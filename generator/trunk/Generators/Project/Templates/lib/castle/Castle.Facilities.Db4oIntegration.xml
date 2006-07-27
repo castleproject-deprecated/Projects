@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.Facilities.Db4oIntegration</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.Facilities.Db4oIntegration.Db4oFacility">
+            <summary>
+            Enable components to take advantage of the capabilities 
+            offered by the db4objects project.
+            </summary>
+        </member>
+    </members>
+</doc>

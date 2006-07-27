@@ -1,0 +1,229 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AspectSharp.Lang</name>
+    </assembly>
+    <members>
+        <member name="T:AspectSharp.Lang.AST.Types.ITypeResolver">
+            <summary>
+            Summary description for ITypeResolver.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.Types.NamespaceTypeMap">
+            <summary>
+            Summary description for NamespaceTypeMap.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.Visitors.DepthFirstVisitor">
+            <summary>
+            Summary description for AbstractDepthFirstVisitor.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.IVisitor">
+            <summary>
+            Summary description for IVisitor.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.Visitors.XmlTreeVisitor">
+            <summary>
+            Summary description for PrintTreeVisitor.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.AllMethodSignature">
+            <summary>
+            Summary description for AllMethodSignature.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.MethodSignature">
+            <summary>
+            Summary description for MethodSignature.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.AspectDefinition">
+            <summary>
+            Summary description for AspectDefinition.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.NodeBase">
+            <summary>
+            Summary description for NodeBase.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.INode">
+            <summary>
+            Summary description for INode.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.AspectDefinitionCollection">
+            <summary>
+            Summary description for AspectDefinitionCollection.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.NodeCollectionBase">
+            <summary>
+            Summary description for NodeCollectionBase.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.AssemblyReference">
+            <summary>
+            Summary description for AssemblyReference.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.DefinitionBase">
+            <summary>
+            Summary description for DefinitionBase.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.EngineConfiguration">
+            <summary>
+            Summary description for EngineConfiguration.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.IDeclarationCollection">
+            <summary>
+            Summary description for IDeclarationCollection.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.ImportDirective">
+            <summary>
+            Summary description for ImportDirective.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.ImportDirectiveCollection">
+            <summary>
+            Summary description for ImportNodeCollection.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.InterceptorDefinition">
+            <summary>
+            Summary description for InterceptorDefinition.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.InterceptorDefinitionCollection">
+            <summary>
+            Summary description for InterceptorDefinitionCollection.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.InterceptorEntryDefinition">
+            <summary>
+            Summary description for InterceptorEntryDefinition.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.InterceptorGlobalDeclarationCollection">
+            <summary>
+            Summary description for InterceptorGlobalDeclarationCollection.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.LexicalInfo">
+            <summary>
+            Summary description for LexicalInfo.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.MixinDefinition">
+            <summary>
+            Summary description for MixinDefinition.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.MixinDefinitionCollection">
+            <summary>
+            Summary description for MixinDefinitionCollection.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.MixinEntryDefinition">
+            <summary>
+            Summary description for MixinEntryDefinition.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.MixinGlobalDeclarationCollection">
+            <summary>
+            Summary description for MixinGlobalDeclarationCollection.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.PointCutDefinition">
+            <summary>
+            Summary description for PointCutDefinition.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.PointCutDefinitionCollection">
+            <summary>
+            Summary description for PointCutCollection.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.TargetTypeDefinition">
+            <summary>
+            Summary description for TargetTypeDefinition.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.TypeReference">
+            <summary>
+            Summary description for TypeReference.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AST.TypeReferenceCollection">
+            <summary>
+            Summary description for TypeReferenceCollection.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.Steps.Semantic.SemanticAnalizerBase">
+            <summary>
+            Summary description for SemanticAnalizerBase.
+            TODO: Rewrite using the DepthFirstVisitor
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.Steps.AbstractStep">
+            <summary>
+            Summary description for AbstractStep.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.Steps.IStep">
+            <summary>
+            Summary description for IStep.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.Steps.Semantic.SemanticAnalizerStep">
+            <summary>
+            Summary description for SemanticAnalizerStep.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.Steps.Types.Resolution.TypeManager">
+            <summary>
+            Summary description for TypeManager.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.Steps.Types.Resolution.TypeResolverList">
+            <summary>
+            Summary description for TypeResolverList.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.Steps.Types.PruneTypesStep">
+            <summary>
+            Summary description for PruneTypesStep.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.Steps.AbstractVisitorStep">
+            <summary>
+            Summary description for AbstractVisitorStep.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.Steps.Types.ResolveTypesStep">
+            <summary>
+            Summary description for ResolveTypesStep.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.Steps.Context">
+            <summary>
+            Summary description for Context.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.Steps.StepChainBuilder">
+            <summary>
+            Summary description for StepChainBuilder.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Lang.AspectParser">
+            <summary>
+            Summary description for AspectParser.
+            </summary>
+        </member>
+    </members>
+</doc>

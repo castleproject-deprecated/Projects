@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<project name="<%= Name %>" default="build" xmlns="http://nant.sf.net/release/0.85-rc2/nant.xsd">
+	<property name="dir.src.app" value="app" />
+	<property name="dir.src.test" value="test" />
+	<property name="dir.config" value="config" />
+	<property name="dir.bin" value="public/bin" />
+	<property name="dir.lib" value="lib" />
+	<property name="dir.lib.castle" value="<%= '${' %>dir.lib}/castle" />
+	<property name="dir.lib.nunit" value="<%= '${' %>dir.lib}/nunit" />
+	<property name="dir.lib.mysql" value="<%= '${' %>dir.lib}/mysql" />
+	<property name="dir.doc" value="doc" />
+	
+	<target name="clean" description="Delete all temp. files">
+        <delete>
+            <fileset>
+				<include name="<%= '${' %>dir.bin}/**" />
+				<!-- add other files to be cleaned here -->
+            </fileset>
+        </delete>
+    </target>
+
+	<target name="build" description="Compile all source files">
+		<mkdir dir="<%= '${' %>dir.bin}" />
+		<copy flatten="true" todir="<%= '${' %>dir.bin}">
+			<fileset>
+				<include name="<%= '${' %>dir.lib.castle}/**" />
+				<include name="<%= '${' %>dir.lib.mysql}/**" />
+				<include name="<%= '${' %>dir.lib.nunit}/nunit.framework.dll" />
+			</fileset>
+		</copy>
+		<csc target="library" output="<%= '${' %>dir.bin}/<%= '${' %>project::get-name()}.dll">
+			<sources>
+				<include name="<%= '${' %>dir.config}/Boot.cs" />
+				<include name="<%= '${' %>dir.src.app}/**/*.cs" />
+				<include name="<%= '${' %>dir.src.test}/**/*.cs" />
+			</sources>
+			<references basedir="<%= '${' %>dir.bin}">
+				<include name="System.Web.dll" />
+				<include name="nunit.framework.dll" />
+				<include name="Castle.Model.dll" />
+				<include name="Castle.ActiveRecord.dll" />
+				<include name="Castle.MonoRail.Framework.dll" />
+				<include name="Castle.MonoRail.ActiveRecordScaffold.dll" />
+				<include name="Castle.MonoRail.ActiveRecordSupport.dll" />
+				<include name="Castle.MonoRail.Framework.Views.NVelocity.dll" />
+				<include name="Castle.Components.Common.EmailSender.dll" />
+				<include name="Castle.Components.Common.EmailSender.SmtpEmailSender.dll" />
+				<include name="Castle.MonoRail.TestSupport.dll" />
+				<include name="log4net.dll" />
+				<include name="NHibernate.dll" />
+				<include name="Nullables.NHibernate.dll" />
+				<include name="Nullables.dll" />
+				<include name="NVelocity.dll" />
+				<include name="MySql.Data.dll" />
+				<!-- add other references here -->
+			</references>
+		</csc>
+	</target>
+	
+	<target name="rebuild" description="Clean and build" depends="clean, build" />
+
+	<target name="test" description="Runs all the tests" depends="build">
+		<nunit2 if="<%= '${' %>platform::is-win32()}"> 
+			<formatter type="Plain" />
+			<test assemblyname="<%= '${' %>dir.bin}/<%= '${' %>project::get-name()}.dll" />
+		</nunit2>
+		<exec program="nunit-console" if="<%= '${' %>platform::is-unix()}">
+			<arg line="<%= '${' %>dir.bin}/<%= '${' %>project::get-name()}.dll /nologo" />
+		</exec>
+	</target>
+		
+	<target name="setup" description="Setup the developement environment">
+		<gac-install>
+			<assemblies>
+				<include name="<%= '${' %>dir.lib}/Castle/net-1.1/Castle.MonoRail.TestSupport.dll" />
+			</assemblies>
+		</gac-install>
+	</target>
+	
+</project>

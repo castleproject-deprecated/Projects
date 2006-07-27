@@ -1,0 +1,921 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.Services.Logging</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.Services.Logging.ConsoleLogger">
+            <summary>
+            The Logger sending everything to the standard output streams.
+            This is mainly for the cases when you have a utility that
+            does not have a logger to supply.
+            </summary>
+        </member>
+        <member name="T:Castle.Services.Logging.LevelFilteredLogger">
+            <summary>
+            The Level Filtered Logger class.  This is a base clase which
+            provides a LogLevel attribute and reroutes all functions into
+            one Log method.
+            </summary>
+        </member>
+        <member name="T:Castle.Services.Logging.ILogger">
+            <summary>
+            Manages logging.
+            </summary>
+            <remarks>
+            This is a facade for the different logging subsystems.
+            It offers a simplified interface that follows IOC patterns
+            and a simplified priority/level/severity abstraction. 
+            </remarks>
+        </member>
+        <member name="M:Castle.Services.Logging.ILogger.Debug(System.String)">
+            <summary>
+            Logs a debug message.
+            </summary>
+            <param name="message">The Message</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ILogger.Debug(System.String,System.Exception)">
+            <summary>
+            Logs a debug message. 
+            </summary>
+            <param name="message">The Message</param>
+            <param name="exception">The Exception</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ILogger.Debug(System.String,System.Object[])">
+            <summary>
+            Logs a debug message.
+            </summary>
+            <param name="format">Message format</param>
+            <param name="args">Array of objects to write using format</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ILogger.Info(System.String)">
+            <summary>
+            Logs an info message.
+            </summary>
+            <param name="message">The Message</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ILogger.Info(System.String,System.Exception)">
+            <summary>
+            Logs an info message. 
+            </summary>
+            <param name="message">The Message</param>
+            <param name="exception">The Exception</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ILogger.Info(System.String,System.Object[])">
+            <summary>
+            Logs an info message.
+            </summary>
+            <param name="format">Message format</param>
+            <param name="args">Array of objects to write using format</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ILogger.Warn(System.String)">
+            <summary>
+            Logs a warn message.
+            </summary>
+            <param name="message">The Message</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ILogger.Warn(System.String,System.Exception)">
+            <summary>
+            Logs a warn message. 
+            </summary>
+            <param name="message">The Message</param>
+            <param name="exception">The Exception</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ILogger.Warn(System.String,System.Object[])">
+            <summary>
+            Logs a warn message.
+            </summary>
+            <param name="format">Message format</param>
+            <param name="args">Array of objects to write using format</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ILogger.Error(System.String)">
+            <summary>
+            Logs an error message.
+            </summary>
+            <param name="message">The Message</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ILogger.Error(System.String,System.Exception)">
+            <summary>
+            Logs an error message. 
+            </summary>
+            <param name="message">The Message</param>
+            <param name="exception">The Exception</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ILogger.Error(System.String,System.Object[])">
+            <summary>
+            Logs an error message.
+            </summary>
+            <param name="format">Message format</param>
+            <param name="args">Array of objects to write using format</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ILogger.FatalError(System.String)">
+            <summary>
+            Logs a fatal error message.
+            </summary>
+            <param name="message">The Message</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ILogger.FatalError(System.String,System.Exception)">
+            <summary>
+            Logs a fatal error message.
+            </summary>
+            <param name="message">The Message</param>
+            <param name="exception">The Exception</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ILogger.FatalError(System.String,System.Object[])">
+            <summary>
+            Logs a fatal error message.
+            </summary>
+            <param name="format">Message format</param>
+            <param name="args">Array of objects to write using format</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ILogger.CreateChildLogger(System.String)">
+            <summary>
+            Create a new child logger.
+            The name of the child logger is [current-loggers-name].[passed-in-name]
+            </summary>
+            <param name="name">The Subname of this logger.</param>
+            <returns>The New ILogger instance.</returns> 
+            <exception cref="T:System.ArgumentException">If the name has an empty element name.</exception>
+        </member>
+        <member name="P:Castle.Services.Logging.ILogger.IsDebugEnabled">
+            <summary>
+            Determines if messages of priority "debug" will be logged.
+            </summary>
+            <value>True if "debug" messages will be logged.</value> 
+        </member>
+        <member name="P:Castle.Services.Logging.ILogger.IsInfoEnabled">
+            <summary>
+            Determines if messages of priority "info" will be logged.
+            </summary>
+            <value>True if "info" messages will be logged.</value>
+        </member>
+        <member name="P:Castle.Services.Logging.ILogger.IsWarnEnabled">
+            <summary>
+            Determines if messages of priority "warn" will be logged.
+            </summary>
+            <value>True if "warn" messages will be logged.</value>
+        </member>
+        <member name="P:Castle.Services.Logging.ILogger.IsErrorEnabled">
+            <summary>
+            Determines if messages of priority "error" will be logged.
+            </summary>
+            <value>True if "error" messages will be logged.</value>
+        </member>
+        <member name="P:Castle.Services.Logging.ILogger.IsFatalErrorEnabled">
+            <summary>
+            Determines if messages of priority "fatalError" will be logged.
+            </summary>
+            <value>True if "fatalError" messages will be logged.</value>
+        </member>
+        <member name="M:Castle.Services.Logging.LevelFilteredLogger.#ctor">
+            <summary>
+            Creates a new <c>LevelFilteredLogger</c>.
+            </summary>
+        </member>
+        <member name="P:Castle.Services.Logging.LevelFilteredLogger.Level">
+            <value>
+            The <c>LoggerLevel</c> that this logger
+            will be using. Defaults to <c>LoggerLevel.Off</c>
+            </value>
+        </member>
+        <member name="P:Castle.Services.Logging.LevelFilteredLogger.Name">
+            <value>
+            The name that this logger will be using. 
+            Defaults to <c>String.Empty</c>
+            </value>
+        </member>
+        <member name="P:Castle.Services.Logging.LevelFilteredLogger.IsDebugEnabled">
+            <value>
+            True if the <c>Level</c> is lower
+            or equal to <c>LoggerLevel.Debug</c>
+            </value>
+        </member>
+        <member name="P:Castle.Services.Logging.LevelFilteredLogger.IsInfoEnabled">
+            <value>
+            True if the <c>Level</c> is lower
+            or equal to <c>LoggerLevel.Info</c>
+            </value>
+        </member>
+        <member name="P:Castle.Services.Logging.LevelFilteredLogger.IsWarnEnabled">
+            <value>
+            True if the <c>Level</c> is lower
+            or equal to <c>LoggerLevel.Warn</c>
+            </value>
+        </member>
+        <member name="P:Castle.Services.Logging.LevelFilteredLogger.IsErrorEnabled">
+            <value>
+            True if the <c>Level</c> is lower
+            or equal to <c>LoggerLevel.Error</c>
+            </value>
+        </member>
+        <member name="P:Castle.Services.Logging.LevelFilteredLogger.IsFatalErrorEnabled">
+            <value>
+            True if the <c>Level</c> is lower
+            or equal to <c>LoggerLevel.Fatal</c>
+            </value>
+        </member>
+        <member name="M:Castle.Services.Logging.ConsoleLogger.#ctor">
+            <summary>
+            Creates a new ConsoleLogger with the <c>Level</c>
+            set to <c>LoggerLevel.Debug</c> and the <c>Name</c>
+            set to <c>String.Empty</c>.
+            </summary>
+        </member>
+        <member name="M:Castle.Services.Logging.ConsoleLogger.#ctor(Castle.Services.Logging.LoggerLevel)">
+            <summary>
+            Creates a new ConsoleLogger with the <c>Name</c>
+            set to <c>String.Empty</c>.
+            </summary>
+            <param name="logLevel">The logs Level.</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ConsoleLogger.#ctor(System.String)">
+            <summary>
+            Creates a new ConsoleLogger with the <c>Level</c>
+            set to <c>LoggerLevel.Debug</c>.
+            </summary>
+            <param name="name">The logs Name.</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ConsoleLogger.#ctor(System.String,Castle.Services.Logging.LoggerLevel)">
+            <summary>
+            Creates a new ConsoleLogger.
+            </summary>
+            <param name="name">The logs Name.</param>
+            <param name="logLevel">The logs Level.</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ConsoleLogger.Log(Castle.Services.Logging.LoggerLevel,System.String,System.String,System.Exception)">
+            <summary>
+            A Common method to log.
+            </summary>
+            <param name="level">The level of logging</param>
+            <param name="name">The name of the logger</param>
+            <param name="message">The Message</param>
+            <param name="exception">The Exception</param>
+        </member>
+        <member name="M:Castle.Services.Logging.ConsoleLogger.CreateChildLogger(System.String)">
+            <summary>
+            Returns a new <c>ConsoleLogger</c> with the name
+            added after this loggers name, with a dot in between.
+            </summary>
+            <param name="name">The added hierchial name.</param>
+            <returns>A new <c>ConsoleLogger</c>.</returns> 
+        </member>
+        <member name="T:Castle.Services.Logging.DiagnosticsLogger">
+            <summary>
+            The Logger using standart Diagnostics namespace.
+            </summary>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.#ctor(System.String)">
+            <summary>
+            Creates a logger based on <see cref="T:System.Diagnostics.EventLog"/>.
+            </summary>
+            <param name="logName"><see cref="P:System.Diagnostics.EventLog.Log"/></param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.#ctor(System.String,System.String)">
+            <summary>
+            Creates a logger based on <see cref="T:System.Diagnostics.EventLog"/>.
+            </summary>
+            <param name="logName"><see cref="P:System.Diagnostics.EventLog.Log"/></param>
+            <param name="source"><see cref="P:System.Diagnostics.EventLog.Source"/></param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Creates a logger based on <see cref="T:System.Diagnostics.EventLog"/>.
+            </summary>
+            <param name="logName"><see cref="P:System.Diagnostics.EventLog.Log"/></param>
+            <param name="machineName"><see cref="P:System.Diagnostics.EventLog.MachineName"/></param>
+            <param name="source"><see cref="P:System.Diagnostics.EventLog.Source"/></param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.Debug(System.String)">
+            <summary>
+            Logs a debug message.
+            </summary>
+            <param name="message">The Message</param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.Debug(System.String,System.Exception)">
+            <summary>
+            Logs a debug message. 
+            </summary>
+            <param name="message">The Message</param>
+            <param name="exception">The Exception</param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.Debug(System.String,System.Object[])">
+            <summary>
+            Logs a debug message.
+            </summary>
+            <param name="format">Message format</param>
+            <param name="args">Array of objects to write using format</param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.Info(System.String)">
+            <summary>
+            Logs an info message.
+            </summary>
+            <param name="message">The Message</param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.Info(System.String,System.Exception)">
+            <summary>
+            Logs an info message. 
+            </summary>
+            <param name="message">The Message</param>
+            <param name="exception">The Exception</param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.Info(System.String,System.Object[])">
+            <summary>
+            Logs an info message.
+            </summary>
+            <param name="format">Message format</param>
+            <param name="args">Array of objects to write using format</param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.Warn(System.String)">
+            <summary>
+            Logs a warn message.
+            </summary>
+            <param name="message">The Message</param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.Warn(System.String,System.Exception)">
+            <summary>
+            Logs a warn message. 
+            </summary>
+            <param name="message">The Message</param>
+            <param name="exception">The Exception</param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.Warn(System.String,System.Object[])">
+            <summary>
+            Logs a warn message.
+            </summary>
+            <param name="format">Message format</param>
+            <param name="args">Array of objects to write using format</param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.Error(System.String)">
+            <summary>
+            Logs an error message.
+            </summary>
+            <param name="message">The Message</param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.Error(System.String,System.Exception)">
+            <summary>
+            Logs an error message. 
+            </summary>
+            <param name="message">The Message</param>
+            <param name="exception">The Exception</param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.Error(System.String,System.Object[])">
+            <summary>
+            Logs an error message.
+            </summary>
+            <param name="format">Message format</param>
+            <param name="args">Array of objects to write using format</param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.FatalError(System.String)">
+            <summary>
+            Logs a fatal error message.
+            </summary>
+            <param name="message">The Message</param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.FatalError(System.String,System.Exception)">
+            <summary>
+            Logs a fatal error message.
+            </summary>
+            <param name="message">The Message</param>
+            <param name="exception">The Exception</param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.FatalError(System.String,System.Object[])">
+            <summary>
+            Logs a fatal error message.
+            </summary>
+            <param name="format">Message format</param>
+            <param name="args">Array of objects to write using format</param>
+        </member>
+        <member name="M:Castle.Services.Logging.DiagnosticsLogger.CreateChildLogger(System.String)">
+            <summary>
+            Create a new logger with the same Log, MachineName and Source properties.
+            </summary>
+            <param name="name">Ignored, cause a source can only be registered to one log at a time.</param>
+            <returns>The New ILogger instance.</returns> 
+            <exception cref="T:System.ArgumentException">If the name has an empty element name.</exception>
+        </member>
+        <member name="P:Castle.Services.Logging.DiagnosticsLogger.IsDebugEnabled">
+            <summary>
+            Debug level is always enabled.
+            </summary>
+            <value>The Value is always True</value> 
+        </member>
+        <member name="P:Castle.Services.Logging.DiagnosticsLogger.IsInfoEnabled">
+            <summary>
+            Information level is always enabled.
+            </summary>
+            <value>The Value is always True</value> 
+        </member>
+        <member name="P:Castle.Services.Logging.DiagnosticsLogger.IsWarnEnabled">
+            <summary>
+            Warning level is always enabled.
+            </summary>
+            <value>The Value is always True</value> 
+        </member>
+        <member name="P:Castle.Services.Logging.DiagnosticsLogger.IsErrorEnabled">
+            <summary>
+            Error level is always enabled.
+            </summary>
+            <value>The Value is always True</value> 
+        </member>
+        <member name="P:Castle.Services.Logging.DiagnosticsLogger.IsFatalErrorEnabled">
+            <summary>
+            FatalError level is always enabled.
+            </summary>
+            <value>The Value is always True</value> 
+        </member>
+        <member name="T:Castle.Services.Logging.NullLogger">
+            <summary>
+            The Null Logger class.  This is useful for implementations where you need
+            to provide a logger to a utility class, but do not want any output from it.
+            It also helps when you have a utility that does not have a logger to supply.
+            </summary>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogger.#ctor">
+            <summary>
+            Creates a new <c>NullLogger</c>.
+            </summary>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogger.Debug(System.String)">
+            <summary>
+            No-op.
+            </summary>
+            <param name="message">Ignored</param>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogger.Debug(System.String,System.Exception)">
+            <summary>
+            No-op.
+            </summary>
+            <param name="message">Ignored</param>
+            <param name="exception">Ignored</param>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogger.Debug(System.String,System.Object[])">
+            <summary>
+            No-op.
+            </summary>
+            <param name="format">Ignored</param>
+            <param name="args">Ignored</param>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogger.Info(System.String)">
+            <summary>
+            No-op.
+            </summary>
+            <param name="message">Ignored</param>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogger.Info(System.String,System.Exception)">
+            <summary>
+            No-op.
+            </summary>
+            <param name="message">Ignored</param>
+            <param name="exception">Ignored</param>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogger.Info(System.String,System.Object[])">
+            <summary>
+            No-op.
+            </summary>
+            <param name="format">Ignored</param>
+            <param name="args">Ignored</param>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogger.Warn(System.String)">
+            <summary>
+            No-op.
+            </summary>
+            <param name="message">Ignored</param>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogger.Warn(System.String,System.Exception)">
+            <summary>
+            No-op.
+            </summary>
+            <param name="message">Ignored</param>
+            <param name="exception">Ignored</param>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogger.Warn(System.String,System.Object[])">
+            <summary>
+            No-op.
+            </summary>
+            <param name="format">Ignored</param>
+            <param name="args">Ignored</param>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogger.Error(System.String)">
+            <summary>
+            No-op.
+            </summary>
+            <param name="message">Ignored</param>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogger.Error(System.String,System.Exception)">
+            <summary>
+            No-op.
+            </summary>
+            <param name="message">Ignored</param>
+            <param name="exception">Ignored</param>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogger.Error(System.String,System.Object[])">
+            <summary>
+            No-op.
+            </summary>
+            <param name="format">Ignored</param>
+            <param name="args">Ignored</param>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogger.FatalError(System.String)">
+            <summary>
+            No-op.
+            </summary>
+            <param name="message">Ignored</param>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogger.FatalError(System.String,System.Exception)">
+            <summary>
+            No-op.
+            </summary>
+            <param name="message">Ignored</param>
+            <param name="exception">Ignored</param>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogger.FatalError(System.String,System.Object[])">
+            <summary>
+            No-op.
+            </summary>
+            <param name="format">Ignored</param>
+            <param name="args">Ignored</param>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogger.CreateChildLogger(System.String)">
+            <summary>
+            Returns this <c>NullLogger</c>.
+            </summary>
+            <param name="name">Ignored</param>
+            <returns>This ILogger instance.</returns> 
+        </member>
+        <member name="P:Castle.Services.Logging.NullLogger.IsDebugEnabled">
+            <summary>
+            No-op.
+            </summary>
+            <value>false</value> 
+        </member>
+        <member name="P:Castle.Services.Logging.NullLogger.IsInfoEnabled">
+            <summary>
+            No-op.
+            </summary>
+            <value>false</value> 
+        </member>
+        <member name="P:Castle.Services.Logging.NullLogger.IsWarnEnabled">
+            <summary>
+            No-op.
+            </summary>
+            <value>false</value> 
+        </member>
+        <member name="P:Castle.Services.Logging.NullLogger.IsErrorEnabled">
+            <summary>
+            No-op.
+            </summary>
+            <value>false</value> 
+        </member>
+        <member name="P:Castle.Services.Logging.NullLogger.IsFatalErrorEnabled">
+            <summary>
+            No-op.
+            </summary>
+            <value>false</value> 
+        </member>
+        <member name="T:Castle.Services.Logging.StreamLogger">
+            <summary>
+            The Stream Logger class.  This class can stream log information
+            to any stream, it is suitable for storing a log file to disk,
+            or to a <c>MemoryStream</c> for testing your components.
+            </summary>
+            <remarks>
+            This logger is not thread safe.
+            </remarks>
+        </member>
+        <member name="M:Castle.Services.Logging.StreamLogger.#ctor(System.String,System.IO.Stream)">
+            <summary>
+            Creates a new <c>StreamLogger</c> with default encoding 
+            and buffer size. Initial Level is set to Debug.
+            </summary>
+            <param name="name">
+            The name of the log.
+            </param>
+            <param name="stream">
+            The stream that will be used for logging,
+            seeking while the logger is alive 
+            </param>
+        </member>
+        <member name="M:Castle.Services.Logging.StreamLogger.#ctor(System.String,System.IO.Stream,System.Text.Encoding)">
+            <summary>
+            Creates a new <c>StreamLogger</c> with default buffer size.
+            Initial Level is set to Debug.
+            </summary>
+            <param name="name">
+            The name of the log.
+            </param>
+            <param name="stream">
+            The stream that will be used for logging,
+            seeking while the logger is alive 
+            </param>
+            <param name="encoding">
+            The encoding that will be used for this stream.
+            <see cref="T:System.IO.StreamWriter"/>
+            </param>
+        </member>
+        <member name="M:Castle.Services.Logging.StreamLogger.#ctor(System.String,System.IO.Stream,System.Text.Encoding,System.Int32)">
+            <summary>
+            Creates a new <c>StreamLogger</c>. 
+            Initial Level is set to Debug.
+            </summary>
+            <param name="name">
+            The name of the log.
+            </param>
+            <param name="stream">
+            The stream that will be used for logging,
+            seeking while the logger is alive 
+            </param>
+            <param name="encoding">
+            The encoding that will be used for this stream.
+            <see cref="T:System.IO.StreamWriter"/>
+            </param>
+            <param name="bufferSize">
+            The buffer size that will be used for this stream.
+            <see cref="T:System.IO.StreamWriter"/>
+            </param>
+        </member>
+        <member name="M:Castle.Services.Logging.StreamLogger.#ctor(System.String,System.IO.StreamWriter)">
+            <summary>
+            Creates a new <c>StreamLogger</c> with 
+            Debug as default Level.
+            </summary>
+            <param name="name">The name of the log.</param>
+            <param name="writer">The <c>StreamWriter</c> the log will write to.</param>
+        </member>
+        <member name="T:Castle.Services.Logging.WebLogger">
+            <summary>
+            The WebLogger sends everything to the HttpContext.Trace
+            </summary>
+        </member>
+        <member name="F:Castle.Services.Logging.WebLogger._logLevel">
+            <summary>
+            Default logger level
+            </summary>
+        </member>
+        <member name="F:Castle.Services.Logging.WebLogger._name">
+            <summary>
+            Default name
+            </summary>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.#ctor">
+            <summary>
+            Creates a new WebLogger with the priority set to DEBUG.
+            </summary>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.#ctor(Castle.Services.Logging.LoggerLevel)">
+            <summary>
+            Creates a new WebLogger.
+            </summary>
+            <param name="logLevel">The Log level typecode.</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.#ctor(System.String)">
+            <summary>
+            Creates a new WebLogger.
+            </summary>
+            <param name="name">The Log name.</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.#ctor(System.String,Castle.Services.Logging.LoggerLevel)">
+            <summary>
+            Creates a new WebLogger.
+            </summary>
+            <param name="name">The Log name.</param>
+            <param name="logLevel">The Log level typecode.</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.Debug(System.String)">
+            <summary>
+            Logs a debug message.
+            </summary>
+            <param name="message">The Message</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.Debug(System.String,System.Exception)">
+            <summary>
+            Logs a debug message. 
+            </summary>
+            <param name="message">The Message</param>
+            <param name="exception">The Exception</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.Debug(System.String,System.Object[])">
+            <summary>
+            Logs a debug message.
+            </summary>
+            <param name="format">Message format</param>
+            <param name="args">Array of objects to write using format</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.Info(System.String)">
+            <summary>
+            Logs an info message.
+            </summary>
+            <param name="message">The Message</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.Info(System.String,System.Exception)">
+            <summary>
+            Logs an info message. 
+            </summary>
+            <param name="message">The Message</param>
+            <param name="exception">The Exception</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.Info(System.String,System.Object[])">
+            <summary>
+            Logs an info message.
+            </summary>
+            <param name="format">Message format</param>
+            <param name="args">Array of objects to write using format</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.Warn(System.String)">
+            <summary>
+            Logs a warn message.
+            </summary>
+            <param name="message">The Message</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.Warn(System.String,System.Exception)">
+            <summary>
+            Logs a warn message. 
+            </summary>
+            <param name="message">The Message</param>
+            <param name="exception">The Exception</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.Warn(System.String,System.Object[])">
+            <summary>
+            Logs an warn message.
+            </summary>
+            <param name="format">Message format</param>
+            <param name="args">Array of objects to write using format</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.Error(System.String)">
+            <summary>
+            Logs an error message.
+            </summary>
+            <param name="message">The Message</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.Error(System.String,System.Exception)">
+            <summary>
+            Logs an error message. 
+            </summary>
+            <param name="message">The Message</param>
+            <param name="exception">The Exception</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.Error(System.String,System.Object[])">
+            <summary>
+            Logs an error message.
+            </summary>
+            <param name="format">Message format</param>
+            <param name="args">Array of objects to write using format</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.FatalError(System.String)">
+            <summary>
+            Logs a fatal error message.
+            </summary>
+            <param name="message">The Message</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.FatalError(System.String,System.Exception)">
+            <summary>
+            Logs a fatal error message.
+            </summary>
+            <param name="message">The Message</param>
+            <param name="exception">The Exception</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.FatalError(System.String,System.Object[])">
+            <summary>
+            Logs a fatal error message.
+            </summary>
+            <param name="format">Message format</param>
+            <param name="args">Array of objects to write using format</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.Log(Castle.Services.Logging.LoggerLevel,System.String,System.Exception)">
+            <summary>
+            A Common method to log.
+            </summary>
+            <param name="level">The level of logging</param>
+            <param name="message">The Message</param>
+            <param name="exception">The Exception</param>
+        </member>
+        <member name="M:Castle.Services.Logging.WebLogger.CreateChildLogger(System.String)">
+            <summary>
+            Just returns this logger (<c>WebLogger</c> is not hierarchical).
+            </summary>
+            <param name="name">Ignored</param>
+            <returns>This ILogger instance.</returns> 
+        </member>
+        <member name="P:Castle.Services.Logging.WebLogger.IsDebugEnabled">
+            <summary>
+            Determines if messages of priority "debug" will be logged.
+            </summary>
+            <value>True if "debug" messages will be logged.</value> 
+        </member>
+        <member name="P:Castle.Services.Logging.WebLogger.IsInfoEnabled">
+            <summary>
+            Determines if messages of priority "info" will be logged.
+            </summary>
+            <value>True if "info" messages will be logged.</value>
+        </member>
+        <member name="P:Castle.Services.Logging.WebLogger.IsWarnEnabled">
+            <summary>
+            Determines if messages of priority "warn" will be logged.
+            </summary>
+            <value>True if "warn" messages will be logged.</value>
+        </member>
+        <member name="P:Castle.Services.Logging.WebLogger.IsErrorEnabled">
+            <summary>
+            Determines if messages of priority "error" will be logged.
+            </summary>
+            <value>True if "error" messages will be logged.</value>
+        </member>
+        <member name="P:Castle.Services.Logging.WebLogger.IsFatalErrorEnabled">
+            <summary>
+            Determines if messages of priority "fatalError" will be logged.
+            </summary>
+            <value>True if "fatalError" messages will be logged.</value>
+        </member>
+        <member name="T:Castle.Services.Logging.ILoggerFactory">
+            <summary>
+            Manages the instantiation of <see cref="T:Castle.Services.Logging.ILogger"/>s.
+            </summary>
+        </member>
+        <member name="M:Castle.Services.Logging.ILoggerFactory.Create(System.Type)">
+            <summary>
+            Creates a new logger, getting the logger name from the specified type.
+            </summary>
+        </member>
+        <member name="M:Castle.Services.Logging.ILoggerFactory.Create(System.String)">
+            <summary>
+            Creates a new logger.
+            </summary>
+        </member>
+        <member name="M:Castle.Services.Logging.ILoggerFactory.Create(System.Type,Castle.Services.Logging.LoggerLevel)">
+            <summary>
+            Creates a new logger, getting the logger name from the specified type.
+            </summary>
+        </member>
+        <member name="M:Castle.Services.Logging.ILoggerFactory.Create(System.String,Castle.Services.Logging.LoggerLevel)">
+            <summary>
+            Creates a new logger.
+            </summary>
+        </member>
+        <member name="M:Castle.Services.Logging.AbstractLoggerFactory.GetConfigFile(System.String)">
+            <summary>
+            Gets the configuration file.
+            </summary>
+            <param name="filename">i.e. log4net.config</param>
+            <returns></returns>
+        </member>
+        <member name="T:Castle.Services.Logging.ConsoleFactory">
+            <summary>
+            Summary description for ConsoleFactory.
+            </summary>
+        </member>
+        <member name="T:Castle.Services.Logging.LoggerLevel">
+            <summary>
+            Supporting Logger levels.
+            </summary>
+        </member>
+        <member name="F:Castle.Services.Logging.LoggerLevel.Debug">
+            <summary>
+            Debug logging level
+            </summary>
+        </member>
+        <member name="F:Castle.Services.Logging.LoggerLevel.Info">
+            <summary>
+            Info logging level
+            </summary>
+        </member>
+        <member name="F:Castle.Services.Logging.LoggerLevel.Warn">
+            <summary>
+            Warn logging level
+            </summary>
+        </member>
+        <member name="F:Castle.Services.Logging.LoggerLevel.Error">
+            <summary>
+            Error logging level
+            </summary>
+        </member>
+        <member name="F:Castle.Services.Logging.LoggerLevel.Fatal">
+            <summary>
+            Fatal logging level
+            </summary>
+        </member>
+        <member name="F:Castle.Services.Logging.LoggerLevel.Off">
+            <summary>
+            Logging will be off
+            </summary>
+        </member>
+        <member name="T:Castle.Services.Logging.NullLogFactory">
+            <summary>
+            NullLogFactory used when logging is turned off.
+            </summary>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogFactory.Create(System.String)">
+            <summary>
+            Creates an instance of ILogger with the specified name.
+            </summary>
+            <param name="name">Name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.Services.Logging.NullLogFactory.Create(System.String,Castle.Services.Logging.LoggerLevel)">
+            <summary>
+            Creates an instance of ILogger with the specified name and LoggerLevel.
+            </summary>
+            <param name="name">Name.</param>
+            <param name="level">Level.</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
