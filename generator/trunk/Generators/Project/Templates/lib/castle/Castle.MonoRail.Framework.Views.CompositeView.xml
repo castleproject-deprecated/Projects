@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.MonoRail.Framework.Views.CompositeView</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.MonoRail.Framework.Views.CompositeView.CompositeViewEngine">
+            <summary>
+            Composition of view engines that dispatch to 
+            one or other based on the view file extesion.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Views.CompositeView.CompositeViewEngine.Process(System.IO.TextWriter,Castle.MonoRail.Framework.IRailsEngineContext,Castle.MonoRail.Framework.Controller,System.String)">
+            <summary>
+             Processes the view - using the templateName to obtain the correct template
+             and writes the results to the System.TextWriter No layout is applied!
+             </summary>
+        </member>
+    </members>
+</doc>
