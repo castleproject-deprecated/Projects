@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.Facilities.AspectSharp</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.Facilities.AspectSharp.AopInterceptor">
+            <summary>
+            Summary description for AopInterceptor.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.AspectSharp.AopProxyFactory">
+            <summary>
+            Specialization of <see cref="T:Castle.Windsor.Proxy.DefaultProxyFactory"/>
+            that checks for aspects in the model and potential mixins.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.AspectSharp.AspectEngineActivator">
+            <summary>
+            Summary description for AspectEngineActivator.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.AspectSharp.ContainerInvocationDispatcher">
+            <summary>
+            This specialization of DefaultInvocationDispatcher only check 
+            if the AopAlliance interceptor can be obtained from the 
+            kernel. If not, the standard flow is used.
+            </summary>
+        </member>
+    </members>
+</doc>

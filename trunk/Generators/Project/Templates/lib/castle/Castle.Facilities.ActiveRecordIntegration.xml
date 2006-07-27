@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.Facilities.ActiveRecordIntegration</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.Facilities.ActiveRecordIntegration.ActiveRecordFacility">
+            <summary>
+            Provides integration with ActiveRecord framework.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.ActiveRecordIntegration.ActiveRecordTransactionManager">
+            <summary>
+            Dispatch the transaction management to the
+            Session transaction implementation.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.ActiveRecordIntegration.SafeSessionProxy">
+            <summary>
+            This class implements <see cref="T:NHibernate.ISession"/>
+            and delegates <see cref="M:NHibernate.ISession.Close"/> and 
+            <see cref="!:ISession.Dispose"/> to <see cref="M:Castle.ActiveRecord.Framework.ISessionFactoryHolder.ReleaseSession(NHibernate.ISession)"/>
+            as the session is in fact managed by ActiveRecord framework
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.ActiveRecordIntegration.SessionFactoryDelegate">
+            <summary>
+            Implements <see cref="T:NHibernate.ISessionFactory"/> allowing 
+            it to be used by the container as an ordinary component.
+            However only <see cref="M:NHibernate.ISessionFactory.OpenSession(System.Data.IDbConnection)"/>
+            is implemented
+            </summary>
+        </member>
+    </members>
+</doc>

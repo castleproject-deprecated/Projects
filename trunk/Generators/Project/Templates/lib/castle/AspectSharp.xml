@@ -1,0 +1,328 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AspectSharp</name>
+    </assembly>
+    <members>
+        <member name="T:AspectSharp.Builder.SectionHandler.AspectSharpConfigurationHandler">
+            <summary>
+            Summary description for AspectSharpConfigurationHandler.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Builder.AppDomainConfigurationBuilder">
+            <summary>
+            Summary description for AppDomainConfigurationBuilder.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Builder.XmlEngineBuilder">
+            <summary>
+            Summary description for XmlEngineBuilder.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Builder.AspectLanguageEngineBuilder">
+            <summary>
+            Summary description for AspectLanguageEngineBuilder.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Builder.AspectEngineBuilder">
+            <summary>
+            Summary description for AspectEngineBuilder.
+            </summary>
+        </member>
+        <member name="M:AspectSharp.Builder.AspectLanguageEngineBuilder.#ctor">
+            <summary>
+            Should be used cautiously by subclasses.
+            </summary>
+        </member>
+        <member name="M:AspectSharp.Builder.XmlEngineBuilder.#ctor">
+            <summary>
+            Should be used cautiously by subclasses.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Builder.BuilderException">
+            <summary>
+            Summary description for BuilderException.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Builder.CodeEngineBuilder">
+            <summary>
+            Summary description for CodeEngineBuilder.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.Dispatcher.DefaultDispatcherFactory">
+            <summary>
+            Summary description for DefaultDispatcherFactory.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.IInvocationDispatcherFactory">
+            <summary>
+            Summary description for IInvocationHandlerFactory.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.Dispatcher.DefaultInvocationDispatcher">
+            <summary>
+            Summary description for DefaultInvocationDispatcher.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.IInvocationDispatcher">
+            <summary>
+            Summary description for IInvocationDispatcher.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.Dispatcher.InvocationComposite">
+            <summary>
+            Summary description for DefaultMethodInvocation.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.IMutableMethodInvocation">
+            <summary>
+            Extends the original behavior by adding the
+            ability to change the method arguments for the next
+            executions
+            </summary>
+        </member>
+        <member name="M:AspectSharp.Core.IMutableMethodInvocation.SetArguments(System.Object[])">
+            <summary>
+            
+            </summary>
+            <param name="arguments"></param>
+        </member>
+        <member name="T:AspectSharp.Core.CustomProxyGenerator">
+            <summary>
+            Generates a dynamic proxy. This overrides the .Net proxy requirements 
+            that forces one to extend MarshalByRefObject or (for a different purpose)
+            ContextBoundObject to have a Proxiable class.
+            </summary>
+            <example>
+            <code>
+            MyInvocationinterceptor interceptor = ...
+            IInterfaceExposed proxy = 
+            	ProxyGenerator.CreateProxy( new Type[] { typeof(IInterfaceExposed) }, interceptor );
+            </code>
+            </example>
+        </member>
+        <member name="M:AspectSharp.Core.CustomProxyGenerator.CreateProxy(System.Type,System.Object,System.Object[],Castle.DynamicProxy.IInterceptor)">
+            <summary>
+            Generates a proxy implementing the specified interface and the mixins
+            redirecting method invocations to the specifed interceptor.
+            </summary>
+            <param name="inter">Interface to be implemented.</param>
+            <param name="mixins">Array of instances (mixins) to be introducted.</param>
+            <param name="interceptor">Instance of <see cref="T:Castle.DynamicProxy.IInterceptor"/>.</param>
+            <returns>Proxy Instance.</returns>
+        </member>
+        <member name="M:AspectSharp.Core.CustomProxyGenerator.CreateClassProxy(System.Type,System.Object[],Castle.DynamicProxy.IInterceptor,System.Object[])">
+            <summary>
+            Generates a class which extends the baseClass, overriding all 
+            the virtual methods and implementing all the mixin interfaces.
+            </summary>
+            <param name="baseClass">Super class</param>
+            <param name="mixins">Array of mixins to be implemented by the proxy</param>
+            <param name="interceptor">Instance of <see cref="T:Castle.DynamicProxy.IInterceptor"/></param>
+            <returns>Proxy instance</returns>
+        </member>
+        <member name="M:AspectSharp.Core.CustomProxyGenerator.CreateGeneratorContext(System.Object[])">
+            <summary>
+            Creates a context - which is used to guid custom proxy
+            generation.
+            </summary>
+            <param name="mixins">Array of mixins to be registered</param>
+            <returns>A GeneratorContext instance</returns>
+        </member>
+        <member name="T:AspectSharp.Core.Matchers.AssignableMatcher">
+            <summary>
+            Summary description for AssignableMatcher.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.Matchers.SingleTypeMatcher">
+            <summary>
+            Summary description for SingleTypeMatcher.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.IClassMatcher">
+            <summary>
+            Summary description for IClassMatcher.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.Matchers.DefaultAspectMatcher">
+            <summary>
+            Summary description for DefaultAspectMatcher.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.IAspectMatcher">
+            <summary>
+            Summary description for IAspectMatcher.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.Matchers.DefaultJoinPointMatcher">
+            <summary>
+            Summary description for DefaultJoinPointMatcher.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.IJoinPointMatcher">
+            <summary>
+            Summary description for IJoinPointMatcher.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.Matchers.MatcherException">
+            <summary>
+            Summary description for MatcherException.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.Matchers.NamespaceMatcher">
+            <summary>
+            Summary description for NamespaceMatcher.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.Matchers.TypeAliasDictionary">
+            <summary>
+            Summary description for TypeAliasDictionary.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.Proxy.DefaultProxyFactory">
+            <summary>
+            Default implementation of IProxyFactory which uses Castle.DynamicProxy to
+            generate the proxies.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.IProxyFactory">
+            <summary>
+            Defines the contract used by AspectEngine to obtain proxies.
+            </summary>
+            <remarks>
+            The generated type must obey the requirements of Aspect#, in other
+            words, the definitions in the AspectDefinition must be proper handled.
+            </remarks>
+        </member>
+        <member name="M:AspectSharp.Core.IProxyFactory.CreateInterfaceProxy(System.Type,System.Object,AspectSharp.Lang.AST.AspectDefinition)">
+            <summary>
+            Implementors must return a proxy (concrete class) that implements 
+            the specified interface and dispatch the call to the specified target.
+            </summary>
+            <param name="inter">The interface to be implemented</param>
+            <param name="target">The invocation default target</param>
+            <param name="aspect">Definitions</param>
+            <returns>The proxy instance</returns>
+        </member>
+        <member name="M:AspectSharp.Core.IProxyFactory.CreateClassProxy(System.Type,AspectSharp.Lang.AST.AspectDefinition,System.Object[])">
+            <summary>
+            Implementors must return a proxy (concrete class) that extends
+            the specified classType.
+            </summary>
+            <param name="classType">The proxy super class</param>
+            <param name="aspect">Definitions</param>
+            <returns>The proxy instance</returns>
+        </member>
+        <member name="F:AspectSharp.Core.Proxy.DefaultProxyFactory._aspect2ProxyType">
+            <summary>
+            For caching, we associate the AspectDefinition with a
+            dynamic Type to avoid regenerate it.
+            </summary>
+        </member>
+        <member name="M:AspectSharp.Core.Proxy.DefaultProxyFactory.#ctor(AspectSharp.AspectEngine,AspectSharp.Core.IInvocationDispatcherFactory)">
+            <summary>
+            Constructs a DefaultProxyFactory
+            </summary>
+            <param name="engine"></param>
+            <param name="dispatcherFactory"></param>
+        </member>
+        <member name="M:AspectSharp.Core.Proxy.DefaultProxyFactory.#ctor(AspectSharp.AspectEngine)">
+            <summary>
+            Constructs a DefaultProxyFactory
+            </summary>
+            <param name="engine"></param>
+        </member>
+        <member name="T:AspectSharp.Core.Proxy.DefaultProxyFactory.AspectInstanceKey">
+            <summary>
+            Key to identify cached aspect type instances
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.Proxy.ProxyFactoryException">
+            <summary>
+            Summary description for ProxyFactoryException.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.Core.IProxyAware">
+            <summary>
+            Summary description for IProxyAware.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.AspectEngine">
+            <summary>
+            The AspectEngine is responsible for matching 
+            specified types agaisnt an AspectDefinition. 
+            If a match is found, a proxy is requested and the AOP
+            features will be implemented in the Proxy.
+            </summary>
+        </member>
+        <member name="M:AspectSharp.AspectEngine.#ctor(AspectSharp.Lang.AST.EngineConfiguration)">
+            <summary>
+            Constructs an AspectEngine
+            </summary>
+            <param name="config">From where to gather the 
+            configuration</param>
+        </member>
+        <member name="M:AspectSharp.AspectEngine.Wrap(System.Object)">
+            <summary>
+            Wraps an object. The object specified is no longer used
+            hence this method is marked as obsolete.
+            </summary>
+            <param name="instance"></param>
+            <returns></returns>
+            <remarks>
+            We cannot stress enough that the instance passed must not be used
+            to access the object contents.
+            </remarks>
+        </member>
+        <member name="M:AspectSharp.AspectEngine.WrapClass(System.Type,System.Object[])">
+            <summary>
+            Wraps an interface. The target argument must be an
+            object capable of responding to the interface messages, or
+            your interceptors must be capable of respoding to them. 
+            </summary>
+            <param name="classType">Concrete class with a available constructor (public or protected) to be wrapped</param>
+            <returns>A proxy</returns>
+        </member>
+        <member name="M:AspectSharp.AspectEngine.WrapInterface(System.Type,System.Object)">
+            <summary>
+            Wraps an interface. The target argument must be an
+            object capable of responding to the interface messages, or
+            your interceptors must be capable of respoding to them. 
+            </summary>
+            <param name="inter">Interface to be wrapped</param>
+            <param name="target">The object that responds to the interface messages</param>
+            <returns>A proxy</returns>
+        </member>
+        <member name="M:AspectSharp.AspectEngine.Union(AspectSharp.Lang.AST.AspectDefinition[])">
+            <summary>
+            Creates a single AspectDefinition as the merge of two or more
+            AspectDefinitions
+            </summary>
+            <param name="aspects">The aspects to be merged</param>
+            <returns>The result of the merge</returns>
+        </member>
+        <member name="P:AspectSharp.AspectEngine.Configuration">
+            <summary>
+            The configuration applied to this AspectEngine instance
+            </summary>
+        </member>
+        <member name="P:AspectSharp.AspectEngine.ProxyFactory">
+            <summary>
+            The <see cref="T:AspectSharp.Core.IProxyFactory"/> implementation
+            responsible for generating the proxies.
+            </summary>
+        </member>
+        <member name="P:AspectSharp.AspectEngine.AspectMatcher">
+            <summary>
+            The <see cref="T:AspectSharp.Core.IAspectMatcher"/> implementation
+            responsible for matching the types against the 
+            AspectDefinitions in the configuration.
+            </summary>
+        </member>
+        <member name="T:AspectSharp.AssertUtil">
+            <summary>
+            Summary description for AssertUtil.
+            </summary>
+        </member>
+    </members>
+</doc>

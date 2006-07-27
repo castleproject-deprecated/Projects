@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.Facilities.AutomaticTransactionManagement</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.Facilities.AutomaticTransactionManagement.TransactionComponentInspector">
+            <summary>
+            Summary description for TransactionComponentInspector.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.AutomaticTransactionManagement.TransactionInterceptor">
+            <summary>
+            Intercepts call for transactional components, coordinating
+            the transaction creation, commit/rollback accordingly to the 
+            method execution. Rollback is invoked if an exception is threw.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.AutomaticTransactionManagement.TransactionMetaInfoStore">
+            <summary>
+            Pendent
+            </summary>
+        </member>
+    </members>
+</doc>
