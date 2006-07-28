@@ -1,4 +1,4 @@
-namespace Generator.Tests
+namespace Generator.Tests.Unit
 
 import Generator.Extentions
 import NUnit.Framework
