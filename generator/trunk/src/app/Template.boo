@@ -42,7 +42,7 @@ class Template:
 		compiler.Parameters.Ducky = true
 		compiler.Parameters.Debug = _debug
 		compiler.Parameters.Input.Add(StringInput(_filename, code))
-		compiler.Parameters.References.Add(Assembly.GetExecutingAssembly())
+		compiler.Parameters.References.Add(typeof(GeneratorBase).Assembly)
 		compiler.Parameters.Pipeline = CompileToMemory()
 		compiler.Parameters.Pipeline.RemoveAt(0)
 		compiler.Parameters.Pipeline.Insert(0, WSABooParsingStep())

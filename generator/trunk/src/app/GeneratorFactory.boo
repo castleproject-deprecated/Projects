@@ -52,7 +52,7 @@ class GeneratorFactory:
 	
 	public static ScriptBasePath as string:
 		get:
-			asmpath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+			asmpath = Path.GetDirectoryName(typeof(GeneratorBase).Assembly.Location)
 			return Path.Combine(asmpath, "../Generators/".ToPath())
 		
 	private static def GetGeneratorScriptFile(name as string):
@@ -72,7 +72,7 @@ class GeneratorFactory:
 		compiler = BooCompiler()
 		compiler.Parameters.Input.Add(FileInput("${ScriptBasePath}/Config.boo"))
 		compiler.Parameters.Input.Add(StringInput(script, code.ToString()))
-		compiler.Parameters.References.Add(Assembly.GetExecutingAssembly())
+		compiler.Parameters.References.Add(typeof(GeneratorBase).Assembly)
 		compiler.Parameters.Pipeline = CompileToMemory()
 		
 		ctx = compiler.Run()

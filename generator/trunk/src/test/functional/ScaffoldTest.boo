@@ -4,7 +4,7 @@ import Generator
 import Generator.Extentions
 import NUnit.Framework
 
-[TestFixture, Ignore("TODO: do work from cmd line")]
+[TestFixture]
 class ScaffoldGeneratorTest(GeneratorTestCase):
 
 	[Test]
@@ -13,4 +13,4 @@ class ScaffoldGeneratorTest(GeneratorTestCase):
 
 	[Test]
 	def Generate():
-		Assert.AreEqual(0, Main(("scaffold", "Test")))
+		Assert.AreEqual(0, Main(("scaffold", "Test", "Wow")))

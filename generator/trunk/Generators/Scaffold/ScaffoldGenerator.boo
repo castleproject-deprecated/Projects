@@ -1,5 +1,3 @@
-import System.Reflection
-
 class ScaffoldGenerator(NamedGeneratorBase):
 	[Property(Area)] _area as string
 	[Property(Controller)] _controller as string
@@ -17,7 +15,7 @@ class ScaffoldGenerator(NamedGeneratorBase):
 			# it is plural of model name
 			_controller = _model.ToPlural()
 		
-		if string.IsNullOrEmpty(Area):
+		if Area == "":
 			Area = null
 			controllerPath = ControllersBasePath
 			controllerTestPath = ControllersTestsBasePath

@@ -11,6 +11,6 @@ class ControllerGeneratorTest(GeneratorTestCase):
 	def Usage():
 		Assert.AreEqual(-1, Main(("controller",)))
 
-	[Test, Ignore("TODO: do work from cmd line")]
+	[Test]
 	def Generate():
-		Assert.AreEqual(0, Main(("controller", "Test")))
+		Assert.AreEqual(0, Main(("controller", "SomeTest", "Index")))

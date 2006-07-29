@@ -12,7 +12,7 @@ class ControllerGenerator(NamedGeneratorBase):
 		Process('Test.cs', "${ControllersTestsBasePath}/${ClassName}ControllerTest.cs")
 		
 		MkDir("${ViewsBasePath}/layouts")
-		Process('Layout.vm', "${ViewsBasePath}/layouts/${FileName}.vm")
+		Process('layout.vm', "${ViewsBasePath}/layouts/${FileName}.vm")
 		
 		MkDir(ViewPath)
 		for a in Actions:
