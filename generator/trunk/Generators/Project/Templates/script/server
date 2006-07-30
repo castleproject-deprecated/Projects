@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-xsp2 --root public $*
+cd public
+xsp2 $*

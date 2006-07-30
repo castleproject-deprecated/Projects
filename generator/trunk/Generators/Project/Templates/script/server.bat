@@ -1,1 +1,3 @@
-@lib\castle\CassiniWebServer2.exe %CD%\public 8080
+@echo off
+cd public
+lib\castle\CassiniWebServer2.exe %CD% 8080

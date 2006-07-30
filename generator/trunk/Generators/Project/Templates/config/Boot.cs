@@ -29,12 +29,8 @@ namespace <%= ClassName %>
 		{
 			if (isInitialized) return;
 			
-			string basePath = new FileInfo(
-				Assembly.GetExecutingAssembly().Location).Directory.FullName;
-			
 			XmlConfigurationSource config = new XmlConfigurationSource(
-				string.Format("{0}/../../config/databases/{1}.xml", 
-				basePath,  database));
+				string.Format("../config/databases/{0}.xml", database));
 			if (!isWeb) {
 				config.ThreadScopeInfoImplementation = null;
 			}
