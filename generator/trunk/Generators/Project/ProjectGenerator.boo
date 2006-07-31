@@ -51,6 +51,8 @@ class ProjectGenerator(NamedGeneratorBase):
 		MkDir("${Name}/test/helpers")
 		MkDir("${Name}/test/models")
 		Process("test/models/ActiveRecordTestCase.cs", "${Name}/test/models/ActiveRecordTestCase.cs")
+		
+		print "Run 'nant setup' from the base directory to setup the environment"
 	
 	def Help():
 		return 'Generates a new MonoRail project'

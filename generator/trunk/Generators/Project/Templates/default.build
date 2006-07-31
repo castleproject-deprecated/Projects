@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <project name="<%= Name %>" default="build" xmlns="http://nant.sf.net/release/0.85-rc2/nant.xsd">
+	<!-- Directories, change these if you which to change project structure -->
 	<property name="dir.src.app" value="app" />
 	<property name="dir.src.test" value="test" />
 	<property name="dir.config" value="config" />
@@ -7,16 +8,20 @@
 	<property name="dir.lib" value="lib" />
 	<property name="dir.lib.castle" value="<%= '${' %>dir.lib}/castle" />
 	<property name="dir.lib.nunit" value="<%= '${' %>dir.lib}/nunit" />
+	<property name="dir.lib.nant" value="<%= '${' %>dir.lib}/nant" />
 	<property name="dir.lib.mysql" value="<%= '${' %>dir.lib}/mysql" />
-	<property name="dir.doc" value="doc" />
+	
+	<!--
+	Castle release properties. If you change one of these you should
+	run the setup target again to update the libs.
+	-->
+	<property name="castle.version" value="net-2.0" />
+	<property name="castle.url" value="http://www.castleproject.org/~ayende/CASTLE-627-<%= '${' %>castle.version}-2006-7-29-release.zip" />
+	
+	<loadtasks assembly="<%= '${' %>dir.lib.nant}/NAnt.Contrib.Tasks.dll" />
 	
 	<target name="clean" description="Delete all temp. files">
-        <delete>
-            <fileset>
-				<include name="<%= '${' %>dir.bin}/**" />
-				<!-- add other files to be cleaned here -->
-            </fileset>
-        </delete>
+        <delete dir="<%= '${' %>dir.bin}" />
     </target>
 
 	<target name="build" description="Compile all source files">
@@ -70,11 +75,24 @@
 	</target>
 		
 	<target name="setup" description="Setup the developement environment">
-		<gac-install>
-			<assemblies>
-				<include name="<%= '${' %>dir.lib}/Castle/net-1.1/Castle.MonoRail.TestSupport.dll" />
-			</assemblies>
-		</gac-install>
+		<!-- Installs castles -->
+		<mkdir dir="tmp" />
+		<get src="<%= '${' %>castle.url}" dest="tmp/castle.zip" />
+		<unzip zipfile="tmp/castle.zip" todir="tmp/castle" />
+		<mkdir dir="<%= '${' %>dir.lib.castle}" />
+		<copy todir="<%= '${' %>dir.lib.castle}">
+			<fileset basedir="tmp/castle/<%= '${' %>castle.version}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<delete dir="tmp" />
+		
+		<!-- Installs required libs in the GAC -->
+		<gac-install failonerror="false"> 
+			<assemblies> 
+				<include name="<%= '${' %>dir.lib.castle}/Castle.MonoRail.TestSupport.dll" /> 
+			</assemblies> 
+		</gac-install> 
 	</target>
 	
 </project>
