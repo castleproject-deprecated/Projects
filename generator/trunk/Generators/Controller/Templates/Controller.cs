@@ -1,14 +1,17 @@
 using System;
 using Castle.MonoRail.Framework;
 
-namespace <%= Namespace %> {
+namespace <%= Namespace %>
+{
 	/// <summary>
 	/// <%= Name %> controller.
 	/// </summary>
 	[Layout("<%= FileName %>")]
-	public class <%= ClassName %>Controller : ApplicationController	{
+	public class <%= ClassName %>Controller : ApplicationController
+	{
 		<% for action in Actions: %>
-		public void <%= action %>()	{
+		public void <%= action %>()
+		{
 			
 		}
 		

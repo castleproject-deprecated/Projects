@@ -1,4 +1,4 @@
-#set (title = "<%= Action %>")
+#set ($title = "<%= Action %>")
 
 <h1><%= ClassName %>#<%= Action %></h1>
 

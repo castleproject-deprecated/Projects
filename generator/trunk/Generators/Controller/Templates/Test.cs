@@ -5,10 +5,12 @@ namespace <%= TestsNamespace %> {
 	/// <%= ClassName %>Controller test case
 	/// </summary>
 	[TestFixture]
-	public class <%= ClassName %>ControllerTest : ControllerTestCase {
+	public class <%= ClassName %>ControllerTest : ControllerTestCase
+	{
 		<% for action in Actions: %>
 		[Test]
-		public void <%= action %>()	{
+		public void <%= action %>()
+		{
 			DoGet("<%= ClassName.ToLower() %>/<%= action.ToLower() %>.<%= Extension %>");
 			AssertSuccess();
 			
