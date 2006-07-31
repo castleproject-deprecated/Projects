@@ -9,7 +9,7 @@ namespace <%= ClassName %>.Tests.Models
 		[TestFixtureSetUp]
 		public virtual void TestFixtureSetUp()
 		{
-			Boot.InitializeActiveRecord("test");
+			Boot.InitializeActiveRecord("test", false);
 		}
 		
 		[SetUp]
