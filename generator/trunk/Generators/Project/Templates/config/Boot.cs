@@ -29,14 +29,18 @@ namespace <%= ClassName %>
 		{
 			if (isInitialized) return;
 			
-			XmlConfigurationSource config = new XmlConfigurationSource(
-				string.Format("../config/databases/{0}.xml", database));
-			if (!isWeb) {
-				config.ThreadScopeInfoImplementation = null;
+			XmlConfigurationSource config = null;
+			
+			if(isWeb)
+			{
+				config = new XmlConfigurationSource(
+					string.Format("../config/databases/{0}.xml", database));
 			}
-			
-			ActiveRecordStarter.Initialize(Assembly.GetExecutingAssembly(),	config);
-			
+			else
+			{
+				config = new XmlConfigurationSource(string.Format("../../config/databases/{0}.xml", database));
+ 				config.ThreadScopeInfoImplementation = null;	
+			}			
 			isInitialized = true;
 		}
 	}
