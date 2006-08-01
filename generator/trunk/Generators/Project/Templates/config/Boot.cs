@@ -40,7 +40,10 @@ namespace <%= ClassName %>
 			{
 				config = new XmlConfigurationSource(string.Format("../../config/databases/{0}.xml", database));
  				config.ThreadScopeInfoImplementation = null;	
-			}			
+			}
+			
+			ActiveRecordStarter.Initialize(Assembly.GetExecutingAssembly(),	config);
+				
 			isInitialized = true;
 		}
 	}
