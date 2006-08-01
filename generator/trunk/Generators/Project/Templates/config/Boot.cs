@@ -29,16 +29,14 @@ namespace <%= ClassName %>
 		{
 			if (isInitialized) return;
 			
-			XmlConfigurationSource config = null;
+			// Find the path to the project Assembly
+			string path = new FileInfo(new Uri(Assembly.GetExecutingAssembly().CodeBase).PathAndQuery).Directory.FullName;
 			
-			if(isWeb)
+			XmlConfigurationSource config = new XmlConfigurationSource(
+				string.Format("{0}/../../config/databases/{1}.xml", path, database));
+			
+			if (!isWeb)
 			{
-				config = new XmlConfigurationSource(
-					string.Format("../config/databases/{0}.xml", database));
-			}
-			else
-			{
-				config = new XmlConfigurationSource(string.Format("../../config/databases/{0}.xml", database));
  				config.ThreadScopeInfoImplementation = null;	
 			}
 			
