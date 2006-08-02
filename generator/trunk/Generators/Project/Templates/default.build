@@ -94,11 +94,11 @@
 				<include name="<%= '${' %>dir.db.migrations}/*.cs" />
 			</sources>
 			<references basedir="<%= '${' %>dir.lib}">
-				<include name="migrator/QIT.Management.Migrator.dll" />
+				<include name="Migrator/QIT.Management.Migrator.dll" />
 			</references>
 		</csc>
 		<!-- run migrations -->
-		<exec program="<%= '${' %>dir.lib}/migrator/QIT.Management.Migrator.MigratorConsole.exe" unless="<%= '${' %>version=='-1'}" verbose="true">
+		<exec program="<%= '${' %>dir.lib}/Migrator/QIT.Management.Migrator.MigratorConsole.exe" unless="<%= '${' %>version=='-1'}" verbose="true">
 			<arg value="-asm" />
 			<arg value="<%= '${' %>migration.output.dll}" />
 			<arg value="-constr" />
@@ -106,7 +106,7 @@
 			<arg value="-version" />
 			<arg value="<%= '${' %>version}" />
 		</exec>
-		<exec program="<%= '${' %>dir.lib}/migrator/QIT.Management.Migrator.MigratorConsole.exe" if="<%= '${' %>version=='-1'}" verbose="true">
+		<exec program="<%= '${' %>dir.lib}/Migrator/QIT.Management.Migrator.MigratorConsole.exe" if="<%= '${' %>version=='-1'}" verbose="true">
 			<arg value="-asm" />
 			<arg value="<%= '${' %>migration.output.dll}" />
 			<arg value="-constr" />
