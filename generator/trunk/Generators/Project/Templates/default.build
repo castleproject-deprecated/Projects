@@ -10,6 +10,10 @@
 	<property name="dir.lib.nunit" value="<%= '${' %>dir.lib}/nunit" />
 	<property name="dir.lib.nant" value="<%= '${' %>dir.lib}/nant" />
 	<property name="dir.lib.mysql" value="<%= '${' %>dir.lib}/mysql" />
+	<property name="dir.lib.npgsql" value="<%= '${' %>dir.lib}/npgsql/ms1.1" if="<%= '${' %>platform::is-win32()}" />
+	<property name="dir.lib.npgsql" value="<%= '${' %>dir.lib}/npgsql/mono" if="<%= '${' %>platform::is-unix()}" />
+	<property name="dir.db" value="db" />
+	<property name="dir.db.migrations" value="<%= '${' %>dir.db}/migrations" />
 	
 	<!--
 	Castle release properties. If you change one of these you should
@@ -57,6 +61,7 @@
 				<include name="Nullables.dll" />
 				<include name="NVelocity.dll" />
 				<include name="MySql.Data.dll" />
+				<include name="Npgsql.dll" />
 				<!-- add other references here -->
 			</references>
 		</csc>
@@ -71,6 +76,41 @@
 		</nunit2>
 		<exec program="nunit-console" if="<%= '${' %>platform::is-unix()}">
 			<arg line="<%= '${' %>dir.bin}/<%= '${' %>project::get-name()}.dll /nologo" />
+		</exec>
+	</target>
+	
+	<target name="migrate" description="run database migrations - optional args: environment(like development,test, defaults to dev), version">
+		<!-- get connection string -->
+		<property name="environment" value="development" unless="<%= '${' %>property::exists('environment')}" />
+		<property name="version" value="-1" unless="<%= '${' %>property::exists('version')}" />
+		<property name="migration.output.dll" value="<%= '${' %>dir.db}/<%= '${' %>project::get-name()}.Migrations.dll" />
+		<xmlpeek file="<%= '${' %>dir.config}/databases/<%= '${' %>environment}.xml"
+			xpath="/activerecord/config/add[@key='hibernate.connection.connection_string']/@value"
+			property="connection.string" />
+		<echo message="connection string is: <%= '${' %>connection.string}" />
+		<!-- compile migrations -->
+		<csc target="library" output="<%= '${' %>migration.output.dll}">
+			<sources>
+				<include name="<%= '${' %>dir.db.migrations}/*.cs" />
+			</sources>
+			<references basedir="<%= '${' %>dir.lib}">
+				<include name="migrator/QIT.Management.Migrator.dll" />
+			</references>
+		</csc>
+		<!-- run migrations -->
+		<exec program="<%= '${' %>dir.lib}/migrator/QIT.Management.Migrator.MigratorConsole.exe" unless="<%= '${' %>version=='-1'}" verbose="true">
+			<arg value="-asm" />
+			<arg value="<%= '${' %>migration.output.dll}" />
+			<arg value="-constr" />
+			<arg value="<%= '${' %>connection.string}" />
+			<arg value="-version" />
+			<arg value="<%= '${' %>version}" />
+		</exec>
+		<exec program="<%= '${' %>dir.lib}/migrator/QIT.Management.Migrator.MigratorConsole.exe" if="<%= '${' %>version=='-1'}" verbose="true">
+			<arg value="-asm" />
+			<arg value="<%= '${' %>migration.output.dll}" />
+			<arg value="-constr" />
+			<arg value="<%= '${' %>connection.string}" />
 		</exec>
 	</target>
 		

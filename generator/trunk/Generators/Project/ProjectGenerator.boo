@@ -30,6 +30,9 @@ class ProjectGenerator(NamedGeneratorBase):
 		Process("Config.boo", "${Name}/lib/generator/Generators/Config.boo")
 		
 		MkDir("${Name}/log")
+
+		MkDir("${Name}/db")
+		MkDir("${Name}/db/migrations")
 		
 		MkDir("${Name}/public/content")
 		CopyDir("public/content", "${Name}/public/content")

@@ -11,12 +11,12 @@ namespace <%= Namespace %>
 	{
 		public override void Up()
 		{
-			// TODO Code!
+			base.Database.AddTable("<%= ClassName %>", new Column[] { new Column("id", typeof(int), ColumnProperties.PrimaryKeyWithIdentity) } );
 		}
 		
 		public override void Down()
 		{
-			// TODO Code!
+			base.Database.RemoveTable("<%= ClassName %>");
 		}
 		
 	}
