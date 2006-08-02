@@ -10,10 +10,11 @@
 	<property name="dir.lib.nunit" value="<%= '${' %>dir.lib}/nunit" />
 	<property name="dir.lib.nant" value="<%= '${' %>dir.lib}/nant" />
 	<property name="dir.lib.mysql" value="<%= '${' %>dir.lib}/mysql" />
-	<property name="dir.lib.npgsql" value="<%= '${' %>dir.lib}/npgsql/ms1.1" if="<%= '${' %>platform::is-win32()}" />
-	<property name="dir.lib.npgsql" value="<%= '${' %>dir.lib}/npgsql/mono" if="<%= '${' %>platform::is-unix()}" />
+	<property name="dir.lib.npgsql" value="<%= '${' %>dir.lib}/npgsql/<%= '${' %>framework::get-target-framework()}" />
 	<property name="dir.db" value="db" />
 	<property name="dir.db.migrations" value="<%= '${' %>dir.db}/migrations" />
+	<property name="shell.script.extension" value=".bat" if="<%= '${' %>platform::is-win32()}" />
+	<property name="shell.script.extension" value="" if="<%= '${' %>platform::is-unix()}" />
 	
 	<!--
 	Castle release properties. If you change one of these you should
@@ -34,6 +35,7 @@
 			<fileset>
 				<include name="<%= '${' %>dir.lib.castle}/**" />
 				<include name="<%= '${' %>dir.lib.mysql}/**" />
+				<include name="<%= '${' %>dir.lib.npgsql}/**" />
 				<include name="<%= '${' %>dir.lib.nunit}/nunit.framework.dll" />
 			</fileset>
 		</copy>
@@ -87,7 +89,7 @@
 		<xmlpeek file="<%= '${' %>dir.config}/databases/<%= '${' %>environment}.xml"
 			xpath="/activerecord/config/add[@key='hibernate.connection.connection_string']/@value"
 			property="connection.string" />
-		<echo message="connection string is: <%= '${' %>connection.string}" />
+		<!--echo message="connection string is: <%= '${' %>connection.string}" /-->
 		<!-- compile migrations -->
 		<csc target="library" output="<%= '${' %>migration.output.dll}">
 			<sources>
@@ -98,7 +100,7 @@
 			</references>
 		</csc>
 		<!-- run migrations -->
-		<exec program="<%= '${' %>dir.lib}/Migrator/QIT.Management.Migrator.MigratorConsole.exe" unless="<%= '${' %>version=='-1'}" verbose="true">
+		<exec program="script/migrator<%= '${' %>shell.script.extension}" unless="<%= '${' %>version=='-1'}" verbose="true">
 			<arg value="-asm" />
 			<arg value="<%= '${' %>migration.output.dll}" />
 			<arg value="-constr" />
@@ -106,7 +108,7 @@
 			<arg value="-version" />
 			<arg value="<%= '${' %>version}" />
 		</exec>
-		<exec program="<%= '${' %>dir.lib}/Migrator/QIT.Management.Migrator.MigratorConsole.exe" if="<%= '${' %>version=='-1'}" verbose="true">
+		<exec program="script/migrator<%= '${' %>shell.script.extension}" if="<%= '${' %>version=='-1'}" verbose="true">
 			<arg value="-asm" />
 			<arg value="<%= '${' %>migration.output.dll}" />
 			<arg value="-constr" />

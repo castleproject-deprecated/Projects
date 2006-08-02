@@ -51,6 +51,8 @@ class ProjectGenerator(NamedGeneratorBase):
 		Copy("script/generate.bat", "${Name}/script")
 		Copy("script/server", "${Name}/script")
 		Copy("script/server.bat", "${Name}/script")
+		Copy("script/migrator", "${Name}/script")
+		Copy("script/migrator.bat", "${Name}/script")
 		
 		MkDir("${Name}/test/controllers")
 		Process("test/controllers/ControllerTestCase.cs", "${Name}/test/controllers/ControllerTestCase.cs")
