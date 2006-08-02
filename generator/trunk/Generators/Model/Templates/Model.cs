@@ -8,7 +8,7 @@ namespace <%= Namespace %>
 	/// An instance of this class represents a <%= Name %>.
 	/// </summary>
 	[ActiveRecord]
-	public class <%= ClassName %> : ActiveRecordValidationBase<%= "<" + ClassName + ">" %>
+	public class <%= ClassName %> : ActiveRecordValidationBase<% if UseGeneric: %><%= "<" + ClassName + ">" %><% end %>
 	{
 		#region Fields
 		private int _id;
@@ -31,6 +31,20 @@ namespace <%= Namespace %>
 		}
 		<% end %>
 		#endregion
+		
+		<% if not UseGeneric: %>
+		#region Finders
+		public static <%= ClassName %>[] FindAll()
+		{
+			return ((<%= ClassName %>[]) (ActiveRecordBase.FindAll(typeof(<%= ClassName %>))));
+		}
+		
+		public static <%= ClassName %> Find(int id)
+		{
+			return ((<%= ClassName %>) (ActiveRecordBase.FindByPrimaryKey(typeof(<%= ClassName %>), id)));
+		}
+		#endregion
+		<% end %>
 	}
 
 }

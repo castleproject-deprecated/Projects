@@ -1,6 +1,9 @@
 import System.IO
 
 class ProjectGenerator(NamedGeneratorBase):
+	[Property(DotNet1), Option('net-1.1', '1', 'Set the target framework to .NET 1.1, Mono 1.0. Default is .NET 2.0, Mono 2.0')]
+	_dotNet11 as bool
+	
 	def Run():
 		MkDir(Name)
 		
@@ -62,3 +65,10 @@ class ProjectGenerator(NamedGeneratorBase):
 		
 	def Usage():
 		return "ProjectName"
+
+	TargetFramework:
+		get:
+			if DotNet1:
+				return "net-1.1"
+			else:
+				return "net-2.0"

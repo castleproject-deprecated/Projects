@@ -19,7 +19,7 @@
 	Castle release properties. If you change one of these you should
 	run the setup target again to update the libs.
 	-->
-	<property name="castle.version" value="net-2.0" />
+	<property name="castle.version" value="<%= TargetFramework %>" />
 	<property name="castle.url" value="http://www.castleproject.org/~ayende/CASTLE-627-<%= '${' %>castle.version}-2006-7-29-release.zip" />
 	
 	<loadtasks assembly="<%= '${' %>dir.lib.nant}/NAnt.Contrib.Tasks.dll" />

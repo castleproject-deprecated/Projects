@@ -6,6 +6,12 @@ accessible from the generators.
 class Config:
 	public static BaseNamespace = "<%= ClassName %>"
 	
+	<% if DotNet1: %>
+	public static Framework = "net-1.1"
+	<% else: %>
+	public static Framework = "net-2.0"
+	<% end %>
+	
 	# Paths to your models (your ActiveRecord classes)
 	public static ModelsBasePath = "app/models"
 	public static ModelsNamespace = "<%= '${' %>BaseNamespace}.Models"

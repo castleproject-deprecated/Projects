@@ -3,7 +3,7 @@ namespace Generator.Tests.Unit
 import Generator.Extentions
 import NUnit.Framework
 
-[TestFixture]
+[TestFixture, Category("Unit")]
 class ExtentionsTest:
 
 	[Test]

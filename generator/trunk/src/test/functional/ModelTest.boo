@@ -4,7 +4,7 @@ import Generator
 import Generator.Extentions
 import NUnit.Framework
 
-[TestFixture]
+[TestFixture, Category("Functional")]
 class ModelGeneratorTest(GeneratorTestCase):
 
 	[Test]

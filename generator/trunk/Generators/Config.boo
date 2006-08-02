@@ -6,6 +6,8 @@ accessible from the generators.
 class Config:
 	public static BaseNamespace = "TestProject"
 	
+	public static Framework = "net-2.0"
+	
 	# Paths to your models (your ActiveRecord classes)
 	public static ModelsBasePath = "app/models"
 	public static ModelsNamespace = "${BaseNamespace}.Models"

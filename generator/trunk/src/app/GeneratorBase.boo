@@ -9,25 +9,28 @@ abstract class GeneratorBase:
 	[Property(Argv)]			_argv as (string)
 	[Property(ScriptPath)]		_scriptPath as string
 	[Property(TemplatesPath)]	_templatesPath as string
-	[Property(Force)]			_force as bool
+	[Property(Force), Option('force', 'f', 'Overwrite all existing files')]
+	_force as bool
 	
 	_overwiteAll as bool = false
+	_parser as ArgumentParser
 	
 	def constructor():
 		_scriptPath = Path.Combine(ScriptBasePath, GeneratorName)
 		_templatesPath = "${ScriptPath}/Templates"
+		_parser = ArgumentParser(self)
 	
 	# This method is called when the generator is created
 	# it can be used to initialize arguments
 	virtual def Init(argv as (string)):
-		_argv = argv
+		_argv = _parser.SetArguments(argv)
 	
 	# Main method to run the generator
 	abstract def Run():
 		pass
 	
 	virtual def Usage() as string:
-		return '[arguments]'
+		return _parser.GetUsage()
 		
 	virtual def Help() as string:
 		return 'No help yet, maybe tomorrow!'
@@ -57,13 +60,12 @@ abstract class GeneratorBase:
 			if keep:
 				Log('exists', cleanToFile)
 				return
-			
-			if file.Length == result.Length:
-				if Force:
-					Log('replace', cleanToFile)
-				else:
-					Log('same', cleanToFile)
-					return
+				
+			if Force:
+				Log('replace', cleanToFile)
+			elif file.Length == result.Length:
+				Log('same', cleanToFile)
+				return
 			else:
 				if LogAndAskForOverwrite(cleanToFile):
 					Log('replace', cleanToFile)
@@ -71,7 +73,6 @@ abstract class GeneratorBase:
 					return
 		else:
 			Log('create', cleanToFile)
-		
 		
 		using w = StreamWriter(cleanToFile):
 			w.Write(result)
@@ -82,7 +83,7 @@ abstract class GeneratorBase:
 		cleanToFile = Path.Combine(cleanToPath, FileInfo(cleanFile).Name)
 		
 		if File.Exists(cleanToFile):
-			if LogAndAskForOverwrite(cleanToFile):
+			if Force or LogAndAskForOverwrite(cleanToFile):
 				Log('replace', cleanToFile)
 			else:
 				return
@@ -112,7 +113,10 @@ abstract class GeneratorBase:
 	
 	#region Helper methods
 	virtual def PrintUsage():
-		print "Usage: generate ${GeneratorName} ${Usage()}"
+		print "usage: generate ${GeneratorName} ${Usage()}"
+		print
+		print _parser.GetHelp()
+		print
 		print Help()
 
 	protected def Log(action as string, path as string):

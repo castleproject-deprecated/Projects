@@ -25,5 +25,7 @@ class ModelGenerator(NamedGeneratorBase):
 		get:
 			return ModelsTestsNamespace
 
-
+	UseGeneric as bool:
+		get:
+			return Framework == "net-2.0"
 

@@ -4,7 +4,7 @@ import System.IO
 import NUnit.Framework
 import Generator
 
-[TestFixture]
+[TestFixture, Category("Unit")]
 class GeneratorTest:
 	_generator as TestGenerator
 	

@@ -3,13 +3,9 @@ namespace Generator
 import Generator.Extentions
 
 abstract class NamedGeneratorBase(GeneratorBase):
-	[Property(Name)]
+	[Property(Name), Argument("The name of the element to be generated")]
 	_name as string
 	
-	def Init(argv as (string)):
-		_name = argv[0]
-		super.Init(argv[1:])
-		
 	virtual def Usage() as string:
 		return "${GeneratorName}Name".ToHumanName()
 	
