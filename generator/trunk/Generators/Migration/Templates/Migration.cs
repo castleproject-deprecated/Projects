@@ -4,19 +4,21 @@ using QIT.Management.Migrator;
 namespace <%= Namespace %>
 {
 	/// <summary>
-	/// Migration <%= ClassName %>.
+	/// <%= HumanName %> to the database
 	/// </summary>
 	[Migration(<%= Version %>)]
 	public class <%= ClassName %> : Migration
 	{
 		public override void Up()
 		{
-			base.Database.AddTable("<%= ClassName %>", new Column[] { new Column("id", typeof(int), ColumnProperties.PrimaryKeyWithIdentity) } );
+			Database.AddTable("<%= ClassName %>",
+							  new Column("id", typeof(int), ColumnProperties.PrimaryKeyWithIdentity)
+							  );
 		}
 		
 		public override void Down()
 		{
-			base.Database.RemoveTable("<%= ClassName %>");
+			Database.RemoveTable("<%= ClassName %>");
 		}
 		
 	}

@@ -2,7 +2,9 @@ import System.IO
 
 class MigrationGenerator(NamedGeneratorBase):
 	def Run():
+		MkDir(MigrationsBasePath)
 		sVersion = string.Format("{0:000}", Version)
+		
 		Process('Migration.cs', "${MigrationsBasePath}/${sVersion}_${ClassName}.cs")
 	
 	def Help() as string:
@@ -14,7 +16,7 @@ class MigrationGenerator(NamedGeneratorBase):
 
 	LastVersion as int:
 		get:
-			max = 1
+			max = 0
 			for file in Directory.GetFiles("${MigrationsBasePath}"):
 				info = FileInfo(file)
 				if info.Name.Substring(3, 1) == '_':
