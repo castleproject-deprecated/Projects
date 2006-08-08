@@ -15,7 +15,7 @@ class ScaffoldGenerator(NamedGeneratorBase):
 			# it is plural of model name
 			_controller = _model.ToPlural()
 		
-		if Area == "":
+		if Area == "" or Area == null:
 			Area = null
 			controllerPath = ControllersBasePath
 			controllerTestPath = ControllersTestsBasePath
@@ -74,13 +74,13 @@ class ScaffoldGenerator(NamedGeneratorBase):
 	Namespace:
 		get:
 			if Area != null:
-				return "${ControllersNamespace}.${Area}"
+				return "${ControllersNamespace}.${Area.ToClassName()}"
 			return ControllersNamespace
 		
 	TestsNamespace:
 		get:
 			if Area != null:
-				return "${ControllersTestsNamespace}.${Area}"
+				return "${ControllersTestsNamespace}.${Area.ToClassName()}"
 			return ControllersTestsNamespace
 	
 	ApplicationControllerNamespace:
