@@ -26,7 +26,7 @@ class ScaffoldGenerator(NamedGeneratorBase):
 			viewPath = "${ViewsBasePath}/${Area.ToLower()}/${ControllerFileName}"
 			
 		MkDir(ControllersBasePath)
-      Process('ApplicationController.cs', "${ControllersBasePath}/ApplicationController.cs", true)	
+		Process('ApplicationController.cs', "${ControllersBasePath}/ApplicationController.cs", true)	
 
 		MkDir(controllerPath)
 		Process('Controller.cs', "${controllerPath}/${ControllerName}Controller.cs")
