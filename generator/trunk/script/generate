@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-mono bin/generate.exe $*
+mono @CD@/bin/generate.exe $*

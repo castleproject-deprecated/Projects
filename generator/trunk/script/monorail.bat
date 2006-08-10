@@ -1,1 +1,2 @@
-@bin\generate.exe project %*
+@echo off
+@CD@\bin\generate.exe project %*

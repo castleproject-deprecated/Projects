@@ -6,6 +6,15 @@ This is a work in progress and considered in early alpha stage so use at your ow
 
 Consult the project home page for more information (http://www.castleproject.org/index.php/Generator).
 
+To install
+==========
+To install the generate and monorail command line script, run:
+    nant install
+Under unix:
+	sudo nant install
+On Windows, monorail.bat and generate.bat will be copied to your c:\Windows directory. On Unix, the monorail and generate bash scripts will be copied to /usr/bin. You can change this directory by setting the 'to' property, like this:
+    nant install -D:to=/opt/local/bin
+Now the generate and monorail scripts are accessible from everywhere! Just like Jesus!
 
 To compile
 ==========
@@ -19,7 +28,7 @@ To run automated tests, from the base directory, run:
 
 To run
 ======
-To run the generator, from the base directory, run:
-    mono bin/generate.exe
-or, un Windows:
-    bin\generate.exe
+Afther installation, simply run:
+   generate
+Or the MonoRail project generator shortcut:
+   monorail MyMonoRailProject
