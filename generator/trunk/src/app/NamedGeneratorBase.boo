@@ -3,11 +3,8 @@ namespace Generator
 import Generator.Extentions
 
 abstract class NamedGeneratorBase(GeneratorBase):
-	[Property(Name), Argument("The name of the element to be generated")]
-	_name as string
-	
-	virtual def Usage() as string:
-		return "${GeneratorName}Name".ToHumanName()
+	[Property(Name), Argument('The name of the thing to generate')]
+	private _name as string
 	
 	virtual VarName:
 		get:

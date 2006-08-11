@@ -39,7 +39,7 @@ class GeneratorFactory:
 		return 0
 	
 	private static def ListGenerators():
-		print 'Usage: generate GeneratorName [Arguments...]'
+		print 'usage: generate GeneratorName [Arguments...]'
 		print
 		print 'Available generators:'
 		for d in Directory.GetDirectories(ScriptBasePath):

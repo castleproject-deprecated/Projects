@@ -9,10 +9,16 @@ abstract class GeneratorBase:
 	[Property(Argv)]			_argv as (string)
 	[Property(ScriptPath)]		_scriptPath as string
 	[Property(TemplatesPath)]	_templatesPath as string
-	[Property(Force), Option('force', 'f', 'Overwrite all existing files')]
-	_force as bool
 	
+	[Option('replace', 'r', 'Overwrite existing files')]
 	_overwiteAll as bool = false
+	[Option('force', 'f', 'Force overwrite of files that look the same')]
+	_force as bool
+	[Option('silent', 's', 'Display not output')]
+	_silent as bool
+	[Option('debug', 'd', 'Set debug mode')]
+	_debug as string
+		
 	_parser as ArgumentParser
 	
 	def constructor():
@@ -61,7 +67,7 @@ abstract class GeneratorBase:
 				Log('exists', cleanToFile)
 				return
 				
-			if Force:
+			if _force:
 				Log('replace', cleanToFile)
 			elif file.Length == result.Length:
 				Log('same', cleanToFile)
@@ -83,7 +89,7 @@ abstract class GeneratorBase:
 		cleanToFile = Path.Combine(cleanToPath, FileInfo(cleanFile).Name)
 		
 		if File.Exists(cleanToFile):
-			if Force or LogAndAskForOverwrite(cleanToFile):
+			if _force or LogAndAskForOverwrite(cleanToFile):
 				Log('replace', cleanToFile)
 			else:
 				return
@@ -120,7 +126,12 @@ abstract class GeneratorBase:
 		print Help()
 
 	protected def Log(action as string, path as string):
-		print action.PadLeft(10), path
+		if not _silent:
+			print action.PadLeft(10), path
+			
+	protected def Debug(msg as string):
+		if _debug and not _silent:
+			print msg
 	
 	private def CollectVariables() as Hash:
 		props = {}
