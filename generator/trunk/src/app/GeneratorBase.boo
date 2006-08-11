@@ -17,7 +17,7 @@ abstract class GeneratorBase:
 	[Option('silent', 's', 'Display not output')]
 	_silent as bool
 	[Option('debug', 'd', 'Set debug mode')]
-	_debug as string
+	_debug as bool
 		
 	_parser as ArgumentParser
 	
