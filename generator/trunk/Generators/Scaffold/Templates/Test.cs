@@ -10,10 +10,6 @@ namespace <%= TestsNamespace %>
 	[TestFixture]
 	public class <%= ControllerName %>ControllerTest : ControllerTestCase
 	{		
-		protected override string GetPhysicalDir()
-		{
-			return "..\\";
-		}
 		
 		[Test]
 		public void Index()
