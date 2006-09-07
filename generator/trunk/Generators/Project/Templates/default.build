@@ -21,7 +21,7 @@
 	run the setup target again to update the libs.
 	-->
 	<property name="castle.version" value="<%= TargetFramework %>" />
-	<property name="castle.url" value="http://www.castleproject.org/~ayende/CASTLE-681-<%= '${' %>castle.version}-2006-8-11-release.zip" />
+	<property name="castle.url" value="http://www.castleproject.org/~ayende/CASTLE-760-<%= '${' %>castle.version}-debug.zip" />
 	
 	<loadtasks assembly="<%= '${' %>dir.lib.nant}/NAnt.Contrib.Tasks.dll" />
 	

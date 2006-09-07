@@ -1,0 +1,213 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4D4F4A99-8E47-45A1-88B5-8A97AF9541BE}</ProjectGuid>
+    <RootNamespace>Spinoff.Management.Web</RootNamespace>
+    <AssemblyName>Spinoff.Management.Web</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RunPostBuildEvent>OnSuccessfulBuild</RunPostBuildEvent>
+    <PostBuildEvent>copy $(MSBuildProjectDirectory)\Config\$(Configuration).config $(MSBuildProjectDirectory)\Web.config</PostBuildEvent>
+    <NoConfig>false</NoConfig>
+    <OutputPath>bin\</OutputPath>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+    <StartProgram>..\SpinoffMgnt.sln</StartProgram>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>true</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Test|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'CCNET|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugType>Full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugType>None</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Test' ">
+    <DebugType>None</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'CCNET' ">
+    <DebugType>None</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="NVelocity">
+      <HintPath>..\..\lib\Castle\net-2.0\NVelocity.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.ActiveRecord">
+      <HintPath>..\..\lib\Castle\net-2.0\Castle.ActiveRecord.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.ActiveRecordScaffold">
+      <HintPath>..\..\lib\Castle\net-2.0\Castle.MonoRail.ActiveRecordScaffold.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.ActiveRecordSupport">
+      <HintPath>..\..\lib\Castle\net-2.0\Castle.MonoRail.ActiveRecordSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.Framework">
+      <HintPath>..\..\lib\Castle\net-2.0\Castle.MonoRail.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.Framework.Views.NVelocity">
+      <HintPath>..\..\lib\Castle\net-2.0\Castle.MonoRail.Framework.Views.NVelocity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="NHibernate">
+      <HintPath>..\..\lib\Castle\net-2.0\NHibernate.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Castle.Components.Common.TemplateEngine.NVelocityTemplateEngine">
+      <HintPath>..\..\lib\Castle\net-2.0\Castle.Components.Common.TemplateEngine.NVelocityTemplateEngine.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Nullables.NHibernate">
+      <HintPath>..\..\lib\Castle\net-2.0\Nullables.NHibernate.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="anrControls.Markdown.NET">
+      <HintPath>..\..\lib\Castle\net-2.0\anrControls.Markdown.NET.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Castle.Components.Binder">
+      <HintPath>..\..\lib\Castle\net-2.0\Castle.Components.Binder.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\lib\Castle\net-2.0\Castle.Core.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <None Include="Config\Debug.config" />
+    <None Include="Config\Release.config" />
+    <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PreferencesController.cs" />
+    <Compile Include="Helpers\TextHelper.cs" />
+    <None Include="Views\Home\About.vm" />
+    <None Include="Views\Home\Index.vm" />
+    <None Include="Views\Layouts\Default.vm" />
+    <Compile Include="Components\Menu.cs" />
+    <Compile Include="Filters\AuthentificationFilter.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Helpers\FormTagHelper.cs" />
+    <Compile Include="Helpers\ArHelper.cs" />
+    <Compile Include="Controllers\AuditsController.cs" />
+    <Compile Include="Helpers\ListHelper.cs" />
+    <Compile Include="Utils\DataBinder.cs" />
+    <Compile Include="Helpers\LocaleHelper.cs" />
+    <Compile Include="Helpers\HelperBase.cs" />
+    <Compile Include="Helpers\DateHelper.cs" />
+    <Compile Include="Controllers\ListsController.cs" />
+    <EmbeddedResource Include="Resources\Audit.en.resx" />
+    <EmbeddedResource Include="Resources\Audit.fr.resx" />
+    <EmbeddedResource Include="Resources\Global.en.resx" />
+    <EmbeddedResource Include="Resources\Global.fr.resx" />
+    <Compile Include="Helpers\ResourcesHelper.cs" />
+    <Compile Include="Helpers\DebugHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="Index.htm" />
+    <Content Include="Content\Css\Common.css" />
+    <Content Include="Content\Css\Sections.css" />
+    <Content Include="Content\Images\back.gif" />
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{6B55ABDF-BB28-4E3F-AED4-17BB503F1422}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <Folder Include="Filters" />
+    <Folder Include="Components" />
+    <Folder Include="Views\Components" />
+    <Folder Include="Views\Components\Menu" />
+    <Content Include="Views\Components\Menu\Default.vm" />
+    <Folder Include="Views\Login" />
+    <Content Include="Views\Login\Login.vm" />
+    <Content Include="Views\Layouts\Basic.vm" />
+    <Content Include="Content\Css\Form.css" />
+    <Folder Include="Content\Javascripts" />
+    <Content Include="Views\Layouts\Scaffold.vm" />
+    <Folder Include="Views\Audits" />
+    <Content Include="Views\Audits\List.vm" />
+    <Content Include="Views\Audits\New.vm" />
+    <Content Include="Views\Audits\_Form.vm" />
+    <Folder Include="Views\Rescues" />
+    <Content Include="Content\Images\header.jpg" />
+    <Content Include="Content\Images\logo.gif" />
+    <Content Include="Views\Layouts\_Header.vm" />
+    <Content Include="Views\Layouts\_Footer.vm" />
+    <Content Include="Content\Javascripts\builder.js" />
+    <Content Include="Content\Javascripts\controls.js" />
+    <Content Include="Content\Javascripts\dragdrop.js" />
+    <Content Include="Content\Javascripts\effects.js" />
+    <Content Include="Content\Javascripts\prototype.js" />
+    <Content Include="Content\Javascripts\scriptaculous.js" />
+    <Content Include="Content\Javascripts\slider.js" />
+    <Folder Include="Utils" />
+    <Content Include="Views\Home\Menu.vm" />
+    <Content Include="Views\Layouts\_Messages.vm" />
+    <Content Include="Content\Javascripts\inputs.js" />
+    <Content Include="Views\Audits\Menu.vm" />
+    <Content Include="Views\Rescues\General.vm" />
+    <Content Include="Views\Audits\_History.vm" />
+    <Content Include="Views\Audits\View.vm" />
+    <Content Include="Content\Javascripts\dynamicListFunctions.js" />
+    <Folder Include="Views\Lists" />
+    <Content Include="Views\Lists\_options.vm" />
+    <Content Include="Content\Images\spinner.gif" />
+    <Content Include="Content\Images\delete.gif" />
+    <Content Include="Content\Images\modify.gif" />
+    <Content Include="Content\Images\plus.gif" />
+    <Content Include="Content\Javascripts\functions.js" />
+    <Folder Include="Resources" />
+    <Content Include="Views\Audits\NewFor.vm" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>
