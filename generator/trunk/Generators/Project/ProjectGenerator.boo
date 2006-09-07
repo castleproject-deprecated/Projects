@@ -2,8 +2,10 @@ import System
 import System.IO
 
 class ProjectGenerator(NamedGeneratorBase):
-	[Property(DotNet1), Option('net-1.1', '1', 'Set the target framework to .NET 1.1, Mono 1.0. Default is .NET 2.0, Mono 2.0')]
+	[Property(DotNet1), Option('net-1.1', '1', 'Set the target framework to .NET 1.1/Mono 1.0. (Default 2.0)')]
 	_dotNet11 as bool
+	[Property(VSFiles), Option('vs', 'v', 'Generates Visual Studio project files [BETA]')]
+	_vsFiles as bool
 	
 	[Property(AppGuid)] _appGuid = Guid.NewGuid()
 	[Property(TestGuid)] _testGuid = Guid.NewGuid()
@@ -64,11 +66,12 @@ class ProjectGenerator(NamedGeneratorBase):
 		MkDir("${Name}/test/models")
 		Process("test/models/ActiveRecordTestCase.cs", "${Name}/test/models/ActiveRecordTestCase.cs")
 		
-		vsVersion = '2005'
-		vsVersion = '2003' if DotNet1
-		Process("vs/${vsVersion}/app.csproj", "${Name}/app/app.csproj")
-		Process("vs/${vsVersion}/test.csproj", "${Name}/test/test.csproj")
-		Process("vs/${vsVersion}/solution.sln", "${Name}/${Name}.sln")
+		if VSFiles:
+			vsVersion = '2005'
+			vsVersion = '2003' if DotNet1
+			Process("vs/${vsVersion}/app.csproj", "${Name}/app/app.csproj")
+			Process("vs/${vsVersion}/test.csproj", "${Name}/test/test.csproj")
+			Process("vs/${vsVersion}/solution.sln", "${Name}/${Name}.sln")
 		
 		print "Run 'nant setup' from the base directory to setup the environment"
 	
