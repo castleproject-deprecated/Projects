@@ -28,7 +28,7 @@
     </UpgradeBackupLocation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>public\bin</OutputPath>
+    <OutputPath>..\public\bin</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -51,7 +51,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>public\bin\</OutputPath>
+    <OutputPath>..\public\bin\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -78,9 +78,9 @@
       <Name>Nunit.Framework.dll</Name>
       <HintPath>..\lib\nunit\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Model.Dll">
-      <Name>Castle.Model.Dll</Name>
-      <HintPath>..\lib\castle\Castle.Model.dll</HintPath>
+    <Reference Include="Castle.Core.dll">
+      <Name>Castle.Core.dll</Name>
+      <HintPath>..\lib\castle\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.ActiveRecord.dll">
       <Name>Castle.ActiveRecord.dll</Name>
@@ -137,6 +137,16 @@
     <Reference Include="MySql.Data.dll">
       <Name>MySql.Data.dll</Name>
       <HintPath>..\lib\mysql\MySql.Data.dll</HintPath>
+    </Reference>
+	<Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
     </Reference>
   </ItemGroup>
   <ItemGroup>

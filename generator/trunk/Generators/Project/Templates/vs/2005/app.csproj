@@ -29,7 +29,7 @@
     </UpgradeBackupLocation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>public\bin\</OutputPath>
+    <OutputPath>..\public\bin\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -52,7 +52,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>public\bin\</OutputPath>
+    <OutputPath>..\public\bin\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -75,13 +75,9 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework.dll">
-      <Name>Nunit.Framework</Name>
-      <HintPath>..\lib\nunit\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Castle.Model.Dll">
-      <Name>Castle.Model.Dll</Name>
-      <HintPath>..\lib\castle\Castle.Model.Dll</HintPath>
+    <Reference Include="Castle.Core.dll">
+      <Name>Castle.Core.Dll</Name>
+      <HintPath>..\lib\castle\Castle.Core.Dll</HintPath>
     </Reference>
     <Reference Include="Castle.ActiveRecord.dll">
       <Name>Castle.ActiveRecord.dll</Name>
@@ -111,10 +107,6 @@
       <Name>Castle.Components.Common.EmailSender.SmtpEmailSender.dll</Name>
       <HintPath>..\lib\castle\Castle.Components.Common.EmailSender.SmtpEmailSender.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.MonoRail.TestSupport.dll">
-      <Name>Castle.MonoRail.TestSupport.dll</Name>
-      <HintPath>..\lib\castle\Castle.MonoRail.TestSupport.dll</HintPath>
-    </Reference>
     <Reference Include="log4net.dll">
       <Name>log4net.dll</Name>
       <HintPath>..\lib\castle\log4net.dll</HintPath>
@@ -138,10 +130,6 @@
     <Reference Include="MySql.Data.dll">
       <Name>MySql.Data.dll</Name>
       <HintPath>..\lib\mysql\MySql.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Npgsql.dll">
-      <Name>Npgsql.dll</Name>
-      <HintPath>..\lib\Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
