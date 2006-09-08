@@ -1,90 +1,181 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid><%= AppGuid %></ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{<%= AppGuid %>}</ProjectGuid>
-    <RootNamespace><%= ClassName %></RootNamespace>
-    <AssemblyName><%= ClassName %></AssemblyName>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName><%= Name %></AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
     <OutputType>Library</OutputType>
-    <NoConfig>false</NoConfig>
-    <OutputPath>public\bin\</OutputPath>
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <FileAlignment>4096</FileAlignment>
+    <RootNamespace>
+    </RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <NoStdLib>false</NoStdLib>
-    <WarningLevel>4</WarningLevel>
-    <Optimize>false</Optimize>
+    <OutputPath>public\bin\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <NoStdLib>false</NoStdLib>
-    <WarningLevel>4</WarningLevel>
-    <Optimize>true</Optimize>
+    <OutputPath>public\bin\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
     <DefineConstants>TRACE</DefineConstants>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DebugType>Full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DebugType>None</DebugType>
+    <DocumentationFile>
+    </DocumentationFile>
     <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="NVelocity">
-      <HintPath>..\..\lib\Castle\net-2.0\NVelocity.dll</HintPath>
+    <Reference Include="nunit.framework.dll">
+      <Name>Nunit.Framework</Name>
+      <HintPath>..\lib\nunit\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.ActiveRecord">
-      <HintPath>..\..\lib\Castle\net-2.0\Castle.ActiveRecord.dll</HintPath>
+    <Reference Include="Castle.Model.Dll">
+      <Name>Castle.Model.Dll</Name>
+      <HintPath>..\lib\castle\Castle.Model.Dll</HintPath>
     </Reference>
-    <Reference Include="Castle.MonoRail.ActiveRecordScaffold">
-      <HintPath>..\..\lib\Castle\net-2.0\Castle.MonoRail.ActiveRecordScaffold.dll</HintPath>
+    <Reference Include="Castle.ActiveRecord.dll">
+      <Name>Castle.ActiveRecord.dll</Name>
+      <HintPath>..\lib\castle\Castle.ActiveRecord.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.MonoRail.ActiveRecordSupport">
-      <HintPath>..\..\lib\Castle\net-2.0\Castle.MonoRail.ActiveRecordSupport.dll</HintPath>
+    <Reference Include="Castle.MonoRail.Framework.dll">
+      <Name>Castle.MonoRail.Framework.dll</Name>
+      <HintPath>..\lib\castle\Castle.MonoRail.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.MonoRail.Framework">
-      <HintPath>..\..\lib\Castle\net-2.0\Castle.MonoRail.Framework.dll</HintPath>
+    <Reference Include="Castle.MonoRail.ActiveRecordScaffold.dll">
+      <Name>Castle.MonoRail.ActiveRecordScaffold.dll</Name>
+      <HintPath>..\lib\castle\Castle.MonoRail.ActiveRecordScaffold.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.MonoRail.Framework.Views.NVelocity">
-      <HintPath>..\..\lib\Castle\net-2.0\Castle.MonoRail.Framework.Views.NVelocity.dll</HintPath>
+    <Reference Include="Castle.MonoRail.ActiveRecordSupport.dll">
+      <Name>Castle.MonoRail.ActiveRecordSupport.dll</Name>
+      <HintPath>..\lib\castle\Castle.MonoRail.ActiveRecordSupport.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="NHibernate">
-      <HintPath>..\..\lib\Castle\net-2.0\NHibernate.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Castle.MonoRail.Framework.Views.NVelocity.dll">
+      <Name>Castle.MonoRail.Framework.Views.NVelocity.dll</Name>
+      <HintPath>..\lib\castle\Castle.MonoRail.Framework.Views.NVelocity.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Components.Common.TemplateEngine.NVelocityTemplateEngine">
-      <HintPath>..\..\lib\Castle\net-2.0\Castle.Components.Common.TemplateEngine.NVelocityTemplateEngine.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Castle.Components.Common.EmailSender.dll">
+      <Name>Castle.Components.Common.EmailSender.dll</Name>
+      <HintPath>..\lib\castle\Castle.Components.Common.EmailSender.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Components.Binder">
-      <HintPath>..\..\lib\Castle\net-2.0\Castle.Components.Binder.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Castle.Components.Common.EmailSender.SmtpEmailSender.dll">
+      <Name>Castle.Components.Common.EmailSender.SmtpEmailSender.dll</Name>
+      <HintPath>..\lib\castle\Castle.Components.Common.EmailSender.SmtpEmailSender.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Core">
-      <HintPath>..\..\lib\Castle\net-2.0\Castle.Core.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Castle.MonoRail.TestSupport.dll">
+      <Name>Castle.MonoRail.TestSupport.dll</Name>
+      <HintPath>..\lib\castle\Castle.MonoRail.TestSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net.dll">
+      <Name>log4net.dll</Name>
+      <HintPath>..\lib\castle\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.dll">
+      <Name>NHibernate.dll</Name>
+      <HintPath>..\lib\castle\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Nullables.NHibernate.dll">
+      <Name>Nullables.NHibernate.dll</Name>
+      <HintPath>..\lib\castle\Nullables.NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Nullables.dll">
+      <Name>Nullables.dll</Name>
+      <HintPath>..\lib\castle\Nullables.dll</HintPath>
+    </Reference>
+    <Reference Include="NVelocity.dll">
+      <Name>NVelocity.dll</Name>
+      <HintPath>..\lib\castle\NVelocity.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.dll">
+      <Name>MySql.Data.dll</Name>
+      <HintPath>..\lib\mysql\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql.dll">
+      <Name>Npgsql.dll</Name>
+      <HintPath>..\lib\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    
+    <Compile Include="controllers\ApplicationController.cs" />
+    <Compile Include="..\config\Boot.cs" />
+    <None Include="..\config\databases\development.xml" />
+    <None Include="..\config\databases\test.xml" />
+    <None Include="..\public\Web.config" />
+    <None Include="..\public\global.asax" />
+    <None Include="..\public\index.html" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <ItemGroup>
+    <Folder Include="helpers\" />
+    <Folder Include="models\" />
+    <Folder Include="views\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>
