@@ -52,7 +52,7 @@
 	
 	<target name="install" description="Installs the application" depends="build">
 		<if test="${platform::is-win32()}">
-			<property name="to" value="C:\Windows" overwrite="false" />
+			<property name="to" value="${environment::get-folder-path('System')}\.." overwrite="false" />
 			<copy todir="${to}">
 				<fileset basedir="script">
 					<include name="monorail.bat" />
