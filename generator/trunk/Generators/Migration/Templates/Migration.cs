@@ -1,5 +1,5 @@
 using System;
-using QIT.Management.Migrator;
+using Migrator;
 
 namespace <%= Namespace %>
 {
@@ -12,7 +12,7 @@ namespace <%= Namespace %>
 		public override void Up()
 		{
 			Database.AddTable("<%= ClassName %>",
-							  new Column("id", typeof(int), ColumnProperties.PrimaryKeyWithIdentity)
+							  new Column("Id", typeof(int), ColumnProperties.PrimaryKeyWithIdentity)
 							  );
 		}
 		

@@ -11,10 +11,9 @@
 	<property name="dir.lib.nant" value="<%= '${' %>dir.lib}/nant" />
 	<property name="dir.lib.mysql" value="<%= '${' %>dir.lib}/mysql" />
 	<property name="dir.lib.npgsql" value="<%= '${' %>dir.lib}/npgsql/<%= '${' %>framework::get-target-framework()}" />
+	<property name="dir.lib.migrator" value="<%= '${' %>dir.lib}/Migrator" />
 	<property name="dir.db" value="db" />
-	<property name="dir.db.migrations" value="<%= '${' %>dir.db}/migrations" />
-	<property name="shell.script.extension" value=".bat" if="<%= '${' %>platform::is-win32()}" />
-	<property name="shell.script.extension" value="" if="<%= '${' %>platform::is-unix()}" />
+	<property name="dir.migrations" value="<%= '${' %>dir.db}/migrations" />
 	
 	<!--
 	Castle release properties. If you change one of these you should
@@ -34,8 +33,8 @@
 		<copy flatten="true" todir="<%= '${' %>dir.bin}">
 			<fileset>
 				<include name="<%= '${' %>dir.lib.castle}/**" />
-				<include name="<%= '${' %>dir.lib.mysql}/**" />
 				<include name="<%= '${' %>dir.lib.npgsql}/**" />
+				<include name="<%= '${' %>dir.lib.migrator}/**" />
 				<include name="<%= '${' %>dir.lib.nunit}/nunit.framework.dll" />
 			</fileset>
 		</copy>
@@ -44,6 +43,7 @@
 				<include name="<%= '${' %>dir.config}/Boot.cs" />
 				<include name="<%= '${' %>dir.src.app}/**/*.cs" />
 				<include name="<%= '${' %>dir.src.test}/**/*.cs" />
+				<include name="<%= '${' %>dir.migrations}/**/*.cs" />
 			</sources>
 			<references basedir="<%= '${' %>dir.bin}">
 				<include name="System.Web.dll" />
@@ -64,6 +64,7 @@
 				<include name="NVelocity.dll" />
 				<include name="MySql.Data.dll" />
 				<include name="Npgsql.dll" />
+				<include name="Migrator.dll" />
 				<!-- add other references here -->
 			</references>
 		</csc>
@@ -81,38 +82,20 @@
 		</exec>
 	</target>
 	
-	<target name="migrate" description="run database migrations - optional args: environment(like development,test, defaults to dev), version">
+	<target name="migrate" description="Migrate the database" depends="build">
 		<!-- get connection string -->
-		<property name="environment" value="development" unless="<%= '${' %>property::exists('environment')}" />
-		<property name="version" value="-1" unless="<%= '${' %>property::exists('version')}" />
-		<property name="migration.output.dll" value="<%= '${' %>dir.db}/<%= '${' %>project::get-name()}.Migrations.dll" />
+		<property name="environment" value="development" overwrite="false" />
+		<property name="version" value="-1" overwrite="false" />
+		<property name="migration.output.dll" value="<%= '${' %>dir.bin}/<%= '${' %>project::get-name()}.dll" />
 		<xmlpeek file="<%= '${' %>dir.config}/databases/<%= '${' %>environment}.xml"
 			xpath="/activerecord/config/add[@key='hibernate.connection.connection_string']/@value"
 			property="connection.string" />
-		<!--echo message="connection string is: <%= '${' %>connection.string}" /-->
-		<!-- compile migrations -->
-		<csc target="library" output="<%= '${' %>migration.output.dll}">
-			<sources>
-				<include name="<%= '${' %>dir.db.migrations}/*.cs" />
-			</sources>
-			<references basedir="<%= '${' %>dir.lib}">
-				<include name="Migrator/QIT.Management.Migrator.dll" />
-			</references>
-		</csc>
+		<xmlpeek file="<%= '${' %>dir.config}/databases/<%= '${' %>environment}.xml"
+			xpath="/activerecord/config/add[@key='hibernate.connection.driver_class']/@value"
+			property="driver.class" />
 		<!-- run migrations -->
-		<exec program="script/migrator<%= '${' %>shell.script.extension}" unless="<%= '${' %>version=='-1'}" verbose="true">
-			<arg value="-asm" />
-			<arg value="<%= '${' %>migration.output.dll}" />
-			<arg value="-constr" />
-			<arg value="<%= '${' %>connection.string}" />
-			<arg value="-version" />
-			<arg value="<%= '${' %>version}" />
-		</exec>
-		<exec program="script/migrator<%= '${' %>shell.script.extension}" if="<%= '${' %>version=='-1'}" verbose="true">
-			<arg value="-asm" />
-			<arg value="<%= '${' %>migration.output.dll}" />
-			<arg value="-constr" />
-			<arg value="<%= '${' %>connection.string}" />
+		<exec program="script/migrate">
+			<arg line='<%= '${' %>driver.class} "<%= '${' %>connection.string}" "<%= '${' %>migration.output.dll}" -version <%= '${' %>version}' />
 		</exec>
 	</target>
 		
@@ -132,7 +115,8 @@
 		<!-- Installs required libs in the GAC -->
 		<gac-install failonerror="false"> 
 			<assemblies> 
-				<include name="<%= '${' %>dir.lib.castle}/Castle.MonoRail.TestSupport.dll" /> 
+				<include name="<%= '${' %>dir.lib.castle}/Castle.MonoRail.TestSupport.dll" />
+				<include name="<%= '${' %>dir.lib.mysql}/MySql.Data.dll" />
 			</assemblies> 
 		</gac-install> 
 	</target>

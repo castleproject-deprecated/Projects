@@ -41,7 +41,6 @@ class ProjectGenerator(NamedGeneratorBase):
 		MkDir("${Name}/log")
 
 		MkDir("${Name}/db")
-		MkDir("${Name}/db/migrations")
 		
 		MkDir("${Name}/public/content")
 		CopyDir("public/content", "${Name}/public/content")
@@ -57,8 +56,8 @@ class ProjectGenerator(NamedGeneratorBase):
 		Copy("script/generate.bat", "${Name}/script")
 		Copy("script/server", "${Name}/script")
 		Copy("script/server.bat", "${Name}/script")
-		Copy("script/migrator", "${Name}/script")
-		Copy("script/migrator.bat", "${Name}/script")
+		Copy("script/migrate", "${Name}/script")
+		Copy("script/migrate.bat", "${Name}/script")
 		
 		MkDir("${Name}/test/controllers")
 		Process("test/controllers/ControllerTestCase.cs", "${Name}/test/controllers/ControllerTestCase.cs")

@@ -1,0 +1,1 @@
+@lib\Migrator\Migrator.Console.exe %*
