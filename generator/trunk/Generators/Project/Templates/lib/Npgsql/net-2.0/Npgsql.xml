@@ -845,6 +845,11 @@
             We try to send a simple query text, select 1 as ConnectionTest;
             </summary>
         </member>
+        <member name="M:Npgsql.NpgsqlConnector.ReleaseResources">
+            <summary>
+            This method is responsible for releasing all resources associated with this Connector.
+            </summary>
+        </member>
         <member name="M:Npgsql.NpgsqlConnector.ReleasePlansPortals">
             <summary>
             This method is responsible to release all portals used by this Connector.
@@ -2330,6 +2335,11 @@
             Convert a postgresql boolean to a System.Boolean.
             </summary>
         </member>
+        <member name="M:NpgsqlTypes.BasicBackendToNativeTypeConverter.ToBit(NpgsqlTypes.NpgsqlBackendTypeInfo,System.String,System.Int16,System.Int32)">
+            <summary>
+            Convert a postgresql bit to a System.Boolean.
+            </summary>
+        </member>
         <member name="M:NpgsqlTypes.BasicBackendToNativeTypeConverter.ToDateTime(NpgsqlTypes.NpgsqlBackendTypeInfo,System.String,System.Int16,System.Int32)">
             <summary>
             Convert a postgresql datetime to a System.DateTime.
@@ -2364,6 +2374,11 @@
         <member name="M:NpgsqlTypes.BasicNativeToBackendTypeConverter.ToBoolean(NpgsqlTypes.NpgsqlNativeTypeInfo,System.Object)">
             <summary>
             Convert to a postgresql boolean.
+            </summary>
+        </member>
+        <member name="M:NpgsqlTypes.BasicNativeToBackendTypeConverter.ToBit(NpgsqlTypes.NpgsqlNativeTypeInfo,System.Object)">
+            <summary>
+            Convert to a postgresql bit.
             </summary>
         </member>
         <member name="M:NpgsqlTypes.BasicNativeToBackendTypeConverter.ToDateTime(NpgsqlTypes.NpgsqlNativeTypeInfo,System.Object)">
