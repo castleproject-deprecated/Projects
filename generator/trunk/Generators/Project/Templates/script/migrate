@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-mono lib/Migrator/Migrator.Console.exe "$@"
+mono public/bin/Migrator.Console.exe "$@"

@@ -1,1 +1,1 @@
-@lib\Migrator\Migrator.Console.exe %*
+@public\bin\Migrator.Console.exe %*

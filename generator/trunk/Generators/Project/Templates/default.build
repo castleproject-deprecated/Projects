@@ -9,7 +9,7 @@
 	<property name="dir.lib.castle" value="<%= '${' %>dir.lib}/castle" />
 	<property name="dir.lib.nunit" value="<%= '${' %>dir.lib}/nunit" />
 	<property name="dir.lib.nant" value="<%= '${' %>dir.lib}/nant" />
-	<property name="dir.lib.mysql" value="<%= '${' %>dir.lib}/mysql" />
+	<property name="dir.lib.mysql" value="<%= '${' %>dir.lib}/mysql/<%= '${' %>framework::get-target-framework()}" />
 	<property name="dir.lib.npgsql" value="<%= '${' %>dir.lib}/npgsql/<%= '${' %>framework::get-target-framework()}" />
 	<property name="dir.lib.migrator" value="<%= '${' %>dir.lib}/Migrator" />
 	<property name="dir.db" value="db" />
@@ -34,6 +34,7 @@
 			<fileset>
 				<include name="<%= '${' %>dir.lib.castle}/**" />
 				<include name="<%= '${' %>dir.lib.npgsql}/**" />
+				<include name="<%= '${' %>dir.lib.mysql}/**" />
 				<include name="<%= '${' %>dir.lib.migrator}/**" />
 				<include name="<%= '${' %>dir.lib.nunit}/nunit.framework.dll" />
 			</fileset>
