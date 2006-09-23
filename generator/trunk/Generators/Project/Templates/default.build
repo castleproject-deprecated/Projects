@@ -11,7 +11,7 @@
 	<property name="dir.lib.nant" value="<%= '${' %>dir.lib}/nant" />
 	<property name="dir.lib.mysql" value="<%= '${' %>dir.lib}/mysql/<%= '${' %>framework::get-target-framework()}" />
 	<property name="dir.lib.npgsql" value="<%= '${' %>dir.lib}/npgsql/<%= '${' %>framework::get-target-framework()}" />
-	<property name="dir.lib.migrator" value="<%= '${' %>dir.lib}/Migrator" />
+	<property name="dir.lib.migrator" value="<%= '${' %>dir.lib}/Migrator/<%= '${' %>framework::get-target-framework()}" />
 	<property name="dir.db" value="db" />
 	<property name="dir.migrations" value="<%= '${' %>dir.db}/migrations" />
 	
@@ -94,8 +94,10 @@
 		<xmlpeek file="<%= '${' %>dir.config}/databases/<%= '${' %>environment}.xml"
 			xpath="/activerecord/config/add[@key='hibernate.connection.driver_class']/@value"
 			property="driver.class" />
+		<property name="ext" value=".bat" if="<%= '${' %>platform::is-win32()}" />
+		<property name="ext" value="" overwrite="false" />
 		<!-- run migrations -->
-		<exec program="script/migrate">
+		<exec program="script/migrate<%= '${' %>ext}">
 			<arg line='<%= '${' %>driver.class} "<%= '${' %>connection.string}" "<%= '${' %>migration.output.dll}" -version <%= '${' %>version}' />
 		</exec>
 	</target>
