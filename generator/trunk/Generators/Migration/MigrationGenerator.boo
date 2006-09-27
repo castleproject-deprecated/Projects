@@ -7,7 +7,7 @@ class MigrationGenerator(NamedGeneratorBase):
 		
 		Process('Migration.cs', "${MigrationsBasePath}/${sVersion}_${ClassName}.cs")
 	
-	def Help() as string:
+	def Help():
 		return 'Generates a migration'
 
 	Version as int:
@@ -16,6 +16,7 @@ class MigrationGenerator(NamedGeneratorBase):
 
 	LastVersion as int:
 		get:
+			return 1 unless Directory.Exists("${MigrationsBasePath}")
 			max = 0
 			for file in Directory.GetFiles("${MigrationsBasePath}"):
 				info = FileInfo(file)
