@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-mono lib/generator/bin/generate.exe $*
+mono lib/generator/bin/generate.exe "$@"

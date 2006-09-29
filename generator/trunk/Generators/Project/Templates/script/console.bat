@@ -1,1 +1,1 @@
-@booi script\console %*
+@booi script\console.boo %*

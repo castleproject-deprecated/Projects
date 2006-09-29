@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-booi script/console.boo
+booi script/console.boo $*
