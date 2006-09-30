@@ -6,50 +6,50 @@
 	<property name="dir.config" value="config" />
 	<property name="dir.bin" value="public/bin" />
 	<property name="dir.lib" value="lib" />
-	<property name="dir.lib.castle" value="<%= '${' %>dir.lib}/castle" />
-	<property name="dir.lib.nunit" value="<%= '${' %>dir.lib}/nunit" />
-	<property name="dir.lib.nant" value="<%= '${' %>dir.lib}/nant" />
-	<property name="dir.lib.mysql" value="<%= '${' %>dir.lib}/mysql/<%= '${' %>framework::get-target-framework()}" />
-	<property name="dir.lib.npgsql" value="<%= '${' %>dir.lib}/npgsql/<%= '${' %>framework::get-target-framework()}" />
-	<property name="dir.lib.migrator" value="<%= '${' %>dir.lib}/Migrator/<%= '${' %>framework::get-target-framework()}" />
+	<property name="dir.lib.castle" value="${dir.lib}/castle" />
+	<property name="dir.lib.nunit" value="${dir.lib}/nunit" />
+	<property name="dir.lib.nant" value="${dir.lib}/nant" />
+	<property name="dir.lib.mysql" value="${dir.lib}/mysql/${framework::get-target-framework()}" />
+	<property name="dir.lib.npgsql" value="${dir.lib}/npgsql/${framework::get-target-framework()}" />
+	<property name="dir.lib.migrator" value="${dir.lib}/Migrator/${framework::get-target-framework()}" />
 	<property name="dir.db" value="db" />
-	<property name="dir.migrations" value="<%= '${' %>dir.db}/migrations" />
+	<property name="dir.migrations" value="${dir.db}/migrations" />
 	
 	<!--
 	Castle release properties. If you change one of these you should
 	run the setup target again to update the libs.
 	-->
 	<property name="castle.version" value="<%= TargetFramework %>" />
-	<property name="castle.url" value="http://www.castleproject.org/~ayende/CASTLE-760-<%= '${' %>castle.version}-debug.zip" />
+	<property name="castle.url" value="http://www.castleproject.org/~ayende/CASTLE-760-${castle.version}-debug.zip" />
 	
-	<loadtasks assembly="<%= '${' %>dir.lib.nant}/NAnt.Contrib.Tasks.dll" />
+	<loadtasks assembly="${dir.lib.nant}/NAnt.Contrib.Tasks.dll" />
 	
 	<target name="clean" description="Delete all temp. files">
-        <delete dir="<%= '${' %>dir.bin}" />
+        <delete dir="${dir.bin}" />
     </target>
 
 	<target name="build" description="Compile all source files">
-		<mkdir dir="<%= '${' %>dir.bin}" />
-		<copy flatten="true" todir="<%= '${' %>dir.bin}">
+		<mkdir dir="${dir.bin}" />
+		<copy flatten="true" todir="${dir.bin}">
 			<fileset>
-				<include name="<%= '${' %>dir.lib.castle}/**" />
-				<include name="<%= '${' %>dir.lib.npgsql}/**" />
-				<include name="<%= '${' %>dir.lib.mysql}/**" />
-				<include name="<%= '${' %>dir.lib.migrator}/**" />
-				<include name="<%= '${' %>dir.lib.nunit}/nunit.framework.dll" />
+				<include name="${dir.lib.castle}/**" />
+				<include name="${dir.lib.npgsql}/**" />
+				<include name="${dir.lib.mysql}/**" />
+				<include name="${dir.lib.migrator}/**" />
+				<include name="${dir.lib.nunit}/nunit.framework.dll" />
 			</fileset>
 		</copy>
-		<csc target="library" output="<%= '${' %>dir.bin}/<%= '${' %>project::get-name()}.dll">
+		<csc target="library" output="${dir.bin}/${project::get-name()}.dll">
 			<sources>
-				<include name="<%= '${' %>dir.config}/Boot.cs" />
-				<include name="<%= '${' %>dir.src.app}/**/*.cs" />
-				<include name="<%= '${' %>dir.src.test}/**/*.cs" />
-				<include name="<%= '${' %>dir.migrations}/**/*.cs" />
+				<include name="${dir.config}/Boot.cs" />
+				<include name="${dir.src.app}/**/*.cs" />
+				<include name="${dir.src.test}/**/*.cs" />
+				<include name="${dir.migrations}/**/*.cs" />
 			</sources>
-			<references basedir="<%= '${' %>dir.bin}">
+			<references basedir="${dir.bin}">
 				<include name="System.Web.dll" />
 				<include name="nunit.framework.dll" />
-				<include name="Castle.Model.dll" />
+				<include name="Castle.Core.dll" />
 				<include name="Castle.ActiveRecord.dll" />
 				<include name="Castle.MonoRail.Framework.dll" />
 				<include name="Castle.MonoRail.ActiveRecordScaffold.dll" />
@@ -74,12 +74,12 @@
 	<target name="rebuild" description="Clean and build" depends="clean, build" />
 
 	<target name="test" description="Runs all the tests" depends="build">
-		<nunit2 if="<%= '${' %>platform::is-win32()}"> 
+		<nunit2 if="${platform::is-win32()}"> 
 			<formatter type="Plain" />
-			<test assemblyname="<%= '${' %>dir.bin}/<%= '${' %>project::get-name()}.dll" />
+			<test assemblyname="${dir.bin}/${project::get-name()}.dll" />
 		</nunit2>
-		<exec program="nunit-console" if="<%= '${' %>platform::is-unix()}">
-			<arg line="<%= '${' %>dir.bin}/<%= '${' %>project::get-name()}.dll /nologo" />
+		<exec program="nunit-console" if="${platform::is-unix()}">
+			<arg line="${dir.bin}/${project::get-name()}.dll /nologo" />
 		</exec>
 	</target>
 	
@@ -87,30 +87,35 @@
 		<!-- get connection string -->
 		<property name="environment" value="development" overwrite="false" />
 		<property name="version" value="-1" overwrite="false" />
-		<property name="migration.output.dll" value="<%= '${' %>dir.bin}/<%= '${' %>project::get-name()}.dll" />
-		<xmlpeek file="<%= '${' %>dir.config}/databases/<%= '${' %>environment}.xml"
+		<property name="migration.output.dll" value="${dir.bin}/${project::get-name()}.dll" />
+		<xmlpeek file="${dir.config}/databases/${environment}.xml"
 			xpath="/activerecord/config/add[@key='hibernate.connection.connection_string']/@value"
 			property="connection.string" />
-		<xmlpeek file="<%= '${' %>dir.config}/databases/<%= '${' %>environment}.xml"
+		<xmlpeek file="${dir.config}/databases/${environment}.xml"
 			xpath="/activerecord/config/add[@key='hibernate.connection.driver_class']/@value"
 			property="driver.class" />
-		<property name="ext" value=".bat" if="<%= '${' %>platform::is-win32()}" />
+		<property name="ext" value=".bat" if="${platform::is-win32()}" />
 		<property name="ext" value="" overwrite="false" />
 		<!-- run migrations -->
-		<exec program="script/migrate<%= '${' %>ext}">
-			<arg line='<%= '${' %>driver.class} "<%= '${' %>connection.string}" "<%= '${' %>migration.output.dll}" -version <%= '${' %>version}' />
+		<exec program="script/migrate${ext}">
+			<arg line='${driver.class} "${connection.string}" "${migration.output.dll}" -version ${version}' />
 		</exec>
 	</target>
 		
 	<target name="setup" description="Setup the developement environment">
 		<!-- Installs castles -->
 		<mkdir dir="tmp" />
-		<get src="<%= '${' %>castle.url}" dest="tmp/castle.zip" />
+		<get src="${castle.url}" dest="tmp/castle.zip" />
 		<unzip zipfile="tmp/castle.zip" todir="tmp/castle" />
-		<mkdir dir="<%= '${' %>dir.lib.castle}" />
-		<copy todir="<%= '${' %>dir.lib.castle}">
-			<fileset basedir="tmp/castle/<%= '${' %>castle.version}">
+		<!--
+		For newer builds of castle uncomment this line
+		<unzip zipfile="tmp/castle/${castle.version}/external-dependencies.zip" todir="tmp/castle/${castle.version}" />
+		-->
+		<mkdir dir="${dir.lib.castle}" />
+		<copy todir="${dir.lib.castle}">
+			<fileset basedir="tmp/castle/${castle.version}">
 				<include name="**/*" />
+				<exclude name="external-dependencies.zip" />
 			</fileset>
 		</copy>
 		<delete dir="tmp" />
@@ -118,8 +123,8 @@
 		<!-- Installs required libs in the GAC -->
 		<gac-install failonerror="false"> 
 			<assemblies> 
-				<include name="<%= '${' %>dir.lib.castle}/Castle.MonoRail.TestSupport.dll" />
-				<include name="<%= '${' %>dir.lib.mysql}/MySql.Data.dll" />
+				<include name="${dir.lib.castle}/Castle.MonoRail.TestSupport.dll" />
+				<include name="${dir.lib.mysql}/MySql.Data.dll" />
 			</assemblies> 
 		</gac-install> 
 	</target>

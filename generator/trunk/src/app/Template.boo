@@ -62,8 +62,15 @@ class Template:
 		
 		return templateObj.RunTemplate(variables)
 		
+	private def Sanitize(reader as TextReader) as TextReader:
+		out = reader.ReadToEnd()
+		reader.Close()
+		# Ugly fix to allow ${...} in templates
+		out = out.Replace('${', '<%= "$"+"{" %>')
+		return StringReader(out)
+		
 	private def ParseCode(reader as TextReader, variables as Hash) as string:	
-		lexer = AspLexer(reader)
+		lexer = AspLexer(Sanitize(reader))
 		parser = AspParser(lexer)
 		parser.template()
 		code = parser.Builder.ToString()
@@ -73,12 +80,12 @@ class Template:
 		builder.Append('import Generator\n')
 		
 		builder.Append('class TemplateCode():\n')
-		builder.Append('\tpublic def RunTemplate(vars as Hash) as string:').Append('\n')
+		builder.Append('\tpublic def RunTemplate(vars as Hash) as string:\n')
 		for v in variables:
-			builder.Append("\t\t${v.Key}=vars['${v.Key}']\n")
-		builder.Append('\t\tout = System.Text.StringBuilder()').Append('\n')
+			builder.Append("\t\t${v.Key} = vars['${v.Key}']\n")
+		builder.Append('\t\tout = System.Text.StringBuilder()\n')
 		builder.Append(code)
-		builder.Append('\t\treturn out.ToString()').Append('\n')
+		builder.Append('\t\treturn out.ToString()\n')
 		builder.Append('\tend\n')
 		builder.Append('end')
 		

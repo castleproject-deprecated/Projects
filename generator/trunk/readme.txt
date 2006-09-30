@@ -10,7 +10,7 @@ To install
 ==========
 To install the generate and monorail command line script, run:
     nant install
-Under unix:
+Under unix systems:
 	sudo nant install
 On Windows, monorail.bat and generate.bat will be copied to your c:\Windows directory. On Unix, the monorail and generate bash scripts will be copied to /usr/bin. You can change this directory by setting the 'to' property, like this:
     nant install -D:to=/opt/local/bin

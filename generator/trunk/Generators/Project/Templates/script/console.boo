@@ -18,7 +18,7 @@ interpreter.load("<%= ClassName %>.dll")
 interpreter.Eval("import System")
 interpreter.Eval("import <%= ClassName %>")
 interpreter.Eval("import <%= ClassName %>.Models")
-interpreter.Eval("Boot.InitializeActiveRecord('<%= '${' %>config}', false)")
+interpreter.Eval("Boot.InitializeActiveRecord('${config}', false)")
 
-print "<%= '${' %>config} environement loaded"
+print "${config} environement loaded"
 interpreter.ConsoleLoopEval()

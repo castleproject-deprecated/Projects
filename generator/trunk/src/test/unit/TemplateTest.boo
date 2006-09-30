@@ -37,7 +37,27 @@ class TemplateTest:
 		aList = (1, 2, 3)
 		t = Template(GetTestFile(code))
 		Assert.IsTrue(t.Process({'aList':aList}).StartsWith('123'))
-		
+	
+	[Test]
+	def ProcessWithQuotes():
+		code = 'This is a "test"'
+		t = Template(GetTestFile(code))
+		Assert.AreEqual(code + "\n", t.Process())
+	
+	[Test]
+	def ProcessWithSpecialBooChars():
+		code = 'This is a ${test}'
+		t = Template(GetTestFile(code))
+		Assert.AreEqual(code + "\n", t.Process())
+	
+	[Test]
+	def ProcessWithSpecialBooCharsWithVar():
+		myvar = "cool"
+		test = "${myvar}ish"
+		code = 'This is <%= test %>'
+		t = Template(GetTestFile(code))
+		Assert.AreEqual("This is coolish\n", t.Process({'test':test}))
+	
 	private def GetTestFile(content as string) as string:
 		filename = "test.txt"
 		File.Delete(filename)

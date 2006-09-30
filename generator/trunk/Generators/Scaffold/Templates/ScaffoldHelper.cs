@@ -114,7 +114,7 @@ namespace <%= HelpersNamespace %>
 		{
 			HtmlHelper helper = new HtmlHelper();
 			ActiveRecordModel model = ActiveRecordModel.GetModel(arType);
-			PropertyInfo prop = ((PrimaryKeyModel)model.Ids[0]).Property;
+			PropertyInfo prop = model.PrimaryKey.Property;
 			object selected = null;
 			
 			if (ar != null && prop != null)
