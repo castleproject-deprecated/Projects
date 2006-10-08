@@ -1,0 +1,277 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{824EC872-2992-4518-8C41-4F87640D752A}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>TestSite.StringTemplate</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TestSite.StringTemplate</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="antlr.runtime">
+      <Name>antlr.runtime</Name>
+      <HintPath>..\..\..\SharedLibs\stringtemplate\net-1.1\antlr.runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core">
+      <Name>Castle.Core</Name>
+      <HintPath>..\..\..\build\net-1.1\debug\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.Framework">
+      <Name>Castle.MonoRail.Framework</Name>
+      <HintPath>..\..\..\build\net-1.1\debug\Castle.MonoRail.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Nullables, Version=1.2.0.2001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL" />
+    <Reference Include="StringTemplate">
+      <Name>StringTemplate</Name>
+      <HintPath>..\..\..\SharedLibs\stringtemplate\net-1.1\StringTemplate.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <ProjectReference Include="..\Castle.MonoRail.Framework.Views.StringTemplateView\Castle.MonoRail.Framework.Views.StringTemplateView-vs2005.csproj">
+      <Name>Castle.MonoRail.Framework.Views.StringTemplateView</Name>
+      <Project>{AECBD3E5-110C-4602-B74A-444A61350983}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Components\BlockComponent1.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Components\BlockViewComponent1.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Components\BlockViewComponent2.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Components\InlineComponentWithParam1.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Components\SimpleInlineViewComponent.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Components\SimpleInlineViewComponent2.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Components\SimpleInlineViewComponent3.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Components\TemplatedInlineViewComponent.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\ActionProviders\DynamicActionProvider1.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\AjaxController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\AppPath.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\BlogController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CookiesController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\DynController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\ExceptionController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\FilterController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\FlashController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\HelperController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\HomeController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\LayoutController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\NewsController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\PaginatedController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\PerfController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Registration.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\RescueController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\ResourcedController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\SmartController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\SubArea\HomeController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\TestWizardController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\UsingComponentController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\ValidatedController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="sample.build" />
+    <None Include="views\ajax\autocom.st" />
+    <None Include="views\ajax\index.st" />
+    <None Include="views\ajax\periodinvocation.st" />
+    <None Include="views\apppath\index.st" />
+    <None Include="views\components\SimpleInlineViewComponent2\mycompview1.st" />
+    <None Include="views\components\SimpleInlineViewComponent3\default.st" />
+    <None Include="views\components\TemplatedInlineViewComponent\templatedview.st" />
+    <None Include="views\cookies\index.st" />
+    <None Include="views\dyn\index.st" />
+    <None Include="views\filter\index.st" />
+    <None Include="views\flash\flashContents.st" />
+    <None Include="views\flash\flashIt.st" />
+    <None Include="views\flash\validateRequest.st" />
+    <None Include="views\helper\DictHelperUsage.st" />
+    <None Include="views\helper\InheritedHelpers.st" />
+    <None Include="views\helper\MyDeclaredHelpers.st" />
+    <None Include="views\home\display.st" />
+    <None Include="views\home\heyhello.st" />
+    <None Include="views\home\index.st" />
+    <None Include="views\layoutable\changelayout.st" />
+    <None Include="views\layoutable\index.st" />
+    <None Include="views\layouts\master.st" />
+    <None Include="views\layouts\master2.st" />
+    <None Include="views\paginated\list1.st" />
+    <None Include="views\rescues\appException.st" />
+    <None Include="views\rescues\argException.st" />
+    <None Include="views\rescues\general.st" />
+    <None Include="views\rescues\methodDefaultException.st" />
+    <None Include="views\rescues\saveerror.st" />
+    <None Include="views\rescues\updateerror.st" />
+    <None Include="views\rescues\updateerrormsg.st" />
+    <None Include="views\resourced\getresources.st" />
+    <None Include="views\SubArea\home\index.st" />
+    <None Include="views\testwizard\InnerAction2.st" />
+    <None Include="views\testwizard\page1.st" />
+    <None Include="views\testwizard\page3.st" />
+    <None Include="views\testwizard\page4.st" />
+    <None Include="views\userlist.st" />
+    <None Include="views\UsingComponent\CaptureFor.st" />
+    <None Include="views\UsingComponent\CaptureForAppend.st" />
+    <None Include="views\UsingComponent\CaptureForAppendBefore.st" />
+    <None Include="views\UsingComponent\CaptureForDirective.st" />
+    <None Include="views\UsingComponent\index.st" />
+    <None Include="views\UsingComponent\index1.st" />
+    <None Include="views\UsingComponent\index3.st" />
+    <None Include="views\UsingComponent\index4.st" />
+    <None Include="views\UsingComponent\index5.st" />
+    <None Include="views\UsingComponent\index6.st" />
+    <None Include="views\UsingComponent\index8.st" />
+    <None Include="views\UsingComponent\index9.st" />
+    <None Include="views\UsingComponent\InlineComponentUsingTemplatedRender.st" />
+    <None Include="views\validated\default.st" />
+    <None Include="web.config" />
+    <EmbeddedResource Include="Controllers\ResourceFile.resx" />
+    <Content Include="views\home\bag.st" />
+    <Content Include="views\home\bag2.st" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
