@@ -1,9 +1,0 @@
-<Assemblies Version="14">
-  <Assembly Name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Cache="ecb6bd44-98a3-4b84-8f55-0a7c4f1b38aa.ReflectionCache" Timestamp="632630573360000000" />
-  <Assembly Name="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Cache="a00ecd9c-efe6-49e6-beeb-9a38c5211f20.ReflectionCache" Timestamp="632630573360000000" />
-  <Assembly Name="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Cache="c9c2f226-8ee7-42ba-917f-3fdb8f9ba98d.ReflectionCache" Timestamp="632630573360000000" />
-  <Assembly Name="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Cache="66795229-d20b-4d6e-a4e7-ace1ac3533e4.ReflectionCache" Timestamp="632630573360000000" />
-  <Assembly Name="NHibernate, Version=1.2.0.2001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4" Cache="f6cf1b3e-afe9-4549-b635-52b7bb4c1e9b.ReflectionCache" Timestamp="632972275785015648" />
-  <Assembly Name="nunit.framework, Version=2.2.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" Cache="e8f890f5-9d0b-45f4-9048-922f8ba04294.ReflectionCache" Timestamp="632972275787719536" />
-  <Assembly Name="Castle.ActiveRecord, Version=0.0.1.3, Culture=neutral, PublicKeyToken=407dd0808d44fbdc" Cache="b1c5caed-72eb-49e4-9d52-76da7cacfcb3.ReflectionCache" Timestamp="632973681822514784" />
-</Assemblies>
