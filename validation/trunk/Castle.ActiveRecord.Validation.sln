@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.ActiveRecord.Validation", "Castle.ActiveRecord.Validation\Castle.ActiveRecord.Validation.csproj", "{F089BBD5-A3E9-4E4C-AC4A-DB0F3E98B50E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.ActiveRecord.Validation.Tests", "Castle.ActiveRecord.Validation.Tests\Castle.ActiveRecord.Validation.Tests.csproj", "{6FC292B0-A1AA-41E4-B394-FBEB721C1A50}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F089BBD5-A3E9-4E4C-AC4A-DB0F3E98B50E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F089BBD5-A3E9-4E4C-AC4A-DB0F3E98B50E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F089BBD5-A3E9-4E4C-AC4A-DB0F3E98B50E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F089BBD5-A3E9-4E4C-AC4A-DB0F3E98B50E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FC292B0-A1AA-41E4-B394-FBEB721C1A50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FC292B0-A1AA-41E4-B394-FBEB721C1A50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FC292B0-A1AA-41E4-B394-FBEB721C1A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FC292B0-A1AA-41E4-B394-FBEB721C1A50}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
