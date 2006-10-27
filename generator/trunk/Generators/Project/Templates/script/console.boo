@@ -20,5 +20,10 @@ interpreter.Eval("import <%= ClassName %>")
 interpreter.Eval("import <%= ClassName %>.Models")
 interpreter.Eval("Boot.InitializeActiveRecord('${config}', false)")
 
+interpreter.Eval("import Castle.ActiveRecord")              
+interpreter.Eval("session as SessionScope = SessionScope()")
+
 print "${config} environement loaded"
 interpreter.ConsoleLoopEval()
+
+interpreter.Eval("session.Dispose(false)")
