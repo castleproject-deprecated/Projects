@@ -39,9 +39,13 @@ namespace Castle.ActiveRecord.Validation.Validators.CultureIndependant
             {
                 object[] attributes = propertyInfo.GetCustomAttributes(false);
 
-                foreach (ValidateAtLeastOneIsNotEmptyAttribute attribute in attributes)                
-                    if (attribute.Group == group)
-                        propertiesInGroup.Add(propertyInfo);                
+                foreach (object attribute in attributes)
+                {
+                    ValidateAtLeastOneIsNotEmptyAttribute validator = attribute as ValidateAtLeastOneIsNotEmptyAttribute;
+
+                    if ((validator != null) && (validator.Group == group))
+                        propertiesInGroup.Add(propertyInfo);
+                }
             }
 
             foreach (PropertyInfo propertyInfo in propertiesInGroup)
