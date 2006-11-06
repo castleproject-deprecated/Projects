@@ -28,6 +28,7 @@ namespace Castle.ActiveRecord.Validation.Tests
             Assert.IsTrue(validator.Perform(this, "http://www.castleproject.org"));
             Assert.IsTrue(validator.Perform(this, "http://www.bbc.co.uk"));
             Assert.IsTrue(validator.Perform(this, "ftp://my.ftp.site"));
+            Assert.IsTrue(validator.Perform(this, "http://www.tickets.com/file.extension?id=something"));
         }
 
         [Test]

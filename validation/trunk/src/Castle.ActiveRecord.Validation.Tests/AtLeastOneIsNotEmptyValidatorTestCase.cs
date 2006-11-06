@@ -34,6 +34,15 @@ namespace Castle.ActiveRecord.Validation.Tests
             SinglePropertyTestClass testClass = new SinglePropertyTestClass("a value");
             Assert.IsTrue(validator.Perform(testClass, testClass.SingleProperty));
         }
+        
+        [Test]
+        public void ValidationPassesForASinglePropertyWithMultipleAttributes()
+        {
+            AtLeastOneIsNotEmptyValidator validator = new AtLeastOneIsNotEmptyValidator(SinglePropertySingleGroupTestGroup);
+            
+            SinglePropertyMultipleGroupMultipleAttributesTestClass testClass = new SinglePropertyMultipleGroupMultipleAttributesTestClass("a value");
+            Assert.IsTrue(validator.Perform(testClass, testClass.SingleProperty));
+        }
 
         [Test]
         public void ValidationFailsForASingleNullOrEmptyField()
@@ -202,5 +211,26 @@ namespace Castle.ActiveRecord.Validation.Tests
         }
 
         #endregion
+
+        #region Single Property Multiple Group Multiple Attributes Test Class
+
+        private class SinglePropertyMultipleGroupMultipleAttributesTestClass
+        {
+            private string singleField;
+
+            public SinglePropertyMultipleGroupMultipleAttributesTestClass(string value)
+            {
+                singleField = value;    
+            }
+            
+            [ValidateLength(int.MinValue, 10), ValidateAtLeastOneIsNotEmpty(SinglePropertySingleGroupTestGroup)]
+            public string SingleProperty
+            {
+                get { return singleField; }
+            }
+        }
+
+        #endregion
+
     }
 }
