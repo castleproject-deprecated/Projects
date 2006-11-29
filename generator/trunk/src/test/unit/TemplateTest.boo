@@ -1,5 +1,6 @@
 namespace Generator.Tests.Unit
 
+import System
 import System.IO
 import NUnit.Framework
 import Generator
@@ -42,13 +43,13 @@ class TemplateTest:
 	def ProcessWithQuotes():
 		code = 'This is a "test"'
 		t = Template(GetTestFile(code))
-		Assert.AreEqual(code + "\n", t.Process())
+		Assert.AreEqual(code + Environment.NewLine, t.Process())
 	
 	[Test]
 	def ProcessWithSpecialBooChars():
 		code = 'This is a ${test}'
 		t = Template(GetTestFile(code))
-		Assert.AreEqual(code + "\n", t.Process())
+		Assert.AreEqual(code + Environment.NewLine, t.Process())
 	
 	[Test]
 	def ProcessWithSpecialBooCharsWithVar():
@@ -56,7 +57,7 @@ class TemplateTest:
 		test = "${myvar}ish"
 		code = 'This is <%= test %>'
 		t = Template(GetTestFile(code))
-		Assert.AreEqual("This is coolish\n", t.Process({'test':test}))
+		Assert.AreEqual("This is coolish" + Environment.NewLine, t.Process({'test':test}))
 	
 	private def GetTestFile(content as string) as string:
 		filename = "test.txt"

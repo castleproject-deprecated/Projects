@@ -17,5 +17,8 @@ class GeneratorTestCase:
 		
 	[TearDown]
 	def TearDown():
-		Directory.Delete(TEST_DIR, true) if Directory.Exists(TEST_DIR)
+		try:
+			Directory.Delete(TEST_DIR, true) if Directory.Exists(TEST_DIR)
+		except e:
+			e.GetHashCode() // not sure how to ignore exceptions in Boo
 		Directory.SetCurrentDirectory(_currentDir)
