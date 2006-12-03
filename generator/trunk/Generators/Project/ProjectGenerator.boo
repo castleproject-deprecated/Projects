@@ -56,6 +56,7 @@ class ProjectGenerator(NamedGeneratorBase):
 		Copy("script/generate.bat", "${Name}/script")
 		Copy("script/server", "${Name}/script")
 		Copy("script/server.bat", "${Name}/script")
+		Process("script/server.boo", "${Name}/script/server.boo")
 		Copy("script/migrate", "${Name}/script")
 		Copy("script/migrate.bat", "${Name}/script")
 		

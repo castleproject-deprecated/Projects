@@ -102,18 +102,16 @@
 		</exec>
 	</target>
 		
-	<target name="setup" description="Setup the developement environment">
+  <target name="setup" description="Setup the developement environment">
 		<!-- Installs castles -->
 		<mkdir dir="tmp" />
 		<get src="${castle.url}" dest="tmp/castle.zip" />
 		<unzip zipfile="tmp/castle.zip" todir="tmp/castle" />
-		<!--
-		For newer builds of castle uncomment this line
-		<unzip zipfile="tmp/castle/${castle.version}/external-dependencies.zip" todir="tmp/castle/${castle.version}" />
+		<unzip zipfile="tmp/castle/bin/external-dependencies.zip" todir="tmp/castle/bin" />
 		-->
 		<mkdir dir="${dir.lib.castle}" />
 		<copy todir="${dir.lib.castle}">
-			<fileset basedir="tmp/castle/${castle.version}">
+			<fileset basedir="tmp/castle/bin">
 				<include name="**/*" />
 				<exclude name="external-dependencies.zip" />
 			</fileset>
