@@ -3,8 +3,12 @@
 
 
 	<target name="build" description="Builds the app" depends="prepare">
-		<booc target="exe"
-		      output="bin/generate.exe"
+		<property name="type" value="exe" overwrite="false" />
+		<property name="target" value="${type}" />
+		<property name="target" value="library" if="${type == 'dll'}" />
+		
+		<booc target="${target}"
+		      output="bin/generate.${type}"
 		>
 			<sources basedir="src/app">
 				<include name="**/*.boo" />

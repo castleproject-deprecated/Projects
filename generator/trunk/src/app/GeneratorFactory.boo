@@ -18,13 +18,12 @@ class GeneratorFactory:
 		
 		name = argv[0].ToClassName()
 		args = argv[1:]
-		script = GetGeneratorScriptFile(name)
 		
-		if not File.Exists(script):
-			print "Generator ${name} not found"
+		try:
+			generator = GetGenerator(name)
+		except ex as Exception:
+			print ex.Message
 			return -1
-		
-		generator = Compile(script)
 		
 		if argv.Length == 1:
 			generator.PrintUsage()
@@ -37,23 +36,37 @@ class GeneratorFactory:
 			print ex.Message
 			return -1
 		return 0
+		
+	# Creates a new generator by its name
+	static def GetGenerator(name as string) as GeneratorBase:
+		script = GetGeneratorScriptFile(name)
+		
+		raise GeneratorException("Generator ${name} not found") if not File.Exists(script)
+		
+		return Compile(script)
+	
+	# Returns all generators
+	static def GetGenerators() as (GeneratorBase):
+		generators = []
+		for d in Directory.GetDirectories(ScriptBasePath):
+			name = DirectoryInfo(d).Name
+			try:
+				generators.Add(GetGenerator(name))
+			except Exception:
+				pass
+		return generators.ToArray(GeneratorBase)
+	
+	static ScriptBasePath as string:
+		get:
+			asmpath = Path.GetDirectoryName(typeof(GeneratorBase).Assembly.Location)
+			return Path.Combine(asmpath, "../Generators/".ToPath())
 	
 	private static def ListGenerators():
 		print 'usage: generate GeneratorName [Arguments...]'
 		print
 		print 'Available generators:'
-		for d in Directory.GetDirectories(ScriptBasePath):
-			name = DirectoryInfo(d).Name
-			try:
-				gen = Compile(GetGeneratorScriptFile(name))
-				print gen.GeneratorName.PadLeft(10), ':',  gen.Help()
-			except Exception:
-				pass
-	
-	public static ScriptBasePath as string:
-		get:
-			asmpath = Path.GetDirectoryName(typeof(GeneratorBase).Assembly.Location)
-			return Path.Combine(asmpath, "../Generators/".ToPath())
+		for gen in GetGenerators():
+			print gen.GeneratorName.PadLeft(10), ':',  gen.Help()
 		
 	private static def GetGeneratorScriptFile(name as string):
 		return Path.Combine(ScriptBasePath, "${name}/${name}Generator.boo")
