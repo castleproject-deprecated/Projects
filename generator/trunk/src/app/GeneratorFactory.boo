@@ -18,9 +18,6 @@ class GeneratorFactory:
 	def constructor():
 		asmpath = Path.GetDirectoryName(typeof(GeneratorBase).Assembly.Location)
 		_scriptBasePath = Path.Combine(asmpath, "../Generators/".ToPath())
-		
-	def constructor(scriptBasePath):
-		_scriptBasePath = scriptBasePath
 	
 	def CreateAndRun(argv as (string)) as int:
 		if argv.Length == 0:
