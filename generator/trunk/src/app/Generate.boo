@@ -4,5 +4,5 @@ import System
 
 [STAThread]
 def Main(argv as (string)):
-	return GeneratorFactory.CreateAndRun(argv)
+	return GeneratorFactory.Instance.CreateAndRun(argv)
 	

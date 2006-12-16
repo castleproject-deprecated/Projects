@@ -3,9 +3,7 @@ namespace Generator
 import Generator.Extentions
 
 abstract class NamedGeneratorBase(GeneratorBase):
-	
 	[Property(Name), Argument('The name of the thing to generate')]
-	
 	_name as string
 	
 	virtual VarName:

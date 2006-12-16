@@ -7,11 +7,22 @@ import System.Reflection
 import Boo.Lang.Compiler
 import Boo.Lang.Compiler.IO
 import Boo.Lang.Compiler.Pipelines
+import Boo.Lang.Useful.Attributes
 import Generator.Extentions
 
+[Singleton]
 class GeneratorFactory:
+	[Property(ScriptBasePath)]
+	_scriptBasePath as string
 	
-	static def CreateAndRun(argv as (string)) as int:
+	def constructor():
+		asmpath = Path.GetDirectoryName(typeof(GeneratorBase).Assembly.Location)
+		_scriptBasePath = Path.Combine(asmpath, "../Generators/".ToPath())
+		
+	def constructor(scriptBasePath):
+		_scriptBasePath = scriptBasePath
+	
+	def CreateAndRun(argv as (string)) as int:
 		if argv.Length == 0:
 			ListGenerators()
 			return -1
@@ -38,7 +49,7 @@ class GeneratorFactory:
 		return 0
 		
 	# Creates a new generator by its name
-	static def GetGenerator(name as string) as GeneratorBase:
+	def GetGenerator(name as string) as GeneratorBase:
 		script = GetGeneratorScriptFile(name)
 		
 		raise GeneratorException("Generator ${name} not found") if not File.Exists(script)
@@ -46,7 +57,7 @@ class GeneratorFactory:
 		return Compile(script)
 	
 	# Returns all generators
-	static def GetGenerators() as (GeneratorBase):
+	def GetGenerators() as (GeneratorBase):
 		generators = []
 		for d in Directory.GetDirectories(ScriptBasePath):
 			name = DirectoryInfo(d).Name
@@ -56,22 +67,17 @@ class GeneratorFactory:
 				pass
 		return generators.ToArray(GeneratorBase)
 	
-	static ScriptBasePath as string:
-		get:
-			asmpath = Path.GetDirectoryName(typeof(GeneratorBase).Assembly.Location)
-			return Path.Combine(asmpath, "../Generators/".ToPath())
-	
-	private static def ListGenerators():
+	private def ListGenerators():
 		print 'usage: generate GeneratorName [Arguments...]'
 		print
 		print 'Available generators:'
 		for gen in GetGenerators():
-			print gen.GeneratorName.PadLeft(10), ':',  gen.Help()
+			print gen.GeneratorName.PadLeft(10), ':',	 gen.Help()
 		
-	private static def GetGeneratorScriptFile(name as string):
+	private def GetGeneratorScriptFile(name as string):
 		return Path.Combine(ScriptBasePath, "${name}/${name}Generator.boo")
 			
-	private static def Compile(script as string) as GeneratorBase:
+	private def Compile(script as string) as GeneratorBase:
 		code = StringBuilder()
 		
 		# Adds default imports

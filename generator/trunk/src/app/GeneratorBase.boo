@@ -49,7 +49,7 @@ abstract class GeneratorBase:
 	
 	ScriptBasePath as string:
 		get:
-			return GeneratorFactory.ScriptBasePath
+			return GeneratorFactory.Instance.ScriptBasePath
 	#endregion
 	
 	#region Template processing methods
