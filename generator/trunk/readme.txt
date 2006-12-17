@@ -4,7 +4,7 @@ The scaffold and project generators are heavily inspired by RoR, it generates re
 
 This is a work in progress and considered in early alpha stage so use at your own risk but contributions or comments are welcome.
 
-Consult the project home page for more information (http://www.castleproject.org/index.php/Generator).
+Consult the project home page for more information (http://wiki.castleproject.org/index.php/Generator).
 
 To install
 ==========
