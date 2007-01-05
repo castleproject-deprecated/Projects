@@ -26,21 +26,21 @@ namespace Castle.MonoRail.Views.AspView.Tests
         [Test]
         public void WithoutProperties()
         {
-            string expected = DecorateWithDefaultLayout("\r\nA View without any properties");
+            string expected = DecorateWithDefaultLayout("A View without any properties");
             DoGet("Withlayout/WithoutProperties.rails");
             AssertReplyEqualTo(expected);
         }
         [Test]
         public void WithPropertiesUsingFlash()
         {
-            string expected = DecorateWithDefaultLayout("\r\nA View with properties: Flashed data");
+            string expected = DecorateWithDefaultLayout("A View with properties: Flashed data");
             DoGet("Withlayout/UsingFlash.rails");
             AssertReplyEqualTo(expected);
         }
         [Test]
         public void WithPropertiesUsingPropertyBag()
         {
-            string expected = DecorateWithDefaultLayout("\r\nA View with properties: PropertyBaged data");
+            string expected = DecorateWithDefaultLayout("A View with properties: PropertyBaged data");
             DoGet("Withlayout/UsingPropertyBag.rails");
             AssertReplyEqualTo(expected);
         }
@@ -48,8 +48,7 @@ namespace Castle.MonoRail.Views.AspView.Tests
         private string DecorateWithDefaultLayout(string html)
         {
             return string.Format(
-                @"
-<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
+                @"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
 
 <html xmlns=""http://www.w3.org/1999/xhtml"" >
 <head>
@@ -60,8 +59,7 @@ namespace Castle.MonoRail.Views.AspView.Tests
         hello from default layout
     </div>
     <div>
-        {0}
-    </div>
+        {0}    </div>
 </body>
 </html>
 ",html);

@@ -38,7 +38,7 @@ namespace Castle.MonoRail.Views.AspView
         { get { throw new ShouldNotBeImplemented(); } }
         protected DictHelper DictHelper
         { get { throw new ShouldNotBeImplemented(); } }
-        protected Effects2Helper Effects2Helper
+        protected ScriptaculousHelper ScriptaculousHelper
         { get { throw new ShouldNotBeImplemented(); } }
         protected EffectsFatHelper EffectsFatHelper
         { get { throw new ShouldNotBeImplemented(); } }

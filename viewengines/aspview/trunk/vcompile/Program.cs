@@ -24,6 +24,7 @@ namespace vcompile
     using Microsoft.CSharp;
     using Castle.MonoRail.Views.AspView;
     using System.Configuration;
+    using System.Diagnostics;
 
     class Program
     {
@@ -34,7 +35,9 @@ namespace vcompile
             {
                 InitializeConfig();
 
-                string siteRoot = options.SiteRoot ?? args[0].Substring(3);
+                string siteRoot = options.SiteRoot;// ?? args[0].Substring(3);
+                if (args.Length > 0)
+                    Debug.Fail("Entering debug");
                 string[] references = options.AssembliesToReference.ToArray();
                 if (!Directory.Exists(siteRoot))
                 {

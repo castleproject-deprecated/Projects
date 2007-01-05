@@ -18,6 +18,7 @@ namespace Castle.MonoRail.Views.AspView.Tests
     using System;
     using Castle.MonoRail.TestSupport;
     using NUnit.Framework;
+    using System.Diagnostics;
 
     [TestFixture]
     public class SanityTestCase : AbstractMRTestCase
@@ -26,8 +27,7 @@ namespace Castle.MonoRail.Views.AspView.Tests
         public void SanityTest()
         {
             #region expected
-            string expected = @"
-<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
+            string expected = @"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
 
 <html xmlns=""http://www.w3.org/1999/xhtml"" >
 <head>
@@ -38,30 +38,22 @@ namespace Castle.MonoRail.Views.AspView.Tests
         hello from default layout
     </div>
     <div>
-        
- 
+         
  
 hello from index<br />
 This are the strings:<br />
-
     string no 1<br />
-
     string no 2<br />
-
     string no 3<br />
-
         
 <br />
 End of normal view
 <br />
-
-
 <div>Hello</div>
-<form action=""Print.rails"">
+<div>1</div><form action=""Print.rails"">
 <input type=""text"" name=""theText"" />
 <input type=""submit"" value=""send"" />
-</form>
-    </div>
+</form>    </div>
 </body>
 </html>
 ";

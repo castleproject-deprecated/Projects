@@ -33,5 +33,8 @@ namespace AspViewTestSite
             CancelView();
             RenderText("hello from print(). theText='{0}'", theText);
         }
+        public void SiteRoot()
+        {
+        }
     }
 }

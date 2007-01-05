@@ -28,6 +28,7 @@ namespace Castle.MonoRail.Views.AspView
         #region static readonly members
         private static readonly Regex findImportsDirectives = new Regex("<%@\\s*Import\\s+Namespace\\s*=\\s*\"(?<namespace>.*)\"\\s*%>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Regex findSubViewTags = new Regex("<subView:(?<viewName>[\\w\\.]+)\\s*(?<attributes>.*)\\s*>\\s*</subView:\\k<viewName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex findAttributes = new Regex("\\s*(?<name>\\w+)\\s*=\\s*\"(?<value>\\w*)\"\\s*");
         private static readonly string assemblyNamespace = "CompiledViews";
         private static readonly string assemblyFileName = assemblyNamespace + ".dll";
         #endregion
@@ -87,7 +88,6 @@ namespace Castle.MonoRail.Views.AspView
         {
             string viewName = match.Groups["viewName"].Value.Replace('.', '/');
             string arguments = match.Groups["attributes"].Value;
-            Regex findAttributes = new Regex("(?<name>\\S+)=\"(?<value>.*)\"");
             StringBuilder argumentsString = new StringBuilder();
             bool first = true;
             foreach (Match attribute in findAttributes.Matches(arguments))
@@ -255,6 +255,10 @@ namespace Castle.MonoRail.Views.AspView
                 markup = viewBody.Substring(index, end - index);
                 index = end;
             }
+            while (markup.IndexOf("\r\n") == 0)
+                markup = markup.Substring(2);
+//            while (markup.LastIndexOf("\r\n") == markup.Length - 2)
+//                markup = markup.Substring(0, markup.Length - 2);
             return markup;
         }
 

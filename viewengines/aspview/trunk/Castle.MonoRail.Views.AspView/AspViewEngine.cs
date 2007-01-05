@@ -278,5 +278,30 @@ namespace Castle.MonoRail.Views.AspView
             return sourcesList;
         }
 
+        public override object CreateJSGenerator(IRailsEngineContext context)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+        public override string ViewFileExtension
+        {
+            get { return "aspx"; }
+        }
+        public override string JSGeneratorFileExtension
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+        public override void ProcessPartial(TextWriter output, IRailsEngineContext context, Controller controller, string partialName)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+        public override bool SupportsJSGeneration
+        {
+            get { return false; }
+        }
+        public override void GenerateJS(TextWriter output, IRailsEngineContext context, Controller controller, string templateName)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
 	}
 }

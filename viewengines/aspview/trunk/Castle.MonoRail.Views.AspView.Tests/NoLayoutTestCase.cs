@@ -24,21 +24,21 @@ namespace Castle.MonoRail.Views.AspView.Tests
         [Test]
         public void NoLayoutWithoutProperties()
         {
-            string expected = "\r\nA View without any properties";
+            string expected = "A View without any properties";
             DoGet("nolayout/WithoutProperties.rails");
             AssertReplyEqualTo(expected);
         }
         [Test]
         public void NoLayoutWithPropertiesUsingFlash()
         {
-            string expected = "\r\nA View with properties: Flashed data";
+            string expected = "A View with properties: Flashed data";
             DoGet("nolayout/UsingFlash.rails");
             AssertReplyEqualTo(expected);
         }
         [Test]
         public void NoLayoutWithPropertiesUsingPropertyBag()
         {
-            string expected = "\r\nA View with properties: PropertyBaged data";
+            string expected = "A View with properties: PropertyBaged data";
             DoGet("nolayout/UsingPropertyBag.rails");
             AssertReplyEqualTo(expected);
         }

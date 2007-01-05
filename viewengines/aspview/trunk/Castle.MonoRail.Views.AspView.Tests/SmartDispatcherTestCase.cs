@@ -24,7 +24,7 @@ namespace Castle.MonoRail.Views.AspView.Tests
         [Test]
         public void CanMapIntAndString()
         {
-            string expected = "\r\n Saved OK. <br />\r\n message: id: 1 | name: Ken Egozi";
+            string expected = " Saved OK. <br />\r\n message: id: 1 | name: Ken Egozi";
             string[] parameters = new string[2] { "id=1","name=Ken%20Egozi" };
             DoPost("SmartDispatcherTest/Save.rails", parameters);
             AssertReplyEqualTo(expected);

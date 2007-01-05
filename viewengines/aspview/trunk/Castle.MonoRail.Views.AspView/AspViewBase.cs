@@ -49,6 +49,13 @@ using Castle.MonoRail.Framework.Helpers;
 		{
 			get { return (string)Properties["siteRoot"]; }
 		}
+		/// <summary>
+		/// Gets the Application's full virtual root, including protocol, host and port
+		/// </summary>
+        protected string fullSiteRoot
+		{
+            get { return (string)Properties["fullSiteRoot"]; }
+		}
         /// <summary>
         /// Gets the DictHelper instance
         /// </summary>
@@ -59,9 +66,9 @@ using Castle.MonoRail.Framework.Helpers;
         /// <summary>
         /// Gets the Effects2Helper instance
         /// </summary>
-        protected Effects2Helper Effects2Helper 
+        protected ScriptaculousHelper ScriptaculousHelper
         {
-            get { return (Effects2Helper)Properties["Effects2Helper"]; }
+            get { return (ScriptaculousHelper)Properties["ScriptaculousHelper"]; }
         }
         /// <summary>
         /// Gets the EffectsFatHelper instance
@@ -206,6 +213,7 @@ using Castle.MonoRail.Framework.Helpers;
             foreach (DictionaryEntry entry in _controller.PropertyBag)
                 _properties[entry.Key.ToString()] = entry.Value;
             _properties["siteRoot"] = _context.ApplicationPath;
+            _properties["fullSiteRoot"] = _context.Request.Uri.GetLeftPart(UriPartial.Authority) + _context.ApplicationPath;
             _extentedPropertiesList = new List<IDictionary<string, object>>();
         }
         /// <summary>

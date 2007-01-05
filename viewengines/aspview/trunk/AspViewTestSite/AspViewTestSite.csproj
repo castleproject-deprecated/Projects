@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Helpers\Index.aspx" />
+    <Content Include="Views\Home\SiteRoot.aspx" />
     <Content Include="Views\Home\SubViewSample.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Layouts\Default.aspx" />

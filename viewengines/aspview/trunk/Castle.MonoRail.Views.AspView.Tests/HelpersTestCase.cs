@@ -24,7 +24,7 @@ namespace Castle.MonoRail.Views.AspView.Tests
         [Test]
         public void FormHelperGeneratesTextField()
         {
-            string expected = "\r\n<input type=\"text\" id=\"object_field\" name=\"object.field\" value=\"\" />";
+            string expected = "<input type=\"text\" id=\"object_field\" name=\"object.field\" value=\"\" />";
             DoGet("helpers/index.rails");
             AssertReplyEqualTo(expected);
         }

@@ -103,8 +103,10 @@ namespace Castle.MonoRail.Views.AspView
                 else
                 {
                     string markup = GetMarkup(viewBody, ref index);
-                    writer.Write("Output(@\"");
                     markup = markup.Replace("\"", "\"\"");
+                    markup = markup.Replace("~~", "\"); Output(fullSiteRoot); Output(@\"");
+                    markup = markup.Replace("~", "\"); Output(siteRoot); Output(@\"");
+                    writer.Write("Output(@\"");
                     writer.Write(markup);
                     writer.WriteLine("\");");
                 }

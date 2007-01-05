@@ -24,8 +24,7 @@ namespace Castle.MonoRail.Views.AspView.Tests
         [Test]
         public void Show()
         {
-            string expected = @"
-<form action=""Save.rails"">
+            string expected = @"<form action=""Save.rails"">
     <input type=""text"" name=""post.PublishDate"" value='01/01/2001 00:00:00' />
     <input type=""text"" name=""post.Content"" value='AspView rock' />
     <input type=""submit"" value=""Save"" />

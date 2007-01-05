@@ -14,7 +14,7 @@ This are the strings:<br />
 End of normal view
 <br />
 <%string message = "Hello";%>
-<subView:SubViewSample message="message"></subView:SubViewSample>
+<subView:SubViewSample message="message" number = "1" ></subView:SubViewSample>
 <form action="Print.rails">
 <input type="text" name="theText" />
 <input type="submit" value="send" />
