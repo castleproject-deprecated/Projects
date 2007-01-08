@@ -21,11 +21,12 @@ namespace Castle.MonoRail.Views.AspView
 
     using Castle.MonoRail.Framework;
 using Castle.MonoRail.Framework.Helpers;
+    using System.Reflection;
 
     public abstract class AspViewBase
     {
         #region members
-        protected TextWriter _outputStream;
+        protected TextWriter _outputWriter;
         protected TextWriter _viewOutput;
         protected Dictionary<string, object> _properties;
         protected IList<IDictionary<string, object>> _extentedPropertiesList;
@@ -116,9 +117,9 @@ using Castle.MonoRail.Framework.Helpers;
         /// <summary>
         /// Gets the output writer for the current view rendering
         /// </summary>
-        public TextWriter OutputStream
+        public TextWriter OutputWriter
         {
-            get { return _outputStream; }
+            get { return _outputWriter; }
         }
         /// <summary>
         /// Used only in layouts. Gets or sets the output writer for the view
@@ -184,7 +185,7 @@ using Castle.MonoRail.Framework.Helpers;
         public AspViewBase(AspViewEngine viewEngine, TextWriter output, IRailsEngineContext context, Controller controller)
         {
             _viewEngine = viewEngine;
-            _outputStream = output;
+            _outputWriter = output;
             _context = context;
             _controller = controller;
             InitProperties(context, controller);
@@ -240,7 +241,7 @@ using Castle.MonoRail.Framework.Helpers;
         protected void OutputSubView(string subViewName, IDictionary<string, object> parameters)
         {
             string subViewFileName = GetSubViewFileName(subViewName);
-            AspViewBase subView = _viewEngine.GetView(subViewFileName, _outputStream, _context, _controller);
+            AspViewBase subView = _viewEngine.GetView(subViewFileName, _outputWriter, _context, _controller);
             if (parameters != null)
                 foreach (string key in parameters.Keys)
                     if (parameters[key] != null)
@@ -270,9 +271,48 @@ using Castle.MonoRail.Framework.Helpers;
             OutputSubView(subViewName, parameters);
         }
 
+        Stack<TextWriter> outputWriters = new Stack<TextWriter>();
+        Stack<IViewFilter> viewFilters = new Stack<IViewFilter>();
+
+        protected void StartFiltering(string filterName)
+        {
+            Type filterType = null;
+            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                foreach (Type type in assembly.GetTypes())
+                {
+                    if (type.Name == filterName && type.GetInterface("IViewFilter") != null)
+                    {
+                        filterType = type;
+                        break;
+                    }
+
+                }
+            }
+            if (filterType == null)
+                throw new RailsException("Cannot find a viewfilter [{0}]", filterName);
+            IViewFilter filter = (IViewFilter)Activator.CreateInstance(filterType);
+            StartFiltering(filter);
+        }
+        protected void StartFiltering(IViewFilter filter)
+        {
+            outputWriters.Push(_outputWriter);
+            _outputWriter = new StringWriter();
+            viewFilters.Push(filter);
+        }
+        protected void EndFiltering()
+        {
+            string original = _outputWriter.ToString();
+            IViewFilter filter = viewFilters.Pop();
+            string filtered = filter.ApplyOn(original);
+            _outputWriter.Dispose();
+            _outputWriter = outputWriters.Pop();
+            _outputWriter.Write(filtered);
+        }
+
         protected void Output(string message)
         {
-            OutputStream.Write(message);
+            OutputWriter.Write(message);
         }
         protected void Output(string message, params object[] arguments)
         {
@@ -331,5 +371,7 @@ using Castle.MonoRail.Framework.Helpers;
         {
             _parentView = view;
         }
+
     }
+
 }

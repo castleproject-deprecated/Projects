@@ -55,6 +55,7 @@
     <Compile Include="AspViewException.cs" />
     <Compile Include="AspViewFile.cs" />
     <Compile Include="AspViewPreProcessor.cs" />
+    <Compile Include="IViewFilter.cs" />
     <Compile Include="VbPreProcessor.cs" />
     <Compile Include="CaseInsensitiveStringComparer.cs" />
     <Compile Include="LanguagePreProcessor.cs" />
@@ -63,6 +64,8 @@
     <Compile Include="ViewAtDesignTime.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="ViewFilters\LowerCaseViewFilter.cs" />
+    <Compile Include="ViewFilters\UpperCaseViewFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="KenEgoziOpenSource.snk" />

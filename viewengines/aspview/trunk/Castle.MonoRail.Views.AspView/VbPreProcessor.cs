@@ -160,5 +160,25 @@ namespace Castle.MonoRail.Views.AspView
         {
             writer.WriteLine("End Namespace");
         }
+
+        protected override string GetViewFilterCloseStatement()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        protected override string GetLateBoundViewFilterOpenStatement(string filterName)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        protected override string GetEarlyBoundViewFilterOpenStatement(string filterName)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        protected override string GetSubViewStatement(string viewName, string parameters)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
     }
 }

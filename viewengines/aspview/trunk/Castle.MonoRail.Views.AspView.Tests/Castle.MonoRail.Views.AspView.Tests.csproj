@@ -52,6 +52,7 @@
     <Compile Include="SanityTestCase.cs" />
     <Compile Include="SmartDispatcherTestCase.cs" />
     <Compile Include="UsingReferencesTestCase.cs" />
+    <Compile Include="ViewFiltersTestCases.cs" />
     <Compile Include="WithLayoutTestCase.cs" />
   </ItemGroup>
   <ItemGroup>

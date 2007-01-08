@@ -22,12 +22,14 @@ namespace Castle.MonoRail.Views.AspView
     using System.Collections.Specialized;
     using System.IO;
     using Castle.MonoRail.Framework;
+    using System.Reflection;
 
     public abstract class LanguagePreProcessor
     {
         #region static readonly members
         private static readonly Regex findImportsDirectives = new Regex("<%@\\s*Import\\s+Namespace\\s*=\\s*\"(?<namespace>.*)\"\\s*%>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Regex findSubViewTags = new Regex("<subView:(?<viewName>[\\w\\.]+)\\s*(?<attributes>.*)\\s*>\\s*</subView:\\k<viewName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex findViewFiltersTags = new Regex("<filter:(?<filterName>\\w+)(?<attributes>[\\w\"\\s]*)>(?<content>.*)</filter:\\k<filterName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
         private static readonly Regex findAttributes = new Regex("\\s*(?<name>\\w+)\\s*=\\s*\"(?<value>\\w*)\"\\s*");
         private static readonly string assemblyNamespace = "CompiledViews";
         private static readonly string assemblyFileName = assemblyNamespace + ".dll";
@@ -81,9 +83,55 @@ namespace Castle.MonoRail.Views.AspView
 
         private string ProcessViewBody(string viewBody)
         {
-            return findSubViewTags.Replace(viewBody,SubViewTagHandler);
+            string processedBody = ProcessSubViewTags(viewBody);
+            processedBody = ProcessViewFilterTags(processedBody);
+            return processedBody;
         }
 
+        protected string ProcessSubViewTags(string input)
+        {
+            return findSubViewTags.Replace(input, SubViewTagHandler);
+        }
+
+        private string ProcessViewFilterTags(string input)
+        {
+            string processed = string.Empty;
+            string current = input;
+            while (processed != current)
+            {
+                processed = current;
+                current = findViewFiltersTags.Replace(processed, ViewFilterTagHandler);
+            }
+            return processed;
+        }
+
+        private string ViewFilterTagHandler(Match match)
+        {
+            string filterName = match.Groups["filterName"].Value;
+            string content = match.Groups["content"].Value;
+            string openTag = FilterCanBeBoundEarly(filterName) ?
+                GetEarlyBoundViewFilterOpenStatement(filterName):
+                GetLateBoundViewFilterOpenStatement(filterName);
+            string closeTag = GetViewFilterCloseStatement();
+            return string.Format("<% {0} %>{1}<% {2} %>", openTag, content, closeTag);
+        }
+
+        protected abstract string GetViewFilterCloseStatement();
+
+        protected abstract string GetLateBoundViewFilterOpenStatement(string filterName);
+
+        protected abstract string GetEarlyBoundViewFilterOpenStatement(string filterName);
+
+        protected string GetAssemblyQualifiedViewFilterName(string filterName)
+        {
+            return "Castle.MonoRail.Views.AspView.ViewFilters." + filterName;
+        }
+
+        private bool FilterCanBeBoundEarly(string filterName)
+        {
+            Type t = Type.GetType(GetAssemblyQualifiedViewFilterName(filterName), false);
+            return t != null;
+        }
         private string SubViewTagHandler(Match match)
         {
             string viewName = match.Groups["viewName"].Value.Replace('.', '/');
@@ -96,11 +144,11 @@ namespace Castle.MonoRail.Views.AspView
                     attribute.Groups["name"].Value,
                     attribute.Groups["value"].Value);
             }
-            return string.Format("<% OutputSubView(\"{0}\"{1}); %>",
-                viewName,
-                argumentsString.ToString());
+            return string.Format("<% {0} %>",
+                GetSubViewStatement(viewName, argumentsString.ToString()));
         }
 
+        protected abstract string GetSubViewStatement(string viewName, string parameters);
 
         private string GetDirectory(string viewName)
         {

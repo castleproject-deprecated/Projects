@@ -49,7 +49,27 @@ namespace Castle.MonoRail.Views.AspView
 			return source;
 		}
 
-		protected override void WriteNamespace(StringWriter writer, string assemblyNamespace)
+        protected override string GetViewFilterCloseStatement()
+        {
+            return "EndFiltering();";
+        }
+
+        protected override string GetLateBoundViewFilterOpenStatement(string filterName)
+        {
+            return string.Format("StartFiltering(\"{0}\");", filterName);
+        }
+
+        protected override string GetEarlyBoundViewFilterOpenStatement(string filterName)
+        {
+            return string.Format("StartFiltering(new {0}());",
+                GetAssemblyQualifiedViewFilterName(filterName));
+        }
+        protected override string GetSubViewStatement(string viewName, string parameters)
+        {
+            return string.Format("OutputSubView(\"{0}\"{1});",
+                viewName, parameters);
+        }
+        protected override void WriteNamespace(StringWriter writer, string assemblyNamespace)
 		{
 			writer.WriteLine("namespace {0}", assemblyNamespace);
 		}
