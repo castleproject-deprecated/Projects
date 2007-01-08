@@ -37,7 +37,25 @@ Finally - outside the filter";
             AssertReplyEqualTo(expected);
         }
 
-        [Test]
+		[Test]
+		public void HtmlDecodeFilterWorks()
+		{
+			#region expected
+			string expected = @"<html>";
+			#endregion
+			DoGet("ViewFilters/HtmlDecodeViewFilter.rails");
+			AssertReplyEqualTo(expected);
+		}
+		[Test]
+		public void HtmlEncodeFilterWorks()
+		{
+			#region expected
+			string expected = @"&lt;html&gt;";
+			#endregion
+			DoGet("ViewFilters/HtmlEncodeViewFilter.rails");
+			AssertReplyEqualTo(expected);
+		}
+		[Test]
         public void SingleLineCustomViewFilterWorks()
         {
             #region expected

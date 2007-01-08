@@ -76,6 +76,8 @@
     <Content Include="Views\NoLayout\WithoutProperties.aspx" />
     <Content Include="Views\SmartDispatcherTest\Save.aspx" />
     <Content Include="Views\UsingReferences\Show.aspx" />
+    <Content Include="Views\ViewFilters\HtmlDecodeViewFilter.aspx" />
+    <Content Include="Views\ViewFilters\HtmlEncodeViewFilter.aspx" />
     <Content Include="Views\ViewFilters\LowerAndUpperCaseViewFilters.aspx" />
     <Content Include="Views\ViewFilters\MixViewFilters.aspx" />
     <Content Include="Views\ViewFilters\SingleLineCustomViewFilter.aspx" />

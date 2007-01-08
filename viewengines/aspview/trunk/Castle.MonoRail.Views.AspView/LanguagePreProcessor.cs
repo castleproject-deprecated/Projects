@@ -108,6 +108,8 @@ namespace Castle.MonoRail.Views.AspView
         private string ViewFilterTagHandler(Match match)
         {
             string filterName = match.Groups["filterName"].Value;
+			if (!filterName.EndsWith("ViewFilter", StringComparison.CurrentCultureIgnoreCase))
+				filterName += "ViewFilter";
             string content = match.Groups["content"].Value;
             string openTag = FilterCanBeBoundEarly(filterName) ?
                 GetEarlyBoundViewFilterOpenStatement(filterName):
@@ -129,7 +131,7 @@ namespace Castle.MonoRail.Views.AspView
 
         private bool FilterCanBeBoundEarly(string filterName)
         {
-            Type t = Type.GetType(GetAssemblyQualifiedViewFilterName(filterName), false);
+            Type t = Type.GetType(GetAssemblyQualifiedViewFilterName(filterName), false, true);
             return t != null;
         }
         private string SubViewTagHandler(Match match)
@@ -137,7 +139,6 @@ namespace Castle.MonoRail.Views.AspView
             string viewName = match.Groups["viewName"].Value.Replace('.', '/');
             string arguments = match.Groups["attributes"].Value;
             StringBuilder argumentsString = new StringBuilder();
-            bool first = true;
             foreach (Match attribute in findAttributes.Matches(arguments))
             {
                 argumentsString.AppendFormat(",\"{0}\", {1}",

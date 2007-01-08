@@ -2,9 +2,9 @@
 <%
 %>
 outside the filter
-<filter:SingleLineViewFilter>
+<filter:SingleLine>
 first line
 second line
-</filter:SingleLineViewFilter>
+</filter:SingleLine>
 outside the filter again - first line
 outside the filter again - second line

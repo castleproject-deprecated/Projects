@@ -2,12 +2,12 @@
 <%
 %>
 outside the filter
-<filter:SingleLineViewFilter>
+<filter:SingleLine>
 first line
-<filter:UpperCaseViewFilter>
+<filter:UpperCase>
 THIS TEXT SHOULD BE IN UPPER CASE AND IN THE SAME LINE AS THE SURROUNDING TEXT
-</filter:UpperCaseViewFilter>
+</filter:UpperCase>
 second line
-</filter:SingleLineViewFilter>
+</filter:SingleLine>
 outside the filter again - first line
 outside the filter again - second line

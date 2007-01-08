@@ -2,11 +2,11 @@
 <%
 %>
 Outside the filter
-<filter:LowerCaseViewFilter>
+<filter:LowerCase>
 Inside the LowerCaseViewFilter - this text should be viewed in lower case
-</filter:LowerCaseViewFilter>
+</filter:LowerCase>
 Outside the filter AGain
-<filter:UpperCaseViewFilter>
+<filter:UpperCase>
 Inside the UpperCaseViewFilter - this text should be viewed in upper case
-</filter:UpperCaseViewFilter>
+</filter:UpperCase>
 Finally - outside the filter

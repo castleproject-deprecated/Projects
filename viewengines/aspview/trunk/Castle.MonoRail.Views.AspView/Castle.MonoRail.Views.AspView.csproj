@@ -64,6 +64,8 @@
     <Compile Include="ViewAtDesignTime.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="ViewFilters\HtmlDecodeViewFilter.cs" />
+    <Compile Include="ViewFilters\HtmlEncodeViewFilter.cs" />
     <Compile Include="ViewFilters\LowerCaseViewFilter.cs" />
     <Compile Include="ViewFilters\UpperCaseViewFilter.cs" />
   </ItemGroup>

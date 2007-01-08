@@ -274,23 +274,28 @@ using Castle.MonoRail.Framework.Helpers;
         Stack<TextWriter> outputWriters = new Stack<TextWriter>();
         Stack<IViewFilter> viewFilters = new Stack<IViewFilter>();
 
+		private Type GetFilterType(string filterName)
+		{
+			Type filterType = null;
+			foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+			{
+				foreach (Type type in assembly.GetTypes())
+				{
+					if (type.Name.Equals(filterName, StringComparison.CurrentCultureIgnoreCase) && type.GetInterface("IViewFilter") != null)
+					{
+						filterType = type;
+						break;
+					}
+
+				}
+			}
+			if (filterType == null)
+				throw new RailsException("Cannot find a viewfilter [{0}]", filterName);
+			return filterType;
+		}
         protected void StartFiltering(string filterName)
         {
-            Type filterType = null;
-            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                foreach (Type type in assembly.GetTypes())
-                {
-                    if (type.Name == filterName && type.GetInterface("IViewFilter") != null)
-                    {
-                        filterType = type;
-                        break;
-                    }
-
-                }
-            }
-            if (filterType == null)
-                throw new RailsException("Cannot find a viewfilter [{0}]", filterName);
+            Type filterType = GetFilterType(filterName);
             IViewFilter filter = (IViewFilter)Activator.CreateInstance(filterType);
             StartFiltering(filter);
         }
