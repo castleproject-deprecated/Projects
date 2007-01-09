@@ -2,21 +2,52 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspViewTestSite", "AspViewTestSite\AspViewTestSite.csproj", "{65929B65-C749-43C8-9EA8-5EFFFAE16A5C}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{36052ED8-861B-49E3-B2D8-9C7DCDAF7E14} = {36052ED8-861B-49E3-B2D8-9C7DCDAF7E14}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.Views.AspView", "Castle.MonoRail.Views.AspView\Castle.MonoRail.Views.AspView.csproj", "{41B2C873-254B-4BC5-8514-AD33ED3B5934}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vcompile", "vcompile\vcompile.csproj", "{36052ED8-861B-49E3-B2D8-9C7DCDAF7E14}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.Views.AspView.Tests", "Castle.MonoRail.Views.AspView.Tests\Castle.MonoRail.Views.AspView.Tests.csproj", "{5797C3B2-2994-42F4-9FCE-12B288A8A1E8}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{648DC04C-1AAE-4113-A8E9-097F444AA0D8}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Solution Items\KenEgoziOpenSource.snk = Solution Items\KenEgoziOpenSource.snk
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{AD4AC238-0320-4805-88B4-C9A77D4C09F6}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Castle", "Castle", "{7C0F01C7-F300-403E-8C6C-6347F1A544D8}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Solution Items\Lib\Castle\Castle.Core.dll = Solution Items\Lib\Castle\Castle.Core.dll
 		Solution Items\Lib\Castle\Castle.Core.pdb = Solution Items\Lib\Castle\Castle.Core.pdb
@@ -29,6 +60,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Castle", "Castle", "{7C0F01
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestModel", "TestModel\TestModel.csproj", "{5BCEC661-5B7B-4E00-AA19-95B367BF996F}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

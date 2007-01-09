@@ -20,7 +20,7 @@ namespace Castle.MonoRail.Views.AspView
 
 	public class VbPreProcessor : LanguagePreProcessor
 	{
-        protected override void ProcessProperties(string propertiesSection, Dictionary<string, string> properties)
+        protected override void ProcessProperties(string propertiesSection, Dictionary<string, ViewProperty> properties)
         {
             propertiesSection = StripRemarks(propertiesSection);
             string[] propertiesDeclerations = propertiesSection.Split(';');
@@ -39,7 +39,7 @@ namespace Castle.MonoRail.Views.AspView
                     name = name.Remove(name.Length - 2);
                     type += "()";
                 }
-                properties.Add(name, type);
+                properties.Add(name, new ViewProperty(name, type, null));
             }
 
         }
@@ -79,14 +79,14 @@ namespace Castle.MonoRail.Views.AspView
             writer.WriteLine("End Sub");
         }
 
-        protected override void WriteProperties(StringWriter writer, Dictionary<string, string> properties)
+        protected override void WriteProperties(StringWriter writer, Dictionary<string, ViewProperty> properties)
         {
             foreach (string name in properties.Keys)
             {
-                string type = properties[name];
-                writer.WriteLine("Private ReadOnly Property {0}() As {1}",name, type);
+                ViewProperty prop = properties[name];
+                writer.WriteLine("Private ReadOnly Property {0}() As {1}", prop.Name, prop.Type);
                 writer.WriteLine("Get");
-                writer.WriteLine("Return DirectCast(Properties(\"{0}\"), {1})",name,type);
+                writer.WriteLine("Return DirectCast(Properties(\"{0}\"), {1})", prop.Name, prop.Type);
                 writer.WriteLine("End Get");
                 writer.WriteLine("End Property");
             }

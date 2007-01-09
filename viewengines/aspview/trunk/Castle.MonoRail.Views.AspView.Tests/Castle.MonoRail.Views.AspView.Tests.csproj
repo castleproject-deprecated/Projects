@@ -48,6 +48,7 @@
     <Compile Include="CSharpPreProcessorTestCases.cs" />
     <Compile Include="HelpersTestCase.cs" />
     <Compile Include="NoLayoutTestCase.cs" />
+    <Compile Include="PropertiesTestCases.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SanityTestCase.cs" />
     <Compile Include="SmartDispatcherTestCase.cs" />

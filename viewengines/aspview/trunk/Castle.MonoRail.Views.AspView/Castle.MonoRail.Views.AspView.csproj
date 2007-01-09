@@ -68,6 +68,7 @@
     <Compile Include="ViewFilters\HtmlEncodeViewFilter.cs" />
     <Compile Include="ViewFilters\LowerCaseViewFilter.cs" />
     <Compile Include="ViewFilters\UpperCaseViewFilter.cs" />
+    <Compile Include="ViewProperty.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="KenEgoziOpenSource.snk" />

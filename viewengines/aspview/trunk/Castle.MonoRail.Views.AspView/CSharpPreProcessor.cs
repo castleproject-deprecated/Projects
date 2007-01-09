@@ -20,7 +20,7 @@ namespace Castle.MonoRail.Views.AspView
 
 	public class CSharpPreProcessor : LanguagePreProcessor
 	{
-        protected override void ProcessProperties(string propertiesSection, Dictionary<string, string> properties)
+        protected override void ProcessProperties(string propertiesSection, Dictionary<string, ViewProperty> properties)
         {
             propertiesSection = StripRemarks(propertiesSection);
             string[] propertiesDeclerations = propertiesSection.Split(';');
@@ -29,12 +29,17 @@ namespace Castle.MonoRail.Views.AspView
                 string prop = propertiesDecleration.Trim();
                 if (prop == string.Empty)
                     continue;
-                int lastSpace = prop.LastIndexOf(" ");
+                string[] mainParts = prop.Split(new char[1]{'='},2);
+                string propDecleration = mainParts[0].Trim();
+                string defaultValue = null;
+                if (mainParts.Length == 2)
+                    defaultValue = mainParts[1].Trim();
+                int lastSpace = propDecleration.LastIndexOf(" ");
                 if (lastSpace == -1)
                     throw new Exception("Illegal property decleration: '" + prop + "'");
-                string type = prop.Substring(0, lastSpace).Trim();
-                string name = prop.Substring(lastSpace).Trim();
-                properties.Add(name, type);
+                string type = propDecleration.Substring(0, lastSpace).Trim();
+                string name = propDecleration.Substring(lastSpace).Trim();
+                properties.Add(name, new ViewProperty(name, type, defaultValue));
             }
 
         }
@@ -92,17 +97,18 @@ namespace Castle.MonoRail.Views.AspView
 				className);
 		}
 
-		protected override void WriteProperties(StringWriter writer, Dictionary<string, string> properties)
+		protected override void WriteProperties(StringWriter writer, Dictionary<string, ViewProperty> properties)
 		{
             foreach (string name in properties.Keys)
             {
-                string type = properties[name];
+                ViewProperty prop = properties[name];
+                string defaultValueString =
+                    prop.DefaultValue != null ? ", " + prop.DefaultValue : string.Empty;
                 writer.WriteLine(
-                    "private {0} {1} {{ get {{ return ({0})GetParameter(\"{1}\"); }} }}",
-                    type, name);
+                    @"private {0} {1} {{ get {{ return ({0})GetParameter(""{1}""{2}); }} }}",
+                    prop.Type, prop.Name, defaultValueString);
             }
         }
-
 		protected override void WriteRenderDecleration(StringWriter writer)
 		{
             writer.WriteLine("public override void Render()");

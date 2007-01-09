@@ -20,7 +20,7 @@ namespace Castle.MonoRail.Views.AspView
     using System.Collections;
 
     using Castle.MonoRail.Framework;
-using Castle.MonoRail.Framework.Helpers;
+    using Castle.MonoRail.Framework.Helpers;
     using System.Reflection;
 
     public abstract class AspViewBase
@@ -271,9 +271,19 @@ using Castle.MonoRail.Framework.Helpers;
             OutputSubView(subViewName, parameters);
         }
 
+        /// <summary>
+        /// Stack of writers, used as buffers for viewfilters
+        /// </summary>
         Stack<TextWriter> outputWriters = new Stack<TextWriter>();
+        /// <summary>
+        /// Maintains the currently active view filters
+        /// </summary>
         Stack<IViewFilter> viewFilters = new Stack<IViewFilter>();
-
+        /// <summary>
+        /// Searching a view filter given it's type's name
+        /// </summary>
+        /// <param name="filterName">the filter's typeName</param>
+        /// <returns>System.Type of the filter</returns>
 		private Type GetFilterType(string filterName)
 		{
 			Type filterType = null;
@@ -293,18 +303,29 @@ using Castle.MonoRail.Framework.Helpers;
 				throw new RailsException("Cannot find a viewfilter [{0}]", filterName);
 			return filterType;
 		}
+        /// <summary>
+        /// Signaling the current view to start bufferring the following writes, filtering it later
+        /// </summary>
+        /// <param name="filterName">The filter's type name to apply</param>
         protected void StartFiltering(string filterName)
         {
             Type filterType = GetFilterType(filterName);
             IViewFilter filter = (IViewFilter)Activator.CreateInstance(filterType);
             StartFiltering(filter);
         }
+        /// <summary>
+        /// Signaling the current view to start bufferring the following writes, filtering it later
+        /// </summary>
+        /// <param name="filter">The filter to apply</param>
         protected void StartFiltering(IViewFilter filter)
         {
             outputWriters.Push(_outputWriter);
             _outputWriter = new StringWriter();
             viewFilters.Push(filter);
         }
+        /// <summary>
+        /// Signals the current view to apply the last view filter that was started on the buffered output
+        /// </summary>
         protected void EndFiltering()
         {
             string original = _outputWriter.ToString();
@@ -314,20 +335,36 @@ using Castle.MonoRail.Framework.Helpers;
             _outputWriter = outputWriters.Pop();
             _outputWriter.Write(filtered);
         }
-
+        /// <summary>
+        /// Output a string to the current output writer
+        /// </summary>
+        /// <param name="message">Message to output</param>
         protected void Output(string message)
         {
             OutputWriter.Write(message);
         }
+        /// <summary>
+        /// Output a string to the current output writer
+        /// </summary>
+        /// <param name="message">Message to output</param>
+        /// <param name="arguments">Message's format arguments</param>
         protected void Output(string message, params object[] arguments)
         {
             Output(string.Format(message, arguments));
         }
+        /// <summary>
+        /// Output an object's 'ToString()' to the current output writer
+        /// </summary>
+        /// <param name="message">object to output</param>
         protected void Output(object message)
         {
             Output(message.ToString());
         }
-
+        /// <summary>
+        /// Gets a quallified path and filename to a sub view given it's name
+        /// </summary>
+        /// <param name="subViewName">The sub view's name</param>
+        /// <returns>Relative or absolute path and filename to the sub view</returns>
         private string GetSubViewFileName(string subViewName)
         {
             if (subViewName[0] == '/' || subViewName[0] == '\\')
@@ -335,35 +372,60 @@ using Castle.MonoRail.Framework.Helpers;
             else
                 return Path.Combine(ViewDirectory, subViewName + _viewEngine.Extension);
         }
-
+        /// <summary>
+        /// Gets a parameter's value from the view's propery containers.
+        /// will throw exception if the parameter is not found
+        /// </summary>
+        /// <param name="parameterName">Parameter's name to look for</param>
+        /// <returns>The parametr's value</returns>
         protected object GetParameter(string parameterName)
         {
-            object value = GetParameterInternal(parameterName);
-            if (value == null)
+            object value;
+            if (!TryGetParameter(parameterName, out value))
                 throw new RailsException("Parameter '" + parameterName + "' was not found!");
             return value;
         }
-        protected bool TryGetParameter(string parameterName, out object parameter)
+        /// <summary>
+        /// Gets a parameter's value from the view's propery containers.
+        /// will return a default value if the parameter is not found
+        /// </summary>
+        /// <param name="parameterName">Parameter's name to look for</param>
+        /// <param name="defaultValue">The value to use if the parameter will not be found</param>
+        /// <returns>The parametr's value</returns>
+        protected object GetParameter(string parameterName, object defaultValue)
         {
-            parameter = GetParameterInternal(parameterName);
-            return parameter != null;
-        }
-        protected object GetParameterInternal(string propertyName)
-        {
-            object value = null;
-            if (_properties.ContainsKey(propertyName))
-                value = _properties[propertyName];
-            if (value == null)
-            {
-                foreach (IDictionary<string, object> dic in _extentedPropertiesList)
-                    if (dic.ContainsKey(propertyName))
-                    {
-                        value = dic[propertyName];
-                        break;
-                    }
-            }
+            object value;
+            if (!TryGetParameter(parameterName, out value))
+                value = defaultValue;
             return value;
         }
+        /// <summary>
+        /// Actually looking in the property containers for a parameter's value given it's name
+        /// </summary>
+        /// <param name="parameterName">The parameter's name</param>
+        /// <param name="parameter">The parameter's value</param>
+        /// <returns>True if the property is found, False elsewhere</returns>
+        protected bool TryGetParameter(string parameterName, out object parameter)
+        {
+            if (_properties.ContainsKey(parameterName))
+            {
+                parameter = _properties[parameterName];
+                return true;
+            }
+            
+            foreach (IDictionary<string, object> dic in _extentedPropertiesList)
+                if (dic.ContainsKey(parameterName))
+                {
+                    parameter = dic[parameterName];
+                    return true;
+                }
+            parameter = null;
+            return false;
+        }
+        /// <summary>
+        /// Adds a property container to the _extentedPropertiesList
+        /// </summary>
+        /// <param name="properties">A property container </param>
         protected void AddProperties(IDictionary<string, object> properties)
         {
             _extentedPropertiesList.Add(properties);
@@ -371,12 +433,13 @@ using Castle.MonoRail.Framework.Helpers;
 
         protected abstract string ViewDirectory { get; }
         protected abstract string ViewName { get; }
-
+        /// <summary>
+        /// Sets a view's parent view. Used in layouts
+        /// </summary>
+        /// <param name="view">The view's parent</param>
         internal void SetParent(AspViewBase view)
         {
             _parentView = view;
         }
-
     }
-
 }

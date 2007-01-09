@@ -50,7 +50,7 @@ namespace Castle.MonoRail.Views.AspView
 
             Dictionary<string, object> imports = new Dictionary<string, object>();
             Dictionary<string, object> references = new Dictionary<string, object>();
-            Dictionary<string, string> properties = new Dictionary<string, string>();
+            Dictionary<string, ViewProperty> properties = new Dictionary<string, ViewProperty>();
 
             string directivesSection = GetDirectivesSection(file.ViewSource, ref index);
 			string propertiesSection = GetPropertiesSection(file.ViewSource, ref index);
@@ -282,7 +282,7 @@ namespace Castle.MonoRail.Views.AspView
         /// </summary>
         /// <param name="propertiesSection">The properties section from the source view</param>
         /// <param name="properties">The properties <name,type> container(</param>
-        protected abstract void ProcessProperties(string propertiesSection, Dictionary<string, string> properties);
+        protected abstract void ProcessProperties(string propertiesSection, Dictionary<string, ViewProperty> properties);
 
         /// <summary>
         /// Gets the next markup string from the view's source
@@ -371,7 +371,7 @@ namespace Castle.MonoRail.Views.AspView
         /// </summary>
 		/// <param name="writer">A StringWriter that writes the generated class</param>
 		/// <param name="properties">Properties container</param>
-		protected abstract void WriteProperties(StringWriter writer, Dictionary<string, string> properties);
+		protected abstract void WriteProperties(StringWriter writer, Dictionary<string, ViewProperty> properties);
 
         /// <summary>
         /// Writes the Render method decleration to the buffer

@@ -12,32 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace AspViewTestSite
+namespace Castle.MonoRail.Views.AspView
 {
-    using Castle.MonoRail.Framework;
-
-    public class HomeController : SmartDispatcherController
+    public class ViewProperty
     {
-        [Layout("default")]
-        public void Index()
+        private string _name;
+        private string _type;
+        private string _defaultValue = null;
+
+        public ViewProperty(string name, string type, string defaultValue)
         {
-            string[] strings = new string[3];
-            strings[0] = "string no 1";
-            strings[1] = "string no 2";
-            strings[2] = "string no 3";
-            PropertyBag["strings"] = strings;
+            _name = name;
+            _type = type;
+            _defaultValue = defaultValue;
         }
 
-        public void Print(string theText)
+        public string Name
         {
-            CancelView();
-            RenderText("hello from print(). theText='{0}'", theText);
+            get { return _name; }
+            set { _name = value; }
         }
-        public void SiteRoot()
+        public string Type
         {
+            get { return _type; }
+            set { _type = value; }
         }
-        public void DefaultValues()
+        public string DefaultValue
         {
+            get { return _defaultValue; }
+            set { _defaultValue = value; }
         }
     }
 }
