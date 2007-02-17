@@ -14,70 +14,36 @@
 
 namespace Castle.MonoRail.Views.AspView
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Reflection;
-    using Castle.MonoRail.Framework;
-
     public class AspViewEngineOptions
     {
-        #region members
-        private string _siteRoot;
-        private bool _saveToDisk;
-        private bool _debug;
-        private List<string> _assembliesToReference = new List<string>();
 		private string _actionExtension;
-        #endregion
+		private AspViewCompilerOptions _compilerOptions;
 
-        public AspViewEngineOptions()
-        {
-            _saveToDisk = false;
-            _debug = false;
-            _siteRoot = null;
-            _assembliesToReference.Add("System.dll");
-            _assembliesToReference.Add("Castle.Core.dll");
-            _assembliesToReference.Add("Castle.MonoRail.Views.AspView.dll");
-            _assembliesToReference.Add("Castle.MonoRail.Framework.dll");
+		public AspViewEngineOptions()
+		{
+			_actionExtension = ".aspx";
+			_compilerOptions = new AspViewCompilerOptions();
+		}
+		public AspViewEngineOptions(string actionExtension, AspViewCompilerOptions compilerOptions)
+		{
+			_actionExtension = actionExtension;
+			_compilerOptions = compilerOptions;
+		}
 
-        }
-
-        /// <summary>
-        /// the virtual site's root
-        /// </summary>
-        public string SiteRoot
-        {
-            get { return _siteRoot; }
-            set { _siteRoot = value; }
-        }
-        /// <summary>
+		/// <summary>
         /// The actions extension (the virtual extension from the urls)
         /// </summary>
 		public string ActionExtension
         {
 			get { return _actionExtension; }
 			set { _actionExtension = value; }
-        }
-		
-        public bool SaveToDisk
-        {
-            get { return _saveToDisk; }
-            set { _saveToDisk = value; }
-        }
-        /// <summary>
-        /// True if the compiler should emit debug symbols
-        /// </summary>
-        public bool Debug
-        {
-            get { return _debug; }
-            set { _debug = value; }
-        }
-        /// <summary>
-        /// Assemblies to link to the CompiledViews assembly. This feature isn't yet implemented
-        /// </summary>
-        public List<string> AssembliesToReference
-        {
-            get { return _assembliesToReference; }
-        }
+		}
+		/// <summary>
+		/// The compiler's options object
+		/// </summary>
+		public AspViewCompilerOptions CompilerOptions
+		{
+			get { return _compilerOptions; }
+		}		
     }
 }

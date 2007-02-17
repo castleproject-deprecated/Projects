@@ -27,27 +27,37 @@ namespace Castle.MonoRail.Views.AspView
 
         public object Create(object parent, object configContext, XmlNode section)
         {
-            AspViewEngineOptions options = new AspViewEngineOptions();
+			bool? debug = null;
+			bool? inMemory = null;
+			string temporarySourceFilesDirectory = null;
+			bool? saveFiles = null;
+			List<string> references = new List<string>();
+			string actionExtension = null;
 
-            if (section.Attributes["saveToDisk"] != null)
-                options.SaveToDisk = bool.Parse(section.Attributes["saveToDisk"].Value);
-            if (section.Attributes["debug"] != null)
-                options.Debug = bool.Parse(section.Attributes["debug"].Value);
-			if (section.Attributes["siteRoot"] != null)
-				options.SiteRoot = section.Attributes["siteRoot"].Value;
+			if (section.Attributes["debug"] != null)
+				debug = bool.Parse(section.Attributes["debug"].Value);
+			if (section.Attributes["inMemory"] != null)
+				inMemory = bool.Parse(section.Attributes["inMemory"].Value);
+			if (section.Attributes["temporarySourceFilesDirectory"] != null)
+				temporarySourceFilesDirectory = section.Attributes["temporarySourceFilesDirectory"].Value;
+			if (section.Attributes["saveFiles"] != null)
+				saveFiles = bool.Parse(section.Attributes["saveFiles"].Value);
+			foreach (XmlNode reference in section.SelectNodes("reference"))
+				references.Add(reference.Attributes["assembly"].Value);
+
+			AspViewCompilerOptions compilerOptions = new AspViewCompilerOptions(
+				debug, inMemory, temporarySourceFilesDirectory, saveFiles, references);
+
 			if (section.Attributes["actionExtension"] != null)
 			{
-				string actionExtension = section.Attributes["actionExtension"].Value;
+				actionExtension = section.Attributes["actionExtension"].Value;
 				if (actionExtension[0] != '.')
 					actionExtension = "." + actionExtension;
-				options.ActionExtension = actionExtension;
 			}
-			foreach (XmlNode reference in section.SelectNodes("reference"))
-            {
-                options.AssembliesToReference.Add(reference.Attributes["assembly"].Value);
-            }
-            return options;
 
+			AspViewEngineOptions options = new AspViewEngineOptions(actionExtension, compilerOptions);
+
+            return options;
         }
 
         #endregion

@@ -29,6 +29,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Run vcompile in Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Run vcompile in Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Castle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -56,6 +64,7 @@
     <Compile Include="AspViewFile.cs" />
     <Compile Include="AspViewPreProcessor.cs" />
     <Compile Include="IViewFilter.cs" />
+    <Compile Include="Utilities.cs" />
     <Compile Include="VbPreProcessor.cs" />
     <Compile Include="CaseInsensitiveStringComparer.cs" />
     <Compile Include="LanguagePreProcessor.cs" />
@@ -64,6 +73,8 @@
     <Compile Include="ViewAtDesignTime.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="ViewComponentContext.cs" />
+    <Compile Include="ViewComponentSectionRendereDelegate.cs" />
     <Compile Include="ViewFilters\HtmlDecodeViewFilter.cs" />
     <Compile Include="ViewFilters\HtmlEncodeViewFilter.cs" />
     <Compile Include="ViewFilters\LowerCaseViewFilter.cs" />

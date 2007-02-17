@@ -12,6 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Text.RegularExpressions;
+class A
+{
+	private static readonly Regex findViewComponentTags = new Regex("<component:(?<componentName>\\w+)(?<attributes>[\\w\"\\s=]*)>(?<content>.*)</component:\\k<componentName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+	public void B()
+	{
+		string s = "<component:GridComponent source=\"items\"><section:header></section:header></component:GridComponent>";
+		System.Console.WriteLine(findViewComponentTags.Matches(s).Count);
+	}
+
+}
+
 namespace Castle.MonoRail.Views.AspView
 {
     using System;
@@ -24,16 +36,26 @@ namespace Castle.MonoRail.Views.AspView
     using Castle.MonoRail.Framework;
     using System.Reflection;
 
+
     public abstract class LanguagePreProcessor
     {
         #region static readonly members
         private static readonly Regex findImportsDirectives = new Regex("<%@\\s*Import\\s+Namespace\\s*=\\s*\"(?<namespace>.*)\"\\s*%>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private static readonly Regex findSubViewTags = new Regex("<subView:(?<viewName>[\\w\\.]+)\\s*(?<attributes>.*)\\s*>\\s*</subView:\\k<viewName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private static readonly Regex findViewFiltersTags = new Regex("<filter:(?<filterName>\\w+)(?<attributes>[\\w\"\\s]*)>(?<content>.*)</filter:\\k<filterName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+		private static readonly Regex findSubViewTags = new Regex("<subView:(?<viewName>[\\w\\.]+)\\s*(?<attributes>[\\w\"\\s=]*)\\s*>\\s*</subView:\\k<viewName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+		private static readonly Regex findViewFiltersTags = new Regex("<filter:(?<filterName>\\w+)(?<attributes>[\\w\"\\s=]*)>(?<content>.*)</filter:\\k<filterName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
         private static readonly Regex findAttributes = new Regex("\\s*(?<name>\\w+)\\s*=\\s*\"(?<value>\\w*)\"\\s*");
-        private static readonly string assemblyNamespace = "CompiledViews";
+		private static readonly Regex findViewComponentTags = new Regex("<component:(?<componentName>\\w+)(?<attributes>[\\w\"\\s=]*)>(?<content>.*)</component:\\k<componentName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+		private static readonly Regex findSectionTags = new Regex("<section:(?<sectionName>\\w+)(?<attributes>[\\w\"\\s=]*)>(?<content>.*)</section:\\k<sectionName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+		private static readonly string assemblyNamespace = "CompiledViews";
         private static readonly string assemblyFileName = assemblyNamespace + ".dll";
         #endregion
+
+		public void a()
+		{
+		}
+
+		protected int viewComponentsCounter = 0;
+		protected Dictionary<string, string> sectionHandlers;
 
 		public LanguagePreProcessor()
         {
@@ -47,6 +69,7 @@ namespace Castle.MonoRail.Views.AspView
         public void Process(AspViewFile file)
         {
             int index = 0;
+			sectionHandlers = new Dictionary<string, string>();
 
             Dictionary<string, object> imports = new Dictionary<string, object>();
             Dictionary<string, object> references = new Dictionary<string, object>();
@@ -75,18 +98,29 @@ namespace Castle.MonoRail.Views.AspView
 			WriteSubCloseTag(writer);
             WriteViewNameProperty(writer, file.ViewName);
             WriteViewDirectoryProperty(writer, GetDirectory(file.ViewName));
+			WriteSectionHandlers(writer);
 			WriteClassCloseTag(writer);
 			WriteNamespaceCloseTag(writer);
 
 			file.ConcreteClass = writer.GetStringBuilder().ToString();
         }
 
+		protected abstract void WriteSectionHandlers(StringWriter writer);
+
         private string ProcessViewBody(string viewBody)
         {
             string processedBody = ProcessSubViewTags(viewBody);
             processedBody = ProcessViewFilterTags(processedBody);
+			processedBody = ProcessViewComponentTags(processedBody);
             return processedBody;
         }
+
+
+		private string ProcessViewComponentTags(string processedBody)
+		{
+			viewComponentsCounter = 0;
+			return findViewComponentTags.Replace(processedBody, ViewComponentTagHandler);
+		}
 
         protected string ProcessSubViewTags(string input)
         {
@@ -117,6 +151,104 @@ namespace Castle.MonoRail.Views.AspView
             string closeTag = GetViewFilterCloseStatement();
             return string.Format("<% {0} %>{1}<% {2} %>", openTag, content, closeTag);
         }
+		private string SubViewTagHandler(Match match)
+		{
+			string viewName = match.Groups["viewName"].Value.Replace('.', '/');
+			string arguments = match.Groups["attributes"].Value;
+			StringBuilder argumentsString = new StringBuilder();
+			foreach (Match attribute in findAttributes.Matches(arguments))
+			{
+				argumentsString.AppendFormat(",\"{0}\", {1}",
+					attribute.Groups["name"].Value,
+					attribute.Groups["value"].Value);
+			}
+			return string.Format("<% {0} %>",
+				GetSubViewStatement(viewName, argumentsString.ToString()));
+		}
+		private string ViewComponentTagHandler(Match match)
+		{
+			++viewComponentsCounter;
+			int sectionsCounter = 0;
+			string componentTypeName = match.Groups["componentName"].Value;
+			//ViewComponent viewComponent = (ViewComponent)Activator.CreateInstance(Type.GetType(componentTypeName));
+			string arguments = match.Groups["attributes"].Value;
+			string content = match.Groups["content"].Value;
+			StringBuilder argumentsString = new StringBuilder();
+			foreach (Match attribute in findAttributes.Matches(arguments))
+			{
+				argumentsString.AppendFormat(",\"{0}\", {1}",
+					attribute.Groups["name"].Value,
+					attribute.Groups["value"].Value);
+			}
+			StringBuilder componentCode = new StringBuilder();
+			string contextName = "viewComponentContext" + viewComponentsCounter;
+			string componentName = componentTypeName + viewComponentsCounter;
+			string bodyHandlerName = null;
+			if (content.Trim().Length>0)
+				bodyHandlerName = componentName + "_body";
+			componentCode.Append(GetViewComponentInitializationStatements(contextName, componentTypeName, componentName, argumentsString.ToString(), bodyHandlerName));
+			componentCode.Append(Environment.NewLine);
+			if (bodyHandlerName != null)
+				RegisterSectionHandler(bodyHandlerName, content);
+
+			foreach (Match sectionTag in findSectionTags.Matches(content))
+			{
+				++sectionsCounter;
+				string sectionTypeName = sectionTag.Groups["sectionName"].Value;
+				//if (!viewComponent.SupportsSection(sectionTypeName))
+				//	throw new ApplicationException(string.Format(
+				//		"{0} does not support a section named '{1}'",
+				//		componentTypeName, sectionTypeName));
+				string sectionContent = sectionTag.Groups["content"].Value;
+				string sectionName = sectionTypeName + sectionsCounter;
+				string handlerName = componentName + "_" + sectionName;
+				RegisterSectionHandler(handlerName, sectionContent);
+				componentCode.Append(GetSectionRegistrationStatement(sectionTypeName, contextName, handlerName));
+				componentCode.Append(Environment.NewLine);
+			}
+			componentCode.Append(GetViewComponentStatements(componentName, contextName));
+			return "<% " + componentCode.ToString() + "%>" + Environment.NewLine;
+		}
+
+		private void RegisterSectionHandler(string handlerName, string sectionContent)
+		{
+			string processedSection;
+			using (StringWriter sectionWriter = new StringWriter())
+			{
+				WriteRenderBody(sectionWriter, sectionContent);
+				processedSection = sectionWriter.GetStringBuilder().ToString();
+			}
+
+			sectionHandlers[handlerName] = processedSection;
+		}
+
+		private string GetSectionRegistrationStatement(string sectionTypeName, string contextName, string handlerName)
+		{
+			return string.Format(@"
+				{0}.RegisterSection(""{1}"", new ViewComponentSectionRendereDelegate({2}));
+"
+				, contextName, sectionTypeName, handlerName);
+		}
+
+		protected string GetViewComponentInitializationStatements(string contextName, string componentTypeName, string componentName, string arguments, string bodyHandlerName)
+		{
+			string bodyHandler = "null";
+			if (bodyHandlerName != null)
+				bodyHandler = string.Format("new ViewComponentSectionRendereDelegate({0})", bodyHandlerName);
+			return string.Format(@"
+				ViewComponentContext {0} = new ViewComponentContext(this, {4}, ""{1}"", this.OutputWriter {2});
+				ViewComponent {3} = ((IViewComponentFactory)_context.GetService(typeof(IViewComponentFactory))).Create(""{1}"");"
+				, contextName, componentTypeName, arguments, componentName, bodyHandler);
+		}
+		protected string GetViewComponentStatements(string contextName, string componentName)
+		{
+			return string.Format(@"
+				{0}.Init(_context, {1});
+				{0}.Render();
+				if ({1}.ViewToRender != null)
+					OutputSubView({1}.ViewToRender, {1}.ContextVars);"
+				, contextName, componentName);
+		}
 
         protected abstract string GetViewFilterCloseStatement();
 
@@ -133,20 +265,6 @@ namespace Castle.MonoRail.Views.AspView
         {
             Type t = Type.GetType(GetAssemblyQualifiedViewFilterName(filterName), false, true);
             return t != null;
-        }
-        private string SubViewTagHandler(Match match)
-        {
-            string viewName = match.Groups["viewName"].Value.Replace('.', '/');
-            string arguments = match.Groups["attributes"].Value;
-            StringBuilder argumentsString = new StringBuilder();
-            foreach (Match attribute in findAttributes.Matches(arguments))
-            {
-                argumentsString.AppendFormat(",\"{0}\", {1}",
-                    attribute.Groups["name"].Value,
-                    attribute.Groups["value"].Value);
-            }
-            return string.Format("<% {0} %>",
-                GetSubViewStatement(viewName, argumentsString.ToString()));
         }
 
         protected abstract string GetSubViewStatement(string viewName, string parameters);
@@ -235,7 +353,7 @@ namespace Castle.MonoRail.Views.AspView
             int end = viewSource.IndexOf("%>", start);
             if (end == -1)
                 throw new Exception("%> expected");
-            string propertiesSection = viewSource.Substring(start + 2, end - start - 4);
+            string propertiesSection = viewSource.Substring(start + 2, end - start - 2);
             index = end + 2;
             if (index > viewSource.Length - 1)
                 index = -1;

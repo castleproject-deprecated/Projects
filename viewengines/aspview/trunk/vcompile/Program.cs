@@ -12,87 +12,113 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace vcompile
+namespace Castle.MonoRail.AspView.Compiler
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.IO;
-    using System.Text.RegularExpressions;
-    using System.CodeDom.Compiler;
-    using System.Collections.Specialized;
-    using Microsoft.CSharp;
-    using Castle.MonoRail.Views.AspView;
-    using System.Configuration;
-    using System.Diagnostics;
+	using System;
+	using System.Collections.Generic;
+	using System.Text;
+	using System.IO;
+	using System.Text.RegularExpressions;
+	using System.CodeDom.Compiler;
+	using System.Collections.Specialized;
+	using Microsoft.CSharp;
+	using Castle.MonoRail.Views.AspView;
+	using System.Configuration;
+	using System.Diagnostics;
+	using System.Reflection;
 
-    class Program
-    {
-        static AspViewEngineOptions options;
-        static void Main(string[] args)
-        {
-            try
-            {
-                InitializeConfig();
+	class vcompile
+	{
+		static AspViewEngineOptions options;
+		static int Main(string[] args)
+		{
+			InitializeConfig();
 
-                string siteRoot = options.SiteRoot;// ?? args[0].Substring(3);
-                if (args.Length > 0)
-                    Debug.Fail("Entering debug");
-                string[] references = options.AssembliesToReference.ToArray();
-                if (!Directory.Exists(siteRoot))
-                {
-                    PrintHelpMessage(string.Format("The path '{0}' does not exist", siteRoot));
-                    Console.ReadLine();
-                    return;
-                }
-                AspViewCompiler compiler = new AspViewCompiler(
-                    new AspViewCompilerOptions(true, false, false));
-                compiler.CompileSite(siteRoot, references);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                Console.ReadLine();
-            }
-            Console.ReadLine();
+			string siteRoot = ConfigurationManager.AppSettings["siteRoot"];
 
-        }
+			if (!Directory.Exists(siteRoot))
+			{
+				PrintHelpMessage(string.Format("The path '{0}' does not exist", siteRoot));
+				Console.ReadLine();
+				return 1;
+			}
 
-        private static void PrintHelpMessage(string message)
-        {
-            if (message != null)
-            {
-                Console.WriteLine("message from the compiler:");
-                Console.WriteLine(message);
-                Console.WriteLine();
-                Console.WriteLine();
-            }
-            Console.WriteLine("usage: vcompile [options]");
-            Console.WriteLine();
-            Console.WriteLine("valid options:");
-            Console.WriteLine("\t/r:siteRoot\t\twill compile the site at siteRoot directory");
-            Console.WriteLine();
-            Console.WriteLine("example:");
-            Console.WriteLine("\tvcompile /r:C:\\Dev\\Sites\\MySite\t\twill compile the site at 'C:\\Dev\\Sites\\MySite' directory");
-            Console.WriteLine();
-        }
+			AspViewCompiler compiler = new AspViewCompiler(options.CompilerOptions);
 
-        private static void PrintHelpMessage()
-        {
-            PrintHelpMessage(null);
-        }
+			if (compiler == null)
+			{
+				PrintHelpMessage("Could not start the compiler.");
+				return 2;
+			}
+			try
+			{
+				compiler.CompileSite(siteRoot);
+				Console.WriteLine("finish");
+				return 0;
+			}
+			catch (Exception ex)
+			{
+				PrintHelpMessage("Could not compile." + Environment.NewLine + ex.ToString());
+				return 3;
+			}
 
-        private static void InitializeConfig()
-        {
-            InitializeConfig("aspView");
-            if (options == null)
-                InitializeConfig("aspview");
-            if (options == null)
-                options = new AspViewEngineOptions();
-        }
-        private static void InitializeConfig(string configName)
-        {
-            options = (AspViewEngineOptions)ConfigurationManager.GetSection(configName);
-        }
-    }
+		}
+
+		private static void InvokeCompile(object compiler, string siteRoot, string[] references)
+		{
+			Type t = compiler.GetType();
+			MethodInfo compileSite = t.GetMethod("CompileSite", new Type[2] { typeof(string), typeof(string[]) });
+			compileSite.Invoke(compiler, new object[2] { siteRoot, references });
+		}
+
+		private static object GetCompiler(Assembly aspview)
+		{
+			object options = GetCompilerOptions(aspview);
+			Type t = aspview.GetType("Castle.MonoRail.Views.AspView.AspViewCompiler");
+			ConstructorInfo c = t.GetConstructor(new Type[1] { options.GetType() });
+			return c.Invoke(new object[1] { options });
+		}
+		private static object GetCompilerOptions(Assembly aspview)
+		{
+			Type t = aspview.GetType("Castle.MonoRail.Views.AspView.AspViewCompilerOptions");
+			ConstructorInfo c = t.GetConstructor(new Type[3] { typeof(bool), typeof(bool), typeof(bool) });
+			return c.Invoke(new object[3] { true, false, false });
+		}
+
+		private static void PrintHelpMessage(string message)
+		{
+			if (message != null)
+			{
+				Console.WriteLine("message from the compiler:");
+				Console.WriteLine(message);
+				Console.WriteLine();
+				Console.WriteLine();
+			}
+			Console.WriteLine("usage: vcompile [options]");
+			Console.WriteLine();
+			Console.WriteLine("valid options:");
+			Console.WriteLine("\t/r:siteRoot\t\twill compile the site at siteRoot directory");
+			Console.WriteLine();
+			Console.WriteLine("example:");
+			Console.WriteLine("\tvcompile /r:C:\\Dev\\Sites\\MySite\t\twill compile the site at 'C:\\Dev\\Sites\\MySite' directory");
+			Console.WriteLine();
+		}
+
+		private static void PrintHelpMessage()
+		{
+			PrintHelpMessage(null);
+		}
+		private static void InitializeConfig()
+		{
+			InitializeConfig("aspView");
+			if (options == null)
+				InitializeConfig("aspview");
+			if (options == null)
+				options = new AspViewEngineOptions();
+		}
+		private static void InitializeConfig(string configName)
+		{
+			options = (AspViewEngineOptions)ConfigurationManager.GetSection(configName);
+		}
+	}
 }

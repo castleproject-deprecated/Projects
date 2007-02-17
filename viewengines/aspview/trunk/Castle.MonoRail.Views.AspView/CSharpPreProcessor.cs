@@ -180,5 +180,24 @@ namespace Castle.MonoRail.Views.AspView
             writer.WriteLine("}");
         }
 
+		/// <summary>
+		/// Writes handlers for the view component sections
+		/// </summary>
+		/// <param name="writer">A StringWriter that writes the generated class</param>
+		protected override void WriteSectionHandlers(StringWriter writer)
+		{
+			foreach (string handlerName in sectionHandlers.Keys)
+			{
+				string content = sectionHandlers[handlerName];
+
+				writer.WriteLine(@"
+				internal void {0} ()
+				{{
+					{1}
+				}}",
+				  handlerName, content);
+			}
+		}
+
     }
 }

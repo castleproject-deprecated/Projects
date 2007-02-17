@@ -221,10 +221,12 @@ namespace Castle.MonoRail.Views.AspView
         /// When overriden in a concrete view class, renders the view content to the output writer
         /// </summary>
         public abstract void Render();
+		/*  DELETE
         protected virtual string ScriptDirectory
         {
             get { return _viewEngine.ViewRootDir; }
         }
+		 * */
         /// <summary>
         /// Renders another view in place
         /// </summary>
@@ -240,35 +242,46 @@ namespace Castle.MonoRail.Views.AspView
         /// <param name="parameters">Parameters that can be sent to the sub view's Properties container</param>
         protected void OutputSubView(string subViewName, IDictionary<string, object> parameters)
         {
-            string subViewFileName = GetSubViewFileName(subViewName);
-            AspViewBase subView = _viewEngine.GetView(subViewFileName, _outputWriter, _context, _controller);
-            if (parameters != null)
-                foreach (string key in parameters.Keys)
-                    if (parameters[key] != null)
-                        subView.Properties[key] = parameters[key];
-            subView.Render();
+			OutputSubView(subViewName, _outputWriter, parameters);
         }
-        /// <summary>
+		/// <summary>
+		/// Renders another view in place
+		/// </summary>
+		/// <param name="subViewName">The sub view's name</param>
+		/// <param name="parameters">Parameters that can be sent to the sub view's Properties container</param>
+		/// <param name="writer">The writer that will be used for the sub view's output</param>
+		protected void OutputSubView(string subViewName, TextWriter writer, IDictionary<string, object> parameters)
+		{
+			string subViewFileName = GetSubViewFileName(subViewName);
+			AspViewBase subView = _viewEngine.GetView(subViewFileName, writer, _context, _controller);
+			if (parameters != null)
+				foreach (string key in parameters.Keys)
+					if (parameters[key] != null)
+						subView.Properties[key] = parameters[key];
+			subView.Render();
+		}
+
+		/// <summary>
+		/// Renders another view in place
+		/// </summary>
+		/// <param name="subViewName">The sub view's name</param>
+		/// <param name="parameters">Parameters that can be sent to the sub view's Properties container</param>
+		protected void OutputSubView(string subViewName, params object[] arguments)
+		{
+			OutputSubView(subViewName, _outputWriter, arguments);
+		}
+		
+		/// <summary>
         /// Renders another view in place
         /// </summary>
         /// <param name="subViewName">The sub view's name</param>
         /// <param name="parameters">Parameters that can be sent to the sub view's ordered as name, value</param>
-        protected void OutputSubView(string subViewName, params object[] arguments)
+		/// <param name="writer">The writer that will be used for the sub view's output</param>
+		internal void OutputSubView(string subViewName, TextWriter writer, params object[] arguments)
         {
-            if (arguments.Length % 2 != 0)
-                throw new RailsException("SubView parameters should be arranged as key and value pairs");
-            int i = 0;
-            IDictionary<string, object> parameters = new Dictionary<string, object>(arguments.Length / 2);
-            while (i < arguments.Length)
-            {
-                string name = arguments[i] as string;
-                if (name==null)
-                    throw new RailsException("SubView parameters should be arranged as key and value pairs");
-                object key = arguments[i + 1];
-                parameters.Add(name, key);
-                i += 2;
-            }
-            OutputSubView(subViewName, parameters);
+			IDictionary<string, object> parameters =
+				Utilities.ConvertArgumentsToParameters(arguments);
+            OutputSubView(subViewName, writer, parameters);
         }
 
         /// <summary>
@@ -441,5 +454,32 @@ namespace Castle.MonoRail.Views.AspView
         {
             _parentView = view;
         }
-    }
+		/// <summary>
+		/// This is required because we may want to replace the output stream and get the correct
+		/// behavior from components call RenderText() or RenderSection()
+		/// </summary>
+		public IDisposable SetOutputWriter(TextWriter newOutputWriter)
+		{
+			ReturnOutputStreamToInitialWriter disposable = new ReturnOutputStreamToInitialWriter(OutputWriter, this);
+			_outputWriter = newOutputWriter;
+			return disposable;
+		}
+
+		private class ReturnOutputStreamToInitialWriter : IDisposable
+		{
+			private TextWriter initialWriter;
+			private AspViewBase parent;
+
+			public ReturnOutputStreamToInitialWriter(TextWriter initialWriter, AspViewBase parent)
+			{
+				this.initialWriter = initialWriter;
+				this.parent = parent;
+			}
+
+			public void Dispose()
+			{
+				parent._outputWriter = initialWriter;
+			}
+		}
+	}
 }

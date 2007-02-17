@@ -180,5 +180,13 @@ namespace Castle.MonoRail.Views.AspView
         {
             throw new Exception("The method or operation is not implemented.");
         }
+		/// <summary>
+		/// Writes handlers for the view component sections
+		/// </summary>
+		/// <param name="writer">A StringWriter that writes the generated class</param>
+		protected override void WriteSectionHandlers(StringWriter writer)
+		{
+			throw new Exception("The method or operation is not implemented.");
+		}
     }
 }
