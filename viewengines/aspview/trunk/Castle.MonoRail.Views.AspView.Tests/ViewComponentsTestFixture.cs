@@ -81,5 +81,35 @@ Showing 1 - 5 of 5
 			DoGet("UsingViewComponents/WithSections.rails");
 			AssertReplyEqualTo(expected);
 		}
+		[Test]
+		public void CaptureForWorks()
+		{
+			#region expected
+			string expected = @"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
+
+<html xmlns=""http://www.w3.org/1999/xhtml"" >
+<head>
+    <title>AspView layout test</title>
+</head>
+<body>
+    <div>
+        hello from UsingCaptureFor layout
+    </div>
+    <div>
+		<h1>Under me should appear the regular content of the view</h1>
+        a. Some text, located before the capturedContent component
+b. Some text, located after the capturedContent component
+This text should be rendered right after text a.
+    </div>
+    <div>
+		<h1>Under me should appear the contents of a CaptureFor component, with id=""capturedContent""</h1>
+		This content should be rendered in the captured-for place holder
+    </div>
+</body>
+</html>";
+			#endregion
+			DoGet("UsingViewComponents/UsingCaptureFor.rails");
+			AssertReplyEqualTo(expected);
+		}
 	}
 }

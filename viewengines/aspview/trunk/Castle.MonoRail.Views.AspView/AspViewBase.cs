@@ -29,7 +29,7 @@ namespace Castle.MonoRail.Views.AspView
         protected TextWriter _outputWriter;
         protected TextWriter _viewOutput;
         protected Dictionary<string, object> _properties;
-        protected IList<IDictionary<string, object>> _extentedPropertiesList;
+        protected IList<IDictionary> _extentedPropertiesList;
         protected IRailsEngineContext _context;
         protected Controller _controller;
         protected AspViewEngine _viewEngine;
@@ -149,7 +149,7 @@ namespace Castle.MonoRail.Views.AspView
         /// <summary>
         /// Gets the extended properties collection
         /// </summary>
-        protected IList<IDictionary<string, object>> ExtentedPropertiesList
+        protected IList<IDictionary> ExtentedPropertiesList
         {
             get { return _extentedPropertiesList; }
         }
@@ -215,7 +215,7 @@ namespace Castle.MonoRail.Views.AspView
                 _properties[entry.Key.ToString()] = entry.Value;
             _properties["siteRoot"] = _context.ApplicationPath;
             _properties["fullSiteRoot"] = _context.Request.Uri.GetLeftPart(UriPartial.Authority) + _context.ApplicationPath;
-            _extentedPropertiesList = new List<IDictionary<string, object>>();
+            _extentedPropertiesList = new List<IDictionary>();
         }
         /// <summary>
         /// When overriden in a concrete view class, renders the view content to the output writer
@@ -426,12 +426,14 @@ namespace Castle.MonoRail.Views.AspView
                 return true;
             }
             
-            foreach (IDictionary<string, object> dic in _extentedPropertiesList)
-                if (dic.ContainsKey(parameterName))
+            foreach (IDictionary dic in _extentedPropertiesList)
+                if (dic.Contains(parameterName))
                 {
                     parameter = dic[parameterName];
                     return true;
                 }
+			if (ParentView != null)
+				return ParentView.TryGetParameter(parameterName, out parameter);
             parameter = null;
             return false;
         }
@@ -439,7 +441,7 @@ namespace Castle.MonoRail.Views.AspView
         /// Adds a property container to the _extentedPropertiesList
         /// </summary>
         /// <param name="properties">A property container </param>
-        protected void AddProperties(IDictionary<string, object> properties)
+        protected void AddProperties(IDictionary properties)
         {
             _extentedPropertiesList.Add(properties);
         }

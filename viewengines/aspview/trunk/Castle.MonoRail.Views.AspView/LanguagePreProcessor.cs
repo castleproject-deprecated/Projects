@@ -12,18 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Text.RegularExpressions;
-class A
-{
-	private static readonly Regex findViewComponentTags = new Regex("<component:(?<componentName>\\w+)(?<attributes>[\\w\"\\s=]*)>(?<content>.*)</component:\\k<componentName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
-	public void B()
-	{
-		string s = "<component:GridComponent source=\"items\"><section:header></section:header></component:GridComponent>";
-		System.Console.WriteLine(findViewComponentTags.Matches(s).Count);
-	}
-
-}
-
 namespace Castle.MonoRail.Views.AspView
 {
     using System;
@@ -43,8 +31,8 @@ namespace Castle.MonoRail.Views.AspView
         private static readonly Regex findImportsDirectives = new Regex("<%@\\s*Import\\s+Namespace\\s*=\\s*\"(?<namespace>.*)\"\\s*%>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		private static readonly Regex findSubViewTags = new Regex("<subView:(?<viewName>[\\w\\.]+)\\s*(?<attributes>[\\w\"\\s=]*)\\s*>\\s*</subView:\\k<viewName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		private static readonly Regex findViewFiltersTags = new Regex("<filter:(?<filterName>\\w+)(?<attributes>[\\w\"\\s=]*)>(?<content>.*)</filter:\\k<filterName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
-        private static readonly Regex findAttributes = new Regex("\\s*(?<name>\\w+)\\s*=\\s*\"(?<value>\\w*)\"\\s*");
-		private static readonly Regex findViewComponentTags = new Regex("<component:(?<componentName>\\w+)(?<attributes>[\\w\"\\s=]*)>(?<content>.*)</component:\\k<componentName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+        private static readonly Regex findAttributes = new Regex("\\s*(?<name>\\w+)\\s*=\\s*\"(?<value>\\w*|\\s*<%=\\s*\\w+\\s*%>\\s*)\"\\s*");
+		private static readonly Regex findViewComponentTags = new Regex("<component:(?<componentName>\\w+)(?<attributes>\\s*\\w+=\"[<][%]=\\w+[%][>]\"|\\s*\\w+=\"\\w*\"|\\s*)>(?<content>.*)</component:\\k<componentName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.IgnorePatternWhitespace);
 		private static readonly Regex findSectionTags = new Regex("<section:(?<sectionName>\\w+)(?<attributes>[\\w\"\\s=]*)>(?<content>.*)</section:\\k<sectionName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 		private static readonly string assemblyNamespace = "CompiledViews";
         private static readonly string assemblyFileName = assemblyNamespace + ".dll";
@@ -170,15 +158,19 @@ namespace Castle.MonoRail.Views.AspView
 			++viewComponentsCounter;
 			int sectionsCounter = 0;
 			string componentTypeName = match.Groups["componentName"].Value;
-			//ViewComponent viewComponent = (ViewComponent)Activator.CreateInstance(Type.GetType(componentTypeName));
 			string arguments = match.Groups["attributes"].Value;
 			string content = match.Groups["content"].Value;
 			StringBuilder argumentsString = new StringBuilder();
 			foreach (Match attribute in findAttributes.Matches(arguments))
 			{
+				string name = attribute.Groups["name"].Value;
+				string value = attribute.Groups["value"].Value;
+				if (value.Trim().StartsWith("<%="))
+					value = value.Trim().Substring(3, value.Length - 5);
+				else
+					value = string.Format("\"{0}\"", value);
 				argumentsString.AppendFormat(",\"{0}\", {1}",
-					attribute.Groups["name"].Value,
-					attribute.Groups["value"].Value);
+					name, value);
 			}
 			StringBuilder componentCode = new StringBuilder();
 			string contextName = "viewComponentContext" + viewComponentsCounter;
@@ -237,6 +229,7 @@ namespace Castle.MonoRail.Views.AspView
 				bodyHandler = string.Format("new ViewComponentSectionRendereDelegate({0})", bodyHandlerName);
 			return string.Format(@"
 				ViewComponentContext {0} = new ViewComponentContext(this, {4}, ""{1}"", this.OutputWriter {2});
+				this.AddProperties({0}.ContextVars);
 				ViewComponent {3} = ((IViewComponentFactory)_context.GetService(typeof(IViewComponentFactory))).Create(""{1}"");"
 				, contextName, componentTypeName, arguments, componentName, bodyHandler);
 		}
