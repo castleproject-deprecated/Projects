@@ -82,11 +82,13 @@
     <Content Include="Views\Home\SiteRoot.aspx" />
     <Content Include="Views\Home\SubViewSample.aspx" />
     <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Layouts\UsingCaptureFor.aspx" />
     <Content Include="Views\Layouts\Default.aspx" />
     <Content Include="Views\NoLayout\WithProperties.aspx" />
     <Content Include="Views\NoLayout\WithoutProperties.aspx" />
     <Content Include="Views\SmartDispatcherTest\Save.aspx" />
     <Content Include="Views\UsingReferences\Show.aspx" />
+    <Content Include="Views\UsingViewComponents\UsingCaptureFor.aspx" />
     <Content Include="Views\UsingViewComponents\WithSections.aspx" />
     <Content Include="Views\UsingViewComponents\WithBody.aspx" />
     <Content Include="Views\UsingViewComponents\Simple.aspx" />

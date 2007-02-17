@@ -27,5 +27,9 @@ namespace AspViewTestSite
 			PropertyBag["items"] = PaginationHelper.CreatePagination(this,
 				(IList)new string[5] { "AspView", "Can", "Now", "Handle", "ViewComponents" }, 5);
 		}
+		public void UsingCaptureFor()
+		{
+			LayoutName = "UsingCaptureFor";
+		}
 	}
 }

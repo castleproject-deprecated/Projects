@@ -5,7 +5,7 @@
 	string item;
 %>
 A simple viewcomponent, without a body and sections
-<component:GridComponent source="items">
+<component:GridComponent source="<%=items%>">
 	<section:header>
 	<table>
 		<thead>
