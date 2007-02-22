@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Tools.CodeGenerator", "Castle.Tools.CodeGenerator\Castle.Tools.CodeGenerator.csproj", "{AD98AAA1-00B5-4766-87E2-62C82DC09896}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Tools.CodeGenerator.Tests", "Castle.Tools.CodeGenerator.Tests\Castle.Tools.CodeGenerator.Tests.csproj", "{1FF3DD73-91A3-419D-A479-1ACE24DEFFC9}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD98AAA1-00B5-4766-87E2-62C82DC09896}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD98AAA1-00B5-4766-87E2-62C82DC09896}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD98AAA1-00B5-4766-87E2-62C82DC09896}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD98AAA1-00B5-4766-87E2-62C82DC09896}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FF3DD73-91A3-419D-A479-1ACE24DEFFC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FF3DD73-91A3-419D-A479-1ACE24DEFFC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FF3DD73-91A3-419D-A479-1ACE24DEFFC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FF3DD73-91A3-419D-A479-1ACE24DEFFC9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

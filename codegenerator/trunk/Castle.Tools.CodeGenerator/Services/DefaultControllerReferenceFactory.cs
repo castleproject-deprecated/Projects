@@ -1,0 +1,25 @@
+using System;
+using System.Collections.Generic;
+
+using Castle.Tools.CodeGenerator.Model;
+
+namespace Castle.Tools.CodeGenerator.Services
+{
+  public class DefaultControllerReferenceFactory : IControllerReferenceFactory
+  {
+    #region Methods
+    public ControllerActionReference CreateActionReference(ICodeGeneratorServices services, Type controllerType,
+                                                           string controllerName, string areaName, string actionName,
+                                                           params ActionArgument[] arguments)
+    {
+      return new ControllerActionReference(services, controllerType, controllerName, areaName, actionName, arguments);
+    }
+
+    public ControllerViewReference CreateViewReference(ICodeGeneratorServices services, Type controllerType,
+                                                       string controllerName, string areaName, string actionName)
+    {
+      return new ControllerViewReference(services, controllerType, controllerName, areaName, actionName);
+    }
+    #endregion
+  }
+}

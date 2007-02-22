@@ -1,0 +1,111 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AD98AAA1-00B5-4766-87E2-62C82DC09896}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Castle.Tools.CodeGenerator</RootNamespace>
+    <AssemblyName>Castle.Tools.CodeGenerator</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Castle.Tools.CodeGenerator.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Build\Debug\AnyCPU\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Build\Release\AnyCPU\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\castle\build\net-2.0\debug\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\castle\build\net-2.0\debug\Castle.MonoRail.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory, Version=2.0.0.1, Culture=neutral, PublicKeyToken=efe927acf176eea2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build.Engine" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.Build.Utilities" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\ControllerReferences.cs" />
+    <Compile Include="Model\TreeNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MsBuild\GenerateMonoRailSiteTreeTask.cs" />
+    <Compile Include="MsBuild\MsBuildLogger.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AbstractGenerator.cs" />
+    <Compile Include="Services\ActionMapGenerator.cs" />
+    <Compile Include="Services\AspDotNetRedirectService.cs" />
+    <Compile Include="Services\ControllerPartialsGenerator.cs" />
+    <Compile Include="Services\ControllerVisitor.cs" />
+    <Compile Include="Services\DefaultArgumentConversionService.cs" />
+    <Compile Include="Services\DefaultCodeGeneratorServices.cs" />
+    <Compile Include="Services\DefaultControllerReferenceFactory.cs" />
+    <Compile Include="Services\DefaultNamingService.cs" />
+    <Compile Include="Services\DefaultSourceGenerator.cs" />
+    <Compile Include="Services\IArgumentConversionService.cs" />
+    <Compile Include="Services\ICodeGeneratorServices.cs" />
+    <Compile Include="Services\IControllerReferenceFactory.cs" />
+    <Compile Include="Services\IGenerator.cs" />
+    <Compile Include="Services\ILogger.cs" />
+    <Compile Include="Services\INamingService.cs" />
+    <Compile Include="Services\IParsedSourceStorageService.cs" />
+    <Compile Include="Services\IParserFactory.cs" />
+    <Compile Include="Services\IRedirectService.cs" />
+    <Compile Include="Services\ISiteTreeGeneratorService.cs" />
+    <Compile Include="Services\ISourceGenerator.cs" />
+    <Compile Include="Services\ITreeCreationService.cs" />
+    <Compile Include="Services\ITypeResolver.cs" />
+    <Compile Include="Services\IViewSourceMapper.cs" />
+    <Compile Include="Services\NRefactoryParserFactory.cs" />
+    <Compile Include="Services\NullLogger.cs" />
+    <Compile Include="Services\DefaultSourceStorageService.cs" />
+    <Compile Include="Services\ControllerMapGenerator.cs" />
+    <Compile Include="Services\SiteTreeGeneratorService.cs" />
+    <Compile Include="Services\DefaultTreeCreationService.cs" />
+    <Compile Include="Services\TreeWalker.cs" />
+    <Compile Include="Services\TypeInspectionVisitor.cs" />
+    <Compile Include="Services\TypeResolver.cs" />
+    <Compile Include="Services\TypeResolvingVisitor.cs" />
+    <Compile Include="Services\TypeTableEntry.cs" />
+    <Compile Include="Services\ViewComponentVisitor.cs" />
+    <Compile Include="Services\ViewMapGenerator.cs" />
+    <Compile Include="Services\ViewSourceMapper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Castle.Tools.CodeGenerator.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
