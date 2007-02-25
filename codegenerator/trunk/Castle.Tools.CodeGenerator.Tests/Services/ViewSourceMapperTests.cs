@@ -49,6 +49,7 @@ namespace Castle.Tools.CodeGenerator.Services
       using (_mocks.Unordered())
       {
         Expect.Call(_treeService.FindNode("HomeController")).Return(null);
+        Expect.Call(_treeService.FindNode("HomeComponent")).Return(null);
         Expect.Call(_treeService.FindNode("Home")).Return(null);
         _treeService.PopToRoot();
       }
@@ -91,6 +92,7 @@ namespace Castle.Tools.CodeGenerator.Services
       using (_mocks.Unordered())
       {
         Expect.Call(_treeService.FindNode("AreaController")).Return(null);
+        Expect.Call(_treeService.FindNode("AreaComponent")).Return(null);
         Expect.Call(_treeService.FindNode("Area")).Return(area);
         _treeService.PushNode(area);
         Expect.Call(_treeService.FindNode("HomeController")).Return(node);
