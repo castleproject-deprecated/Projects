@@ -26,15 +26,20 @@ namespace Castle.MonoRail.AspView.Compiler
 	using System.Configuration;
 	using System.Diagnostics;
 	using System.Reflection;
+	using System.Web.Configuration;
+	using System.Xml;
+	using System.Xml.XPath;
 
 	class vcompile
 	{
 		static AspViewEngineOptions options;
+		static string siteRoot;
 		static int Main(string[] args)
 		{
-			InitializeConfig();
+			string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+			siteRoot = baseDirectory.Substring(0, baseDirectory.LastIndexOf("\\bin"));
 
-			string siteRoot = ConfigurationManager.AppSettings["siteRoot"];
+			InitializeConfig();
 
 			if (!Directory.Exists(siteRoot))
 			{
@@ -62,27 +67,6 @@ namespace Castle.MonoRail.AspView.Compiler
 				return 3;
 			}
 
-		}
-
-		private static void InvokeCompile(object compiler, string siteRoot, string[] references)
-		{
-			Type t = compiler.GetType();
-			MethodInfo compileSite = t.GetMethod("CompileSite", new Type[2] { typeof(string), typeof(string[]) });
-			compileSite.Invoke(compiler, new object[2] { siteRoot, references });
-		}
-
-		private static object GetCompiler(Assembly aspview)
-		{
-			object options = GetCompilerOptions(aspview);
-			Type t = aspview.GetType("Castle.MonoRail.Views.AspView.AspViewCompiler");
-			ConstructorInfo c = t.GetConstructor(new Type[1] { options.GetType() });
-			return c.Invoke(new object[1] { options });
-		}
-		private static object GetCompilerOptions(Assembly aspview)
-		{
-			Type t = aspview.GetType("Castle.MonoRail.Views.AspView.AspViewCompilerOptions");
-			ConstructorInfo c = t.GetConstructor(new Type[3] { typeof(bool), typeof(bool), typeof(bool) });
-			return c.Invoke(new object[3] { true, false, false });
 		}
 
 		private static void PrintHelpMessage(string message)
@@ -118,7 +102,25 @@ namespace Castle.MonoRail.AspView.Compiler
 		}
 		private static void InitializeConfig(string configName)
 		{
-			options = (AspViewEngineOptions)ConfigurationManager.GetSection(configName);
+			string path = Path.Combine(siteRoot, "web.config");
+			if (!File.Exists(path))
+			{
+				Console.WriteLine("Cannot locate web.config" + Environment.NewLine +
+					"VCompile should run from the bin directory of the website");
+				Environment.Exit(1);
+			}
+			XmlNode aspViewNode = null;
+			using (XmlTextReader reader = new XmlTextReader(path))
+			{
+				XmlDocument xml = new XmlDocument();
+				xml.Load(reader);
+				aspViewNode = xml.SelectSingleNode("/configuration/aspview");
+			}
+			AspViewConfigurationSection section = new AspViewConfigurationSection();
+			options = (AspViewEngineOptions)section.Create(null, null, aspViewNode);
+			if (options != null)
+				Console.WriteLine(options.CompilerOptions.Debug);
 		}
+
 	}
 }
