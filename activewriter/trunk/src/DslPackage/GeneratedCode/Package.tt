@@ -1,0 +1,67 @@
+<#
+/***************************************************************************
+Copyright 2006 Gokhan Altinoren - http://altinoren.com/
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+***************************************************************************/
+#>
+<#@ Dsl processor="DslDirectiveProcessor" requires="fileName='..\..\Dsl\DslDefinition.dsl'" #>
+<#@ include file="DslPackage\Package.tt" #>
+<#
+	string directiveName = "ActiveWriter";
+#>
+//
+// Package attributes which may need to change are placed on the partial class below, rather than in the main include file.
+//
+namespace <#= CodeGenerationUtilities.GetPackageNamespace(this.Dsl) #>
+{
+	using System;
+	using CustomTool;
+	using Microsoft.VisualStudio.Shell;
+    using Microsoft.VisualStudio.TextTemplating.VSHost;
+    using Microsoft.VisualStudio.Shell.Interop;
+
+	[ProvideToolWindow(typeof(Altinoren.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow), MultiInstances = false, Style = VSShell::VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Bottom)]
+	[ProvideToolWindowVisibility(typeof(Altinoren.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow), Constants.ActiveWriterEditorFactoryId )]
+	[InstalledProductRegistration(false, "#101", "#110", "1.0", IconResourceID = 201)]
+    [ProvideLoadKey("Standard", "1.0", Constants.ProductName, Constants.CompanyName, 1)]
+    [ProvideCodeGenerator(typeof(ActiveWriterTemplatedCodeGenerator), "ActiveWriterCodeGenerator", "Altinoren ActiveWriter code generator for .actiw files", true, ProjectSystem = ProvideCodeGeneratorAttribute.CSharpProjectGuid)]
+    [ProvideCodeGenerator(typeof(ActiveWriterTemplatedCodeGenerator), "ActiveWriterCodeGenerator", "Altinoren ActiveWriter code generator for .actiw files", true, ProjectSystem = ProvideCodeGeneratorAttribute.VisualBasicProjectGuid)]
+	[VSShell::ProvideMenuResource(1000, 14)]
+	[VSShell::ProvideToolboxItems(1)]
+	[VSTextTemplatingHost::ProvideDirectiveProcessor(typeof(global::<#= this.Dsl.Namespace #>.<#= directiveName #>DirectiveProcessor), global::<#= this.Dsl.Namespace #>.<#= directiveName #>DirectiveProcessor.<#= directiveName #>DirectiveProcessorName, "A directive processor that provides access to <#= directiveName #> files")]
+	[global::System.Runtime.InteropServices.Guid(Constants.<#= dslName #>PackageId)]
+	internal sealed partial class <#= dslName #>Package : <#= dslName #>PackageBase
+	{
+		protected override void Initialize()
+		{
+			base.Initialize();
+			
+			this.AddToolWindow(typeof(Altinoren.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow));
+		}
+		
+		internal string GetResourceString(string resourceName)
+		{
+			string resourceValue;
+			IVsResourceManager resourceManager = (IVsResourceManager)GetService(typeof(SVsResourceManager));
+			if (resourceManager == null)
+			{
+				throw new InvalidOperationException("Could not get SVsResourceManager service. Make sure the package is Sited before calling this method");
+			}
+			Guid packageGuid = this.GetType().GUID;
+			int hr = resourceManager.LoadResourceString(ref packageGuid, -1, resourceName, out resourceValue);
+			Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(hr);
+			return resourceValue;
+		}
+	}
+}

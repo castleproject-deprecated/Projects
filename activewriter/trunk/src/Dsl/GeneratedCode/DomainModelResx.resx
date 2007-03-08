@@ -1,0 +1,2938 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Altinoren.ActiveWriter.ActiveWriterDomainModel.Description" xml:space="preserve">
+    <value>A Visual Studio 2005 addin to design domain models and to generate code decorated with ActiveRecord attributes based on the model.</value>
+    <comment>Description for DslLibrary &apos;ActiveWriter&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ActiveWriterDomainModel.DisplayName" xml:space="preserve">
+    <value>ActiveWriter</value>
+    <comment>DisplayName for DslLibrary &apos;ActiveWriter&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model.Description" xml:space="preserve">
+    <value>Domain model</value>
+    <comment>Description for DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model.DisplayName" xml:space="preserve">
+    <value>Model</value>
+    <comment>DisplayName for DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseNullables.Description" xml:space="preserve">
+    <value>Instructs ActiveWriter to generate code using nullables where possible.</value>
+    <comment>Description for DomainProperty &apos;UseNullables&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseNullables.DisplayName" xml:space="preserve">
+    <value>Use Nullables</value>
+    <comment>DisplayName for DomainProperty &apos;UseNullables&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseNullables.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;UseNullables&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CaseOfPrivateFields.Description" xml:space="preserve">
+    <value>Tells ActiveWriter how to name private fields of properties if the Access of Property is PropertyAccess.Property (Default)</value>
+    <comment>Description for DomainProperty &apos;CaseOfPrivateFields&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CaseOfPrivateFields.DisplayName" xml:space="preserve">
+    <value>Case Of Private Fields</value>
+    <comment>DisplayName for DomainProperty &apos;CaseOfPrivateFields&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CaseOfPrivateFields.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;CaseOfPrivateFields&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/GenerateMonoRailProject.Description" xml:space="preserve">
+    <value>Tells ActiveWriter to generate a seperate MonoRail project with View and Controller code, taking this file&apos;s output as the model.</value>
+    <comment>Description for DomainProperty &apos;GenerateMonoRailProject&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/GenerateMonoRailProject.DisplayName" xml:space="preserve">
+    <value>Generate MonoRail Project</value>
+    <comment>DisplayName for DomainProperty &apos;GenerateMonoRailProject&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/GenerateMonoRailProject.Category" xml:space="preserve">
+    <value>Code Generation - Web</value>
+    <comment>Category for DomainProperty &apos;GenerateMonoRailProject&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/MonoRailProjectName.Description" xml:space="preserve">
+    <value>Name of the MonoRail project. If a project with the same name already exists in the solution, it won&apos;t be added to the solution.</value>
+    <comment>Description for DomainProperty &apos;MonoRailProjectName&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/MonoRailProjectName.DisplayName" xml:space="preserve">
+    <value>MonoRail Project Name</value>
+    <comment>DisplayName for DomainProperty &apos;MonoRailProjectName&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/MonoRailProjectName.Category" xml:space="preserve">
+    <value>Code Generation - Web</value>
+    <comment>Category for DomainProperty &apos;MonoRailProjectName&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/MonoRailProjectPath.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.Model.MonoRail Project Path</value>
+    <comment>Description for DomainProperty &apos;MonoRailProjectPath&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/MonoRailProjectPath.DisplayName" xml:space="preserve">
+    <value>MonoRail Project Path</value>
+    <comment>DisplayName for DomainProperty &apos;MonoRailProjectPath&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/MonoRailProjectPath.Category" xml:space="preserve">
+    <value>Code Generation - Web</value>
+    <comment>Category for DomainProperty &apos;MonoRailProjectPath&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/MonoRailDefaultLayout.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;MonoRailDefaultLayout&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/MonoRailDefaultLayout.DisplayName" xml:space="preserve">
+    <value>MonoRail Default Layout</value>
+    <comment>DisplayName for DomainProperty &apos;MonoRailDefaultLayout&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/MonoRailDefaultLayout.Category" xml:space="preserve">
+    <value>Code Generation - Web</value>
+    <comment>Category for DomainProperty &apos;MonoRailDefaultLayout&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/MonoRailDefaultRescue.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;MonoRailDefaultRescue&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/MonoRailDefaultRescue.DisplayName" xml:space="preserve">
+    <value>MonoRail Default Rescue</value>
+    <comment>DisplayName for DomainProperty &apos;MonoRailDefaultRescue&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/MonoRailDefaultRescue.Category" xml:space="preserve">
+    <value>Code Generation - Web</value>
+    <comment>Category for DomainProperty &apos;MonoRailDefaultRescue&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/MonoRailViewFileExtension.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;MonoRailViewFileExtension&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/MonoRailViewFileExtension.DisplayName" xml:space="preserve">
+    <value>MonoRail View File Extension</value>
+    <comment>DisplayName for DomainProperty &apos;MonoRailViewFileExtension&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/MonoRailViewFileExtension.Category" xml:space="preserve">
+    <value>Code Generation - Web</value>
+    <comment>Category for DomainProperty &apos;MonoRailViewFileExtension&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseGenerics.Description" xml:space="preserve">
+    <value>Instructs ActiveWriter to generate code using generic collections where possible.</value>
+    <comment>Description for DomainProperty &apos;UseGenerics&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseGenerics.DisplayName" xml:space="preserve">
+    <value>Use Generics</value>
+    <comment>DisplayName for DomainProperty &apos;UseGenerics&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseGenerics.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;UseGenerics&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseBaseClass.Description" xml:space="preserve">
+    <value>Instructs ActiveWriter to generate classes inherited from a base class. If Base Class Name property is empty, ActiveRecordBase or ActiveRecordBase&lt;T&gt; will be used depending on the Use generics property.</value>
+    <comment>Description for DomainProperty &apos;UseBaseClass&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseBaseClass.DisplayName" xml:space="preserve">
+    <value>Use Base Class</value>
+    <comment>DisplayName for DomainProperty &apos;UseBaseClass&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseBaseClass.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;UseBaseClass&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/BaseClassName.Description" xml:space="preserve">
+    <value>Defins the base class to be inherited. Does have no effect if Use Base Class property is set to false.</value>
+    <comment>Description for DomainProperty &apos;BaseClassName&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/BaseClassName.DisplayName" xml:space="preserve">
+    <value>Base Class Name</value>
+    <comment>DisplayName for DomainProperty &apos;BaseClassName&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/BaseClassName.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;BaseClassName&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/GeneratesDoubleDerived.Description" xml:space="preserve">
+    <value>If true, will generate a base class with all functionality and a derived partial class to support customization through overrides.</value>
+    <comment>Description for DomainProperty &apos;GeneratesDoubleDerived&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/GeneratesDoubleDerived.DisplayName" xml:space="preserve">
+    <value>Generates Double Derived</value>
+    <comment>DisplayName for DomainProperty &apos;GeneratesDoubleDerived&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/GeneratesDoubleDerived.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;GeneratesDoubleDerived&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/DoubleDerivedNameSuffix.Description" xml:space="preserve">
+    <value>Suffix appended to base class names in double derived code generation. Defaults to &quot;Base&quot;, if not supplied.</value>
+    <comment>Description for DomainProperty &apos;DoubleDerivedNameSuffix&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/DoubleDerivedNameSuffix.DisplayName" xml:space="preserve">
+    <value>Double Derived Name Suffix</value>
+    <comment>DisplayName for DomainProperty &apos;DoubleDerivedNameSuffix&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseGeneratedCodeAttribute.Description" xml:space="preserve">
+    <value>Instructs ActiveWriter to decorate each class with GeneratedCodeAttribute. Some tools evaluate existance of this attribute to handle code differently.</value>
+    <comment>Description for DomainProperty &apos;UseGeneratedCodeAttribute&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseGeneratedCodeAttribute.DisplayName" xml:space="preserve">
+    <value>Use GeneratedCodeAttribute</value>
+    <comment>DisplayName for DomainProperty &apos;UseGeneratedCodeAttribute&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseGeneratedCodeAttribute.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;UseGeneratedCodeAttribute&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass.Description" xml:space="preserve">
+    <value>A class of the domain</value>
+    <comment>Description for DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass.DisplayName" xml:space="preserve">
+    <value>Model Class</value>
+    <comment>DisplayName for DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Cache.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Cache&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Cache.DisplayName" xml:space="preserve">
+    <value>Cache</value>
+    <comment>DisplayName for DomainProperty &apos;Cache&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Cache.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Cache&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/DiscriminatorColumn.Description" xml:space="preserve">
+    <value>Discriminator column for a table inheritance modeling</value>
+    <comment>Description for DomainProperty &apos;DiscriminatorColumn&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/DiscriminatorColumn.DisplayName" xml:space="preserve">
+    <value>Discriminator Column</value>
+    <comment>DisplayName for DomainProperty &apos;DiscriminatorColumn&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/DiscriminatorColumn.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;DiscriminatorColumn&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/DiscriminatorType.Description" xml:space="preserve">
+    <value>Column type (like string or integer) for the discriminator column</value>
+    <comment>Description for DomainProperty &apos;DiscriminatorType&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/DiscriminatorType.DisplayName" xml:space="preserve">
+    <value>Discriminator Type</value>
+    <comment>DisplayName for DomainProperty &apos;DiscriminatorType&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/DiscriminatorType.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;DiscriminatorType&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/DiscriminatorValue.Description" xml:space="preserve">
+    <value>Value that represents the target class on the discriminator column</value>
+    <comment>Description for DomainProperty &apos;DiscriminatorValue&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/DiscriminatorValue.DisplayName" xml:space="preserve">
+    <value>Discriminator Value</value>
+    <comment>DisplayName for DomainProperty &apos;DiscriminatorValue&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/DiscriminatorValue.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;DiscriminatorValue&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Lazy.Description" xml:space="preserve">
+    <value>Enable lazy loading for the type</value>
+    <comment>Description for DomainProperty &apos;Lazy&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Lazy.DisplayName" xml:space="preserve">
+    <value>Lazy</value>
+    <comment>DisplayName for DomainProperty &apos;Lazy&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Lazy.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Lazy&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Proxy.Description" xml:space="preserve">
+    <value>Associates a proxy type with the target type</value>
+    <comment>Description for DomainProperty &apos;Proxy&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Proxy.DisplayName" xml:space="preserve">
+    <value>Proxy</value>
+    <comment>DisplayName for DomainProperty &apos;Proxy&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Proxy.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Proxy&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Schema.Description" xml:space="preserve">
+    <value>Schema name associated with the type</value>
+    <comment>Description for DomainProperty &apos;Schema&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Schema.DisplayName" xml:space="preserve">
+    <value>Schema</value>
+    <comment>DisplayName for DomainProperty &apos;Schema&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Schema.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Schema&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Table.Description" xml:space="preserve">
+    <value>Table name associated with the type</value>
+    <comment>Description for DomainProperty &apos;Table&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Table.DisplayName" xml:space="preserve">
+    <value>Table</value>
+    <comment>DisplayName for DomainProperty &apos;Table&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Table.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Table&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Where.Description" xml:space="preserve">
+    <value>SQL condition to retrieve objects</value>
+    <comment>Description for DomainProperty &apos;Where&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Where.DisplayName" xml:space="preserve">
+    <value>Where</value>
+    <comment>DisplayName for DomainProperty &apos;Where&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Where.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Where&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/HasKeyProperty.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ModelClass.Has Key Property</value>
+    <comment>Description for DomainProperty &apos;HasKeyProperty&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/HasKeyProperty.DisplayName" xml:space="preserve">
+    <value>Has Key Property</value>
+    <comment>DisplayName for DomainProperty &apos;HasKeyProperty&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/IsValidatorSet.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ModelClass.Is Validator Set</value>
+    <comment>Description for DomainProperty &apos;IsValidatorSet&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/IsValidatorSet.DisplayName" xml:space="preserve">
+    <value>Is Validator Set</value>
+    <comment>DisplayName for DomainProperty &apos;IsValidatorSet&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/DynamicInsert.Description" xml:space="preserve">
+    <value>Specifies that INSERT SQL should be generated at runtime and contains only the columns whose values are not null.</value>
+    <comment>Description for DomainProperty &apos;DynamicInsert&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/DynamicInsert.DisplayName" xml:space="preserve">
+    <value>Dynamic Insert</value>
+    <comment>DisplayName for DomainProperty &apos;DynamicInsert&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/DynamicInsert.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;DynamicInsert&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/DynamicUpdate.Description" xml:space="preserve">
+    <value>Specifies that UPDATE SQL should be generated at runtime and contains only those columns whose values have changed.</value>
+    <comment>Description for DomainProperty &apos;DynamicUpdate&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/DynamicUpdate.DisplayName" xml:space="preserve">
+    <value>Dynamic Update</value>
+    <comment>DisplayName for DomainProperty &apos;DynamicUpdate&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/DynamicUpdate.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;DynamicUpdate&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Persister.Description" xml:space="preserve">
+    <value>Specifies a custom IEntityPersister.</value>
+    <comment>Description for DomainProperty &apos;Persister&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Persister.DisplayName" xml:space="preserve">
+    <value>Persister</value>
+    <comment>DisplayName for DomainProperty &apos;Persister&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Persister.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Persister&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/SelectBeforeUpdate.Description" xml:space="preserve">
+    <value>Specifies that NHibernate should never perform an SQL UPDATE unless it is certain that an  object is actually modified. In certain cases (actually, only when a transient object has been associated with a new session using update()), this means that NHibernate will perform an extra SQL SELECT to determine if an UPDATE is actually required.</value>
+    <comment>Description for DomainProperty &apos;SelectBeforeUpdate&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/SelectBeforeUpdate.DisplayName" xml:space="preserve">
+    <value>Select Before Update</value>
+    <comment>DisplayName for DomainProperty &apos;SelectBeforeUpdate&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/SelectBeforeUpdate.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;SelectBeforeUpdate&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Polymorphism.Description" xml:space="preserve">
+    <value>Determines whether implicit or explicit query polymorphism is used.</value>
+    <comment>Description for DomainProperty &apos;Polymorphism&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Polymorphism.DisplayName" xml:space="preserve">
+    <value>Polymorphism</value>
+    <comment>DisplayName for DomainProperty &apos;Polymorphism&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Polymorphism.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Polymorphism&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Mutable.Description" xml:space="preserve">
+    <value>Specifies that instances of the class are (not) mutable.</value>
+    <comment>Description for DomainProperty &apos;Mutable&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Mutable.DisplayName" xml:space="preserve">
+    <value>Mutable</value>
+    <comment>DisplayName for DomainProperty &apos;Mutable&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Mutable.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Mutable&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/BatchSize.Description" xml:space="preserve">
+    <value>Specify a &quot;batch size&quot; for fetching instances of this class by identifier.</value>
+    <comment>Description for DomainProperty &apos;BatchSize&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/BatchSize.DisplayName" xml:space="preserve">
+    <value>Batch Size</value>
+    <comment>DisplayName for DomainProperty &apos;BatchSize&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/BatchSize.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;BatchSize&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Locking.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ModelClass.Locking</value>
+    <comment>Description for DomainProperty &apos;Locking&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Locking.DisplayName" xml:space="preserve">
+    <value>Locking</value>
+    <comment>DisplayName for DomainProperty &apos;Locking&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/Locking.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Locking&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/UseAutoImport.Description" xml:space="preserve">
+    <value>The auto-import attribute lets us use unqualified class names in the query language, by default. The assembly and namespace attributes specify the assembly where persistent classes are located and the namespace they are declared in.</value>
+    <comment>Description for DomainProperty &apos;UseAutoImport&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/UseAutoImport.DisplayName" xml:space="preserve">
+    <value>Use Auto Import</value>
+    <comment>DisplayName for DomainProperty &apos;UseAutoImport&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/UseAutoImport.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;UseAutoImport&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty.Description" xml:space="preserve">
+    <value>A property or field of a class</value>
+    <comment>Description for DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty.DisplayName" xml:space="preserve">
+    <value>Property</value>
+    <comment>DisplayName for DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Column.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Column&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Column.DisplayName" xml:space="preserve">
+    <value>Column</value>
+    <comment>DisplayName for DomainProperty &apos;Column&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Column.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Column&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/ColumnType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;ColumnType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/ColumnType.DisplayName" xml:space="preserve">
+    <value>Column Type</value>
+    <comment>DisplayName for DomainProperty &apos;ColumnType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/ColumnType.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;ColumnType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Formula.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Formula&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Formula.DisplayName" xml:space="preserve">
+    <value>Formula</value>
+    <comment>DisplayName for DomainProperty &apos;Formula&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Formula.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Formula&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Insert.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Insert&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Insert.DisplayName" xml:space="preserve">
+    <value>Insert</value>
+    <comment>DisplayName for DomainProperty &apos;Insert&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Insert.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Insert&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Length.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Length&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Length.DisplayName" xml:space="preserve">
+    <value>Length</value>
+    <comment>DisplayName for DomainProperty &apos;Length&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Length.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Length&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/NotNull.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;NotNull&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/NotNull.DisplayName" xml:space="preserve">
+    <value>Not Null</value>
+    <comment>DisplayName for DomainProperty &apos;NotNull&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/NotNull.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;NotNull&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Unique.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Unique&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Unique.DisplayName" xml:space="preserve">
+    <value>Unique</value>
+    <comment>DisplayName for DomainProperty &apos;Unique&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Unique.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Unique&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/UnsavedValue.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;UnsavedValue&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/UnsavedValue.DisplayName" xml:space="preserve">
+    <value>Unsaved Value</value>
+    <comment>DisplayName for DomainProperty &apos;UnsavedValue&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/UnsavedValue.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;UnsavedValue&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Update.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Update&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Update.DisplayName" xml:space="preserve">
+    <value>Update</value>
+    <comment>DisplayName for DomainProperty &apos;Update&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Update.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Update&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Generator.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Generator&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Generator.DisplayName" xml:space="preserve">
+    <value>Generator</value>
+    <comment>DisplayName for DomainProperty &apos;Generator&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Generator.Category" xml:space="preserve">
+    <value>ActiveRecord Primary Key</value>
+    <comment>Category for DomainProperty &apos;Generator&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/KeyType.Description" xml:space="preserve">
+    <value>Denotes if the property is a normal property, a key or part of of a primary key.</value>
+    <comment>Description for DomainProperty &apos;KeyType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/KeyType.DisplayName" xml:space="preserve">
+    <value>Key Type</value>
+    <comment>DisplayName for DomainProperty &apos;KeyType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/KeyType.Category" xml:space="preserve">
+    <value>ActiveRecord Primary Key</value>
+    <comment>Category for DomainProperty &apos;KeyType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Params.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Params&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Params.DisplayName" xml:space="preserve">
+    <value>Params</value>
+    <comment>DisplayName for DomainProperty &apos;Params&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Params.Category" xml:space="preserve">
+    <value>ActiveRecord Primary Key</value>
+    <comment>Category for DomainProperty &apos;Params&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/SequenceName.Description" xml:space="preserve">
+    <value>Name of the sequence to be used for the primary key. Required when Generator is Sequence.</value>
+    <comment>Description for DomainProperty &apos;SequenceName&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/SequenceName.DisplayName" xml:space="preserve">
+    <value>Sequence Name</value>
+    <comment>DisplayName for DomainProperty &apos;SequenceName&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/SequenceName.Category" xml:space="preserve">
+    <value>ActiveRecord Primary Key</value>
+    <comment>Category for DomainProperty &apos;SequenceName&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Accessor.Description" xml:space="preserve">
+    <value>Accessor of the property.</value>
+    <comment>Description for DomainProperty &apos;Accessor&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Accessor.DisplayName" xml:space="preserve">
+    <value>Accessor</value>
+    <comment>DisplayName for DomainProperty &apos;Accessor&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Accessor.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;Accessor&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/CompositeKeyName.Description" xml:space="preserve">
+    <value>Name of the composite key class to be generated.</value>
+    <comment>Description for DomainProperty &apos;CompositeKeyName&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/CompositeKeyName.DisplayName" xml:space="preserve">
+    <value>Composite Key Name</value>
+    <comment>DisplayName for DomainProperty &apos;CompositeKeyName&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/CompositeKeyName.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;CompositeKeyName&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/PropertyType.Description" xml:space="preserve">
+    <value>Type of the property.</value>
+    <comment>Description for DomainProperty &apos;PropertyType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/PropertyType.DisplayName" xml:space="preserve">
+    <value>Property Type</value>
+    <comment>DisplayName for DomainProperty &apos;PropertyType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/PropertyType.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;PropertyType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/DebuggerDisplay.Description" xml:space="preserve">
+    <value>Decorates the class this property belongs to with DebuggerDisplay attribute, using this property as the display source. Example:  [DebuggerDisplay(&quot;Name = {Name}&quot;)]</value>
+    <comment>Description for DomainProperty &apos;DebuggerDisplay&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/DebuggerDisplay.DisplayName" xml:space="preserve">
+    <value>Debugger Display</value>
+    <comment>DisplayName for DomainProperty &apos;DebuggerDisplay&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/DebuggerDisplay.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;DebuggerDisplay&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Validator.Description" xml:space="preserve">
+    <value>Defines validators to be used on the property.</value>
+    <comment>Description for DomainProperty &apos;Validator&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Validator.DisplayName" xml:space="preserve">
+    <value>Validator</value>
+    <comment>DisplayName for DomainProperty &apos;Validator&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Validator.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Validator&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/UniqueKey.Description" xml:space="preserve">
+    <value>A unique-key attribute can be used to group columns in a single unit key constraint.</value>
+    <comment>Description for DomainProperty &apos;UniqueKey&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/UniqueKey.DisplayName" xml:space="preserve">
+    <value>Unique Key</value>
+    <comment>DisplayName for DomainProperty &apos;UniqueKey&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/UniqueKey.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;UniqueKey&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Index.Description" xml:space="preserve">
+    <value>Specifies the name of a (multi-column) index.</value>
+    <comment>Description for DomainProperty &apos;Index&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Index.DisplayName" xml:space="preserve">
+    <value>Index</value>
+    <comment>DisplayName for DomainProperty &apos;Index&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Index.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Index&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/SqlType.Description" xml:space="preserve">
+    <value>Overrides the default column type.</value>
+    <comment>Description for DomainProperty &apos;SqlType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/SqlType.DisplayName" xml:space="preserve">
+    <value>Sql Type</value>
+    <comment>DisplayName for DomainProperty &apos;SqlType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/SqlType.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;SqlType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Check.Description" xml:space="preserve">
+    <value>Create an SQL check constraint on either column or table.</value>
+    <comment>Description for DomainProperty &apos;Check&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Check.DisplayName" xml:space="preserve">
+    <value>Check</value>
+    <comment>DisplayName for DomainProperty &apos;Check&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/Check.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Check&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelElementWithAccess.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ModelElementWithAccess</value>
+    <comment>Description for DomainClass &apos;ModelElementWithAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelElementWithAccess.DisplayName" xml:space="preserve">
+    <value>Model Element With Access</value>
+    <comment>DisplayName for DomainClass &apos;ModelElementWithAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelElementWithAccess/CustomAccess.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;CustomAccess&apos; on DomainClass &apos;ModelElementWithAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelElementWithAccess/CustomAccess.DisplayName" xml:space="preserve">
+    <value>Custom Access</value>
+    <comment>DisplayName for DomainProperty &apos;CustomAccess&apos; on DomainClass &apos;ModelElementWithAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelElementWithAccess/CustomAccess.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;CustomAccess&apos; on DomainClass &apos;ModelElementWithAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelElementWithAccess/Access.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Access&apos; on DomainClass &apos;ModelElementWithAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelElementWithAccess/Access.DisplayName" xml:space="preserve">
+    <value>Access</value>
+    <comment>DisplayName for DomainProperty &apos;Access&apos; on DomainClass &apos;ModelElementWithAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelElementWithAccess/Access.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Access&apos; on DomainClass &apos;ModelElementWithAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NamedElement.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NamedElement</value>
+    <comment>Description for DomainClass &apos;NamedElement&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NamedElement.DisplayName" xml:space="preserve">
+    <value>Named Element</value>
+    <comment>DisplayName for DomainClass &apos;NamedElement&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NamedElement/Name.Description" xml:space="preserve">
+    <value>Name of the element</value>
+    <comment>Description for DomainProperty &apos;Name&apos; on DomainClass &apos;NamedElement&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NamedElement/Name.DisplayName" xml:space="preserve">
+    <value>Name</value>
+    <comment>DisplayName for DomainProperty &apos;Name&apos; on DomainClass &apos;NamedElement&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NamedElement/Description.Description" xml:space="preserve">
+    <value>Description of the element. This will appear in a &lt;summary&gt; Xml comment.</value>
+    <comment>Description for DomainProperty &apos;Description&apos; on DomainClass &apos;NamedElement&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NamedElement/Description.DisplayName" xml:space="preserve">
+    <value>Description</value>
+    <comment>DisplayName for DomainProperty &apos;Description&apos; on DomainClass &apos;NamedElement&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelHasClass.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ModelHasClass</value>
+    <comment>Description for DomainClass &apos;ModelHasClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelHasClass.DisplayName" xml:space="preserve">
+    <value>Model Has Class</value>
+    <comment>DisplayName for DomainClass &apos;ModelHasClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelHasClass/Model.Description" xml:space="preserve">
+    <value>Classes of the model</value>
+    <comment>Description for DomainRole &apos;Model&apos; on DomainRelationship &apos;ModelHasClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelHasClass/Model.DisplayName" xml:space="preserve">
+    <value>Model</value>
+    <comment>DisplayName for DomainRole &apos;Model&apos; on DomainRelationship &apos;ModelHasClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelHasClass/Model.PropertyDisplayName" xml:space="preserve">
+    <value>Classes</value>
+    <comment>PropertyDisplayName for DomainRole &apos;Model&apos; on DomainRelationship &apos;ModelHasClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelHasClass/Class.Description" xml:space="preserve">
+    <value>Model of the class</value>
+    <comment>Description for DomainRole &apos;Class&apos; on DomainRelationship &apos;ModelHasClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelHasClass/Class.DisplayName" xml:space="preserve">
+    <value>Class</value>
+    <comment>DisplayName for DomainRole &apos;Class&apos; on DomainRelationship &apos;ModelHasClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelHasClass/Class.PropertyDisplayName" xml:space="preserve">
+    <value>Model</value>
+    <comment>PropertyDisplayName for DomainRole &apos;Class&apos; on DomainRelationship &apos;ModelHasClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation.Description" xml:space="preserve">
+    <value>Maps a many to one association</value>
+    <comment>Description for DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation.DisplayName" xml:space="preserve">
+    <value>Many To One Relation</value>
+    <comment>DisplayName for DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetCache.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetCache&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetCache.DisplayName" xml:space="preserve">
+    <value>Target Cache</value>
+    <comment>DisplayName for DomainProperty &apos;TargetCache&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetCache.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetCache&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetCascade.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetCascade&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetCascade.DisplayName" xml:space="preserve">
+    <value>Target Cascade</value>
+    <comment>DisplayName for DomainProperty &apos;TargetCascade&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetCascade.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetCascade&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetColumnKey.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetColumnKey&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetColumnKey.DisplayName" xml:space="preserve">
+    <value>Target Column Key</value>
+    <comment>DisplayName for DomainProperty &apos;TargetColumnKey&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetColumnKey.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetColumnKey&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetCustomAccess.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetCustomAccess&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetCustomAccess.DisplayName" xml:space="preserve">
+    <value>Target Custom Access</value>
+    <comment>DisplayName for DomainProperty &apos;TargetCustomAccess&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetCustomAccess.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetCustomAccess&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetInverse.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetInverse&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetInverse.DisplayName" xml:space="preserve">
+    <value>Target Inverse</value>
+    <comment>DisplayName for DomainProperty &apos;TargetInverse&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetInverse.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetInverse&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetLazy.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetLazy&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetLazy.DisplayName" xml:space="preserve">
+    <value>Target Lazy</value>
+    <comment>DisplayName for DomainProperty &apos;TargetLazy&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetLazy.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetLazy&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetMapType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetMapType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetMapType.DisplayName" xml:space="preserve">
+    <value>Target Map Type</value>
+    <comment>DisplayName for DomainProperty &apos;TargetMapType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetMapType.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetMapType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetOrderBy.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetOrderBy&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetOrderBy.DisplayName" xml:space="preserve">
+    <value>Target Order By</value>
+    <comment>DisplayName for DomainProperty &apos;TargetOrderBy&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetOrderBy.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetOrderBy&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetRelationType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetRelationType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetRelationType.DisplayName" xml:space="preserve">
+    <value>Target Relation Type</value>
+    <comment>DisplayName for DomainProperty &apos;TargetRelationType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetRelationType.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetRelationType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetSchema.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetSchema&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetSchema.DisplayName" xml:space="preserve">
+    <value>Target Schema</value>
+    <comment>DisplayName for DomainProperty &apos;TargetSchema&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetSchema.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetSchema&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetSort.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetSort&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetSort.DisplayName" xml:space="preserve">
+    <value>Target Sort</value>
+    <comment>DisplayName for DomainProperty &apos;TargetSort&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetSort.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetSort&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetTable.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetTable&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetTable.DisplayName" xml:space="preserve">
+    <value>Target Table</value>
+    <comment>DisplayName for DomainProperty &apos;TargetTable&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetTable.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetTable&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetWhere.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetWhere&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetWhere.DisplayName" xml:space="preserve">
+    <value>Target Where</value>
+    <comment>DisplayName for DomainProperty &apos;TargetWhere&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetWhere.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetWhere&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetDescription.Description" xml:space="preserve">
+    <value>Description of the property. This will appear in a &lt;summary&gt; Xml comment.</value>
+    <comment>Description for DomainProperty &apos;TargetDescription&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetDescription.DisplayName" xml:space="preserve">
+    <value>Target Description</value>
+    <comment>DisplayName for DomainProperty &apos;TargetDescription&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetDescription.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;TargetDescription&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyName.Description" xml:space="preserve">
+    <value>Name of the property in the generated code. If not supplied, ActiveWriter will use the source class name in plural form.</value>
+    <comment>Description for DomainProperty &apos;TargetPropertyName&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyName.DisplayName" xml:space="preserve">
+    <value>Target Property Name</value>
+    <comment>DisplayName for DomainProperty &apos;TargetPropertyName&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyName.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;TargetPropertyName&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyType.Description" xml:space="preserve">
+    <value>Type of the property. If not supplied, ActiveWriter will use IList by default.</value>
+    <comment>Description for DomainProperty &apos;TargetPropertyType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyType.DisplayName" xml:space="preserve">
+    <value>Target Property Type</value>
+    <comment>DisplayName for DomainProperty &apos;TargetPropertyType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyType.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;TargetPropertyType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceCascade.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceCascade&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceCascade.DisplayName" xml:space="preserve">
+    <value>Source Cascade</value>
+    <comment>DisplayName for DomainProperty &apos;SourceCascade&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceCascade.Category" xml:space="preserve">
+    <value>Source (BelongsTo)</value>
+    <comment>Category for DomainProperty &apos;SourceCascade&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceColumn.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceColumn&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceColumn.DisplayName" xml:space="preserve">
+    <value>Source Column</value>
+    <comment>DisplayName for DomainProperty &apos;SourceColumn&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceColumn.Category" xml:space="preserve">
+    <value>Source (BelongsTo)</value>
+    <comment>Category for DomainProperty &apos;SourceColumn&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceCustomAccess.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceCustomAccess&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceCustomAccess.DisplayName" xml:space="preserve">
+    <value>Source Custom Access</value>
+    <comment>DisplayName for DomainProperty &apos;SourceCustomAccess&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceCustomAccess.Category" xml:space="preserve">
+    <value>Source (BelongsTo)</value>
+    <comment>Category for DomainProperty &apos;SourceCustomAccess&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceInsert.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceInsert&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceInsert.DisplayName" xml:space="preserve">
+    <value>Source Insert</value>
+    <comment>DisplayName for DomainProperty &apos;SourceInsert&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceInsert.Category" xml:space="preserve">
+    <value>Source (BelongsTo)</value>
+    <comment>Category for DomainProperty &apos;SourceInsert&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceNotNull.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceNotNull&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceNotNull.DisplayName" xml:space="preserve">
+    <value>Source Not Null</value>
+    <comment>DisplayName for DomainProperty &apos;SourceNotNull&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceNotNull.Category" xml:space="preserve">
+    <value>Source (BelongsTo)</value>
+    <comment>Category for DomainProperty &apos;SourceNotNull&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceOuterJoin.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceOuterJoin&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceOuterJoin.DisplayName" xml:space="preserve">
+    <value>Source Outer Join</value>
+    <comment>DisplayName for DomainProperty &apos;SourceOuterJoin&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceOuterJoin.Category" xml:space="preserve">
+    <value>Source (BelongsTo)</value>
+    <comment>Category for DomainProperty &apos;SourceOuterJoin&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceType.DisplayName" xml:space="preserve">
+    <value>Source Type</value>
+    <comment>DisplayName for DomainProperty &apos;SourceType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceType.Category" xml:space="preserve">
+    <value>Source (BelongsTo)</value>
+    <comment>Category for DomainProperty &apos;SourceType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceUnique.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceUnique&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceUnique.DisplayName" xml:space="preserve">
+    <value>Source Unique</value>
+    <comment>DisplayName for DomainProperty &apos;SourceUnique&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceUnique.Category" xml:space="preserve">
+    <value>Source (BelongsTo)</value>
+    <comment>Category for DomainProperty &apos;SourceUnique&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceUpdate.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceUpdate&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceUpdate.DisplayName" xml:space="preserve">
+    <value>Source Update</value>
+    <comment>DisplayName for DomainProperty &apos;SourceUpdate&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceUpdate.Category" xml:space="preserve">
+    <value>Source (BelongsTo)</value>
+    <comment>Category for DomainProperty &apos;SourceUpdate&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceDescription.Description" xml:space="preserve">
+    <value>Description of the property. This will appear in a &lt;summary&gt; Xml comment.</value>
+    <comment>Description for DomainProperty &apos;SourceDescription&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceDescription.DisplayName" xml:space="preserve">
+    <value>Source Description</value>
+    <comment>DisplayName for DomainProperty &apos;SourceDescription&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceDescription.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;SourceDescription&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetAccess.Description" xml:space="preserve">
+    <value>The access strategy.</value>
+    <comment>Description for DomainProperty &apos;TargetAccess&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetAccess.DisplayName" xml:space="preserve">
+    <value>Target Access</value>
+    <comment>DisplayName for DomainProperty &apos;TargetAccess&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetAccess.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetAccess&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyName.Description" xml:space="preserve">
+    <value>Name of the property. If not suplied, ActiveWriter will use target class name.</value>
+    <comment>Description for DomainProperty &apos;SourcePropertyName&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyName.DisplayName" xml:space="preserve">
+    <value>Source Property Name</value>
+    <comment>DisplayName for DomainProperty &apos;SourcePropertyName&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyName.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;SourcePropertyName&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceNotFoundBehaviour.Description" xml:space="preserve">
+    <value>Gets or sets the way broken relations are handled.</value>
+    <comment>Description for DomainProperty &apos;SourceNotFoundBehaviour&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceNotFoundBehaviour.DisplayName" xml:space="preserve">
+    <value>Source Not Found Behaviour</value>
+    <comment>DisplayName for DomainProperty &apos;SourceNotFoundBehaviour&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceNotFoundBehaviour.Category" xml:space="preserve">
+    <value>Source (BelongsTo)</value>
+    <comment>Category for DomainProperty &apos;SourceNotFoundBehaviour&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetNotFoundBehaviour.Description" xml:space="preserve">
+    <value>Gets or sets the way broken relations are handled.</value>
+    <comment>Description for DomainProperty &apos;TargetNotFoundBehaviour&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetNotFoundBehaviour.DisplayName" xml:space="preserve">
+    <value>Target Not Found Behaviour</value>
+    <comment>DisplayName for DomainProperty &apos;TargetNotFoundBehaviour&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetNotFoundBehaviour.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetNotFoundBehaviour&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetElement.Description" xml:space="preserve">
+    <value>Use for simple types.</value>
+    <comment>Description for DomainProperty &apos;TargetElement&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetElement.DisplayName" xml:space="preserve">
+    <value>Target Element</value>
+    <comment>DisplayName for DomainProperty &apos;TargetElement&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetElement.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetElement&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetIndexType.Description" xml:space="preserve">
+    <value>Only used with maps.</value>
+    <comment>Description for DomainProperty &apos;TargetIndexType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetIndexType.DisplayName" xml:space="preserve">
+    <value>Target Index Type</value>
+    <comment>DisplayName for DomainProperty &apos;TargetIndexType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetIndexType.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetIndexType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetIndex.Description" xml:space="preserve">
+    <value>Only used with maps or list.</value>
+    <comment>Description for DomainProperty &apos;TargetIndex&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetIndex.DisplayName" xml:space="preserve">
+    <value>Target Index</value>
+    <comment>DisplayName for DomainProperty &apos;TargetIndex&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetIndex.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetIndex&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/Source.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainRole &apos;Source&apos; on DomainRelationship &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/Source.DisplayName" xml:space="preserve">
+    <value>Source</value>
+    <comment>DisplayName for DomainRole &apos;Source&apos; on DomainRelationship &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/Source.PropertyDisplayName" xml:space="preserve">
+    <value>Targets</value>
+    <comment>PropertyDisplayName for DomainRole &apos;Source&apos; on DomainRelationship &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/Target.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainRole &apos;Target&apos; on DomainRelationship &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/Target.DisplayName" xml:space="preserve">
+    <value>Target</value>
+    <comment>DisplayName for DomainRole &apos;Target&apos; on DomainRelationship &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/Target.PropertyDisplayName" xml:space="preserve">
+    <value>Sources</value>
+    <comment>PropertyDisplayName for DomainRole &apos;Target&apos; on DomainRelationship &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ClassHasProperty.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;ClassHasProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ClassHasProperty.DisplayName" xml:space="preserve">
+    <value>Class Has Property</value>
+    <comment>DisplayName for DomainClass &apos;ClassHasProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ClassHasProperty/ModelClass.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainRole &apos;ModelClass&apos; on DomainRelationship &apos;ClassHasProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ClassHasProperty/ModelClass.DisplayName" xml:space="preserve">
+    <value>Model Class</value>
+    <comment>DisplayName for DomainRole &apos;ModelClass&apos; on DomainRelationship &apos;ClassHasProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ClassHasProperty/ModelClass.PropertyDisplayName" xml:space="preserve">
+    <value>Properties</value>
+    <comment>PropertyDisplayName for DomainRole &apos;ModelClass&apos; on DomainRelationship &apos;ClassHasProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ClassHasProperty/Property.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainRole &apos;Property&apos; on DomainRelationship &apos;ClassHasProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ClassHasProperty/Property.DisplayName" xml:space="preserve">
+    <value>Property</value>
+    <comment>DisplayName for DomainRole &apos;Property&apos; on DomainRelationship &apos;ClassHasProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ClassHasProperty/Property.PropertyDisplayName" xml:space="preserve">
+    <value>Model Class</value>
+    <comment>PropertyDisplayName for DomainRole &apos;Property&apos; on DomainRelationship &apos;ClassHasProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation.Description" xml:space="preserve">
+    <value>Maps a many to many association with an association table</value>
+    <comment>Description for DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation.DisplayName" xml:space="preserve">
+    <value>Many To Many Relation</value>
+    <comment>DisplayName for DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceCache.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceCache&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceCache.DisplayName" xml:space="preserve">
+    <value>Source Cache</value>
+    <comment>DisplayName for DomainProperty &apos;SourceCache&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceCache.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceCache&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceCascade.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceCascade&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceCascade.DisplayName" xml:space="preserve">
+    <value>Source Cascade</value>
+    <comment>DisplayName for DomainProperty &apos;SourceCascade&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceCascade.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceCascade&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceColumn.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceColumn&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceColumn.DisplayName" xml:space="preserve">
+    <value>Source Column</value>
+    <comment>DisplayName for DomainProperty &apos;SourceColumn&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceColumn.Category" xml:space="preserve">
+    <value>Common</value>
+    <comment>Category for DomainProperty &apos;SourceColumn&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceCustomAccess.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceCustomAccess&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceCustomAccess.DisplayName" xml:space="preserve">
+    <value>Source Custom Access</value>
+    <comment>DisplayName for DomainProperty &apos;SourceCustomAccess&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceCustomAccess.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceCustomAccess&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceInverse.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceInverse&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceInverse.DisplayName" xml:space="preserve">
+    <value>Source Inverse</value>
+    <comment>DisplayName for DomainProperty &apos;SourceInverse&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceInverse.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceInverse&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceLazy.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceLazy&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceLazy.DisplayName" xml:space="preserve">
+    <value>Source Lazy</value>
+    <comment>DisplayName for DomainProperty &apos;SourceLazy&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceLazy.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceLazy&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceMapType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceMapType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceMapType.DisplayName" xml:space="preserve">
+    <value>Source Map Type</value>
+    <comment>DisplayName for DomainProperty &apos;SourceMapType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceMapType.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceMapType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceOrderBy.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceOrderBy&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceOrderBy.DisplayName" xml:space="preserve">
+    <value>Source Order By</value>
+    <comment>DisplayName for DomainProperty &apos;SourceOrderBy&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceOrderBy.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceOrderBy&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceRelationType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceRelationType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceRelationType.DisplayName" xml:space="preserve">
+    <value>Source Relation Type</value>
+    <comment>DisplayName for DomainProperty &apos;SourceRelationType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceRelationType.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceRelationType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/Schema.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Schema&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/Schema.DisplayName" xml:space="preserve">
+    <value>Schema</value>
+    <comment>DisplayName for DomainProperty &apos;Schema&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/Schema.Category" xml:space="preserve">
+    <value>Common</value>
+    <comment>Category for DomainProperty &apos;Schema&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceSort.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceSort&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceSort.DisplayName" xml:space="preserve">
+    <value>Source Sort</value>
+    <comment>DisplayName for DomainProperty &apos;SourceSort&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceSort.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceSort&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/Table.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Table&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/Table.DisplayName" xml:space="preserve">
+    <value>Table</value>
+    <comment>DisplayName for DomainProperty &apos;Table&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/Table.Category" xml:space="preserve">
+    <value>Common</value>
+    <comment>Category for DomainProperty &apos;Table&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceWhere.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceWhere&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceWhere.DisplayName" xml:space="preserve">
+    <value>Source Where</value>
+    <comment>DisplayName for DomainProperty &apos;SourceWhere&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceWhere.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceWhere&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetCache.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetCache&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetCache.DisplayName" xml:space="preserve">
+    <value>Target Cache</value>
+    <comment>DisplayName for DomainProperty &apos;TargetCache&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetCache.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetCache&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetCascade.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetCascade&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetCascade.DisplayName" xml:space="preserve">
+    <value>Target Cascade</value>
+    <comment>DisplayName for DomainProperty &apos;TargetCascade&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetCascade.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetCascade&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetColumn.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetColumn&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetColumn.DisplayName" xml:space="preserve">
+    <value>Target Column</value>
+    <comment>DisplayName for DomainProperty &apos;TargetColumn&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetColumn.Category" xml:space="preserve">
+    <value>Common</value>
+    <comment>Category for DomainProperty &apos;TargetColumn&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetCustomAccess.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetCustomAccess&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetCustomAccess.DisplayName" xml:space="preserve">
+    <value>Target Custom Access</value>
+    <comment>DisplayName for DomainProperty &apos;TargetCustomAccess&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetCustomAccess.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetCustomAccess&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetInverse.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetInverse&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetInverse.DisplayName" xml:space="preserve">
+    <value>Target Inverse</value>
+    <comment>DisplayName for DomainProperty &apos;TargetInverse&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetInverse.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetInverse&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetLazy.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetLazy&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetLazy.DisplayName" xml:space="preserve">
+    <value>Target Lazy</value>
+    <comment>DisplayName for DomainProperty &apos;TargetLazy&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetLazy.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetLazy&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetMapType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetMapType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetMapType.DisplayName" xml:space="preserve">
+    <value>Target Map Type</value>
+    <comment>DisplayName for DomainProperty &apos;TargetMapType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetMapType.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetMapType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetOrderBy.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetOrderBy&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetOrderBy.DisplayName" xml:space="preserve">
+    <value>Target Order By</value>
+    <comment>DisplayName for DomainProperty &apos;TargetOrderBy&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetOrderBy.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetOrderBy&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetRelationType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetRelationType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetRelationType.DisplayName" xml:space="preserve">
+    <value>Target Relation Type</value>
+    <comment>DisplayName for DomainProperty &apos;TargetRelationType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetRelationType.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetRelationType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetSort.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetSort&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetSort.DisplayName" xml:space="preserve">
+    <value>Target Sort</value>
+    <comment>DisplayName for DomainProperty &apos;TargetSort&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetSort.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetSort&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetWhere.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetWhere&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetWhere.DisplayName" xml:space="preserve">
+    <value>Target Where</value>
+    <comment>DisplayName for DomainProperty &apos;TargetWhere&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetWhere.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetWhere&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceDescription.Description" xml:space="preserve">
+    <value>Description of the property. This will appear in a &lt;summary&gt; Xml comment.</value>
+    <comment>Description for DomainProperty &apos;SourceDescription&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceDescription.DisplayName" xml:space="preserve">
+    <value>Source Description</value>
+    <comment>DisplayName for DomainProperty &apos;SourceDescription&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceDescription.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;SourceDescription&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetDescription.Description" xml:space="preserve">
+    <value>Description of the property. This will appear in a &lt;summary&gt; Xml comment.</value>
+    <comment>Description for DomainProperty &apos;TargetDescription&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetDescription.DisplayName" xml:space="preserve">
+    <value>Target Description</value>
+    <comment>DisplayName for DomainProperty &apos;TargetDescription&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetDescription.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;TargetDescription&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceAccess.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceAccess&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceAccess.DisplayName" xml:space="preserve">
+    <value>Source Access</value>
+    <comment>DisplayName for DomainProperty &apos;SourceAccess&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceAccess.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceAccess&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetAccess.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetAccess&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetAccess.DisplayName" xml:space="preserve">
+    <value>Target Access</value>
+    <comment>DisplayName for DomainProperty &apos;TargetAccess&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetAccess.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetAccess&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyType.Description" xml:space="preserve">
+    <value>Type of the property. If not supplied, ActiveWriter will use IList by default.</value>
+    <comment>Description for DomainProperty &apos;SourcePropertyType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyType.DisplayName" xml:space="preserve">
+    <value>Source Property Type</value>
+    <comment>DisplayName for DomainProperty &apos;SourcePropertyType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyType.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;SourcePropertyType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyType.Description" xml:space="preserve">
+    <value>Type of the property. If not supplied, ActiveWriter will use IList by default.</value>
+    <comment>Description for DomainProperty &apos;TargetPropertyType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyType.DisplayName" xml:space="preserve">
+    <value>Target Property Type</value>
+    <comment>DisplayName for DomainProperty &apos;TargetPropertyType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyType.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;TargetPropertyType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyName.Description" xml:space="preserve">
+    <value>Name of the property in the generated code. If not supplied, ActiveWriter will use the target class name in plural form.</value>
+    <comment>Description for DomainProperty &apos;SourcePropertyName&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyName.DisplayName" xml:space="preserve">
+    <value>Source Property Name</value>
+    <comment>DisplayName for DomainProperty &apos;SourcePropertyName&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyName.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;SourcePropertyName&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyName.Description" xml:space="preserve">
+    <value>Name of the property in the generated code. If not supplied, ActiveWriter will use the source class name in plural form.</value>
+    <comment>Description for DomainProperty &apos;TargetPropertyName&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyName.DisplayName" xml:space="preserve">
+    <value>Target Property Name</value>
+    <comment>DisplayName for DomainProperty &apos;TargetPropertyName&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyName.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;TargetPropertyName&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/Source.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainRole &apos;Source&apos; on DomainRelationship &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/Source.DisplayName" xml:space="preserve">
+    <value>Source</value>
+    <comment>DisplayName for DomainRole &apos;Source&apos; on DomainRelationship &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/Source.PropertyDisplayName" xml:space="preserve">
+    <value>Many To Many Targets</value>
+    <comment>PropertyDisplayName for DomainRole &apos;Source&apos; on DomainRelationship &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/Target.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainRole &apos;Target&apos; on DomainRelationship &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/Target.DisplayName" xml:space="preserve">
+    <value>Target</value>
+    <comment>DisplayName for DomainRole &apos;Target&apos; on DomainRelationship &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/Target.PropertyDisplayName" xml:space="preserve">
+    <value>Many To Many Sources</value>
+    <comment>PropertyDisplayName for DomainRole &apos;Target&apos; on DomainRelationship &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation.Description" xml:space="preserve">
+    <value>Associates a foreign table where the current class and the target class share their primary key.</value>
+    <comment>Description for DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation.DisplayName" xml:space="preserve">
+    <value>One To One Relation</value>
+    <comment>DisplayName for DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceAccess.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceAccess&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceAccess.DisplayName" xml:space="preserve">
+    <value>Source Access</value>
+    <comment>DisplayName for DomainProperty &apos;SourceAccess&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceAccess.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceAccess&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceCascade.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceCascade&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceCascade.DisplayName" xml:space="preserve">
+    <value>Source Cascade</value>
+    <comment>DisplayName for DomainProperty &apos;SourceCascade&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceCascade.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceCascade&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceConstrained.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceConstrained&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceConstrained.DisplayName" xml:space="preserve">
+    <value>Source Constrained</value>
+    <comment>DisplayName for DomainProperty &apos;SourceConstrained&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceConstrained.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceConstrained&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceCustomAccess.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceCustomAccess&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceCustomAccess.DisplayName" xml:space="preserve">
+    <value>Source Custom Access</value>
+    <comment>DisplayName for DomainProperty &apos;SourceCustomAccess&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceCustomAccess.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceCustomAccess&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceOuterJoin.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceOuterJoin&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceOuterJoin.DisplayName" xml:space="preserve">
+    <value>Source Outer Join</value>
+    <comment>DisplayName for DomainProperty &apos;SourceOuterJoin&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceOuterJoin.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceOuterJoin&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetAccess.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetAccess&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetAccess.DisplayName" xml:space="preserve">
+    <value>Target Access</value>
+    <comment>DisplayName for DomainProperty &apos;TargetAccess&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetAccess.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetAccess&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetCascade.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetCascade&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetCascade.DisplayName" xml:space="preserve">
+    <value>Target Cascade</value>
+    <comment>DisplayName for DomainProperty &apos;TargetCascade&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetCascade.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetCascade&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetConstrained.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetConstrained&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetConstrained.DisplayName" xml:space="preserve">
+    <value>Target Constrained</value>
+    <comment>DisplayName for DomainProperty &apos;TargetConstrained&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetConstrained.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetConstrained&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetCustomAccess.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetCustomAccess&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetCustomAccess.DisplayName" xml:space="preserve">
+    <value>Target Custom Access</value>
+    <comment>DisplayName for DomainProperty &apos;TargetCustomAccess&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetCustomAccess.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetCustomAccess&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetOuterJoin.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetOuterJoin&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetOuterJoin.DisplayName" xml:space="preserve">
+    <value>Target Outer Join</value>
+    <comment>DisplayName for DomainProperty &apos;TargetOuterJoin&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetOuterJoin.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetOuterJoin&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceDescription.Description" xml:space="preserve">
+    <value>Description of the property. This will appear in a &lt;summary&gt; Xml comment.</value>
+    <comment>Description for DomainProperty &apos;SourceDescription&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceDescription.DisplayName" xml:space="preserve">
+    <value>Source Description</value>
+    <comment>DisplayName for DomainProperty &apos;SourceDescription&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/SourceDescription.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;SourceDescription&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetDescription.Description" xml:space="preserve">
+    <value>Description of the property. This will appear in a &lt;summary&gt; Xml comment.</value>
+    <comment>Description for DomainProperty &apos;TargetDescription&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetDescription.DisplayName" xml:space="preserve">
+    <value>Target Description</value>
+    <comment>DisplayName for DomainProperty &apos;TargetDescription&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/TargetDescription.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;TargetDescription&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/Source.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainRole &apos;Source&apos; on DomainRelationship &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/Source.DisplayName" xml:space="preserve">
+    <value>Source</value>
+    <comment>DisplayName for DomainRole &apos;Source&apos; on DomainRelationship &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/Source.PropertyDisplayName" xml:space="preserve">
+    <value>One To One Target</value>
+    <comment>PropertyDisplayName for DomainRole &apos;Source&apos; on DomainRelationship &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/Target.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainRole &apos;Target&apos; on DomainRelationship &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/Target.DisplayName" xml:space="preserve">
+    <value>Target</value>
+    <comment>DisplayName for DomainRole &apos;Target&apos; on DomainRelationship &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/Target.PropertyDisplayName" xml:space="preserve">
+    <value>One To One Sources</value>
+    <comment>PropertyDisplayName for DomainRole &apos;Target&apos; on DomainRelationship &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/Property.DisplayName" xml:space="preserve">
+    <value>Property</value>
+    <comment>Display name for EnumerationLiteral &apos;Property&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/Property.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PropertyAccess.Property</value>
+    <comment>Description for EnumerationLiteral &apos;Property&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/FieldCamelcase.DisplayName" xml:space="preserve">
+    <value>FieldCamelcase</value>
+    <comment>Display name for EnumerationLiteral &apos;FieldCamelcase&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/FieldCamelcase.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PropertyAccess.FieldCamelcase</value>
+    <comment>Description for EnumerationLiteral &apos;FieldCamelcase&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/FieldCamelcaseUnderscore.DisplayName" xml:space="preserve">
+    <value>FieldCamelcaseUnderscore</value>
+    <comment>Display name for EnumerationLiteral &apos;FieldCamelcaseUnderscore&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/FieldCamelcaseUnderscore.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PropertyAccess.FieldCamelcaseUnderscore</value>
+    <comment>Description for EnumerationLiteral &apos;FieldCamelcaseUnderscore&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/FieldPascalcaseMUnderscore.DisplayName" xml:space="preserve">
+    <value>FieldPascalcaseMUnderscore</value>
+    <comment>Display name for EnumerationLiteral &apos;FieldPascalcaseMUnderscore&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/FieldPascalcaseMUnderscore.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PropertyAccess.FieldPascalcaseMUnderscore</value>
+    <comment>Description for EnumerationLiteral &apos;FieldPascalcaseMUnderscore&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/FieldLowercaseUnderscore.DisplayName" xml:space="preserve">
+    <value>FieldLowercaseUnderscore</value>
+    <comment>Display name for EnumerationLiteral &apos;FieldLowercaseUnderscore&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/FieldLowercaseUnderscore.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PropertyAccess.FieldLowercaseUnderscore</value>
+    <comment>Description for EnumerationLiteral &apos;FieldLowercaseUnderscore&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/NosetterCamelcase.DisplayName" xml:space="preserve">
+    <value>NosetterCamelcase</value>
+    <comment>Display name for EnumerationLiteral &apos;NosetterCamelcase&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/NosetterCamelcase.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PropertyAccess.NosetterCamelcase</value>
+    <comment>Description for EnumerationLiteral &apos;NosetterCamelcase&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/NosetterCamelcaseUnderscore.DisplayName" xml:space="preserve">
+    <value>NosetterCamelcaseUnderscore</value>
+    <comment>Display name for EnumerationLiteral &apos;NosetterCamelcaseUnderscore&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/NosetterCamelcaseUnderscore.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PropertyAccess.NosetterCamelcaseUnderscore</value>
+    <comment>Description for EnumerationLiteral &apos;NosetterCamelcaseUnderscore&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/NosetterPascalcaseMUnderscore.DisplayName" xml:space="preserve">
+    <value>NosetterPascalcaseMUnderscore</value>
+    <comment>Display name for EnumerationLiteral &apos;NosetterPascalcaseMUnderscore&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/NosetterPascalcaseMUnderscore.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PropertyAccess.NosetterPascalcaseMUnderscore</value>
+    <comment>Description for EnumerationLiteral &apos;NosetterPascalcaseMUnderscore&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/NosetterLowercaseUnderscore.DisplayName" xml:space="preserve">
+    <value>NosetterLowercaseUnderscore</value>
+    <comment>Display name for EnumerationLiteral &apos;NosetterLowercaseUnderscore&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/NosetterLowercaseUnderscore.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PropertyAccess.NosetterLowercaseUnderscore</value>
+    <comment>Description for EnumerationLiteral &apos;NosetterLowercaseUnderscore&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/Field.DisplayName" xml:space="preserve">
+    <value>Field</value>
+    <comment>Display name for EnumerationLiteral &apos;Field&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/Field.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PropertyAccess.Field</value>
+    <comment>Description for EnumerationLiteral &apos;Field&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/NosetterLowercase.DisplayName" xml:space="preserve">
+    <value>NosetterLowercase</value>
+    <comment>Display name for EnumerationLiteral &apos;NosetterLowercase&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyAccess/NosetterLowercase.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PropertyAccess.NosetterLowercase</value>
+    <comment>Description for EnumerationLiteral &apos;NosetterLowercase&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CacheEnum/Undefined.DisplayName" xml:space="preserve">
+    <value>Undefined</value>
+    <comment>Display name for EnumerationLiteral &apos;Undefined&apos; on DomainEnumeration &apos;CacheEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CacheEnum/Undefined.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.CacheEnum.Undefined</value>
+    <comment>Description for EnumerationLiteral &apos;Undefined&apos; on DomainEnumeration &apos;CacheEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CacheEnum/ReadOnly.DisplayName" xml:space="preserve">
+    <value>ReadOnly</value>
+    <comment>Display name for EnumerationLiteral &apos;ReadOnly&apos; on DomainEnumeration &apos;CacheEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CacheEnum/ReadOnly.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.CacheEnum.ReadOnly</value>
+    <comment>Description for EnumerationLiteral &apos;ReadOnly&apos; on DomainEnumeration &apos;CacheEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CacheEnum/ReadWrite.DisplayName" xml:space="preserve">
+    <value>ReadWrite</value>
+    <comment>Display name for EnumerationLiteral &apos;ReadWrite&apos; on DomainEnumeration &apos;CacheEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CacheEnum/ReadWrite.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.CacheEnum.ReadWrite</value>
+    <comment>Description for EnumerationLiteral &apos;ReadWrite&apos; on DomainEnumeration &apos;CacheEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CacheEnum/NonStrictReadWrite.DisplayName" xml:space="preserve">
+    <value>NonStrictReadWrite</value>
+    <comment>Display name for EnumerationLiteral &apos;NonStrictReadWrite&apos; on DomainEnumeration &apos;CacheEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CacheEnum/NonStrictReadWrite.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.CacheEnum.NonStrictReadWrite</value>
+    <comment>Description for EnumerationLiteral &apos;NonStrictReadWrite&apos; on DomainEnumeration &apos;CacheEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/None.DisplayName" xml:space="preserve">
+    <value>None</value>
+    <comment>Display name for EnumerationLiteral &apos;None&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/None.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PrimaryKeyType.None</value>
+    <comment>Description for EnumerationLiteral &apos;None&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/Identity.DisplayName" xml:space="preserve">
+    <value>Identity</value>
+    <comment>Display name for EnumerationLiteral &apos;Identity&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/Identity.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PrimaryKeyType.Identity</value>
+    <comment>Description for EnumerationLiteral &apos;Identity&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/Sequence.DisplayName" xml:space="preserve">
+    <value>Sequence</value>
+    <comment>Display name for EnumerationLiteral &apos;Sequence&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/Sequence.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PrimaryKeyType.Sequence</value>
+    <comment>Description for EnumerationLiteral &apos;Sequence&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/HiLo.DisplayName" xml:space="preserve">
+    <value>HiLo</value>
+    <comment>Display name for EnumerationLiteral &apos;HiLo&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/HiLo.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PrimaryKeyType.HiLo</value>
+    <comment>Description for EnumerationLiteral &apos;HiLo&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/SeqHiLo.DisplayName" xml:space="preserve">
+    <value>SeqHiLo</value>
+    <comment>Display name for EnumerationLiteral &apos;SeqHiLo&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/SeqHiLo.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PrimaryKeyType.SeqHiLo</value>
+    <comment>Description for EnumerationLiteral &apos;SeqHiLo&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/UuidHex.DisplayName" xml:space="preserve">
+    <value>UuidHex</value>
+    <comment>Display name for EnumerationLiteral &apos;UuidHex&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/UuidHex.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PrimaryKeyType.UuidHex</value>
+    <comment>Description for EnumerationLiteral &apos;UuidHex&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/UuidString.DisplayName" xml:space="preserve">
+    <value>UuidString</value>
+    <comment>Display name for EnumerationLiteral &apos;UuidString&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/UuidString.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PrimaryKeyType.UuidString</value>
+    <comment>Description for EnumerationLiteral &apos;UuidString&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/Guid.DisplayName" xml:space="preserve">
+    <value>Guid</value>
+    <comment>Display name for EnumerationLiteral &apos;Guid&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/Guid.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PrimaryKeyType.Guid</value>
+    <comment>Description for EnumerationLiteral &apos;Guid&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/GuidComb.DisplayName" xml:space="preserve">
+    <value>GuidComb</value>
+    <comment>Display name for EnumerationLiteral &apos;GuidComb&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/GuidComb.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PrimaryKeyType.GuidComb</value>
+    <comment>Description for EnumerationLiteral &apos;GuidComb&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/Native.DisplayName" xml:space="preserve">
+    <value>Native</value>
+    <comment>Display name for EnumerationLiteral &apos;Native&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/Native.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PrimaryKeyType.Native</value>
+    <comment>Description for EnumerationLiteral &apos;Native&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/Assigned.DisplayName" xml:space="preserve">
+    <value>Assigned</value>
+    <comment>Display name for EnumerationLiteral &apos;Assigned&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/Assigned.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PrimaryKeyType.Assigned</value>
+    <comment>Description for EnumerationLiteral &apos;Assigned&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/Foreign.DisplayName" xml:space="preserve">
+    <value>Foreign</value>
+    <comment>Display name for EnumerationLiteral &apos;Foreign&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PrimaryKeyType/Foreign.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PrimaryKeyType.Foreign</value>
+    <comment>Description for EnumerationLiteral &apos;Foreign&apos; on DomainEnumeration &apos;PrimaryKeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.KeyType/None.DisplayName" xml:space="preserve">
+    <value>None</value>
+    <comment>Display name for EnumerationLiteral &apos;None&apos; on DomainEnumeration &apos;KeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.KeyType/None.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.KeyType.None</value>
+    <comment>Description for EnumerationLiteral &apos;None&apos; on DomainEnumeration &apos;KeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.KeyType/PrimaryKey.DisplayName" xml:space="preserve">
+    <value>PrimaryKey</value>
+    <comment>Display name for EnumerationLiteral &apos;PrimaryKey&apos; on DomainEnumeration &apos;KeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.KeyType/PrimaryKey.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.KeyType.PrimaryKey</value>
+    <comment>Description for EnumerationLiteral &apos;PrimaryKey&apos; on DomainEnumeration &apos;KeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.KeyType/CompositeKey.DisplayName" xml:space="preserve">
+    <value>CompositeKey</value>
+    <comment>Display name for EnumerationLiteral &apos;CompositeKey&apos; on DomainEnumeration &apos;KeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.KeyType/CompositeKey.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.KeyType.CompositeKey</value>
+    <comment>Description for EnumerationLiteral &apos;CompositeKey&apos; on DomainEnumeration &apos;KeyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CascadeEnum/None.DisplayName" xml:space="preserve">
+    <value>None</value>
+    <comment>Display name for EnumerationLiteral &apos;None&apos; on DomainEnumeration &apos;CascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CascadeEnum/None.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.CascadeEnum.None</value>
+    <comment>Description for EnumerationLiteral &apos;None&apos; on DomainEnumeration &apos;CascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CascadeEnum/All.DisplayName" xml:space="preserve">
+    <value>All</value>
+    <comment>Display name for EnumerationLiteral &apos;All&apos; on DomainEnumeration &apos;CascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CascadeEnum/All.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.CascadeEnum.All</value>
+    <comment>Description for EnumerationLiteral &apos;All&apos; on DomainEnumeration &apos;CascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CascadeEnum/SaveUpdate.DisplayName" xml:space="preserve">
+    <value>SaveUpdate</value>
+    <comment>Display name for EnumerationLiteral &apos;SaveUpdate&apos; on DomainEnumeration &apos;CascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CascadeEnum/SaveUpdate.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.CascadeEnum.SaveUpdate</value>
+    <comment>Description for EnumerationLiteral &apos;SaveUpdate&apos; on DomainEnumeration &apos;CascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CascadeEnum/Delete.DisplayName" xml:space="preserve">
+    <value>Delete</value>
+    <comment>Display name for EnumerationLiteral &apos;Delete&apos; on DomainEnumeration &apos;CascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CascadeEnum/Delete.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.CascadeEnum.Delete</value>
+    <comment>Description for EnumerationLiteral &apos;Delete&apos; on DomainEnumeration &apos;CascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OuterJoinEnum/Auto.DisplayName" xml:space="preserve">
+    <value>Auto</value>
+    <comment>Display name for EnumerationLiteral &apos;Auto&apos; on DomainEnumeration &apos;OuterJoinEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OuterJoinEnum/Auto.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.OuterJoinEnum.Auto</value>
+    <comment>Description for EnumerationLiteral &apos;Auto&apos; on DomainEnumeration &apos;OuterJoinEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OuterJoinEnum/True.DisplayName" xml:space="preserve">
+    <value>True</value>
+    <comment>Display name for EnumerationLiteral &apos;True&apos; on DomainEnumeration &apos;OuterJoinEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OuterJoinEnum/True.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.OuterJoinEnum.True</value>
+    <comment>Description for EnumerationLiteral &apos;True&apos; on DomainEnumeration &apos;OuterJoinEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OuterJoinEnum/False.DisplayName" xml:space="preserve">
+    <value>False</value>
+    <comment>Display name for EnumerationLiteral &apos;False&apos; on DomainEnumeration &apos;OuterJoinEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OuterJoinEnum/False.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.OuterJoinEnum.False</value>
+    <comment>Description for EnumerationLiteral &apos;False&apos; on DomainEnumeration &apos;OuterJoinEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.RelationType/Guess.DisplayName" xml:space="preserve">
+    <value>Guess</value>
+    <comment>Display name for EnumerationLiteral &apos;Guess&apos; on DomainEnumeration &apos;RelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.RelationType/Guess.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.RelationType.Guess</value>
+    <comment>Description for EnumerationLiteral &apos;Guess&apos; on DomainEnumeration &apos;RelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.RelationType/Bag.DisplayName" xml:space="preserve">
+    <value>Bag</value>
+    <comment>Display name for EnumerationLiteral &apos;Bag&apos; on DomainEnumeration &apos;RelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.RelationType/Bag.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.RelationType.Bag</value>
+    <comment>Description for EnumerationLiteral &apos;Bag&apos; on DomainEnumeration &apos;RelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.RelationType/Set.DisplayName" xml:space="preserve">
+    <value>Set</value>
+    <comment>Display name for EnumerationLiteral &apos;Set&apos; on DomainEnumeration &apos;RelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.RelationType/Set.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.RelationType.Set</value>
+    <comment>Description for EnumerationLiteral &apos;Set&apos; on DomainEnumeration &apos;RelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.RelationType/IdBag.DisplayName" xml:space="preserve">
+    <value>IdBag</value>
+    <comment>Display name for EnumerationLiteral &apos;IdBag&apos; on DomainEnumeration &apos;RelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.RelationType/IdBag.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.RelationType.IdBag</value>
+    <comment>Description for EnumerationLiteral &apos;IdBag&apos; on DomainEnumeration &apos;RelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.RelationType/Map.DisplayName" xml:space="preserve">
+    <value>Map</value>
+    <comment>Display name for EnumerationLiteral &apos;Map&apos; on DomainEnumeration &apos;RelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.RelationType/Map.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.RelationType.Map</value>
+    <comment>Description for EnumerationLiteral &apos;Map&apos; on DomainEnumeration &apos;RelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/AnsiChar.DisplayName" xml:space="preserve">
+    <value>AnsiChar</value>
+    <comment>Display name for EnumerationLiteral &apos;AnsiChar&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/AnsiChar.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.AnsiChar</value>
+    <comment>Description for EnumerationLiteral &apos;AnsiChar&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Single.DisplayName" xml:space="preserve">
+    <value>Single</value>
+    <comment>Display name for EnumerationLiteral &apos;Single&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Single.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.Single</value>
+    <comment>Description for EnumerationLiteral &apos;Single&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/AnsiString.DisplayName" xml:space="preserve">
+    <value>AnsiString</value>
+    <comment>Display name for EnumerationLiteral &apos;AnsiString&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/AnsiString.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.AnsiString</value>
+    <comment>Description for EnumerationLiteral &apos;AnsiString&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/CultureInfo.DisplayName" xml:space="preserve">
+    <value>CultureInfo</value>
+    <comment>Display name for EnumerationLiteral &apos;CultureInfo&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/CultureInfo.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.CultureInfo</value>
+    <comment>Description for EnumerationLiteral &apos;CultureInfo&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Binary.DisplayName" xml:space="preserve">
+    <value>Binary</value>
+    <comment>Display name for EnumerationLiteral &apos;Binary&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Binary.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.Binary</value>
+    <comment>Description for EnumerationLiteral &apos;Binary&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Type.DisplayName" xml:space="preserve">
+    <value>Type</value>
+    <comment>Display name for EnumerationLiteral &apos;Type&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Type.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.Type</value>
+    <comment>Description for EnumerationLiteral &apos;Type&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/String.DisplayName" xml:space="preserve">
+    <value>String</value>
+    <comment>Display name for EnumerationLiteral &apos;String&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/String.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.String</value>
+    <comment>Description for EnumerationLiteral &apos;String&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/StringClob.DisplayName" xml:space="preserve">
+    <value>StringClob</value>
+    <comment>Display name for EnumerationLiteral &apos;StringClob&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/StringClob.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.StringClob</value>
+    <comment>Description for EnumerationLiteral &apos;StringClob&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/BinaryBlob.DisplayName" xml:space="preserve">
+    <value>BinaryBlob</value>
+    <comment>Display name for EnumerationLiteral &apos;BinaryBlob&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/BinaryBlob.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.BinaryBlob</value>
+    <comment>Description for EnumerationLiteral &apos;BinaryBlob&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Boolean.DisplayName" xml:space="preserve">
+    <value>Boolean</value>
+    <comment>Display name for EnumerationLiteral &apos;Boolean&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Boolean.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.Boolean</value>
+    <comment>Description for EnumerationLiteral &apos;Boolean&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Byte.DisplayName" xml:space="preserve">
+    <value>Byte</value>
+    <comment>Display name for EnumerationLiteral &apos;Byte&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Byte.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.Byte</value>
+    <comment>Description for EnumerationLiteral &apos;Byte&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Char.DisplayName" xml:space="preserve">
+    <value>Char</value>
+    <comment>Display name for EnumerationLiteral &apos;Char&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Char.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.Char</value>
+    <comment>Description for EnumerationLiteral &apos;Char&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/DateTime.DisplayName" xml:space="preserve">
+    <value>DateTime</value>
+    <comment>Display name for EnumerationLiteral &apos;DateTime&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/DateTime.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.DateTime</value>
+    <comment>Description for EnumerationLiteral &apos;DateTime&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Decimal.DisplayName" xml:space="preserve">
+    <value>Decimal</value>
+    <comment>Display name for EnumerationLiteral &apos;Decimal&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Decimal.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.Decimal</value>
+    <comment>Description for EnumerationLiteral &apos;Decimal&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Double.DisplayName" xml:space="preserve">
+    <value>Double</value>
+    <comment>Display name for EnumerationLiteral &apos;Double&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Double.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.Double</value>
+    <comment>Description for EnumerationLiteral &apos;Double&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Guid.DisplayName" xml:space="preserve">
+    <value>Guid</value>
+    <comment>Display name for EnumerationLiteral &apos;Guid&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Guid.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.Guid</value>
+    <comment>Description for EnumerationLiteral &apos;Guid&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Int16.DisplayName" xml:space="preserve">
+    <value>Int16</value>
+    <comment>Display name for EnumerationLiteral &apos;Int16&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Int16.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.Int16</value>
+    <comment>Description for EnumerationLiteral &apos;Int16&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Int32.DisplayName" xml:space="preserve">
+    <value>Int32</value>
+    <comment>Display name for EnumerationLiteral &apos;Int32&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Int32.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.Int32</value>
+    <comment>Description for EnumerationLiteral &apos;Int32&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Int64.DisplayName" xml:space="preserve">
+    <value>Int64</value>
+    <comment>Display name for EnumerationLiteral &apos;Int64&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Int64.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.Int64</value>
+    <comment>Description for EnumerationLiteral &apos;Int64&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Ticks.DisplayName" xml:space="preserve">
+    <value>Ticks</value>
+    <comment>Display name for EnumerationLiteral &apos;Ticks&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Ticks.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.Ticks</value>
+    <comment>Description for EnumerationLiteral &apos;Ticks&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/TimeSpan.DisplayName" xml:space="preserve">
+    <value>TimeSpan</value>
+    <comment>Display name for EnumerationLiteral &apos;TimeSpan&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/TimeSpan.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.TimeSpan</value>
+    <comment>Description for EnumerationLiteral &apos;TimeSpan&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Timestamp.DisplayName" xml:space="preserve">
+    <value>Timestamp</value>
+    <comment>Display name for EnumerationLiteral &apos;Timestamp&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Timestamp.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.Timestamp</value>
+    <comment>Description for EnumerationLiteral &apos;Timestamp&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/TrueFalse.DisplayName" xml:space="preserve">
+    <value>TrueFalse</value>
+    <comment>Display name for EnumerationLiteral &apos;TrueFalse&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/TrueFalse.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.TrueFalse</value>
+    <comment>Description for EnumerationLiteral &apos;TrueFalse&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/YesNo.DisplayName" xml:space="preserve">
+    <value>YesNo</value>
+    <comment>Display name for EnumerationLiteral &apos;YesNo&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/YesNo.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.YesNo</value>
+    <comment>Description for EnumerationLiteral &apos;YesNo&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Accessor/Public.DisplayName" xml:space="preserve">
+    <value>Public</value>
+    <comment>Display name for EnumerationLiteral &apos;Public&apos; on DomainEnumeration &apos;Accessor&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Accessor/Public.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.Accessor.Public</value>
+    <comment>Description for EnumerationLiteral &apos;Public&apos; on DomainEnumeration &apos;Accessor&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Accessor/Private.DisplayName" xml:space="preserve">
+    <value>Private</value>
+    <comment>Display name for EnumerationLiteral &apos;Private&apos; on DomainEnumeration &apos;Accessor&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Accessor/Private.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.Accessor.Private</value>
+    <comment>Description for EnumerationLiteral &apos;Private&apos; on DomainEnumeration &apos;Accessor&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Accessor/Protected.DisplayName" xml:space="preserve">
+    <value>Protected</value>
+    <comment>Display name for EnumerationLiteral &apos;Protected&apos; on DomainEnumeration &apos;Accessor&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Accessor/Protected.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.Accessor.Protected</value>
+    <comment>Description for EnumerationLiteral &apos;Protected&apos; on DomainEnumeration &apos;Accessor&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyType/Property.DisplayName" xml:space="preserve">
+    <value>Property</value>
+    <comment>Display name for EnumerationLiteral &apos;Property&apos; on DomainEnumeration &apos;PropertyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyType/Property.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PropertyType.Property</value>
+    <comment>Description for EnumerationLiteral &apos;Property&apos; on DomainEnumeration &apos;PropertyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyType/Field.DisplayName" xml:space="preserve">
+    <value>Field</value>
+    <comment>Display name for EnumerationLiteral &apos;Field&apos; on DomainEnumeration &apos;PropertyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyType/Field.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PropertyType.Field</value>
+    <comment>Description for EnumerationLiteral &apos;Field&apos; on DomainEnumeration &apos;PropertyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyType/Version.DisplayName" xml:space="preserve">
+    <value>Version</value>
+    <comment>Display name for EnumerationLiteral &apos;Version&apos; on DomainEnumeration &apos;PropertyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyType/Version.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PropertyType.Version</value>
+    <comment>Description for EnumerationLiteral &apos;Version&apos; on DomainEnumeration &apos;PropertyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyType/Timestamp.DisplayName" xml:space="preserve">
+    <value>Timestamp</value>
+    <comment>Display name for EnumerationLiteral &apos;Timestamp&apos; on DomainEnumeration &apos;PropertyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.PropertyType/Timestamp.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.PropertyType.Timestamp</value>
+    <comment>Description for EnumerationLiteral &apos;Timestamp&apos; on DomainEnumeration &apos;PropertyType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FieldCase/Unchanged.DisplayName" xml:space="preserve">
+    <value>Unchanged</value>
+    <comment>Display name for EnumerationLiteral &apos;Unchanged&apos; on DomainEnumeration &apos;FieldCase&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FieldCase/Unchanged.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for EnumerationLiteral &apos;Unchanged&apos; on DomainEnumeration &apos;FieldCase&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FieldCase/Camelcase.DisplayName" xml:space="preserve">
+    <value>Camelcase</value>
+    <comment>Display name for EnumerationLiteral &apos;Camelcase&apos; on DomainEnumeration &apos;FieldCase&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FieldCase/Camelcase.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.FieldCase.Camelcase</value>
+    <comment>Description for EnumerationLiteral &apos;Camelcase&apos; on DomainEnumeration &apos;FieldCase&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FieldCase/CamelcaseUnderscore.DisplayName" xml:space="preserve">
+    <value>CamelcaseUnderscore</value>
+    <comment>Display name for EnumerationLiteral &apos;CamelcaseUnderscore&apos; on DomainEnumeration &apos;FieldCase&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FieldCase/CamelcaseUnderscore.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.FieldCase.CamelcaseUnderscore</value>
+    <comment>Description for EnumerationLiteral &apos;CamelcaseUnderscore&apos; on DomainEnumeration &apos;FieldCase&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FieldCase/CamelcaseMUnderscore.DisplayName" xml:space="preserve">
+    <value>CamelcaseMUnderscore</value>
+    <comment>Display name for EnumerationLiteral &apos;CamelcaseMUnderscore&apos; on DomainEnumeration &apos;FieldCase&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FieldCase/CamelcaseMUnderscore.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.FieldCase.CamelcaseMUnderscore</value>
+    <comment>Description for EnumerationLiteral &apos;CamelcaseMUnderscore&apos; on DomainEnumeration &apos;FieldCase&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FieldCase/Pascalcase.DisplayName" xml:space="preserve">
+    <value>Pascalcase</value>
+    <comment>Display name for EnumerationLiteral &apos;Pascalcase&apos; on DomainEnumeration &apos;FieldCase&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FieldCase/Pascalcase.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.FieldCase.Pascalcase</value>
+    <comment>Description for EnumerationLiteral &apos;Pascalcase&apos; on DomainEnumeration &apos;FieldCase&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FieldCase/PascalcaseUnderscore.DisplayName" xml:space="preserve">
+    <value>PascalcaseUnderscore</value>
+    <comment>Display name for EnumerationLiteral &apos;PascalcaseUnderscore&apos; on DomainEnumeration &apos;FieldCase&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FieldCase/PascalcaseUnderscore.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.FieldCase.PascalcaseUnderscore</value>
+    <comment>Description for EnumerationLiteral &apos;PascalcaseUnderscore&apos; on DomainEnumeration &apos;FieldCase&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FieldCase/PascalcaseMUnderscore.DisplayName" xml:space="preserve">
+    <value>PascalcaseMUnderscore</value>
+    <comment>Display name for EnumerationLiteral &apos;PascalcaseMUnderscore&apos; on DomainEnumeration &apos;FieldCase&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FieldCase/PascalcaseMUnderscore.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.FieldCase.PascalcaseMUnderscore</value>
+    <comment>Description for EnumerationLiteral &apos;PascalcaseMUnderscore&apos; on DomainEnumeration &apos;FieldCase&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CodeLanguage/CSharp.DisplayName" xml:space="preserve">
+    <value>CSharp</value>
+    <comment>Display name for EnumerationLiteral &apos;CSharp&apos; on DomainEnumeration &apos;CodeLanguage&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CodeLanguage/CSharp.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for EnumerationLiteral &apos;CSharp&apos; on DomainEnumeration &apos;CodeLanguage&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CodeLanguage/VB.DisplayName" xml:space="preserve">
+    <value>VB</value>
+    <comment>Display name for EnumerationLiteral &apos;VB&apos; on DomainEnumeration &apos;CodeLanguage&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CodeLanguage/VB.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.CodeLanguage.VB</value>
+    <comment>Description for EnumerationLiteral &apos;VB&apos; on DomainEnumeration &apos;CodeLanguage&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NullableUsage/No.DisplayName" xml:space="preserve">
+    <value>No</value>
+    <comment>Display name for EnumerationLiteral &apos;No&apos; on DomainEnumeration &apos;NullableUsage&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NullableUsage/No.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NullableUsage.No</value>
+    <comment>Description for EnumerationLiteral &apos;No&apos; on DomainEnumeration &apos;NullableUsage&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NullableUsage/Native.DisplayName" xml:space="preserve">
+    <value>Native</value>
+    <comment>Display name for EnumerationLiteral &apos;Native&apos; on DomainEnumeration &apos;NullableUsage&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NullableUsage/Native.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NullableUsage.Native</value>
+    <comment>Description for EnumerationLiteral &apos;Native&apos; on DomainEnumeration &apos;NullableUsage&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NullableUsage/WithHelperLibrary.DisplayName" xml:space="preserve">
+    <value>WithHelperLibrary</value>
+    <comment>Display name for EnumerationLiteral &apos;WithHelperLibrary&apos; on DomainEnumeration &apos;NullableUsage&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NullableUsage/WithHelperLibrary.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NullableUsage.WithHelperLibrary</value>
+    <comment>Description for EnumerationLiteral &apos;WithHelperLibrary&apos; on DomainEnumeration &apos;NullableUsage&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Polymorphism/Implicit.DisplayName" xml:space="preserve">
+    <value>Implicit</value>
+    <comment>Display name for EnumerationLiteral &apos;Implicit&apos; on DomainEnumeration &apos;Polymorphism&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Polymorphism/Implicit.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.Polymorphism.Implicit</value>
+    <comment>Description for EnumerationLiteral &apos;Implicit&apos; on DomainEnumeration &apos;Polymorphism&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Polymorphism/Explicit.DisplayName" xml:space="preserve">
+    <value>Explicit</value>
+    <comment>Display name for EnumerationLiteral &apos;Explicit&apos; on DomainEnumeration &apos;Polymorphism&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Polymorphism/Explicit.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.Polymorphism.Explicit</value>
+    <comment>Description for EnumerationLiteral &apos;Explicit&apos; on DomainEnumeration &apos;Polymorphism&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OptimisticLocking/None.DisplayName" xml:space="preserve">
+    <value>None</value>
+    <comment>Display name for EnumerationLiteral &apos;None&apos; on DomainEnumeration &apos;OptimisticLocking&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OptimisticLocking/None.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.OptimisticLocking.None</value>
+    <comment>Description for EnumerationLiteral &apos;None&apos; on DomainEnumeration &apos;OptimisticLocking&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OptimisticLocking/Version.DisplayName" xml:space="preserve">
+    <value>Version</value>
+    <comment>Display name for EnumerationLiteral &apos;Version&apos; on DomainEnumeration &apos;OptimisticLocking&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OptimisticLocking/Version.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.OptimisticLocking.Version</value>
+    <comment>Description for EnumerationLiteral &apos;Version&apos; on DomainEnumeration &apos;OptimisticLocking&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OptimisticLocking/Dirty.DisplayName" xml:space="preserve">
+    <value>Dirty</value>
+    <comment>Display name for EnumerationLiteral &apos;Dirty&apos; on DomainEnumeration &apos;OptimisticLocking&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OptimisticLocking/Dirty.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.OptimisticLocking.Dirty</value>
+    <comment>Description for EnumerationLiteral &apos;Dirty&apos; on DomainEnumeration &apos;OptimisticLocking&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OptimisticLocking/All.DisplayName" xml:space="preserve">
+    <value>All</value>
+    <comment>Display name for EnumerationLiteral &apos;All&apos; on DomainEnumeration &apos;OptimisticLocking&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OptimisticLocking/All.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.OptimisticLocking.All</value>
+    <comment>Description for EnumerationLiteral &apos;All&apos; on DomainEnumeration &apos;OptimisticLocking&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NotFoundBehaviour/Default.DisplayName" xml:space="preserve">
+    <value>Default</value>
+    <comment>Display name for EnumerationLiteral &apos;Default&apos; on DomainEnumeration &apos;NotFoundBehaviour&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NotFoundBehaviour/Default.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NotFoundBehaviour.Default</value>
+    <comment>Description for EnumerationLiteral &apos;Default&apos; on DomainEnumeration &apos;NotFoundBehaviour&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NotFoundBehaviour/Exception.DisplayName" xml:space="preserve">
+    <value>Exception</value>
+    <comment>Display name for EnumerationLiteral &apos;Exception&apos; on DomainEnumeration &apos;NotFoundBehaviour&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NotFoundBehaviour/Exception.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NotFoundBehaviour.Exception</value>
+    <comment>Description for EnumerationLiteral &apos;Exception&apos; on DomainEnumeration &apos;NotFoundBehaviour&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NotFoundBehaviour/Ignore.DisplayName" xml:space="preserve">
+    <value>Ignore</value>
+    <comment>Display name for EnumerationLiteral &apos;Ignore&apos; on DomainEnumeration &apos;NotFoundBehaviour&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NotFoundBehaviour/Ignore.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NotFoundBehaviour.Ignore</value>
+    <comment>Description for EnumerationLiteral &apos;Ignore&apos; on DomainEnumeration &apos;NotFoundBehaviour&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ClassShape.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;ClassShape&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ClassShape.DisplayName" xml:space="preserve">
+    <value>Class Shape</value>
+    <comment>DisplayName for DomainClass &apos;ClassShape&apos;</comment>
+  </data>
+  <data name="ClassShapePropertiesTitle" xml:space="preserve">
+    <value>Properties</value>
+    <comment>Compartment title</comment>
+  </data>
+  <data name="ClassShapeNameDefaultText" xml:space="preserve">
+    <value>Name</value>
+    <comment>Text decorator default text</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneConnector.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ManyToOneConnector</value>
+    <comment>Description for DomainClass &apos;ManyToOneConnector&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneConnector.DisplayName" xml:space="preserve">
+    <value>Many To One Connector</value>
+    <comment>DisplayName for DomainClass &apos;ManyToOneConnector&apos;</comment>
+  </data>
+  <data name="ManyToOneConnectorOneDefaultText" xml:space="preserve">
+    <value>1</value>
+    <comment>Text decorator default text</comment>
+  </data>
+  <data name="ManyToOneConnectorManyDefaultText" xml:space="preserve">
+    <value>n</value>
+    <comment>Text decorator default text</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyConnector.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ManyToManyConnector</value>
+    <comment>Description for DomainClass &apos;ManyToManyConnector&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyConnector.DisplayName" xml:space="preserve">
+    <value>Many To Many Connector</value>
+    <comment>DisplayName for DomainClass &apos;ManyToManyConnector&apos;</comment>
+  </data>
+  <data name="ManyToManyConnectorManySourceDefaultText" xml:space="preserve">
+    <value>n</value>
+    <comment>Text decorator default text</comment>
+  </data>
+  <data name="ManyToManyConnectorManyTargetDefaultText" xml:space="preserve">
+    <value>m</value>
+    <comment>Text decorator default text</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneConnector.Description" xml:space="preserve">
+    <value>Associates a foreign table where the current class and the target class share their primary key.</value>
+    <comment>Description for DomainClass &apos;OneToOneConnector&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneConnector.DisplayName" xml:space="preserve">
+    <value>One To One Connector</value>
+    <comment>DisplayName for DomainClass &apos;OneToOneConnector&apos;</comment>
+  </data>
+  <data name="OneToOneConnectorOneSourceDefaultText" xml:space="preserve">
+    <value>1</value>
+    <comment>Text decorator default text</comment>
+  </data>
+  <data name="OneToOneConnectorOneTargetDefaultText" xml:space="preserve">
+    <value>1</value>
+    <comment>Text decorator default text</comment>
+  </data>
+  <data name="FormatList" xml:space="preserve">
+    <value>ActiveWriter (*.actiw)|*.actiw</value>
+    <comment>A list of file format specifiers for the Save dialog box</comment>
+  </data>
+  <data name="ModelExplorerTitle" xml:space="preserve">
+    <value>ActiveWriter</value>
+    <comment>Model Explorer Toolwindow title</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ActiveRecordMapping.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ActiveRecordMapping</value>
+    <comment>Description for DomainClass &apos;ActiveRecordMapping&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ActiveRecordMapping.DisplayName" xml:space="preserve">
+    <value>Active Record Mapping</value>
+    <comment>DisplayName for DomainClass &apos;ActiveRecordMapping&apos;</comment>
+  </data>
+  <data name="ActiveWriterToolboxTab" xml:space="preserve">
+    <value>ActiveWriter</value>
+    <comment>Toolbox item tab name</comment>
+  </data>
+  <data name="ClassToolboxItem" xml:space="preserve">
+    <value>Class</value>
+    <comment>Toolbox item name</comment>
+  </data>
+  <data name="ClassToolboxTooltip" xml:space="preserve">
+    <value>Create a Domain class</value>
+    <comment>Toolbox tooltip text</comment>
+  </data>
+  <data name="ManyToOneRelationshipToolboxItem" xml:space="preserve">
+    <value>Many To One Relationship</value>
+    <comment>Toolbox item name</comment>
+  </data>
+  <data name="ManyToOneRelationshipToolboxTooltip" xml:space="preserve">
+    <value>Drag between classes to create a many to one relationship</value>
+    <comment>Toolbox tooltip text</comment>
+  </data>
+  <data name="ManyToManyRelationshipToolboxItem" xml:space="preserve">
+    <value>Many To Many Relationship</value>
+    <comment>Toolbox item name</comment>
+  </data>
+  <data name="ManyToManyRelationshipToolboxTooltip" xml:space="preserve">
+    <value>Drag between classes to create a many to many relationship</value>
+    <comment>Toolbox tooltip text</comment>
+  </data>
+  <data name="OneToOneRelationshipToolboxItem" xml:space="preserve">
+    <value>One To One Relationship</value>
+    <comment>Toolbox item name</comment>
+  </data>
+  <data name="OneToOneRelationshipToolboxTooltip" xml:space="preserve">
+    <value>Drag between classes to create a one to one relationship</value>
+    <comment>Toolbox tooltip text</comment>
+  </data>
+  <data name="AmbiguousSchema" xml:space="preserve">
+    <value>More than one schema found for target namespace &apos;{0}&apos;, use the first one at &apos;{1}&apos;.</value>
+    <comment>Serialization Warning: AmbiguousSchema</comment>
+  </data>
+  <data name="ExpectingFullFormRelationship" xml:space="preserve">
+    <value>Element &apos;{0}&apos; is treated as the target role-player of a relationship &apos;{1}&apos; instance, which should be serialized in full-form.</value>
+    <comment>Serialization Warning: ExpectingFullFormRelationship</comment>
+  </data>
+  <data name="ExpectingShortFormRelationship" xml:space="preserve">
+    <value>Instances of relationship &apos;{0}&apos; should be serialized in short-form.</value>
+    <comment>Serialization Warning: ExpectingShortFormRelationship</comment>
+  </data>
+  <data name="IgnoredPropertyValue" xml:space="preserve">
+    <value>Invalid property value &apos;{0}&apos; for property &apos;{1}&apos; with type &apos;{2}&apos;, ignored.</value>
+    <comment>Serialization Warning: IgnoredPropertyValue</comment>
+  </data>
+  <data name="MissingId" xml:space="preserve">
+    <value>Missing &apos;Id&apos; attribute, a new Guid &apos;{0}&apos; is auto-generated.</value>
+    <comment>Serialization Warning: MissingId</comment>
+  </data>
+  <data name="MonikerResolvedToDuplicateLink" xml:space="preserve">
+    <value>Resolving moniker &apos;{0}&apos; causes a duplicate link to be created, so the link and the moniker are ignored.</value>
+    <comment>Serialization Warning: MonikerResolvedToDuplicateLink</comment>
+  </data>
+  <data name="NoSchema" xml:space="preserve">
+    <value>Cannot find a schema that defines target namespace &apos;{0}&apos;, schema validation skipped.</value>
+    <comment>Serialization Warning: NoSchema</comment>
+  </data>
+  <data name="UnexpectedXmlElement" xml:space="preserve">
+    <value>Unexpected XML element &apos;{0}&apos;, ignored.</value>
+    <comment>Serialization Warning: UnexpectedXmlElement</comment>
+  </data>
+  <data name="AmbiguousMoniker" xml:space="preserve">
+    <value>Ambiguous moniker &apos;{0}&apos; encountered. It is used for both &apos;{1}&apos; and &apos;{2}&apos;.</value>
+    <comment>Serialization Error: AmbiguousMoniker</comment>
+  </data>
+  <data name="CannotMonikerizeElement" xml:space="preserve">
+    <value>Instances of DomainClass &apos;{0}&apos; cannot be serialized as a moniker.
+A DomainClass can be serialized as a moniker only if 
+1) it has a defined/inherited DomainProperty marked as IsMonikerKey=true, or 
+2) it is marked/inherited with SerializeId=true.</value>
+    <comment>Serialization Error: CannotMonikerizeElement</comment>
+  </data>
+  <data name="CannotOpenDocument" xml:space="preserve">
+    <value>Error encountered, check Error List window for details.</value>
+    <comment>Serialization Error: CannotOpenDocument</comment>
+  </data>
+  <data name="CannotSaveDocument" xml:space="preserve">
+    <value>Error encountered, check Error List window for details.</value>
+    <comment>Serialization Error: CannotSaveDocument</comment>
+  </data>
+  <data name="DanglingRelationship" xml:space="preserve">
+    <value>Relationship &apos;{0}&apos; instance is missing target role-player.</value>
+    <comment>Serialization Error: DanglingRelationship</comment>
+  </data>
+  <data name="InvalidPropertyValue" xml:space="preserve">
+    <value>Invalid property value &apos;{0}&apos; for property &apos;{1}&apos; with type &apos;{2}&apos;.</value>
+    <comment>Serialization Error: InvalidPropertyValue</comment>
+  </data>
+  <data name="MissingMoniker" xml:space="preserve">
+    <value>Missing moniker. A moniker is expected in attribute &apos;{0}&apos;.</value>
+    <comment>Serialization Error: MissingMoniker</comment>
+  </data>
+  <data name="MissingTransaction" xml:space="preserve">
+    <value>This must be called within the context of an active transaction.</value>
+    <comment>Serialization Error: MissingTransaction</comment>
+  </data>
+  <data name="UnresolvedMoniker" xml:space="preserve">
+    <value>Cannot resolve moniker &apos;{0}&apos;.</value>
+    <comment>Serialization Error: UnresolvedMoniker</comment>
+  </data>
+  <data name="VersionMismatch" xml:space="preserve">
+    <value>Unsupported version &apos;{0}&apos;, can only support &apos;{1}&apos;.</value>
+    <comment>Serialization Error: VersionMismatch</comment>
+  </data>
+  <data name="MinimumMultiplicityMissingLink" xml:space="preserve">
+    <value>{0} {1} has no {2}.</value>
+    <comment>Multiplicity underflow validation.</comment>
+  </data>
+  <data name="SaveOperationCancelled" xml:space="preserve">
+    <value>Save operation cancelled.</value>
+    <comment>Message when save is cancelled on validation errors</comment>
+  </data>
+  <data name="SaveValidationFailed" xml:space="preserve">
+    <value>There were validation errors, continue save?</value>
+    <comment>Message when validation errors are found on save</comment>
+  </data>
+  <data name="UnloadableSaveValidationFailed" xml:space="preserve">
+    <value>There were validation errors. Continuing to save may cause the file to become unloadable, do you want to continue?</value>
+    <comment>Message when validation errors are found on save that will cause file to become unloadable</comment>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ClassShapeKeyDefaultImage" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\key.png;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Icon decorator default image</comment>
+  </data>
+  <data name="ClassShapeValidationDefaultImage" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\validation.png;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Icon decorator default image</comment>
+  </data>
+  <data name="ClassToolboxBitmap" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\ClassTool.bmp;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Toolbox item image</comment>
+  </data>
+  <data name="ManyToOneRelationshipToolboxBitmap" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\Connector12n.bmp;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Toolbox item image</comment>
+  </data>
+  <data name="ManyToManyRelationshipToolboxBitmap" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\Connectorm2n.bmp;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Toolbox item image</comment>
+  </data>
+  <data name="OneToOneRelationshipToolboxBitmap" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\Connector121.bmp;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Toolbox item image</comment>
+  </data>
+</root>
+
+

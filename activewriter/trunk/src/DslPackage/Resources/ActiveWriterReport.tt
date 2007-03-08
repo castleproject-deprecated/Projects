@@ -1,0 +1,41 @@
+﻿<#
+/***************************************************************************
+Copyright 2006 Gökhan Altınören - http://altinoren.com/
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+***************************************************************************/
+#>
+<#@ template inherits="Microsoft.VisualStudio.TextTemplating.VSHost.ModelingTextTransformation" debug="true"#>
+<#@ output extension=".%EXT%" #>
+<#@ ActiveWriter processor="ActiveWriterDirectiveProcessor" requires="fileName='%MODELFILE%'" #>
+<#@ import namespace="Altinoren.ActiveWriter.CodeGeneration" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="Altinoren.ActiveWriter.ServerExplorerSupport" #>
+<#
+	Hashtable propertyBag = new Hashtable();
+	propertyBag.Add("Generic.Model", this.Model);
+	propertyBag.Add("Generic.Namespace", "%NAMESPACE%");
+	propertyBag.Add("Generic.ProcessID", "%PID%");
+	
+	CodeGenerationHelper helper = new CodeGenerationHelper(propertyBag);
+	helper.Generate();
+	
+	this.Write(propertyBag["CodeGeneration.ActiveRecordOutput"].ToString());
+	
+	// Disabled. Will be implemented in the plugin interface in the future.
+	/*if (this.Model.GenerateMonoRailProject)
+	{
+		MonoRailGenerator monoRailGenerator = new MonoRailGenerator(propertyBag);
+		monoRailGenerator.Generate();
+	}*/
+#>
