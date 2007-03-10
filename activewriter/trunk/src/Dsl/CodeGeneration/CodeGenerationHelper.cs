@@ -173,7 +173,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             classDeclaration.TypeAttributes = TypeAttributes.Public;
             classDeclaration.IsPartial = true;
 
-            classDeclaration.CustomAttributes.Add(new CodeAttributeDeclaration("CompositeKey"));
             classDeclaration.CustomAttributes.Add(new CodeAttributeDeclaration("Serializable"));
             if (keys[0].ModelClass.Model.UseGeneratedCodeAttribute)
                 classDeclaration.CustomAttributes.Add(GetGeneratedCodeAttribute());
@@ -389,10 +388,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private CodeTypeMember GetActiveRecordMemberCompositeKeyProperty(CodeTypeDeclaration compositeClass,
                                                                          CodeMemberField memberField)
         {
+            // TODO: Composite key generation omits UnsavedValue property. All the properties which are parts of the composite key
+            // should have the same UnsavedValue, by the way.
             CodeMemberProperty memberProperty =
                 GetMemberProperty(memberField, compositeClass.Name, true, true, null);
 
-            memberProperty.CustomAttributes.Add(new CodeAttributeDeclaration("PrimaryKey"));
+            memberProperty.CustomAttributes.Add(new CodeAttributeDeclaration("CompositeKey"));
 
             return memberProperty;
         }
