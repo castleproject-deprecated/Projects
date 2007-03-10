@@ -243,7 +243,7 @@
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="85b4e54d-4986-463a-a7e2-b15758af79aa" Description="" Name="UnsavedValue" DisplayName="Unsaved Value" Category="ActiveRecord">
+        <DomainProperty Id="85b4e54d-4986-463a-a7e2-b15758af79aa" Description="" Name="UnsavedValue" DisplayName="Unsaved Value" Category="ActiveRecord Primary Key">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>

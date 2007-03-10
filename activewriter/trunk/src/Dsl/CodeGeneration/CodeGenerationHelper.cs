@@ -1129,7 +1129,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private CodeAttributeDeclaration GetKeyPropertyAttribute(ModelProperty property)
         {
-            // AR: Why KeyPropertyAttribute doesn't have the same constructor signature as it's base class PropertyAttribute?
+            // Why KeyPropertyAttribute doesn't have the same constructor signature as it's base class PropertyAttribute?
             CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("KeyProperty");
 
             PopulateKeyPropertyAttribute(property, attribute);
@@ -1208,8 +1208,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 attribute.Arguments.Add(GetNamedAttributeArgument("NotNull", property.NotNull));
             if (property.Unique)
                 attribute.Arguments.Add(GetNamedAttributeArgument("Unique", property.Unique));
-            if (!String.IsNullOrEmpty(property.UnsavedValue))
-                attribute.Arguments.Add(GetNamedAttributeArgument("UnsavedValue", property.UnsavedValue));
             if (!property.Update)
                 attribute.Arguments.Add(GetNamedAttributeArgument("Update", property.Update));
             if (!String.IsNullOrEmpty(property.UniqueKey))

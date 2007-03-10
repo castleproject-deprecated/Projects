@@ -638,7 +638,7 @@
     <comment>DisplayName for DomainProperty &apos;UnsavedValue&apos; on DomainClass &apos;ModelProperty&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ModelProperty/UnsavedValue.Category" xml:space="preserve">
-    <value>ActiveRecord</value>
+    <value>ActiveRecord Primary Key</value>
     <comment>Category for DomainProperty &apos;UnsavedValue&apos; on DomainClass &apos;ModelProperty&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ModelProperty/Update.Description" xml:space="preserve">
