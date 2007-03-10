@@ -16,6 +16,7 @@ namespace Castle.Tools.CodeGenerator.Services
     protected string _namespace;
     protected string _serviceType;
     protected string _serviceIdentifier;
+    protected CodeConstructor _constructor;
     #endregion
 
     #region AbstractGenerator()
@@ -41,16 +42,22 @@ namespace Castle.Tools.CodeGenerator.Services
     protected virtual CodeTypeDeclaration GenerateTypeDeclaration(string ns, string name)
     {
       CodeTypeDeclaration type = _source.GenerateTypeDeclaration(ns, name);
-      CodeMemberField field = new CodeMemberField(_source[_serviceType], _naming.ToMemberVariableName(_serviceIdentifier));
-      field.Attributes = MemberAttributes.Family;
-      type.Members.Add(field);
 
-      CodeConstructor constructor = CreateServicesConstructor();
+      CreateMemberFields(type);
+
+      CodeConstructor constructor = _constructor = CreateServicesConstructor();
       constructor.Statements.Add(
         new CodeAssignStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), _naming.ToMemberVariableName(_serviceIdentifier)),
                                 new CodeArgumentReferenceExpression(_naming.ToVariableName(_serviceIdentifier))));
       type.Members.Add(constructor);
       return type;
+    }
+
+    protected virtual void CreateMemberFields(CodeTypeDeclaration type)
+    {
+      CodeMemberField field = new CodeMemberField(_source[_serviceType], _naming.ToMemberVariableName(_serviceIdentifier));
+      field.Attributes = MemberAttributes.Family;
+      type.Members.Add(field);
     }
 
     protected virtual CodeConstructor CreateServicesConstructor()

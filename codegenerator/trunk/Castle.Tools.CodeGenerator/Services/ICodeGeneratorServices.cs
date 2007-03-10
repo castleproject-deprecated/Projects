@@ -32,5 +32,10 @@ namespace Castle.Tools.CodeGenerator.Services
     {
       get;
     }
+
+    IRuntimeInformationService RuntimeInformationService
+    {
+      get;
+    }
   }
 }

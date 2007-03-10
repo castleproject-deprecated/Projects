@@ -47,25 +47,27 @@ namespace Castle.Tools.CodeGenerator.Services
     public override void Visit(ActionTreeNode node)
     {
       CodeTypeDeclaration type = _typeStack.Peek();
+      List<string> actionArgumentTypes = new List<string>();
 
       CodeMemberMethod method = new CodeMemberMethod();
       method.Name = node.Name;
-      method.ReturnType = _source[typeof(ControllerActionReference)];
+      method.ReturnType = _source[typeof(IControllerActionReference)];
       method.Attributes = MemberAttributes.Public;
       method.CustomAttributes.Add(_source.DebuggerAttribute);
-      List<CodeExpression> actionArguments = CreateActionArgumentsAndAddParameters(method, node);
-      method.Statements.Add(new CodeMethodReturnStatement(CreateNewActionReference(node, actionArguments)));
+      List<CodeExpression> actionArguments = CreateActionArgumentsAndAddParameters(method, node, actionArgumentTypes);
+      method.Statements.Add(new CodeMethodReturnStatement(CreateNewActionReference(node, actionArguments, actionArgumentTypes)));
       type.Members.Add(method);
+
 
       if (actionArguments.Count > 0 && _occurences[node.Name] == 1)
       {
         method = new CodeMemberMethod();
-        method.Comments.Add(new CodeCommentStatement("Empty argument Action..."));
+        method.Comments.Add(new CodeCommentStatement("Empty argument Action... Not sure if we want to pass MethodInformation to these..."));
         method.Name = node.Name;
-        method.ReturnType = _source[typeof(ControllerActionReference)];
+        method.ReturnType = _source[typeof(IArgumentlessControllerActionReference)];
         method.Attributes = MemberAttributes.Public;
         method.CustomAttributes.Add(_source.DebuggerAttribute);
-        method.Statements.Add(new CodeMethodReturnStatement(CreateNewActionReference(node, new List<CodeExpression>())));
+        method.Statements.Add(new CodeMethodReturnStatement(CreateNewActionReference(node, new List<CodeExpression>(), actionArgumentTypes)));
         type.Members.Add(method);
       }
 
@@ -74,8 +76,62 @@ namespace Castle.Tools.CodeGenerator.Services
     #endregion
 
     #region Methods
-    protected CodeExpression CreateNewActionReference(ActionTreeNode node, List<CodeExpression> actionArguments)
+    /*
+    I opted to only get this information when it was necessary, but decided to check this in at least once because it might be useful. -jlewalle
+    protected string CreateMethodInformation(ActionTreeNode node, CodeTypeDeclaration type, List<string> actionArgumentTypes)
     {
+      string methodInfoName = _naming.ToMethodSignatureName(node.Name, actionArgumentTypes.ToArray());
+      string memberName = _naming.ToMemberVariableName(methodInfoName);
+      CodeMemberField field = new CodeMemberField(_source[typeof(MethodInformation)], memberName);
+      field.Attributes = MemberAttributes.Family;
+      type.Members.Add(field);
+
+      List<CodeExpression> actionArgumentRuntimeTypes = new List<CodeExpression>();
+      foreach (string typeName in actionArgumentTypes)
+      {
+        actionArgumentRuntimeTypes.Add(new CodeTypeOfExpression(_source[typeName]));
+      }
+      _constructor.Statements.Add(
+        new CodeAssignStatement(
+          new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), memberName),
+          new CodeMethodInvokeExpression(
+            new CodeMethodReferenceExpression(
+              new CodePropertyReferenceExpression(
+                new CodeArgumentReferenceExpression(_naming.ToVariableName(_serviceIdentifier)), "RuntimeInformationService"
+              ),
+              "ResolveMethodInformation"
+            ),
+            new CodeExpression[]
+            {
+              new CodeTypeOfExpression(node.Controller.FullName),
+              new CodePrimitiveExpression(node.Name),
+              new CodeArrayCreateExpression(_source[typeof(Type)], actionArgumentRuntimeTypes.ToArray())
+            }
+          )
+        )
+      );
+      return memberName;
+    }
+    */
+
+    protected CodeExpression CreateNewActionReference(ActionTreeNode node, List<CodeExpression> actionArguments, List<string> actionArgumentTypes)
+    {
+      List<CodeExpression> actionArgumentRuntimeTypes = new List<CodeExpression>();
+      foreach (string typeName in actionArgumentTypes)
+      {
+        actionArgumentRuntimeTypes.Add(new CodeTypeOfExpression(_source[typeName]));
+      }
+
+      CodeExpression createMethodSignature = new CodeObjectCreateExpression(
+        _source[typeof(MethodSignature)],
+        new CodeExpression[]
+        {
+          new CodeTypeOfExpression(node.Controller.FullName),
+          new CodePrimitiveExpression(node.Name),
+          new CodeArrayCreateExpression(_source[typeof(Type)], actionArgumentRuntimeTypes.ToArray())
+        }
+      );
+
       CodeExpression[] constructionArguments = new CodeExpression[]
         {
           new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), _naming.ToMemberVariableName(_serviceIdentifier)),
@@ -83,6 +139,7 @@ namespace Castle.Tools.CodeGenerator.Services
           new CodePrimitiveExpression(node.Controller.Area),
           new CodePrimitiveExpression(_naming.ToControllerName(node.Controller.Name)),
           new CodePrimitiveExpression(node.Name),
+          createMethodSignature,
           new CodeArrayCreateExpression(_source[typeof(ActionArgument)], actionArguments.ToArray())
         };
 
@@ -96,10 +153,11 @@ namespace Castle.Tools.CodeGenerator.Services
         );
     }
 
-    protected List<CodeExpression> CreateActionArgumentsAndAddParameters(CodeMemberMethod method, ActionTreeNode node)
+    protected List<CodeExpression> CreateActionArgumentsAndAddParameters(CodeMemberMethod method, ActionTreeNode node, List<string> actionArgumentTypes)
     {
       List<CodeExpression> actionArguments = new List<CodeExpression>();
 
+      int index = 0;
       foreach (ParameterTreeNode parameterInfo in node.Children)
       {
         CodeParameterDeclarationExpression newParameter = new CodeParameterDeclarationExpression();
@@ -107,15 +165,15 @@ namespace Castle.Tools.CodeGenerator.Services
         newParameter.Type = _source[parameterInfo.Type];
         method.Parameters.Add(newParameter);
 
+        actionArgumentTypes.Add(parameterInfo.Type);
+
         CodeObjectCreateExpression argumentCreate =
           new CodeObjectCreateExpression(_source[typeof(ActionArgument)], new CodeExpression[]
                                                                                           {
-                                                                                            new CodePrimitiveExpression(
-                                                                                              parameterInfo.Name),
-                                                                                            new CodeTypeOfExpression(
-                                                                                              newParameter.Type),
-                                                                                            new CodeArgumentReferenceExpression
-                                                                                              (parameterInfo.Name)
+                                                                                            new CodePrimitiveExpression(index++),
+                                                                                            new CodePrimitiveExpression(parameterInfo.Name),
+                                                                                            new CodeTypeOfExpression(newParameter.Type),
+                                                                                            new CodeArgumentReferenceExpression(parameterInfo.Name)
                                                                                           });
 
         actionArguments.Add(argumentCreate);

@@ -40,6 +40,7 @@ namespace Castle.Tools.CodeGenerator.Model
       AreaTreeNode rootNode = new AreaTreeNode("Root");
       rootNode.AddChild(node);
       Assert.AreNotEqual(node.GetType().FullName, node.ToString());
+      Assert.AreEqual("ControllerServices", node.Namespace);
     }
 
     [Test]

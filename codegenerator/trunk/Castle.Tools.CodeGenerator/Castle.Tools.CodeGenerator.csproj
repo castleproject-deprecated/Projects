@@ -52,6 +52,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\ControllerReferences.cs" />
+    <Compile Include="Model\IArgumentlessControllerActionReference.cs" />
+    <Compile Include="Model\IControllerActionReference.cs" />
+    <Compile Include="Model\IControllerViewReference.cs" />
+    <Compile Include="Model\MethodSignature.cs" />
+    <Compile Include="Model\RuntimeInformation.cs" />
     <Compile Include="Model\TreeNode.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -67,6 +72,7 @@
     <Compile Include="Services\DefaultCodeGeneratorServices.cs" />
     <Compile Include="Services\DefaultControllerReferenceFactory.cs" />
     <Compile Include="Services\DefaultNamingService.cs" />
+    <Compile Include="Services\DefaultRuntimeInformationService.cs" />
     <Compile Include="Services\DefaultSourceGenerator.cs" />
     <Compile Include="Services\IArgumentConversionService.cs" />
     <Compile Include="Services\ICodeGeneratorServices.cs" />
@@ -77,6 +83,7 @@
     <Compile Include="Services\IParsedSourceStorageService.cs" />
     <Compile Include="Services\IParserFactory.cs" />
     <Compile Include="Services\IRedirectService.cs" />
+    <Compile Include="Services\IRuntimeInformationService.cs" />
     <Compile Include="Services\ISiteTreeGeneratorService.cs" />
     <Compile Include="Services\ISourceGenerator.cs" />
     <Compile Include="Services\ITreeCreationService.cs" />

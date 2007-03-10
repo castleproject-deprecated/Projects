@@ -1,4 +1,5 @@
 using System;
+using ICSharpCode.NRefactory.Parser.AST;
 
 namespace Castle.Tools.CodeGenerator.Services
 {
@@ -10,5 +11,6 @@ namespace Castle.Tools.CodeGenerator.Services
     void AliasNamespace(string alias, string ns);
     Type Resolve(string typeName, bool throwOnFail);
     string Resolve(string typeName);
+    string Resolve(TypeReference reference);
   }
 }

@@ -38,17 +38,8 @@ namespace Castle.Tools.CodeGenerator.Services
 
       foreach (ParameterDeclarationExpression parameter in methodDeclaration.Parameters)
       {
-		  
-        string typeName = this.TypeResolver.Resolve(parameter.TypeReference.SystemType);
-        if (String.IsNullOrEmpty(typeName))
-        {
-          Type parameterType = this.TypeResolver.Resolve(parameter.TypeReference.SystemType, true);
-          action.AddChild(new ParameterTreeNode(parameter.ParameterName, parameterType.FullName));
-        }
-        else
-        {
-          action.AddChild(new ParameterTreeNode(parameter.ParameterName, typeName));
-        }
+        string typeName = this.TypeResolver.Resolve(parameter.TypeReference);
+        action.AddChild(new ParameterTreeNode(parameter.ParameterName, typeName));
       }
       controllerNode.AddChild(action, true);
 

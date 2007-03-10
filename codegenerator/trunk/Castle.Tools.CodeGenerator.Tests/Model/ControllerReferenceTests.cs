@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Castle.MonoRail.Framework;
 using Castle.Tools.CodeGenerator.Services;
 using Rhino.Mocks;
@@ -27,10 +28,11 @@ namespace Castle.Tools.CodeGenerator.Model
     [Test]
     public void Constructor_Always_ProperlyInitializes()
     {
-      ActionArgument argument = new ActionArgument("id", 1);
+      ActionArgument argument = new ActionArgument(0, "id", 1);
       Assert.AreEqual("id", argument.Name);
       Assert.AreEqual(typeof(Int32), argument.Type);
       Assert.AreEqual(1, argument.Value);
+      Assert.AreEqual(0, argument.Index);
     }
     #endregion
   }
@@ -120,6 +122,7 @@ namespace Castle.Tools.CodeGenerator.Model
     protected IRailsEngineContext _railsContext;
     protected IRedirectService _redirectService;
     protected IArgumentConversionService _argumentConversionService;
+    protected IResponse _response;
     protected string _virtualDirectory;
     #endregion
 
@@ -134,6 +137,7 @@ namespace Castle.Tools.CodeGenerator.Model
       _serverUtility = _mocks.CreateMock<IServerUtility>();
       _redirectService = _mocks.CreateMock<IRedirectService>();
       _argumentConversionService = _mocks.CreateMock<IArgumentConversionService>();
+      _response = _mocks.CreateMock<IResponse>();
       _controller = new TestController();
     }
     #endregion
@@ -206,12 +210,13 @@ namespace Castle.Tools.CodeGenerator.Model
     [Test]
     public void Url_OneArgument_ReturnsUrl()
     {
-      New("Area", "Controller", "Action", new ActionArgument("name", "Jacob"));
+      ActionArgument argument = new ActionArgument(0, "name", "Jacob");
+      New("Area", "Controller", "Action", argument);
 
       using (_mocks.Unordered())
       {
         SetupMocks();
-        Expect.Call(_argumentConversionService.ConvertArgument("name", "Jacob")).Return("Jacob");
+        Expect.Call(_argumentConversionService.ConvertArgument(null, argument)).Return("Jacob");
         Expect.Call(_serverUtility.UrlEncode("name")).Return("name");
         Expect.Call(_serverUtility.UrlEncode("Jacob")).Return("Jacob");
       }
@@ -225,12 +230,13 @@ namespace Castle.Tools.CodeGenerator.Model
     [Test]
     public void Url_OneArgument_ReturnsUrlUsesEncoded()
     {
-      New("Area", "Controller", "Action", new ActionArgument("name", "Jacob"));
+      ActionArgument argument = new ActionArgument(0, "name", "Jacob");
+      New("Area", "Controller", "Action", argument);
 
       using (_mocks.Unordered())
       {
         SetupMocks();
-        Expect.Call(_argumentConversionService.ConvertArgument("name", "Jacob")).Return("Jacob");
+        Expect.Call(_argumentConversionService.ConvertArgument(null, argument)).Return("Jacob");
         Expect.Call(_serverUtility.UrlEncode("name")).Return("Ename");
         Expect.Call(_serverUtility.UrlEncode("Jacob")).Return("EJacob");
       }
@@ -258,6 +264,29 @@ namespace Castle.Tools.CodeGenerator.Model
     }
 
     [Test]
+    public void Redirect_Ajax_Works()
+    {
+      Controller controller = new TestController();
+      New("Area", "Controller", "Action");
+
+      BindingFlags flags = BindingFlags.FlattenHierarchy | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod;
+      FieldInfo field = controller.GetType().GetField("context", flags);
+      field.SetValue(controller, _railsContext);
+
+      using (_mocks.Unordered())
+      {
+        SetupMocks();
+        Expect.Call(_services.Controller).Return(controller).Repeat.Any();
+        Expect.Call(_railsContext.Response).Return(_response).Repeat.Any();
+        _response.Write("<script type=\"text/javascript\">window.location = \"/Area/Controller/Action.rails\";</script>");
+      }
+
+      _mocks.ReplayAll();
+      _reference.Redirect(true);
+      _mocks.VerifyAll();
+    }
+
+    [Test]
     public void Redirect_NoArgumentsWithoutArea_Redirects()
     {
       New(null, "Controller", "Action");
@@ -276,12 +305,13 @@ namespace Castle.Tools.CodeGenerator.Model
     [Test]
     public void Redirect_OneArgumentWithArea_Redirects()
     {
-      New("Area", "Controller", "Action", new ActionArgument("name", "Jacob"));
+      ActionArgument argument = new ActionArgument(0, "name", "Jacob");
+      New("Area", "Controller", "Action", argument);
 
       using (_mocks.Unordered())
       {
         SetupMocks();
-        Expect.Call(_argumentConversionService.ConvertArgument("name", "Jacob")).Return("Jacob");
+        Expect.Call(_argumentConversionService.ConvertArgument(null, argument)).Return("Jacob");
         Expect.Call(_serverUtility.UrlEncode("name")).Return("Ename");
         Expect.Call(_serverUtility.UrlEncode("Jacob")).Return("EJacob");
         _redirectService.Redirect("/Area/Controller/Action.rails?Ename=EJacob&");
@@ -296,7 +326,8 @@ namespace Castle.Tools.CodeGenerator.Model
     public void Transfer_MethodIsReal_InvokesAction()
     {
       Controller controller = new TestController();
-      New("Area", "Controller", "Index", new ActionArgument("name", "Jacob"));
+      ActionArgument argument = new ActionArgument(0, "name", "Jacob");
+      New("Area", "Controller", "Index", argument);
 
       using (_mocks.Unordered())
       {
@@ -314,7 +345,8 @@ namespace Castle.Tools.CodeGenerator.Model
     public void Transfer_MethodIsBad_Throws()
     {
       Controller controller = new TestController();
-      New("Area", "Controller", "BadAction", new ActionArgument("name", "Jacob"));
+      ActionArgument argument = new ActionArgument(0, "name", "Jacob");
+      New("Area", "Controller", "BadAction", argument);
 
       using (_mocks.Unordered())
       {
@@ -331,7 +363,7 @@ namespace Castle.Tools.CodeGenerator.Model
     protected void New(string area, string controller, string action, params ActionArgument[] arguments)
     {
       _reference =
-        new ControllerActionReference(_services, typeof(TestController), area, controller, action, arguments);
+        new ControllerActionReference(_services, typeof(TestController), area, controller, action, null, arguments);
     }
     #endregion
   }
@@ -352,12 +384,13 @@ namespace Castle.Tools.CodeGenerator.Model
     [Test]
     public void Url_OneArgument_ReturnsUrl()
     {
-      New("Area", "Controller", "Action", new ActionArgument("name", "Jacob"));
+      ActionArgument argument = new ActionArgument(0, "name", "Jacob");
+      New("Area", "Controller", "Action", argument);
 
       using (_mocks.Unordered())
       {
         SetupMocks();
-        Expect.Call(_argumentConversionService.ConvertArgument("name", "Jacob")).Return("Jacob");
+        Expect.Call(_argumentConversionService.ConvertArgument(null, argument)).Return("Jacob");
         Expect.Call(_serverUtility.UrlEncode("name")).Return("name");
         Expect.Call(_serverUtility.UrlEncode("Jacob")).Return("Jacob");
       }
@@ -389,7 +422,7 @@ namespace Castle.Tools.CodeGenerator.Model
     protected void New(string area, string controller, string action, params ActionArgument[] arguments)
     {
       _reference =
-        new ControllerActionReference(_services, typeof(TestController), area, controller, action, arguments);
+        new ControllerActionReference(_services, typeof(TestController), area, controller, action, null, arguments);
     }
     #endregion
   }

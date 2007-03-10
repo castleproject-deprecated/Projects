@@ -34,7 +34,7 @@ namespace Castle.Tools.CodeGenerator.Services
     public void CreateActionReference_Always_CreatesValidReference()
     {
       ControllerActionReference reference =
-        _factory.CreateActionReference(_services, typeof(TestController), "Area", "Controller", "Action",
+        _factory.CreateActionReference(_services, typeof(TestController), "Area", "Controller", "Action", null,
                                        new ActionArgument[0]);
       Assert.AreEqual("Controller", reference.ControllerName);
       Assert.AreEqual("Area", reference.AreaName);

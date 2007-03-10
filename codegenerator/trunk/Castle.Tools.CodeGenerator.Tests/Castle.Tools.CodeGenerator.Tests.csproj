@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\ControllerReferenceTests.cs" />
+    <Compile Include="Model\MethodSignatureTests.cs" />
     <Compile Include="Model\TreeNodeTests.cs" />
     <Compile Include="MsBuild\GenerateMonoRailSiteTreeTaskTests.cs" />
     <Compile Include="MsBuild\MsBuildLoggerTests.cs" />
@@ -65,9 +66,11 @@
     <Compile Include="Services\CodeDomAssert.cs" />
     <Compile Include="Services\ControllerPartialsGeneratorTests.cs" />
     <Compile Include="Services\ControllerVisitorTests.cs" />
+    <Compile Include="Services\DefaultArgumentConversionServiceTests.cs" />
     <Compile Include="Services\DefaultCodeGeneratorServicesTests.cs" />
     <Compile Include="Services\DefaultControllerReferenceFactoryTests.cs" />
     <Compile Include="Services\DefaultNamingServiceTests.cs" />
+    <Compile Include="Services\DefaultRuntimeInformationServiceTests.cs" />
     <Compile Include="Services\DefaultSourceStorageServiceTests.cs" />
     <Compile Include="Services\MockControllerReferenceFactory.cs" />
     <Compile Include="Services\NRefactoryParserFactoryTests.cs" />

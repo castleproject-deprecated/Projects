@@ -25,7 +25,8 @@ namespace Castle.Tools.CodeGenerator.Services
   	{
   		_mocks = new MockRepository();
       _naming = new DefaultNamingService();
-      _source = new DefaultSourceGenerator(); // I found a more integration style of testing was better, I started off
+      _source = new DefaultSourceGenerator();
+      // I found a more integration style of testing was better, I started off
       // mocking calls to ISourceGenerator, and that was just stupid, we want the classes and types and members.
       // and the assertions here ensure that.
       _logging = new NullLogger();
@@ -71,6 +72,16 @@ namespace Castle.Tools.CodeGenerator.Services
     #endregion
 
     #region Test Methods
+    [Test]
+    public void VisitViewNode_UnderNoController_DoesNothing()
+    {
+      ViewTreeNode node = new ViewTreeNode("Index");
+
+      _mocks.ReplayAll();
+      _generator.Visit(node);
+      _mocks.VerifyAll();
+    }
+
     [Test]
     public void VisitViewNode_NoParameters_CreatesMethod()
     {

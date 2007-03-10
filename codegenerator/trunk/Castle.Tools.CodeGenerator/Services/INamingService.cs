@@ -13,5 +13,7 @@ namespace Castle.Tools.CodeGenerator.Services
     string ToControllerWrapperName(string name);
     string ToActionWrapperName(string name);
     string ToViewWrapperName(string name);
+    string ToMethodSignatureName(string name, string[] types);
+    string ToMethodSignatureName(string name, Type[] types);
   }
 }

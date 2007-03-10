@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using ICSharpCode.NRefactory.Parser.AST;
 
 namespace Castle.Tools.CodeGenerator.Services
 {
@@ -140,10 +141,44 @@ namespace Castle.Tools.CodeGenerator.Services
         throw new TypeLoadException(String.Format("Unable to resolve: {0}", typeName));
       return null;
     }
+
+    public string Resolve(TypeReference reference)
+    {
+      return ResolveTypeReference(reference).ToString();
+    }
+
+    public TypeReference ResolveTypeReference(TypeReference reference)
+    {
+      string temp = reference.SystemType;
+      if (reference.GenericTypes.Count > 0)
+      {
+        temp = temp + "`" + reference.GenericTypes.Count;
+      }
+      string resolvedSystemType = HighLevelResolve(temp);
+
+      List<TypeReference> resolvedGenerics = new List<TypeReference>();
+      foreach (TypeReference genericType in reference.GenericTypes)
+      {
+        TypeReference resolvedGenericArgument = ResolveTypeReference(genericType);
+        resolvedGenerics.Add(resolvedGenericArgument);
+      }
+
+      return new TypeReference(resolvedSystemType, reference.PointerNestingLevel, reference.RankSpecifier, resolvedGenerics);
+    }
     #endregion
 
     #region Methods
-    private static Type FindType(string name)
+    protected string HighLevelResolve(string name)
+    {
+      string baseName = Resolve(name);
+      if (baseName == null)
+      {
+        return Resolve(name, true).FullName;
+      }
+      return baseName;
+    }
+
+    protected static Type FindType(string name)
     {
       foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
       {

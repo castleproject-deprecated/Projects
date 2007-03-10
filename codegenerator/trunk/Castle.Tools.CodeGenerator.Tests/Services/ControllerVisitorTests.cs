@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Castle.Tools.CodeGenerator.Model;
+using ICSharpCode.NRefactory.Parser;
 using ICSharpCode.NRefactory.Parser.AST;
 using Rhino.Mocks;
 using NUnit.Framework;
@@ -171,29 +173,9 @@ namespace Castle.Tools.CodeGenerator.Services
       using (_mocks.Unordered())
       {
         Expect.Call(_treeService.Peek).Return(node);
-        Expect.Call(_typeResolver.Resolve("System.Boolean")).Return("System.Boolean");
-      }
-
-      _mocks.ReplayAll();
-      _visitor.Visit(method, null);
-      _mocks.VerifyAll();
-      
-      Assert.AreEqual("Action", node.Children[0].Name);
-      Assert.AreEqual("parameter", node.Children[0].Children[0].Name);
-    }
-
-    [Test]
-    public void VisitMethodDeclaration_ActionMemberTrickyArgumentType_CreatesEntryInNode()
-    {
-      MethodDeclaration method = new MethodDeclaration("Action", Modifier.Public, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
-      method.Parameters.Add(new ParameterDeclarationExpression(new TypeReference("bool"), "parameter"));
-      ControllerTreeNode node = new ControllerTreeNode("SomeController", "SomeNamespace");
-
-      using (_mocks.Unordered())
-      {
-        Expect.Call(_treeService.Peek).Return(node);
-        Expect.Call(_typeResolver.Resolve("System.Boolean")).Return(null);
-        Expect.Call(_typeResolver.Resolve("System.Boolean", true)).Return(typeof(bool));
+        Expect.Call(_typeResolver.Resolve(new TypeReference("bool"))).Constraints(Is.Matching(new Predicate<TypeReference>(delegate(TypeReference reference) {
+          return reference.SystemType == "System.Boolean";
+        }))).Return("System.Boolean");
       }
 
       _mocks.ReplayAll();
@@ -215,6 +197,84 @@ namespace Castle.Tools.CodeGenerator.Services
       attributeSection.Attributes.Add(attribute);
       return attributeSection;
     }
+    #endregion
+  }
+
+  [TestFixture]
+  public class ControllerVisitorHighLevelTests
+  {
+    #region Member Data
+    private MockRepository _mocks;
+    private ControllerVisitor _visitor;
+    private ITreeCreationService _treeService;
+    private ITypeResolver _typeResolver;
+    #endregion
+
+    #region Test Setup and Teardown Methods
+    [SetUp]
+    public void Setup()
+    {
+      _mocks = new MockRepository();
+      _typeResolver = new TypeResolver();
+      _typeResolver = _mocks.CreateMock<ITypeResolver>();
+      _treeService = new DefaultTreeCreationService();
+      _visitor = new ControllerVisitor(new NullLogger(), _typeResolver, _treeService);
+    }
+    #endregion
+
+    #region Test Methods
+    [Test]
+    public void Parsing_MethodWithSystemTypeArrayParameter_YieldsCorrectType()
+    {
+      using (_mocks.Unordered())
+      {
+        _typeResolver.UseNamespace("System");
+        _typeResolver.UseNamespace("SomeNamespace");
+        Expect.Call(_typeResolver.Resolve(new TypeReference("DateTime"))).Constraints(Is.Matching(new Predicate<TypeReference>(delegate(TypeReference reference) {
+          return reference.SystemType == "DateTime";
+        }))).Return("System.DateTime[]");
+      }
+
+      _mocks.ReplayAll();
+      Parse(MethodWithSystemTypeArrayParameter);
+      _mocks.VerifyAll();
+    }
+    #endregion
+
+    #region Sources
+    protected void Parse(string source)
+    {
+      using (StringReader reader = new StringReader(source))
+      {
+        IParser parser = new NRefactoryParserFactory().CreateCSharpParser(reader);
+        parser.ParseMethodBodies = false;
+        parser.Parse();
+        _visitor.Visit(parser.CompilationUnit, null);
+      }
+    }
+
+    public static string MethodWithSystemTypeArrayParameter = @"
+using System;
+namespace SomeNamespace
+{
+  public partial class SomeController
+  {
+    public void SomeMethod(DateTime[] values) { }
+  }
+}
+";
+
+    public static string MethodWithSystemTypeListParameter = @"
+using System;
+using System.Collections.Generic;
+namespace SomeNamespace
+{
+  public partial class SomeController
+  {
+    public void SomeMethod(List<DateTime> values) { }
+  }
+}
+";
     #endregion
   }
 }

@@ -12,14 +12,16 @@ namespace Castle.Tools.CodeGenerator.Services
     private IRedirectService _redirectService;
     private IRailsEngineContext _railsContext;
     private IArgumentConversionService _argumentConversionService;
+    private IRuntimeInformationService _runtimeInformationService;
     #endregion
 
     #region DefaultCodeGeneratorServices()
-    public DefaultCodeGeneratorServices(IControllerReferenceFactory controllerReferenceFactory, IRedirectService redirectService, IArgumentConversionService argumentConversionService)
+    public DefaultCodeGeneratorServices(IControllerReferenceFactory controllerReferenceFactory, IRedirectService redirectService, IArgumentConversionService argumentConversionService, IRuntimeInformationService runtimeInformationService)
     {
       _controllerReferenceFactory = controllerReferenceFactory;
       _redirectService = redirectService;
       _argumentConversionService = argumentConversionService;
+      _runtimeInformationService = runtimeInformationService;
     }
     #endregion
 
@@ -49,6 +51,11 @@ namespace Castle.Tools.CodeGenerator.Services
     public IArgumentConversionService ArgumentConversionService
     {
       get { return _argumentConversionService; }
+    }
+
+    public IRuntimeInformationService RuntimeInformationService
+    {
+      get { return _runtimeInformationService; }
     }
     #endregion
   }

@@ -12,8 +12,7 @@ namespace Castle.Tools.CodeGenerator.Services
     private ILogger _logger;
     private ITreeCreationService _treeService;
     private INamingService _naming;
-    private string viewDirectory = @"Views";
-    private string componentsDirectory = @"Components";
+    private string _viewDirectory = @"Views";
     #endregion
 
     #region ViewSourceMapper()
@@ -66,7 +65,7 @@ namespace Castle.Tools.CodeGenerator.Services
       List<string> parts = new List<string>(Path.GetDirectoryName(path).Split('\\', '/'));
       while (parts.Count > 0)
       {
-        if (parts[0] == viewDirectory)
+        if (parts[0] == _viewDirectory)
         {
           parts.RemoveAt(0);
           return parts.ToArray();

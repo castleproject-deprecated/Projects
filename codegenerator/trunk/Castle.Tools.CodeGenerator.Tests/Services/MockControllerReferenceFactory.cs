@@ -24,12 +24,12 @@ namespace Castle.Tools.CodeGenerator.Services
     #endregion
 
     #region IControllerReferenceFactory Members
-    public ControllerActionReference CreateActionReference(ICodeGeneratorServices services, Type controllerType, string areaName, string controllerName, string actionName, params ActionArgument[] arguments)
+    public ControllerActionReference CreateActionReference(ICodeGeneratorServices services, Type controllerType, string areaName, string controllerName, string actionName, MethodSignature signature, params ActionArgument[] arguments)
     {
       string key = MakeKey(areaName, controllerName, actionName);
       if (!_actions.ContainsKey(key))
       {
-        _actions[key] = _mocks.CreateMock<ControllerActionReference>(services, controllerType, areaName, controllerName, actionName, arguments);
+        _actions[key] = _mocks.CreateMock<ControllerActionReference>(services, controllerType, areaName, controllerName, actionName, signature, arguments);
       }
       return _actions[key];
     }

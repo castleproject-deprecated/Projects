@@ -78,6 +78,37 @@ namespace Castle.Tools.CodeGenerator.Services
     {
       Assert.AreEqual("HelloWorldControllerNode", _service.ToControllerWrapperName("HelloWorldController"));
     }
+
+    [Test]
+    public void ToMemberSignature_SameName_AreDifferent()
+    {
+      string name1 = _service.ToMethodSignatureName("Method", new Type[] { typeof(string) });
+      string name2 = _service.ToMethodSignatureName("Method", new Type[] { typeof(long) });
+      Assert.AreNotEqual(name1, name2);
+    }
+
+    [Test]
+    public void ToMemberSignature_SameTypes_AreSame()
+    {
+      string name1 = _service.ToMethodSignatureName("Method", new string[] { "string" });
+      string name2 = _service.ToMethodSignatureName("Method", new string[] { "string" });
+      Assert.AreEqual(name1, name2);
+    }
+
+    [Test]
+    public void ToMemberSignature_SameTypesDifferentName_AreDifferent()
+    {
+      string name1 = _service.ToMethodSignatureName("Method", new Type[] { typeof(string) });
+      string name2 = _service.ToMethodSignatureName("OtherMethod", new Type[] { typeof(string) });
+      Assert.AreNotEqual(name1, name2);
+    }
+
+    [Test]
+    public void ToMemberSignature_ArrayTypes_ArentStupid()
+    {
+      string name = _service.ToMethodSignatureName("Method", new Type[] { typeof(string[]) });
+      Assert.AreEqual("Method_StringBB", name);
+    }
     #endregion
   }
 }

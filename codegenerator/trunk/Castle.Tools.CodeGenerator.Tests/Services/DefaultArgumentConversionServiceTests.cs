@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+
+using Castle.Tools.CodeGenerator.Model;
+
 using Rhino.Mocks;
 using NUnit.Framework;
 
-namespace Eleutian.Tools.CodeGenerator.Services
+namespace Castle.Tools.CodeGenerator.Services
 {
   [TestFixture]
   public class DefaultArgumentConversionServiceTests
@@ -27,7 +30,8 @@ namespace Eleutian.Tools.CodeGenerator.Services
     public void ConvertValue_Always_ReturnsSameValue()
     {
       string value = "Hello, World!";
-      Assert.AreEqual(value, _service.ConvertArgument("value", value));
+      ActionArgument argument = new ActionArgument(0, "name", value);
+      Assert.AreEqual(value, _service.ConvertArgument(null, argument));
     }
     #endregion	
   }

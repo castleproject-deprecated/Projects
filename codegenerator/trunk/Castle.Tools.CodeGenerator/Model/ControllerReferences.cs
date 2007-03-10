@@ -13,6 +13,7 @@ namespace Castle.Tools.CodeGenerator.Model
   public class ActionArgument
   {
     #region Member Data
+    private int _index;
     private Type _type;
     private string _name;
     private object _value;
@@ -24,6 +25,11 @@ namespace Castle.Tools.CodeGenerator.Model
       get { return _type; }
     }
 
+    public int Index
+    {
+      get { return _index; }
+    }
+    
     public string Name
     {
       get { return _name; }
@@ -36,13 +42,14 @@ namespace Castle.Tools.CodeGenerator.Model
     #endregion
 
     #region ActionArgument()
-    public ActionArgument(string name, object value)
-      : this(name, value.GetType(), value)
+    public ActionArgument(int index, string name, object value)
+      : this(index, name, value.GetType(), value)
     {
     }
 
-    public ActionArgument(string name, Type type, object value)
+    public ActionArgument(int index, string name, Type type, object value)
     {
+      _index = index;
       _name = name;
       _type = type;
       _value = value;
@@ -50,7 +57,7 @@ namespace Castle.Tools.CodeGenerator.Model
     #endregion
   }
 
-  public class ControllerViewReference
+  public class ControllerViewReference : IControllerViewReference
   {
     #region Member Data
     private ICodeGeneratorServices _services;
@@ -118,10 +125,11 @@ namespace Castle.Tools.CodeGenerator.Model
     #endregion
   }
 
-  public class ControllerActionReference : ControllerViewReference
+  public class ControllerActionReference : ControllerViewReference, IControllerActionReference
   {
     #region Member Data
     private ActionArgument[] _arguments;
+    private MethodSignature _signature;
     #endregion
 
     #region Properties
@@ -129,13 +137,19 @@ namespace Castle.Tools.CodeGenerator.Model
     {
       get { return _arguments; }
     }
+
+    public MethodSignature ActionMethodSignature
+    {
+      get { return _signature; }
+    }
     #endregion
 
     #region ControllerActionReference()
-    public ControllerActionReference(ICodeGeneratorServices services, Type controllerType, string areaName, string controllerName, string actionName, params ActionArgument[] arguments)
+    public ControllerActionReference(ICodeGeneratorServices services, Type controllerType, string areaName, string controllerName, string actionName, MethodSignature signature, params ActionArgument[] arguments)
       : base(services, controllerType, areaName, controllerName, actionName)
     {
       _arguments = arguments;
+      _signature = signature;
     }
     #endregion
 
@@ -171,18 +185,35 @@ namespace Castle.Tools.CodeGenerator.Model
         urlBuilder.UseExtensions = true;
         IDictionary parameters = new Hashtable();
         IArgumentConversionService conversionService = this.Services.ArgumentConversionService;
+        int index = 0;
         foreach (ActionArgument argument in this.Arguments)
         {
-          parameters.Add(argument.Name, conversionService.ConvertArgument(argument.Name, argument.Value));
+          parameters.Add(argument.Name, conversionService.ConvertArgument(this.ActionMethodSignature, argument));
+          index++;
         }
         UrlInfo urlInfo = this.Services.RailsContext.UrlInfo;
         return urlBuilder.BuildUrl(urlInfo, this.AreaName, this.ControllerName, this.ActionName, parameters);
       }
     }
 
+    public virtual void Redirect(bool useJavascript)
+    {
+      if (useJavascript)
+      {
+        string type = "text/javascript";
+        string javascript = String.Format("<script type=\"{0}\">window.location = \"{1}\";</script>", type, this.Url);
+        this.Services.Controller.CancelView();
+        this.Services.Controller.RenderText(javascript);
+      }
+      else
+      {
+        this.Services.RedirectService.Redirect(this.Url);
+      }
+    }
+
     public virtual void Redirect()
     {
-      this.Services.RedirectService.Redirect(this.Url);
+      Redirect(false);
     }
     #endregion
   }

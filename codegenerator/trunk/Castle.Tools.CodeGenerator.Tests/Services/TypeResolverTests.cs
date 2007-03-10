@@ -1,5 +1,7 @@
 using System;
-
+using System.Collections.Generic;
+using System.Reflection;
+using ICSharpCode.NRefactory.Parser.AST;
 using NUnit.Framework;
 
 namespace Castle.Tools.CodeGenerator.Services
@@ -109,14 +111,99 @@ namespace Castle.Tools.CodeGenerator.Services
       _typeResolver.Resolve("DateTime");
     }
 
-    /*
     [Test]
-    public void Resolve_AbsoluteQualifiedRequireAssemblySearch_Works()
+    public void ResolveStringOnly_ArrayOfDateTimes_Fails()
     {
-      Type type = typeof(Eleutian.Shared.DateTimeHelper);
-      Assert.AreEqual(type, _typeResolver.Resolve("Eleutian.Shared.DateTimeHelper", false));
+      _typeResolver.UseNamespace("System");
+      Assert.IsNull(_typeResolver.Resolve("DateTime[]"));
     }
-    */
+
+    [Test]
+    public void Resolve_ArrayOfDateTimes_Works()
+    {
+      _typeResolver.UseNamespace("System");
+      Assert.IsNotNull(_typeResolver.Resolve("DateTime[]", true));
+    }
+
+    [Test]
+    public void ResolveTypeReference_Simple_Works()
+    {
+      TypeReference reference = new TypeReference("DateTime");
+
+      _typeResolver.UseNamespace("System");
+
+      Assert.AreEqual("DateTime", reference.ToString());
+      Assert.AreEqual("System.DateTime", _typeResolver.Resolve(reference));
+    }
+
+    [Test]
+    public void ResolveTypeReference_SimplePrimitiveTypeArray_Works()
+    {
+      TypeReference reference = new TypeReference("long", new int[] { 0 });
+
+      _typeResolver.UseNamespace("System");
+
+      Assert.AreEqual("long[]", reference.ToString());
+      Assert.AreEqual("System.Int64[]", _typeResolver.Resolve(reference));
+    }
+
+    [Test]
+    public void ResolveTypeReference_SimpleArray_Works()
+    {
+      TypeReference reference = new TypeReference("DateTime", new int[] { 0 });
+
+      _typeResolver.UseNamespace("System");
+
+      Assert.AreEqual("DateTime[]", reference.ToString());
+      Assert.AreEqual("System.DateTime[]", _typeResolver.Resolve(reference));
+    }
+
+    [Test]
+    public void ResolveTypeReference_TwoDimArray_Works()
+    {
+      TypeReference reference = new TypeReference("DateTime", new int[] { 0, 0 });
+
+      _typeResolver.UseNamespace("System");
+
+      Assert.AreEqual("DateTime[][]", reference.ToString());
+      Assert.AreEqual("System.DateTime[][]", _typeResolver.Resolve(reference));
+    }
+
+    [Test]
+    public void ResolveTypeReference_ArrayOfSourceType_Works()
+    {
+      TypeReference reference = new TypeReference("RadClass", new int[] { 0, 0 });
+
+      _typeResolver.AddTableEntry("SomeNamespace.Utility.RadClass");
+
+      _typeResolver.UseNamespace("System");
+      _typeResolver.UseNamespace("SomeNamespace.Utility");
+
+      Assert.AreEqual("RadClass[][]", reference.ToString());
+      Assert.AreEqual("SomeNamespace.Utility.RadClass[][]", _typeResolver.Resolve(reference));
+    }
+
+    [Test]
+    public void ResolveTypeReference_GenericList_Works()
+    {
+      TypeReference reference = new TypeReference("List", new List<TypeReference>(new TypeReference[] { new TypeReference("string") }));
+      _typeResolver.UseNamespace("System");
+      _typeResolver.UseNamespace("System.Collections.Generic");
+
+      Assert.AreEqual("List<string>", reference.ToString());
+      string actual = _typeResolver.Resolve(reference);
+    }
+
+    [Test]
+    public void ResolveTypeReference_GenericDictionary_Works()
+    {
+      TypeReference reference = new TypeReference("Dictionary", new List<TypeReference>(new TypeReference[] { new TypeReference("string"), new TypeReference("DateTime") }));
+      _typeResolver.UseNamespace("System");
+      _typeResolver.UseNamespace("System.Collections.Generic");
+
+      Assert.AreEqual("Dictionary<string,DateTime>", reference.ToString());
+      string actual = _typeResolver.Resolve(reference);
+    }
     #endregion
   }
 }

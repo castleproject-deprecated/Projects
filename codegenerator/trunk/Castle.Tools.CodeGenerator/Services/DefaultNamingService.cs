@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace Castle.Tools.CodeGenerator.Services
 {
@@ -51,6 +52,27 @@ namespace Castle.Tools.CodeGenerator.Services
     public string ToViewWrapperName(string name)
     {
       return name + "ViewNode";
+    }
+
+    public string ToMethodSignatureName(string name, Type[] types)
+    {
+      string[] names = new string[types.Length];
+      for (int i = 0; i < types.Length; i++)
+      {
+        names[i] = types[i].Name;
+      }
+      return ToMethodSignatureName(name, names);
+    }
+
+    public string ToMethodSignatureName(string name, string[] types)
+    {
+      StringBuilder sb = new StringBuilder();
+      sb.Append(name);
+      foreach (string type in types)
+      {
+        sb.Append("_").Append(type.Replace(".", "_").Replace("[]", "BB"));
+      }
+      return sb.ToString();
     }
   }
 }
