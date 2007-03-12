@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<activeRecordMapping dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" isCompleteView="false" name="GeneratedCodeTestModel">
+  <modelMoniker Id="d31e3081-74cd-42fb-a26f-8ad359cf7aac" />
+  <nestedChildShapes>
+    <classShape Id="5c19bbb6-6a34-4dc6-a032-8157f66a9f30" absoluteBounds="0.5, 0.5, 1.5, 0.71745849609375023">
+      <modelClassMoniker name="/d31e3081-74cd-42fb-a26f-8ad359cf7aac/SimpleClass" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e96fef44-f1fb-4a4c-874a-2b7c727dbed0" absoluteBounds="0.5149999999999999, 0.91000000000000014, 1.4700000000000002, 0.20745849609375" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="36c7a1b1-a877-4ebf-9be8-9ffb5845dc7c" absoluteBounds="0.5, 1.375, 1.5, 1.2105004882812502">
+      <modelClassMoniker name="/d31e3081-74cd-42fb-a26f-8ad359cf7aac/ClassWithProperties" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8508816c-728b-45f8-b5b0-29bf06c063de" absoluteBounds="0.51499999999999968, 1.7850000000000001, 1.4700000000000002, 0.70050048828125" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1f441d92-f236-4aaa-8063-82da38a3276d" absoluteBounds="0.5, 2.625, 1.5, 0.88180582682291675">
+      <modelClassMoniker name="/d31e3081-74cd-42fb-a26f-8ad359cf7aac/ClassWithPK" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cf457d1f-a513-412f-977c-a69bd0328d64" absoluteBounds="0.5149999999999999, 3.035, 1.4700000000000002, 0.37180582682291663" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="752fa105-e46a-46d0-8245-8bd5e459ac4c" absoluteBounds="0.5, 3.75, 1.5, 1.0461531575520828">
+      <modelClassMoniker name="/d31e3081-74cd-42fb-a26f-8ad359cf7aac/ClassWithCompositeKey" />
+      <nestedChildShapes>
+        <elementListCompartment Id="80175bb4-90b4-4ad2-9ede-d5dcc20a6144" absoluteBounds="0.5149999999999999, 4.16, 1.4700000000000002, 0.53615315755208326" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</activeRecordMapping>
