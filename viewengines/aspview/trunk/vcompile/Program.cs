@@ -112,6 +112,7 @@ namespace Castle.MonoRail.AspView.Compiler
 			XmlNode aspViewNode = null;
 			using (XmlTextReader reader = new XmlTextReader(path))
 			{
+				reader.Namespaces = false;
 				XmlDocument xml = new XmlDocument();
 				xml.Load(reader);
 				aspViewNode = xml.SelectSingleNode("/configuration/aspview");

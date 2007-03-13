@@ -122,7 +122,7 @@ namespace Castle.MonoRail.Views.AspView
                 if (viewBody.IndexOf("<%", index) == index)
                 {
                     string code = GetCode(viewBody, ref index);
-                    if (code[0] == '=' && code.Length > 0)
+                    if (code.Length > 0 && code[0] == '=')
                         code = "Output(" + code.Substring(1) + ");";
                     writer.WriteLine(code);
                 }
