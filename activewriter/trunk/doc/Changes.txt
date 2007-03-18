@@ -1,6 +1,7 @@
 Preview 2
 
 New:
+- Built with VS SDK v4
 - Generics support (ActiveRecordBase<T> & ActiveRecordValidationBase<T>) (Generics is the default in the designer)
 - VB.NET seems OK (Not tested extensively).
 - Auto-sensing project type (C# or VB.NET) for code generation. You don't have to set that in the model anymore.
