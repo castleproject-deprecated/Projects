@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<model dslVersion="1.0.0.0" Id="d31e3081-74cd-42fb-a26f-8ad359cf7aac" useGenerics="false" xmlns="http://schemas.microsoft.com/dsltools/ActiveWriter">
+  <classes>
+    <modelClass name="SimpleClass" />
+    <modelClass name="ClassWithProperties">
+      <properties>
+        <modelProperty Id="3793fd4c-e756-444d-90a5-f5cef20111a5" name="SimpleProperty" length="0" />
+        <modelProperty Id="0c51af09-2494-4d97-9380-960550f46e2f" name="CustomizedProperty" customAccess="customAccess" column="column" columnType="Int32" formula="formula" insert="false" length="1" notNull="true" unique="true" update="false" accessor="Protected" uniqueKey="uniqueKey" index="index" sqlType="sqlType" check="check" />
+        <modelProperty Id="b62ab24e-0e7b-4a76-80a9-f56e661f7bd8" name="PropertyWithValidators" length="0" validator="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;ArrayOfAnyType xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;&#xD;&#xA;  &lt;anyType xsi:type=&quot;ValidateConfirmation&quot;&gt;&#xD;&#xA;    &lt;ErrorMessage /&gt;&#xD;&#xA;    &lt;ConfirmationFieldOrProperty&gt;...&lt;/ConfirmationFieldOrProperty&gt;&#xD;&#xA;  &lt;/anyType&gt;&#xD;&#xA;  &lt;anyType xsi:type=&quot;ValidateCreditCard&quot;&gt;&#xD;&#xA;    &lt;AllowedTypes&gt;All&lt;/AllowedTypes&gt;&#xD;&#xA;    &lt;Exceptions /&gt;&#xD;&#xA;  &lt;/anyType&gt;&#xD;&#xA;  &lt;anyType xsi:type=&quot;ValidateEmail&quot; /&gt;&#xD;&#xA;  &lt;anyType xsi:type=&quot;ValidateIsUnique&quot; /&gt;&#xD;&#xA;  &lt;anyType xsi:type=&quot;ValidateNotEmpty&quot; /&gt;&#xD;&#xA;  &lt;anyType xsi:type=&quot;ValidateRegExp&quot;&gt;&#xD;&#xA;    &lt;Pattern&gt;...&lt;/Pattern&gt;&#xD;&#xA;  &lt;/anyType&gt;&#xD;&#xA;  &lt;anyType xsi:type=&quot;ValidateLength&quot;&gt;&#xD;&#xA;    &lt;ExactLength&gt;20&lt;/ExactLength&gt;&#xD;&#xA;    &lt;MinLength&gt;-2147483648&lt;/MinLength&gt;&#xD;&#xA;    &lt;MaxLenght&gt;2147483647&lt;/MaxLenght&gt;&#xD;&#xA;  &lt;/anyType&gt;&#xD;&#xA;&lt;/ArrayOfAnyType&gt;" />
+      </properties>
+    </modelClass>
+    <modelClass name="ClassWithPK">
+      <properties>
+        <modelProperty Id="6a9bbc37-135d-4245-aace-16d82c341ddf" name="PrimaryKeyProperty" columnType="Int32" length="0" unsavedValue="unsavedValue" keyType="PrimaryKey" params="params" />
+      </properties>
+    </modelClass>
+    <modelClass name="ClassWithCompositeKey">
+      <properties>
+        <modelProperty Id="69180611-3473-4a58-8859-19792a19a738" name="Key1" columnType="Int32" length="0" keyType="CompositeKey" />
+        <modelProperty Id="ed152660-490f-4d00-80fc-dc89e40687ed" name="Key2" columnType="Int32" length="0" keyType="CompositeKey" />
+      </properties>
+    </modelClass>
+  </classes>
+</model>
