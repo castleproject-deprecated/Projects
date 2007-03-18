@@ -5,7 +5,7 @@
 	</head>
 	<body style="font-family: Verdana, Arial, Helvetica; font-size: 10pt;">
         <strong>
-        ActiveWriter Preview</strong><br />
+        ActiveWriter Preview 2</strong><br />
         <br />
         ActiveWriter is a visual designer, an addin for Visual Studio 2005, to design a domain
         model and to generate code decorated with <a href="http://www.castleproject.org/index.php/ActiveRecord"
@@ -19,7 +19,9 @@
         <strong>
         Info, bugs, suggestions and feature requests<br />
         </strong>
-        Latest ActiveWriter version and other ActiveWriter information is available at <a href="http://altinoren.com" target="_blank">altinoren.com</a>. Please
+        Latest binaries of ActiveWriter and other ActiveWriter information is available at <a href="http://altinoren.com" target="_blank">altinoren.com</a>. Source code
+        is available through Castle Project's Contrib SVN repository at&nbsp; http://svn.castleproject.org:8080/svn/castlecontrib/
+        . Please
         send bugs, suggestions and feature request through the Navigation pane of the site
         or directly to me through <a href="mailto:gokhan@altinoren.com">
             gokhan@altinoren.com</a>.<br />
@@ -35,11 +37,58 @@
         <br />
         Pluralization code is simplified version of Damian Conway's algorithm in paper <a href="http://www.csse.monash.edu.au/~damian/papers/HTML/Plurals.html" target="_blank">
             An Algorithmic Approach to English Pluralization</a><br />
-        Server Explorer integration greatly inspired &nbsp;from Ted Glaza's post <a href="http://forums.microsoft.com/MSDN/ShowPost.aspx?postid=265925&siteid=1" target="_blank">
+        Server Explorer integration greatly inspired from Ted Glaza's post <a href="http://forums.microsoft.com/MSDN/ShowPost.aspx?postid=265925&siteid=1" target="_blank">
             here</a>.<br />
         <br />
         Gokhan Altinoren<br />
-        30/09/2006
+        <br />
+        <br />
+        <strong>Preview 2 Release - 18/03/2007<br />
+            <br />
+        </strong>What's new:<br />
+        <ul>
+            <li>Built with VS SDK v4.</li>
+            <li>Generics support (ActiveRecordBase<t></t>
+                &amp; ActiveRecordValidationBase<t></t>) (Generics is the default in the designer)
+            </li>
+            <li>VB.NET seems OK (Not tested extensively). </li>
+            <li>Auto-sensing project type (C# or VB.NET) for code generation. You don't have to
+                set that in the model anymore. </li>
+            <li>New ActiveWriter Class Details toolwindow. Can be used for rapidly adding class
+                properties. (Idea: Ayende) </li>
+            <li>AR validators are supported for each property (not for field, key, composite key,
+                timestamp or version) through a designer. </li>
+            <li>Ability to customize the base class. You can substitude your own base class from
+                the editor or generate classes without a base class. </li>
+            <li>Ability to customize the source property name for associations. This is necessary
+                for hierarchical objects, where they point to themselves, and using the class name
+                resulted in un-compilable code in previous build. (Reported By: Ayende) </li>
+            <li>More domain consistency check through validations when opening / saving. </li>
+            <li>Applying pluralizing rules to the table name from the entity name if not specified.
+                (Idea: Ayende) </li>
+            <li>Ability to select a property for optional DebuggerDisplay attribute. </li>
+            <li>Ability to decorate classes with GeneratedCodeAttribute. </li>
+            <li>No more setting Custom Tool property of an .actiw file to ActiveWriterCodeGenerator
+                manually after creating the file. It's done automatically. (Thanks: Bogdan Pietroiu)
+            </li>
+            <li>Key icon decorator on class shapes if a primary or composite key property exists
+                (pure cosmetic). </li>
+            <li>Key icon decorator on class shapes if at least a property has validator(s) set (pure
+                cosmetic). </li>
+            <li>Connector shapes changed to a more-UML-like notation. </li>
+            <li>Extended nullable support. You may choose between nullables through external Nullables
+                library (1.1 style) or native nullables usage of 2.0 framework. </li>
+            <li>Some added properties to support changes (not all) in Castle trunk for ActiveRecordAttribute,
+                PropertyAttribute etc. </li>
+        </ul>
+        What's crippled:<br />
+        <ul>
+            <li>- Using Output window less when doing drag-drop from Server Explorer to prevent
+                a bug.</li>
+        </ul>
+        <strong>Preview Release -
+        30/09/2006</strong><br />
+        Initial release
 	
 	</body>
 </html>
