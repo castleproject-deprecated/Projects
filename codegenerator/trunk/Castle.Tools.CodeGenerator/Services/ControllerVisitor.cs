@@ -92,8 +92,25 @@ namespace Castle.Tools.CodeGenerator.Services
     #region Protected Methods
     protected virtual bool IsController(TypeDeclaration typeDeclaration)
     {
-      return
+      bool isController = 
         typeDeclaration.Name.EndsWith("Controller") && (typeDeclaration.Modifier & Modifier.Partial) == Modifier.Partial;
+
+        if(!isController)
+        {
+            if( (typeDeclaration.Modifier & Modifier.Partial) != Modifier.Partial)
+            {
+                _logger.LogInfo("Controller Source for " + typeDeclaration.Name +
+                                " will not be included in the generated sitemap because it is not a partial type");
+            }
+            if( !typeDeclaration.Name.EndsWith("Controller"))
+            {
+                _logger.LogInfo("Controller source for " + typeDeclaration.Name +
+                                " will not be included in the generated site map because its type name does not end with controller");
+
+            }
+        }
+
+        return isController;
     }
 
     protected virtual string GetArea(TypeDeclaration typeDeclaration)
