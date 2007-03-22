@@ -66,6 +66,7 @@
     <Compile Include="Services\AbstractGenerator.cs" />
     <Compile Include="Services\ActionMapGenerator.cs" />
     <Compile Include="Services\AspDotNetRedirectService.cs" />
+    <Compile Include="Services\DictionaryAdapterFactory.cs" />
     <Compile Include="Services\ControllerPartialsGenerator.cs" />
     <Compile Include="Services\ControllerVisitor.cs" />
     <Compile Include="Services\DefaultArgumentConversionService.cs" />
@@ -74,9 +75,12 @@
     <Compile Include="Services\DefaultNamingService.cs" />
     <Compile Include="Services\DefaultRuntimeInformationService.cs" />
     <Compile Include="Services\DefaultSourceGenerator.cs" />
+    <Compile Include="Services\DictionaryAdapterKeyPrefixAttribute.cs" />
     <Compile Include="Services\IArgumentConversionService.cs" />
     <Compile Include="Services\ICodeGeneratorServices.cs" />
     <Compile Include="Services\IControllerReferenceFactory.cs" />
+    <Compile Include="Services\IDictionaryAdapter.cs" />
+    <Compile Include="Services\IDictionaryAdapterFactory.cs" />
     <Compile Include="Services\IGenerator.cs" />
     <Compile Include="Services\ILogger.cs" />
     <Compile Include="Services\INamingService.cs" />
