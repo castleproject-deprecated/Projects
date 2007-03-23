@@ -9,11 +9,11 @@ namespace Castle.Tools.CodeGenerator.Services
   {
     #region Methods
     public ControllerActionReference CreateActionReference(ICodeGeneratorServices services, Type controllerType,
-                                                           string controllerName, string areaName, string actionName,
+														   string areaName, string controllerName, string actionName,
                                                            MethodSignature signature,
                                                            params ActionArgument[] arguments)
     {
-      return new ControllerActionReference(services, controllerType, controllerName, areaName, actionName, signature, arguments);
+      return new ControllerActionReference(services, controllerType,areaName, controllerName , actionName, signature, arguments);
     }
 
     public ControllerViewReference CreateViewReference(ICodeGeneratorServices services, Type controllerType,
