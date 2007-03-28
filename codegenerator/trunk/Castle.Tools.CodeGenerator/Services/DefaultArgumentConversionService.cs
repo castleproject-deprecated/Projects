@@ -12,6 +12,12 @@ namespace Castle.Tools.CodeGenerator.Services
     {
       return argument.Value;
     }
-    #endregion
+
+  	public string ConvertKey(MethodSignature signature, ActionArgument argument)
+  	{
+  	  return argument.Name;
+  	}
+
+  	#endregion
   }
 }

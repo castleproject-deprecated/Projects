@@ -188,7 +188,7 @@ namespace Castle.Tools.CodeGenerator.Model
         int index = 0;
         foreach (ActionArgument argument in this.Arguments)
         {
-          parameters.Add(argument.Name, conversionService.ConvertArgument(this.ActionMethodSignature, argument));
+          parameters.Add(conversionService.ConvertKey(this.ActionMethodSignature, argument), conversionService.ConvertArgument(this.ActionMethodSignature, argument));
           index++;
         }
         UrlInfo urlInfo = this.Services.RailsContext.UrlInfo;

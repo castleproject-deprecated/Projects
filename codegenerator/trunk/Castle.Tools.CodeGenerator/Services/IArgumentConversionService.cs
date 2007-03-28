@@ -8,5 +8,6 @@ namespace Castle.Tools.CodeGenerator.Services
   public interface IArgumentConversionService
   {
     object ConvertArgument(MethodSignature signature, ActionArgument argument);
+	string ConvertKey(MethodSignature signature, ActionArgument argument);
   }
 }
