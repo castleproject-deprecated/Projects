@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Altinoren.ActiveWriter.ARValidators;
+using System.Xml;
 
 namespace Altinoren.ActiveWriter.CodeGeneration
 {
@@ -29,12 +29,18 @@ namespace Altinoren.ActiveWriter.CodeGeneration
     using Microsoft.CSharp;
     using Microsoft.VisualBasic;
     using EnvDTE;
+    using System.ComponentModel.Design;
+    using ARValidators;
     using CodeNamespace = System.CodeDom.CodeNamespace;
     using CodeAttributeArgument = System.CodeDom.CodeAttributeArgument;
     
     public class CodeGenerationHelper
     {
         #region Private Variables
+
+        private Assembly _activeRecord;
+        private Dictionary<string, string> nHibernateConfigs = new Dictionary<string, string>();
+        private static string _assemblyLoadPath;
 
         private CodeDomProvider _provider;
         private Model _model;
@@ -44,10 +50,16 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private List<string> _generatedClassNames;
 
         private Hashtable _propertyBag = null;
+        private DTE _dte = null;
 
         #endregion
 
         #region ctors
+
+        static CodeGenerationHelper()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(AssemblyResolve);
+        }
 
         public CodeGenerationHelper(Hashtable propertyBag)
         {
@@ -55,10 +67,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             _model = (Model)propertyBag["Generic.Model"];
             _namespace = propertyBag["Generic.Namespace"].ToString();
             
-            DTE dte = ServerExplorerSupport.DTEHelper.GetDTE(_propertyBag["Generic.ProcessID"].ToString());
-            _propertyBag.Add("Generic.DTE", dte);
+            _dte = ServerExplorerSupport.DTEHelper.GetDTE(_propertyBag["Generic.ProcessID"].ToString());
+            _propertyBag.Add("Generic.DTE", _dte);
 
-            switch (ServerExplorerSupport.DTEHelper.GetProjectLanguage(dte.ActiveDocument.ProjectItem.ContainingProject))
+            switch (ServerExplorerSupport.DTEHelper.GetProjectLanguage(_dte.ActiveDocument.ProjectItem.ContainingProject))
             {
                 case CodeLanguage.CSharp:
                     _provider = new CSharpCodeProvider();
@@ -94,8 +106,66 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 GenerateClass(cls, nameSpace);
             }
 
-            string activeRecordOutput = GenerateCode(compileUnit);
-            _propertyBag.Add("CodeGeneration.ActiveRecordOutput", activeRecordOutput);
+            if (_model.Target == CodeGenerationTarget.ActiveRecord)
+            {
+                string primaryOutput = GenerateCode(compileUnit);
+                _propertyBag.Add("CodeGeneration.PrimaryOutput", primaryOutput);
+            }
+            else
+            {
+                _assemblyLoadPath = _model.AssemblyPath;
+
+                // Code below means: ActiveRecordStarter.ModelsCreated += new ModelsCreatedDelegate(OnARModelCreated);
+                _activeRecord = Assembly.Load(_model.ActiveRecordAssemblyName);
+                Type starter = _activeRecord.GetType("Castle.ActiveRecord.ActiveRecordStarter");
+                EventInfo eventInfo = starter.GetEvent("ModelsCreated");
+                Type eventType = eventInfo.EventHandlerType;
+                MethodInfo info =
+                    this.GetType().GetMethod("OnARModelCreated", BindingFlags.Public | BindingFlags.Instance);
+                Delegate del = Delegate.CreateDelegate(eventType, this, info);
+                eventInfo.AddEventHandler(this, del);
+
+                Assembly assembly = GenerateARAssembly(compileUnit);
+
+                // Code below means: ActiveRecordStarter.Initialize(assembly, new InPlaceConfigurationSource());
+                Type config = _activeRecord.GetType("Castle.ActiveRecord.Framework.Config.InPlaceConfigurationSource");
+                object configSource = Activator.CreateInstance(config);
+                try
+                {
+                    starter.InvokeMember("Initialize",
+                                         BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod, null,
+                                         null,
+                                         new object[] {assembly, configSource});
+                }
+                catch (TargetInvocationException ex)
+                {
+                    // Eat config errors
+                    if (!ex.InnerException.Message.StartsWith("Could not find configuration for"))
+                        throw;
+                }
+                ClearARAttributes(compileUnit);
+                string primaryOutput = GenerateCode(compileUnit);
+                _propertyBag.Add("CodeGeneration.PrimaryOutput", primaryOutput);
+
+                foreach (KeyValuePair<string, string> pair in nHibernateConfigs)
+                {
+                    string path = Path.Combine(_dte.ActiveDocument.Path, pair.Key + ".hbm.xml");
+                    using(StreamWriter writer = new StreamWriter(path, false, Encoding.Unicode))
+                    {
+                        writer.Write(pair.Value);
+                    }
+
+                    ProjectItem item = null;
+
+                    if (_model.RelateWithActiwFile)
+                        item = _dte.ActiveDocument.ProjectItem.ProjectItems.AddFromFile(path);
+                    else
+                        item = _dte.ItemOperations.AddExistingItem(path);
+
+                    item.Properties.Item("BuildAction").Value = Common.EmbeddedResourceBuildActionIndex;
+                }
+                
+            }
         }
 
         #endregion
@@ -1058,7 +1128,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private CodeAttributeDeclaration GetDebuggerDisplayAttribute(CodeTypeDeclaration classDeclaration, ModelProperty property)
         {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("DebuggerDisplay");
+            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("System.Diagnostics.DebuggerDisplay");
 
             attribute.Arguments.Add(GetPrimitiveAttributeArgument(property.Name, property.Name));
             
@@ -1926,6 +1996,138 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             }
 
             return sb.ToString();
+        }
+
+        private Assembly GenerateARAssembly(CodeCompileUnit compileUnit)
+        {
+            CompilerParameters parameters = new CompilerParameters();
+            parameters.GenerateInMemory = true;
+            parameters.OutputAssembly = Common.InMemoryCompiledAssemblyName + ".dll";
+            parameters.GenerateExecutable = false;
+
+            Assembly activeRecord = Assembly.Load(_model.ActiveRecordAssemblyName);
+            parameters.ReferencedAssemblies.Add(activeRecord.Location);
+            Assembly nHibernate = Assembly.Load(_model.NHibernateAssemblyName);
+            parameters.ReferencedAssemblies.Add(nHibernate.Location);
+            parameters.ReferencedAssemblies.Add("System.dll");
+            parameters.ReferencedAssemblies.Add("mscorlib.dll");
+
+            CompilerResults results = _provider.CompileAssemblyFromDom(parameters, compileUnit);
+            if (results.Errors.Count == 0)
+            {
+                return results.CompiledAssembly;
+            }
+            else
+            {
+                ArrayList list = new ArrayList();
+                foreach (CompilerError error in results.Errors)
+                {
+                    list.Add(new Exception(error.ErrorText));
+                }
+                throw new ExceptionCollection(list);
+            }
+        }
+
+        // Actually: OnARModelCreated(ActiveRecordModelCollection, IConfigurationSource)
+        // We're not using it typed since we use this through reflection.
+        public void OnARModelCreated(object models, object source)
+        {
+            nHibernateConfigs.Clear();
+            if (models != null)
+            {
+                Type modelCollection = _activeRecord.GetType("Castle.ActiveRecord.Framework.Internal.ActiveRecordModelCollection");
+                if ((int)modelCollection.GetProperty("Count").GetValue(models, null) > 0)
+                {
+                    IEnumerator enumerator = (IEnumerator)modelCollection.InvokeMember("GetEnumerator", BindingFlags.Public | BindingFlags.InvokeMethod | BindingFlags.Instance, null, models, null);
+                    while (enumerator.MoveNext())
+                    {
+                        Type visitor = _activeRecord.GetType("Castle.ActiveRecord.Framework.Internal.XmlGenerationVisitor");
+                        object generationVisitor = Activator.CreateInstance(visitor);
+                        visitor.InvokeMember("CreateXml", BindingFlags.Public | BindingFlags.Instance | BindingFlags.InvokeMethod, null,
+                                             generationVisitor, new object[]{enumerator.Current});
+
+                        string xml = (string)visitor.GetProperty("Xml").GetValue(generationVisitor, null);
+                        xml = xml.Replace(", " + Common.InMemoryCompiledAssemblyName, string.Empty); // Strips the assembly name from class names
+                        XmlDocument document = new XmlDocument();
+                        document.LoadXml(xml);
+                        XmlNodeList nodeList = document.GetElementsByTagName("class");
+                        if (nodeList.Count > 0)
+                        {
+                            string name = null;
+
+                            foreach (XmlAttribute attribute in nodeList[0].Attributes)
+                            {
+                                if (attribute.Name == "name")
+                                {
+                                    name = attribute.Value;
+                                    break;
+                                }
+                            }
+
+                            if (name != null)
+                            nHibernateConfigs.Add(name, xml);
+                        }
+                    }
+                }
+            }
+        }
+
+        private static Assembly AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            AssemblyName name = new AssemblyName(args.Name);
+            if (name.Name == "Castle.ActiveRecord" || name.Name == "Iesi.Collections" || name.Name == "log4net" || name.Name == "NHibernate")
+            {
+                // If this line is reached, these assemblies are not in GAC. Load from designated place.
+                string assemblyPath = Path.Combine(_assemblyLoadPath, name.Name + ".dll");
+
+                return Assembly.LoadFrom(assemblyPath);
+            }
+
+            return null;
+        }
+
+        private void ClearARAttributes(CodeCompileUnit unit)
+        {
+            foreach (CodeNamespace ns in unit.Namespaces)
+            {
+                List<CodeNamespaceImport> imports = new List<CodeNamespaceImport>();
+                foreach (CodeNamespaceImport import in ns.Imports)
+                {
+                    if (!(import.Namespace.IndexOf("Castle") > -1 || import.Namespace.IndexOf("Nullables") > -1))
+                        imports.Add(import);
+                }
+                ns.Imports.Clear();
+                ns.Imports.AddRange(imports.ToArray());
+
+                foreach (CodeTypeDeclaration type in ns.Types)
+                {
+                    List<CodeAttributeDeclaration> attributesToRemove = new List<CodeAttributeDeclaration>();
+                    foreach (CodeAttributeDeclaration attribute in type.CustomAttributes)
+                    {
+                        if (Array.FindIndex(Common.ARAttributes, delegate(string name) { return name == attribute.Name; }) > -1)
+                            attributesToRemove.Add(attribute);
+                    }
+                    foreach (CodeAttributeDeclaration declaration in attributesToRemove)
+                    {
+                        type.CustomAttributes.Remove(declaration);
+                    }
+
+                    
+                    foreach (CodeTypeMember member in type.Members)
+                    {
+                        List<CodeAttributeDeclaration> memberAttributesToRemove = new List<CodeAttributeDeclaration>();
+                        foreach (CodeAttributeDeclaration attribute in member.CustomAttributes)
+                        {
+                            if (Array.FindIndex(Common.ARAttributes, delegate(string name) { return name == attribute.Name; }) > -1)
+                                memberAttributesToRemove.Add(attribute);
+                        }
+                        foreach (CodeAttributeDeclaration declaration in memberAttributesToRemove)
+                        {
+                            member.CustomAttributes.Remove(declaration);
+                        }
+                    }
+                }
+            }
         }
 
         #endregion

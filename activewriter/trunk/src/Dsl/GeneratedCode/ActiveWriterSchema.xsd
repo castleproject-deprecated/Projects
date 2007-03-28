@@ -110,6 +110,36 @@
         <xsd:documentation>Instructs ActiveWriter to decorate each class with GeneratedCodeAttribute. Some tools evaluate existance of this attribute to handle code differently.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
+    <!-- Property: Target -->
+    <xsd:attribute name="target" type="CodeGenerationTarget" >
+      <xsd:annotation>
+        <xsd:documentation>Defines the experimental code generation target.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: AssemblyPath -->
+    <xsd:attribute name="assemblyPath" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Provides assembly load path for Castle.ActiveRecord.dll and related assemblies. If required assemblies are in GAC, this setting is omitted. If not and is this setting is blank an error will be thrown during code generation.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: ActiveRecordAssemblyName -->
+    <xsd:attribute name="activeRecordAssemblyName" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Provides assembly name to be used during code generation.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: NHibernateAssemblyName -->
+    <xsd:attribute name="nHibernateAssemblyName" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Provides assembly name to be used during code generation.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: RelateWithActiwFile -->
+    <xsd:attribute name="relateWithActiwFile" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>Instructs ActiveWriter to add hbm.xml file as a nested file of this .actiw file. Otherwise, file will be added as a standalone item to the project.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
   </xsd:complexType>
   
   <!-- Model Moniker -->
@@ -1044,6 +1074,14 @@
       <xsd:enumeration value="Default"/>
       <xsd:enumeration value="Exception"/>
       <xsd:enumeration value="Ignore"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum CodeGenerationTarget -->
+  <xsd:simpleType name="CodeGenerationTarget">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="ActiveRecord"/>
+      <xsd:enumeration value="NHibernate"/>
     </xsd:restriction>
   </xsd:simpleType>
   

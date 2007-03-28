@@ -73,6 +73,31 @@
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="60bf3b58-876b-4d6a-8e36-21ae054e0daf" Description="Defines the experimental code generation target." Name="Target" DisplayName="Target" DefaultValue="ActiveRecord" Category="Code Generation">
+          <Type>
+            <DomainEnumerationMoniker Name="CodeGenerationTarget" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="c2197ab7-cf01-432f-b44d-ebbb4bdea14d" Description="Provides assembly load path for Castle.ActiveRecord.dll and related assemblies. If required assemblies are in GAC, this setting is omitted. If not and is this setting is blank an error will be thrown during code generation." Name="AssemblyPath" DisplayName="Assembly Path" Category="Code Generation (NHibernate)">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="16c1464a-bb58-41bb-ad6b-46b957eec2a2" Description="Provides assembly name to be used during code generation." Name="ActiveRecordAssemblyName" DisplayName="Active Record Assembly Name" DefaultValue="Castle.ActiveRecord, Version=0.0.1.3, Culture=neutral, PublicKeyToken=407dd0808d44fbdc" Category="Code Generation (NHibernate)">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="a0bcb53c-a856-4a8d-9245-f973dfb023d3" Description="Provides assembly name to be used during code generation." Name="NHibernateAssemblyName" DisplayName="NHibernate Assembly Name" DefaultValue="NHibernate, Version=1.2.0.3001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4" Category="Code Generation (NHibernate)">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="3871c9b7-2f36-4c4e-b902-c8848a2842bc" Description="Instructs ActiveWriter to add hbm.xml file as a nested file of this .actiw file. Otherwise, file will be added as a standalone item to the project." Name="RelateWithActiwFile" DisplayName="Relate With Actiw File" DefaultValue="true" Category="Code Generation (NHibernate)">
+          <Type>
+            <ExternalTypeMoniker Name="/System/Boolean" />
+          </Type>
+        </DomainProperty>
       </Properties>
       <ElementMergeDirectives>
         <ElementMergeDirective>
@@ -1006,6 +1031,12 @@
         <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NotFoundBehaviour.Ignore" Name="Ignore" Value="" />
       </Literals>
     </DomainEnumeration>
+    <DomainEnumeration Name="CodeGenerationTarget" Namespace="Altinoren.ActiveWriter" Description="">
+      <Literals>
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.CodeGenerationTarget.ActiveRecord" Name="ActiveRecord" Value="" />
+        <EnumerationLiteral Description="" Name="NHibernate" Value="" />
+      </Literals>
+    </DomainEnumeration>
   </Types>
   <Shapes>
     <CompartmentShape Id="ca45d586-12d1-4f5d-99c7-83c1eb0e61eb" Description="" Name="ClassShape" DisplayName="Class Shape" Namespace="Altinoren.ActiveWriter" GeneratesDoubleDerived="true" FixedTooltipText="Class Shape" FillColor="LightSteelBlue" InitialHeight="0.4" Geometry="RoundedRectangle">
@@ -1099,6 +1130,21 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="useGeneratedCodeAttribute">
             <DomainPropertyMoniker Name="Model/UseGeneratedCodeAttribute" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="target">
+            <DomainPropertyMoniker Name="Model/Target" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="assemblyPath">
+            <DomainPropertyMoniker Name="Model/AssemblyPath" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="activeRecordAssemblyName">
+            <DomainPropertyMoniker Name="Model/ActiveRecordAssemblyName" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="nHibernateAssemblyName">
+            <DomainPropertyMoniker Name="Model/NHibernateAssemblyName" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="relateWithActiwFile">
+            <DomainPropertyMoniker Name="Model/RelateWithActiwFile" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

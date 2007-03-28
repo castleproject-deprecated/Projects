@@ -96,6 +96,11 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(Model), "GeneratesDoubleDerived", Model.GeneratesDoubleDerivedDomainPropertyId, typeof(Model.GeneratesDoubleDerivedPropertyHandler)),
 				new DomainMemberInfo(typeof(Model), "DoubleDerivedNameSuffix", Model.DoubleDerivedNameSuffixDomainPropertyId, typeof(Model.DoubleDerivedNameSuffixPropertyHandler)),
 				new DomainMemberInfo(typeof(Model), "UseGeneratedCodeAttribute", Model.UseGeneratedCodeAttributeDomainPropertyId, typeof(Model.UseGeneratedCodeAttributePropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "Target", Model.TargetDomainPropertyId, typeof(Model.TargetPropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "AssemblyPath", Model.AssemblyPathDomainPropertyId, typeof(Model.AssemblyPathPropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "ActiveRecordAssemblyName", Model.ActiveRecordAssemblyNameDomainPropertyId, typeof(Model.ActiveRecordAssemblyNamePropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "NHibernateAssemblyName", Model.NHibernateAssemblyNameDomainPropertyId, typeof(Model.NHibernateAssemblyNamePropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "RelateWithActiwFile", Model.RelateWithActiwFileDomainPropertyId, typeof(Model.RelateWithActiwFilePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "Cache", ModelClass.CacheDomainPropertyId, typeof(ModelClass.CachePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "DiscriminatorColumn", ModelClass.DiscriminatorColumnDomainPropertyId, typeof(ModelClass.DiscriminatorColumnPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "DiscriminatorType", ModelClass.DiscriminatorTypeDomainPropertyId, typeof(ModelClass.DiscriminatorTypePropertyHandler)),
@@ -1358,6 +1363,27 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NotFoundBehaviour/Ignore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Ignore,
+	}
+}
+namespace Altinoren.ActiveWriter
+{
+	/// <summary>
+	/// DomainEnumeration: CodeGenerationTarget
+	/// </summary>
+	[global::System.CLSCompliant(true)]
+	public enum CodeGenerationTarget
+	{
+		/// <summary>
+		/// ActiveRecord
+		/// Description for Altinoren.ActiveWriter.CodeGenerationTarget.ActiveRecord
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.CodeGenerationTarget/ActiveRecord.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		ActiveRecord,
+		/// <summary>
+		/// NHibernate
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.CodeGenerationTarget/NHibernate.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		NHibernate,
 	}
 }
 

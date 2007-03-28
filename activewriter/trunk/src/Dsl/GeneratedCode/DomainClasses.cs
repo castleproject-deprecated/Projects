@@ -1301,6 +1301,453 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region Target domain property code
+		
+		/// <summary>
+		/// Target domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid TargetDomainPropertyId = new global::System.Guid(0x60bf3b58, 0x876b, 0x4d6a, 0x8e, 0x36, 0x21, 0xae, 0x05, 0x4e, 0x0d, 0xaf);
+		
+		/// <summary>
+		/// Storage for Target
+		/// </summary>
+		private CodeGenerationTarget targetPropertyStorage = Altinoren.ActiveWriter.CodeGenerationTarget.ActiveRecord;
+		
+		/// <summary>
+		/// Gets or sets the value of Target domain property.
+		/// Defines the experimental code generation target.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/Target.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/Target.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/Target.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.CodeGenerationTarget.ActiveRecord)]
+		[DslModeling::DomainObjectId("60bf3b58-876b-4d6a-8e36-21ae054e0daf")]
+		public CodeGenerationTarget Target
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return targetPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				TargetPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.Target domain property.
+		/// </summary>
+		internal sealed partial class TargetPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, CodeGenerationTarget>
+		{
+			private TargetPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.Target domain property value handler.
+			/// </summary>
+			public static readonly TargetPropertyHandler Instance = new TargetPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.Target domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return TargetDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed CodeGenerationTarget GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.targetPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, CodeGenerationTarget newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				CodeGenerationTarget oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.targetPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region AssemblyPath domain property code
+		
+		/// <summary>
+		/// AssemblyPath domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid AssemblyPathDomainPropertyId = new global::System.Guid(0xc2197ab7, 0xcf01, 0x432f, 0xb4, 0x4d, 0xeb, 0xbb, 0x4b, 0xde, 0xa1, 0x4d);
+		
+		/// <summary>
+		/// Storage for AssemblyPath
+		/// </summary>
+		private global::System.String assemblyPathPropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of AssemblyPath domain property.
+		/// Provides assembly load path for Castle.ActiveRecord.dll and related assemblies.
+		/// If required assemblies are in GAC, this setting is omitted. If not and is this
+		/// setting is blank an error will be thrown during code generation.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/AssemblyPath.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/AssemblyPath.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/AssemblyPath.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainObjectId("c2197ab7-cf01-432f-b44d-ebbb4bdea14d")]
+		public global::System.String AssemblyPath
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return assemblyPathPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				AssemblyPathPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.AssemblyPath domain property.
+		/// </summary>
+		internal sealed partial class AssemblyPathPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private AssemblyPathPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.AssemblyPath domain property value handler.
+			/// </summary>
+			public static readonly AssemblyPathPropertyHandler Instance = new AssemblyPathPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.AssemblyPath domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return AssemblyPathDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.assemblyPathPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.assemblyPathPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region ActiveRecordAssemblyName domain property code
+		
+		/// <summary>
+		/// ActiveRecordAssemblyName domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid ActiveRecordAssemblyNameDomainPropertyId = new global::System.Guid(0x16c1464a, 0xbb58, 0x41bb, 0xad, 0x6b, 0x46, 0xb9, 0x57, 0xee, 0xc2, 0xa2);
+		
+		/// <summary>
+		/// Storage for ActiveRecordAssemblyName
+		/// </summary>
+		private global::System.String activeRecordAssemblyNamePropertyStorage = "Castle.ActiveRecord, Version=0.0.1.3, Culture=neutral, PublicKeyToken=407dd0808d44fbdc";
+		
+		/// <summary>
+		/// Gets or sets the value of ActiveRecordAssemblyName domain property.
+		/// Provides assembly name to be used during code generation.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ActiveRecordAssemblyName.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/ActiveRecordAssemblyName.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ActiveRecordAssemblyName.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue("Castle.ActiveRecord, Version=0.0.1.3, Culture=neutral, PublicKeyToken=407dd0808d44fbdc")]
+		[DslModeling::DomainObjectId("16c1464a-bb58-41bb-ad6b-46b957eec2a2")]
+		public global::System.String ActiveRecordAssemblyName
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return activeRecordAssemblyNamePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				ActiveRecordAssemblyNamePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.ActiveRecordAssemblyName domain property.
+		/// </summary>
+		internal sealed partial class ActiveRecordAssemblyNamePropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private ActiveRecordAssemblyNamePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.ActiveRecordAssemblyName domain property value handler.
+			/// </summary>
+			public static readonly ActiveRecordAssemblyNamePropertyHandler Instance = new ActiveRecordAssemblyNamePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.ActiveRecordAssemblyName domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return ActiveRecordAssemblyNameDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.activeRecordAssemblyNamePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.activeRecordAssemblyNamePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region NHibernateAssemblyName domain property code
+		
+		/// <summary>
+		/// NHibernateAssemblyName domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid NHibernateAssemblyNameDomainPropertyId = new global::System.Guid(0xa0bcb53c, 0xa856, 0x4a8d, 0x92, 0x45, 0xf9, 0x73, 0xdf, 0xb0, 0x23, 0xd3);
+		
+		/// <summary>
+		/// Storage for NHibernateAssemblyName
+		/// </summary>
+		private global::System.String nHibernateAssemblyNamePropertyStorage = "NHibernate, Version=1.2.0.3001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4";
+		
+		/// <summary>
+		/// Gets or sets the value of NHibernateAssemblyName domain property.
+		/// Provides assembly name to be used during code generation.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/NHibernateAssemblyName.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/NHibernateAssemblyName.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/NHibernateAssemblyName.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue("NHibernate, Version=1.2.0.3001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4")]
+		[DslModeling::DomainObjectId("a0bcb53c-a856-4a8d-9245-f973dfb023d3")]
+		public global::System.String NHibernateAssemblyName
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return nHibernateAssemblyNamePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				NHibernateAssemblyNamePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.NHibernateAssemblyName domain property.
+		/// </summary>
+		internal sealed partial class NHibernateAssemblyNamePropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private NHibernateAssemblyNamePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.NHibernateAssemblyName domain property value handler.
+			/// </summary>
+			public static readonly NHibernateAssemblyNamePropertyHandler Instance = new NHibernateAssemblyNamePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.NHibernateAssemblyName domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return NHibernateAssemblyNameDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.nHibernateAssemblyNamePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.nHibernateAssemblyNamePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region RelateWithActiwFile domain property code
+		
+		/// <summary>
+		/// RelateWithActiwFile domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid RelateWithActiwFileDomainPropertyId = new global::System.Guid(0x3871c9b7, 0x2f36, 0x4c4e, 0xb9, 0x02, 0xc8, 0x84, 0x8a, 0x28, 0x42, 0xbc);
+		
+		/// <summary>
+		/// Storage for RelateWithActiwFile
+		/// </summary>
+		private global::System.Boolean relateWithActiwFilePropertyStorage = true;
+		
+		/// <summary>
+		/// Gets or sets the value of RelateWithActiwFile domain property.
+		/// Instructs ActiveWriter to add hbm.xml file as a nested file of this .actiw file.
+		/// Otherwise, file will be added as a standalone item to the project.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/RelateWithActiwFile.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/RelateWithActiwFile.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/RelateWithActiwFile.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(true)]
+		[DslModeling::DomainObjectId("3871c9b7-2f36-4c4e-b902-c8848a2842bc")]
+		public global::System.Boolean RelateWithActiwFile
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return relateWithActiwFilePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				RelateWithActiwFilePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.RelateWithActiwFile domain property.
+		/// </summary>
+		internal sealed partial class RelateWithActiwFilePropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.Boolean>
+		{
+			private RelateWithActiwFilePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.RelateWithActiwFile domain property value handler.
+			/// </summary>
+			public static readonly RelateWithActiwFilePropertyHandler Instance = new RelateWithActiwFilePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.RelateWithActiwFile domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return RelateWithActiwFileDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.Boolean GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.relateWithActiwFilePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.Boolean newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.Boolean oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.relateWithActiwFilePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region Classes opposite domain role accessor
 		/// <summary>
 		/// Gets a list of Classes.

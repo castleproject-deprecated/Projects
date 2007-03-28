@@ -30,7 +30,7 @@ limitations under the License.
 	CodeGenerationHelper helper = new CodeGenerationHelper(propertyBag);
 	helper.Generate();
 	
-	this.Write(propertyBag["CodeGeneration.ActiveRecordOutput"].ToString());
+	this.Write(propertyBag["CodeGeneration.PrimaryOutput"].ToString());
 	
 	// Disabled. Will be implemented in the plugin interface in the future.
 	/*if (this.Model.GenerateMonoRailProject)

@@ -297,6 +297,66 @@
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;UseGeneratedCodeAttribute&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.Model/Target.Description" xml:space="preserve">
+    <value>Defines the experimental code generation target.</value>
+    <comment>Description for DomainProperty &apos;Target&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/Target.DisplayName" xml:space="preserve">
+    <value>Target</value>
+    <comment>DisplayName for DomainProperty &apos;Target&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/Target.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;Target&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/AssemblyPath.Description" xml:space="preserve">
+    <value>Provides assembly load path for Castle.ActiveRecord.dll and related assemblies. If required assemblies are in GAC, this setting is omitted. If not and is this setting is blank an error will be thrown during code generation.</value>
+    <comment>Description for DomainProperty &apos;AssemblyPath&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/AssemblyPath.DisplayName" xml:space="preserve">
+    <value>Assembly Path</value>
+    <comment>DisplayName for DomainProperty &apos;AssemblyPath&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/AssemblyPath.Category" xml:space="preserve">
+    <value>Code Generation (NHibernate)</value>
+    <comment>Category for DomainProperty &apos;AssemblyPath&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ActiveRecordAssemblyName.Description" xml:space="preserve">
+    <value>Provides assembly name to be used during code generation.</value>
+    <comment>Description for DomainProperty &apos;ActiveRecordAssemblyName&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ActiveRecordAssemblyName.DisplayName" xml:space="preserve">
+    <value>Active Record Assembly Name</value>
+    <comment>DisplayName for DomainProperty &apos;ActiveRecordAssemblyName&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ActiveRecordAssemblyName.Category" xml:space="preserve">
+    <value>Code Generation (NHibernate)</value>
+    <comment>Category for DomainProperty &apos;ActiveRecordAssemblyName&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/NHibernateAssemblyName.Description" xml:space="preserve">
+    <value>Provides assembly name to be used during code generation.</value>
+    <comment>Description for DomainProperty &apos;NHibernateAssemblyName&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/NHibernateAssemblyName.DisplayName" xml:space="preserve">
+    <value>NHibernate Assembly Name</value>
+    <comment>DisplayName for DomainProperty &apos;NHibernateAssemblyName&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/NHibernateAssemblyName.Category" xml:space="preserve">
+    <value>Code Generation (NHibernate)</value>
+    <comment>Category for DomainProperty &apos;NHibernateAssemblyName&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/RelateWithActiwFile.Description" xml:space="preserve">
+    <value>Instructs ActiveWriter to add hbm.xml file as a nested file of this .actiw file. Otherwise, file will be added as a standalone item to the project.</value>
+    <comment>Description for DomainProperty &apos;RelateWithActiwFile&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/RelateWithActiwFile.DisplayName" xml:space="preserve">
+    <value>Relate With Actiw File</value>
+    <comment>DisplayName for DomainProperty &apos;RelateWithActiwFile&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/RelateWithActiwFile.Category" xml:space="preserve">
+    <value>Code Generation (NHibernate)</value>
+    <comment>Category for DomainProperty &apos;RelateWithActiwFile&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ModelClass.Description" xml:space="preserve">
     <value>A class of the domain</value>
     <comment>Description for DomainClass &apos;ModelClass&apos;</comment>
@@ -2700,6 +2760,22 @@
   <data name="Altinoren.ActiveWriter.NotFoundBehaviour/Ignore.Description" xml:space="preserve">
     <value>Description for Altinoren.ActiveWriter.NotFoundBehaviour.Ignore</value>
     <comment>Description for EnumerationLiteral &apos;Ignore&apos; on DomainEnumeration &apos;NotFoundBehaviour&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CodeGenerationTarget/ActiveRecord.DisplayName" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Display name for EnumerationLiteral &apos;ActiveRecord&apos; on DomainEnumeration &apos;CodeGenerationTarget&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CodeGenerationTarget/ActiveRecord.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.CodeGenerationTarget.ActiveRecord</value>
+    <comment>Description for EnumerationLiteral &apos;ActiveRecord&apos; on DomainEnumeration &apos;CodeGenerationTarget&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CodeGenerationTarget/NHibernate.DisplayName" xml:space="preserve">
+    <value>NHibernate</value>
+    <comment>Display name for EnumerationLiteral &apos;NHibernate&apos; on DomainEnumeration &apos;CodeGenerationTarget&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.CodeGenerationTarget/NHibernate.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for EnumerationLiteral &apos;NHibernate&apos; on DomainEnumeration &apos;CodeGenerationTarget&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ClassShape.Description" xml:space="preserve">
     <value></value>

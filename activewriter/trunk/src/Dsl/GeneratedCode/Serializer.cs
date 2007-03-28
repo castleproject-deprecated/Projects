@@ -367,6 +367,91 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// Target
+			if (!serializationContext.Result.Failed)
+			{
+				string attribTarget = reader.GetAttribute("target");
+				if (attribTarget != null)
+				{
+					CodeGenerationTarget valueOfTarget;
+					if (DslModeling::SerializationUtilities.TryGetValue<CodeGenerationTarget>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTarget), out valueOfTarget))
+					{
+						instanceOfModel.Target = valueOfTarget;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "target", typeof(CodeGenerationTarget), attribTarget);
+					}
+				}
+			}
+			// AssemblyPath
+			if (!serializationContext.Result.Failed)
+			{
+				string attribAssemblyPath = reader.GetAttribute("assemblyPath");
+				if (attribAssemblyPath != null)
+				{
+					global::System.String valueOfAssemblyPath;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribAssemblyPath), out valueOfAssemblyPath))
+					{
+						instanceOfModel.AssemblyPath = valueOfAssemblyPath;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "assemblyPath", typeof(global::System.String), attribAssemblyPath);
+					}
+				}
+			}
+			// ActiveRecordAssemblyName
+			if (!serializationContext.Result.Failed)
+			{
+				string attribActiveRecordAssemblyName = reader.GetAttribute("activeRecordAssemblyName");
+				if (attribActiveRecordAssemblyName != null)
+				{
+					global::System.String valueOfActiveRecordAssemblyName;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribActiveRecordAssemblyName), out valueOfActiveRecordAssemblyName))
+					{
+						instanceOfModel.ActiveRecordAssemblyName = valueOfActiveRecordAssemblyName;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "activeRecordAssemblyName", typeof(global::System.String), attribActiveRecordAssemblyName);
+					}
+				}
+			}
+			// NHibernateAssemblyName
+			if (!serializationContext.Result.Failed)
+			{
+				string attribNHibernateAssemblyName = reader.GetAttribute("nHibernateAssemblyName");
+				if (attribNHibernateAssemblyName != null)
+				{
+					global::System.String valueOfNHibernateAssemblyName;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribNHibernateAssemblyName), out valueOfNHibernateAssemblyName))
+					{
+						instanceOfModel.NHibernateAssemblyName = valueOfNHibernateAssemblyName;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "nHibernateAssemblyName", typeof(global::System.String), attribNHibernateAssemblyName);
+					}
+				}
+			}
+			// RelateWithActiwFile
+			if (!serializationContext.Result.Failed)
+			{
+				string attribRelateWithActiwFile = reader.GetAttribute("relateWithActiwFile");
+				if (attribRelateWithActiwFile != null)
+				{
+					global::System.Boolean valueOfRelateWithActiwFile;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribRelateWithActiwFile), out valueOfRelateWithActiwFile))
+					{
+						instanceOfModel.RelateWithActiwFile = valueOfRelateWithActiwFile;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "relateWithActiwFile", typeof(global::System.Boolean), attribRelateWithActiwFile);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -1032,6 +1117,66 @@ namespace Altinoren.ActiveWriter
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("useGeneratedCodeAttribute", serializedPropValue);
+					}
+				}
+			}
+			// Target
+			if (!serializationContext.Result.Failed)
+			{
+				CodeGenerationTarget propValue = instanceOfModel.Target;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<CodeGenerationTarget>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "ActiveRecord") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("target", serializedPropValue);
+					}
+				}
+			}
+			// AssemblyPath
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.AssemblyPath;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("assemblyPath", propValue);
+				}
+			}
+			// ActiveRecordAssemblyName
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.ActiveRecordAssemblyName;
+				if (!serializationContext.Result.Failed)
+				{
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "Castle.ActiveRecord, Version=0.0.1.3, Culture=neutral, PublicKeyToken=407dd0808d44fbdc") != 0))
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("activeRecordAssemblyName", propValue);
+					}
+				}
+			}
+			// NHibernateAssemblyName
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.NHibernateAssemblyName;
+				if (!serializationContext.Result.Failed)
+				{
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "NHibernate, Version=1.2.0.3001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4") != 0))
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("nHibernateAssemblyName", propValue);
+					}
+				}
+			}
+			// RelateWithActiwFile
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.Boolean propValue = instanceOfModel.RelateWithActiwFile;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Boolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("relateWithActiwFile", serializedPropValue);
 					}
 				}
 			}

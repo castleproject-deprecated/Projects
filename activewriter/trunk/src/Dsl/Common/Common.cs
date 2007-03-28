@@ -21,6 +21,7 @@ namespace Altinoren.ActiveWriter
         // TODO: Tidy this class.
         private static string[] umToA = new string[] { "agendum", "datum", "extremum", "bacterium", "erratum" };
         
+        public static string[] ARAttributes = new string[] {"ActiveRecord", "Property", "Field", "PrimaryKey", "CompositeKey", "HasMany", "BelongsTo", "HasAndBelongsToMany"};
         public static string CompositeClassNameSuffix = "CompositeKey";
         public static string ActiveRecordNamespace = "Castle.ActiveRecord";
         public static string CollectionsNamespace = "System.Collections";
@@ -36,6 +37,8 @@ namespace Altinoren.ActiveWriter
         public static string ModelsFolderName = "Models";
         public static string ViewsFolderName = "Views";
         public static string ControllersFolderName = "Controllers";
+        public static string InMemoryCompiledAssemblyName = "AW";
+        public static int EmbeddedResourceBuildActionIndex = 3;
 
         public static string MakeCamel(string value)
         {

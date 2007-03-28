@@ -64,6 +64,6 @@ namespace Altinoren.ActiveWriter
             {
                 context.LogError("MonoRail project must have a path defined", "AW001ValidateMonoRailProjectPath", this);
             }
-        }
+        }        
     }
 }
