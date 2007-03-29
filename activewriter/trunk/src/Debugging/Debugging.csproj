@@ -112,10 +112,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ReadMe-Tests.txt" />
-    <EmbeddedResource Include="Tests\Debugging.Tests.NHBlog.hbm.xml">
+    <EmbeddedResource Include="Tests\NHBlog.hbm.xml">
       <DependentUpon>GeneratedCodeNHibernateTestModel.actiw</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tests\Debugging.Tests.NHPost.hbm.xml">
+    <EmbeddedResource Include="Tests\NHPost.hbm.xml">
       <DependentUpon>GeneratedCodeNHibernateTestModel.actiw</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

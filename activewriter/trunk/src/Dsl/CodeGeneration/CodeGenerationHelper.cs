@@ -149,7 +149,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
                 foreach (KeyValuePair<string, string> pair in nHibernateConfigs)
                 {
-                    string path = Path.Combine(_dte.ActiveDocument.Path, pair.Key + ".hbm.xml");
+                    string path = Path.Combine(_dte.ActiveDocument.Path, RemoveNamespaceFromStart(pair.Key) + ".hbm.xml");
                     using(StreamWriter writer = new StreamWriter(path, false, Encoding.Unicode))
                     {
                         writer.Write(pair.Value);
@@ -2128,6 +2128,14 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     }
                 }
             }
+        }
+
+        private string RemoveNamespaceFromStart(string name)
+        {
+            if (name.StartsWith(_namespace))
+                return name.Remove(0, _namespace.Length + 1);
+
+            return name;
         }
 
         #endregion
