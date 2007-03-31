@@ -1357,8 +1357,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 attribute.Arguments.Add(GetNamedEnumAttributeArgument("Access", "PropertyAccess", relation.TargetAccess));
             if (relation.TargetCache != CacheEnum.Undefined)
                 attribute.Arguments.Add(GetNamedEnumAttributeArgument("Cache", "CacheEnum", relation.TargetCache));
-            if (relation.TargetCascade != CascadeEnum.None)
-                attribute.Arguments.Add(GetNamedEnumAttributeArgument("Cascade", "CascadeEnum", relation.TargetCascade));
+            if (relation.TargetCascade != ManyRelationCascadeEnum.None)
+                attribute.Arguments.Add(GetNamedEnumAttributeArgument("Cascade", "ManyRelationCascadeEnum", relation.TargetCascade));
             if (!String.IsNullOrEmpty(relation.TargetColumnKey))
                 attribute.Arguments.Add(GetNamedAttributeArgument("ColumnKey", relation.TargetColumnKey));
             if (!String.IsNullOrEmpty(relation.TargetCustomAccess))
@@ -1395,7 +1395,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (!String.IsNullOrEmpty(relation.TargetIndex))
                 attribute.Arguments.Add(GetNamedAttributeArgument("Index", relation.TargetIndex));
             if (!String.IsNullOrEmpty(relation.TargetElement))
-                attribute.Arguments.Add(GetNamedAttributeArgument("CustomAccess", relation.TargetElement));
+                attribute.Arguments.Add(GetNamedAttributeArgument("Element", relation.TargetElement));
 
             return attribute;
         }
@@ -1462,8 +1462,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     attribute.Arguments.Add(GetNamedEnumAttributeArgument("Access", "PropertyAccess", relation.SourceAccess));
                 if (relation.SourceCache != CacheEnum.Undefined)
                     attribute.Arguments.Add(GetNamedEnumAttributeArgument("Cache", "CacheEnum", relation.SourceCache));
-                if (relation.SourceCascade != CascadeEnum.None)
-                    attribute.Arguments.Add(GetNamedEnumAttributeArgument("Cascade", "CascadeEnum", relation.SourceCascade));
+                if (relation.SourceCascade != ManyRelationCascadeEnum.None)
+                    attribute.Arguments.Add(GetNamedEnumAttributeArgument("Cascade", "ManyRelationCascadeEnum", relation.SourceCascade));
                 if (!String.IsNullOrEmpty(relation.SourceCustomAccess))
                     attribute.Arguments.Add(GetNamedAttributeArgument("CustomAccess", relation.SourceCustomAccess));
 
@@ -1496,8 +1496,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     attribute.Arguments.Add(GetNamedEnumAttributeArgument("Access", "PropertyAccess", relation.TargetAccess));
                 if (relation.TargetCache != CacheEnum.Undefined)
                     attribute.Arguments.Add(GetNamedEnumAttributeArgument("Cache", "CacheEnum", relation.TargetCache));
-                if (relation.TargetCascade != CascadeEnum.None)
-                    attribute.Arguments.Add(GetNamedEnumAttributeArgument("Cascade", "CascadeEnum", relation.TargetCascade));
+                if (relation.TargetCascade != ManyRelationCascadeEnum.None)
+                    attribute.Arguments.Add(GetNamedEnumAttributeArgument("Cascade", "ManyRelationCascadeEnum", relation.TargetCascade));
                 if (!String.IsNullOrEmpty(relation.TargetCustomAccess))
                     attribute.Arguments.Add(GetNamedAttributeArgument("CustomAccess", relation.TargetCustomAccess));
 

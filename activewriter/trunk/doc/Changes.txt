@@ -1,3 +1,11 @@
+Preview 2.1
+
+New:
+- Now optionally generates NHibernate hbm.xml files.
+
+Fixed:
+- Contrib-23: Produces CascadeEnum instead of ManyRelationCascadeEnum
+
 Preview 2
 
 New:

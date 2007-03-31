@@ -20,5 +20,20 @@
         <modelProperty Id="ed152660-490f-4d00-80fc-dc89e40687ed" name="Key2" columnType="Int32" length="0" keyType="CompositeKey" />
       </properties>
     </modelClass>
+    <modelClass name="ManyToOne_Many">
+      <targets>
+        <manyToOneRelation Id="3a197aa5-d136-42ad-9caa-1fbadd133749" targetCache="ReadOnly" targetCascade="All" targetColumnKey="post_blogid" targetCustomAccess="TargetCustomAccess" targetInverse="true" targetLazy="true" targetOrderBy="TargetOrderBy" targetRelationType="Bag" targetSchema="TargetSchema" targetSort="TargetSort" targetTable="Posts" targetWhere="TargetWhere" targetPropertyName="TargetProperty" sourceCascade="All" sourceColumn="post_blogid" sourceCustomAccess="SourceCustomAccss" sourceInsert="false" sourceNotNull="true" sourceOuterJoin="True" sourceType="ManyToOne_Many" sourceUnique="true" sourceUpdate="false" sourcePropertyName="SourceProperty" sourceNotFoundBehaviour="Ignore" targetNotFoundBehaviour="Exception" targetElement="TargetElement">
+          <modelClassMoniker name="/d31e3081-74cd-42fb-a26f-8ad359cf7aac/ManyToOne_One" />
+        </manyToOneRelation>
+      </targets>
+      <properties>
+        <modelProperty Id="3cdb63da-5b0f-43de-9d8d-cb5aea4faa2c" name="post_id" length="0" keyType="PrimaryKey" />
+      </properties>
+    </modelClass>
+    <modelClass name="ManyToOne_One">
+      <properties>
+        <modelProperty Id="e8eebad4-ec78-41cb-b537-d31ebbc6020d" name="blog_id" length="0" keyType="PrimaryKey" />
+      </properties>
+    </modelClass>
   </classes>
 </model>

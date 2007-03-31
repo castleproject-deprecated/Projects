@@ -410,7 +410,7 @@
         </DomainProperty>
         <DomainProperty Id="55f2f2e3-3183-4b1a-b3c9-9a864fb2e4ae" Description="" Name="TargetCascade" DisplayName="Target Cascade" DefaultValue="None" Category="Target (HasMany)">
           <Type>
-            <DomainEnumerationMoniker Name="CascadeEnum" />
+            <DomainEnumerationMoniker Name="ManyRelationCascadeEnum" />
           </Type>
         </DomainProperty>
         <DomainProperty Id="e4d0bfec-46a2-466d-b8f2-5545ebb18658" Description="" Name="TargetColumnKey" DisplayName="Target Column Key" Category="Target (HasMany)">
@@ -609,7 +609,7 @@
         </DomainProperty>
         <DomainProperty Id="b1eb524a-89f0-407d-a7d2-fe54e92c091e" Description="" Name="SourceCascade" DisplayName="Source Cascade" DefaultValue="None" Category="Source">
           <Type>
-            <DomainEnumerationMoniker Name="CascadeEnum" />
+            <DomainEnumerationMoniker Name="ManyRelationCascadeEnum" />
           </Type>
         </DomainProperty>
         <DomainProperty Id="45f8bd67-d220-4187-a3c9-0cf6bab3057f" Description="" Name="SourceColumn" DisplayName="Source Column" Category="Common">
@@ -674,7 +674,7 @@
         </DomainProperty>
         <DomainProperty Id="79db5e78-57ca-41f6-b409-f54c3692c71b" Description="" Name="TargetCascade" DisplayName="Target Cascade" DefaultValue="None" Category="Target">
           <Type>
-            <DomainEnumerationMoniker Name="CascadeEnum" />
+            <DomainEnumerationMoniker Name="ManyRelationCascadeEnum" />
           </Type>
         </DomainProperty>
         <DomainProperty Id="6b974a6d-7e61-4920-8ced-490f4a59f590" Description="" Name="TargetColumn" DisplayName="Target Column" Category="Common">
@@ -1035,6 +1035,15 @@
       <Literals>
         <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.CodeGenerationTarget.ActiveRecord" Name="ActiveRecord" Value="" />
         <EnumerationLiteral Description="" Name="NHibernate" Value="" />
+      </Literals>
+    </DomainEnumeration>
+    <DomainEnumeration Name="ManyRelationCascadeEnum" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum">
+      <Literals>
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.None" Name="None" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.All" Name="All" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.SaveUpdate" Name="SaveUpdate" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.Delete" Name="Delete" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.AllDeleteOrphan" Name="AllDeleteOrphan" Value="" />
       </Literals>
     </DomainEnumeration>
   </Types>

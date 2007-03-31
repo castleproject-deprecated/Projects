@@ -5853,14 +5853,14 @@ namespace Altinoren.ActiveWriter
 				string attribTargetCascade = reader.GetAttribute("targetCascade");
 				if (attribTargetCascade != null)
 				{
-					CascadeEnum valueOfTargetCascade;
-					if (DslModeling::SerializationUtilities.TryGetValue<CascadeEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetCascade), out valueOfTargetCascade))
+					ManyRelationCascadeEnum valueOfTargetCascade;
+					if (DslModeling::SerializationUtilities.TryGetValue<ManyRelationCascadeEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetCascade), out valueOfTargetCascade))
 					{
 						instanceOfManyToOneRelation.TargetCascade = valueOfTargetCascade;
 					}
 					else
 					{	// Invalid property value, ignored.
-						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetCascade", typeof(CascadeEnum), attribTargetCascade);
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetCascade", typeof(ManyRelationCascadeEnum), attribTargetCascade);
 					}
 				}
 			}
@@ -6876,8 +6876,8 @@ namespace Altinoren.ActiveWriter
 			// TargetCascade
 			if (!serializationContext.Result.Failed)
 			{
-				CascadeEnum propValue = instanceOfManyToOneRelation.TargetCascade;
-				string serializedPropValue = DslModeling::SerializationUtilities.GetString<CascadeEnum>(serializationContext, propValue);
+				ManyRelationCascadeEnum propValue = instanceOfManyToOneRelation.TargetCascade;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<ManyRelationCascadeEnum>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "None") != 0)
@@ -8256,14 +8256,14 @@ namespace Altinoren.ActiveWriter
 				string attribSourceCascade = reader.GetAttribute("sourceCascade");
 				if (attribSourceCascade != null)
 				{
-					CascadeEnum valueOfSourceCascade;
-					if (DslModeling::SerializationUtilities.TryGetValue<CascadeEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceCascade), out valueOfSourceCascade))
+					ManyRelationCascadeEnum valueOfSourceCascade;
+					if (DslModeling::SerializationUtilities.TryGetValue<ManyRelationCascadeEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceCascade), out valueOfSourceCascade))
 					{
 						instanceOfManyToManyRelation.SourceCascade = valueOfSourceCascade;
 					}
 					else
 					{	// Invalid property value, ignored.
-						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "sourceCascade", typeof(CascadeEnum), attribSourceCascade);
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "sourceCascade", typeof(ManyRelationCascadeEnum), attribSourceCascade);
 					}
 				}
 			}
@@ -8477,14 +8477,14 @@ namespace Altinoren.ActiveWriter
 				string attribTargetCascade = reader.GetAttribute("targetCascade");
 				if (attribTargetCascade != null)
 				{
-					CascadeEnum valueOfTargetCascade;
-					if (DslModeling::SerializationUtilities.TryGetValue<CascadeEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetCascade), out valueOfTargetCascade))
+					ManyRelationCascadeEnum valueOfTargetCascade;
+					if (DslModeling::SerializationUtilities.TryGetValue<ManyRelationCascadeEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetCascade), out valueOfTargetCascade))
 					{
 						instanceOfManyToManyRelation.TargetCascade = valueOfTargetCascade;
 					}
 					else
 					{	// Invalid property value, ignored.
-						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetCascade", typeof(CascadeEnum), attribTargetCascade);
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetCascade", typeof(ManyRelationCascadeEnum), attribTargetCascade);
 					}
 				}
 			}
@@ -9262,8 +9262,8 @@ namespace Altinoren.ActiveWriter
 			// SourceCascade
 			if (!serializationContext.Result.Failed)
 			{
-				CascadeEnum propValue = instanceOfManyToManyRelation.SourceCascade;
-				string serializedPropValue = DslModeling::SerializationUtilities.GetString<CascadeEnum>(serializationContext, propValue);
+				ManyRelationCascadeEnum propValue = instanceOfManyToManyRelation.SourceCascade;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<ManyRelationCascadeEnum>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "None") != 0)
@@ -9407,8 +9407,8 @@ namespace Altinoren.ActiveWriter
 			// TargetCascade
 			if (!serializationContext.Result.Failed)
 			{
-				CascadeEnum propValue = instanceOfManyToManyRelation.TargetCascade;
-				string serializedPropValue = DslModeling::SerializationUtilities.GetString<CascadeEnum>(serializationContext, propValue);
+				ManyRelationCascadeEnum propValue = instanceOfManyToManyRelation.TargetCascade;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<ManyRelationCascadeEnum>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "None") != 0)

@@ -565,7 +565,7 @@
     <!-- Property: TargetCache -->
     <xsd:attribute name="targetCache" type="CacheEnum" />
     <!-- Property: TargetCascade -->
-    <xsd:attribute name="targetCascade" type="CascadeEnum" />
+    <xsd:attribute name="targetCascade" type="ManyRelationCascadeEnum" />
     <!-- Property: TargetColumnKey -->
     <xsd:attribute name="targetColumnKey" type="xsd:string" />
     <!-- Property: TargetCustomAccess -->
@@ -731,7 +731,7 @@
     <!-- Property: SourceCache -->
     <xsd:attribute name="sourceCache" type="CacheEnum" />
     <!-- Property: SourceCascade -->
-    <xsd:attribute name="sourceCascade" type="CascadeEnum" />
+    <xsd:attribute name="sourceCascade" type="ManyRelationCascadeEnum" />
     <!-- Property: SourceColumn -->
     <xsd:attribute name="sourceColumn" type="xsd:string" />
     <!-- Property: SourceCustomAccess -->
@@ -757,7 +757,7 @@
     <!-- Property: TargetCache -->
     <xsd:attribute name="targetCache" type="CacheEnum" />
     <!-- Property: TargetCascade -->
-    <xsd:attribute name="targetCascade" type="CascadeEnum" />
+    <xsd:attribute name="targetCascade" type="ManyRelationCascadeEnum" />
     <!-- Property: TargetColumn -->
     <xsd:attribute name="targetColumn" type="xsd:string" />
     <!-- Property: TargetCustomAccess -->
@@ -1082,6 +1082,17 @@
     <xsd:restriction base="xsd:string">
       <xsd:enumeration value="ActiveRecord"/>
       <xsd:enumeration value="NHibernate"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum ManyRelationCascadeEnum -->
+  <xsd:simpleType name="ManyRelationCascadeEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="None"/>
+      <xsd:enumeration value="All"/>
+      <xsd:enumeration value="SaveUpdate"/>
+      <xsd:enumeration value="Delete"/>
+      <xsd:enumeration value="AllDeleteOrphan"/>
     </xsd:restriction>
   </xsd:simpleType>
   

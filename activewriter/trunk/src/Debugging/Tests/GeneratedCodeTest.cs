@@ -149,5 +149,48 @@ namespace Debugging.Tests
             ck2.Key2 = 2;
             Assert.IsTrue(ck.Equals(ck2));
         }
+
+        [Test]
+        public void CanGenerateManyToOneRelation()
+        {
+            Type type = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.ManyToOne_One");
+            Type type2 = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.ManyToOne_Many");
+            PropertyInfo property = type.GetProperty("TargetProperties");
+
+            object[] propertyAttributes = property.GetCustomAttributes(typeof(HasManyAttribute), false);
+            Assert.IsTrue(propertyAttributes.Length == 1, "Did not generate HasManyAttribute.");
+
+            HasManyAttribute attribute = propertyAttributes[0] as HasManyAttribute;
+            Assert.IsTrue(attribute.Table == "Posts");
+            Assert.IsTrue(attribute.ColumnKey == "post_blogid");
+            Assert.IsTrue(attribute.Cascade == ManyRelationCascadeEnum.All);
+            Assert.IsTrue(attribute.Cache == CacheEnum.ReadOnly);
+            Assert.IsTrue(attribute.CustomAccess == "TargetCustomAccess");
+            Assert.IsTrue(attribute.Inverse);
+            Assert.IsTrue(attribute.Lazy);
+            Assert.IsTrue(attribute.OrderBy == "TargetOrderBy");
+            Assert.IsTrue(attribute.RelationType == RelationType.Bag);
+            Assert.IsTrue(attribute.Schema == "TargetSchema");
+            Assert.IsTrue(attribute.Where == "TargetWhere");
+            Assert.IsTrue(attribute.NotFoundBehaviour == NotFoundBehaviour.Exception);
+            Assert.IsTrue(attribute.Element == "TargetElement");
+            Assert.AreEqual(attribute.MapType, type2);
+
+            PropertyInfo property2 = type2.GetProperty("SourceProperty");
+            object[] propertyAttributes2 = property2.GetCustomAttributes(typeof(BelongsToAttribute), false);
+            Assert.IsTrue(propertyAttributes2.Length == 1, "Did not generate BelongsToAttribute.");
+
+            BelongsToAttribute attribute2 = propertyAttributes2[0] as BelongsToAttribute;
+            Assert.IsTrue(attribute2.Column == "post_blogid");
+            Assert.IsTrue(attribute2.Cascade == CascadeEnum.All);
+            Assert.IsTrue(attribute2.NotNull == false);
+            Assert.IsTrue(attribute2.CustomAccess == "SourceCustomAccss");
+            Assert.IsTrue(attribute2.OuterJoin == OuterJoinEnum.True);
+            Assert.IsTrue(attribute2.NotFoundBehaviour == NotFoundBehaviour.Ignore);
+            Assert.IsTrue(attribute2.Unique);
+            Assert.IsFalse(attribute2.Insert);
+            Assert.IsFalse(attribute2.Update);
+            Assert.AreEqual(attribute2.Type, type2);
+        }
     }
 }

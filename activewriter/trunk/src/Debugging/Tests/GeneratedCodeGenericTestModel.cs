@@ -155,4 +155,60 @@ namespace Debugging.Tests {
             return left ^ right;
         }
     }
+    
+    [ActiveRecord()]
+    public partial class ManyToOne_Many : ActiveRecordBase {
+        
+        private string _post_id;
+        
+        private ManyToOne_One _sourceProperty;
+        
+        [PrimaryKey(PrimaryKeyType.Native, ColumnType="String")]
+        public string post_id {
+            get {
+                return this._post_id;
+            }
+            set {
+                this._post_id = value;
+            }
+        }
+        
+        [BelongsTo("post_blogid", Cascade=CascadeEnum.All, CustomAccess="SourceCustomAccss", Insert=false, OuterJoin=OuterJoinEnum.True, Type=typeof(ManyToOne_Many), Unique=true, Update=false, NotFoundBehaviour=NotFoundBehaviour.Ignore)]
+        public ManyToOne_One SourceProperty {
+            get {
+                return this._sourceProperty;
+            }
+            set {
+                this._sourceProperty = value;
+            }
+        }
+    }
+    
+    [ActiveRecord()]
+    public partial class ManyToOne_One : ActiveRecordBase {
+        
+        private string _blog_id;
+        
+        private IList _targetProperties;
+        
+        [PrimaryKey(PrimaryKeyType.Native, ColumnType="String")]
+        public string blog_id {
+            get {
+                return this._blog_id;
+            }
+            set {
+                this._blog_id = value;
+            }
+        }
+        
+        [HasMany(typeof(ManyToOne_Many), Cache=CacheEnum.ReadOnly, Cascade=ManyRelationCascadeEnum.All, ColumnKey="post_blogid", CustomAccess="TargetCustomAccess", Inverse=true, Lazy=true, OrderBy="TargetOrderBy", RelationType=RelationType.Bag, Schema="TargetSchema", Table="Posts", Where="TargetWhere", NotFoundBehaviour=NotFoundBehaviour.Exception, Element="TargetElement")]
+        public IList TargetProperties {
+            get {
+                return this._targetProperties;
+            }
+            set {
+                this._targetProperties = value;
+            }
+        }
+    }
 }

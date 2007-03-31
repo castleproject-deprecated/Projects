@@ -1386,4 +1386,45 @@ namespace Altinoren.ActiveWriter
 		NHibernate,
 	}
 }
+namespace Altinoren.ActiveWriter
+{
+	/// <summary>
+	/// DomainEnumeration: ManyRelationCascadeEnum
+	/// Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum
+	/// </summary>
+	[global::System.CLSCompliant(true)]
+	public enum ManyRelationCascadeEnum
+	{
+		/// <summary>
+		/// None
+		/// Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.None
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyRelationCascadeEnum/None.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		None,
+		/// <summary>
+		/// All
+		/// Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.All
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyRelationCascadeEnum/All.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		All,
+		/// <summary>
+		/// SaveUpdate
+		/// Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.SaveUpdate
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyRelationCascadeEnum/SaveUpdate.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		SaveUpdate,
+		/// <summary>
+		/// Delete
+		/// Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.Delete
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyRelationCascadeEnum/Delete.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		Delete,
+		/// <summary>
+		/// AllDeleteOrphan
+		/// Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.AllDeleteOrphan
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyRelationCascadeEnum/AllDeleteOrphan.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		AllDeleteOrphan,
+	}
+}
 

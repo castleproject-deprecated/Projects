@@ -499,7 +499,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetCascade
 		/// </summary>
-		private CascadeEnum targetCascadePropertyStorage = Altinoren.ActiveWriter.CascadeEnum.None;
+		private ManyRelationCascadeEnum targetCascadePropertyStorage = Altinoren.ActiveWriter.ManyRelationCascadeEnum.None;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetCascade domain property.
@@ -507,9 +507,9 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCascade.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCascade.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCascade.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.CascadeEnum.None)]
+		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.ManyRelationCascadeEnum.None)]
 		[DslModeling::DomainObjectId("55f2f2e3-3183-4b1a-b3c9-9a864fb2e4ae")]
-		public CascadeEnum TargetCascade
+		public ManyRelationCascadeEnum TargetCascade
 		{
 			[global::System.Diagnostics.DebuggerStepThrough]
 			get
@@ -525,7 +525,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Value handler for the ManyToOneRelation.TargetCascade domain property.
 		/// </summary>
-		internal sealed partial class TargetCascadePropertyHandler : DslModeling::DomainPropertyValueHandler<ManyToOneRelation, CascadeEnum>
+		internal sealed partial class TargetCascadePropertyHandler : DslModeling::DomainPropertyValueHandler<ManyToOneRelation, ManyRelationCascadeEnum>
 		{
 			private TargetCascadePropertyHandler() { }
 		
@@ -551,7 +551,7 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <returns>Property value.</returns>
-			public override sealed CascadeEnum GetValue(ManyToOneRelation element)
+			public override sealed ManyRelationCascadeEnum GetValue(ManyToOneRelation element)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 				return element.targetCascadePropertyStorage;
@@ -562,11 +562,11 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <param name="newValue">New property value.</param>
-			public override sealed void SetValue(ManyToOneRelation element, CascadeEnum newValue)
+			public override sealed void SetValue(ManyToOneRelation element, ManyRelationCascadeEnum newValue)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 		
-				CascadeEnum oldValue = GetValue(element);
+				ManyRelationCascadeEnum oldValue = GetValue(element);
 				if (newValue != oldValue)
 				{
 					ValueChanging(element, oldValue, newValue);
@@ -3827,7 +3827,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for SourceCascade
 		/// </summary>
-		private CascadeEnum sourceCascadePropertyStorage = Altinoren.ActiveWriter.CascadeEnum.None;
+		private ManyRelationCascadeEnum sourceCascadePropertyStorage = Altinoren.ActiveWriter.ManyRelationCascadeEnum.None;
 		
 		/// <summary>
 		/// Gets or sets the value of SourceCascade domain property.
@@ -3835,9 +3835,9 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCascade.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCascade.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCascade.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.CascadeEnum.None)]
+		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.ManyRelationCascadeEnum.None)]
 		[DslModeling::DomainObjectId("b1eb524a-89f0-407d-a7d2-fe54e92c091e")]
-		public CascadeEnum SourceCascade
+		public ManyRelationCascadeEnum SourceCascade
 		{
 			[global::System.Diagnostics.DebuggerStepThrough]
 			get
@@ -3853,7 +3853,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Value handler for the ManyToManyRelation.SourceCascade domain property.
 		/// </summary>
-		internal sealed partial class SourceCascadePropertyHandler : DslModeling::DomainPropertyValueHandler<ManyToManyRelation, CascadeEnum>
+		internal sealed partial class SourceCascadePropertyHandler : DslModeling::DomainPropertyValueHandler<ManyToManyRelation, ManyRelationCascadeEnum>
 		{
 			private SourceCascadePropertyHandler() { }
 		
@@ -3879,7 +3879,7 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <returns>Property value.</returns>
-			public override sealed CascadeEnum GetValue(ManyToManyRelation element)
+			public override sealed ManyRelationCascadeEnum GetValue(ManyToManyRelation element)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 				return element.sourceCascadePropertyStorage;
@@ -3890,11 +3890,11 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <param name="newValue">New property value.</param>
-			public override sealed void SetValue(ManyToManyRelation element, CascadeEnum newValue)
+			public override sealed void SetValue(ManyToManyRelation element, ManyRelationCascadeEnum newValue)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 		
-				CascadeEnum oldValue = GetValue(element);
+				ManyRelationCascadeEnum oldValue = GetValue(element);
 				if (newValue != oldValue)
 				{
 					ValueChanging(element, oldValue, newValue);
@@ -4961,7 +4961,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetCascade
 		/// </summary>
-		private CascadeEnum targetCascadePropertyStorage = Altinoren.ActiveWriter.CascadeEnum.None;
+		private ManyRelationCascadeEnum targetCascadePropertyStorage = Altinoren.ActiveWriter.ManyRelationCascadeEnum.None;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetCascade domain property.
@@ -4969,9 +4969,9 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCascade.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCascade.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCascade.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.CascadeEnum.None)]
+		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.ManyRelationCascadeEnum.None)]
 		[DslModeling::DomainObjectId("79db5e78-57ca-41f6-b409-f54c3692c71b")]
-		public CascadeEnum TargetCascade
+		public ManyRelationCascadeEnum TargetCascade
 		{
 			[global::System.Diagnostics.DebuggerStepThrough]
 			get
@@ -4987,7 +4987,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Value handler for the ManyToManyRelation.TargetCascade domain property.
 		/// </summary>
-		internal sealed partial class TargetCascadePropertyHandler : DslModeling::DomainPropertyValueHandler<ManyToManyRelation, CascadeEnum>
+		internal sealed partial class TargetCascadePropertyHandler : DslModeling::DomainPropertyValueHandler<ManyToManyRelation, ManyRelationCascadeEnum>
 		{
 			private TargetCascadePropertyHandler() { }
 		
@@ -5013,7 +5013,7 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <returns>Property value.</returns>
-			public override sealed CascadeEnum GetValue(ManyToManyRelation element)
+			public override sealed ManyRelationCascadeEnum GetValue(ManyToManyRelation element)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 				return element.targetCascadePropertyStorage;
@@ -5024,11 +5024,11 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <param name="newValue">New property value.</param>
-			public override sealed void SetValue(ManyToManyRelation element, CascadeEnum newValue)
+			public override sealed void SetValue(ManyToManyRelation element, ManyRelationCascadeEnum newValue)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 		
-				CascadeEnum oldValue = GetValue(element);
+				ManyRelationCascadeEnum oldValue = GetValue(element);
 				if (newValue != oldValue)
 				{
 					ValueChanging(element, oldValue, newValue);

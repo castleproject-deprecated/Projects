@@ -2777,6 +2777,46 @@
     <value></value>
     <comment>Description for EnumerationLiteral &apos;NHibernate&apos; on DomainEnumeration &apos;CodeGenerationTarget&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.ManyRelationCascadeEnum/None.DisplayName" xml:space="preserve">
+    <value>None</value>
+    <comment>Display name for EnumerationLiteral &apos;None&apos; on DomainEnumeration &apos;ManyRelationCascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyRelationCascadeEnum/None.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.None</value>
+    <comment>Description for EnumerationLiteral &apos;None&apos; on DomainEnumeration &apos;ManyRelationCascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyRelationCascadeEnum/All.DisplayName" xml:space="preserve">
+    <value>All</value>
+    <comment>Display name for EnumerationLiteral &apos;All&apos; on DomainEnumeration &apos;ManyRelationCascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyRelationCascadeEnum/All.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.All</value>
+    <comment>Description for EnumerationLiteral &apos;All&apos; on DomainEnumeration &apos;ManyRelationCascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyRelationCascadeEnum/SaveUpdate.DisplayName" xml:space="preserve">
+    <value>SaveUpdate</value>
+    <comment>Display name for EnumerationLiteral &apos;SaveUpdate&apos; on DomainEnumeration &apos;ManyRelationCascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyRelationCascadeEnum/SaveUpdate.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.SaveUpdate</value>
+    <comment>Description for EnumerationLiteral &apos;SaveUpdate&apos; on DomainEnumeration &apos;ManyRelationCascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyRelationCascadeEnum/Delete.DisplayName" xml:space="preserve">
+    <value>Delete</value>
+    <comment>Display name for EnumerationLiteral &apos;Delete&apos; on DomainEnumeration &apos;ManyRelationCascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyRelationCascadeEnum/Delete.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.Delete</value>
+    <comment>Description for EnumerationLiteral &apos;Delete&apos; on DomainEnumeration &apos;ManyRelationCascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyRelationCascadeEnum/AllDeleteOrphan.DisplayName" xml:space="preserve">
+    <value>AllDeleteOrphan</value>
+    <comment>Display name for EnumerationLiteral &apos;AllDeleteOrphan&apos; on DomainEnumeration &apos;ManyRelationCascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyRelationCascadeEnum/AllDeleteOrphan.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.AllDeleteOrphan</value>
+    <comment>Description for EnumerationLiteral &apos;AllDeleteOrphan&apos; on DomainEnumeration &apos;ManyRelationCascadeEnum&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ClassShape.Description" xml:space="preserve">
     <value></value>
     <comment>Description for DomainClass &apos;ClassShape&apos;</comment>
