@@ -111,5 +111,39 @@ This text should be rendered right after text a.
 			DoGet("UsingViewComponents/UsingCaptureFor.rails");
 			AssertReplyEqualTo(expected);
 		}
+		[Test]
+		public void MultipleViewComponentsWorksTogether()
+		{
+			#region expected
+			string expected = @"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
+
+<html xmlns=""http://www.w3.org/1999/xhtml"" >
+<head>
+    <title>AspView layout test</title>
+</head>
+<body>
+    <div>
+        hello from UsingMultipleViewComponents layout
+    </div>
+    <div>
+		<h1>Under me should appear the regular content of the view</h1>
+        Some view text
+Some view text
+The next text should be bolded:
+<b>I should be bold, some variable textand within a BoldViewComponent</b>Some view text - not bolded    </div>
+    <div>
+		<h1>Under me should appear the contents of a CaptureFor component, with id=""capturedContent1""</h1>
+		This content should be rendered in the captured-for place holder no. 1
+    </div>
+    <div>
+		<h1>Under me should appear the contents of a CaptureFor component, with id=""capturedContent2""</h1>
+		This content should be rendered in the captured-for place holder no. 2
+    </div>
+</body>
+</html>";
+			#endregion
+			DoGet("UsingViewComponents/UsingMultipleViewComponents.rails");
+			AssertReplyEqualTo(expected);
+		}
 	}
 }

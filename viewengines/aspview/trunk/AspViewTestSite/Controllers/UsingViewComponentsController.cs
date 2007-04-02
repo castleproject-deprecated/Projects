@@ -31,5 +31,10 @@ namespace AspViewTestSite
 		{
 			LayoutName = "UsingCaptureFor";
 		}
+		public void UsingMultipleViewComponents()
+		{
+			LayoutName = "UsingMultipleViewComponents";
+		}
+
 	}
 }
