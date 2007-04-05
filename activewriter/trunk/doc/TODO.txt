@@ -2,9 +2,12 @@
 - When adding a new property, handle enter key properly in toolwindow.
 - Double derived?
 - Import?
-- Attribute'lara yeni eklenenler?
+- Sync. attribute properties with AR trunk.
+- 
 
 Ayende:
 - Classes should probably have a default Id property. (?)
 - While you can specify discriminators, there doesn’t seem to be a way to use inheritance. (Implementing Type hierarchies)
+- On the Northwind database, dragging the Customers table generate a PK of type System.Char
+- Another option to consider is to use the inflector to singularize the table tables when dragging from server explorer.
 
