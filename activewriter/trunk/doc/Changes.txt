@@ -6,6 +6,7 @@ New:
 Fixed:
 - Contrib-23: Produces CascadeEnum instead of ManyRelationCascadeEnum
 - Ability to generate virtual properties to support Lazy properly (thx: Ayende)
+- Make sure that Char and AnsiChar types are treated as a System.String types, instead of System.Char types (patch: Ayende)
 
 Preview 2
 
