@@ -12,6 +12,9 @@ using Microsoft.Build.Framework;
 
 using Rhino.Mocks;
 using NUnit.Framework;
+
+using Rhino.Mocks.Constraints;
+
 using ILogger = Castle.Tools.CodeGenerator.Services.ILogger;
 
 namespace Castle.Tools.CodeGenerator.MsBuild

@@ -217,6 +217,7 @@ namespace Castle.Tools.CodeGenerator.Model
       {
         SetupMocks();
         Expect.Call(_argumentConversionService.ConvertArgument(null, argument)).Return("Jacob");
+        Expect.Call(_argumentConversionService.ConvertKey(null, argument)).Return("name");
         Expect.Call(_serverUtility.UrlEncode("name")).Return("name");
         Expect.Call(_serverUtility.UrlEncode("Jacob")).Return("Jacob");
       }
@@ -237,6 +238,7 @@ namespace Castle.Tools.CodeGenerator.Model
       {
         SetupMocks();
         Expect.Call(_argumentConversionService.ConvertArgument(null, argument)).Return("Jacob");
+        Expect.Call(_argumentConversionService.ConvertKey(null, argument)).Return("name");
         Expect.Call(_serverUtility.UrlEncode("name")).Return("Ename");
         Expect.Call(_serverUtility.UrlEncode("Jacob")).Return("EJacob");
       }
@@ -312,6 +314,7 @@ namespace Castle.Tools.CodeGenerator.Model
       {
         SetupMocks();
         Expect.Call(_argumentConversionService.ConvertArgument(null, argument)).Return("Jacob");
+        Expect.Call(_argumentConversionService.ConvertKey(null, argument)).Return("name");
         Expect.Call(_serverUtility.UrlEncode("name")).Return("Ename");
         Expect.Call(_serverUtility.UrlEncode("Jacob")).Return("EJacob");
         _redirectService.Redirect("/Area/Controller/Action.rails?Ename=EJacob&");
@@ -391,6 +394,7 @@ namespace Castle.Tools.CodeGenerator.Model
       {
         SetupMocks();
         Expect.Call(_argumentConversionService.ConvertArgument(null, argument)).Return("Jacob");
+        Expect.Call(_argumentConversionService.ConvertKey(null, argument)).Return("name");
         Expect.Call(_serverUtility.UrlEncode("name")).Return("name");
         Expect.Call(_serverUtility.UrlEncode("Jacob")).Return("Jacob");
       }

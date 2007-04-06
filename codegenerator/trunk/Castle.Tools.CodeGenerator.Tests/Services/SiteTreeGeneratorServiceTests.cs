@@ -6,6 +6,8 @@ using ICSharpCode.NRefactory.Parser.AST;
 using Rhino.Mocks;
 using NUnit.Framework;
 
+using Rhino.Mocks.Constraints;
+
 namespace Castle.Tools.CodeGenerator.Services
 {
   [TestFixture]

@@ -6,6 +6,9 @@ using ICSharpCode.NRefactory.Parser;
 using ICSharpCode.NRefactory.Parser.AST;
 using Rhino.Mocks;
 using NUnit.Framework;
+
+using Rhino.Mocks.Constraints;
+
 using Attribute=ICSharpCode.NRefactory.Parser.AST.Attribute;
 
 namespace Castle.Tools.CodeGenerator.Services
