@@ -1771,8 +1771,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 case NHibernateType.Int16:
                 case NHibernateType.Int64:
                 case NHibernateType.Single:
-                case NHibernateType.AnsiChar:
-                case NHibernateType.Char:
                 case NHibernateType.Byte:
                 case NHibernateType.Guid:
                     return true;
@@ -1805,9 +1803,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     return new CodeTypeReference("NullableInt64");
                 case NHibernateType.Single:
                     return new CodeTypeReference("NullableSingle");
-                case NHibernateType.AnsiChar:
-                case NHibernateType.Char:
-                    return new CodeTypeReference("NullableChar");
                 case NHibernateType.Byte:
                     return new CodeTypeReference("NullableByte");
                 case NHibernateType.Guid:
@@ -1833,8 +1828,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 case NHibernateType.Int16:
                 case NHibernateType.Int64:
                 case NHibernateType.Single:
-                case NHibernateType.AnsiChar:
-                case NHibernateType.Char:
                 case NHibernateType.Byte:
                 case NHibernateType.Guid:
                     return GetNullableTypeReference(GetSystemType(type));
@@ -1857,13 +1850,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             {
                     // TODO: Combine and order most likely asc
                 case NHibernateType.AnsiChar:
-                    return typeof (Char);
+                case NHibernateType.Char:
+                    return typeof (string);
                 case NHibernateType.Boolean:
                     return typeof (Boolean);
                 case NHibernateType.Byte:
                     return typeof (Byte);
-                case NHibernateType.Char:
-                    return typeof (Char);
                 case NHibernateType.DateTime:
                     return typeof (DateTime);
                 case NHibernateType.Decimal:
