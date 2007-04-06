@@ -140,6 +140,12 @@
         <xsd:documentation>Instructs ActiveWriter to add hbm.xml file as a nested file of this .actiw file. Otherwise, file will be added as a standalone item to the project.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
+    <!-- Property: UseVirtualProperties -->
+    <xsd:attribute name="useVirtualProperties" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>Instructs ActiveWriter to generate virtual properties where possible.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
   </xsd:complexType>
   
   <!-- Model Moniker -->

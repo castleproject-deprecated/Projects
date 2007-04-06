@@ -98,6 +98,11 @@
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="652aa8bf-1eb6-47ea-928a-c14b6b950791" Description="Instructs ActiveWriter to generate virtual properties where possible." Name="UseVirtualProperties" DisplayName="Use Virtual Properties" DefaultValue="true" Category="Code Generation">
+          <Type>
+            <ExternalTypeMoniker Name="/System/Boolean" />
+          </Type>
+        </DomainProperty>
       </Properties>
       <ElementMergeDirectives>
         <ElementMergeDirective>
@@ -1154,6 +1159,9 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="relateWithActiwFile">
             <DomainPropertyMoniker Name="Model/RelateWithActiwFile" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="useVirtualProperties">
+            <DomainPropertyMoniker Name="Model/UseVirtualProperties" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

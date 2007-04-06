@@ -452,6 +452,23 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// UseVirtualProperties
+			if (!serializationContext.Result.Failed)
+			{
+				string attribUseVirtualProperties = reader.GetAttribute("useVirtualProperties");
+				if (attribUseVirtualProperties != null)
+				{
+					global::System.Boolean valueOfUseVirtualProperties;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUseVirtualProperties), out valueOfUseVirtualProperties))
+					{
+						instanceOfModel.UseVirtualProperties = valueOfUseVirtualProperties;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "useVirtualProperties", typeof(global::System.Boolean), attribUseVirtualProperties);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -1177,6 +1194,19 @@ namespace Altinoren.ActiveWriter
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("relateWithActiwFile", serializedPropValue);
+					}
+				}
+			}
+			// UseVirtualProperties
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.Boolean propValue = instanceOfModel.UseVirtualProperties;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Boolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("useVirtualProperties", serializedPropValue);
 					}
 				}
 			}

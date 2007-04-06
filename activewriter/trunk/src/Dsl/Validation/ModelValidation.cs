@@ -64,6 +64,21 @@ namespace Altinoren.ActiveWriter
             {
                 context.LogError("MonoRail project must have a path defined", "AW001ValidateMonoRailProjectPath", this);
             }
-        }        
+        }
+
+        [ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
+        private void ValidateVirtualPropertyWithoutLazyModelClass(ValidationContext context)
+        {
+            if (!this.UseVirtualProperties && Classes.Count > 0)
+            {
+                foreach (ModelClass cls in Classes)
+                {
+                    if (cls.Lazy)
+                    {
+                        context.LogError("Class " + cls.Name + " is Lazy but model will not generate virtual properties. Change UseVirtualProperties to true.", "AW001ValidateVirtualPropertyWithoutLazyModelClassError", cls);
+                    }
+                }
+            }
+        }
     }
 }

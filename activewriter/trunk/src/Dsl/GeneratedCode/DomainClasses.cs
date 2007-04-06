@@ -1748,6 +1748,95 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region UseVirtualProperties domain property code
+		
+		/// <summary>
+		/// UseVirtualProperties domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid UseVirtualPropertiesDomainPropertyId = new global::System.Guid(0x652aa8bf, 0x1eb6, 0x47ea, 0x92, 0x8a, 0xc1, 0x4b, 0x6b, 0x95, 0x07, 0x91);
+		
+		/// <summary>
+		/// Storage for UseVirtualProperties
+		/// </summary>
+		private global::System.Boolean useVirtualPropertiesPropertyStorage = true;
+		
+		/// <summary>
+		/// Gets or sets the value of UseVirtualProperties domain property.
+		/// Instructs ActiveWriter to generate virtual properties where possible.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/UseVirtualProperties.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/UseVirtualProperties.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/UseVirtualProperties.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(true)]
+		[DslModeling::DomainObjectId("652aa8bf-1eb6-47ea-928a-c14b6b950791")]
+		public global::System.Boolean UseVirtualProperties
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return useVirtualPropertiesPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				UseVirtualPropertiesPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.UseVirtualProperties domain property.
+		/// </summary>
+		internal sealed partial class UseVirtualPropertiesPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.Boolean>
+		{
+			private UseVirtualPropertiesPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.UseVirtualProperties domain property value handler.
+			/// </summary>
+			public static readonly UseVirtualPropertiesPropertyHandler Instance = new UseVirtualPropertiesPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.UseVirtualProperties domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return UseVirtualPropertiesDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.Boolean GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.useVirtualPropertiesPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.Boolean newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.Boolean oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.useVirtualPropertiesPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region Classes opposite domain role accessor
 		/// <summary>
 		/// Gets a list of Classes.

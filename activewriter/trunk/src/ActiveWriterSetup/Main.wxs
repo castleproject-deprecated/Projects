@@ -10,7 +10,7 @@
 -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">
 	<Product UpgradeCode="c43851aa-77cf-44f2-9e72-7ab9cf85a0c1" Name="$(loc.ProductName)" Id="44cbbaaa-6860-4836-899b-e62282e165f9" Version="1.0.0" Manufacturer="$(loc.Manufacturer)" Language="1033" >
-		<Package Id="8b89f7d4-f2a3-4bea-8e03-06cf0646bf5e" Manufacturer="$(loc.Manufacturer)" InstallerVersion="200" Platforms="Intel" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
+		<Package Id="850c8feb-88e1-44e1-a56a-f1a9898e6513" Manufacturer="$(loc.Manufacturer)" InstallerVersion="200" Platforms="Intel" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
 
 		<!-- 
 			Launch conditions and corresponding properties.

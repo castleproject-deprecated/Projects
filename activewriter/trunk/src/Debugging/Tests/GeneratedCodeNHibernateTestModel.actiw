@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<model dslVersion="1.0.0.0" Id="8ddba27c-80c3-48bc-9295-5f8a94949a89" useNullables="Native" useBaseClass="false" useGeneratedCodeAttribute="true" target="NHibernate" assemblyPath="D:\Projects\CastleContrib\activewriter\trunk\assemblies" xmlns="http://schemas.microsoft.com/dsltools/ActiveWriter">
+<model dslVersion="1.0.0.0" Id="8ddba27c-80c3-48bc-9295-5f8a94949a89" useNullables="Native" useBaseClass="false" useGeneratedCodeAttribute="true" target="NHibernate" assemblyPath="D:\Projects\CastleContrib\activewriter\trunk\assemblies" useVirtualProperties="false" xmlns="http://schemas.microsoft.com/dsltools/ActiveWriter">
   <classes>
     <modelClass name="NHBlog" schema="dbo">
       <properties>

@@ -5,6 +5,7 @@ New:
 
 Fixed:
 - Contrib-23: Produces CascadeEnum instead of ManyRelationCascadeEnum
+- Ability to generate virtual properties to support Lazy properly (thx: Ayende)
 
 Preview 2
 

@@ -562,7 +562,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CodeMemberProperty memberProperty = new CodeMemberProperty();
 
             memberProperty.Name = propertyName;
-            memberProperty.Attributes = MemberAttributes.Public | MemberAttributes.Final;
+
+            if (_model.UseVirtualProperties)
+                memberProperty.Attributes = MemberAttributes.Public;
+            else
+                memberProperty.Attributes = MemberAttributes.Public | MemberAttributes.Final;
             if (get)
                 memberProperty.GetStatements.Add(new CodeMethodReturnStatement(
                                                      new CodeFieldReferenceExpression(

@@ -357,6 +357,18 @@
     <value>Code Generation (NHibernate)</value>
     <comment>Category for DomainProperty &apos;RelateWithActiwFile&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.Model/UseVirtualProperties.Description" xml:space="preserve">
+    <value>Instructs ActiveWriter to generate virtual properties where possible.</value>
+    <comment>Description for DomainProperty &apos;UseVirtualProperties&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseVirtualProperties.DisplayName" xml:space="preserve">
+    <value>Use Virtual Properties</value>
+    <comment>DisplayName for DomainProperty &apos;UseVirtualProperties&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseVirtualProperties.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;UseVirtualProperties&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ModelClass.Description" xml:space="preserve">
     <value>A class of the domain</value>
     <comment>Description for DomainClass &apos;ModelClass&apos;</comment>
