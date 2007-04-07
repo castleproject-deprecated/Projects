@@ -211,4 +211,60 @@ namespace Debugging.Tests {
             }
         }
     }
+    
+    [ActiveRecord()]
+    public partial class ManyToMany_First : ActiveRecordBase {
+        
+        private string _post_id;
+        
+        private IList _targetProperties;
+        
+        [PrimaryKey(PrimaryKeyType.Native, ColumnType="String")]
+        public string post_id {
+            get {
+                return this._post_id;
+            }
+            set {
+                this._post_id = value;
+            }
+        }
+        
+        [HasAndBelongsToMany(typeof(ManyToMany_Second), Cache=CacheEnum.ReadOnly, Cascade=ManyRelationCascadeEnum.All, CustomAccess="TargetCustomAccess", ColumnRef="tag_id", ColumnKey="post_id", Inverse=true, Lazy=true, MapType=typeof(ManyToMany_Second), OrderBy="TargetOrderBy", RelationType=RelationType.Bag, Where="TargetWhere", NotFoundBehaviour=NotFoundBehaviour.Exception, Schema="dbo", Table="FirstSecond")]
+        public IList TargetProperties {
+            get {
+                return this._targetProperties;
+            }
+            set {
+                this._targetProperties = value;
+            }
+        }
+    }
+    
+    [ActiveRecord()]
+    public partial class ManyToMany_Second : ActiveRecordBase {
+        
+        private string _tag_id;
+        
+        private IList _sourceProperties;
+        
+        [PrimaryKey(PrimaryKeyType.Native, ColumnType="String")]
+        public string tag_id {
+            get {
+                return this._tag_id;
+            }
+            set {
+                this._tag_id = value;
+            }
+        }
+        
+        [HasAndBelongsToMany(typeof(ManyToMany_First), Cache=CacheEnum.ReadOnly, Cascade=ManyRelationCascadeEnum.All, CustomAccess="SourceCustomAccess", ColumnRef="post_id", ColumnKey="tag_id", Inverse=true, Lazy=true, MapType=typeof(ManyToMany_First), OrderBy="SourceOrderBy", RelationType=RelationType.Bag, Where="SourceWhere", NotFoundBehaviour=NotFoundBehaviour.Exception, Schema="dbo", Table="FirstSecond")]
+        public IList SourceProperties {
+            get {
+                return this._sourceProperties;
+            }
+            set {
+                this._sourceProperties = value;
+            }
+        }
+    }
 }

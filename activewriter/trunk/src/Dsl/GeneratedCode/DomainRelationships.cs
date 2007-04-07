@@ -6531,6 +6531,184 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region TargetNotFoundBehaviour domain property code
+		
+		/// <summary>
+		/// TargetNotFoundBehaviour domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid TargetNotFoundBehaviourDomainPropertyId = new global::System.Guid(0x29123760, 0x24b6, 0x42d1, 0xa9, 0xb1, 0xfb, 0x8b, 0x1d, 0x08, 0xd1, 0x98);
+		
+		/// <summary>
+		/// Storage for TargetNotFoundBehaviour
+		/// </summary>
+		private NotFoundBehaviour targetNotFoundBehaviourPropertyStorage = Altinoren.ActiveWriter.NotFoundBehaviour.Default;
+		
+		/// <summary>
+		/// Gets or sets the value of TargetNotFoundBehaviour domain property.
+		/// Gets or sets the way broken relations are handled.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetNotFoundBehaviour.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetNotFoundBehaviour.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetNotFoundBehaviour.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.NotFoundBehaviour.Default)]
+		[DslModeling::DomainObjectId("29123760-24b6-42d1-a9b1-fb8b1d08d198")]
+		public NotFoundBehaviour TargetNotFoundBehaviour
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return targetNotFoundBehaviourPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				TargetNotFoundBehaviourPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the ManyToManyRelation.TargetNotFoundBehaviour domain property.
+		/// </summary>
+		internal sealed partial class TargetNotFoundBehaviourPropertyHandler : DslModeling::DomainPropertyValueHandler<ManyToManyRelation, NotFoundBehaviour>
+		{
+			private TargetNotFoundBehaviourPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the ManyToManyRelation.TargetNotFoundBehaviour domain property value handler.
+			/// </summary>
+			public static readonly TargetNotFoundBehaviourPropertyHandler Instance = new TargetNotFoundBehaviourPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the ManyToManyRelation.TargetNotFoundBehaviour domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return TargetNotFoundBehaviourDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed NotFoundBehaviour GetValue(ManyToManyRelation element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.targetNotFoundBehaviourPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(ManyToManyRelation element, NotFoundBehaviour newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				NotFoundBehaviour oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.targetNotFoundBehaviourPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region SourceNotFoundBehaviour domain property code
+		
+		/// <summary>
+		/// SourceNotFoundBehaviour domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid SourceNotFoundBehaviourDomainPropertyId = new global::System.Guid(0x32c73c34, 0x5d19, 0x4c1c, 0x84, 0x27, 0x91, 0x64, 0x6d, 0x05, 0xfb, 0x53);
+		
+		/// <summary>
+		/// Storage for SourceNotFoundBehaviour
+		/// </summary>
+		private NotFoundBehaviour sourceNotFoundBehaviourPropertyStorage = Altinoren.ActiveWriter.NotFoundBehaviour.Default;
+		
+		/// <summary>
+		/// Gets or sets the value of SourceNotFoundBehaviour domain property.
+		/// Gets or sets the way broken relations are handled.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceNotFoundBehaviour.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceNotFoundBehaviour.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceNotFoundBehaviour.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.NotFoundBehaviour.Default)]
+		[DslModeling::DomainObjectId("32c73c34-5d19-4c1c-8427-91646d05fb53")]
+		public NotFoundBehaviour SourceNotFoundBehaviour
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return sourceNotFoundBehaviourPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				SourceNotFoundBehaviourPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the ManyToManyRelation.SourceNotFoundBehaviour domain property.
+		/// </summary>
+		internal sealed partial class SourceNotFoundBehaviourPropertyHandler : DslModeling::DomainPropertyValueHandler<ManyToManyRelation, NotFoundBehaviour>
+		{
+			private SourceNotFoundBehaviourPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the ManyToManyRelation.SourceNotFoundBehaviour domain property value handler.
+			/// </summary>
+			public static readonly SourceNotFoundBehaviourPropertyHandler Instance = new SourceNotFoundBehaviourPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the ManyToManyRelation.SourceNotFoundBehaviour domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return SourceNotFoundBehaviourDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed NotFoundBehaviour GetValue(ManyToManyRelation element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.sourceNotFoundBehaviourPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(ManyToManyRelation element, NotFoundBehaviour newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				NotFoundBehaviour oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.sourceNotFoundBehaviourPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region Source link accessor
 		/// <summary>
 		/// Get the list of ManyToManyRelation links to a ModelClass.

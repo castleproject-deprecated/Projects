@@ -8807,6 +8807,40 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// TargetNotFoundBehaviour
+			if (!serializationContext.Result.Failed)
+			{
+				string attribTargetNotFoundBehaviour = reader.GetAttribute("targetNotFoundBehaviour");
+				if (attribTargetNotFoundBehaviour != null)
+				{
+					NotFoundBehaviour valueOfTargetNotFoundBehaviour;
+					if (DslModeling::SerializationUtilities.TryGetValue<NotFoundBehaviour>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetNotFoundBehaviour), out valueOfTargetNotFoundBehaviour))
+					{
+						instanceOfManyToManyRelation.TargetNotFoundBehaviour = valueOfTargetNotFoundBehaviour;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetNotFoundBehaviour", typeof(NotFoundBehaviour), attribTargetNotFoundBehaviour);
+					}
+				}
+			}
+			// SourceNotFoundBehaviour
+			if (!serializationContext.Result.Failed)
+			{
+				string attribSourceNotFoundBehaviour = reader.GetAttribute("sourceNotFoundBehaviour");
+				if (attribSourceNotFoundBehaviour != null)
+				{
+					NotFoundBehaviour valueOfSourceNotFoundBehaviour;
+					if (DslModeling::SerializationUtilities.TryGetValue<NotFoundBehaviour>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceNotFoundBehaviour), out valueOfSourceNotFoundBehaviour))
+					{
+						instanceOfManyToManyRelation.SourceNotFoundBehaviour = valueOfSourceNotFoundBehaviour;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "sourceNotFoundBehaviour", typeof(NotFoundBehaviour), attribSourceNotFoundBehaviour);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -9634,6 +9668,32 @@ namespace Altinoren.ActiveWriter
 				{
 					if (!string.IsNullOrEmpty(propValue))
 						writer.WriteAttributeString("targetPropertyName", propValue);
+				}
+			}
+			// TargetNotFoundBehaviour
+			if (!serializationContext.Result.Failed)
+			{
+				NotFoundBehaviour propValue = instanceOfManyToManyRelation.TargetNotFoundBehaviour;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<NotFoundBehaviour>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Default") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("targetNotFoundBehaviour", serializedPropValue);
+					}
+				}
+			}
+			// SourceNotFoundBehaviour
+			if (!serializationContext.Result.Failed)
+			{
+				NotFoundBehaviour propValue = instanceOfManyToManyRelation.SourceNotFoundBehaviour;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<NotFoundBehaviour>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Default") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("sourceNotFoundBehaviour", serializedPropValue);
+					}
 				}
 			}
 		}

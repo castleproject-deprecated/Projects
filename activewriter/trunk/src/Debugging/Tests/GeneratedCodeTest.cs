@@ -1,3 +1,17 @@
+// Copyright 2006 Gokhan Altinoren - http://altinoren.com/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 namespace Debugging.Tests
 {
     using System;
@@ -191,6 +205,53 @@ namespace Debugging.Tests
             Assert.IsFalse(attribute2.Insert);
             Assert.IsFalse(attribute2.Update);
             Assert.AreEqual(attribute2.Type, type2);
+        }
+
+        [Test]
+        public void CanGenerateManyToManyRelation()
+        {
+            Type type = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.ManyToMany_First");
+            Type type2 = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.ManyToMany_Second");
+            PropertyInfo property = type.GetProperty("TargetProperties");
+
+            object[] propertyAttributes = property.GetCustomAttributes(typeof(HasAndBelongsToManyAttribute), false);
+            Assert.IsTrue(propertyAttributes.Length == 1, "Did not generate HasAndBelongsToManyAttribute.");
+
+            HasAndBelongsToManyAttribute attribute = propertyAttributes[0] as HasAndBelongsToManyAttribute;
+            Assert.IsTrue(attribute.Table == "FirstSecond");
+            Assert.IsTrue(attribute.ColumnKey == "post_id");
+            Assert.IsTrue(attribute.ColumnRef == "tag_id");
+            Assert.IsTrue(attribute.Cascade == ManyRelationCascadeEnum.All);
+            Assert.IsTrue(attribute.Cache == CacheEnum.ReadOnly);
+            Assert.IsTrue(attribute.CustomAccess == "TargetCustomAccess");
+            Assert.IsTrue(attribute.Inverse);
+            Assert.IsTrue(attribute.Lazy);
+            Assert.IsTrue(attribute.OrderBy == "TargetOrderBy");
+            Assert.IsTrue(attribute.RelationType == RelationType.Bag);
+            Assert.IsTrue(attribute.Schema == "dbo");
+            Assert.IsTrue(attribute.Where == "TargetWhere");
+            Assert.IsTrue(attribute.NotFoundBehaviour == NotFoundBehaviour.Exception);
+            Assert.AreEqual(attribute.MapType, type2);
+
+            PropertyInfo property2 = type2.GetProperty("SourceProperties");
+            object[] propertyAttributes2 = property2.GetCustomAttributes(typeof(HasAndBelongsToManyAttribute), false);
+            Assert.IsTrue(propertyAttributes2.Length == 1, "Did not generate HasAndBelongsToManyAttribute.");
+
+            HasAndBelongsToManyAttribute attribute2 = propertyAttributes2[0] as HasAndBelongsToManyAttribute;
+            Assert.IsTrue(attribute2.Table == "FirstSecond");
+            Assert.IsTrue(attribute2.ColumnKey == "tag_id");
+            Assert.IsTrue(attribute2.ColumnRef == "post_id");
+            Assert.IsTrue(attribute2.Cascade == ManyRelationCascadeEnum.All);
+            Assert.IsTrue(attribute2.Cache == CacheEnum.ReadOnly);
+            Assert.IsTrue(attribute2.CustomAccess == "SourceCustomAccess");
+            Assert.IsTrue(attribute2.Inverse);
+            Assert.IsTrue(attribute2.Lazy);
+            Assert.IsTrue(attribute2.OrderBy == "SourceOrderBy");
+            Assert.IsTrue(attribute2.RelationType == RelationType.Bag);
+            Assert.IsTrue(attribute2.Schema == "dbo");
+            Assert.IsTrue(attribute2.Where == "SourceWhere");
+            Assert.IsTrue(attribute2.NotFoundBehaviour == NotFoundBehaviour.Exception);
+            Assert.AreEqual(attribute2.MapType, type);
         }
     }
 }

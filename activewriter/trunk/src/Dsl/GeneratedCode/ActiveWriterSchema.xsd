@@ -822,6 +822,18 @@
         <xsd:documentation>Name of the property in the generated code. If not supplied, ActiveWriter will use the source class name in plural form.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
+    <!-- Property: TargetNotFoundBehaviour -->
+    <xsd:attribute name="targetNotFoundBehaviour" type="NotFoundBehaviour" >
+      <xsd:annotation>
+        <xsd:documentation>Gets or sets the way broken relations are handled.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: SourceNotFoundBehaviour -->
+    <xsd:attribute name="sourceNotFoundBehaviour" type="NotFoundBehaviour" >
+      <xsd:annotation>
+        <xsd:documentation>Gets or sets the way broken relations are handled.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
   </xsd:complexType>
   
   <!-- ManyToManyRelation Moniker -->

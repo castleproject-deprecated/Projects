@@ -1821,6 +1821,30 @@
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;TargetPropertyName&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetNotFoundBehaviour.Description" xml:space="preserve">
+    <value>Gets or sets the way broken relations are handled.</value>
+    <comment>Description for DomainProperty &apos;TargetNotFoundBehaviour&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetNotFoundBehaviour.DisplayName" xml:space="preserve">
+    <value>Target Not Found Behaviour</value>
+    <comment>DisplayName for DomainProperty &apos;TargetNotFoundBehaviour&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetNotFoundBehaviour.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetNotFoundBehaviour&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceNotFoundBehaviour.Description" xml:space="preserve">
+    <value>Gets or sets the way broken relations are handled.</value>
+    <comment>Description for DomainProperty &apos;SourceNotFoundBehaviour&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceNotFoundBehaviour.DisplayName" xml:space="preserve">
+    <value>Source Not Found Behaviour</value>
+    <comment>DisplayName for DomainProperty &apos;SourceNotFoundBehaviour&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceNotFoundBehaviour.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceNotFoundBehaviour&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ManyToManyRelation/Source.Description" xml:space="preserve">
     <value></value>
     <comment>Description for DomainRole &apos;Source&apos; on DomainRelationship &apos;ManyToManyRelation&apos;</comment>

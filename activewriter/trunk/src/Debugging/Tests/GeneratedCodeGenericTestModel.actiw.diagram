@@ -46,5 +46,25 @@
         <classShapeMoniker Id="eba0adf8-c887-4552-8d02-49184ab01e2c" />
       </nodes>
     </manyToOneConnector>
+    <classShape Id="e3a8b275-ce69-4924-8a9c-4ca3ba3de424" absoluteBounds="0.5, 6.25, 1.5, 0.88180582682291675">
+      <modelClassMoniker name="/d31e3081-74cd-42fb-a26f-8ad359cf7aac/ManyToMany_First" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8c95c387-a974-49b9-95ce-703673c3faf1" absoluteBounds="0.51499999999999968, 6.66, 1.4700000000000002, 0.37180582682291663" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3cfaadf2-4cec-46ce-afda-e7c734d9d820" absoluteBounds="3.25, 6.25, 1.5, 0.88180582682291675">
+      <modelClassMoniker name="/d31e3081-74cd-42fb-a26f-8ad359cf7aac/ManyToMany_Second" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b602c4fd-5e1a-4b0c-9e42-41a84fd95d1d" absoluteBounds="3.2649999999999997, 6.66, 1.4700000000000002, 0.37180582682291663" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+      </nestedChildShapes>
+    </classShape>
+    <manyToManyConnector edgePoints="[(3.25 : 6.69090291341146); (2 : 6.69090291341146)]" manuallyRouted="false" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <manyToManyRelationMoniker Id="5001877a-5646-4acb-8457-42ee83c303b9" />
+      <relativeChildShapes />
+      <nodes>
+        <classShapeMoniker Id="3cfaadf2-4cec-46ce-afda-e7c734d9d820" />
+        <classShapeMoniker Id="e3a8b275-ce69-4924-8a9c-4ca3ba3de424" />
+      </nodes>
+    </manyToManyConnector>
   </nestedChildShapes>
 </activeRecordMapping>

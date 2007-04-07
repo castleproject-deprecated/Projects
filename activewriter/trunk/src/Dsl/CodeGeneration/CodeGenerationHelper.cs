@@ -766,25 +766,29 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                   relationship.Source.Name, relationship.Target.Name));
 
             CodeTypeDeclaration targetClass = GenerateClass(relationship.Target, nameSpace);
-            
+
+            string propertyName = String.IsNullOrEmpty(relationship.SourcePropertyName)
+                                      ? Common.GetPlural(relationship.Source.Name)
+                                      : Common.GetPlural(relationship.SourcePropertyName);
+
             string propertyType = String.IsNullOrEmpty(relationship.TargetPropertyType)
                                       ? "IList"
                                       : relationship.TargetPropertyType;
 
             CodeMemberField memberField;
             if (!relationship.Source.Model.UseGenerics)
-                memberField = GetMemberField(targetClass.Name, propertyType, Accessor.Private, relationship.TargetAccess);
+                memberField = GetMemberField(propertyName, propertyType, Accessor.Private, relationship.TargetAccess);
             else
-                memberField = GetGenericMemberField(targetClass.Name, targetClass.Name, propertyType, Accessor.Private, relationship.TargetAccess);
+                memberField = GetGenericMemberField(propertyName, targetClass.Name, propertyType, Accessor.Private, relationship.TargetAccess);
 
             classDeclaration.Members.Add(memberField);
 
             CodeMemberProperty memberProperty;
             if (String.IsNullOrEmpty(relationship.SourceDescription))
-                memberProperty = GetMemberProperty(memberField, Common.GetPlural(targetClass.Name), true, true, null);
+                memberProperty = GetMemberProperty(memberField, Common.GetPlural(propertyName), true, true, null);
             else
                 memberProperty =
-                    GetMemberProperty(memberField, Common.GetPlural(targetClass.Name), true, true,
+                    GetMemberProperty(memberField, Common.GetPlural(propertyName), true, true,
                                       relationship.SourceDescription);
             classDeclaration.Members.Add(memberProperty);
 
@@ -809,24 +813,28 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             CodeTypeDeclaration sourceClass = GenerateClass(relationship.Source, nameSpace);
 
+            string propertyName = String.IsNullOrEmpty(relationship.TargetPropertyName)
+                          ? Common.GetPlural(relationship.Target.Name)
+                          : Common.GetPlural(relationship.TargetPropertyName);
+
             string propertyType = String.IsNullOrEmpty(relationship.SourcePropertyType)
                                       ? "IList"
                                       : relationship.SourcePropertyType;
 
             CodeMemberField memberField;
             if (!relationship.Source.Model.UseGenerics)
-                memberField = GetMemberField(sourceClass.Name, propertyType, Accessor.Private, relationship.SourceAccess);
+                memberField = GetMemberField(propertyName, propertyType, Accessor.Private, relationship.SourceAccess);
             else
-                memberField = GetGenericMemberField(sourceClass.Name, sourceClass.Name, propertyType, Accessor.Private, relationship.SourceAccess);
+                memberField = GetGenericMemberField(propertyName, sourceClass.Name, propertyType, Accessor.Private, relationship.SourceAccess);
 
             classDeclaration.Members.Add(memberField);
 
             CodeMemberProperty memberProperty;
             if (String.IsNullOrEmpty(relationship.TargetDescription))
-                memberProperty = GetMemberProperty(memberField, Common.GetPlural(sourceClass.Name), true, true, null);
+                memberProperty = GetMemberProperty(memberField, Common.GetPlural(propertyName), true, true, null);
             else
                 memberProperty =
-                    GetMemberProperty(memberField, Common.GetPlural(sourceClass.Name), true, true,
+                    GetMemberProperty(memberField, Common.GetPlural(propertyName), true, true,
                                       relationship.TargetDescription);
             classDeclaration.Members.Add(memberProperty);
 
@@ -1126,7 +1134,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         }
 
         #endregion
-
 
         # region DebuggerDisplay
 
@@ -1492,6 +1499,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     attribute.Arguments.Add(GetNamedAttributeArgument("Sort", relation.SourceSort));
                 if (!String.IsNullOrEmpty(relation.SourceWhere))
                     attribute.Arguments.Add(GetNamedAttributeArgument("Where", relation.SourceWhere));
+                if (relation.SourceNotFoundBehaviour != NotFoundBehaviour.Default)
+                    attribute.Arguments.Add(
+                        GetNamedEnumAttributeArgument("NotFoundBehaviour", "NotFoundBehaviour",
+                                                      relation.SourceNotFoundBehaviour));
             }
             else
             {
@@ -1526,6 +1537,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     attribute.Arguments.Add(GetNamedAttributeArgument("Sort", relation.TargetSort));
                 if (!String.IsNullOrEmpty(relation.TargetWhere))
                     attribute.Arguments.Add(GetNamedAttributeArgument("Where", relation.TargetWhere));
+                if (relation.TargetNotFoundBehaviour != NotFoundBehaviour.Default)
+                    attribute.Arguments.Add(
+                        GetNamedEnumAttributeArgument("NotFoundBehaviour", "NotFoundBehaviour",
+                                                      relation.TargetNotFoundBehaviour));
             }
 
             if (!String.IsNullOrEmpty(relation.Schema))

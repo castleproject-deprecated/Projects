@@ -35,5 +35,20 @@
         <modelProperty Id="e8eebad4-ec78-41cb-b537-d31ebbc6020d" name="blog_id" length="0" keyType="PrimaryKey" />
       </properties>
     </modelClass>
+    <modelClass name="ManyToMany_First">
+      <properties>
+        <modelProperty Id="4ca397f1-b800-42cc-8afc-b659d82c6cfe" name="post_id" length="0" keyType="PrimaryKey" />
+      </properties>
+    </modelClass>
+    <modelClass name="ManyToMany_Second">
+      <properties>
+        <modelProperty Id="373555bd-9c43-499f-8257-fabd0f6053cc" name="tag_id" length="0" keyType="PrimaryKey" />
+      </properties>
+      <manyToManyTargets>
+        <manyToManyRelation Id="5001877a-5646-4acb-8457-42ee83c303b9" sourceCache="ReadOnly" sourceCascade="All" sourceColumn="tag_id" sourceCustomAccess="SourceCustomAccess" sourceInverse="true" sourceLazy="true" sourceMapType="ManyToMany_First" sourceOrderBy="SourceOrderBy" sourceRelationType="Bag" schema="dbo" sourceSort="SourceSort" table="FirstSecond" sourceWhere="SourceWhere" targetCache="ReadOnly" targetCascade="All" targetColumn="post_id" targetCustomAccess="TargetCustomAccess" targetInverse="true" targetLazy="true" targetMapType="ManyToMany_Second" targetOrderBy="TargetOrderBy" targetRelationType="Bag" targetSort="TargetSort" targetWhere="TargetWhere" sourcePropertyName="SourceProperties" targetPropertyName="TargetProperties" targetNotFoundBehaviour="Exception" sourceNotFoundBehaviour="Exception">
+          <modelClassMoniker name="/d31e3081-74cd-42fb-a26f-8ad359cf7aac/ManyToMany_First" />
+        </manyToManyRelation>
+      </manyToManyTargets>
+    </modelClass>
   </classes>
 </model>

@@ -767,6 +767,16 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="29123760-24b6-42d1-a9b1-fb8b1d08d198" Description="Gets or sets the way broken relations are handled." Name="TargetNotFoundBehaviour" DisplayName="Target Not Found Behaviour" DefaultValue="Default" Category="Target">
+          <Type>
+            <DomainEnumerationMoniker Name="NotFoundBehaviour" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="32c73c34-5d19-4c1c-8427-91646d05fb53" Description="Gets or sets the way broken relations are handled." Name="SourceNotFoundBehaviour" DisplayName="Source Not Found Behaviour" DefaultValue="Default" Category="Source">
+          <Type>
+            <DomainEnumerationMoniker Name="NotFoundBehaviour" />
+          </Type>
+        </DomainProperty>
       </Properties>
       <Source>
         <DomainRole Id="a09915cc-6063-4ccb-b932-1dc8660fc47c" Description="" Name="Source" DisplayName="Source" PropertyName="ManyToManyTargets" PropertyDisplayName="Many To Many Targets">
@@ -1552,6 +1562,12 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="targetPropertyName">
             <DomainPropertyMoniker Name="ManyToManyRelation/TargetPropertyName" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="targetNotFoundBehaviour">
+            <DomainPropertyMoniker Name="ManyToManyRelation/TargetNotFoundBehaviour" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="sourceNotFoundBehaviour">
+            <DomainPropertyMoniker Name="ManyToManyRelation/SourceNotFoundBehaviour" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

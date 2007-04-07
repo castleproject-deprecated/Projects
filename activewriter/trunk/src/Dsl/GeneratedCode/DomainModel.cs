@@ -213,6 +213,8 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(ManyToManyRelation), "TargetPropertyType", ManyToManyRelation.TargetPropertyTypeDomainPropertyId, typeof(ManyToManyRelation.TargetPropertyTypePropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToManyRelation), "SourcePropertyName", ManyToManyRelation.SourcePropertyNameDomainPropertyId, typeof(ManyToManyRelation.SourcePropertyNamePropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToManyRelation), "TargetPropertyName", ManyToManyRelation.TargetPropertyNameDomainPropertyId, typeof(ManyToManyRelation.TargetPropertyNamePropertyHandler)),
+				new DomainMemberInfo(typeof(ManyToManyRelation), "TargetNotFoundBehaviour", ManyToManyRelation.TargetNotFoundBehaviourDomainPropertyId, typeof(ManyToManyRelation.TargetNotFoundBehaviourPropertyHandler)),
+				new DomainMemberInfo(typeof(ManyToManyRelation), "SourceNotFoundBehaviour", ManyToManyRelation.SourceNotFoundBehaviourDomainPropertyId, typeof(ManyToManyRelation.SourceNotFoundBehaviourPropertyHandler)),
 				new DomainMemberInfo(typeof(OneToOneRelation), "SourceAccess", OneToOneRelation.SourceAccessDomainPropertyId, typeof(OneToOneRelation.SourceAccessPropertyHandler)),
 				new DomainMemberInfo(typeof(OneToOneRelation), "SourceCascade", OneToOneRelation.SourceCascadeDomainPropertyId, typeof(OneToOneRelation.SourceCascadePropertyHandler)),
 				new DomainMemberInfo(typeof(OneToOneRelation), "SourceConstrained", OneToOneRelation.SourceConstrainedDomainPropertyId, typeof(OneToOneRelation.SourceConstrainedPropertyHandler)),
