@@ -76,6 +76,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GeneratedCodeGenericTestModel.actiw</DependentUpon>
     </Compile>
+    <Compile Include="Tests\GeneratedCodeVirtualPropertyTest.cs" />
+    <Compile Include="Tests\GeneratedCodeVirtualPropertyTestModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GeneratedCodeVirtualPropertyTestModel.actiw</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -106,6 +112,11 @@
       <LastGenOutput>GeneratedCodeRuntimeTestModel.cs</LastGenOutput>
     </None>
     <None Include="Tests\GeneratedCodeRuntimeTestModel.actiw.diagram" />
+    <None Include="Tests\GeneratedCodeVirtualPropertyTestModel.actiw">
+      <Generator>ActiveWriterCodeGenerator</Generator>
+      <LastGenOutput>GeneratedCodeVirtualPropertyTestModel.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\GeneratedCodeVirtualPropertyTestModel.actiw.diagram" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />

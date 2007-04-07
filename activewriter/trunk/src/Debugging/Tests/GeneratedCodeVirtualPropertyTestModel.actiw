@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<model dslVersion="1.0.0.0" Id="8fa48f3f-caf2-4794-ba01-366fe315ec7e" xmlns="http://schemas.microsoft.com/dsltools/ActiveWriter">
+  <classes>
+    <modelClass name="VirtualPropertyTestClass">
+      <properties>
+        <modelProperty Id="45fb3d1a-d51e-4c93-880f-a868c7ded82a" name="VirtualProperty" length="0" />
+      </properties>
+    </modelClass>
+  </classes>
+</model>

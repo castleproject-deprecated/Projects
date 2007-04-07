@@ -12,13 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Debugging
+namespace Debugging.Tests
 {
-    class Class1
-    {
-        public static void Main()
-        {
+    using System;
+    using System.Reflection;
+    using NUnit.Framework;
 
+    [TestFixture]
+    public class GeneratedCodeVirtualPropertyTest
+    {
+        [Test]
+        public void CanGenerateVirtualProperty()
+        {
+            Type type = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.VirtualPropertyTestClass");
+            PropertyInfo property = type.GetProperty("VirtualProperty");
+            Assert.IsTrue(property.GetGetMethod().IsVirtual);
+            Assert.IsTrue(property.GetSetMethod().IsVirtual);
+            Assert.IsFalse(property.GetGetMethod().IsFinal);
+            Assert.IsFalse(property.GetSetMethod().IsFinal);
         }
     }
 }
