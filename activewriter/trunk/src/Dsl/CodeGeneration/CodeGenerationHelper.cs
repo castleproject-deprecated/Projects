@@ -779,7 +779,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (!relationship.Source.Model.UseGenerics)
                 memberField = GetMemberField(propertyName, propertyType, Accessor.Private, relationship.TargetAccess);
             else
-                memberField = GetGenericMemberField(propertyName, targetClass.Name, propertyType, Accessor.Private, relationship.TargetAccess);
+                memberField = GetGenericMemberField(targetClass.Name, propertyName, propertyType, Accessor.Private, relationship.TargetAccess);
 
             classDeclaration.Members.Add(memberField);
 
@@ -825,7 +825,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (!relationship.Source.Model.UseGenerics)
                 memberField = GetMemberField(propertyName, propertyType, Accessor.Private, relationship.SourceAccess);
             else
-                memberField = GetGenericMemberField(propertyName, sourceClass.Name, propertyType, Accessor.Private, relationship.SourceAccess);
+                memberField = GetGenericMemberField(sourceClass.Name, propertyName, propertyType, Accessor.Private, relationship.SourceAccess);
 
             classDeclaration.Members.Add(memberField);
 
