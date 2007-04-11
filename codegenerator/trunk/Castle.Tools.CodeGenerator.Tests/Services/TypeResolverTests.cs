@@ -204,6 +204,13 @@ namespace Castle.Tools.CodeGenerator.Services
       Assert.AreEqual("Dictionary<string,DateTime>", reference.ToString());
       string actual = _typeResolver.Resolve(reference);
     }
+
+    [Test]
+    public void Resolve_Enumeration_Works()
+    {
+      _typeResolver.UseNamespace("System");
+      Assert.IsNull(_typeResolver.Resolve("DayOfWeek"));
+    }
     #endregion
   }
 }

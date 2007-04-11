@@ -27,7 +27,7 @@ namespace Castle.Tools.CodeGenerator.Services
     #region AbstractAstVisitor Members
     public override object Visit(MethodDeclaration methodDeclaration, object data)
     {
-      if (methodDeclaration.Modifier != Modifier.Public)
+      if ((methodDeclaration.Modifier & Modifier.Public) != Modifier.Public)
       {
         return null;
       }
