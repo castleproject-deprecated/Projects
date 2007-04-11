@@ -167,6 +167,25 @@ namespace Castle.Tools.CodeGenerator.Services
     }
 
     [Test]
+    public void VisitMethodDeclaration_ActionMemberNoArgumentsIsVirtual_CreatesEntryInNode()
+    {
+      MethodDeclaration method = new MethodDeclaration("Action", Modifier.Public | Modifier.Virtual, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
+      ControllerTreeNode node = new ControllerTreeNode("SomeController", "SomeNamespace");
+
+      using (_mocks.Unordered())
+      {
+        Expect.Call(_treeService.Peek).Return(node);
+      }
+
+      _mocks.ReplayAll();
+      _visitor.Visit(method, null);
+      _mocks.VerifyAll();
+      
+      Assert.AreEqual("Action", node.Children[0].Name);
+      Assert.AreEqual(0, node.Children[0].Children.Count);
+    }
+
+    [Test]
     public void VisitMethodDeclaration_ActionMemberStandardArgument_CreatesEntryInNode()
     {
       MethodDeclaration method = new MethodDeclaration("Action", Modifier.Public, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
