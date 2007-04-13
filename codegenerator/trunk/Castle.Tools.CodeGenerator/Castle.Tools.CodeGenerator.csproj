@@ -116,7 +116,13 @@
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
   -->
+  <Target Name="AfterBuild">
+    <CreateItem Include="$(OutputPath)$(AssemblyName).dll;$(OutputPath)ICSharpCode.NRefactory.dll;$(MSBuildProjectDirectory)\..\$(AssemblyName).targets">
+      <Output ItemName="InstallFiles" TaskParameter="Include"/>
+    </CreateItem>
+    <MakeDir Directories="$(MSBuildExtensionsPath)\$(AssemblyName)" />
+    <Copy SourceFiles="@(InstallFiles)" DestinationFolder="$(MSBuildExtensionsPath)\$(AssemblyName)" />
+  </Target>
+  
 </Project>

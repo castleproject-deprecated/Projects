@@ -163,7 +163,7 @@ namespace Castle.Tools.CodeGenerator.MsBuild
       {
         _buildEngine.LogMessageEvent(null);
         LastCall.IgnoreArguments().Repeat.Any();
-        Expect.Call(_item.ItemSpec).Return("HomeController.cs").Repeat.Any();
+      	Expect.Call(_item.GetMetadata("FullPath")).Return("HomeController.cs").Repeat.Any();
         Expect.Call(_sourceStorage.GetParsedSource("HomeController.cs")).Return(_parsedSource);
         Expect.Call(_parsedSource.CompilationUnit).Return(new CompilationUnit());
         Expect.Call(_treeService.Root).Return(root).Repeat.Any();
@@ -193,8 +193,8 @@ namespace Castle.Tools.CodeGenerator.MsBuild
       using (_mocks.Unordered())
       {
         _buildEngine.LogMessageEvent(null);
-        LastCall.IgnoreArguments().Repeat.Any();
-        Expect.Call(_item.ItemSpec).Return("Index.brail").Repeat.Any();
+        LastCall.IgnoreArguments().Repeat.Any();       
+      	Expect.Call(_item.GetMetadata("FullPath")).Return("Index.brail").Repeat.Any();
         _viewSourceMapper.AddViewSource("Index.brail");
         Expect.Call(_treeService.Root).Return(root).Repeat.Any();
         _generator.Generate(root);
@@ -225,8 +225,8 @@ namespace Castle.Tools.CodeGenerator.MsBuild
       using (_mocks.Unordered())
       {
         _buildEngine.LogMessageEvent(null);
-        LastCall.IgnoreArguments().Repeat.Any();
-        Expect.Call(_item.ItemSpec).Return("CoolSuperSourceCode.cs").Repeat.Any();
+        LastCall.IgnoreArguments().Repeat.Any();        
+      	Expect.Call(_item.GetMetadata("FullPath")).Return("CoolSuperSourceCode.cs").Repeat.Any();
         _parserService.Parse(null, null);
         LastCall.Constraints(Is.NotNull(), Is.Equal("CoolSuperSourceCode.cs"));
         Expect.Call(_treeService.Root).Return(root).Repeat.Any();

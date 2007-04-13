@@ -37,6 +37,7 @@ namespace Castle.Tools.CodeGenerator.MsBuild
         private ITreeCreationService _treeService;
         private IViewSourceMapper _viewSourceMapper;
         private List<IGenerator> _generators = new List<IGenerator>();
+		private bool _debug = false;
         #endregion
 
         #region Properties
@@ -99,7 +100,15 @@ namespace Castle.Tools.CodeGenerator.MsBuild
         {
             get { return _generatedItems.ToArray(); }
         }
-        #endregion
+
+
+    	public bool Debug
+    	{
+    		get { return _debug; }
+    		set { _debug = value; }
+    	}
+
+    	#endregion
 
         #region GenerateMonoRailSiteTreeTask()
         public GenerateMonoRailSiteTreeTask()
@@ -139,7 +148,8 @@ namespace Castle.Tools.CodeGenerator.MsBuild
             this.Log.LogMessage(MessageImportance.High, "ViewSources: {0}", this.ViewSources.Length);
             this.Log.LogMessage(MessageImportance.High, "ViewComponentSources: {0}", this.ViewComponentSources.Length);
             this.Log.LogMessage(MessageImportance.High, "Loading References...");
-            
+
+			if (Debug) System.Diagnostics.Debugger.Launch();
             foreach (ITaskItem reference in _assemblyReferences)
             {
                 try
@@ -161,19 +171,21 @@ namespace Castle.Tools.CodeGenerator.MsBuild
             this.Log.LogMessage(MessageImportance.High, "Parsing Sources...");
             foreach (ITaskItem ti in this.Sources)
             {
-                if (File.Exists(ti.ItemSpec))
+            	string filePath = ti.GetMetadata("FullPath");
+            	if (File.Exists(filePath))
                 {
                     TypeInspectionVisitor visitor = new TypeInspectionVisitor(_typeResolver);
-                    _service.Parse(visitor, ti.ItemSpec);
+                    _service.Parse(visitor, filePath);
                 }
             }
 
-            foreach (ITaskItem item in this.ViewComponentSources)
+        	foreach (ITaskItem item in this.ViewComponentSources)
             {
                 _typeResolver.Clear();
 
                 ViewComponentVisitor visitor = new ViewComponentVisitor(_logger, _typeResolver, _treeService);
-                visitor.Visit(_sourceStorage.GetParsedSource(item.ItemSpec).CompilationUnit, null);
+            	string filePath = item.GetMetadata("FullPath");
+            	visitor.Visit(_sourceStorage.GetParsedSource(filePath).CompilationUnit, null);
             }
 
             foreach (ITaskItem item in this.ControllerSources)
@@ -181,12 +193,14 @@ namespace Castle.Tools.CodeGenerator.MsBuild
                 _typeResolver.Clear();
 
                 ControllerVisitor visitor = new ControllerVisitor(_logger, _typeResolver, _treeService);
-                visitor.Visit(_sourceStorage.GetParsedSource(item.ItemSpec).CompilationUnit, null);
+            	string filePath = item.GetMetadata("FullPath");
+            	visitor.Visit(_sourceStorage.GetParsedSource(filePath).CompilationUnit, null);
             }
 
             foreach (ITaskItem bi in this.ViewSources)
             {
-                _viewSourceMapper.AddViewSource(bi.ItemSpec);
+            	string filePath = bi.GetMetadata("FullPath");
+                _viewSourceMapper.AddViewSource(filePath);
             }
 
             this.Log.LogMessage(MessageImportance.High, "Generating {0}", this.OutputFile);

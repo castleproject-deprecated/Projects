@@ -2,15 +2,12 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Tools.CodeGenerator", "Castle.Tools.CodeGenerator\Castle.Tools.CodeGenerator.csproj", "{AD98AAA1-00B5-4766-87E2-62C82DC09896}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Tools.CodeGenerator.Tests", "Castle.Tools.CodeGenerator.Tests\Castle.Tools.CodeGenerator.Tests.csproj", "{1FF3DD73-91A3-419D-A479-1ACE24DEFFC9}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{24206503-5E83-4E1B-BC8F-9DEB04913949}"
+	ProjectSection(SolutionItems) = preProject
+		Castle.Tools.CodeGenerator.targets = Castle.Tools.CodeGenerator.targets
 	EndProjectSection
 EndProject
 Global
