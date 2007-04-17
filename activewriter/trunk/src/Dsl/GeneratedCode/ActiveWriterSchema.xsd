@@ -146,6 +146,12 @@
         <xsd:documentation>Instructs ActiveWriter to generate virtual properties where possible.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
+    <!-- Property: Namespace -->
+    <xsd:attribute name="namespace" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>The namespace to be used in generated code. If not supplied (default), ActiveWriter will use the namespace from the native project structure.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
   </xsd:complexType>
   
   <!-- Model Moniker -->

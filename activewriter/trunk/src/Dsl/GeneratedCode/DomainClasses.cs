@@ -1837,6 +1837,95 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region Namespace domain property code
+		
+		/// <summary>
+		/// Namespace domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid NamespaceDomainPropertyId = new global::System.Guid(0x88ffcb9e, 0xcd62, 0x45cf, 0x8b, 0x96, 0xfb, 0xff, 0x7f, 0x1e, 0x1c, 0x5f);
+		
+		/// <summary>
+		/// Storage for Namespace
+		/// </summary>
+		private global::System.String namespacePropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of Namespace domain property.
+		/// The namespace to be used in generated code. If not supplied (default),
+		/// ActiveWriter will use the namespace from the native project structure.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/Namespace.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/Namespace.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/Namespace.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainObjectId("88ffcb9e-cd62-45cf-8b96-fbff7f1e1c5f")]
+		public global::System.String Namespace
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return namespacePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				NamespacePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.Namespace domain property.
+		/// </summary>
+		internal sealed partial class NamespacePropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private NamespacePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.Namespace domain property value handler.
+			/// </summary>
+			public static readonly NamespacePropertyHandler Instance = new NamespacePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.Namespace domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return NamespaceDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.namespacePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.namespacePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region Classes opposite domain role accessor
 		/// <summary>
 		/// Gets a list of Classes.

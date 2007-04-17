@@ -469,6 +469,23 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// Namespace
+			if (!serializationContext.Result.Failed)
+			{
+				string attribNamespace = reader.GetAttribute("namespace");
+				if (attribNamespace != null)
+				{
+					global::System.String valueOfNamespace;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribNamespace), out valueOfNamespace))
+					{
+						instanceOfModel.Namespace = valueOfNamespace;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "namespace", typeof(global::System.String), attribNamespace);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -1208,6 +1225,16 @@ namespace Altinoren.ActiveWriter
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("useVirtualProperties", serializedPropValue);
 					}
+				}
+			}
+			// Namespace
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.Namespace;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("namespace", propValue);
 				}
 			}
 		}

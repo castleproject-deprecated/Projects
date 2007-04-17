@@ -65,7 +65,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         {
             _propertyBag = propertyBag;
             _model = (Model)propertyBag["Generic.Model"];
-            _namespace = propertyBag["Generic.Namespace"].ToString();
+            if (string.IsNullOrEmpty(_model.Namespace))
+                _namespace = propertyBag["Generic.Namespace"].ToString();
+            else
+                _namespace = _model.Namespace;
             
             _dte = ServerExplorerSupport.DTEHelper.GetDTE(_propertyBag["Generic.ProcessID"].ToString());
             _propertyBag.Add("Generic.DTE", _dte);

@@ -369,6 +369,18 @@
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;UseVirtualProperties&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.Model/Namespace.Description" xml:space="preserve">
+    <value>The namespace to be used in generated code. If not supplied (default), ActiveWriter will use the namespace from the native project structure.</value>
+    <comment>Description for DomainProperty &apos;Namespace&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/Namespace.DisplayName" xml:space="preserve">
+    <value>Namespace</value>
+    <comment>DisplayName for DomainProperty &apos;Namespace&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/Namespace.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;Namespace&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ModelClass.Description" xml:space="preserve">
     <value>A class of the domain</value>
     <comment>Description for DomainClass &apos;ModelClass&apos;</comment>

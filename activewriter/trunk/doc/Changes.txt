@@ -2,6 +2,7 @@ Preview 2.1
 
 New:
 - Now optionally generates NHibernate hbm.xml files.
+- Namespace in generated code is now customizable (Idea: Robert van Hoornaar)
 
 Fixed:
 - Contrib-23: Produces CascadeEnum instead of ManyRelationCascadeEnum

@@ -103,6 +103,11 @@
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="88ffcb9e-cd62-45cf-8b96-fbff7f1e1c5f" Description="The namespace to be used in generated code. If not supplied (default), ActiveWriter will use the namespace from the native project structure." Name="Namespace" DisplayName="Namespace" Category="Code Generation">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
       </Properties>
       <ElementMergeDirectives>
         <ElementMergeDirective>
@@ -1172,6 +1177,9 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="useVirtualProperties">
             <DomainPropertyMoniker Name="Model/UseVirtualProperties" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="namespace">
+            <DomainPropertyMoniker Name="Model/Namespace" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>
