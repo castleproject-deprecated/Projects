@@ -14,7 +14,7 @@
 
 using Castle.ActiveRecord.Framework;
 
-namespace Castle.ActiveRecord.Validation
+namespace Castle.Components.Validator.Contrib
 {
     public class MissingRegionSpecificValidatorException : ActiveRecordException
     {

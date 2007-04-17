@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Castle.ActiveRecord.Validation.Tests")]
+[assembly: AssemblyTitle("Castle.Components.Validator.Contrib.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Blue Pod Design")]
-[assembly: AssemblyProduct("Castle.ActiveRecord.Validation.Tests")]
-[assembly: AssemblyCopyright("Copyright © Blue Pod Design 2006")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Castle.Components.Validator.Contrib.Tests")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

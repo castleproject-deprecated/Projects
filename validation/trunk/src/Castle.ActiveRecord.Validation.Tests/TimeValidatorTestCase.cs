@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.ActiveRecord.Validation.Validators;
+using Castle.Components.Validator.Contrib.Validators;
 using NUnit.Framework;
 
 namespace Castle.ActiveRecord.Validation.Tests
@@ -25,8 +25,8 @@ namespace Castle.ActiveRecord.Validation.Tests
         {
             TimeValidator validator = new TimeValidator();
 
-            Assert.IsTrue(validator.Perform(this, "00:00"));
-            Assert.IsTrue(validator.Perform(this, "23:59"));
+            Assert.IsTrue(validator.IsValid(this, "00:00"));
+            Assert.IsTrue(validator.IsValid(this, "23:59"));
         }
 
         [Test]
@@ -34,12 +34,12 @@ namespace Castle.ActiveRecord.Validation.Tests
         {
             TimeValidator validator = new TimeValidator();
 
-            Assert.IsFalse(validator.Perform(this, "24:00"));
-            Assert.IsFalse(validator.Perform(this, "00:60"));
-            Assert.IsFalse(validator.Perform(this, "12"));
-            Assert.IsFalse(validator.Perform(this, "23:"));
-            Assert.IsFalse(validator.Perform(this, "abc"));
-            Assert.IsFalse(validator.Perform(this, ":10"));
+            Assert.IsFalse(validator.IsValid(this, "24:00"));
+            Assert.IsFalse(validator.IsValid(this, "00:60"));
+            Assert.IsFalse(validator.IsValid(this, "12"));
+            Assert.IsFalse(validator.IsValid(this, "23:"));
+            Assert.IsFalse(validator.IsValid(this, "abc"));
+            Assert.IsFalse(validator.IsValid(this, ":10"));
         }
     }
 }

@@ -15,10 +15,9 @@
 using System;
 using System.Globalization;
 using System.Threading;
-using Castle.ActiveRecord;
-using Castle.ActiveRecord.Validation.Validators;
+using Castle.Components.Validator.Contrib.Validators;
 
-namespace Castle.ActiveRecord.Validation.Attributes
+namespace Castle.Components.Validator.Contrib.Attributes
 {
     /// <summary>
     /// Validate the telephone number.
@@ -26,10 +25,12 @@ namespace Castle.ActiveRecord.Validation.Attributes
     [Serializable, CLSCompliant(false)]
     public class ValidateTelephoneNumberAttribute : AbstractValidationAttribute
     {
+        private string region;
+
         /// <summary>
         /// Validates the property as a telephone number for the region associated with the current thread's culture.
         /// </summary>
-        public ValidateTelephoneNumberAttribute() : base(new TelephoneNumberValidator(new RegionInfo(Thread.CurrentThread.CurrentCulture.LCID)))
+        public ValidateTelephoneNumberAttribute()
         {            
         }
 
@@ -39,8 +40,8 @@ namespace Castle.ActiveRecord.Validation.Attributes
         /// <param name="region">A 2 or 3 letter ISO 3166 code describing the region against whose 
         /// telephone number format the property should be tested.</param>
         public ValidateTelephoneNumberAttribute(string region)
-            : base(new TelephoneNumberValidator(region))
         {
+            this.region = region;
         }
 
         /// <summary>
@@ -49,8 +50,20 @@ namespace Castle.ActiveRecord.Validation.Attributes
         /// <param name="region">A 2 or 3 letter ISO 3166 code describing the region against whose  
         /// telephone number format the property should be tested.</param>
         /// <param name="errorMessage">The error message.</param>
-        public ValidateTelephoneNumberAttribute(string region, string errorMessage) : base(new TelephoneNumberValidator(region), errorMessage)
+        public ValidateTelephoneNumberAttribute(string region, string errorMessage) : base(errorMessage)
         {
+            this.region = region;
+        }
+
+        public override IValidator Build()
+        {
+            IValidator validator = string.IsNullOrEmpty(region)
+                                       ? new TelephoneNumberValidator(new RegionInfo(Thread.CurrentThread.CurrentCulture.LCID))
+                                       : new TelephoneNumberValidator(region);
+
+            ConfigureValidatorMessage(validator);
+
+            return validator;
         }
     }
 }

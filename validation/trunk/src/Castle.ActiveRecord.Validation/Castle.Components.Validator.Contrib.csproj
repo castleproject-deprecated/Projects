@@ -7,8 +7,8 @@
     <ProjectGuid>{F089BBD5-A3E9-4E4C-AC4A-DB0F3E98B50E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Castle.ActiveRecord.Validation</RootNamespace>
-    <AssemblyName>Castle.ActiveRecord.Validation</AssemblyName>
+    <RootNamespace>Castle.Components.Validator.Contrib</RootNamespace>
+    <AssemblyName>Castle.Components.Validator.Contrib</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,7 +30,11 @@
   <ItemGroup>
     <Reference Include="Castle.ActiveRecord, Version=0.0.1.3, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\AR_NH1.2_Trunk\build\net-2.0\debug\Castle.ActiveRecord.dll</HintPath>
+      <HintPath>..\..\lib\Castle.ActiveRecord.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Components.Validator, Version=0.0.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Castle.Components.Validator.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=1.2.0.2001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -42,12 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\ValidateTimeAttribute.cs" />
-    <Compile Include="Attributes\ValidateAtLeastOneIsNotEmptyAttribute.cs" />
     <Compile Include="Attributes\ValidatePostCodeAttribute.cs" />
     <Compile Include="Attributes\ValidateTelephoneNumberAttribute.cs" />
     <Compile Include="Attributes\ValidateUrlAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Validators\AtLeastOneIsNotEmptyValidator.cs" />
     <Compile Include="MissingRegionSpecificValidatorException.cs" />
     <Compile Include="Validators\TimeValidator.cs" />
     <Compile Include="Validators\TelephoneNumberValidator.cs" />

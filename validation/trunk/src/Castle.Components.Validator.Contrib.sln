@@ -1,9 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.ActiveRecord.Validation", "Castle.ActiveRecord.Validation\Castle.ActiveRecord.Validation.csproj", "{F089BBD5-A3E9-4E4C-AC4A-DB0F3E98B50E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Components.Validator.Contrib", "Castle.ActiveRecord.Validation\Castle.Components.Validator.Contrib.csproj", "{F089BBD5-A3E9-4E4C-AC4A-DB0F3E98B50E}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.ActiveRecord.Validation.Tests", "Castle.ActiveRecord.Validation.Tests\Castle.ActiveRecord.Validation.Tests.csproj", "{6FC292B0-A1AA-41E4-B394-FBEB721C1A50}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Components.Validator.Contrib.Tests", "Castle.ActiveRecord.Validation.Tests\Castle.Components.Validator.Contrib.Tests.csproj", "{6FC292B0-A1AA-41E4-B394-FBEB721C1A50}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

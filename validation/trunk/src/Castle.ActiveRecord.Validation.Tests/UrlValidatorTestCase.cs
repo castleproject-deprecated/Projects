@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.ActiveRecord.Validation.Validators;
+using Castle.Components.Validator.Contrib.Validators;
 using NUnit.Framework;
 
 namespace Castle.ActiveRecord.Validation.Tests
@@ -25,10 +25,10 @@ namespace Castle.ActiveRecord.Validation.Tests
         {
             UrlValidator validator = new UrlValidator();
 
-            Assert.IsTrue(validator.Perform(this, "http://www.castleproject.org"));
-            Assert.IsTrue(validator.Perform(this, "http://www.bbc.co.uk"));
-            Assert.IsTrue(validator.Perform(this, "ftp://my.ftp.site"));
-            Assert.IsTrue(validator.Perform(this, "http://www.tickets.com/file.extension?id=something"));
+            Assert.IsTrue(validator.IsValid(this, "http://www.castleproject.org"));
+            Assert.IsTrue(validator.IsValid(this, "http://www.bbc.co.uk"));
+            Assert.IsTrue(validator.IsValid(this, "ftp://my.ftp.site"));
+            Assert.IsTrue(validator.IsValid(this, "http://www.tickets.com/file.extension?id=something"));
         }
 
         [Test]
@@ -36,9 +36,9 @@ namespace Castle.ActiveRecord.Validation.Tests
         {
             UrlValidator validator = new UrlValidator();
 
-            Assert.IsFalse(validator.Perform(this, "http://www"));
-            Assert.IsFalse(validator.Perform(this, ".www.bbc.co.uk"));
-            Assert.IsFalse(validator.Perform(this, "ftp:///my.ftp.site"));
+            Assert.IsFalse(validator.IsValid(this, "http://www"));
+            Assert.IsFalse(validator.IsValid(this, ".www.bbc.co.uk"));
+            Assert.IsFalse(validator.IsValid(this, "ftp:///my.ftp.site"));
         }
     }
 }

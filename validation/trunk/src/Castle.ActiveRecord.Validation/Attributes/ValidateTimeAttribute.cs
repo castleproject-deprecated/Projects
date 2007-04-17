@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.ActiveRecord.Validation.Validators;
+using Castle.Components.Validator.Contrib.Validators;
 
-namespace Castle.ActiveRecord.Validation.Attributes
+namespace Castle.Components.Validator.Contrib.Attributes
 {
     /// <summary>
     /// Validate the time.
@@ -23,12 +23,21 @@ namespace Castle.ActiveRecord.Validation.Attributes
     [Serializable, CLSCompliant(false)]
     public class ValidateTimeAttribute : AbstractValidationAttribute
     {
-        public ValidateTimeAttribute() : base(new UrlValidator())
+        public ValidateTimeAttribute()
         {
         }
 
-        public ValidateTimeAttribute(string errorMessage) : base(new TimeValidator(), errorMessage)
+        public ValidateTimeAttribute(string errorMessage) : base(errorMessage)
         {
+        }
+
+        public override IValidator Build()
+        {
+            IValidator validator = new TimeValidator();
+
+            ConfigureValidatorMessage(validator);
+
+            return validator;
         }
     }
 }

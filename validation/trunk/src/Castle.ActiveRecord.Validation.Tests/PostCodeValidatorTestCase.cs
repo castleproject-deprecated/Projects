@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.ActiveRecord.Validation.Validators;
+using Castle.Components.Validator.Contrib;
+using Castle.Components.Validator.Contrib.Validators;
 using NUnit.Framework;
 
 namespace Castle.ActiveRecord.Validation.Tests
@@ -25,7 +26,7 @@ namespace Castle.ActiveRecord.Validation.Tests
         public void ExceptionThrownForCulturesWithoutASpecifiedExpression()
         {
             PostCodeValidator validator = new PostCodeValidator("NI");
-            validator.Perform(this, "abc");
+            validator.IsValid(this, "abc");
         }
         
         [Test]
@@ -33,9 +34,9 @@ namespace Castle.ActiveRecord.Validation.Tests
         {
             PostCodeValidator validator = new PostCodeValidator("GB");
 
-            Assert.IsTrue(validator.Perform(this, "DY13 9SB"));
-            Assert.IsTrue(validator.Perform(this, "S11 7EZ"));
-            Assert.IsTrue(validator.Perform(this, "SW12 0HF"));            
+            Assert.IsTrue(validator.IsValid(this, "DY13 9SB"));
+            Assert.IsTrue(validator.IsValid(this, "S11 7EZ"));
+            Assert.IsTrue(validator.IsValid(this, "SW12 0HF"));            
         }
         
         [Test]
@@ -43,9 +44,9 @@ namespace Castle.ActiveRecord.Validation.Tests
         {
             PostCodeValidator validator = new PostCodeValidator("GB");
 
-            Assert.IsFalse(validator.Perform(this, "A 1"));
-            Assert.IsFalse(validator.Perform(this, "AB 1A"));
-            Assert.IsFalse(validator.Perform(this, "1AB 2AB"));
+            Assert.IsFalse(validator.IsValid(this, "A 1"));
+            Assert.IsFalse(validator.IsValid(this, "AB 1A"));
+            Assert.IsFalse(validator.IsValid(this, "1AB 2AB"));
         }
     }
 }

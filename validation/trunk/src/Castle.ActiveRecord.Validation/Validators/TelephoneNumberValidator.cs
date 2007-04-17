@@ -13,9 +13,8 @@
 // limitations under the License.
 
 using System.Globalization;
-using Castle.ActiveRecord.Framework.Validators;
 
-namespace Castle.ActiveRecord.Validation.Validators
+namespace Castle.Components.Validator.Contrib.Validators
 {
     public class TelephoneNumberValidator : RegularExpressionValidator
     {

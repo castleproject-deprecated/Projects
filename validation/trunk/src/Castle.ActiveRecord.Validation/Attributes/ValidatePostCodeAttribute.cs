@@ -15,9 +15,9 @@
 using System;
 using System.Globalization;
 using System.Threading;
-using Castle.ActiveRecord.Validation.Validators;
+using Castle.Components.Validator.Contrib.Validators;
 
-namespace Castle.ActiveRecord.Validation.Attributes
+namespace Castle.Components.Validator.Contrib.Attributes
 {
     /// <summary>
     /// Validate the post code.
@@ -25,10 +25,12 @@ namespace Castle.ActiveRecord.Validation.Attributes
     [Serializable, CLSCompliant(false)]
     public class ValidatePostCodeAttribute : AbstractValidationAttribute
     {
+        private string region;
+        
         /// <summary>
         /// Validates the property as a post code for the region associated with the current thread's culture.
         /// </summary>
-        public ValidatePostCodeAttribute() : base(new PostCodeValidator(new RegionInfo(Thread.CurrentThread.CurrentCulture.LCID)))
+        public ValidatePostCodeAttribute()
         {            
         }
         
@@ -37,8 +39,9 @@ namespace Castle.ActiveRecord.Validation.Attributes
         /// </summary>
         /// <param name="region">A 2 or 3 letter ISO 3166 code describing the region against whose 
         /// post code format the property should be tested.</param>
-        public ValidatePostCodeAttribute(string region) : base(new PostCodeValidator(region))
+        public ValidatePostCodeAttribute(string region)
         {
+            this.region = region;
         }
 
         /// <summary>
@@ -47,8 +50,20 @@ namespace Castle.ActiveRecord.Validation.Attributes
         /// <param name="region">A 2 or 3 letter ISO 3166 code describing the region against whose  
         /// post code format the property should be tested.</param>
         /// <param name="errorMessage">The error message.</param>
-        public ValidatePostCodeAttribute(string region, string errorMessage) : base(new PostCodeValidator(region), errorMessage)
+        public ValidatePostCodeAttribute(string region, string errorMessage) : base(errorMessage)
         {
+            this.region = region;
+        }
+
+        public override IValidator Build()
+        {
+            IValidator validator = string.IsNullOrEmpty(region)
+                                       ? new PostCodeValidator(new RegionInfo(Thread.CurrentThread.CurrentCulture.LCID))
+                                       : new PostCodeValidator(region);
+
+            ConfigureValidatorMessage(validator);
+
+            return validator;
         }
     }
 }

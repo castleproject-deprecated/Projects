@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.ActiveRecord.Validation.Validators;
+using Castle.Components.Validator.Contrib.Validators;
 
-namespace Castle.ActiveRecord.Validation.Attributes
+namespace Castle.Components.Validator.Contrib.Attributes
 {
     /// <summary>
     /// Validate the url.
@@ -23,12 +23,21 @@ namespace Castle.ActiveRecord.Validation.Attributes
     [Serializable, CLSCompliant(false)]
     public class ValidateUrlAttribute : AbstractValidationAttribute
     {
-        public ValidateUrlAttribute() : base(new UrlValidator())
+        public ValidateUrlAttribute()
         {
         }
 
-        public ValidateUrlAttribute(string errorMessage) : base(new UrlValidator(), errorMessage)
+        public ValidateUrlAttribute(string errorMessage) : base(errorMessage)
         {
+        }
+
+        public override IValidator Build()
+        {
+            IValidator validator = new UrlValidator();
+
+            ConfigureValidatorMessage(validator);
+
+            return validator;
         }
     }
 }

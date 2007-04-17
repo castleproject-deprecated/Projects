@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.ActiveRecord.Validation.Validators;
+using Castle.Components.Validator.Contrib;
+using Castle.Components.Validator.Contrib.Validators;
 using NUnit.Framework;
 
 namespace Castle.ActiveRecord.Validation.Tests
@@ -25,7 +26,7 @@ namespace Castle.ActiveRecord.Validation.Tests
         public void ExceptionThrownForCulturesWithoutASpecifiedExpression()
         {
             TelephoneNumberValidator validator = new TelephoneNumberValidator("NI");
-            validator.Perform(this, "012345");
+            validator.IsValid(this, "012345");
         }
 
         [Test]
@@ -33,9 +34,9 @@ namespace Castle.ActiveRecord.Validation.Tests
         {
             TelephoneNumberValidator validator = new TelephoneNumberValidator("GB");
 
-            Assert.IsTrue(validator.Perform(this, "01234567890"));
-            Assert.IsTrue(validator.Perform(this, "012 3456 7890"));
-            Assert.IsTrue(validator.Perform(this, "0123 4567890"));
+            Assert.IsTrue(validator.IsValid(this, "01234567890"));
+            Assert.IsTrue(validator.IsValid(this, "012 3456 7890"));
+            Assert.IsTrue(validator.IsValid(this, "0123 4567890"));
         }
 
         [Test]
@@ -43,8 +44,8 @@ namespace Castle.ActiveRecord.Validation.Tests
         {
             TelephoneNumberValidator validator = new TelephoneNumberValidator("GB");
 
-            Assert.IsFalse(validator.Perform(this, "0000"));
-            Assert.IsFalse(validator.Perform(this, "ABCDEFGH"));
+            Assert.IsFalse(validator.IsValid(this, "0000"));
+            Assert.IsFalse(validator.IsValid(this, "ABCDEFGH"));
         }
     }
 }
