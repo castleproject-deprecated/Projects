@@ -48,7 +48,7 @@ namespace Castle.Tools.CodeGenerator.Services
           constructionArguments
           );
 
-      CodeTypeReference propertyType = new CodeTypeReference(typeof(ControllerViewReference));
+      CodeTypeReference propertyType = new CodeTypeReference(typeof(IControllerViewReference));
       _typeStack.Peek().Members.Add(_source.CreateReadOnlyProperty(node.Name, propertyType, returnExpression));
 
       base.Visit(node);

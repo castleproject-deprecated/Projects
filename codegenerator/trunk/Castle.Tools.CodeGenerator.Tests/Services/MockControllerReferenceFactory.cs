@@ -24,7 +24,7 @@ namespace Castle.Tools.CodeGenerator.Services
     #endregion
 
     #region IControllerReferenceFactory Members
-    public ControllerActionReference CreateActionReference(ICodeGeneratorServices services, Type controllerType, string areaName, string controllerName, string actionName, MethodSignature signature, params ActionArgument[] arguments)
+    public IControllerActionReference CreateActionReference(ICodeGeneratorServices services, Type controllerType, string areaName, string controllerName, string actionName, MethodSignature signature, params ActionArgument[] arguments)
     {
       string key = MakeKey(areaName, controllerName, actionName);
       if (!_actions.ContainsKey(key))
@@ -34,7 +34,7 @@ namespace Castle.Tools.CodeGenerator.Services
       return _actions[key];
     }
 
-    public ControllerViewReference CreateViewReference(ICodeGeneratorServices services, Type controllerType, string controllerName, string areaName, string actionName)
+    public IControllerViewReference CreateViewReference(ICodeGeneratorServices services, Type controllerType, string controllerName, string areaName, string actionName)
     {
       string key = MakeKey(areaName, controllerName, actionName);
       if (!_views.ContainsKey(key))

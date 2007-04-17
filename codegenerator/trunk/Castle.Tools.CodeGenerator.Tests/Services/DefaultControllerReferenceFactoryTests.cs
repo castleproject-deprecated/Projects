@@ -34,7 +34,7 @@ namespace Castle.Tools.CodeGenerator.Services
     public void CreateActionReference_Always_CreatesValidReference()
     {
       ControllerActionReference reference =
-        _factory.CreateActionReference(_services, typeof(TestController), "Area", "Controller", "Action", null,
+        (ControllerActionReference)_factory.CreateActionReference(_services, typeof(TestController), "Area", "Controller", "Action", null,
                                        new ActionArgument[0]);
       Assert.AreEqual("Controller", reference.ControllerName);
       Assert.AreEqual("Area", reference.AreaName);
@@ -47,7 +47,7 @@ namespace Castle.Tools.CodeGenerator.Services
     public void CreateViewReference_Always_CreatesValidReference()
     {
       ControllerViewReference reference =
-        _factory.CreateViewReference(_services, typeof(TestController), "Area", "Controller", "Action");
+        (ControllerViewReference)_factory.CreateViewReference(_services, typeof(TestController), "Area", "Controller", "Action");
       Assert.AreEqual("Controller", reference.ControllerName);
       Assert.AreEqual("Area", reference.AreaName);
       Assert.AreEqual("Action", reference.ActionName);
