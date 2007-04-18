@@ -14,7 +14,7 @@
         <elementListCompartment Id="567c9535-0bb1-4dc9-8008-7176695e14af" absoluteBounds="0.515, 2.535, 1.4700000000000002, 1.19354248046875" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
       </nestedChildShapes>
     </classShape>
-    <manyToOneConnector edgePoints="[(1.25 : 2.125); (1.25 : 1.54615315755208)]" manuallyRouted="false" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <manyToOneConnector edgePoints="[(1.25 : 2.125); (1.25 : 1.54615315755208)]" manuallyRouted="false" fixedFrom="NotFixed" fixedTo="NotFixed">
       <manyToOneRelationMoniker Id="16f467a4-960b-403d-a9e9-2bdc434bd1e5" />
       <relativeChildShapes />
       <nodes>

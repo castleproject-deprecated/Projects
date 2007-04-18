@@ -108,6 +108,11 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="b0d78aac-cb2a-483c-93c9-b682243a338c" Description="List of additional imports to be added to the generated class." Name="AdditionalImports" DisplayName="Additional Imports" Kind="CustomStorage" Category="Code Generation">
+          <Type>
+            <ExternalTypeMoniker Name="/System.Collections.Generic/List&lt;Altinoren.ActiveWriter.Import&gt;" />
+          </Type>
+        </DomainProperty>
       </Properties>
       <ElementMergeDirectives>
         <ElementMergeDirective>
@@ -1066,6 +1071,8 @@
         <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.AllDeleteOrphan" Name="AllDeleteOrphan" Value="" />
       </Literals>
     </DomainEnumeration>
+    <ExternalType Name="List&lt;Altinoren.ActiveWriter.Import&gt;" Namespace="System.Collections.Generic" />
+    <ExternalType Name="Array" Namespace="System" />
   </Types>
   <Shapes>
     <CompartmentShape Id="ca45d586-12d1-4f5d-99c7-83c1eb0e61eb" Description="" Name="ClassShape" DisplayName="Class Shape" Namespace="Altinoren.ActiveWriter" GeneratesDoubleDerived="true" FixedTooltipText="Class Shape" FillColor="LightSteelBlue" InitialHeight="0.4" Geometry="RoundedRectangle">
@@ -1180,6 +1187,9 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="namespace">
             <DomainPropertyMoniker Name="Model/Namespace" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="additionalImports" Representation="Element">
+            <DomainPropertyMoniker Name="Model/AdditionalImports" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

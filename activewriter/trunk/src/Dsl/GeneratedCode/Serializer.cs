@@ -509,9 +509,63 @@ namespace Altinoren.ActiveWriter
 			Model instanceOfModel = element as Model;
 			global::System.Diagnostics.Debug.Assert(instanceOfModel != null, "Expecting an instance of Model!");
 	
+			// Read properties serialized as nested XML elements.
+			if (!serializationContext.Result.Failed)
+				ReadPropertiesFromElements(serializationContext, instanceOfModel, reader);
 			// Read child model elements (which are always serialized as nested XML elements).
 			if (!serializationContext.Result.Failed && !reader.EOF && reader.NodeType == global::System.Xml.XmlNodeType.Element)
 				ReadChildElements(serializationContext, instanceOfModel, reader);
+		}
+	
+		/// <summary>
+		/// This method deserializes all properties that are serialized as nested XML elements.
+		/// </summary>
+		/// <remarks>
+		/// The caller will position the reader at the open tag of the first child XML element, but it can be either a property 
+		/// or a child element. 
+		/// This method will read as many properties as it can. It returns under three circumstances:
+		/// 1) When an unknown child XML element is encountered ("unknown" means it's not a property. It can be either a bogus tag, or
+		///    a child model element). In this case, this method will position the reader at the open tag of the unknown element. This
+		///    implies the if the first child XML element is unknown, this method should return immediately and do nothing.
+		/// 2) When all properties are read. In this case, the reader will be positioned at the next tag, which is either the open tag
+		///    of the next sibling (which can be the open tag of a child model element), or the end tag of the parent element.
+		/// 3) EOF.
+		/// </remarks>
+		/// <param name="serializationContext">Serialization context.</param>
+		/// <param name="element">In-memory Model instance that will get the deserialized data.</param>
+		/// <param name="reader">XmlReader to read serialized data from.</param>
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
+		private static void ReadPropertiesFromElements(DslModeling::SerializationContext serializationContext, Model element, global::System.Xml.XmlReader reader)
+		{
+			while (!serializationContext.Result.Failed && !reader.EOF && reader.NodeType == global::System.Xml.XmlNodeType.Element)
+			{
+				switch (reader.LocalName)
+				{
+					case "additionalImports":	// AdditionalImports
+						if (reader.IsEmptyElement)
+						{	// No serialized value, must be default one.
+							DslModeling::SerializationUtilities.Skip(reader);  // Skip this tag.
+						}
+						else
+						{
+							string strAdditionalImports = reader.ReadInnerXml();
+							global::System.Collections.Generic.List<Altinoren.ActiveWriter.Import> valueOfAdditionalImports;
+							if (DslModeling::SerializationUtilities.TryGetValue<global::System.Collections.Generic.List<Altinoren.ActiveWriter.Import>>(DslModeling::SerializationUtilities.UnescapeXmlString(strAdditionalImports), out valueOfAdditionalImports))
+							{
+								element.AdditionalImports = valueOfAdditionalImports;
+							}
+							else
+							{	// Invalid property value, ignored.
+								ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "additionalImports", typeof(global::System.Collections.Generic.List<Altinoren.ActiveWriter.Import>), strAdditionalImports);
+							}
+	
+							DslModeling::SerializationUtilities.SkipToNextElement(reader);
+						}
+						break;
+					default:
+						return;  // Don't know this element.
+				}
+			}
 		}
 	
 		/// <summary>
@@ -1250,10 +1304,34 @@ namespace Altinoren.ActiveWriter
 			Model instance = element as Model;
 			global::System.Diagnostics.Debug.Assert(instance != null, "Expecting an instance of Model!");
 	
+			// Write properties serialized as nested XML elements.
+			if (!serializationContext.Result.Failed)
+				WritePropertiesAsElements(serializationContext, instance, writer);
 			// Write child model elements (which are always serialized as nested XML elements).
 			if (!serializationContext.Result.Failed)
 				WriteChildElements(serializationContext, instance, writer);
 		}
+	
+		/// <summary>
+		/// Serialize all properties that need to be stored as nested XML elements.
+		/// </summary>
+		/// <param name="serializationContext">Serialization context.</param>
+		/// <param name="element">Model instance to be serialized.</param>
+		/// <param name="writer">XmlWriter to write serialized data to.</param>	
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]	
+		private static void WritePropertiesAsElements(DslModeling::SerializationContext serializationContext, Model element, global::System.Xml.XmlWriter writer)
+		{
+			// AdditionalImports
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.Collections.Generic.List<Altinoren.ActiveWriter.Import> propValue = element.AdditionalImports;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Collections.Generic.List<Altinoren.ActiveWriter.Import>>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					writer.WriteElementString("additionalImports", serializedPropValue);
+				}
+			}
+		} 
 	
 		/// <summary>
 		/// Serialize all child model elements.

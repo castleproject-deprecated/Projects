@@ -1620,6 +1620,14 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             nameSpace.Imports.Add(new CodeNamespaceImport(Common.ActiveRecordNamespace));
             if (_model.UseNullables == NullableUsage.WithHelperLibrary)
                 nameSpace.Imports.Add(new CodeNamespaceImport(Common.NullablesNamespace));
+            if (_model.AdditionalImports != null && _model.AdditionalImports.Count > 0)
+            {
+                foreach (Import item in _model.AdditionalImports)
+                {
+                    if (!string.IsNullOrEmpty(item.Name))
+                        nameSpace.Imports.Add(new CodeNamespaceImport(item.Name));
+                }
+            }
 
             return nameSpace;
         }

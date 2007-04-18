@@ -381,6 +381,18 @@
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;Namespace&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.Model/AdditionalImports.Description" xml:space="preserve">
+    <value>List of additional imports to be added to the generated class.</value>
+    <comment>Description for DomainProperty &apos;AdditionalImports&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/AdditionalImports.DisplayName" xml:space="preserve">
+    <value>Additional Imports</value>
+    <comment>DisplayName for DomainProperty &apos;AdditionalImports&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/AdditionalImports.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;AdditionalImports&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ModelClass.Description" xml:space="preserve">
     <value>A class of the domain</value>
     <comment>Description for DomainClass &apos;ModelClass&apos;</comment>

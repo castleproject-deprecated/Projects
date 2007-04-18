@@ -1926,6 +1926,96 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region AdditionalImports domain property code
+		
+		/// <summary>
+		/// AdditionalImports domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid AdditionalImportsDomainPropertyId = new global::System.Guid(0xb0d78aac, 0xcb2a, 0x483c, 0x93, 0xc9, 0xb6, 0x82, 0x24, 0x3a, 0x33, 0x8c);
+		
+		/// <summary>
+		/// Gets or sets the value of AdditionalImports domain property.
+		/// List of additional imports to be added to the generated class.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/AdditionalImports.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/AdditionalImports.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/AdditionalImports.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainProperty(Kind = DslModeling::DomainPropertyKind.CustomStorage)]
+		[DslModeling::DomainObjectId("b0d78aac-cb2a-483c-93c9-b682243a338c")]
+		public global::System.Collections.Generic.List<Altinoren.ActiveWriter.Import> AdditionalImports
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return AdditionalImportsPropertyHandler.Instance.GetValue(this);
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				AdditionalImportsPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.AdditionalImports domain property.
+		/// </summary>
+		internal sealed partial class AdditionalImportsPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.Collections.Generic.List<Altinoren.ActiveWriter.Import>>
+		{
+			private AdditionalImportsPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.AdditionalImports domain property value handler.
+			/// </summary>
+			public static readonly AdditionalImportsPropertyHandler Instance = new AdditionalImportsPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.AdditionalImports domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return AdditionalImportsDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.Collections.Generic.List<Altinoren.ActiveWriter.Import> GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				// There is no storage for AdditionalImports because its Kind is
+				// set to CustomStorage. Please provide the GetAdditionalImportsValue()
+				// method on the domain class.
+				return element.GetAdditionalImportsValue();
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.Collections.Generic.List<Altinoren.ActiveWriter.Import> newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.Collections.Generic.List<Altinoren.ActiveWriter.Import> oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					// There is no storage for AdditionalImports because its Kind is
+					// set to CustomStorage. Please provide the SetAdditionalImportsValue()
+					// method on the domain class.
+					element.SetAdditionalImportsValue(newValue);
+					ValueChanged(element, oldValue, GetValue(element));
+				}
+			}
+		}
+		
+		#endregion
 		#region Classes opposite domain role accessor
 		/// <summary>
 		/// Gets a list of Classes.

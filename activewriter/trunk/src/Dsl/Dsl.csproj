@@ -88,6 +88,7 @@
     <Compile Include="CodeGeneration\CodeGenerationHelper.cs" />
     <Compile Include="CodeGeneration\MonoRailGenerator.cs" />
     <Compile Include="Common\Common.cs" />
+    <Compile Include="UIEditors\Model.cs" />
     <Compile Include="GeneratedCode\ConnectionBuilders.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

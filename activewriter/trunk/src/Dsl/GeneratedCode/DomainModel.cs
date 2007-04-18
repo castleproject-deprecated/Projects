@@ -103,6 +103,7 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(Model), "RelateWithActiwFile", Model.RelateWithActiwFileDomainPropertyId, typeof(Model.RelateWithActiwFilePropertyHandler)),
 				new DomainMemberInfo(typeof(Model), "UseVirtualProperties", Model.UseVirtualPropertiesDomainPropertyId, typeof(Model.UseVirtualPropertiesPropertyHandler)),
 				new DomainMemberInfo(typeof(Model), "Namespace", Model.NamespaceDomainPropertyId, typeof(Model.NamespacePropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "AdditionalImports", Model.AdditionalImportsDomainPropertyId, typeof(Model.AdditionalImportsPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "Cache", ModelClass.CacheDomainPropertyId, typeof(ModelClass.CachePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "DiscriminatorColumn", ModelClass.DiscriminatorColumnDomainPropertyId, typeof(ModelClass.DiscriminatorColumnPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "DiscriminatorType", ModelClass.DiscriminatorTypeDomainPropertyId, typeof(ModelClass.DiscriminatorTypePropertyHandler)),

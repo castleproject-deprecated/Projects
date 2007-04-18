@@ -53,8 +53,9 @@ namespace Altinoren.ActiveWriter.UIEditors
                         value = null;
                 }
             }
-            
+
             return value;
         }
     }
 }
+
