@@ -633,6 +633,18 @@
     <value>ActiveRecord</value>
     <comment>Category for DomainProperty &apos;UseAutoImport&apos; on DomainClass &apos;ModelClass&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/BaseClassName.Description" xml:space="preserve">
+    <value>If set and if model level base class usage is set, overrides any base class defined in the model.</value>
+    <comment>Description for DomainProperty &apos;BaseClassName&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/BaseClassName.DisplayName" xml:space="preserve">
+    <value>Base Class Name</value>
+    <comment>DisplayName for DomainProperty &apos;BaseClassName&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/BaseClassName.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;BaseClassName&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ModelProperty.Description" xml:space="preserve">
     <value>A property or field of a class</value>
     <comment>Description for DomainClass &apos;ModelProperty&apos;</comment>

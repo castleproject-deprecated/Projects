@@ -231,6 +231,11 @@
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="ce13decc-a9da-4f4a-b014-7b8de1b26e37" Description="If set and if model level base class usage is set, overrides any base class defined in the model." Name="BaseClassName" DisplayName="Base Class Name" Category="Code Generation">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
       </Properties>
       <ElementMergeDirectives>
         <ElementMergeDirective>
@@ -1267,6 +1272,9 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="useAutoImport">
             <DomainPropertyMoniker Name="ModelClass/UseAutoImport" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="baseClassName">
+            <DomainPropertyMoniker Name="ModelClass/BaseClassName" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

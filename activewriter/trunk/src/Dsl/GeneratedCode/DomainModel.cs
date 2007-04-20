@@ -124,6 +124,7 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(ModelClass), "BatchSize", ModelClass.BatchSizeDomainPropertyId, typeof(ModelClass.BatchSizePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "Locking", ModelClass.LockingDomainPropertyId, typeof(ModelClass.LockingPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "UseAutoImport", ModelClass.UseAutoImportDomainPropertyId, typeof(ModelClass.UseAutoImportPropertyHandler)),
+				new DomainMemberInfo(typeof(ModelClass), "BaseClassName", ModelClass.BaseClassNameDomainPropertyId, typeof(ModelClass.BaseClassNamePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelProperty), "Column", ModelProperty.ColumnDomainPropertyId, typeof(ModelProperty.ColumnPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelProperty), "ColumnType", ModelProperty.ColumnTypeDomainPropertyId, typeof(ModelProperty.ColumnTypePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelProperty), "Formula", ModelProperty.FormulaDomainPropertyId, typeof(ModelProperty.FormulaPropertyHandler)),

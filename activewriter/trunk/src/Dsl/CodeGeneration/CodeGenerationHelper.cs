@@ -33,7 +33,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
     using ARValidators;
     using CodeNamespace = System.CodeDom.CodeNamespace;
     using CodeAttributeArgument = System.CodeDom.CodeAttributeArgument;
-    
+
     public class CodeGenerationHelper
     {
         #region Private Variables
@@ -69,7 +69,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 _namespace = propertyBag["Generic.Namespace"].ToString();
             else
                 _namespace = _model.Namespace;
-            
+
             _dte = ServerExplorerSupport.DTEHelper.GetDTE(_propertyBag["Generic.ProcessID"].ToString());
             _propertyBag.Add("Generic.DTE", _dte);
 
@@ -138,7 +138,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     starter.InvokeMember("Initialize",
                                          BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod, null,
                                          null,
-                                         new object[] {assembly, configSource});
+                                         new object[] { assembly, configSource });
                 }
                 catch (TargetInvocationException ex)
                 {
@@ -153,7 +153,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 foreach (KeyValuePair<string, string> pair in nHibernateConfigs)
                 {
                     string path = Path.Combine(_dte.ActiveDocument.Path, RemoveNamespaceFromStart(pair.Key) + ".hbm.xml");
-                    using(StreamWriter writer = new StreamWriter(path, false, Encoding.Unicode))
+                    using (StreamWriter writer = new StreamWriter(path, false, Encoding.Unicode))
                     {
                         writer.Write(pair.Value);
                     }
@@ -167,7 +167,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
                     item.Properties.Item("BuildAction").Value = Common.EmbeddedResourceBuildActionIndex;
                 }
-                
             }
         }
 
@@ -192,10 +191,16 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             if (cls.Model.UseBaseClass)
             {
-                bool withValidator = cls.Properties.FindAll(delegate(ModelProperty property) { return property.IsValidatorSet(); }).Count > 0;
+                bool withValidator = cls.Properties.FindAll(delegate(ModelProperty property)
+                {
+                    return property.IsValidatorSet();
+                }).Count > 0;
 
                 CodeTypeReference type;
-                if (!string.IsNullOrEmpty(cls.Model.BaseClassName))
+                // base class for every modelclass. If left empty then baseclass from model if left emprty ...etc
+                if (!string.IsNullOrEmpty(cls.BaseClassName))
+                    type = type = new CodeTypeReference(cls.BaseClassName);
+                else if (!string.IsNullOrEmpty(cls.Model.BaseClassName))
                     type = new CodeTypeReference(cls.Model.BaseClassName);
                 else if (withValidator)
                     type = new CodeTypeReference(Common.DefaultValidationBaseClass);
@@ -206,7 +211,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     type.TypeArguments.Add(classDeclaration.Name);
                 classDeclaration.BaseTypes.Add(type);
             }
-            
+
             if (!String.IsNullOrEmpty(cls.Description))
                 classDeclaration.Comments.AddRange(GetSummaryComment(cls.Description));
 
@@ -249,11 +254,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             classDeclaration.CustomAttributes.Add(new CodeAttributeDeclaration("Serializable"));
             if (keys[0].ModelClass.Model.UseGeneratedCodeAttribute)
                 classDeclaration.CustomAttributes.Add(GetGeneratedCodeAttribute());
-            
+
             List<CodeMemberField> fields = new List<CodeMemberField>();
 
-            List<string> descriptions = new  List<string>();
-            
+            List<string> descriptions = new List<string>();
+
             foreach (ModelProperty property in keys)
             {
                 CodeMemberField memberField = GetMemberFieldOfProperty(property, Accessor.Private);
@@ -261,11 +266,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 fields.Add(memberField);
 
                 classDeclaration.Members.Add(GetActiveRecordMemberKeyProperty(memberField, property));
-                
+
                 if (!String.IsNullOrEmpty(property.Description))
                     descriptions.Add(property.Description);
             }
-            
+
             if (descriptions.Count > 0)
                 classDeclaration.Comments.AddRange(GetSummaryComment(descriptions.ToArray()));
 
@@ -292,7 +297,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             CodeMemberMethod getHashCode = new CodeMemberMethod();
             getHashCode.Attributes = MemberAttributes.Public | MemberAttributes.Override;
-            getHashCode.ReturnType = new CodeTypeReference(typeof (Int32));
+            getHashCode.ReturnType = new CodeTypeReference(typeof(Int32));
             getHashCode.Name = "GetHashCode";
 
             List<CodeExpression> expressions = new List<CodeExpression>();
@@ -305,9 +310,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             // Now, there's no CodeBinaryOperatorType.XOr or something. We write a helper method instead.
             CodeMemberMethod xor = new CodeMemberMethod();
             xor.Attributes = MemberAttributes.Private;
-            xor.ReturnType = new CodeTypeReference(typeof (Int32));
-            xor.Parameters.Add(new CodeParameterDeclarationExpression(typeof (Int32), "left"));
-            xor.Parameters.Add(new CodeParameterDeclarationExpression(typeof (Int32), "right"));
+            xor.ReturnType = new CodeTypeReference(typeof(Int32));
+            xor.Parameters.Add(new CodeParameterDeclarationExpression(typeof(Int32), "left"));
+            xor.Parameters.Add(new CodeParameterDeclarationExpression(typeof(Int32), "right"));
             xor.Name = Common.XorHelperMethod;
             if (_provider is VBCodeProvider)
                 xor.Statements.Add(new CodeMethodReturnStatement(new CodeSnippetExpression("left XOR right")));
@@ -342,10 +347,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             //}
             CodeMemberMethod equals = new CodeMemberMethod();
             equals.Attributes = MemberAttributes.Public | MemberAttributes.Override;
-            equals.ReturnType = new CodeTypeReference(typeof (Boolean));
+            equals.ReturnType = new CodeTypeReference(typeof(Boolean));
             equals.Name = "Equals";
 
-            CodeParameterDeclarationExpression param = new CodeParameterDeclarationExpression(typeof (Object), "obj");
+            CodeParameterDeclarationExpression param = new CodeParameterDeclarationExpression(typeof(Object), "obj");
             equals.Parameters.Add(param);
 
             equals.Statements.Add(new CodeConditionStatement(
@@ -385,21 +390,21 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             {
                 expressions.Add(
                     new CodeBinaryOperatorExpression(
-                        //_keyA == test.KeyA
+                    //_keyA == test.KeyA
                         new CodeBinaryOperatorExpression(
                             new CodeFieldReferenceExpression(null, field.Name),
                             CodeBinaryOperatorType.ValueEquality,
                             new CodeFieldReferenceExpression(new CodeFieldReferenceExpression(null, "test"), field.Name)),
                         CodeBinaryOperatorType.BooleanOr, // ||
                         new CodeBinaryOperatorExpression(
-                            //_keyA != null
+                    //_keyA != null
                             new CodeBinaryOperatorExpression(
                                 new CodeFieldReferenceExpression(null, field.Name),
                                 CodeBinaryOperatorType.IdentityInequality,
                                 new CodePrimitiveExpression(null)
                                 ),
                             CodeBinaryOperatorType.BooleanAnd, // &&
-                            // _keyA.Equals( test.KeyA )   
+                    // _keyA.Equals( test.KeyA )   
                             new CodeMethodInvokeExpression(
                                 new CodeFieldReferenceExpression(null, field.Name), "Equals",
                                 new CodeFieldReferenceExpression(
@@ -432,7 +437,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             //}
             CodeMemberMethod toString = new CodeMemberMethod();
             toString.Attributes = MemberAttributes.Public | MemberAttributes.Override;
-            toString.ReturnType = new CodeTypeReference(typeof (String));
+            toString.ReturnType = new CodeTypeReference(typeof(String));
             toString.Name = "ToString";
 
             CodeExpression[] expressions = new CodeExpression[fields.Count];
@@ -446,7 +451,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             toString.Statements.Add(new CodeMethodReturnStatement(
                                         new CodeMethodInvokeExpression(new CodeTypeReferenceExpression("String"), "Join",
                                                                        new CodeSnippetExpression("\":\""),
-                                                                       new CodeArrayCreateExpression(typeof (String),
+                                                                       new CodeArrayCreateExpression(typeof(String),
                                                                                                      expressions)))
                 );
             return toString;
@@ -542,7 +547,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 else
                     memberProperty.Type = GetNullableTypeReference(propertyType);
             }
-            else 
+            else
                 memberProperty.Type = new CodeTypeReference(GetSystemType(propertyType));
 
             return memberProperty;
@@ -714,12 +719,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private void GenerateBelongsToRelation(CodeTypeDeclaration classDeclaration, CodeNamespace nameSpace,
                                                ManyToOneRelation relationship)
         {
-            if (String.IsNullOrEmpty(relationship.SourceColumn))
-                throw new ArgumentException(
-                    String.Format("Class {0} does not have a column name on it's many to one relation to class {1}",
-                                  relationship.Source.Name, relationship.Target.Name));
-            // WARNING: The comparison below does not take case sensitive column naming into account
-            if (!String.IsNullOrEmpty(relationship.TargetColumnKey) &&
+            if (!String.IsNullOrEmpty(relationship.TargetColumnKey) && (!String.IsNullOrEmpty(relationship.SourceColumn)) &&
                 !relationship.SourceColumn.ToUpperInvariant().Equals(relationship.TargetColumnKey.ToUpperInvariant()))
                 throw new ArgumentException(
                     String.Format(
@@ -843,7 +843,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             memberProperty.CustomAttributes.Add(GetHasAndBelongsToAttribute(relationship, false));
         }
-        
+
         #endregion
 
         #region OneToOne
@@ -959,7 +959,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             {
                 CodeAttributeDeclaration[] result = new CodeAttributeDeclaration[list.Count];
 
-                for (int i=0; i < list.Count; i++)
+                for (int i = 0; i < list.Count; i++)
                 {
                     Type type = list[i].GetType();
                     if (type == typeof(ValidateConfirmation))
@@ -1145,7 +1145,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("System.Diagnostics.DebuggerDisplay");
 
             attribute.Arguments.Add(GetPrimitiveAttributeArgument(property.Name, property.Name));
-            
+
             return attribute;
         }
 
@@ -1425,8 +1425,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     "Cannot create BelongsTo attribute. Cannot find code type declaration for target class.");
 
             CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("BelongsTo");
-
-            attribute.Arguments.Add(GetPrimitiveAttributeArgument(relation.SourceColumn));
+            if (!string.IsNullOrEmpty(relation.SourceColumn))
+                attribute.Arguments.Add(GetPrimitiveAttributeArgument(relation.SourceColumn));
             if (relation.SourceCascade != CascadeEnum.None)
                 attribute.Arguments.Add(GetNamedEnumAttributeArgument("Cascade", "CascadeEnum", relation.SourceCascade));
             if (!String.IsNullOrEmpty(relation.SourceCustomAccess))
@@ -1449,8 +1449,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             return attribute;
         }
-        
-        #endregion  
+
+        #endregion
 
         #region HasAndBelongTo
 
@@ -1649,8 +1649,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (collection.Count == 0)
                 return collection;
 
-            collection.Insert(0,new CodeCommentStatement("<summary>", true));
-            collection.Add(new CodeCommentStatement("</summary>", true));            
+            collection.Insert(0, new CodeCommentStatement("<summary>", true));
+            collection.Add(new CodeCommentStatement("</summary>", true));
             return collection;
         }
 
@@ -1744,7 +1744,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 {
                     GenerateBelongsToRelation(classDeclaration, nameSpace, relationship);
                 }
-                
+
                 //ManyToMany links where this class is the source
                 ReadOnlyCollection<ManyToManyRelation> manyToManyTargets = ManyToManyRelation.GetLinksToManyToManyTargets(cls);
                 foreach (ManyToManyRelation relationship in manyToManyTargets)
@@ -1783,7 +1783,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private bool IsNullable(NHibernateType type)
         {
-            switch(type)
+            switch (type)
             {
                 case NHibernateType.Int32:
                 case NHibernateType.Boolean:
@@ -1874,54 +1874,54 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         {
             switch (type)
             {
-                    // TODO: Combine and order most likely asc
+                // TODO: Combine and order most likely asc
                 case NHibernateType.AnsiChar:
                 case NHibernateType.Char:
-                    return typeof (string);
+                    return typeof(string);
                 case NHibernateType.Boolean:
-                    return typeof (Boolean);
+                    return typeof(Boolean);
                 case NHibernateType.Byte:
-                    return typeof (Byte);
+                    return typeof(Byte);
                 case NHibernateType.DateTime:
-                    return typeof (DateTime);
+                    return typeof(DateTime);
                 case NHibernateType.Decimal:
-                    return typeof (Decimal);
+                    return typeof(Decimal);
                 case NHibernateType.Double:
-                    return typeof (Double);
+                    return typeof(Double);
                 case NHibernateType.Guid:
-                    return typeof (Guid);
+                    return typeof(Guid);
                 case NHibernateType.Int16:
-                    return typeof (Int16);
+                    return typeof(Int16);
                 case NHibernateType.Int32:
-                    return typeof (Int32);
+                    return typeof(Int32);
                 case NHibernateType.Int64:
-                    return typeof (Int64);
+                    return typeof(Int64);
                 case NHibernateType.Single:
-                    return typeof (Single);
+                    return typeof(Single);
                 case NHibernateType.Ticks:
-                    return typeof (DateTime);
+                    return typeof(DateTime);
                 case NHibernateType.TimeSpan:
-                    return typeof (TimeSpan);
+                    return typeof(TimeSpan);
                 case NHibernateType.Timestamp:
-                    return typeof (DateTime);
+                    return typeof(DateTime);
                 case NHibernateType.TrueFalse:
-                    return typeof (Boolean);
+                    return typeof(Boolean);
                 case NHibernateType.YesNo:
-                    return typeof (Boolean);
+                    return typeof(Boolean);
                 case NHibernateType.AnsiString:
-                    return typeof (String);
+                    return typeof(String);
                 case NHibernateType.CultureInfo:
-                    return typeof (CultureInfo);
+                    return typeof(CultureInfo);
                 case NHibernateType.Binary:
-                    return typeof (Byte[]);
+                    return typeof(Byte[]);
                 case NHibernateType.Type:
-                    return typeof (Type);
+                    return typeof(Type);
                 case NHibernateType.String:
-                    return typeof (String);
+                    return typeof(String);
                 case NHibernateType.StringClob:
-                    return typeof (String);
+                    return typeof(String);
                 case NHibernateType.BinaryBlob:
-                    return typeof (Byte[]);
+                    return typeof(Byte[]);
                 default:
                     throw new ArgumentException("Unknown NHibernate type", type.ToString());
             }
@@ -1945,9 +1945,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 return (CodeExpression)list[0];
             else if (indexOfLeft + 2 == list.Count)
                 return
-                    new CodeBinaryOperatorExpression((CodeExpression) list[indexOfLeft],
+                    new CodeBinaryOperatorExpression((CodeExpression)list[indexOfLeft],
                                                      CodeBinaryOperatorType.BitwiseOr,
-                                                     (CodeExpression) list[indexOfLeft + 1]);
+                                                     (CodeExpression)list[indexOfLeft + 1]);
             else
                 return
                     new CodeBinaryOperatorExpression((CodeExpression)list[indexOfLeft],
@@ -2066,7 +2066,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                         Type visitor = _activeRecord.GetType("Castle.ActiveRecord.Framework.Internal.XmlGenerationVisitor");
                         object generationVisitor = Activator.CreateInstance(visitor);
                         visitor.InvokeMember("CreateXml", BindingFlags.Public | BindingFlags.Instance | BindingFlags.InvokeMethod, null,
-                                             generationVisitor, new object[]{enumerator.Current});
+                                             generationVisitor, new object[] { enumerator.Current });
 
                         string xml = (string)visitor.GetProperty("Xml").GetValue(generationVisitor, null);
                         xml = xml.Replace(", " + Common.InMemoryCompiledAssemblyName, string.Empty); // Strips the assembly name from class names
@@ -2087,7 +2087,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                             }
 
                             if (name != null)
-                            nHibernateConfigs.Add(name, xml);
+                                nHibernateConfigs.Add(name, xml);
                         }
                     }
                 }
@@ -2126,7 +2126,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     List<CodeAttributeDeclaration> attributesToRemove = new List<CodeAttributeDeclaration>();
                     foreach (CodeAttributeDeclaration attribute in type.CustomAttributes)
                     {
-                        if (Array.FindIndex(Common.ARAttributes, delegate(string name) { return name == attribute.Name; }) > -1)
+                        if (Array.FindIndex(Common.ARAttributes, delegate(string name)
+                        {
+                            return name == attribute.Name;
+                        }) > -1)
                             attributesToRemove.Add(attribute);
                     }
                     foreach (CodeAttributeDeclaration declaration in attributesToRemove)
@@ -2134,13 +2137,16 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                         type.CustomAttributes.Remove(declaration);
                     }
 
-                    
+
                     foreach (CodeTypeMember member in type.Members)
                     {
                         List<CodeAttributeDeclaration> memberAttributesToRemove = new List<CodeAttributeDeclaration>();
                         foreach (CodeAttributeDeclaration attribute in member.CustomAttributes)
                         {
-                            if (Array.FindIndex(Common.ARAttributes, delegate(string name) { return name == attribute.Name; }) > -1)
+                            if (Array.FindIndex(Common.ARAttributes, delegate(string name)
+                            {
+                                return name == attribute.Name;
+                            }) > -1)
                                 memberAttributesToRemove.Add(attribute);
                         }
                         foreach (CodeAttributeDeclaration declaration in memberAttributesToRemove)

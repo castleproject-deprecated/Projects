@@ -350,6 +350,12 @@
             <xsd:documentation>The auto-import attribute lets us use unqualified class names in the query language, by default. The assembly and namespace attributes specify the assembly where persistent classes are located and the namespace they are declared in.</xsd:documentation>
           </xsd:annotation>
         </xsd:attribute>
+        <!-- Property: BaseClassName -->
+        <xsd:attribute name="baseClassName" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>If set and if model level base class usage is set, overrides any base class defined in the model.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>

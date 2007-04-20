@@ -1852,6 +1852,23 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// BaseClassName
+			if (!serializationContext.Result.Failed)
+			{
+				string attribBaseClassName = reader.GetAttribute("baseClassName");
+				if (attribBaseClassName != null)
+				{
+					global::System.String valueOfBaseClassName;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribBaseClassName), out valueOfBaseClassName))
+					{
+						instanceOfModelClass.BaseClassName = valueOfBaseClassName;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "baseClassName", typeof(global::System.String), attribBaseClassName);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -2704,6 +2721,16 @@ namespace Altinoren.ActiveWriter
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("useAutoImport", serializedPropValue);
 					}
+				}
+			}
+			// BaseClassName
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModelClass.BaseClassName;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("baseClassName", propValue);
 				}
 			}
 		}

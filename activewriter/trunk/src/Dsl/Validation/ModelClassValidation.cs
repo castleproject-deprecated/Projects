@@ -100,17 +100,9 @@ namespace Altinoren.ActiveWriter
             ReadOnlyCollection<ManyToOneRelation> manyToOneSources = ManyToOneRelation.GetLinksToSources(this);
             foreach (ManyToOneRelation relationship in manyToOneSources)
             {
-                if (String.IsNullOrEmpty(relationship.SourceColumn))
-                    context.LogError(
-                        String.Format(
-                            "Class {0} does not have a column name on it's many to one relation to class {1}",
-                            relationship.Source.Name, relationship.Target.Name),
-                        "AW001ValidateManyToOneValidity1Error", relationship);
-
                 // WARNING: The comparison below does not take case sensitive column naming into account
-                if (!String.IsNullOrEmpty(relationship.TargetColumnKey) &&
-                    !
-                    relationship.SourceColumn.ToUpperInvariant().Equals(relationship.TargetColumnKey.ToUpperInvariant())
+                if (!String.IsNullOrEmpty(relationship.TargetColumnKey) && !String.IsNullOrEmpty(relationship.SourceColumn) &&
+                    !relationship.SourceColumn.ToUpperInvariant().Equals(relationship.TargetColumnKey.ToUpperInvariant())
                     )
                     context.LogError(
                         String.Format(

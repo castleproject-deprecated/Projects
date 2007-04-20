@@ -3887,6 +3887,95 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region BaseClassName domain property code
+		
+		/// <summary>
+		/// BaseClassName domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid BaseClassNameDomainPropertyId = new global::System.Guid(0xce13decc, 0xa9da, 0x4f4a, 0xb0, 0x14, 0x7b, 0x8d, 0xe1, 0xb2, 0x6e, 0x37);
+		
+		/// <summary>
+		/// Storage for BaseClassName
+		/// </summary>
+		private global::System.String baseClassNamePropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of BaseClassName domain property.
+		/// If set and if model level base class usage is set, overrides any base class
+		/// defined in the model.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelClass/BaseClassName.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelClass/BaseClassName.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelClass/BaseClassName.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainObjectId("ce13decc-a9da-4f4a-b014-7b8de1b26e37")]
+		public global::System.String BaseClassName
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return baseClassNamePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				BaseClassNamePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the ModelClass.BaseClassName domain property.
+		/// </summary>
+		internal sealed partial class BaseClassNamePropertyHandler : DslModeling::DomainPropertyValueHandler<ModelClass, global::System.String>
+		{
+			private BaseClassNamePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the ModelClass.BaseClassName domain property value handler.
+			/// </summary>
+			public static readonly BaseClassNamePropertyHandler Instance = new BaseClassNamePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the ModelClass.BaseClassName domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return BaseClassNameDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(ModelClass element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.baseClassNamePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(ModelClass element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.baseClassNamePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region Model opposite domain role accessor
 		/// <summary>
 		/// Gets or sets Model.

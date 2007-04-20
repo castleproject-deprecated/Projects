@@ -4,6 +4,7 @@ New:
 - Now optionally generates NHibernate hbm.xml files.
 - Namespace in generated code is now customizable (Idea: Robert van Hoornaar)
 - Imports in generated code is now customizable (Idea: Robert van Hoornaar)
+- Model classes can override model level base class definition. (Patch: Robert van Hoornaar)
 
 Fixed:
 - Contrib-23: Produces CascadeEnum instead of ManyRelationCascadeEnum
@@ -11,6 +12,7 @@ Fixed:
 - Make sure that Char and AnsiChar types are treated as a System.String types, instead of System.Char types (patch: Ayende)
 - HasAndbelongToMany does not take custom property names and not found behavior into account.
 - Can’t add a Many To Many relationship to 2 entities when the Class and Table name are different.
+- Column keys in many-to-one relations is not optional. (Patch: Robert van Hoornaar)
 
 Preview 2
 
