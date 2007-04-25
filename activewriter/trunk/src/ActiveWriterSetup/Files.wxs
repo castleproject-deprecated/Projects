@@ -32,7 +32,7 @@
 			<!-- Install required assemblies to the GAC. Place components in an "Install" subdirectory to prevent MSI validation errors. -->
 			<Directory Id="Install" Name="Install">
 				<Component Id="_ActiveWriter_GAC" Guid="561bd6c9-ad5f-e832-859e-d6206820c8f1" DiskId="1">
-					<File Id="_ActiveWriterDll_GAC" KeyPath="yes" Name="Altinor1.dll" LongName="Altinoren.ActiveWriter.DslPackage.dll" src="SourceDir\..\DslPackage\bin\Debug\Altinoren.ActiveWriter.DslPackage.dll" Vital="yes" Assembly=".net" ProcessorArchitecture="msıl" AssemblyManifest="_ActiveWriterDll_GAC">
+					<File Id="_ActiveWriterDll_GAC" KeyPath="yes" Name="Altinor1.dll" LongName="Altinoren.ActiveWriter.DslPackage.dll" src="SourceDir\..\DslPackage\bin\Debug\Altinoren.ActiveWriter.DslPackage.dll" Vital="yes" Assembly=".net" ProcessorArchitecture="msil" AssemblyManifest="_ActiveWriterDll_GAC">
 						<AssemblyName Id="Name" Value="Altinoren.ActiveWriter.DslPackage" />
 						<AssemblyName Id="Version" Value="1.0.0.0" />
 						<AssemblyName Id="Culture" Value="neutral" />
@@ -43,7 +43,7 @@
 				</Component>
 				
 				<Component Id="_Dsl_GAC" Guid="7692a4e2-c524-b238-aac6-75e71e5ea8f4" DiskId="1">
-					<File Id="_DslDll_GAC" KeyPath="yes" Name="Altinor2.dll" LongName="Altinoren.ActiveWriter.Dsl.dll" src="SourceDir\..\Dsl\bin\Debug\Altinoren.ActiveWriter.Dsl.dll" Vital="yes" Assembly=".net" ProcessorArchitecture="msıl" AssemblyManifest="_DslDll_GAC">
+					<File Id="_DslDll_GAC" KeyPath="yes" Name="Altinor2.dll" LongName="Altinoren.ActiveWriter.Dsl.dll" src="SourceDir\..\Dsl\bin\Debug\Altinoren.ActiveWriter.Dsl.dll" Vital="yes" Assembly=".net" ProcessorArchitecture="msil" AssemblyManifest="_DslDll_GAC">
 						<AssemblyName Id="Name" Value="Altinoren.ActiveWriter.Dsl" />
 						<AssemblyName Id="Version" Value="1.0.0.0" />
 						<AssemblyName Id="Culture" Value="neutral" />
