@@ -48,11 +48,27 @@ namespace Castle.Tools.CodeGenerator.Services
       _aliases.Clear();
     }
 
+    public void UseNamespace(string ns, bool includeParents)
+    {
+      UseNamespace(ns);
+
+      if (includeParents)
+      {
+        int index;
+        while ((index = ns.IndexOf('.')) >= 0)
+        {
+          ns = ns.Substring(0, index);
+          UseNamespace(ns);
+        }
+      }
+    }
+
     public void UseNamespace(string ns)
     {
-		if (!_usings.Contains(ns)) {
-			_usings.Add(ns);
-		}
+      if (!_usings.Contains(ns))
+      {
+        _usings.Add(ns);
+      }
     }
 
     public void AliasNamespace(string alias, string ns)

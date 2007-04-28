@@ -68,6 +68,13 @@ namespace Castle.Tools.CodeGenerator.Services
     }
 
     [Test]
+    public void Resolve_WithOnlyChildNamespaceButIncludeParentsTrue_Works()
+    {
+      _typeResolver.UseNamespace("System.Collections", true);
+      Assert.AreEqual(typeof(DateTime), _typeResolver.Resolve("DateTime", true));
+    }
+
+    [Test]
     public void Resolve_MissingTypeNoThrow_ReturnsNull()
     {
       Assert.IsNull(_typeResolver.Resolve("DateTime", false));
