@@ -11,8 +11,9 @@ Fixed:
 - Ability to generate virtual properties to support Lazy properly (thx: Ayende)
 - Make sure that Char and AnsiChar types are treated as a System.String types, instead of System.Char types (patch: Ayende)
 - HasAndbelongToMany does not take custom property names and not found behavior into account.
-- Can’t add a Many To Many relationship to 2 entities when the Class and Table name are different.
+- Can’t add a Many To Many relationship to 2 entities when the Class and Table names are different.
 - Column keys in many-to-one relations is not optional. (Patch: Robert van Hoornaar)
+- Partially fixing NHibernate code generation errors. Now works with a workaround.
 
 Preview 2
 

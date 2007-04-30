@@ -40,7 +40,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private Assembly _activeRecord;
         private Dictionary<string, string> nHibernateConfigs = new Dictionary<string, string>();
-        private static string _assemblyLoadPath;
+        private string _assemblyLoadPath;
 
         private CodeDomProvider _provider;
         private Model _model;
@@ -55,11 +55,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         #endregion
 
         #region ctors
-
-        static CodeGenerationHelper()
-        {
-            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(AssemblyResolve);
-        }
 
         public CodeGenerationHelper(Hashtable propertyBag)
         {
@@ -117,24 +112,37 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             else
             {
                 _assemblyLoadPath = _model.AssemblyPath;
+                Type starter = null;
+                Assembly assembly = null;
 
-                // Code below means: ActiveRecordStarter.ModelsCreated += new ModelsCreatedDelegate(OnARModelCreated);
-                _activeRecord = Assembly.Load(_model.ActiveRecordAssemblyName);
-                Type starter = _activeRecord.GetType("Castle.ActiveRecord.ActiveRecordStarter");
-                EventInfo eventInfo = starter.GetEvent("ModelsCreated");
-                Type eventType = eventInfo.EventHandlerType;
-                MethodInfo info =
-                    this.GetType().GetMethod("OnARModelCreated", BindingFlags.Public | BindingFlags.Instance);
-                Delegate del = Delegate.CreateDelegate(eventType, this, info);
-                eventInfo.AddEventHandler(this, del);
+                try
+                {
+                    AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(AssemblyResolve);
 
-                Assembly assembly = GenerateARAssembly(compileUnit);
+                    // Code below means: ActiveRecordStarter.ModelsCreated += new ModelsCreatedDelegate(OnARModelCreated);
+                    _activeRecord = Assembly.Load(_model.ActiveRecordAssemblyName);
+                    starter = _activeRecord.GetType("Castle.ActiveRecord.ActiveRecordStarter");
+                    EventInfo eventInfo = starter.GetEvent("ModelsCreated");
+                    Type eventType = eventInfo.EventHandlerType;
+                    MethodInfo info =
+                        this.GetType().GetMethod("OnARModelCreated", BindingFlags.Public | BindingFlags.Instance);
+                    Delegate del = Delegate.CreateDelegate(eventType, this, info);
+                    eventInfo.AddEventHandler(this, del);
+
+                    assembly = GenerateARAssembly(compileUnit);
+                }
+                finally
+                {
+                    AppDomain.CurrentDomain.AssemblyResolve -= new ResolveEventHandler(AssemblyResolve);
+                }
 
                 // Code below means: ActiveRecordStarter.Initialize(assembly, new InPlaceConfigurationSource());
                 Type config = _activeRecord.GetType("Castle.ActiveRecord.Framework.Config.InPlaceConfigurationSource");
                 object configSource = Activator.CreateInstance(config);
                 try
                 {
+                    starter.InvokeMember("ResetInitializationFlag",
+                                         BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod, null, null, null);
                     starter.InvokeMember("Initialize",
                                          BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod, null,
                                          null,
@@ -2094,7 +2102,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             }
         }
 
-        private static Assembly AssemblyResolve(object sender, ResolveEventArgs args)
+        private Assembly AssemblyResolve(object sender, ResolveEventArgs args)
         {
             AssemblyName name = new AssemblyName(args.Name);
             if (name.Name == "Castle.ActiveRecord" || name.Name == "Iesi.Collections" || name.Name == "log4net" || name.Name == "NHibernate")
