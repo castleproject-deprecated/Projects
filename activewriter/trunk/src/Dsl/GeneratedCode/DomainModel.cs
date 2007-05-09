@@ -125,6 +125,7 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(ModelClass), "Locking", ModelClass.LockingDomainPropertyId, typeof(ModelClass.LockingPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "UseAutoImport", ModelClass.UseAutoImportDomainPropertyId, typeof(ModelClass.UseAutoImportPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "BaseClassName", ModelClass.BaseClassNameDomainPropertyId, typeof(ModelClass.BaseClassNamePropertyHandler)),
+				new DomainMemberInfo(typeof(ModelClass), "UseGenerics", ModelClass.UseGenericsDomainPropertyId, typeof(ModelClass.UseGenericsPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelProperty), "Column", ModelProperty.ColumnDomainPropertyId, typeof(ModelProperty.ColumnPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelProperty), "ColumnType", ModelProperty.ColumnTypeDomainPropertyId, typeof(ModelProperty.ColumnTypePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelProperty), "Formula", ModelProperty.FormulaDomainPropertyId, typeof(ModelProperty.FormulaPropertyHandler)),
@@ -1431,6 +1432,35 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyRelationCascadeEnum/AllDeleteOrphan.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		AllDeleteOrphan,
+	}
+}
+namespace Altinoren.ActiveWriter
+{
+	/// <summary>
+	/// DomainEnumeration: InheritableBoolean
+	/// Description for Altinoren.ActiveWriter.InheritableBoolean
+	/// </summary>
+	[global::System.CLSCompliant(true)]
+	public enum InheritableBoolean
+	{
+		/// <summary>
+		/// True
+		/// Description for Altinoren.ActiveWriter.InheritableBoolean.True
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritableBoolean/True.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		True,
+		/// <summary>
+		/// Inherit
+		/// Description for Altinoren.ActiveWriter.InheritableBoolean.Inherit
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritableBoolean/Inherit.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		Inherit,
+		/// <summary>
+		/// False
+		/// Description for Altinoren.ActiveWriter.InheritableBoolean.False
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritableBoolean/False.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		False,
 	}
 }
 

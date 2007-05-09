@@ -215,7 +215,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 else
                     type = new CodeTypeReference(Common.DefaultBaseClass);
 
-                if (cls.Model.UseGenerics)
+                if (IsGeneric(cls))
                     type.TypeArguments.Add(classDeclaration.Name);
                 classDeclaration.BaseTypes.Add(type);
             }
@@ -703,7 +703,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                       : relationship.TargetPropertyType;
 
             CodeMemberField memberField;
-            if (!relationship.Source.Model.UseGenerics)
+            if (!IsGeneric(relationship.Source))
                 memberField = GetMemberField(propertyName, propertyType, Accessor.Private, relationship.TargetAccess);
             else
                 memberField = GetGenericMemberField(sourceClass.Name, propertyName, propertyType, Accessor.Private, relationship.TargetAccess);
@@ -788,7 +788,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                       : relationship.TargetPropertyType;
 
             CodeMemberField memberField;
-            if (!relationship.Source.Model.UseGenerics)
+            if (!IsGeneric(relationship.Source))
                 memberField = GetMemberField(propertyName, propertyType, Accessor.Private, relationship.TargetAccess);
             else
                 memberField = GetGenericMemberField(targetClass.Name, propertyName, propertyType, Accessor.Private, relationship.TargetAccess);
@@ -834,7 +834,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                       : relationship.SourcePropertyType;
 
             CodeMemberField memberField;
-            if (!relationship.Source.Model.UseGenerics)
+            if (!IsGeneric(relationship.Source))
                 memberField = GetMemberField(propertyName, propertyType, Accessor.Private, relationship.SourceAccess);
             else
                 memberField = GetGenericMemberField(sourceClass.Name, propertyName, propertyType, Accessor.Private, relationship.SourceAccess);
@@ -1622,10 +1622,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         {
             CodeNamespace nameSpace = new CodeNamespace(_namespace);
             nameSpace.Imports.Add(new CodeNamespaceImport(Common.SystemNamespace));
-            if (_model.UseGenerics)
-                nameSpace.Imports.Add(new CodeNamespaceImport(Common.GenericCollectionsNamespace));
-            else
-                nameSpace.Imports.Add(new CodeNamespaceImport(Common.CollectionsNamespace));
+            nameSpace.Imports.Add(new CodeNamespaceImport(Common.GenericCollectionsNamespace));
+            nameSpace.Imports.Add(new CodeNamespaceImport(Common.CollectionsNamespace));
             nameSpace.Imports.Add(new CodeNamespaceImport(Common.ActiveRecordNamespace));
             if (_model.UseNullables == NullableUsage.WithHelperLibrary)
                 nameSpace.Imports.Add(new CodeNamespaceImport(Common.NullablesNamespace));
@@ -1666,6 +1664,24 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         #endregion
 
         #region Code Generation
+
+        private bool IsGeneric(ModelClass cls)
+        {
+            return
+                (cls.Model.UseGenerics && cls.UseGenerics == InheritableBoolean.Inherit) ||
+                cls.UseGenerics == InheritableBoolean.True;
+        }
+
+
+        private bool HasGenericClass(Model model)
+        {
+            return model.Classes.Find(
+                       delegate(ModelClass cls)
+                           {
+                                return cls.UseGenerics == InheritableBoolean.True;
+                           }
+                       ) != null;
+        }
 
         private CodeTypeDeclaration GenerateClass(ModelClass cls, CodeNamespace nameSpace)
         {

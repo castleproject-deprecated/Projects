@@ -3976,6 +3976,96 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region UseGenerics domain property code
+		
+		/// <summary>
+		/// UseGenerics domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid UseGenericsDomainPropertyId = new global::System.Guid(0xca521240, 0x6ae4, 0x43bc, 0xa5, 0x8f, 0x6b, 0xe1, 0xb5, 0xac, 0x1b, 0x85);
+		
+		/// <summary>
+		/// Storage for UseGenerics
+		/// </summary>
+		private InheritableBoolean useGenericsPropertyStorage = Altinoren.ActiveWriter.InheritableBoolean.Inherit;
+		
+		/// <summary>
+		/// Gets or sets the value of UseGenerics domain property.
+		/// If set (other than Inherit), overrides model level generics generation for this
+		/// class.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelClass/UseGenerics.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelClass/UseGenerics.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelClass/UseGenerics.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.InheritableBoolean.Inherit)]
+		[DslModeling::DomainObjectId("ca521240-6ae4-43bc-a58f-6be1b5ac1b85")]
+		public InheritableBoolean UseGenerics
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return useGenericsPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				UseGenericsPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the ModelClass.UseGenerics domain property.
+		/// </summary>
+		internal sealed partial class UseGenericsPropertyHandler : DslModeling::DomainPropertyValueHandler<ModelClass, InheritableBoolean>
+		{
+			private UseGenericsPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the ModelClass.UseGenerics domain property value handler.
+			/// </summary>
+			public static readonly UseGenericsPropertyHandler Instance = new UseGenericsPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the ModelClass.UseGenerics domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return UseGenericsDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed InheritableBoolean GetValue(ModelClass element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.useGenericsPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(ModelClass element, InheritableBoolean newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				InheritableBoolean oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.useGenericsPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region Model opposite domain role accessor
 		/// <summary>
 		/// Gets or sets Model.

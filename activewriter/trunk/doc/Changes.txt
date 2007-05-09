@@ -5,6 +5,7 @@ New:
 - Namespace in generated code is now customizable (Idea: Robert van Hoornaar)
 - Imports in generated code is now customizable (Idea: Robert van Hoornaar)
 - Model classes can override model level base class definition. (Patch: Robert van Hoornaar)
+- Model classes can override model level generics generation. (Idea: Robert van Hoornaar)
 
 Fixed:
 - Contrib-23: Produces CascadeEnum instead of ManyRelationCascadeEnum

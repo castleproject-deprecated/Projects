@@ -356,6 +356,12 @@
             <xsd:documentation>If set and if model level base class usage is set, overrides any base class defined in the model.</xsd:documentation>
           </xsd:annotation>
         </xsd:attribute>
+        <!-- Property: UseGenerics -->
+        <xsd:attribute name="useGenerics" type="InheritableBoolean" >
+          <xsd:annotation>
+            <xsd:documentation>If set (other than Inherit), overrides model level generics generation for this class.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>
@@ -1129,6 +1135,15 @@
       <xsd:enumeration value="SaveUpdate"/>
       <xsd:enumeration value="Delete"/>
       <xsd:enumeration value="AllDeleteOrphan"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum InheritableBoolean -->
+  <xsd:simpleType name="InheritableBoolean">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="True"/>
+      <xsd:enumeration value="Inherit"/>
+      <xsd:enumeration value="False"/>
     </xsd:restriction>
   </xsd:simpleType>
   

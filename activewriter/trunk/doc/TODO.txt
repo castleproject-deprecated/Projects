@@ -3,7 +3,7 @@
 - Double derived?
 - Import?
 - Sync. attribute properties with AR trunk.
-- 
+- Shouldn't it also be good practice when setting the Key Type to Primary key it is always NotNUll=true? (Robert van Hoornaar )
 
 Ayende:
 - Classes should probably have a default Id property. (?)

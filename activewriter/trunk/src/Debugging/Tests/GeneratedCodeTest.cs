@@ -36,6 +36,32 @@ namespace Debugging.Tests
         }
 
         [Test]
+        public void CanGenerateExplicitGenericClassInGenericModel()
+        {
+            Type type = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.ExplicitGenericClassInGenericModel");
+            Assert.IsNotNull(type, "Could not get the generated explicit generic class.");
+            object[] attributes = type.GetCustomAttributes(typeof(ActiveRecordAttribute), false);
+            Assert.IsTrue(attributes.Length == 1);
+
+            Type baseType = type.BaseType;
+            Assert.IsTrue(baseType.IsGenericType, "Generated explicit generic class does not have a generic base class.");
+            Assert.IsTrue(baseType.Name == "ActiveRecordBase`1", "Generated class does not derived from ActiveRecordBase<T>");
+        }
+
+        [Test]
+        public void CanGenerateExplicitNonGenericClassInGenericModel()
+        {
+            Type type = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.ExplicitNonGenericClassInGenericModel");
+            Assert.IsNotNull(type, "Could not get the generated explicit non-generic class.");
+            object[] attributes = type.GetCustomAttributes(typeof(ActiveRecordAttribute), false);
+            Assert.IsTrue(attributes.Length == 1);
+
+            Type baseType = type.BaseType;
+            Assert.IsFalse(baseType.IsGenericType, "Generated explicit non-generic class have a generic base class.");
+            Assert.IsTrue(baseType.Name == "ActiveRecordBase", "Generated class does not derived from ActiveRecordBase");
+        }
+
+        [Test]
         public void CanGenerateNonGenericClass()
         {
             Type type = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.SimpleClass");
@@ -46,6 +72,32 @@ namespace Debugging.Tests
             Type baseType = type.BaseType;
             Assert.IsFalse(baseType.IsGenericType, "Generated class have a generic base class.");
             Assert.IsTrue(baseType.Name == "ActiveRecordBase", "Generated class does not derived from ActiveRecordBase");
+        }
+
+        [Test]
+        public void CanGenerateExplicitNonGenericClassInNonGenericModel()
+        {
+            Type type = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.ExplicitNonGenericClassInNonGenericModel");
+            Assert.IsNotNull(type, "Could not get the generated explicit non-generic class.");
+            object[] attributes = type.GetCustomAttributes(typeof(ActiveRecordAttribute), false);
+            Assert.IsTrue(attributes.Length == 1);
+
+            Type baseType = type.BaseType;
+            Assert.IsFalse(baseType.IsGenericType, "Generated explicit non-generic class have a generic base class.");
+            Assert.IsTrue(baseType.Name == "ActiveRecordBase", "Generated class does not derived from ActiveRecordBase");
+        }
+
+        [Test]
+        public void CanGenerateExplicitGenericClassInNonGenericModel()
+        {
+            Type type = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.ExplicitGenericClassInNonGenericModel");
+            Assert.IsNotNull(type, "Could not get the generated explicit generic class.");
+            object[] attributes = type.GetCustomAttributes(typeof(ActiveRecordAttribute), false);
+            Assert.IsTrue(attributes.Length == 1);
+
+            Type baseType = type.BaseType;
+            Assert.IsTrue(baseType.IsGenericType, "Generated explicit generic class does not have a generic base class.");
+            Assert.IsTrue(baseType.Name == "ActiveRecordBase`1", "Generated class does not derived from ActiveRecordBase<T>");
         }
 
         [Test]

@@ -236,6 +236,11 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="ca521240-6ae4-43bc-a58f-6be1b5ac1b85" Description="If set (other than Inherit), overrides model level generics generation for this class." Name="UseGenerics" DisplayName="Use Generics" DefaultValue="Inherit" Category="Code Generation">
+          <Type>
+            <DomainEnumerationMoniker Name="InheritableBoolean" />
+          </Type>
+        </DomainProperty>
       </Properties>
       <ElementMergeDirectives>
         <ElementMergeDirective>
@@ -1078,6 +1083,13 @@
     </DomainEnumeration>
     <ExternalType Name="List&lt;Altinoren.ActiveWriter.Import&gt;" Namespace="System.Collections.Generic" />
     <ExternalType Name="Array" Namespace="System" />
+    <DomainEnumeration Name="InheritableBoolean" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.InheritableBoolean">
+      <Literals>
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritableBoolean.True" Name="True" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritableBoolean.Inherit" Name="Inherit" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritableBoolean.False" Name="False" Value="" />
+      </Literals>
+    </DomainEnumeration>
   </Types>
   <Shapes>
     <CompartmentShape Id="ca45d586-12d1-4f5d-99c7-83c1eb0e61eb" Description="" Name="ClassShape" DisplayName="Class Shape" Namespace="Altinoren.ActiveWriter" GeneratesDoubleDerived="true" FixedTooltipText="Class Shape" FillColor="LightSteelBlue" InitialHeight="0.4" Geometry="RoundedRectangle">
@@ -1275,6 +1287,9 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="baseClassName">
             <DomainPropertyMoniker Name="ModelClass/BaseClassName" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="useGenerics">
+            <DomainPropertyMoniker Name="ModelClass/UseGenerics" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

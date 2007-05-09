@@ -645,6 +645,18 @@
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;BaseClassName&apos; on DomainClass &apos;ModelClass&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/UseGenerics.Description" xml:space="preserve">
+    <value>If set (other than Inherit), overrides model level generics generation for this class.</value>
+    <comment>Description for DomainProperty &apos;UseGenerics&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/UseGenerics.DisplayName" xml:space="preserve">
+    <value>Use Generics</value>
+    <comment>DisplayName for DomainProperty &apos;UseGenerics&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/UseGenerics.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;UseGenerics&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ModelProperty.Description" xml:space="preserve">
     <value>A property or field of a class</value>
     <comment>Description for DomainClass &apos;ModelProperty&apos;</comment>
@@ -2888,6 +2900,30 @@
   <data name="Altinoren.ActiveWriter.ManyRelationCascadeEnum/AllDeleteOrphan.Description" xml:space="preserve">
     <value>Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.AllDeleteOrphan</value>
     <comment>Description for EnumerationLiteral &apos;AllDeleteOrphan&apos; on DomainEnumeration &apos;ManyRelationCascadeEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritableBoolean/True.DisplayName" xml:space="preserve">
+    <value>True</value>
+    <comment>Display name for EnumerationLiteral &apos;True&apos; on DomainEnumeration &apos;InheritableBoolean&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritableBoolean/True.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritableBoolean.True</value>
+    <comment>Description for EnumerationLiteral &apos;True&apos; on DomainEnumeration &apos;InheritableBoolean&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritableBoolean/Inherit.DisplayName" xml:space="preserve">
+    <value>Inherit</value>
+    <comment>Display name for EnumerationLiteral &apos;Inherit&apos; on DomainEnumeration &apos;InheritableBoolean&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritableBoolean/Inherit.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritableBoolean.Inherit</value>
+    <comment>Description for EnumerationLiteral &apos;Inherit&apos; on DomainEnumeration &apos;InheritableBoolean&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritableBoolean/False.DisplayName" xml:space="preserve">
+    <value>False</value>
+    <comment>Display name for EnumerationLiteral &apos;False&apos; on DomainEnumeration &apos;InheritableBoolean&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritableBoolean/False.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritableBoolean.False</value>
+    <comment>Description for EnumerationLiteral &apos;False&apos; on DomainEnumeration &apos;InheritableBoolean&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ClassShape.Description" xml:space="preserve">
     <value></value>
