@@ -14,6 +14,7 @@ Fixed:
 - Can’t add a Many To Many relationship to 2 entities when the Class and Table names are different.
 - Column keys in many-to-one relations is not optional. (Patch: Robert van Hoornaar)
 - Partially fixing NHibernate code generation errors. Now works with a workaround.
+- Nullable types only when NotNull=false (Patch: Ricardo Stuven)
 
 Preview 2
 

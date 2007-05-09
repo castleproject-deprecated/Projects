@@ -488,7 +488,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                                     ModelProperty property)
         {
             CodeMemberProperty memberProperty =
-                GetMemberProperty(memberField, property.Name, property.ColumnType, true, true, property.Description);
+                GetMemberProperty(memberField, property.Name, property.ColumnType, property.NotNull, true, true, property.Description);
             memberProperty.CustomAttributes.Add(GetKeyPropertyAttribute(property));
 
             return memberProperty;
@@ -499,6 +499,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         {
             CodeMemberProperty memberProperty =
                 GetMemberProperty(memberField, property.Name, property.ColumnType,
+								  property.NotNull,
                                   true,
                                   true,
                                   property.Description);
@@ -524,7 +525,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                                 ModelProperty property)
         {
             CodeMemberProperty memberProperty =
-                GetMemberProperty(memberField, property.Name, property.ColumnType, true, true,
+                GetMemberProperty(memberField, property.Name, property.ColumnType, property.NotNull, true, true,
                                   property.Description);
             memberProperty.CustomAttributes.Add(GetVersionAttribute(property));
 
@@ -535,20 +536,20 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                                   ModelProperty property)
         {
             CodeMemberProperty memberProperty =
-                GetMemberProperty(memberField, property.Name, property.ColumnType, true, true,
+                GetMemberProperty(memberField, property.Name, property.ColumnType, property.NotNull, true, true,
                                   property.Description);
             memberProperty.CustomAttributes.Add(GetTimestampAttribute(property));
 
             return memberProperty;
         }
 
-        private CodeMemberProperty GetMemberProperty(CodeMemberField memberField, string propertyName,
-                                                     NHibernateType propertyType, bool get, bool set, params string[] description)
-        {
+		private CodeMemberProperty GetMemberProperty(CodeMemberField memberField, string propertyName,
+											 NHibernateType propertyType, bool propertyNotNull, bool get, bool set, params string[] description)
+		{
             CodeMemberProperty memberProperty =
                 GetMemberPropertyWithoutType(memberField, propertyName, get, set, description);
 
-            if (_model.UseNullables != NullableUsage.No && IsNullable(propertyType))
+			if (_model.UseNullables != NullableUsage.No && IsNullable(propertyType) && !propertyNotNull)
             {
                 if (_model.UseNullables == NullableUsage.WithHelperLibrary)
                     memberProperty.Type = GetNullableTypeReferenceForHelper(propertyType);
@@ -612,7 +613,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private CodeMemberField GetMemberFieldOfProperty(ModelProperty property, Accessor accessor)
         {
-            if (_model.UseNullables != NullableUsage.No && IsNullable(property.ColumnType))
+			if (_model.UseNullables != NullableUsage.No && IsNullable(property.ColumnType) && !property.NotNull)
             {
                 if (_model.UseNullables == NullableUsage.WithHelperLibrary)
                     return GetMemberField(property.Name, GetNullableTypeReferenceForHelper(property.ColumnType), accessor, property.Access);
