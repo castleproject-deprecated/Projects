@@ -35,6 +35,28 @@
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
+      <!-- Relationship: ModelHasNestedClasses -->
+      <xsd:element name="nestedClasses" minOccurs="0" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>Instances of ModelHasNestedClasses</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded" >
+              <xsd:element ref="modelHasNestedClasses">
+                <xsd:annotation>
+                  <xsd:documentation>[Relationship deriving from ModelHasNestedClasses needs to be serialized in full-form]</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="nestedClass" >
+                <xsd:annotation>
+                  <xsd:documentation>[Target role-player]</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:choice>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
     </xsd:sequence>
     <!-- Id -->
     <xsd:attribute name="Id" type="xsd:string">
@@ -551,6 +573,66 @@
     </xsd:attribute>
   </xsd:complexType>
   
+  <!-- NestedClass -->
+  <xsd:element name="nestedClass" type="NestedClass" substitutionGroup="namedElement" />
+  <xsd:complexType name="NestedClass">
+    <xsd:complexContent>
+      <xsd:extension base="NamedElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Relationship: NestedClassHasProperties -->
+          <xsd:element name="properties" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Instances of NestedClassHasProperties</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:choice minOccurs="0" maxOccurs="unbounded" >
+                  <xsd:element ref="nestedClassHasProperties">
+                    <xsd:annotation>
+                      <xsd:documentation>[Relationship deriving from NestedClassHasProperties needs to be serialized in full-form]</xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element ref="modelProperty" >
+                    <xsd:annotation>
+                      <xsd:documentation>[Target role-player]</xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:element>
+                </xsd:choice>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+          <!-- Relationship: NestedClassReferencesModelClasses -->
+          <xsd:element name="modelClasses" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Instances of NestedClassReferencesModelClasses</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element ref="nestedClassReferencesModelClasses" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                    <xsd:documentation>[Instance of NestedClassReferencesModelClasses needs to be serialized in full-form]</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- NestedClass Moniker -->
+  <xsd:element name="nestedClassMoniker" type="NestedClassMoniker" substitutionGroup="namedElementMoniker" />
+  <xsd:complexType name="NestedClassMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for NestedClass instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="NamedElementMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
   <!-- ModelHasClass -->
   <xsd:element name="modelHasClass" abstract="true" type="ModelHasClass" />
   <xsd:complexType name="ModelHasClass" abstract="true" >
@@ -929,6 +1011,95 @@
     </xsd:annotation>
   </xsd:complexType>
   
+  <!-- ModelHasNestedClasses -->
+  <xsd:element name="modelHasNestedClasses" abstract="true" type="ModelHasNestedClasses" />
+  <xsd:complexType name="ModelHasNestedClasses" abstract="true" >
+    <xsd:sequence minOccurs="0" maxOccurs="1">
+      <!-- Target end NestedClass -->
+      <xsd:element ref="nestedClass" minOccurs="1" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>[Target role-player]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <!-- ModelHasNestedClasses Moniker -->
+  <xsd:element name="modelHasNestedClassesMoniker" abstract="true" type="ModelHasNestedClassesMoniker" />
+  <xsd:complexType name="ModelHasNestedClassesMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for ModelHasNestedClasses instance.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:complexType>
+  
+  <!-- NestedClassHasProperties -->
+  <xsd:element name="nestedClassHasProperties" abstract="true" type="NestedClassHasProperties" />
+  <xsd:complexType name="NestedClassHasProperties" abstract="true" >
+    <xsd:sequence minOccurs="0" maxOccurs="1">
+      <!-- Target end ModelProperty -->
+      <xsd:element ref="modelProperty" minOccurs="1" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>[Target role-player]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <!-- NestedClassHasProperties Moniker -->
+  <xsd:element name="nestedClassHasPropertiesMoniker" abstract="true" type="NestedClassHasPropertiesMoniker" />
+  <xsd:complexType name="NestedClassHasPropertiesMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for NestedClassHasProperties instance.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:complexType>
+  
+  <!-- NestedClassReferencesModelClasses -->
+  <xsd:element name="nestedClassReferencesModelClasses" type="NestedClassReferencesModelClasses" />
+  <xsd:complexType name="NestedClassReferencesModelClasses">
+    <xsd:sequence minOccurs="0" maxOccurs="1">
+      <!-- Target end ModelClass -->
+      <xsd:element ref="modelClassMoniker" minOccurs="1" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>[Target role-player]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <!-- Property: MapType -->
+    <xsd:attribute name="mapType" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Allows one to reference a different type than the property type</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: Insert -->
+    <xsd:attribute name="insert" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>Set to false to ignore this nested component when updating entities of this ActiveRecord class.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: Update -->
+    <xsd:attribute name="update" type="xsd:boolean" />
+    <!-- Property: ColumnPrefix -->
+    <xsd:attribute name="columnPrefix" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Set to false to ignore this nested component when inserting entities of this ActiveRecord class.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: Description -->
+    <xsd:attribute name="description" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Description for nested property on the model class. This will appear in a &lt;summary&gt; Xml comment.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+  
+  <!-- NestedClassReferencesModelClasses Moniker -->
+  <xsd:element name="nestedClassReferencesModelClassesMoniker" abstract="true" type="NestedClassReferencesModelClassesMoniker" />
+  <xsd:complexType name="NestedClassReferencesModelClassesMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for NestedClassReferencesModelClasses instance.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:complexType>
+  
   <!-- Enum PropertyAccess -->
   <xsd:simpleType name="PropertyAccess">
     <xsd:restriction base="xsd:string">
@@ -1144,6 +1315,12 @@
       <xsd:enumeration value="True"/>
       <xsd:enumeration value="Inherit"/>
       <xsd:enumeration value="False"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum DomainEnumeration1 -->
+  <xsd:simpleType name="DomainEnumeration1">
+    <xsd:restriction base="xsd:string">
     </xsd:restriction>
   </xsd:simpleType>
   

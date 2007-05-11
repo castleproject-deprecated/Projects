@@ -985,6 +985,14 @@
     <value>Description</value>
     <comment>DisplayName for DomainProperty &apos;Description&apos; on DomainClass &apos;NamedElement&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.NestedClass.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NestedClass</value>
+    <comment>Description for DomainClass &apos;NestedClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClass.DisplayName" xml:space="preserve">
+    <value>Nested Class</value>
+    <comment>DisplayName for DomainClass &apos;NestedClass&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ModelHasClass.Description" xml:space="preserve">
     <value>Description for Altinoren.ActiveWriter.ModelHasClass</value>
     <comment>Description for DomainClass &apos;ModelHasClass&apos;</comment>
@@ -2093,6 +2101,162 @@
     <value>One To One Sources</value>
     <comment>PropertyDisplayName for DomainRole &apos;Target&apos; on DomainRelationship &apos;OneToOneRelation&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.ModelHasNestedClasses.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ModelHasNestedClasses</value>
+    <comment>Description for DomainClass &apos;ModelHasNestedClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelHasNestedClasses.DisplayName" xml:space="preserve">
+    <value>Model Has Nested Classes</value>
+    <comment>DisplayName for DomainClass &apos;ModelHasNestedClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelHasNestedClasses/Model.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ModelHasNestedClasses.Model</value>
+    <comment>Description for DomainRole &apos;Model&apos; on DomainRelationship &apos;ModelHasNestedClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelHasNestedClasses/Model.DisplayName" xml:space="preserve">
+    <value>Model</value>
+    <comment>DisplayName for DomainRole &apos;Model&apos; on DomainRelationship &apos;ModelHasNestedClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelHasNestedClasses/Model.PropertyDisplayName" xml:space="preserve">
+    <value>Nested Classes</value>
+    <comment>PropertyDisplayName for DomainRole &apos;Model&apos; on DomainRelationship &apos;ModelHasNestedClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelHasNestedClasses/NestedClass.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ModelHasNestedClasses.NestedClass</value>
+    <comment>Description for DomainRole &apos;NestedClass&apos; on DomainRelationship &apos;ModelHasNestedClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelHasNestedClasses/NestedClass.DisplayName" xml:space="preserve">
+    <value>Nested Class</value>
+    <comment>DisplayName for DomainRole &apos;NestedClass&apos; on DomainRelationship &apos;ModelHasNestedClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelHasNestedClasses/NestedClass.PropertyDisplayName" xml:space="preserve">
+    <value>Model</value>
+    <comment>PropertyDisplayName for DomainRole &apos;NestedClass&apos; on DomainRelationship &apos;ModelHasNestedClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassHasProperties.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NestedClassHasProperties</value>
+    <comment>Description for DomainClass &apos;NestedClassHasProperties&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassHasProperties.DisplayName" xml:space="preserve">
+    <value>Nested Class Has Properties</value>
+    <comment>DisplayName for DomainClass &apos;NestedClassHasProperties&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassHasProperties/NestedClass.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NestedClassHasProperties.NestedClass</value>
+    <comment>Description for DomainRole &apos;NestedClass&apos; on DomainRelationship &apos;NestedClassHasProperties&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassHasProperties/NestedClass.DisplayName" xml:space="preserve">
+    <value>Nested Class</value>
+    <comment>DisplayName for DomainRole &apos;NestedClass&apos; on DomainRelationship &apos;NestedClassHasProperties&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassHasProperties/NestedClass.PropertyDisplayName" xml:space="preserve">
+    <value>Properties</value>
+    <comment>PropertyDisplayName for DomainRole &apos;NestedClass&apos; on DomainRelationship &apos;NestedClassHasProperties&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassHasProperties/Property.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainRole &apos;Property&apos; on DomainRelationship &apos;NestedClassHasProperties&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassHasProperties/Property.DisplayName" xml:space="preserve">
+    <value>Property</value>
+    <comment>DisplayName for DomainRole &apos;Property&apos; on DomainRelationship &apos;NestedClassHasProperties&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassHasProperties/Property.PropertyDisplayName" xml:space="preserve">
+    <value>Nested Class</value>
+    <comment>PropertyDisplayName for DomainRole &apos;Property&apos; on DomainRelationship &apos;NestedClassHasProperties&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses.DisplayName" xml:space="preserve">
+    <value>Nested Class References Model Classes</value>
+    <comment>DisplayName for DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/MapType.Description" xml:space="preserve">
+    <value>Allows one to reference a different type than the property type</value>
+    <comment>Description for DomainProperty &apos;MapType&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/MapType.DisplayName" xml:space="preserve">
+    <value>Map Type</value>
+    <comment>DisplayName for DomainProperty &apos;MapType&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/MapType.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;MapType&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Insert.Description" xml:space="preserve">
+    <value>Set to false to ignore this nested component when updating entities of this ActiveRecord class.</value>
+    <comment>Description for DomainProperty &apos;Insert&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Insert.DisplayName" xml:space="preserve">
+    <value>Insert</value>
+    <comment>DisplayName for DomainProperty &apos;Insert&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Insert.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Insert&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Update.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NestedClassReferencesModelClasses.Update</value>
+    <comment>Description for DomainProperty &apos;Update&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Update.DisplayName" xml:space="preserve">
+    <value>Update</value>
+    <comment>DisplayName for DomainProperty &apos;Update&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Update.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;Update&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ColumnPrefix.Description" xml:space="preserve">
+    <value>Set to false to ignore this nested component when inserting entities of this ActiveRecord class.</value>
+    <comment>Description for DomainProperty &apos;ColumnPrefix&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ColumnPrefix.DisplayName" xml:space="preserve">
+    <value>Column Prefix</value>
+    <comment>DisplayName for DomainProperty &apos;ColumnPrefix&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ColumnPrefix.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;ColumnPrefix&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Description.Description" xml:space="preserve">
+    <value>Description for nested property on the model class. This will appear in a &lt;summary&gt; Xml comment.</value>
+    <comment>Description for DomainProperty &apos;Description&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Description.DisplayName" xml:space="preserve">
+    <value>Description</value>
+    <comment>DisplayName for DomainProperty &apos;Description&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Description.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;Description&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/NestedClass.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NestedClassReferencesModelClasses.NestedClass</value>
+    <comment>Description for DomainRole &apos;NestedClass&apos; on DomainRelationship &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/NestedClass.DisplayName" xml:space="preserve">
+    <value>Nested Class</value>
+    <comment>DisplayName for DomainRole &apos;NestedClass&apos; on DomainRelationship &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/NestedClass.PropertyDisplayName" xml:space="preserve">
+    <value>Model Classes</value>
+    <comment>PropertyDisplayName for DomainRole &apos;NestedClass&apos; on DomainRelationship &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ModelClass.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NestedClassReferencesModelClasses.ModelClass</value>
+    <comment>Description for DomainRole &apos;ModelClass&apos; on DomainRelationship &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ModelClass.DisplayName" xml:space="preserve">
+    <value>Model Class</value>
+    <comment>DisplayName for DomainRole &apos;ModelClass&apos; on DomainRelationship &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ModelClass.PropertyDisplayName" xml:space="preserve">
+    <value>Nested Classes</value>
+    <comment>PropertyDisplayName for DomainRole &apos;ModelClass&apos; on DomainRelationship &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.PropertyAccess/Property.DisplayName" xml:space="preserve">
     <value>Property</value>
     <comment>Display name for EnumerationLiteral &apos;Property&apos; on DomainEnumeration &apos;PropertyAccess&apos;</comment>
@@ -2941,8 +3105,24 @@
     <value>Name</value>
     <comment>Text decorator default text</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.NestedClassShape.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;NestedClassShape&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassShape.DisplayName" xml:space="preserve">
+    <value>Nested Class Shape</value>
+    <comment>DisplayName for DomainClass &apos;NestedClassShape&apos;</comment>
+  </data>
+  <data name="NestedClassShapePropertiesTitle" xml:space="preserve">
+    <value>Properties</value>
+    <comment>Compartment title</comment>
+  </data>
+  <data name="NestedClassShapeNameDefaultText" xml:space="preserve">
+    <value>Name</value>
+    <comment>Text decorator default text</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ManyToOneConnector.Description" xml:space="preserve">
-    <value>Description for Altinoren.ActiveWriter.ManyToOneConnector</value>
+    <value></value>
     <comment>Description for DomainClass &apos;ManyToOneConnector&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ManyToOneConnector.DisplayName" xml:space="preserve">
@@ -2958,7 +3138,7 @@
     <comment>Text decorator default text</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ManyToManyConnector.Description" xml:space="preserve">
-    <value>Description for Altinoren.ActiveWriter.ManyToManyConnector</value>
+    <value></value>
     <comment>Description for DomainClass &apos;ManyToManyConnector&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ManyToManyConnector.DisplayName" xml:space="preserve">
@@ -2989,6 +3169,18 @@
     <value>1</value>
     <comment>Text decorator default text</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.NestedConnector.Description" xml:space="preserve">
+    <value>Associates a domain class with a nested class, representing an extracted subset of repeating properties for multiple classes.</value>
+    <comment>Description for DomainClass &apos;NestedConnector&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedConnector.DisplayName" xml:space="preserve">
+    <value>Nested Connector</value>
+    <comment>DisplayName for DomainClass &apos;NestedConnector&apos;</comment>
+  </data>
+  <data name="NestedConnectorNestedDefaultText" xml:space="preserve">
+    <value>Nested</value>
+    <comment>Text decorator default text</comment>
+  </data>
   <data name="FormatList" xml:space="preserve">
     <value>ActiveWriter (*.actiw)|*.actiw</value>
     <comment>A list of file format specifiers for the Save dialog box</comment>
@@ -2998,7 +3190,7 @@
     <comment>Model Explorer Toolwindow title</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ActiveRecordMapping.Description" xml:space="preserve">
-    <value>Description for Altinoren.ActiveWriter.ActiveRecordMapping</value>
+    <value></value>
     <comment>Description for DomainClass &apos;ActiveRecordMapping&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ActiveRecordMapping.DisplayName" xml:space="preserve">
@@ -3014,7 +3206,7 @@
     <comment>Toolbox item name</comment>
   </data>
   <data name="ClassToolboxTooltip" xml:space="preserve">
-    <value>Create a Domain class</value>
+    <value>Create a Domain Class</value>
     <comment>Toolbox tooltip text</comment>
   </data>
   <data name="ManyToOneRelationshipToolboxItem" xml:space="preserve">
@@ -3039,6 +3231,22 @@
   </data>
   <data name="OneToOneRelationshipToolboxTooltip" xml:space="preserve">
     <value>Drag between classes to create a one to one relationship</value>
+    <comment>Toolbox tooltip text</comment>
+  </data>
+  <data name="NestedClassToolboxItem" xml:space="preserve">
+    <value>Nested Class</value>
+    <comment>Toolbox item name</comment>
+  </data>
+  <data name="NestedClassToolboxTooltip" xml:space="preserve">
+    <value>Create a Nested Class</value>
+    <comment>Toolbox tooltip text</comment>
+  </data>
+  <data name="NestedRelationshipToolboxItem" xml:space="preserve">
+    <value>Nested Relationship</value>
+    <comment>Toolbox item name</comment>
+  </data>
+  <data name="NestedRelationshipToolboxTooltip" xml:space="preserve">
+    <value>Drag between classes to create a nested relationship</value>
     <comment>Toolbox tooltip text</comment>
   </data>
   <data name="AmbiguousSchema" xml:space="preserve">
@@ -3155,6 +3363,14 @@ A DomainClass can be serialized as a moniker only if
   </data>
   <data name="OneToOneRelationshipToolboxBitmap" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
     <value>..\Resources\Connector121.bmp;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Toolbox item image</comment>
+  </data>
+  <data name="NestedClassToolboxBitmap" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\ClassTool.bmp;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Toolbox item image</comment>
+  </data>
+  <data name="NestedRelationshipToolboxBitmap" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\ConnectorNested.bmp;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
     <comment>Toolbox item image</comment>
   </data>
 </root>

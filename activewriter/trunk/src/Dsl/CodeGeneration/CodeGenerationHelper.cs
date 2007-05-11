@@ -47,6 +47,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private string _namespace;
 
         private Dictionary<ModelClass, CodeTypeDeclaration> _classDeclarations;
+        private Dictionary<NestedClass, CodeTypeDeclaration> _nestedClassDeclarations;
         private List<string> _generatedClassNames;
 
         private Hashtable _propertyBag = null;
@@ -84,6 +85,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             }
 
             _classDeclarations = new Dictionary<ModelClass, CodeTypeDeclaration>(_model.Classes.Count);
+            _nestedClassDeclarations = new Dictionary<NestedClass, CodeTypeDeclaration>(_model.NestedClasses.Count);
             _generatedClassNames = new List<string>(_model.Classes.Count);
         }
 
@@ -102,6 +104,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             foreach (ModelClass cls in _model.Classes)
             {
                 GenerateClass(cls, nameSpace);
+            }
+
+            // Just to make sure if there are nested classes not conneced to a class, they are generated.
+            foreach (NestedClass cls in _model.NestedClasses)
+            {
+                GenerateNestedClass(cls, nameSpace);
             }
 
             if (_model.Target == CodeGenerationTarget.ActiveRecord)
@@ -191,7 +199,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (String.IsNullOrEmpty(cls.Name))
                 throw new ArgumentException("Class name cannot be blank.", "cls");
 
-            // TODO: Pluralize the name?
             CodeTypeDeclaration classDeclaration = new CodeTypeDeclaration(cls.Name);
 
             classDeclaration.TypeAttributes = TypeAttributes.Public;
@@ -228,6 +235,30 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 classDeclaration.CustomAttributes.Add(GetGeneratedCodeAttribute());
             // Make a note as "generated" to prevent recursive generation attempts
             _classDeclarations.Add(cls, classDeclaration);
+            _generatedClassNames.Add(cls.Name);
+
+            nameSpace.Types.Add(classDeclaration);
+            return classDeclaration;
+        }
+
+        private CodeTypeDeclaration GetNestedClassDeclaration(NestedClass cls, CodeNamespace nameSpace)
+        {
+            if (cls == null)
+                throw new ArgumentException("Nested class not supplied.", "cls");
+            if (String.IsNullOrEmpty(cls.Name))
+                throw new ArgumentException("Nested class name cannot be blank.", "cls");
+
+            CodeTypeDeclaration classDeclaration = new CodeTypeDeclaration(cls.Name);
+
+            classDeclaration.TypeAttributes = TypeAttributes.Public;
+            classDeclaration.IsPartial = true;
+            if (!String.IsNullOrEmpty(cls.Description))
+                classDeclaration.Comments.AddRange(GetSummaryComment(cls.Description));
+
+            if (cls.Model.UseGeneratedCodeAttribute)
+                classDeclaration.CustomAttributes.Add(GetGeneratedCodeAttribute());
+            // Make a note as "generated" to prevent recursive generation attempts
+            _nestedClassDeclarations.Add(cls, classDeclaration);
             _generatedClassNames.Add(cls.Name);
 
             nameSpace.Types.Add(classDeclaration);
@@ -624,6 +655,35 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 return GetMemberField(property.Name, GetSystemType(property.ColumnType), accessor, property.Access);
         }
 
+        private CodeMemberField GetMemberField(CodeTypeDeclaration classDeclaration, ModelProperty property)
+        {
+            // Soooo ugly.
+            CodeMemberField memberField = null;
+            switch (property.PropertyType)
+            {
+                case PropertyType.Property:
+                    memberField = GetMemberFieldOfProperty(property, Accessor.Private);
+                    CodeMemberProperty memberProperty = GetActiveRecordMemberProperty(memberField, property);
+                    classDeclaration.Members.Add(memberProperty);
+                    if (property.IsValidatorSet())
+                        memberProperty.CustomAttributes.AddRange(GetValidationAttributes(property));
+                    break;
+                case PropertyType.Field:
+                    memberField = GetMemberFieldOfProperty(property, property.Accessor);
+                    memberField.CustomAttributes.Add(GetFieldAttribute(property));
+                    break;
+                case PropertyType.Version:
+                    memberField = GetMemberFieldOfProperty(property, Accessor.Private);
+                    classDeclaration.Members.Add(GetActiveRecordMemberVersion(memberField, property));
+                    break;
+                case PropertyType.Timestamp:
+                    memberField = GetMemberFieldOfProperty(property, Accessor.Private);
+                    classDeclaration.Members.Add(GetActiveRecordMemberTimestamp(memberField, property));
+                    break;
+            }
+            return memberField;
+        }
+
         private CodeMemberField GetMemberField(string name, CodeTypeReference fieldType, Accessor accessor, PropertyAccess access)
         {
             CodeMemberField memberField = GetMemberFieldWithoutType(name, accessor, access);
@@ -895,6 +955,29 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             classDeclaration.Members.Add(memberProperty);
 
             memberProperty.CustomAttributes.Add(GetOneToOneAttribute(relationship, false));
+        }
+
+        #endregion
+
+        #region Nested
+
+        private void GenerateNestingRelationFromRelationship(CodeTypeDeclaration classDeclaration, CodeNamespace nameSpace, NestedClassReferencesModelClasses relationship)
+        {
+            CodeTypeDeclaration sourceClass = GenerateNestedClass(relationship.NestedClass, nameSpace);
+
+            CodeMemberField memberField = GetMemberField(sourceClass.Name, sourceClass.Name, Accessor.Private, PropertyAccess.Property);
+            classDeclaration.Members.Add(memberField);
+
+            CodeMemberProperty memberProperty;
+            if (String.IsNullOrEmpty(relationship.Description))
+                memberProperty = GetMemberProperty(memberField, sourceClass.Name, true, true, null);
+            else
+                memberProperty =
+                    GetMemberProperty(memberField, sourceClass.Name, true, true,
+                                      relationship.Description);
+            classDeclaration.Members.Add(memberProperty);
+
+            memberProperty.CustomAttributes.Add(GetNestedAttribute(relationship));
         }
 
         #endregion
@@ -1614,6 +1697,31 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         #endregion
 
+        #region Nested
+
+        private CodeAttributeDeclaration GetNestedAttribute(NestedClassReferencesModelClasses relation)
+        {
+            if (!_nestedClassDeclarations.ContainsKey(relation.NestedClass))
+                throw new ArgumentException(
+                    "Cannot create Nested attribute. Cannot find code type decleration for nested class.");
+
+            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("Nested");
+
+            if (!string.IsNullOrEmpty(relation.ColumnPrefix))
+                attribute.Arguments.Add(GetPrimitiveAttributeArgument(relation.ColumnPrefix));
+            if (!string.IsNullOrEmpty(relation.MapType))
+                attribute.Arguments.Add(GetNamedTypeAttributeArgument("MapType", relation.MapType));
+            if (relation.Insert)
+                attribute.Arguments.Add(GetNamedAttributeArgument("Insert", relation.Insert));
+            if (relation.Update)
+                attribute.Arguments.Add(GetNamedAttributeArgument("Update", relation.Update));
+
+            return attribute;
+        }
+
+        #endregion
+
+
         #endregion
 
         #region Namespace
@@ -1678,9 +1786,44 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             return model.Classes.Find(
                        delegate(ModelClass cls)
                            {
-                                return cls.UseGenerics == InheritableBoolean.True;
+                               return cls.UseGenerics == InheritableBoolean.True;
                            }
                        ) != null;
+        }
+
+        private CodeTypeDeclaration GenerateNestedClass(NestedClass cls, CodeNamespace nameSpace)
+        {
+            if (cls == null)
+                throw new ArgumentNullException("Nested class not supplied", "cls");
+            if (nameSpace == null)
+                throw new ArgumentNullException("Namespace not supplied", "namespace");
+            if (String.IsNullOrEmpty(cls.Name))
+                throw new ArgumentException("Class name cannot be blank", "cls");
+
+            if (!_nestedClassDeclarations.ContainsKey(cls))
+            {
+                if (_generatedClassNames.Contains(cls.Name))
+                    throw new ArgumentException(
+                        "Ambiguous class name. Code for a class with the same name already generated. Please use a different name.",
+                        cls.Name);
+
+                CodeTypeDeclaration classDeclaration = GetNestedClassDeclaration(cls, nameSpace);
+
+                // Properties and Fields
+                foreach (ModelProperty property in cls.Properties)
+                {
+                    CodeMemberField memberField = GetMemberField(classDeclaration, property);
+
+                    classDeclaration.Members.Add(memberField);
+
+                    if (property.DebuggerDisplay)
+                        classDeclaration.CustomAttributes.Add(GetDebuggerDisplayAttribute(classDeclaration, property));
+                }
+
+                return classDeclaration;
+            }
+            else
+                return _nestedClassDeclarations[cls];
         }
 
         private CodeTypeDeclaration GenerateClass(ModelClass cls, CodeNamespace nameSpace)
@@ -1708,30 +1851,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 {
                     if (property.KeyType != KeyType.CompositeKey)
                     {
-                        CodeMemberField memberField = null;
-
-                        switch (property.PropertyType)
-                        {
-                            case PropertyType.Property:
-                                memberField = GetMemberFieldOfProperty(property, Accessor.Private);
-                                CodeMemberProperty memberProperty = GetActiveRecordMemberProperty(memberField, property);
-                                classDeclaration.Members.Add(memberProperty);
-                                if (property.IsValidatorSet())
-                                    memberProperty.CustomAttributes.AddRange(GetValidationAttributes(property));
-                                break;
-                            case PropertyType.Field:
-                                memberField = GetMemberFieldOfProperty(property, property.Accessor);
-                                memberField.CustomAttributes.Add(GetFieldAttribute(property));
-                                break;
-                            case PropertyType.Version:
-                                memberField = GetMemberFieldOfProperty(property, Accessor.Private);
-                                classDeclaration.Members.Add(GetActiveRecordMemberVersion(memberField, property));
-                                break;
-                            case PropertyType.Timestamp:
-                                memberField = GetMemberFieldOfProperty(property, Accessor.Private);
-                                classDeclaration.Members.Add(GetActiveRecordMemberTimestamp(memberField, property));
-                                break;
-                        }
+                        CodeMemberField memberField = GetMemberField(classDeclaration, property);
 
                         classDeclaration.Members.Add(memberField);
 
@@ -1796,6 +1916,14 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 foreach (OneToOneRelation relationship in oneToOneSources)
                 {
                     GenerateOneToOneRelationFromSources(classDeclaration, nameSpace, relationship);
+                }
+
+                //Nested links
+                ReadOnlyCollection<NestedClassReferencesModelClasses> nestingTargets =
+                    NestedClassReferencesModelClasses.GetLinksToNestedClasses(cls);
+                foreach (NestedClassReferencesModelClasses relationship in nestingTargets)
+                {
+                    GenerateNestingRelationFromRelationship(classDeclaration, nameSpace, relationship);
                 }
 
                 // TODO: Other relation types (any etc)
@@ -1899,7 +2027,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         {
             switch (type)
             {
-                // TODO: Combine and order most likely asc
+                    // TODO: Combine and order most likely asc
                 case NHibernateType.AnsiChar:
                 case NHibernateType.Char:
                     return typeof(string);
@@ -2152,9 +2280,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     foreach (CodeAttributeDeclaration attribute in type.CustomAttributes)
                     {
                         if (Array.FindIndex(Common.ARAttributes, delegate(string name)
-                        {
-                            return name == attribute.Name;
-                        }) > -1)
+                                                                     {
+                                                                         return name == attribute.Name;
+                                                                     }) > -1)
                             attributesToRemove.Add(attribute);
                     }
                     foreach (CodeAttributeDeclaration declaration in attributesToRemove)
@@ -2169,9 +2297,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                         foreach (CodeAttributeDeclaration attribute in member.CustomAttributes)
                         {
                             if (Array.FindIndex(Common.ARAttributes, delegate(string name)
-                            {
-                                return name == attribute.Name;
-                            }) > -1)
+                                                                         {
+                                                                             return name == attribute.Name;
+                                                                         }) > -1)
                                 memberAttributesToRemove.Add(attribute);
                         }
                         foreach (CodeAttributeDeclaration declaration in memberAttributesToRemove)

@@ -55,16 +55,22 @@ namespace Altinoren.ActiveWriter
 				typeof(ModelProperty),
 				typeof(ModelElementWithAccess),
 				typeof(NamedElement),
+				typeof(NestedClass),
 				typeof(ModelHasClass),
 				typeof(ManyToOneRelation),
 				typeof(ClassHasProperty),
 				typeof(ManyToManyRelation),
 				typeof(OneToOneRelation),
+				typeof(ModelHasNestedClasses),
+				typeof(NestedClassHasProperties),
+				typeof(NestedClassReferencesModelClasses),
 				typeof(ActiveRecordMapping),
 				typeof(ManyToOneConnector),
 				typeof(ManyToManyConnector),
 				typeof(OneToOneConnector),
+				typeof(NestedConnector),
 				typeof(ClassShape),
+				typeof(NestedClassShape),
 				typeof(global::Altinoren.ActiveWriter.FixUpDiagram),
 				typeof(global::Altinoren.ActiveWriter.ConnectorRolePlayerChanged),
 				typeof(global::Altinoren.ActiveWriter.CompartmentItemAddRule),
@@ -231,6 +237,11 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(OneToOneRelation), "TargetOuterJoin", OneToOneRelation.TargetOuterJoinDomainPropertyId, typeof(OneToOneRelation.TargetOuterJoinPropertyHandler)),
 				new DomainMemberInfo(typeof(OneToOneRelation), "SourceDescription", OneToOneRelation.SourceDescriptionDomainPropertyId, typeof(OneToOneRelation.SourceDescriptionPropertyHandler)),
 				new DomainMemberInfo(typeof(OneToOneRelation), "TargetDescription", OneToOneRelation.TargetDescriptionDomainPropertyId, typeof(OneToOneRelation.TargetDescriptionPropertyHandler)),
+				new DomainMemberInfo(typeof(NestedClassReferencesModelClasses), "MapType", NestedClassReferencesModelClasses.MapTypeDomainPropertyId, typeof(NestedClassReferencesModelClasses.MapTypePropertyHandler)),
+				new DomainMemberInfo(typeof(NestedClassReferencesModelClasses), "Insert", NestedClassReferencesModelClasses.InsertDomainPropertyId, typeof(NestedClassReferencesModelClasses.InsertPropertyHandler)),
+				new DomainMemberInfo(typeof(NestedClassReferencesModelClasses), "Update", NestedClassReferencesModelClasses.UpdateDomainPropertyId, typeof(NestedClassReferencesModelClasses.UpdatePropertyHandler)),
+				new DomainMemberInfo(typeof(NestedClassReferencesModelClasses), "ColumnPrefix", NestedClassReferencesModelClasses.ColumnPrefixDomainPropertyId, typeof(NestedClassReferencesModelClasses.ColumnPrefixPropertyHandler)),
+				new DomainMemberInfo(typeof(NestedClassReferencesModelClasses), "Description", NestedClassReferencesModelClasses.DescriptionDomainPropertyId, typeof(NestedClassReferencesModelClasses.DescriptionPropertyHandler)),
 			};
 		}
 		/// <summary>
@@ -251,6 +262,12 @@ namespace Altinoren.ActiveWriter
 				new DomainRolePlayerInfo(typeof(ManyToManyRelation), "Target", ManyToManyRelation.TargetDomainRoleId),
 				new DomainRolePlayerInfo(typeof(OneToOneRelation), "Source", OneToOneRelation.SourceDomainRoleId),
 				new DomainRolePlayerInfo(typeof(OneToOneRelation), "Target", OneToOneRelation.TargetDomainRoleId),
+				new DomainRolePlayerInfo(typeof(ModelHasNestedClasses), "Model", ModelHasNestedClasses.ModelDomainRoleId),
+				new DomainRolePlayerInfo(typeof(ModelHasNestedClasses), "NestedClass", ModelHasNestedClasses.NestedClassDomainRoleId),
+				new DomainRolePlayerInfo(typeof(NestedClassHasProperties), "NestedClass", NestedClassHasProperties.NestedClassDomainRoleId),
+				new DomainRolePlayerInfo(typeof(NestedClassHasProperties), "Property", NestedClassHasProperties.PropertyDomainRoleId),
+				new DomainRolePlayerInfo(typeof(NestedClassReferencesModelClasses), "NestedClass", NestedClassReferencesModelClasses.NestedClassDomainRoleId),
+				new DomainRolePlayerInfo(typeof(NestedClassReferencesModelClasses), "ModelClass", NestedClassReferencesModelClasses.ModelClassDomainRoleId),
 			};
 		}
 		#endregion
@@ -271,15 +288,18 @@ namespace Altinoren.ActiveWriter
 	
 			if (createElementMap == null)
 			{
-				createElementMap = new global::System.Collections.Generic.Dictionary<global::System.Type, int>(10);
+				createElementMap = new global::System.Collections.Generic.Dictionary<global::System.Type, int>(13);
 				createElementMap.Add(typeof(Model), 0);
 				createElementMap.Add(typeof(ModelClass), 1);
 				createElementMap.Add(typeof(ModelProperty), 2);
-				createElementMap.Add(typeof(ActiveRecordMapping), 3);
-				createElementMap.Add(typeof(ManyToOneConnector), 4);
-				createElementMap.Add(typeof(ManyToManyConnector), 5);
-				createElementMap.Add(typeof(OneToOneConnector), 6);
-				createElementMap.Add(typeof(ClassShape), 7);
+				createElementMap.Add(typeof(NestedClass), 3);
+				createElementMap.Add(typeof(ActiveRecordMapping), 4);
+				createElementMap.Add(typeof(ManyToOneConnector), 5);
+				createElementMap.Add(typeof(ManyToManyConnector), 6);
+				createElementMap.Add(typeof(OneToOneConnector), 7);
+				createElementMap.Add(typeof(NestedConnector), 8);
+				createElementMap.Add(typeof(ClassShape), 9);
+				createElementMap.Add(typeof(NestedClassShape), 10);
 			}
 			int index;
 			if (!createElementMap.TryGetValue(elementType, out index))
@@ -291,11 +311,14 @@ namespace Altinoren.ActiveWriter
 				case 0: return new Model(partition, propertyAssignments);
 				case 1: return new ModelClass(partition, propertyAssignments);
 				case 2: return new ModelProperty(partition, propertyAssignments);
-				case 3: return new ActiveRecordMapping(partition, propertyAssignments);
-				case 4: return new ManyToOneConnector(partition, propertyAssignments);
-				case 5: return new ManyToManyConnector(partition, propertyAssignments);
-				case 6: return new OneToOneConnector(partition, propertyAssignments);
-				case 7: return new ClassShape(partition, propertyAssignments);
+				case 3: return new NestedClass(partition, propertyAssignments);
+				case 4: return new ActiveRecordMapping(partition, propertyAssignments);
+				case 5: return new ManyToOneConnector(partition, propertyAssignments);
+				case 6: return new ManyToManyConnector(partition, propertyAssignments);
+				case 7: return new OneToOneConnector(partition, propertyAssignments);
+				case 8: return new NestedConnector(partition, propertyAssignments);
+				case 9: return new ClassShape(partition, propertyAssignments);
+				case 10: return new NestedClassShape(partition, propertyAssignments);
 				default: return null;
 			}
 		}
@@ -318,12 +341,15 @@ namespace Altinoren.ActiveWriter
 	
 			if (createElementLinkMap == null)
 			{
-				createElementLinkMap = new global::System.Collections.Generic.Dictionary<global::System.Type, int>(5);
+				createElementLinkMap = new global::System.Collections.Generic.Dictionary<global::System.Type, int>(8);
 				createElementLinkMap.Add(typeof(ModelHasClass), 0);
 				createElementLinkMap.Add(typeof(ManyToOneRelation), 1);
 				createElementLinkMap.Add(typeof(ClassHasProperty), 2);
 				createElementLinkMap.Add(typeof(ManyToManyRelation), 3);
 				createElementLinkMap.Add(typeof(OneToOneRelation), 4);
+				createElementLinkMap.Add(typeof(ModelHasNestedClasses), 5);
+				createElementLinkMap.Add(typeof(NestedClassHasProperties), 6);
+				createElementLinkMap.Add(typeof(NestedClassReferencesModelClasses), 7);
 			}
 			int index;
 			if (!createElementLinkMap.TryGetValue(elementLinkType, out index))
@@ -337,6 +363,9 @@ namespace Altinoren.ActiveWriter
 				case 2: return new ClassHasProperty(partition, roleAssignments, propertyAssignments);
 				case 3: return new ManyToManyRelation(partition, roleAssignments, propertyAssignments);
 				case 4: return new OneToOneRelation(partition, roleAssignments, propertyAssignments);
+				case 5: return new ModelHasNestedClasses(partition, roleAssignments, propertyAssignments);
+				case 6: return new NestedClassHasProperties(partition, roleAssignments, propertyAssignments);
+				case 7: return new NestedClassReferencesModelClasses(partition, roleAssignments, propertyAssignments);
 				default: return null;
 			}
 		}
@@ -513,6 +542,7 @@ namespace Altinoren.ActiveWriter
 		{
 			#region Initialize DomainData Table
 			DomainRoles.Add(global::Altinoren.ActiveWriter.ModelHasClass.ClassDomainRoleId, true);
+			DomainRoles.Add(global::Altinoren.ActiveWriter.ModelHasNestedClasses.NestedClassDomainRoleId, true);
 			#endregion
 		}
 		/// <summary>
@@ -585,6 +615,7 @@ namespace Altinoren.ActiveWriter
 		public ActiveWriterCopyClosureBase()
 		{
 			#region Initialize DomainData Table
+			DomainRoles.Add(global::Altinoren.ActiveWriter.ModelHasNestedClasses.NestedClassDomainRoleId, true);
 			#endregion
 		}
 		/// <summary>
@@ -1461,6 +1492,17 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritableBoolean/False.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		False,
+	}
+}
+namespace Altinoren.ActiveWriter
+{
+	/// <summary>
+	/// DomainEnumeration: DomainEnumeration1
+	/// Description for Altinoren.ActiveWriter.DomainEnumeration1
+	/// </summary>
+	[global::System.CLSCompliant(true)]
+	public enum DomainEnumeration1
+	{
 	}
 }
 

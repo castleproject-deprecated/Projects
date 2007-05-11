@@ -11,6 +11,7 @@
 namespace Debugging.Tests {
     using System;
     using System.Collections.Generic;
+    using System.Collections;
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Altinoren.ActiveWriter.CustomTool.ActiveWriterTemplatedCodeGenerator", "1.0.0.0")]
@@ -19,7 +20,7 @@ namespace Debugging.Tests {
         
         private string _blog_name;
         
-        private System.Nullable<int> _blog_id;
+        private int _blog_id;
         
         private IList<NHPost> _posts;
         
@@ -32,7 +33,7 @@ namespace Debugging.Tests {
             }
         }
         
-        public System.Nullable<int> blog_id {
+        public int blog_id {
             get {
                 return this._blog_id;
             }
@@ -64,7 +65,7 @@ namespace Debugging.Tests {
         
         private System.Nullable<bool> _post_published;
         
-        private System.Nullable<int> _post_id;
+        private int _post_id;
         
         private NHBlog _nHBlog;
         
@@ -113,7 +114,7 @@ namespace Debugging.Tests {
             }
         }
         
-        public System.Nullable<int> post_id {
+        public int post_id {
             get {
                 return this._post_id;
             }

@@ -8044,3 +8044,1143 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
+namespace Altinoren.ActiveWriter
+{
+	/// <summary>
+	/// DomainRelationship ModelHasNestedClasses
+	/// Description for Altinoren.ActiveWriter.ModelHasNestedClasses
+	/// </summary>
+	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelHasNestedClasses.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelHasNestedClasses.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[global::System.CLSCompliant(true)]
+	[DslModeling::DomainRelationship(IsEmbedding=true)]
+	[DslModeling::DomainObjectId("b52af8b1-d8e4-4df3-9ccc-aed68d8c50f6")]
+	public partial class ModelHasNestedClasses : DslModeling::ElementLink
+	{
+		#region Constructors, domain class Id
+		
+		/// <summary>
+		/// ModelHasNestedClasses domain class Id.
+		/// </summary>
+		public static readonly new global::System.Guid DomainClassId = new global::System.Guid(0xb52af8b1, 0xd8e4, 0x4df3, 0x9c, 0xcc, 0xae, 0xd6, 0x8d, 0x8c, 0x50, 0xf6);
+	
+				
+		/// <summary>
+		/// Constructor
+		/// Creates a ModelHasNestedClasses link in the same Partition as the given Model
+		/// </summary>
+		/// <param name="source">Model to use as the source of the relationship.</param>
+		/// <param name="target">NestedClass to use as the target of the relationship.</param>
+		public ModelHasNestedClasses(Model source, NestedClass target)
+			: base((source != null ? source.Partition : null), new DslModeling::RoleAssignment[]{new DslModeling::RoleAssignment(ModelHasNestedClasses.ModelDomainRoleId, source), new DslModeling::RoleAssignment(ModelHasNestedClasses.NestedClassDomainRoleId, target)}, null)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="store">Store where new link is to be created.</param>
+		/// <param name="roleAssignments">List of relationship role assignments.</param>
+		public ModelHasNestedClasses(DslModeling::Store store, params DslModeling::RoleAssignment[] roleAssignments)
+			: base(store != null ? store.DefaultPartition : null, roleAssignments, null)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="store">Store where new link is to be created.</param>
+		/// <param name="roleAssignments">List of relationship role assignments.</param>
+		/// <param name="propertyAssignments">List of properties assignments to set on the new link.</param>
+		public ModelHasNestedClasses(DslModeling::Store store, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
+			: base(store != null ? store.DefaultPartition : null, roleAssignments, propertyAssignments)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="partition">Partition where new link is to be created.</param>
+		/// <param name="roleAssignments">List of relationship role assignments.</param>
+		public ModelHasNestedClasses(DslModeling::Partition partition, params DslModeling::RoleAssignment[] roleAssignments)
+			: base(partition, roleAssignments, null)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="partition">Partition where new link is to be created.</param>
+		/// <param name="roleAssignments">List of relationship role assignments.</param>
+		/// <param name="propertyAssignments">List of properties assignments to set on the new link.</param>
+		public ModelHasNestedClasses(DslModeling::Partition partition, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
+			: base(partition, roleAssignments, propertyAssignments)
+		{
+		}
+		#endregion
+		#region Model domain role code
+		
+		/// <summary>
+		/// Model domain role Id.
+		/// </summary>
+		public static readonly global::System.Guid ModelDomainRoleId = new global::System.Guid(0xaa430439, 0x9ab3, 0x4298, 0x96, 0x36, 0x53, 0xd2, 0xf9, 0x77, 0x4d, 0x04);
+		
+		/// <summary>
+		/// DomainRole Model
+		/// Description for Altinoren.ActiveWriter.ModelHasNestedClasses.Model
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelHasNestedClasses/Model.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelHasNestedClasses/Model.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "NestedClasses", PropertyDisplayNameKey="Altinoren.ActiveWriter.ModelHasNestedClasses/Model.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslModeling::DomainObjectId("aa430439-9ab3-4298-9636-53d2f9774d04")]
+		public virtual Model Model
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return (Model)DslModeling::DomainRoleInfo.GetRolePlayer(this, ModelDomainRoleId);
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				DslModeling::DomainRoleInfo.SetRolePlayer(this, ModelDomainRoleId, value);
+			}
+		}
+				
+		#endregion
+		#region Static methods to access Model of a NestedClass
+		/// <summary>
+		/// Gets Model.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static Model GetModel(NestedClass element)
+		{
+			return DslModeling::DomainRoleInfo.GetLinkedElement(element, NestedClassDomainRoleId) as Model;
+		}
+		
+		/// <summary>
+		/// Sets Model.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static void SetModel(NestedClass element, Model newModel)
+		{
+			DslModeling::DomainRoleInfo.SetLinkedElement(element, NestedClassDomainRoleId, newModel);
+		}
+		#endregion
+		#region NestedClass domain role code
+		
+		/// <summary>
+		/// NestedClass domain role Id.
+		/// </summary>
+		public static readonly global::System.Guid NestedClassDomainRoleId = new global::System.Guid(0x6948fc5c, 0xa899, 0x4a5b, 0x91, 0xa9, 0x96, 0x50, 0xe8, 0xd2, 0x7e, 0x3b);
+		
+		/// <summary>
+		/// DomainRole NestedClass
+		/// Description for Altinoren.ActiveWriter.ModelHasNestedClasses.NestedClass
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelHasNestedClasses/NestedClass.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelHasNestedClasses/NestedClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "Model", PropertyDisplayNameKey="Altinoren.ActiveWriter.ModelHasNestedClasses/NestedClass.PropertyDisplayName", PropagatesDelete = true, PropagatesCopy = true, Multiplicity = DslModeling::Multiplicity.One)]
+		[DslModeling::DomainObjectId("6948fc5c-a899-4a5b-91a9-9650e8d27e3b")]
+		public virtual NestedClass NestedClass
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return (NestedClass)DslModeling::DomainRoleInfo.GetRolePlayer(this, NestedClassDomainRoleId);
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				DslModeling::DomainRoleInfo.SetRolePlayer(this, NestedClassDomainRoleId, value);
+			}
+		}
+				
+		#endregion
+		#region Static methods to access NestedClasses of a Model
+		/// <summary>
+		/// Gets a list of NestedClasses.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static DslModeling::LinkedElementCollection<NestedClass> GetNestedClasses(Model element)
+		{
+			return new DslModeling::LinkedElementCollection<NestedClass>(element, ModelDomainRoleId);
+		}
+		#endregion
+		#region Model link accessor
+		/// <summary>
+		/// Get the list of ModelHasNestedClasses links to a Model.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.ModelHasNestedClasses> GetLinksToNestedClasses ( global::Altinoren.ActiveWriter.Model modelInstance )
+		{
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ModelHasNestedClasses>(modelInstance, global::Altinoren.ActiveWriter.ModelHasNestedClasses.ModelDomainRoleId);
+		}
+		#endregion
+		#region NestedClass link accessor
+		/// <summary>
+		/// Get the ModelHasNestedClasses link to a NestedClass.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static global::Altinoren.ActiveWriter.ModelHasNestedClasses GetLinkToModel (global::Altinoren.ActiveWriter.NestedClass nestedClassInstance)
+		{
+			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.ModelHasNestedClasses> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ModelHasNestedClasses>(nestedClassInstance, global::Altinoren.ActiveWriter.ModelHasNestedClasses.NestedClassDomainRoleId);
+			global::System.Diagnostics.Debug.Assert(links.Count <= 1, "Multiplicity of NestedClass not obeyed.");
+			if ( links.Count == 0 )
+			{
+				return null;
+			}
+			else
+			{
+				return links[0];
+			}
+		}
+		#endregion
+		#region ModelHasNestedClasses instance accessors
+		
+		/// <summary>
+		/// Get any ModelHasNestedClasses links between a given Model and a NestedClass.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.ModelHasNestedClasses> GetLinks( global::Altinoren.ActiveWriter.Model source, global::Altinoren.ActiveWriter.NestedClass target )
+		{
+			global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.ModelHasNestedClasses> outLinks = new global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.ModelHasNestedClasses>();
+			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.ModelHasNestedClasses> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ModelHasNestedClasses>(source, global::Altinoren.ActiveWriter.ModelHasNestedClasses.ModelDomainRoleId);
+			foreach ( global::Altinoren.ActiveWriter.ModelHasNestedClasses link in links )
+			{
+				if ( target.Equals(link.NestedClass) )
+				{
+					outLinks.Add(link);
+				}
+			}
+			return outLinks.AsReadOnly();
+		}
+		/// <summary>
+		/// Get the one ModelHasNestedClasses link between a given Modeland a NestedClass.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static global::Altinoren.ActiveWriter.ModelHasNestedClasses GetLink( global::Altinoren.ActiveWriter.Model source, global::Altinoren.ActiveWriter.NestedClass target )
+		{
+			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.ModelHasNestedClasses> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ModelHasNestedClasses>(source, global::Altinoren.ActiveWriter.ModelHasNestedClasses.ModelDomainRoleId);
+			foreach ( global::Altinoren.ActiveWriter.ModelHasNestedClasses link in links )
+			{
+				if ( target.Equals(link.NestedClass) )
+				{
+					return link;
+				}
+			}
+			return null;
+		}
+		
+		#endregion
+	}
+}
+namespace Altinoren.ActiveWriter
+{
+	/// <summary>
+	/// DomainRelationship NestedClassHasProperties
+	/// Description for Altinoren.ActiveWriter.NestedClassHasProperties
+	/// </summary>
+	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassHasProperties.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassHasProperties.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[global::System.CLSCompliant(true)]
+	[DslModeling::DomainRelationship(IsEmbedding=true)]
+	[DslModeling::DomainObjectId("43b9347e-1b5e-4727-b8eb-8ce53dfe040d")]
+	public partial class NestedClassHasProperties : DslModeling::ElementLink
+	{
+		#region Constructors, domain class Id
+		
+		/// <summary>
+		/// NestedClassHasProperties domain class Id.
+		/// </summary>
+		public static readonly new global::System.Guid DomainClassId = new global::System.Guid(0x43b9347e, 0x1b5e, 0x4727, 0xb8, 0xeb, 0x8c, 0xe5, 0x3d, 0xfe, 0x04, 0x0d);
+	
+				
+		/// <summary>
+		/// Constructor
+		/// Creates a NestedClassHasProperties link in the same Partition as the given NestedClass
+		/// </summary>
+		/// <param name="source">NestedClass to use as the source of the relationship.</param>
+		/// <param name="target">ModelProperty to use as the target of the relationship.</param>
+		public NestedClassHasProperties(NestedClass source, ModelProperty target)
+			: base((source != null ? source.Partition : null), new DslModeling::RoleAssignment[]{new DslModeling::RoleAssignment(NestedClassHasProperties.NestedClassDomainRoleId, source), new DslModeling::RoleAssignment(NestedClassHasProperties.PropertyDomainRoleId, target)}, null)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="store">Store where new link is to be created.</param>
+		/// <param name="roleAssignments">List of relationship role assignments.</param>
+		public NestedClassHasProperties(DslModeling::Store store, params DslModeling::RoleAssignment[] roleAssignments)
+			: base(store != null ? store.DefaultPartition : null, roleAssignments, null)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="store">Store where new link is to be created.</param>
+		/// <param name="roleAssignments">List of relationship role assignments.</param>
+		/// <param name="propertyAssignments">List of properties assignments to set on the new link.</param>
+		public NestedClassHasProperties(DslModeling::Store store, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
+			: base(store != null ? store.DefaultPartition : null, roleAssignments, propertyAssignments)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="partition">Partition where new link is to be created.</param>
+		/// <param name="roleAssignments">List of relationship role assignments.</param>
+		public NestedClassHasProperties(DslModeling::Partition partition, params DslModeling::RoleAssignment[] roleAssignments)
+			: base(partition, roleAssignments, null)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="partition">Partition where new link is to be created.</param>
+		/// <param name="roleAssignments">List of relationship role assignments.</param>
+		/// <param name="propertyAssignments">List of properties assignments to set on the new link.</param>
+		public NestedClassHasProperties(DslModeling::Partition partition, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
+			: base(partition, roleAssignments, propertyAssignments)
+		{
+		}
+		#endregion
+		#region NestedClass domain role code
+		
+		/// <summary>
+		/// NestedClass domain role Id.
+		/// </summary>
+		public static readonly global::System.Guid NestedClassDomainRoleId = new global::System.Guid(0x6180382e, 0xdc27, 0x408f, 0x92, 0x93, 0x48, 0x63, 0xf8, 0x05, 0x4b, 0x67);
+		
+		/// <summary>
+		/// DomainRole NestedClass
+		/// Description for Altinoren.ActiveWriter.NestedClassHasProperties.NestedClass
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassHasProperties/NestedClass.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassHasProperties/NestedClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "Properties", PropertyDisplayNameKey="Altinoren.ActiveWriter.NestedClassHasProperties/NestedClass.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslModeling::DomainObjectId("6180382e-dc27-408f-9293-4863f8054b67")]
+		public virtual NestedClass NestedClass
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return (NestedClass)DslModeling::DomainRoleInfo.GetRolePlayer(this, NestedClassDomainRoleId);
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				DslModeling::DomainRoleInfo.SetRolePlayer(this, NestedClassDomainRoleId, value);
+			}
+		}
+				
+		#endregion
+		#region Static methods to access NestedClass of a ModelProperty
+		/// <summary>
+		/// Gets NestedClass.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static NestedClass GetNestedClass(ModelProperty element)
+		{
+			return DslModeling::DomainRoleInfo.GetLinkedElement(element, PropertyDomainRoleId) as NestedClass;
+		}
+		
+		/// <summary>
+		/// Sets NestedClass.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static void SetNestedClass(ModelProperty element, NestedClass newNestedClass)
+		{
+			DslModeling::DomainRoleInfo.SetLinkedElement(element, PropertyDomainRoleId, newNestedClass);
+		}
+		#endregion
+		#region Property domain role code
+		
+		/// <summary>
+		/// Property domain role Id.
+		/// </summary>
+		public static readonly global::System.Guid PropertyDomainRoleId = new global::System.Guid(0xa679ceaf, 0x60f0, 0x4a92, 0xad, 0x5b, 0x42, 0xab, 0x19, 0x7d, 0xe0, 0xcc);
+		
+		/// <summary>
+		/// DomainRole Property
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassHasProperties/Property.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassHasProperties/Property.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "NestedClass", PropertyDisplayNameKey="Altinoren.ActiveWriter.NestedClassHasProperties/Property.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroOne)]
+		[DslModeling::DomainObjectId("a679ceaf-60f0-4a92-ad5b-42ab197de0cc")]
+		public virtual ModelProperty Property
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return (ModelProperty)DslModeling::DomainRoleInfo.GetRolePlayer(this, PropertyDomainRoleId);
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				DslModeling::DomainRoleInfo.SetRolePlayer(this, PropertyDomainRoleId, value);
+			}
+		}
+				
+		#endregion
+		#region Static methods to access Properties of a NestedClass
+		/// <summary>
+		/// Gets a list of Properties.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static DslModeling::LinkedElementCollection<ModelProperty> GetProperties(NestedClass element)
+		{
+			return new DslModeling::LinkedElementCollection<ModelProperty>(element, NestedClassDomainRoleId);
+		}
+		#endregion
+		#region NestedClass link accessor
+		/// <summary>
+		/// Get the list of NestedClassHasProperties links to a NestedClass.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.NestedClassHasProperties> GetLinksToProperties ( global::Altinoren.ActiveWriter.NestedClass nestedClassInstance )
+		{
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.NestedClassHasProperties>(nestedClassInstance, global::Altinoren.ActiveWriter.NestedClassHasProperties.NestedClassDomainRoleId);
+		}
+		#endregion
+		#region Property link accessor
+		/// <summary>
+		/// Get the NestedClassHasProperties link to a ModelProperty.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static global::Altinoren.ActiveWriter.NestedClassHasProperties GetLinkToNestedClass (global::Altinoren.ActiveWriter.ModelProperty propertyInstance)
+		{
+			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.NestedClassHasProperties> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.NestedClassHasProperties>(propertyInstance, global::Altinoren.ActiveWriter.NestedClassHasProperties.PropertyDomainRoleId);
+			global::System.Diagnostics.Debug.Assert(links.Count <= 1, "Multiplicity of Property not obeyed.");
+			if ( links.Count == 0 )
+			{
+				return null;
+			}
+			else
+			{
+				return links[0];
+			}
+		}
+		#endregion
+		#region NestedClassHasProperties instance accessors
+		
+		/// <summary>
+		/// Get any NestedClassHasProperties links between a given NestedClass and a ModelProperty.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.NestedClassHasProperties> GetLinks( global::Altinoren.ActiveWriter.NestedClass source, global::Altinoren.ActiveWriter.ModelProperty target )
+		{
+			global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.NestedClassHasProperties> outLinks = new global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.NestedClassHasProperties>();
+			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.NestedClassHasProperties> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.NestedClassHasProperties>(source, global::Altinoren.ActiveWriter.NestedClassHasProperties.NestedClassDomainRoleId);
+			foreach ( global::Altinoren.ActiveWriter.NestedClassHasProperties link in links )
+			{
+				if ( target.Equals(link.Property) )
+				{
+					outLinks.Add(link);
+				}
+			}
+			return outLinks.AsReadOnly();
+		}
+		/// <summary>
+		/// Get the one NestedClassHasProperties link between a given NestedClassand a ModelProperty.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static global::Altinoren.ActiveWriter.NestedClassHasProperties GetLink( global::Altinoren.ActiveWriter.NestedClass source, global::Altinoren.ActiveWriter.ModelProperty target )
+		{
+			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.NestedClassHasProperties> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.NestedClassHasProperties>(source, global::Altinoren.ActiveWriter.NestedClassHasProperties.NestedClassDomainRoleId);
+			foreach ( global::Altinoren.ActiveWriter.NestedClassHasProperties link in links )
+			{
+				if ( target.Equals(link.Property) )
+				{
+					return link;
+				}
+			}
+			return null;
+		}
+		
+		#endregion
+	}
+}
+namespace Altinoren.ActiveWriter
+{
+	/// <summary>
+	/// DomainRelationship NestedClassReferencesModelClasses
+	/// </summary>
+	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[global::System.CLSCompliant(true)]
+	[DslModeling::DomainRelationship()]
+	[DslModeling::DomainObjectId("6d7cfc22-da01-49be-87ae-387c801c09a5")]
+	public partial class NestedClassReferencesModelClasses : DslModeling::ElementLink
+	{
+		#region Constructors, domain class Id
+		
+		/// <summary>
+		/// NestedClassReferencesModelClasses domain class Id.
+		/// </summary>
+		public static readonly new global::System.Guid DomainClassId = new global::System.Guid(0x6d7cfc22, 0xda01, 0x49be, 0x87, 0xae, 0x38, 0x7c, 0x80, 0x1c, 0x09, 0xa5);
+	
+				
+		/// <summary>
+		/// Constructor
+		/// Creates a NestedClassReferencesModelClasses link in the same Partition as the given NestedClass
+		/// </summary>
+		/// <param name="source">NestedClass to use as the source of the relationship.</param>
+		/// <param name="target">ModelClass to use as the target of the relationship.</param>
+		public NestedClassReferencesModelClasses(NestedClass source, ModelClass target)
+			: base((source != null ? source.Partition : null), new DslModeling::RoleAssignment[]{new DslModeling::RoleAssignment(NestedClassReferencesModelClasses.NestedClassDomainRoleId, source), new DslModeling::RoleAssignment(NestedClassReferencesModelClasses.ModelClassDomainRoleId, target)}, null)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="store">Store where new link is to be created.</param>
+		/// <param name="roleAssignments">List of relationship role assignments.</param>
+		public NestedClassReferencesModelClasses(DslModeling::Store store, params DslModeling::RoleAssignment[] roleAssignments)
+			: base(store != null ? store.DefaultPartition : null, roleAssignments, null)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="store">Store where new link is to be created.</param>
+		/// <param name="roleAssignments">List of relationship role assignments.</param>
+		/// <param name="propertyAssignments">List of properties assignments to set on the new link.</param>
+		public NestedClassReferencesModelClasses(DslModeling::Store store, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
+			: base(store != null ? store.DefaultPartition : null, roleAssignments, propertyAssignments)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="partition">Partition where new link is to be created.</param>
+		/// <param name="roleAssignments">List of relationship role assignments.</param>
+		public NestedClassReferencesModelClasses(DslModeling::Partition partition, params DslModeling::RoleAssignment[] roleAssignments)
+			: base(partition, roleAssignments, null)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="partition">Partition where new link is to be created.</param>
+		/// <param name="roleAssignments">List of relationship role assignments.</param>
+		/// <param name="propertyAssignments">List of properties assignments to set on the new link.</param>
+		public NestedClassReferencesModelClasses(DslModeling::Partition partition, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
+			: base(partition, roleAssignments, propertyAssignments)
+		{
+		}
+		#endregion
+		#region NestedClass domain role code
+		
+		/// <summary>
+		/// NestedClass domain role Id.
+		/// </summary>
+		public static readonly global::System.Guid NestedClassDomainRoleId = new global::System.Guid(0x9afdc90c, 0xc59b, 0x4a9e, 0x84, 0x8d, 0x7c, 0x82, 0xae, 0xd6, 0xcc, 0x3d);
+		
+		/// <summary>
+		/// DomainRole NestedClass
+		/// Description for
+		/// Altinoren.ActiveWriter.NestedClassReferencesModelClasses.NestedClass
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/NestedClass.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/NestedClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "ModelClasses", PropertyDisplayNameKey="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/NestedClass.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslModeling::DomainObjectId("9afdc90c-c59b-4a9e-848d-7c82aed6cc3d")]
+		public virtual NestedClass NestedClass
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return (NestedClass)DslModeling::DomainRoleInfo.GetRolePlayer(this, NestedClassDomainRoleId);
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				DslModeling::DomainRoleInfo.SetRolePlayer(this, NestedClassDomainRoleId, value);
+			}
+		}
+				
+		#endregion
+		#region Static methods to access NestedClasses of a ModelClass
+		/// <summary>
+		/// Gets a list of NestedClasses.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static DslModeling::LinkedElementCollection<NestedClass> GetNestedClasses(ModelClass element)
+		{
+			return new DslModeling::LinkedElementCollection<NestedClass>(element, ModelClassDomainRoleId);
+		}
+		#endregion
+		#region ModelClass domain role code
+		
+		/// <summary>
+		/// ModelClass domain role Id.
+		/// </summary>
+		public static readonly global::System.Guid ModelClassDomainRoleId = new global::System.Guid(0xc8a74401, 0x0517, 0x4a83, 0xb7, 0x99, 0x8c, 0x64, 0xc2, 0x6a, 0xf5, 0xa3);
+		
+		/// <summary>
+		/// DomainRole ModelClass
+		/// Description for
+		/// Altinoren.ActiveWriter.NestedClassReferencesModelClasses.ModelClass
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ModelClass.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ModelClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "NestedClasses", PropertyDisplayNameKey="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ModelClass.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslModeling::DomainObjectId("c8a74401-0517-4a83-b799-8c64c26af5a3")]
+		public virtual ModelClass ModelClass
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return (ModelClass)DslModeling::DomainRoleInfo.GetRolePlayer(this, ModelClassDomainRoleId);
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				DslModeling::DomainRoleInfo.SetRolePlayer(this, ModelClassDomainRoleId, value);
+			}
+		}
+				
+		#endregion
+		#region Static methods to access ModelClasses of a NestedClass
+		/// <summary>
+		/// Gets a list of ModelClasses.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static DslModeling::LinkedElementCollection<ModelClass> GetModelClasses(NestedClass element)
+		{
+			return new DslModeling::LinkedElementCollection<ModelClass>(element, NestedClassDomainRoleId);
+		}
+		#endregion
+		#region MapType domain property code
+		
+		/// <summary>
+		/// MapType domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid MapTypeDomainPropertyId = new global::System.Guid(0xf223ecda, 0x896f, 0x4951, 0xa5, 0x8d, 0xf4, 0x5b, 0x16, 0xc1, 0xf0, 0xbb);
+		
+		/// <summary>
+		/// Storage for MapType
+		/// </summary>
+		private global::System.String mapTypePropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of MapType domain property.
+		/// Allows one to reference a different type than the property type
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/MapType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/MapType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/MapType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainObjectId("f223ecda-896f-4951-a58d-f45b16c1f0bb")]
+		public global::System.String MapType
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return mapTypePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				MapTypePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the NestedClassReferencesModelClasses.MapType domain property.
+		/// </summary>
+		internal sealed partial class MapTypePropertyHandler : DslModeling::DomainPropertyValueHandler<NestedClassReferencesModelClasses, global::System.String>
+		{
+			private MapTypePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the NestedClassReferencesModelClasses.MapType domain property value handler.
+			/// </summary>
+			public static readonly MapTypePropertyHandler Instance = new MapTypePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the NestedClassReferencesModelClasses.MapType domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return MapTypeDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(NestedClassReferencesModelClasses element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.mapTypePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(NestedClassReferencesModelClasses element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.mapTypePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region Insert domain property code
+		
+		/// <summary>
+		/// Insert domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid InsertDomainPropertyId = new global::System.Guid(0x1f2d4b58, 0x7b2f, 0x4aff, 0xbe, 0xa9, 0x0b, 0xcf, 0xb5, 0x0b, 0x1a, 0x01);
+		
+		/// <summary>
+		/// Storage for Insert
+		/// </summary>
+		private global::System.Boolean insertPropertyStorage = true;
+		
+		/// <summary>
+		/// Gets or sets the value of Insert domain property.
+		/// Set to false to ignore this nested component when updating entities of this
+		/// ActiveRecord class.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Insert.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Insert.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Insert.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(true)]
+		[DslModeling::DomainObjectId("1f2d4b58-7b2f-4aff-bea9-0bcfb50b1a01")]
+		public global::System.Boolean Insert
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return insertPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				InsertPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the NestedClassReferencesModelClasses.Insert domain property.
+		/// </summary>
+		internal sealed partial class InsertPropertyHandler : DslModeling::DomainPropertyValueHandler<NestedClassReferencesModelClasses, global::System.Boolean>
+		{
+			private InsertPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the NestedClassReferencesModelClasses.Insert domain property value handler.
+			/// </summary>
+			public static readonly InsertPropertyHandler Instance = new InsertPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the NestedClassReferencesModelClasses.Insert domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return InsertDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.Boolean GetValue(NestedClassReferencesModelClasses element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.insertPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(NestedClassReferencesModelClasses element, global::System.Boolean newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.Boolean oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.insertPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region Update domain property code
+		
+		/// <summary>
+		/// Update domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid UpdateDomainPropertyId = new global::System.Guid(0xce949210, 0x8ff3, 0x45ab, 0xb8, 0xf9, 0xdf, 0x65, 0xba, 0x4b, 0x40, 0xef);
+		
+		/// <summary>
+		/// Storage for Update
+		/// </summary>
+		private global::System.Boolean updatePropertyStorage = true;
+		
+		/// <summary>
+		/// Gets or sets the value of Update domain property.
+		/// Description for Altinoren.ActiveWriter.NestedClassReferencesModelClasses.Update
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Update.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Update.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Update.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(true)]
+		[DslModeling::DomainObjectId("ce949210-8ff3-45ab-b8f9-df65ba4b40ef")]
+		public global::System.Boolean Update
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return updatePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				UpdatePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the NestedClassReferencesModelClasses.Update domain property.
+		/// </summary>
+		internal sealed partial class UpdatePropertyHandler : DslModeling::DomainPropertyValueHandler<NestedClassReferencesModelClasses, global::System.Boolean>
+		{
+			private UpdatePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the NestedClassReferencesModelClasses.Update domain property value handler.
+			/// </summary>
+			public static readonly UpdatePropertyHandler Instance = new UpdatePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the NestedClassReferencesModelClasses.Update domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return UpdateDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.Boolean GetValue(NestedClassReferencesModelClasses element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.updatePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(NestedClassReferencesModelClasses element, global::System.Boolean newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.Boolean oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.updatePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region ColumnPrefix domain property code
+		
+		/// <summary>
+		/// ColumnPrefix domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid ColumnPrefixDomainPropertyId = new global::System.Guid(0x3e791122, 0x9269, 0x440a, 0xab, 0x27, 0x35, 0xa3, 0x7e, 0x3b, 0xe3, 0x63);
+		
+		/// <summary>
+		/// Storage for ColumnPrefix
+		/// </summary>
+		private global::System.String columnPrefixPropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of ColumnPrefix domain property.
+		/// Set to false to ignore this nested component when inserting entities of this
+		/// ActiveRecord class.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ColumnPrefix.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ColumnPrefix.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ColumnPrefix.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainObjectId("3e791122-9269-440a-ab27-35a37e3be363")]
+		public global::System.String ColumnPrefix
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return columnPrefixPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				ColumnPrefixPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the NestedClassReferencesModelClasses.ColumnPrefix domain property.
+		/// </summary>
+		internal sealed partial class ColumnPrefixPropertyHandler : DslModeling::DomainPropertyValueHandler<NestedClassReferencesModelClasses, global::System.String>
+		{
+			private ColumnPrefixPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the NestedClassReferencesModelClasses.ColumnPrefix domain property value handler.
+			/// </summary>
+			public static readonly ColumnPrefixPropertyHandler Instance = new ColumnPrefixPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the NestedClassReferencesModelClasses.ColumnPrefix domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return ColumnPrefixDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(NestedClassReferencesModelClasses element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.columnPrefixPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(NestedClassReferencesModelClasses element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.columnPrefixPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region Description domain property code
+		
+		/// <summary>
+		/// Description domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid DescriptionDomainPropertyId = new global::System.Guid(0x9010a202, 0x2aaf, 0x4c97, 0xbd, 0x0f, 0x87, 0xd4, 0x81, 0x98, 0xdb, 0xc6);
+		
+		/// <summary>
+		/// Storage for Description
+		/// </summary>
+		private global::System.String descriptionPropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of Description domain property.
+		/// Description for nested property on the model class. This will appear in a
+		/// <summary> Xml comment.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Description.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Description.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Description.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainObjectId("9010a202-2aaf-4c97-bd0f-87d48198dbc6")]
+		public global::System.String Description
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return descriptionPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				DescriptionPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the NestedClassReferencesModelClasses.Description domain property.
+		/// </summary>
+		internal sealed partial class DescriptionPropertyHandler : DslModeling::DomainPropertyValueHandler<NestedClassReferencesModelClasses, global::System.String>
+		{
+			private DescriptionPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the NestedClassReferencesModelClasses.Description domain property value handler.
+			/// </summary>
+			public static readonly DescriptionPropertyHandler Instance = new DescriptionPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the NestedClassReferencesModelClasses.Description domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return DescriptionDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(NestedClassReferencesModelClasses element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.descriptionPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(NestedClassReferencesModelClasses element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.descriptionPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region NestedClass link accessor
+		/// <summary>
+		/// Get the list of NestedClassReferencesModelClasses links to a NestedClass.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses> GetLinksToModelClasses ( global::Altinoren.ActiveWriter.NestedClass nestedClassInstance )
+		{
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses>(nestedClassInstance, global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses.NestedClassDomainRoleId);
+		}
+		#endregion
+		#region ModelClass link accessor
+		/// <summary>
+		/// Get the list of NestedClassReferencesModelClasses links to a ModelClass.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses> GetLinksToNestedClasses ( global::Altinoren.ActiveWriter.ModelClass modelClassInstance )
+		{
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses>(modelClassInstance, global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses.ModelClassDomainRoleId);
+		}
+		#endregion
+		#region NestedClassReferencesModelClasses instance accessors
+		
+		/// <summary>
+		/// Get any NestedClassReferencesModelClasses links between a given NestedClass and a ModelClass.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses> GetLinks( global::Altinoren.ActiveWriter.NestedClass source, global::Altinoren.ActiveWriter.ModelClass target )
+		{
+			global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses> outLinks = new global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses>();
+			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses>(source, global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses.NestedClassDomainRoleId);
+			foreach ( global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses link in links )
+			{
+				if ( target.Equals(link.ModelClass) )
+				{
+					outLinks.Add(link);
+				}
+			}
+			return outLinks.AsReadOnly();
+		}
+		/// <summary>
+		/// Get the one NestedClassReferencesModelClasses link between a given NestedClassand a ModelClass.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses GetLink( global::Altinoren.ActiveWriter.NestedClass source, global::Altinoren.ActiveWriter.ModelClass target )
+		{
+			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses>(source, global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses.NestedClassDomainRoleId);
+			foreach ( global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses link in links )
+			{
+				if ( target.Equals(link.ModelClass) )
+				{
+					return link;
+				}
+			}
+			return null;
+		}
+		
+		#endregion
+	}
+}

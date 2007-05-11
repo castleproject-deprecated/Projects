@@ -20,6 +20,7 @@ namespace Altinoren.ActiveWriter
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using Microsoft.VisualStudio.Modeling.Validation;
+    using Altinoren.ActiveWriter.Validation;
 
     [ValidationState(ValidationState.Enabled)]
     public partial class ModelClass
@@ -142,7 +143,7 @@ namespace Altinoren.ActiveWriter
         [ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
         private void ValidateMultiplePrimaryKeys(ValidationContext context)
         {
-            if (Properties.Count > 0 && GetPrimaryKeyCount() > 1)
+            if (Properties.Count > 0 && ValidationHelper.GetPrimaryKeyCount(Properties) > 1)
                 context.LogError(
                     string.Format(
                         "Class {0} has multiple primary keys. Try using a composite key with multiple properties instead.",
@@ -152,7 +153,7 @@ namespace Altinoren.ActiveWriter
         [ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
         private void ValidateCompositeKeyWithSingleProperty(ValidationContext context)
         {
-            if (Properties.Count > 0 && GetCompositeKeyCount() == 1)
+            if (Properties.Count > 0 && ValidationHelper.GetCompositeKeyCount(Properties) == 1)
                 context.LogError(
                     string.Format(
                         "Class {0} has a composite key defined ona a single property. Use multiple properties for the composite key or try using a primary key instead.",
@@ -162,7 +163,7 @@ namespace Altinoren.ActiveWriter
         [ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
         private void ValidateBothPrimaryAndCompositeKey(ValidationContext context)
         {
-            if (Properties.Count > 0 && GetCompositeKeyCount() > 0 && GetPrimaryKeyCount() > 0)
+            if (Properties.Count > 0 && ValidationHelper.GetCompositeKeyCount(Properties) > 0 && ValidationHelper.GetPrimaryKeyCount(Properties) > 0)
                 context.LogError(
                     string.Format(
                         "Class {0} has both primary and composite key(s) defined. Try using either of them.",
@@ -172,7 +173,7 @@ namespace Altinoren.ActiveWriter
         [ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
         private void ValidateAllCompositeKeysHaveSameAccess(ValidationContext context)
         {
-            List<ModelProperty> composits = GetCompositeKeys();
+            List<ModelProperty> composits = ValidationHelper.GetCompositeKeys(Properties);
             
             if (composits.Count > 1)
             {
@@ -192,46 +193,11 @@ namespace Altinoren.ActiveWriter
         [ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
         private void ValidateMultipleDebuggerDisplays(ValidationContext context)
         {
-            if (Properties.Count > 0 && GetDebuggerDisplayCount() > 1)
+            if (Properties.Count > 0 && ValidationHelper.GetDebuggerDisplayCount(Properties) > 1)
                 context.LogError(
                     string.Format(
                         "Class {0} has multiple debugger display attributes set. Only one is allowed per class.",
                         Name), "AW001ValidateMultipleDebuggerDisplaysError", this);
-        }
-
-        private int GetPrimaryKeyCount()
-        {
-            return Properties.FindAll(
-                delegate(ModelProperty property)
-                    {
-                        return (property.KeyType == KeyType.PrimaryKey);
-                    }
-                ).Count;
-        }
-
-        private int GetCompositeKeyCount()
-        {
-            return GetCompositeKeys().Count;
-        }
-        
-        private List<ModelProperty> GetCompositeKeys()
-        {
-            return Properties.FindAll(
-                delegate(ModelProperty property)
-                    {
-                        return (property.KeyType == KeyType.CompositeKey);
-                    }
-                );
-        }
-
-        private int GetDebuggerDisplayCount()
-        {
-            return Properties.FindAll(
-                delegate(ModelProperty property)
-                {
-                    return (property.DebuggerDisplay == true);
-                }
-                ).Count;
         }
     }
 }

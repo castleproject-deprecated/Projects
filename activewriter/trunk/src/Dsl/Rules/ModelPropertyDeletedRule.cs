@@ -25,7 +25,8 @@ namespace Altinoren.ActiveWriter.Rules
 
             ModelProperty property = e.ModelElement as ModelProperty;
 
-            if (property != null)
+            // TODO: Add nested support
+            if (property != null && property.ModelClass != null)
             {
                 Transaction transaction = property.Store.TransactionManager.CurrentTransaction.TopLevelTransaction;
                 if (transaction != null && !transaction.IsSerializing && transaction.Context.ContextInfo.ContainsKey(property.Name))

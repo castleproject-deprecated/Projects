@@ -29,7 +29,11 @@ namespace Altinoren.ActiveWriter.Rules
                 Transaction transaction = property.Store.TransactionManager.CurrentTransaction.TopLevelTransaction;
                 
                 if (transaction != null && !transaction.IsSerializing)
-                    property.ModelClass.Model.OnModelPropertyChanged(e);    
+                {
+                    // TODO: Add nested class support
+                    if (property.ModelClass != null)
+                        property.ModelClass.Model.OnModelPropertyChanged(e);
+                }
             }
         }
     }

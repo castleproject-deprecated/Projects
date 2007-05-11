@@ -16,17 +16,32 @@ namespace Debugging.Tests {
     
     
     [ActiveRecord()]
-    public partial class VirtualPropertyTestClass : ActiveRecordBase<VirtualPropertyTestClass> {
+    public partial class NestingClass1 : ActiveRecordBase<NestingClass1> {
         
-        private string _virtualProperty;
+        private NestedClass1 _nestedClass1;
         
-        [Property(ColumnType="String")]
-        public virtual string VirtualProperty {
+        [Nested("columnPrefix", MapType=typeof(NestedClass1), Insert=true, Update=true)]
+        public virtual NestedClass1 NestedClass1 {
             get {
-                return this._virtualProperty;
+                return this._nestedClass1;
             }
             set {
-                this._virtualProperty = value;
+                this._nestedClass1 = value;
+            }
+        }
+    }
+    
+    public partial class NestedClass1 {
+        
+        private string _nestedClass1Property;
+        
+        [Property(ColumnType="String")]
+        public virtual string NestedClass1Property {
+            get {
+                return this._nestedClass1Property;
+            }
+            set {
+                this._nestedClass1Property = value;
             }
         }
     }

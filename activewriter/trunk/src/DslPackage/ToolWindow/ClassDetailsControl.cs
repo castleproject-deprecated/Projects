@@ -60,7 +60,8 @@ namespace Altinoren.ActiveWriter.ToolWindow
             propertyGrid.CancelEdit();
             propertyGrid.Rows.Clear();
             modelClass = modelClassToHandle;
-            propertyGrid.RowCount = modelClassToHandle.Properties.Count + 1;
+            if (modelClassToHandle != null && modelClassToHandle.Properties != null)
+                propertyGrid.RowCount = modelClassToHandle.Properties.Count + 1;
             propertyGrid.ClearSelection();
             propertyGrid.Visible = true;
         }

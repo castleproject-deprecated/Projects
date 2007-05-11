@@ -24,7 +24,8 @@ namespace Altinoren.ActiveWriter.Rules
             base.ElementDeleting(e);
 
             ModelProperty property = e.ModelElement as ModelProperty;
-            if (property != null)
+            // TODO: Add nested support
+            if (property != null && property.ModelClass != null)
             {
                 Transaction transaction = property.Store.TransactionManager.CurrentTransaction.TopLevelTransaction;
 

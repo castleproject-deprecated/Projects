@@ -53,6 +53,10 @@ namespace Altinoren.ActiveWriter
 		/// Toolbox item filter string used to identify OneToOneRelationship connector tool.
 		/// </summary>
 		public const string OneToOneRelationshipFilterString = "OneToOneRelationship.1.0";
+		/// <summary>
+		/// Toolbox item filter string used to identify NestedRelationship connector tool.
+		/// </summary>
+		public const string NestedRelationshipFilterString = "NestedRelationship.1.0";
 
 		private global::System.IServiceProvider sp;
 		
@@ -96,7 +100,7 @@ namespace Altinoren.ActiveWriter
 		{
 			get
 			{
-				return 4;
+				return 6;
 			}
 		}
 		
@@ -181,6 +185,37 @@ namespace Altinoren.ActiveWriter
 						new global::System.ComponentModel.ToolboxItemFilterAttribute[] { // Collection of ToolboxItemFilterAttribute objects that determine visibility of the toolbox item.
 							new global::System.ComponentModel.ToolboxItemFilterAttribute(ToolboxFilterString, global::System.ComponentModel.ToolboxItemFilterType.Require), 
 							new global::System.ComponentModel.ToolboxItemFilterAttribute(OneToOneRelationshipFilterString)
+						}));
+
+					// Add NestedClass shape tool.
+					toolboxItems.Add(new DslDesign::ModelingToolboxItem(
+						"NestedClassToolboxItem", // Unique identifier (non-localized) for the toolbox item.
+						5, // Position relative to other items in the same toolbox tab.
+						resourceManager.GetString("NestedClassToolboxItem", resourceCulture), // Localized display name for the item.
+						(global::System.Drawing.Bitmap)DslDiagrams::ImageHelper.GetImage(resourceManager.GetObject("NestedClassToolboxBitmap", resourceCulture)), // Image displayed next to the toolbox item.
+						"ActiveWriterToolboxTab", // Unique identifier (non-localized) for the toolbox item tab.
+						resourceManager.GetString("ActiveWriterToolboxTab", resourceCulture), // Localized display name for the toolbox tab.
+						"NestedClassF1Keyword", // F1 help keyword for the toolbox item.
+						resourceManager.GetString("NestedClassToolboxTooltip", resourceCulture), // Localized tooltip text for the toolbox item.
+						CreateElementToolPrototype(store, global::Altinoren.ActiveWriter.NestedClass.DomainClassId), // ElementGroupPrototype (data object) representing model element on the toolbox.
+						new global::System.ComponentModel.ToolboxItemFilterAttribute[] { // Collection of ToolboxItemFilterAttribute objects that determine visibility of the toolbox item.
+							new global::System.ComponentModel.ToolboxItemFilterAttribute(ToolboxFilterString, global::System.ComponentModel.ToolboxItemFilterType.Require) 
+						}));
+
+					// Add NestedRelationship connector tool.
+					toolboxItems.Add(new DslDesign::ModelingToolboxItem(
+						"NestedRelationshipToolboxItem", // Unique identifier (non-localized) for the toolbox item.
+						6, // Position relative to other items in the same toolbox tab.
+						resourceManager.GetString("NestedRelationshipToolboxItem", resourceCulture), // Localized display name for the item.
+						(global::System.Drawing.Bitmap)DslDiagrams::ImageHelper.GetImage(resourceManager.GetObject("NestedRelationshipToolboxBitmap", resourceCulture)), // Image displayed next to the toolbox item.				
+						"ActiveWriterToolboxTab", // Unique identifier (non-localized) for the toolbox item tab.
+						resourceManager.GetString("ActiveWriterToolboxTab", resourceCulture), // Localized display name for the toolbox tab.
+						"NestedRelationship", // F1 help keyword for the toolbox item.
+						resourceManager.GetString("NestedRelationshipToolboxTooltip", resourceCulture), // Localized tooltip text for the toolbox item.
+						null, // Connector toolbox items do not have an underlying data object.
+						new global::System.ComponentModel.ToolboxItemFilterAttribute[] { // Collection of ToolboxItemFilterAttribute objects that determine visibility of the toolbox item.
+							new global::System.ComponentModel.ToolboxItemFilterAttribute(ToolboxFilterString, global::System.ComponentModel.ToolboxItemFilterType.Require), 
+							new global::System.ComponentModel.ToolboxItemFilterAttribute(NestedRelationshipFilterString)
 						}));
 
 					t.Rollback();

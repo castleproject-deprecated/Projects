@@ -11,6 +11,7 @@
 namespace Debugging.Tests {
     using System;
     using System.Collections.Generic;
+    using System.Collections;
     using Castle.ActiveRecord;
     
     

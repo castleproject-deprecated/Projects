@@ -2030,6 +2030,20 @@ namespace Altinoren.ActiveWriter
 			}
 		}
 		#endregion
+		#region NestedClasses opposite domain role accessor
+		/// <summary>
+		/// Gets a list of NestedClasses.
+		/// Description for Altinoren.ActiveWriter.ModelHasNestedClasses.Model
+		/// </summary>
+		public virtual DslModeling::LinkedElementCollection<NestedClass> NestedClasses
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return new DslModeling::LinkedElementCollection<NestedClass>(this, global::Altinoren.ActiveWriter.ModelHasNestedClasses.ModelDomainRoleId);
+			}
+		}
+		#endregion
 		#region ElementGroupPrototype Merge methods
 		/// <summary>
 		/// Returns a value indicating whether the source element represented by the
@@ -2051,6 +2065,11 @@ namespace Altinoren.ActiveWriter
 				DslModeling::DomainClassInfo rootElementDomainInfo = this.Partition.DomainDataDirectory.GetDomainClass(rootElement.DomainClassId);
 				
 				if (rootElementDomainInfo.IsDerivedFrom(global::Altinoren.ActiveWriter.ModelClass.DomainClassId)) 
+				{
+					return true;
+				}
+				
+				if (rootElementDomainInfo.IsDerivedFrom(global::Altinoren.ActiveWriter.NestedClass.DomainClassId)) 
 				{
 					return true;
 				}
@@ -2087,6 +2106,15 @@ namespace Altinoren.ActiveWriter
 
 				return;
 			}
+				
+			global::Altinoren.ActiveWriter.NestedClass sourceNestedClass2 = sourceElement as global::Altinoren.ActiveWriter.NestedClass;
+			if (sourceNestedClass2 != null)
+			{
+				// Create link for path ModelHasNestedClasses.NestedClasses
+				this.NestedClasses.Add(sourceNestedClass2);
+
+				return;
+			}
 			// Fall through to base class if this class hasn't handled the merge.
 			base.MergeRelate(sourceElement, elementGroup);
 		}
@@ -2110,6 +2138,20 @@ namespace Altinoren.ActiveWriter
 				{
 					// Delete the link, but without possible delete propagation to the element since it's moving to a new location.
 					link.Delete(global::Altinoren.ActiveWriter.ModelHasClass.ModelDomainRoleId, global::Altinoren.ActiveWriter.ModelHasClass.ClassDomainRoleId);
+				}
+
+				return;
+			}
+				
+			global::Altinoren.ActiveWriter.NestedClass sourceNestedClass2 = sourceElement as global::Altinoren.ActiveWriter.NestedClass;
+			if (sourceNestedClass2 != null)
+			{
+				// Delete link for path ModelHasNestedClasses.NestedClasses
+				
+				foreach (DslModeling::ElementLink link in global::Altinoren.ActiveWriter.ModelHasNestedClasses.GetLinks((global::Altinoren.ActiveWriter.Model)this, sourceNestedClass2))
+				{
+					// Delete the link, but without possible delete propagation to the element since it's moving to a new location.
+					link.Delete(global::Altinoren.ActiveWriter.ModelHasNestedClasses.ModelDomainRoleId, global::Altinoren.ActiveWriter.ModelHasNestedClasses.NestedClassDomainRoleId);
 				}
 
 				return;
@@ -4178,6 +4220,21 @@ namespace Altinoren.ActiveWriter
 			get
 			{
 				return new DslModeling::LinkedElementCollection<ModelClass>(this, global::Altinoren.ActiveWriter.OneToOneRelation.TargetDomainRoleId);
+			}
+		}
+		#endregion
+		#region NestedClasses opposite domain role accessor
+		/// <summary>
+		/// Gets a list of NestedClasses.
+		/// Description for
+		/// Altinoren.ActiveWriter.NestedClassReferencesModelClasses.ModelClass
+		/// </summary>
+		public virtual DslModeling::LinkedElementCollection<NestedClass> NestedClasses
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return new DslModeling::LinkedElementCollection<NestedClass>(this, global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses.ModelClassDomainRoleId);
 			}
 		}
 		#endregion
@@ -6266,6 +6323,24 @@ namespace Altinoren.ActiveWriter
 			}
 		}
 		#endregion
+		#region NestedClass opposite domain role accessor
+		/// <summary>
+		/// Gets or sets NestedClass.
+		/// </summary>
+		public virtual NestedClass NestedClass
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return DslModeling::DomainRoleInfo.GetLinkedElement(this, global::Altinoren.ActiveWriter.NestedClassHasProperties.PropertyDomainRoleId) as NestedClass;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				DslModeling::DomainRoleInfo.SetLinkedElement(this, global::Altinoren.ActiveWriter.NestedClassHasProperties.PropertyDomainRoleId, value);
+			}
+		}
+		#endregion
 	}
 }
 namespace Altinoren.ActiveWriter
@@ -6676,6 +6751,182 @@ namespace Altinoren.ActiveWriter
 			}
 		}
 		
+		#endregion
+	}
+}
+namespace Altinoren.ActiveWriter
+{
+	/// <summary>
+	/// DomainClass NestedClass
+	/// Description for Altinoren.ActiveWriter.NestedClass
+	/// </summary>
+	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClass.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[global::System.CLSCompliant(true)]
+	[DslModeling::DomainObjectId("0df14a30-0137-4eb3-9617-f0d296e797db")]
+	public partial class NestedClass : NamedElement
+	{
+		#region Constructors, domain class Id
+	
+		/// <summary>
+		/// NestedClass domain class Id.
+		/// </summary>
+		public static readonly new global::System.Guid DomainClassId = new global::System.Guid(0x0df14a30, 0x0137, 0x4eb3, 0x96, 0x17, 0xf0, 0xd2, 0x96, 0xe7, 0x97, 0xdb);
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="store">Store where new element is to be created.</param>
+		/// <param name="propertyAssignments">List of domain property id/value pairs to set once the element is created.</param>
+		public NestedClass(DslModeling::Store store, params DslModeling::PropertyAssignment[] propertyAssignments)
+			: this(store != null ? store.DefaultPartition : null, propertyAssignments)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="partition">Partition where new element is to be created.</param>
+		/// <param name="propertyAssignments">List of domain property id/value pairs to set once the element is created.</param>
+		public NestedClass(DslModeling::Partition partition, params DslModeling::PropertyAssignment[] propertyAssignments)
+			: base(partition, propertyAssignments)
+		{
+		}
+		#endregion
+		#region Model opposite domain role accessor
+		/// <summary>
+		/// Gets or sets Model.
+		/// Description for Altinoren.ActiveWriter.ModelHasNestedClasses.NestedClass
+		/// </summary>
+		public virtual Model Model
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return DslModeling::DomainRoleInfo.GetLinkedElement(this, global::Altinoren.ActiveWriter.ModelHasNestedClasses.NestedClassDomainRoleId) as Model;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				DslModeling::DomainRoleInfo.SetLinkedElement(this, global::Altinoren.ActiveWriter.ModelHasNestedClasses.NestedClassDomainRoleId, value);
+			}
+		}
+		#endregion
+		#region Properties opposite domain role accessor
+		/// <summary>
+		/// Gets a list of Properties.
+		/// Description for Altinoren.ActiveWriter.NestedClassHasProperties.NestedClass
+		/// </summary>
+		public virtual DslModeling::LinkedElementCollection<ModelProperty> Properties
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return new DslModeling::LinkedElementCollection<ModelProperty>(this, global::Altinoren.ActiveWriter.NestedClassHasProperties.NestedClassDomainRoleId);
+			}
+		}
+		#endregion
+		#region ModelClasses opposite domain role accessor
+		/// <summary>
+		/// Gets a list of ModelClasses.
+		/// Description for
+		/// Altinoren.ActiveWriter.NestedClassReferencesModelClasses.NestedClass
+		/// </summary>
+		public virtual DslModeling::LinkedElementCollection<ModelClass> ModelClasses
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return new DslModeling::LinkedElementCollection<ModelClass>(this, global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses.NestedClassDomainRoleId);
+			}
+		}
+		#endregion
+		#region ElementGroupPrototype Merge methods
+		/// <summary>
+		/// Returns a value indicating whether the source element represented by the
+		/// specified root ProtoElement can be added to this element.
+		/// </summary>
+		/// <param name="rootElement">
+		/// The root ProtoElement representing a source element.  This can be null, 
+		/// in which case the ElementGroupPrototype does not contain an ProtoElements
+		/// and the code should inspect the ElementGroupPrototype context information.
+		/// </param>
+		/// <param name="elementGroupPrototype">The ElementGroupPrototype that contains the root ProtoElement.</param>
+		/// <returns>true if the source element represented by the ProtoElement can be added to this target element.</returns>
+		protected override bool CanMerge(DslModeling::ProtoElementBase rootElement, DslModeling::ElementGroupPrototype elementGroupPrototype)
+		{
+			if ( elementGroupPrototype == null ) throw new global::System.ArgumentNullException("elementGroupPrototype");
+			
+			if (rootElement != null)
+			{
+				DslModeling::DomainClassInfo rootElementDomainInfo = this.Partition.DomainDataDirectory.GetDomainClass(rootElement.DomainClassId);
+				
+				if (rootElementDomainInfo.IsDerivedFrom(global::Altinoren.ActiveWriter.ModelProperty.DomainClassId)) 
+				{
+					return true;
+				}
+			}
+			return base.CanMerge(rootElement, elementGroupPrototype);
+		}
+		
+		/// <summary>
+		/// Called by the Merge process to create a relationship between 
+		/// this target element and the specified source element. 
+		/// Typically, a parent-child relationship is established
+		/// between the target element (the parent) and the source element 
+		/// (the child), but any relationship can be established.
+		/// </summary>
+		/// <param name="sourceElement">The element that is to be related to this model element.</param>
+		/// <param name="elementGroup">The group of source ModelElements that have been rehydrated into the target store.</param>
+		/// <remarks>
+		/// This method is overriden to create the relationship between the target element and the specified source element.
+		/// The base method does nothing.
+		/// </remarks>
+		protected override void MergeRelate(DslModeling::ModelElement sourceElement, DslModeling::ElementGroup elementGroup)
+		{
+			// In general, sourceElement is allowed to be null, meaning that the elementGroup must be parsed for special cases.
+			// However this is not supported in generated code.  Use double-deriving on this class and then override MergeRelate completely if you 
+			// need to support this case.
+			if ( sourceElement == null ) throw new global::System.ArgumentNullException("sourceElement");
+		
+				
+			global::Altinoren.ActiveWriter.ModelProperty sourceModelProperty1 = sourceElement as global::Altinoren.ActiveWriter.ModelProperty;
+			if (sourceModelProperty1 != null)
+			{
+				// Create link for path NestedClassHasProperties.Properties
+				this.Properties.Add(sourceModelProperty1);
+
+				return;
+			}
+			// Fall through to base class if this class hasn't handled the merge.
+			base.MergeRelate(sourceElement, elementGroup);
+		}
+		
+		/// <summary>
+		/// Performs operation opposite to MergeRelate - i.e. disconnects a given
+		/// element from the current one (removes links created by MergeRelate).
+		/// </summary>
+		/// <param name="sourceElement">Element to be unmerged/disconnected.</param>
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily")]
+		protected override void MergeDisconnect(DslModeling::ModelElement sourceElement)
+		{
+			if (sourceElement == null) throw new global::System.ArgumentNullException("sourceElement");
+				
+			global::Altinoren.ActiveWriter.ModelProperty sourceModelProperty1 = sourceElement as global::Altinoren.ActiveWriter.ModelProperty;
+			if (sourceModelProperty1 != null)
+			{
+				// Delete link for path NestedClassHasProperties.Properties
+				
+				foreach (DslModeling::ElementLink link in global::Altinoren.ActiveWriter.NestedClassHasProperties.GetLinks((global::Altinoren.ActiveWriter.NestedClass)this, sourceModelProperty1))
+				{
+					// Delete the link, but without possible delete propagation to the element since it's moving to a new location.
+					link.Delete(global::Altinoren.ActiveWriter.NestedClassHasProperties.NestedClassDomainRoleId, global::Altinoren.ActiveWriter.NestedClassHasProperties.PropertyDomainRoleId);
+				}
+
+				return;
+			}
+			// Fall through to base class if this class hasn't handled the unmerge.
+			base.MergeDisconnect(sourceElement);
+		}
 		#endregion
 	}
 }

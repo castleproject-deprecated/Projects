@@ -124,6 +124,14 @@
             <DomainPath>ModelHasClass.Classes</DomainPath>
           </LinkCreationPaths>
         </ElementMergeDirective>
+        <ElementMergeDirective>
+          <Index>
+            <DomainClassMoniker Name="NestedClass" />
+          </Index>
+          <LinkCreationPaths>
+            <DomainPath>ModelHasNestedClasses.NestedClasses</DomainPath>
+          </LinkCreationPaths>
+        </ElementMergeDirective>
       </ElementMergeDirectives>
     </DomainClass>
     <DomainClass Id="38be3d51-c07f-4b6c-b05a-42f20848e9e2" Description="A class of the domain" Name="ModelClass" DisplayName="Model Class" Namespace="Altinoren.ActiveWriter">
@@ -407,6 +415,21 @@
           </Type>
         </DomainProperty>
       </Properties>
+    </DomainClass>
+    <DomainClass Id="0df14a30-0137-4eb3-9617-f0d296e797db" Description="Description for Altinoren.ActiveWriter.NestedClass" Name="NestedClass" DisplayName="Nested Class" Namespace="Altinoren.ActiveWriter">
+      <BaseClass>
+        <DomainClassMoniker Name="NamedElement" />
+      </BaseClass>
+      <ElementMergeDirectives>
+        <ElementMergeDirective>
+          <Index>
+            <DomainClassMoniker Name="ModelProperty" />
+          </Index>
+          <LinkCreationPaths>
+            <DomainPath>NestedClassHasProperties.Properties</DomainPath>
+          </LinkCreationPaths>
+        </ElementMergeDirective>
+      </ElementMergeDirectives>
     </DomainClass>
   </Classes>
   <Relationships>
@@ -891,6 +914,81 @@
         </DomainRole>
       </Target>
     </DomainRelationship>
+    <DomainRelationship Id="b52af8b1-d8e4-4df3-9ccc-aed68d8c50f6" Description="Description for Altinoren.ActiveWriter.ModelHasNestedClasses" Name="ModelHasNestedClasses" DisplayName="Model Has Nested Classes" Namespace="Altinoren.ActiveWriter" IsEmbedding="true">
+      <Source>
+        <DomainRole Id="aa430439-9ab3-4298-9636-53d2f9774d04" Description="Description for Altinoren.ActiveWriter.ModelHasNestedClasses.Model" Name="Model" DisplayName="Model" PropertyName="NestedClasses" PropertyDisplayName="Nested Classes">
+          <RolePlayer>
+            <DomainClassMoniker Name="Model" />
+          </RolePlayer>
+        </DomainRole>
+      </Source>
+      <Target>
+        <DomainRole Id="6948fc5c-a899-4a5b-91a9-9650e8d27e3b" Description="Description for Altinoren.ActiveWriter.ModelHasNestedClasses.NestedClass" Name="NestedClass" DisplayName="Nested Class" PropertyName="Model" Multiplicity="One" PropagatesDelete="true" PropagatesCopy="true" PropertyDisplayName="Model">
+          <RolePlayer>
+            <DomainClassMoniker Name="NestedClass" />
+          </RolePlayer>
+        </DomainRole>
+      </Target>
+    </DomainRelationship>
+    <DomainRelationship Id="43b9347e-1b5e-4727-b8eb-8ce53dfe040d" Description="Description for Altinoren.ActiveWriter.NestedClassHasProperties" Name="NestedClassHasProperties" DisplayName="Nested Class Has Properties" Namespace="Altinoren.ActiveWriter" IsEmbedding="true">
+      <Source>
+        <DomainRole Id="6180382e-dc27-408f-9293-4863f8054b67" Description="Description for Altinoren.ActiveWriter.NestedClassHasProperties.NestedClass" Name="NestedClass" DisplayName="Nested Class" PropertyName="Properties" PropertyDisplayName="Properties">
+          <RolePlayer>
+            <DomainClassMoniker Name="NestedClass" />
+          </RolePlayer>
+        </DomainRole>
+      </Source>
+      <Target>
+        <DomainRole Id="a679ceaf-60f0-4a92-ad5b-42ab197de0cc" Description="" Name="Property" DisplayName="Property" PropertyName="NestedClass" Multiplicity="ZeroOne" PropertyDisplayName="Nested Class">
+          <RolePlayer>
+            <DomainClassMoniker Name="ModelProperty" />
+          </RolePlayer>
+        </DomainRole>
+      </Target>
+    </DomainRelationship>
+    <DomainRelationship Id="6d7cfc22-da01-49be-87ae-387c801c09a5" Description="" Name="NestedClassReferencesModelClasses" DisplayName="Nested Class References Model Classes" Namespace="Altinoren.ActiveWriter">
+      <Properties>
+        <DomainProperty Id="f223ecda-896f-4951-a58d-f45b16c1f0bb" Description="Allows one to reference a different type than the property type" Name="MapType" DisplayName="Map Type" Category="ActiveRecord">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="1f2d4b58-7b2f-4aff-bea9-0bcfb50b1a01" Description="Set to false to ignore this nested component when updating entities of this ActiveRecord class." Name="Insert" DisplayName="Insert" DefaultValue="true" Category="ActiveRecord">
+          <Type>
+            <ExternalTypeMoniker Name="/System/Boolean" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="ce949210-8ff3-45ab-b8f9-df65ba4b40ef" Description="Description for Altinoren.ActiveWriter.NestedClassReferencesModelClasses.Update" Name="Update" DisplayName="Update" DefaultValue="true" Category="ActiveRecord">
+          <Type>
+            <ExternalTypeMoniker Name="/System/Boolean" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="3e791122-9269-440a-ab27-35a37e3be363" Description="Set to false to ignore this nested component when inserting entities of this ActiveRecord class." Name="ColumnPrefix" DisplayName="Column Prefix" Category="ActiveRecord">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="9010a202-2aaf-4c97-bd0f-87d48198dbc6" Description="Description for nested property on the model class. This will appear in a &lt;summary&gt; Xml comment." Name="Description" DisplayName="Description" Category="Code Generation">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+      </Properties>
+      <Source>
+        <DomainRole Id="9afdc90c-c59b-4a9e-848d-7c82aed6cc3d" Description="Description for Altinoren.ActiveWriter.NestedClassReferencesModelClasses.NestedClass" Name="NestedClass" DisplayName="Nested Class" PropertyName="ModelClasses" PropertyDisplayName="Model Classes">
+          <RolePlayer>
+            <DomainClassMoniker Name="NestedClass" />
+          </RolePlayer>
+        </DomainRole>
+      </Source>
+      <Target>
+        <DomainRole Id="c8a74401-0517-4a83-b799-8c64c26af5a3" Description="Description for Altinoren.ActiveWriter.NestedClassReferencesModelClasses.ModelClass" Name="ModelClass" DisplayName="Model Class" PropertyName="NestedClasses" PropertyDisplayName="Nested Classes">
+          <RolePlayer>
+            <DomainClassMoniker Name="ModelClass" />
+          </RolePlayer>
+        </DomainRole>
+      </Target>
+    </DomainRelationship>
   </Relationships>
   <Types>
     <ExternalType Name="DateTime" Namespace="System" />
@@ -1090,6 +1188,7 @@
         <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritableBoolean.False" Name="False" Value="" />
       </Literals>
     </DomainEnumeration>
+    <DomainEnumeration Name="DomainEnumeration1" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.DomainEnumeration1" />
   </Types>
   <Shapes>
     <CompartmentShape Id="ca45d586-12d1-4f5d-99c7-83c1eb0e61eb" Description="" Name="ClassShape" DisplayName="Class Shape" Namespace="Altinoren.ActiveWriter" GeneratesDoubleDerived="true" FixedTooltipText="Class Shape" FillColor="LightSteelBlue" InitialHeight="0.4" Geometry="RoundedRectangle">
@@ -1107,9 +1206,18 @@
       </ShapeHasDecorators>
       <Compartment Name="Properties" Title="Properties" />
     </CompartmentShape>
+    <CompartmentShape Id="db37440f-1f67-41af-869d-fb873cfa72a1" Description="" Name="NestedClassShape" DisplayName="Nested Class Shape" Namespace="Altinoren.ActiveWriter" GeneratesDoubleDerived="true" FixedTooltipText="Nested Class Shape" FillColor="Khaki" InitialHeight="0.4" Geometry="RoundedRectangle">
+      <ShapeHasDecorators Position="InnerTopCenter" HorizontalOffset="0" VerticalOffset="0">
+        <TextDecorator Name="Name" DisplayName="Name" DefaultText="Name" />
+      </ShapeHasDecorators>
+      <ShapeHasDecorators Position="InnerTopRight" HorizontalOffset="0" VerticalOffset="0">
+        <ExpandCollapseDecorator Name="ExpandCollapse" DisplayName="Expand Collapse" />
+      </ShapeHasDecorators>
+      <Compartment Name="Properties" Title="Properties" />
+    </CompartmentShape>
   </Shapes>
   <Connectors>
-    <Connector Id="e7702e83-2753-42c9-85ce-3a19239d6012" Description="Description for Altinoren.ActiveWriter.ManyToOneConnector" Name="ManyToOneConnector" DisplayName="Many To One Connector" Namespace="Altinoren.ActiveWriter" FixedTooltipText="Many To One Connector" SourceEndStyle="EmptyDiamond" TargetEndStyle="EmptyArrow" Thickness="0.01">
+    <Connector Id="e7702e83-2753-42c9-85ce-3a19239d6012" Description="" Name="ManyToOneConnector" DisplayName="Many To One Connector" Namespace="Altinoren.ActiveWriter" FixedTooltipText="Many To One Connector" SourceEndStyle="EmptyDiamond" TargetEndStyle="EmptyArrow" Thickness="0.01">
       <ConnectorHasDecorators Position="TargetTop" OffsetFromShape="0" OffsetFromLine="0">
         <TextDecorator Name="One" DisplayName="One" DefaultText="1" />
       </ConnectorHasDecorators>
@@ -1117,7 +1225,7 @@
         <TextDecorator Name="Many" DisplayName="Many" DefaultText="n" />
       </ConnectorHasDecorators>
     </Connector>
-    <Connector Id="2c40f7b4-090f-4cc2-802e-1aa792bf4785" Description="Description for Altinoren.ActiveWriter.ManyToManyConnector" Name="ManyToManyConnector" DisplayName="Many To Many Connector" Namespace="Altinoren.ActiveWriter" FixedTooltipText="Many To Many Connector" SourceEndStyle="EmptyDiamond" TargetEndStyle="EmptyDiamond" Thickness="0.01">
+    <Connector Id="2c40f7b4-090f-4cc2-802e-1aa792bf4785" Description="" Name="ManyToManyConnector" DisplayName="Many To Many Connector" Namespace="Altinoren.ActiveWriter" FixedTooltipText="Many To Many Connector" SourceEndStyle="EmptyDiamond" TargetEndStyle="EmptyDiamond" Thickness="0.01">
       <ConnectorHasDecorators Position="SourceTop" OffsetFromShape="0" OffsetFromLine="0">
         <TextDecorator Name="ManySource" DisplayName="Many Source" DefaultText="n" />
       </ConnectorHasDecorators>
@@ -1131,6 +1239,11 @@
       </ConnectorHasDecorators>
       <ConnectorHasDecorators Position="TargetTop" OffsetFromShape="0" OffsetFromLine="0">
         <TextDecorator Name="OneTarget" DisplayName="One Target" DefaultText="1" />
+      </ConnectorHasDecorators>
+    </Connector>
+    <Connector Id="6fe0ecce-c266-4750-b28b-2e4e73e19800" Description="Associates a domain class with a nested class, representing an extracted subset of repeating properties for multiple classes." Name="NestedConnector" DisplayName="Nested Connector" Namespace="Altinoren.ActiveWriter" FixedTooltipText="Nested Connector" DashStyle="Dot" TargetEndStyle="HollowArrow" Thickness="0.01">
+      <ConnectorHasDecorators Position="SourceTop" OffsetFromShape="0" OffsetFromLine="0">
+        <TextDecorator Name="Nested" DisplayName="Nested" DefaultText="Nested" />
       </ConnectorHasDecorators>
     </Connector>
   </Connectors>
@@ -1208,6 +1321,9 @@
           <XmlPropertyData XmlName="additionalImports" Representation="Element">
             <DomainPropertyMoniker Name="Model/AdditionalImports" />
           </XmlPropertyData>
+          <XmlRelationshipData RoleElementName="nestedClasses">
+            <DomainRelationshipMoniker Name="ModelHasNestedClasses" />
+          </XmlRelationshipData>
         </ElementData>
       </XmlClassData>
       <XmlClassData TypeName="ModelClass" MonikerAttributeName="" MonikerElementName="modelClassMoniker" ElementName="modelClass" MonikerTypeName="ModelClassMoniker">
@@ -1659,6 +1775,49 @@
       <XmlClassData TypeName="OneToOneConnector" MonikerAttributeName="" MonikerElementName="oneToOneConnectorMoniker" ElementName="oneToOneConnector" MonikerTypeName="OneToOneConnectorMoniker">
         <ConnectorMoniker Name="OneToOneConnector" />
       </XmlClassData>
+      <XmlClassData TypeName="NestedClass" MonikerAttributeName="" MonikerElementName="nestedClassMoniker" ElementName="nestedClass" MonikerTypeName="NestedClassMoniker">
+        <DomainClassMoniker Name="NestedClass" />
+        <ElementData>
+          <XmlRelationshipData RoleElementName="properties">
+            <DomainRelationshipMoniker Name="NestedClassHasProperties" />
+          </XmlRelationshipData>
+          <XmlRelationshipData UseFullForm="true" RoleElementName="modelClasses">
+            <DomainRelationshipMoniker Name="NestedClassReferencesModelClasses" />
+          </XmlRelationshipData>
+        </ElementData>
+      </XmlClassData>
+      <XmlClassData TypeName="ModelHasNestedClasses" MonikerAttributeName="" MonikerElementName="modelHasNestedClassesMoniker" ElementName="modelHasNestedClasses" MonikerTypeName="ModelHasNestedClassesMoniker">
+        <DomainRelationshipMoniker Name="ModelHasNestedClasses" />
+      </XmlClassData>
+      <XmlClassData TypeName="NestedClassShape" MonikerAttributeName="" MonikerElementName="nestedClassShapeMoniker" ElementName="nestedClassShape" MonikerTypeName="NestedClassShapeMoniker">
+        <CompartmentShapeMoniker Name="NestedClassShape" />
+      </XmlClassData>
+      <XmlClassData TypeName="NestedClassHasProperties" MonikerAttributeName="" MonikerElementName="nestedClassHasPropertiesMoniker" ElementName="nestedClassHasProperties" MonikerTypeName="NestedClassHasPropertiesMoniker">
+        <DomainRelationshipMoniker Name="NestedClassHasProperties" />
+      </XmlClassData>
+      <XmlClassData TypeName="NestedConnector" MonikerAttributeName="" MonikerElementName="nestedConnectorMoniker" ElementName="nestedConnector" MonikerTypeName="NestedConnectorMoniker">
+        <ConnectorMoniker Name="NestedConnector" />
+      </XmlClassData>
+      <XmlClassData TypeName="NestedClassReferencesModelClasses" MonikerAttributeName="" MonikerElementName="nestedClassReferencesModelClassesMoniker" ElementName="nestedClassReferencesModelClasses" MonikerTypeName="NestedClassReferencesModelClassesMoniker">
+        <DomainRelationshipMoniker Name="NestedClassReferencesModelClasses" />
+        <ElementData>
+          <XmlPropertyData XmlName="mapType">
+            <DomainPropertyMoniker Name="NestedClassReferencesModelClasses/MapType" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="insert">
+            <DomainPropertyMoniker Name="NestedClassReferencesModelClasses/Insert" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="update">
+            <DomainPropertyMoniker Name="NestedClassReferencesModelClasses/Update" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="columnPrefix">
+            <DomainPropertyMoniker Name="NestedClassReferencesModelClasses/ColumnPrefix" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="description">
+            <DomainPropertyMoniker Name="NestedClassReferencesModelClasses/Description" />
+          </XmlPropertyData>
+        </ElementData>
+      </XmlClassData>
     </ClassData>
   </XmlSerializationBehavior>
   <ExplorerBehavior Name="ActiveWriterExplorer" />
@@ -1741,8 +1900,27 @@
         </TargetDirectives>
       </LinkConnectDirective>
     </ConnectionBuilder>
+    <ConnectionBuilder Name="NestedClassReferencesModelClassesBuilder">
+      <LinkConnectDirective>
+        <DomainRelationshipMoniker Name="NestedClassReferencesModelClasses" />
+        <SourceDirectives>
+          <RolePlayerConnectDirective>
+            <AcceptingClass>
+              <DomainClassMoniker Name="NestedClass" />
+            </AcceptingClass>
+          </RolePlayerConnectDirective>
+        </SourceDirectives>
+        <TargetDirectives>
+          <RolePlayerConnectDirective>
+            <AcceptingClass>
+              <DomainClassMoniker Name="ModelClass" />
+            </AcceptingClass>
+          </RolePlayerConnectDirective>
+        </TargetDirectives>
+      </LinkConnectDirective>
+    </ConnectionBuilder>
   </ConnectionBuilders>
-  <Diagram Id="d25f93b4-c78e-4d22-9d48-ce498e8c1e58" Description="Description for Altinoren.ActiveWriter.ActiveRecordMapping" Name="ActiveRecordMapping" DisplayName="Active Record Mapping" Namespace="Altinoren.ActiveWriter">
+  <Diagram Id="d25f93b4-c78e-4d22-9d48-ce498e8c1e58" Description="" Name="ActiveRecordMapping" DisplayName="Active Record Mapping" Namespace="Altinoren.ActiveWriter">
     <Class>
       <DomainClassMoniker Name="Model" />
     </Class>
@@ -1791,6 +1969,32 @@
           </PropertyDisplayed>
         </CompartmentMap>
       </CompartmentShapeMap>
+      <CompartmentShapeMap>
+        <DomainClassMoniker Name="NestedClass" />
+        <ParentElementPath>
+          <DomainPath>ModelHasNestedClasses.Model/!Model</DomainPath>
+        </ParentElementPath>
+        <DecoratorMap>
+          <TextDecoratorMoniker Name="NestedClassShape/Name" />
+          <PropertyDisplayed>
+            <PropertyPath>
+              <DomainPropertyMoniker Name="NamedElement/Name" />
+            </PropertyPath>
+          </PropertyDisplayed>
+        </DecoratorMap>
+        <CompartmentShapeMoniker Name="NestedClassShape" />
+        <CompartmentMap>
+          <CompartmentMoniker Name="NestedClassShape/Properties" />
+          <ElementsDisplayed>
+            <DomainPath>NestedClassHasProperties.Properties/!Property</DomainPath>
+          </ElementsDisplayed>
+          <PropertyDisplayed>
+            <PropertyPath>
+              <DomainPropertyMoniker Name="NamedElement/Name" />
+            </PropertyPath>
+          </PropertyDisplayed>
+        </CompartmentMap>
+      </CompartmentShapeMap>
     </ShapeMaps>
     <ConnectorMaps>
       <ConnectorMap>
@@ -1805,6 +2009,10 @@
         <ConnectorMoniker Name="OneToOneConnector" />
         <DomainRelationshipMoniker Name="OneToOneRelation" />
       </ConnectorMap>
+      <ConnectorMap>
+        <ConnectorMoniker Name="NestedConnector" />
+        <DomainRelationshipMoniker Name="NestedClassReferencesModelClasses" />
+      </ConnectorMap>
     </ConnectorMaps>
   </Diagram>
   <Designer FileExtension="actiw" EditorGuid="afa967d1-99df-4330-a1d6-a96343c24786">
@@ -1815,7 +2023,7 @@
       <XmlSerializationBehaviorMoniker Name="ActiveWriterSerializationBehavior" />
     </XmlSerializationDefinition>
     <ToolboxTab TabText="ActiveWriter">
-      <ElementTool Name="Class" ToolboxIcon="Resources\ClassTool.bmp" Caption="Class" Tooltip="Create a Domain class" HelpKeyword="CreateClassF1Keyword">
+      <ElementTool Name="Class" ToolboxIcon="Resources\ClassTool.bmp" Caption="Class" Tooltip="Create a Domain Class" HelpKeyword="CreateClassF1Keyword">
         <DomainClassMoniker Name="ModelClass" />
       </ElementTool>
       <ConnectionTool Name="ManyToOneRelationship" ToolboxIcon="Resources\Connector12n.bmp" Caption="Many To One Relationship" Tooltip="Drag between classes to create a many to one relationship" HelpKeyword="ConnectRelationF1Keyword">
@@ -1826,6 +2034,12 @@
       </ConnectionTool>
       <ConnectionTool Name="OneToOneRelationship" ToolboxIcon="Resources\Connector121.bmp" Caption="One To One Relationship" Tooltip="Drag between classes to create a one to one relationship" HelpKeyword="OneToOneRelationship">
         <ConnectionBuilderMoniker Name="ActiveWriter/OneToOneRelationBuilder" />
+      </ConnectionTool>
+      <ElementTool Name="NestedClass" ToolboxIcon="Resources\ClassTool.bmp" Caption="Nested Class" Tooltip="Create a Nested Class" HelpKeyword="NestedClassF1Keyword">
+        <DomainClassMoniker Name="NestedClass" />
+      </ElementTool>
+      <ConnectionTool Name="NestedRelationship" ToolboxIcon="Resources\ConnectorNested.bmp" Caption="Nested Relationship" Tooltip="Drag between classes to create a nested relationship" HelpKeyword="NestedRelationship">
+        <ConnectionBuilderMoniker Name="ActiveWriter/NestedClassReferencesModelClassesBuilder" />
       </ConnectionTool>
     </ToolboxTab>
     <Validation UsesMenu="true" UsesOpen="true" UsesSave="true" UsesLoad="false" />

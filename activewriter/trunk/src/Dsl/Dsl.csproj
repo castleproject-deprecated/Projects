@@ -198,9 +198,11 @@
       <DependentUpon>PropertyValidationEditorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utility\Helper.cs" />
+    <Compile Include="Validation\NestedModelClassValidation.cs" />
     <Compile Include="Validation\ModelValidation.cs" />
     <Compile Include="Validation\ModelClassPropertyValidation.cs" />
     <Compile Include="Validation\ModelClassValidation.cs" />
+    <Compile Include="Validation\ValidationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DslDefinition.dsl.diagram">
@@ -301,6 +303,7 @@
     <Content Include="Resources\Connector121.bmp" />
     <Content Include="Resources\Connector12n.bmp" />
     <Content Include="Resources\Connectorm2n.bmp" />
+    <Content Include="Resources\ConnectorNested.bmp" />
     <Content Include="Resources\ExampleShapeToolBitmap.bmp" />
     <Content Include="Resources\key.png" />
     <Content Include="Resources\validation.png" />
