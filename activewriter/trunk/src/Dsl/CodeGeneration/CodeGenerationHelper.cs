@@ -652,13 +652,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 else
                 {
                     memberProperty.SetStatements.Add(
-                        new CodeConditionStatement(
-                            //new CodeBinaryOperatorExpression(
-                            //    new CodeMethodInvokeExpression(
-                            //        new CodeMethodReferenceExpression(
-                            //            new CodeFieldReferenceExpression(null, memberField.Name), "Equals"),
-                            //        new CodeArgumentReferenceExpression("value")),
-                            //    CodeBinaryOperatorType.ValueEquality, new CodePrimitiveExpression(true)
+                        new CodeConditionStatement( // There's no ValueInequality in CodeDOM (ridiculous), so we'll use ((a == b) == false) instead.
                             new CodeBinaryOperatorExpression(
                                 new CodeBinaryOperatorExpression(
                                     new CodeFieldReferenceExpression(null, memberField.Name),
