@@ -53,6 +53,12 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\INotifyPropertyChangedTest.cs" />
+    <Compile Include="Tests\GeneratedCodeINotifyPropertyChangedTestModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GeneratedCodeINotifyPropertyChangedTestModel.actiw</DependentUpon>
+    </Compile>
     <Compile Include="Tests\NestedClassTest.cs" />
     <Compile Include="Tests\GeneratedCodeNestedTestModel.cs">
       <AutoGen>True</AutoGen>
@@ -95,6 +101,11 @@
     <None Include="Tests\GeneratedCodeGenericTestModel.actiw.diagram">
       <DependentUpon>GeneratedCodeGenericTestModel.actiw</DependentUpon>
     </None>
+    <None Include="Tests\GeneratedCodeINotifyPropertyChangedTestModel.actiw">
+      <Generator>ActiveWriterCodeGenerator</Generator>
+      <LastGenOutput>GeneratedCodeINotifyPropertyChangedTestModel.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\GeneratedCodeINotifyPropertyChangedTestModel.actiw.diagram" />
     <None Include="Tests\GeneratedCodeNestedTestModel.actiw">
       <Generator>ActiveWriterCodeGenerator</Generator>
       <LastGenOutput>GeneratedCodeNestedTestModel.cs</LastGenOutput>

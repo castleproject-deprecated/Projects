@@ -105,7 +105,7 @@
     <!-- Property: UseGenerics -->
     <xsd:attribute name="useGenerics" type="xsd:boolean" >
       <xsd:annotation>
-        <xsd:documentation>Instructs ActiveWriter to generate code using generic collections where possible.</xsd:documentation>
+        <xsd:documentation>Instructs ActiveWriter to generate code using generic collections where possible. This setting is overridable in class level.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
     <!-- Property: UseBaseClass -->
@@ -178,6 +178,12 @@
     <xsd:attribute name="namespace" type="xsd:string" >
       <xsd:annotation>
         <xsd:documentation>The namespace to be used in generated code. If not supplied (default), ActiveWriter will use the namespace from the native project structure.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: ImplementINotifyPropertyChanged -->
+    <xsd:attribute name="implementINotifyPropertyChanged" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>Instructs ActiveWriter to implement INotifyPropertyChanged interface in each class generated. This setting is overridable in class level.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
   </xsd:complexType>
@@ -382,6 +388,12 @@
         <xsd:attribute name="useGenerics" type="InheritableBoolean" >
           <xsd:annotation>
             <xsd:documentation>If set (other than Inherit), overrides model level generics generation for this class.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: ImplementINotifyPropertyChanged -->
+        <xsd:attribute name="implementINotifyPropertyChanged" type="InheritableBoolean" >
+          <xsd:annotation>
+            <xsd:documentation>Instructs ActiveWriter to implement INotifyPropertyChanged interface in this class.</xsd:documentation>
           </xsd:annotation>
         </xsd:attribute>
       </xsd:extension>
@@ -617,6 +629,12 @@
             </xsd:complexType>
           </xsd:element>
         </xsd:sequence>
+        <!-- Property: ImplementINotifyPropertyChanged -->
+        <xsd:attribute name="implementINotifyPropertyChanged" type="InheritableBoolean" >
+          <xsd:annotation>
+            <xsd:documentation>Instructs ActiveWriter to implement INotifyPropertyChanged interface in this class.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>

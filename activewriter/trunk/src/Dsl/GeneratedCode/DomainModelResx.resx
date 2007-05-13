@@ -230,7 +230,7 @@
     <comment>Category for DomainProperty &apos;MonoRailViewFileExtension&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.Model/UseGenerics.Description" xml:space="preserve">
-    <value>Instructs ActiveWriter to generate code using generic collections where possible.</value>
+    <value>Instructs ActiveWriter to generate code using generic collections where possible. This setting is overridable in class level.</value>
     <comment>Description for DomainProperty &apos;UseGenerics&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.Model/UseGenerics.DisplayName" xml:space="preserve">
@@ -392,6 +392,18 @@
   <data name="Altinoren.ActiveWriter.Model/AdditionalImports.Category" xml:space="preserve">
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;AdditionalImports&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ImplementINotifyPropertyChanged.Description" xml:space="preserve">
+    <value>Instructs ActiveWriter to implement INotifyPropertyChanged interface in each class generated. This setting is overridable in class level.</value>
+    <comment>Description for DomainProperty &apos;ImplementINotifyPropertyChanged&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ImplementINotifyPropertyChanged.DisplayName" xml:space="preserve">
+    <value>Implement  INotifyPropertyChanged</value>
+    <comment>DisplayName for DomainProperty &apos;ImplementINotifyPropertyChanged&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ImplementINotifyPropertyChanged.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;ImplementINotifyPropertyChanged&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ModelClass.Description" xml:space="preserve">
     <value>A class of the domain</value>
@@ -656,6 +668,18 @@
   <data name="Altinoren.ActiveWriter.ModelClass/UseGenerics.Category" xml:space="preserve">
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;UseGenerics&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/ImplementINotifyPropertyChanged.Description" xml:space="preserve">
+    <value>Instructs ActiveWriter to implement INotifyPropertyChanged interface in this class.</value>
+    <comment>Description for DomainProperty &apos;ImplementINotifyPropertyChanged&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/ImplementINotifyPropertyChanged.DisplayName" xml:space="preserve">
+    <value>Implement  INotifyPropertyChanged</value>
+    <comment>DisplayName for DomainProperty &apos;ImplementINotifyPropertyChanged&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/ImplementINotifyPropertyChanged.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;ImplementINotifyPropertyChanged&apos; on DomainClass &apos;ModelClass&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ModelProperty.Description" xml:space="preserve">
     <value>A property or field of a class</value>
@@ -992,6 +1016,18 @@
   <data name="Altinoren.ActiveWriter.NestedClass.DisplayName" xml:space="preserve">
     <value>Nested Class</value>
     <comment>DisplayName for DomainClass &apos;NestedClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClass/ImplementINotifyPropertyChanged.Description" xml:space="preserve">
+    <value>Instructs ActiveWriter to implement INotifyPropertyChanged interface in this class.</value>
+    <comment>Description for DomainProperty &apos;ImplementINotifyPropertyChanged&apos; on DomainClass &apos;NestedClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClass/ImplementINotifyPropertyChanged.DisplayName" xml:space="preserve">
+    <value>Implement INotifyPropertyChanged</value>
+    <comment>DisplayName for DomainProperty &apos;ImplementINotifyPropertyChanged&apos; on DomainClass &apos;NestedClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClass/ImplementINotifyPropertyChanged.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;ImplementINotifyPropertyChanged&apos; on DomainClass &apos;NestedClass&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ModelHasClass.Description" xml:space="preserve">
     <value>Description for Altinoren.ActiveWriter.ModelHasClass</value>

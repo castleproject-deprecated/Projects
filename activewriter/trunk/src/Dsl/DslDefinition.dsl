@@ -43,7 +43,7 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="fb8adf70-25ad-408c-8c6b-297e2e719364" Description="Instructs ActiveWriter to generate code using generic collections where possible." Name="UseGenerics" DisplayName="Use Generics" DefaultValue="true" Category="Code Generation">
+        <DomainProperty Id="fb8adf70-25ad-408c-8c6b-297e2e719364" Description="Instructs ActiveWriter to generate code using generic collections where possible. This setting is overridable in class level." Name="UseGenerics" DisplayName="Use Generics" DefaultValue="true" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
@@ -111,6 +111,11 @@
         <DomainProperty Id="b0d78aac-cb2a-483c-93c9-b682243a338c" Description="List of additional imports to be added to the generated class." Name="AdditionalImports" DisplayName="Additional Imports" Kind="CustomStorage" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System.Collections.Generic/List&lt;Altinoren.ActiveWriter.Import&gt;" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="4b0308e4-c189-4ef5-818d-59033de5aaee" Description="Instructs ActiveWriter to implement INotifyPropertyChanged interface in each class generated. This setting is overridable in class level." Name="ImplementINotifyPropertyChanged" DisplayName="Implement  INotifyPropertyChanged" DefaultValue="false" Category="Code Generation">
+          <Type>
+            <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
       </Properties>
@@ -245,6 +250,11 @@
           </Type>
         </DomainProperty>
         <DomainProperty Id="ca521240-6ae4-43bc-a58f-6be1b5ac1b85" Description="If set (other than Inherit), overrides model level generics generation for this class." Name="UseGenerics" DisplayName="Use Generics" DefaultValue="Inherit" Category="Code Generation">
+          <Type>
+            <DomainEnumerationMoniker Name="InheritableBoolean" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="097f2266-f8b4-4079-bafd-9b16b9e8c4a3" Description="Instructs ActiveWriter to implement INotifyPropertyChanged interface in this class." Name="ImplementINotifyPropertyChanged" DisplayName="Implement  INotifyPropertyChanged" DefaultValue="Inherit" Category="Code Generation">
           <Type>
             <DomainEnumerationMoniker Name="InheritableBoolean" />
           </Type>
@@ -420,6 +430,13 @@
       <BaseClass>
         <DomainClassMoniker Name="NamedElement" />
       </BaseClass>
+      <Properties>
+        <DomainProperty Id="c5fefe2c-4d9f-498f-b0b1-619bfa9c215d" Description="Instructs ActiveWriter to implement INotifyPropertyChanged interface in this class." Name="ImplementINotifyPropertyChanged" DisplayName="Implement INotifyPropertyChanged" DefaultValue="Inherit" Category="Code Generation">
+          <Type>
+            <DomainEnumerationMoniker Name="InheritableBoolean" />
+          </Type>
+        </DomainProperty>
+      </Properties>
       <ElementMergeDirectives>
         <ElementMergeDirective>
           <Index>
@@ -1324,6 +1341,9 @@
           <XmlRelationshipData RoleElementName="nestedClasses">
             <DomainRelationshipMoniker Name="ModelHasNestedClasses" />
           </XmlRelationshipData>
+          <XmlPropertyData XmlName="implementINotifyPropertyChanged">
+            <DomainPropertyMoniker Name="Model/ImplementINotifyPropertyChanged" />
+          </XmlPropertyData>
         </ElementData>
       </XmlClassData>
       <XmlClassData TypeName="ModelClass" MonikerAttributeName="" MonikerElementName="modelClassMoniker" ElementName="modelClass" MonikerTypeName="ModelClassMoniker">
@@ -1406,6 +1426,9 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="useGenerics">
             <DomainPropertyMoniker Name="ModelClass/UseGenerics" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="implementINotifyPropertyChanged">
+            <DomainPropertyMoniker Name="ModelClass/ImplementINotifyPropertyChanged" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>
@@ -1784,6 +1807,9 @@
           <XmlRelationshipData UseFullForm="true" RoleElementName="modelClasses">
             <DomainRelationshipMoniker Name="NestedClassReferencesModelClasses" />
           </XmlRelationshipData>
+          <XmlPropertyData XmlName="implementINotifyPropertyChanged">
+            <DomainPropertyMoniker Name="NestedClass/ImplementINotifyPropertyChanged" />
+          </XmlPropertyData>
         </ElementData>
       </XmlClassData>
       <XmlClassData TypeName="ModelHasNestedClasses" MonikerAttributeName="" MonikerElementName="modelHasNestedClassesMoniker" ElementName="modelHasNestedClasses" MonikerTypeName="ModelHasNestedClassesMoniker">

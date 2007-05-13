@@ -486,6 +486,23 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// ImplementINotifyPropertyChanged
+			if (!serializationContext.Result.Failed)
+			{
+				string attribImplementINotifyPropertyChanged = reader.GetAttribute("implementINotifyPropertyChanged");
+				if (attribImplementINotifyPropertyChanged != null)
+				{
+					global::System.Boolean valueOfImplementINotifyPropertyChanged;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribImplementINotifyPropertyChanged), out valueOfImplementINotifyPropertyChanged))
+					{
+						instanceOfModel.ImplementINotifyPropertyChanged = valueOfImplementINotifyPropertyChanged;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "implementINotifyPropertyChanged", typeof(global::System.Boolean), attribImplementINotifyPropertyChanged);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -1357,6 +1374,19 @@ namespace Altinoren.ActiveWriter
 						writer.WriteAttributeString("namespace", propValue);
 				}
 			}
+			// ImplementINotifyPropertyChanged
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.Boolean propValue = instanceOfModel.ImplementINotifyPropertyChanged;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Boolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("implementINotifyPropertyChanged", serializedPropValue);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -1977,6 +2007,23 @@ namespace Altinoren.ActiveWriter
 					else
 					{	// Invalid property value, ignored.
 						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "useGenerics", typeof(InheritableBoolean), attribUseGenerics);
+					}
+				}
+			}
+			// ImplementINotifyPropertyChanged
+			if (!serializationContext.Result.Failed)
+			{
+				string attribImplementINotifyPropertyChanged = reader.GetAttribute("implementINotifyPropertyChanged");
+				if (attribImplementINotifyPropertyChanged != null)
+				{
+					InheritableBoolean valueOfImplementINotifyPropertyChanged;
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritableBoolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribImplementINotifyPropertyChanged), out valueOfImplementINotifyPropertyChanged))
+					{
+						instanceOfModelClass.ImplementINotifyPropertyChanged = valueOfImplementINotifyPropertyChanged;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "implementINotifyPropertyChanged", typeof(InheritableBoolean), attribImplementINotifyPropertyChanged);
 					}
 				}
 			}
@@ -2854,6 +2901,19 @@ namespace Altinoren.ActiveWriter
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("useGenerics", serializedPropValue);
+					}
+				}
+			}
+			// ImplementINotifyPropertyChanged
+			if (!serializationContext.Result.Failed)
+			{
+				InheritableBoolean propValue = instanceOfModelClass.ImplementINotifyPropertyChanged;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<InheritableBoolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("implementINotifyPropertyChanged", serializedPropValue);
 					}
 				}
 			}
@@ -5371,7 +5431,7 @@ namespace Altinoren.ActiveWriter
 			#endregion
 			
 			// Read properties serialized as XML attributes.
-			base.ReadPropertiesFromAttributes(serializationContext, element, reader);
+			ReadPropertiesFromAttributes(serializationContext, element, reader);
 	
 			// Read nested XML elements.
 			if (!serializationContext.Result.Failed)
@@ -5398,6 +5458,43 @@ namespace Altinoren.ActiveWriter
 	
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
+		}
+	
+		/// <summary>
+		/// This method deserializes all properties that are serialized as XML attributes.
+		/// </summary>
+		/// <remarks>
+		/// Because this method only handles properties serialized as XML attributes, the passed-in reader shouldn't be moved inside this method.
+		/// The caller will guarantee that the reader is positioned on the open XML tag of the current element being deserialized.
+		/// </remarks>
+		/// <param name="serializationContext">Serialization context.</param>
+		/// <param name="element">In-memory NestedClass instance that will get the deserialized data.</param>
+		/// <param name="reader">XmlReader to read serialized data from.</param>
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
+		protected override void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		{
+			base.ReadPropertiesFromAttributes(serializationContext, element, reader);
+	
+			NestedClass instanceOfNestedClass = element as NestedClass;
+			global::System.Diagnostics.Debug.Assert(instanceOfNestedClass != null, "Expecting an instance of NestedClass");
+	
+			// ImplementINotifyPropertyChanged
+			if (!serializationContext.Result.Failed)
+			{
+				string attribImplementINotifyPropertyChanged = reader.GetAttribute("implementINotifyPropertyChanged");
+				if (attribImplementINotifyPropertyChanged != null)
+				{
+					InheritableBoolean valueOfImplementINotifyPropertyChanged;
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritableBoolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribImplementINotifyPropertyChanged), out valueOfImplementINotifyPropertyChanged))
+					{
+						instanceOfNestedClass.ImplementINotifyPropertyChanged = valueOfImplementINotifyPropertyChanged;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "implementINotifyPropertyChanged", typeof(InheritableBoolean), attribImplementINotifyPropertyChanged);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -5894,7 +5991,7 @@ namespace Altinoren.ActiveWriter
 			if (rootElementSettings != null && rootElementSettings.Version != null)
 				writer.WriteAttributeString("dslVersion", rootElementSettings.Version.ToString(4));
 	
-			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+			WritePropertiesAsAttributes(serializationContext, element, writer);
 	
 			if (!serializationContext.Result.Failed)
 			{
@@ -5903,6 +6000,35 @@ namespace Altinoren.ActiveWriter
 			}
 	
 			writer.WriteEndElement();
+		}
+	
+		/// <summary>
+		/// Write all properties that need to be serialized as XML attributes.
+		/// </summary>
+		/// <param name="serializationContext">Serialization context.</param>
+		/// <param name="element">NestedClass instance to be serialized.</param>
+		/// <param name="writer">XmlWriter to write serialized data to.</param>	
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
+		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		{
+			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
+			NestedClass instanceOfNestedClass = element as NestedClass;
+			global::System.Diagnostics.Debug.Assert(instanceOfNestedClass != null, "Expecting an instance of NestedClass");
+	
+			// ImplementINotifyPropertyChanged
+			if (!serializationContext.Result.Failed)
+			{
+				InheritableBoolean propValue = instanceOfNestedClass.ImplementINotifyPropertyChanged;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<InheritableBoolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("implementINotifyPropertyChanged", serializedPropValue);
+					}
+				}
+			}
 		}
 	
 		/// <summary>

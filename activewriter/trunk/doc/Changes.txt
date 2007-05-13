@@ -7,6 +7,7 @@ New:
 - Model classes can override model level base class definition. (Patch: Robert van Hoornaar)
 - Model classes can override model level generics generation. (Idea: Robert van Hoornaar)
 - Contrib-26: Add support for AR Nested / NH Component mappings. Allow the ability to specify a column prefix for active record. (thx: Adam Tybor)
+- Optionally generates classes implementing INotifyPropertyChanged.
 
 Fixed:
 - Contrib-23: Produces CascadeEnum instead of ManyRelationCascadeEnum

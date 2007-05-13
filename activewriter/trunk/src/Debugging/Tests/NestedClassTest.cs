@@ -23,7 +23,7 @@ namespace Debugging.Tests
     public class NestedClassTest
     {
         [Test]
-        public void CanGenerateGenericClass()
+        public void CanGenerateNestedClass()
         {
             Type type = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.NestedClass1");
             Assert.IsNotNull(type, "Could not get the generated nested class.");

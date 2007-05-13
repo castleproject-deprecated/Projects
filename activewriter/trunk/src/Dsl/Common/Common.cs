@@ -28,9 +28,12 @@ namespace Altinoren.ActiveWriter
         public static string GenericCollectionsNamespace = "System.Collections.Generic";
         public static string SystemNamespace = "System";
         public static string NullablesNamespace = "Nullables";
+        public static string ComponentmodelNamespace = "System.ComponentModel";
+        public static string INotifyPropertyChangedType = "INotifyPropertyChanged";
         public static string DefaultBaseClass = "ActiveRecordBase";
         public static string DefaultValidationBaseClass = "ActiveRecordValidationBase";
         public static string XorHelperMethod = "XorHelper";
+        public static string PropertyChangedInternalMethod = "NotifyPropertyChanged";
         public static string BlankProjectTemplateName = "EmptyProject.zip";
         public static string DTEProjectTemplateLanguageCSharp = "CSharp";
         public static string DTEProjectTemplateLanguageVB = "VisualBasic";
