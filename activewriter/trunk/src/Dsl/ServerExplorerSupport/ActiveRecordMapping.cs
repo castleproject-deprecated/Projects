@@ -113,6 +113,9 @@ namespace Altinoren.ActiveWriter
                             case "System.Data.SqlClient.SqlConnection":
                                 helper = new SqlHelper((SqlConnection)connection);
                                 break;
+                            case "MySql.Data.MySqlClient.MySqlConnection":
+                                helper = new MySqlHelper((MySql.Data.MySqlClient.MySqlConnection)connection);
+                                break;
                             default:
                                 // TODO: Support Oracle
                                 // TODO: Support other databases with native providers.

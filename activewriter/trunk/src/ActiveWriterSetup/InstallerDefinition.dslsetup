@@ -33,7 +33,7 @@ For more specific information, see the Error List window.
   productCode="44cbbaaa-6860-4836-899b-e62282e165f9"
   upgradeCode="c43851aa-77cf-44f2-9e72-7ab9cf85a0c1"
   localeId="1033"
-  customFragmentIds="CustomToolFragment"
+  customFragmentIds="CustomToolFragment;MySQLFragment"
   >
 	<dslPackage name="ActiveWriter" project="DslPackage" assemblyPath="Altinoren.ActiveWriter.DslPackage.dll" registryRoot="Software\Microsoft\VisualStudio\8.0">
 		<fileExtensions>
