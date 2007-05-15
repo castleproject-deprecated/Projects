@@ -39,7 +39,8 @@
                                   Namespace="$(SiteMapNamespace)"
                                   ControllerSources="@(ControllerSources)"
                                   ViewSources="@(ViewSources)"
-                                  Sources="@(Compile)">
+                                  Sources="@(Compile)"
+                                  AssemblyReferences="@(ReferencePath);@(_ResolvedProjectREferencePaths)">
       
     </GenerateMonoRailSiteTreeTask>
     

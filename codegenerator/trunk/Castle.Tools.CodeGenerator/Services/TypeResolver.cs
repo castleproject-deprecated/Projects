@@ -55,7 +55,7 @@ namespace Castle.Tools.CodeGenerator.Services
       if (includeParents)
       {
         int index;
-        while ((index = ns.IndexOf('.')) >= 0)
+        while ((index = ns.LastIndexOf('.')) >= 0)
         {
           ns = ns.Substring(0, index);
           UseNamespace(ns);

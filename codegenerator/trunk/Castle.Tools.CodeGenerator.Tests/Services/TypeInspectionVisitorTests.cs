@@ -55,7 +55,7 @@ namespace Castle.Tools.CodeGenerator.Services
 
       using (_mocks.Unordered())
       {
-        _typeResolver.UseNamespace("SomeNamespace");
+        _typeResolver.UseNamespace("SomeNamespace",true);
       }
 
       _mocks.ReplayAll();

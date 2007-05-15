@@ -74,6 +74,13 @@ namespace Castle.Tools.CodeGenerator.Services
       Assert.AreEqual(typeof(DateTime), _typeResolver.Resolve("DateTime", true));
     }
 
+	[Test]
+    public void Resolve_WithOnlyChildNamespaceButIncludeParentsMoreThanOneLevelAway_Works()
+    {
+    	_typeResolver.UseNamespace("System.Collections.Generic",true);
+    	Assert.AreEqual(typeof (System.Collections.ArrayList), _typeResolver.Resolve("ArrayList",true));
+    }
+
     [Test]
     public void Resolve_MissingTypeNoThrow_ReturnsNull()
     {

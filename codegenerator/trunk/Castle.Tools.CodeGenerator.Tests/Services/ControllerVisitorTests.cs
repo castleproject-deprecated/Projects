@@ -250,8 +250,8 @@ namespace Castle.Tools.CodeGenerator.Services
     {
       using (_mocks.Unordered())
       {
-        _typeResolver.UseNamespace("System");
-        _typeResolver.UseNamespace("SomeNamespace");
+      	_typeResolver.UseNamespace("System");
+        _typeResolver.UseNamespace("SomeNamespace",true);
         Expect.Call(_typeResolver.Resolve(new TypeReference("DateTime"))).Constraints(Is.Matching(new Predicate<TypeReference>(delegate(TypeReference reference) {
           return reference.SystemType == "DateTime";
         }))).Return("System.DateTime[]");
