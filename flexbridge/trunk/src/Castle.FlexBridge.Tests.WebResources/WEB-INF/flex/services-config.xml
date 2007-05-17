@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<services-config>
+  <services>
+    <service id="remoting-service" class="flex.messaging.services.RemotingService" messageTypes="flex.messaging.messages.RemotingMessage">
+      <default-channels>
+        <channel ref="gateway-amf" />
+      </default-channels>
+    
+      <destination id="gateway">
+        <channels>
+          <channel ref="gateway-amf" />
+        </channels>
+        <properties>
+          <source>*</source>
+        </properties>
+      </destination>
+
+      <destination id="secure-gateway">
+        <channels>
+          <channel ref="secure-gateway-amf" />
+        </channels>
+        <properties>
+          <source>*</source>
+        </properties>
+        
+        <security>
+          <security-constraint ref="trusted-users" />
+        </security>
+      </destination>      
+    </service>
+  </services>
+
+  <security>
+    <security-constraint id="trusted-users">
+      <login-command class="Castle.FlexBridge.LoginCommand" server="FlexBridge" />
+    </security-constraint>
+  </security>
+  
+  <channels>
+    <channel-definition id="gateway-amf" class="mx.messaging.channels.AMFChannel">
+      <endpoint uri="http://{server.name}:{server.port}/{context.root}/FlexGateway.ashx" class="flex.messaging.endpoints.AMFEndpoint"/>
+      <properties>
+      </properties>
+    </channel-definition>
+    
+    <channel-definition id="secure-gateway-amf" class="mx.messaging.channels.SecureAMFChannel">
+      <endpoint uri="https://{server.name}:{server.port}/{context.root}/FlexGateway.ashx" class="flex.messaging.endpoints.AMFEndpoint"/>
+      <properties>
+      </properties>
+    </channel-definition>
+  </channels>
+</services-config>

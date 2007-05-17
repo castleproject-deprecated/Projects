@@ -1,0 +1,84 @@
+TODO Items
+==========
+
+- Solidify support for object graphs containing circular references.
+  The serializer's ToASValue and ToNative values will choke on recursion.
+
+  For serialization, we need to defer initialization of Objects and Arrays.
+  For deserialization, we need to add a "fixup" to perform various deferred
+  tasks related to patching up the object graph with final results.
+
+  One idea is to test IsInitialized before attempting to map a value as
+  part of deserializing an Object or Array and then adding a delegate associated
+  with that object that is to be executed when the object is fully initialized.
+  The most likely candidate location for patching is just before the outermost ToNative
+  call related to the object exits the serializer.  In other words, we would do
+  the patching in the same scope as we added the value to the reference cache.
+
+- When objects that can be mapped to native values are deserialized, we
+  should try to do the mapping as soon as possible.
+
+- Nullable value types.
+
+- Write tests for:
+  - New AS* values.
+  - Equality and HashCodes in AS* values.
+  - Unitialized state.
+  - Built-in mappers.
+  - Reflection-based mapper.
+  - Mapping table.
+    - Ensure it ignores constants and statics.
+    - Check generics.
+  - Mapped serializer.
+  - Nasty recursive object graphs.
+  - Gateway.
+
+
+- Implement:
+  - Message broker.
+  - RemoteObject service.
+  - SharedObject service.
+  - Support generic types and more mappings.
+
+- Mappers to write:
+  - IDictionary / Hashtable
+  - IList / ArrayList
+  - ArraySegment<T>
+  - IMixedArray<T> / MixedArray<T>
+
+- Optimizations:
+  - Weak dictionary for object reference cache or perhaps extra slots on IASValues
+    for use by the serializer.  (ick)
+
+- Extensibility:
+  - Allow default type mapping to be customized more readily.
+  - Allow mappers to specify how well they can handle certain mappings.
+    For example, allow a generic enumerable collection handler to take over mapping
+    ICollection<T> but only if no better mapping can be found elsewhere.
+  - Allow Enums to be decorated with attributes to indicate how they should be serialized
+    (by integer value, by enum value name, or by custom names associated with each value)
+
+- Support nullable types
+
+- To review:
+  - Note in ASArray and ASObject GetNativeValue().
+
+
+ObjectHandlers and ServiceHandlers
+==================================
+
+An object handler combines an object factory with facilities for decomposing
+the properties of the object for serialization.  Currently, we manufacture
+object instances during mapping by using Activator.CreateInstance which assumes
+the existance of a default constructor.  It would be good if class mappings
+were more dynamic.  The user should be able to provide alternative object handlers
+to support mapping of objects with different initialization concerns such as
+components that are managed by an inversion of control container.
+
+A service handler should be similar to an object handler but provide
+a means for the client to specify how service methods are invoked.
+
+In principle these two notions could be combined.  An IObjectHandler or IComponentHandler
+would take care of the initialization concerns and the IServerHandler would
+extend that to provide behaviors.  Or we might simply have one interface with
+optional parts.

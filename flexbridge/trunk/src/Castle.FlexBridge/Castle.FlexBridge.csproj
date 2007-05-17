@@ -1,0 +1,175 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3C816C91-7CD8-40FE-9768-FDE7248726C7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Castle.FlexBridge</RootNamespace>
+    <AssemblyName>Castle.FlexBridge</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Castle.FlexBridge.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Castle.FlexBridge.XML</DocumentationFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Castle.FlexBridge.XML</DocumentationFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActionScript\ASArray.cs" />
+    <Compile Include="ActionScript\ASBoolean.cs" />
+    <Compile Include="ActionScript\ASClass.cs" />
+    <Compile Include="ActionScript\ASClassCache.cs" />
+    <Compile Include="ActionScript\ASDate.cs" />
+    <Compile Include="ActionScript\ASExternalizableObject.cs" />
+    <Compile Include="ActionScript\ASInt29.cs" />
+    <Compile Include="ActionScript\ASNativeArray.cs" />
+    <Compile Include="ActionScript\ASNativeObject.cs" />
+    <Compile Include="ActionScript\ASNull.cs" />
+    <Compile Include="ActionScript\ASNumber.cs" />
+    <Compile Include="ActionScript\ASObject.cs" />
+    <Compile Include="ActionScript\ASClassLayout.cs" />
+    <Compile Include="ActionScript\ASString.cs" />
+    <Compile Include="ActionScript\ASTypeKind.cs" />
+    <Compile Include="ActionScript\ASValueContentFlags.cs" />
+    <Compile Include="ActionScript\ASXmlDocument.cs" />
+    <Compile Include="ActionScript\BaseASValue.cs" />
+    <Compile Include="ActionScript\IASNativeArrayMapper.cs" />
+    <Compile Include="ActionScript\IASNativeObjectMapper.cs" />
+    <Compile Include="ActionScript\IASValue.cs" />
+    <Compile Include="ActionScript\IASValueVisitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\IMixedArray.cs" />
+    <Compile Include="Collections\MixedArray.cs" />
+    <Compile Include="Gateway\AMFContextHolder.cs" />
+    <Compile Include="Gateway\IAMFContext.cs" />
+    <Compile Include="Gateway\IAMFRequest.cs" />
+    <Compile Include="Gateway\IAMFResponse.cs" />
+    <Compile Include="Messaging\DebugEvents\AMFMethodCallEvent.cs" />
+    <Compile Include="Messaging\DebugEvents\AMFRequestHeadersEvent.cs" />
+    <Compile Include="Messaging\DebugEvents\DebugEvent.cs" />
+    <Compile Include="Messaging\DebugEvents\HttpHeadersEvent.cs" />
+    <Compile Include="Messaging\DebugEvents\TraceEvent.cs" />
+    <Compile Include="Messaging\Services\AuthenticationService.cs" />
+    <Compile Include="Messaging\Services\BaseService.cs" />
+    <Compile Include="Messaging\Services\DefaultCommandService.cs" />
+    <Compile Include="Messaging\Services\IService.cs" />
+    <Compile Include="Messaging\Services\RemotingService.cs" />
+    <Compile Include="Utilities\AsyncTaskFailedException.cs" />
+    <Compile Include="Utilities\AsyncTask.cs" />
+    <Compile Include="Messaging\DefaultMessageBroker.cs" />
+    <Compile Include="Messaging\IMessageBroker.cs" />
+    <Compile Include="Messaging\Messages\AbstractMessage.cs" />
+    <Compile Include="Messaging\Messages\AcknowledgeMessage.cs" />
+    <Compile Include="Messaging\Messages\AsyncMessage.cs" />
+    <Compile Include="Messaging\Messages\CommandMessage.cs" />
+    <Compile Include="Messaging\Messages\ErrorMessage.cs" />
+    <Compile Include="Messaging\Messages\IMessage.cs" />
+    <Compile Include="Messaging\Messages\RemotingMessage.cs" />
+    <Compile Include="Gateway\GatewayAMFContext.cs" />
+    <Compile Include="Gateway\GatewayAMFRequest.cs" />
+    <Compile Include="Gateway\GatewayAMFResponse.cs" />
+    <Compile Include="Gateway\FlexGateway.cs" />
+    <Compile Include="Serialization\ActionScriptClassAttribute.cs" />
+    <Compile Include="Serialization\ActionScriptIgnoreAttribute.cs" />
+    <Compile Include="Serialization\ActionScriptPropertyAttribute.cs" />
+    <Compile Include="Serialization\Factories\GenericDictionaryFactory.cs" />
+    <Compile Include="Serialization\Factories\GenericLinkedListFactory.cs" />
+    <Compile Include="Serialization\Factories\GenericListFactory.cs" />
+    <Compile Include="Serialization\Factories\MixedArrayFactory.cs" />
+    <Compile Include="Serialization\IActionScriptSerializerFactory.cs" />
+    <Compile Include="Serialization\MappedActionScriptSerializerFactory.cs" />
+    <Compile Include="Serialization\Mapping\ActionScriptMappingReflector.cs" />
+    <Compile Include="Serialization\Mapping\ActionScriptMappingTable.cs" />
+    <Compile Include="Serialization\Mapping\ActionScriptPropertyMapping.cs" />
+    <Compile Include="Serialization\Mapping\ActionScriptClassMapping.cs" />
+    <Compile Include="Serialization\ActionScriptException.cs" />
+    <Compile Include="Serialization\AMF\AMF3ObjectReader.cs" />
+    <Compile Include="Serialization\AMF\AMFDataInput.cs" />
+    <Compile Include="Serialization\AMF\AMFMessageReader.cs" />
+    <Compile Include="Serialization\AMF\AMF0ObjectReader.cs" />
+    <Compile Include="Serialization\AMF\IAMFObjectReader.cs" />
+    <Compile Include="Serialization\IDynamic.cs" />
+    <Compile Include="Serialization\Mapping\ArrayMapperFactory.cs" />
+    <Compile Include="Serialization\Mapping\ASSourceMappingDescriptor.cs" />
+    <Compile Include="Serialization\Mapping\ASTargetMappingDescriptor.cs" />
+    <Compile Include="Serialization\Mapping\BaseASMapper.cs" />
+    <Compile Include="Serialization\Mapping\BaseASMapperFactory.cs" />
+    <Compile Include="Serialization\Mapping\GenericDictionaryMapperFactory.cs" />
+    <Compile Include="Serialization\Mapping\GenericCollectionMapperFactory.cs" />
+    <Compile Include="Serialization\Factories\IGenericCollectionFactory.cs" />
+    <Compile Include="Serialization\Factories\IGenericDictionaryFactory.cs" />
+    <Compile Include="Serialization\Factories\IMixedArrayFactory.cs" />
+    <Compile Include="Serialization\Mapping\IASMapperFactory.cs" />
+    <Compile Include="Serialization\Mapping\IASSourceMapper.cs" />
+    <Compile Include="Serialization\Mapping\IASTargetMapper.cs" />
+    <Compile Include="Serialization\Mapping\PrimitiveMapperFactory.cs" />
+    <Compile Include="Serialization\Mapping\ObjectMapperFactory.cs" />
+    <Compile Include="Serialization\IDataInput.cs" />
+    <Compile Include="Serialization\IDataOutput.cs" />
+    <Compile Include="Serialization\IExternalizable.cs" />
+    <Compile Include="Serialization\AMF\AMF0ObjectWriter.cs" />
+    <Compile Include="Serialization\AMF\AMF0ObjectTypeCode.cs" />
+    <Compile Include="Serialization\AMF\AMF3ObjectTypeCode.cs" />
+    <Compile Include="Serialization\AMF\AMF3ObjectWriter.cs" />
+    <Compile Include="Serialization\AMF\AMFBody.cs" />
+    <Compile Include="Serialization\AMF\AMFObjectEncoding.cs" />
+    <Compile Include="Serialization\AMF\IAMFObjectWriter.cs" />
+    <Compile Include="Collections\EmptyArray.cs" />
+    <Compile Include="Collections\EmptyDictionary.cs" />
+    <Compile Include="Collections\ReferenceEqualityComparer.cs" />
+    <Compile Include="ActionScript\ASConstants.cs" />
+    <Compile Include="Serialization\AMF\AMFException.cs" />
+    <Compile Include="Serialization\AMF\AMFHeader.cs" />
+    <Compile Include="Serialization\AMF\AMFMessage.cs" />
+    <Compile Include="Serialization\AMF\AMFMessageWriter.cs" />
+    <Compile Include="Serialization\AMF\AMFDataOutput.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ActionScript\ASByteArray.cs" />
+    <Compile Include="Serialization\MappedActionScriptSerializer.cs" />
+    <Compile Include="Serialization\IActionScriptSerializer.cs" />
+    <Compile Include="ActionScript\ASUnsupported.cs" />
+    <Compile Include="ActionScript\ASUndefined.cs" />
+    <Compile Include="Serialization\Mapping\MappingUtils.cs" />
+    <Compile Include="Utilities\EventAsyncResult.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Serialization\RTMP\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
