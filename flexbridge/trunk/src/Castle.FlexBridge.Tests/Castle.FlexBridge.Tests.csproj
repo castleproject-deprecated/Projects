@@ -32,17 +32,17 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Cassini, Version=1.0.40305.0, Culture=neutral, PublicKeyToken=132a282791bfaeb7">
+    <Reference Include="Cassini, Version=2.0.60306.0, Culture=neutral, PublicKeyToken=e0c43dce028783e0, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Cassini\bin\Cassini.dll</HintPath>
+      <HintPath>..\..\libs\Cassini\bin\Cassini.dll</HintPath>
     </Reference>
-    <Reference Include="MbUnit.Framework, Version=1.0.2411.19325, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5">
+    <Reference Include="MbUnit.Framework, Version=1.0.2679.41766, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\MbUnit\bin\MbUnit.Framework.dll</HintPath>
+      <HintPath>..\..\libs\MbUnit\bin\MbUnit.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Rhino.Mocks, Version=2.9.0.4652, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+    <Reference Include="Rhino.Mocks, Version=3.0.5.571, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Rhino.Mocks\bin\Rhino.Mocks.dll</HintPath>
+      <HintPath>..\..\libs\Rhino.Mocks\bin\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

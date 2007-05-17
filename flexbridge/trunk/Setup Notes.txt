@@ -1,0 +1,15 @@
+Setup Notes
+===========
+
+Soon there will be build scripts.
+In the meantime you must do the following things to get the code
+to build and run:
+
+1. Install Adobe Flex Builder 2.
+2. Install MbUnit v2.4.190.
+3. Import the Castle.FlexBridge.Tests.WebResources project into Flex Builder
+   and build it.  It should generate FlexHarness.swf and a few HTML files.
+4. Register Libs\Cassini\bin\Cassini.dll in the GAC.
+5. Open up the Castle.FlexBridge solution in Visual Studio and build it.
+6. Run the Castle.FlexBridge.Tests project using TestDriven.Net.
+
