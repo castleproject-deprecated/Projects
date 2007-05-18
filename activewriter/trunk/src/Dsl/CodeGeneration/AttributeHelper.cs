@@ -21,6 +21,16 @@ namespace Altinoren.ActiveWriter.CodeGeneration
     {
         #region Public Methods
 
+        public static CodeAttributeDeclaration GetGeneratedCodeAttribute()
+        {
+            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("System.CodeDom.Compiler.GeneratedCodeAttribute");
+
+            attribute.Arguments.Add(GetPrimitiveAttributeArgument("Altinoren.ActiveWriter.CustomTool.ActiveWriterTemplatedCodeGenerator"));
+            attribute.Arguments.Add(GetPrimitiveAttributeArgument(Common.ActiveRecordVersion));
+
+            return attribute;
+        }
+
         public static CodeAttributeArgument GetStringArrayAttributeArgument(string[] values)
         {
             CodeExpression[] initializers = new CodeExpression[values.Length];

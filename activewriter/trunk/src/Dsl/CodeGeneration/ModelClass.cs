@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.CodeDom;
+using Altinoren.ActiveWriter.CodeGeneration;
+
 namespace Altinoren.ActiveWriter
 {
     public partial class ModelClass
@@ -21,14 +24,60 @@ namespace Altinoren.ActiveWriter
         public bool IsGeneric()
         {
             return
-                (this.Model.UseGenerics && this.UseGenerics == InheritableBoolean.Inherit) ||
-                this.UseGenerics == InheritableBoolean.True;
+                (Model.UseGenerics && UseGenerics == InheritableBoolean.Inherit) ||
+                UseGenerics == InheritableBoolean.True;
         }
 
         public bool DoesImplementINotifyPropertyChanged()
         {
-            return (this.Model.ImplementINotifyPropertyChanged && this.ImplementINotifyPropertyChanged == InheritableBoolean.Inherit) ||
-                this.ImplementINotifyPropertyChanged == InheritableBoolean.True;
+            return (Model.ImplementINotifyPropertyChanged && ImplementINotifyPropertyChanged == InheritableBoolean.Inherit) ||
+                ImplementINotifyPropertyChanged == InheritableBoolean.True;
+        }
+
+        public CodeAttributeDeclaration GetActiveRecordAttribute()
+        {
+            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ActiveRecord");
+
+            if (!string.IsNullOrEmpty(Table))
+                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(Table));
+            if (Cache != CacheEnum.Undefined)
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cache", "CacheEnum", Cache));
+            if (!string.IsNullOrEmpty(CustomAccess))
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", CustomAccess));
+            if (!string.IsNullOrEmpty(DiscriminatorColumn))
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("DiscriminatorColumn", DiscriminatorColumn));
+            if (!string.IsNullOrEmpty(DiscriminatorType))
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("DiscriminatorType", DiscriminatorType));
+            if (!string.IsNullOrEmpty(DiscriminatorValue))
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("DiscriminatorValue", DiscriminatorValue));
+            if (Lazy)
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Lazy", Lazy));
+            if (!string.IsNullOrEmpty(Proxy))
+                attribute.Arguments.Add(AttributeHelper.GetNamedTypeAttributeArgument("Proxy", Proxy));
+            if (!string.IsNullOrEmpty(Schema))
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Schema", Schema));
+            if (!string.IsNullOrEmpty(Where))
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Where", Where));
+            if (DynamicInsert)
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("DynamicInsert", DynamicInsert));
+            if (DynamicUpdate)
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("DynamicUpdate", DynamicUpdate));
+            if (!string.IsNullOrEmpty(Persister))
+                attribute.Arguments.Add(AttributeHelper.GetNamedTypeAttributeArgument("Persister", Persister));
+            if (SelectBeforeUpdate)
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("SelectBeforeUpdate", SelectBeforeUpdate));
+            if (Polymorphism != Polymorphism.Implicit)
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Polymorphism", "Polymorphism", Polymorphism));
+            if (!Mutable)
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Mutable", Mutable));
+            if (BatchSize != 1)
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("BatchSize", BatchSize));
+            if (Locking != OptimisticLocking.Version)
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Locking", "OptimisticLocking", Locking));
+            if (!UseAutoImport)
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("UseAutoImport", UseAutoImport));
+
+            return attribute;
         }
 
         #endregion

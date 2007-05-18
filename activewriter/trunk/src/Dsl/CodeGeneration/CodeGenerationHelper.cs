@@ -20,7 +20,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
     using System.Collections;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Globalization;
     using System.IO;
     using System.Reflection;
     using System.Text;
@@ -29,9 +28,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
     using Microsoft.VisualBasic;
     using EnvDTE;
     using System.ComponentModel.Design;
-    using ARValidators;
     using CodeNamespace = System.CodeDom.CodeNamespace;
-    using CodeAttributeArgument = System.CodeDom.CodeAttributeArgument;
 
     public class CodeGenerationHelper
     {
@@ -231,9 +228,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (!String.IsNullOrEmpty(cls.Description))
                 classDeclaration.Comments.AddRange(GetSummaryComment(cls.Description));
 
-            classDeclaration.CustomAttributes.Add(GetActiveRecordAttribute(cls));
+            classDeclaration.CustomAttributes.Add(cls.GetActiveRecordAttribute());
             if (cls.Model.UseGeneratedCodeAttribute)
-                classDeclaration.CustomAttributes.Add(GetGeneratedCodeAttribute());
+                classDeclaration.CustomAttributes.Add(AttributeHelper.GetGeneratedCodeAttribute());
             // Make a note as "generated" to prevent recursive generation attempts
             CodeGenerationContext.AddClass(cls, classDeclaration);
 
@@ -261,7 +258,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 classDeclaration.Comments.AddRange(GetSummaryComment(cls.Description));
 
             if (cls.Model.UseGeneratedCodeAttribute)
-                classDeclaration.CustomAttributes.Add(GetGeneratedCodeAttribute());
+                classDeclaration.CustomAttributes.Add(AttributeHelper.GetGeneratedCodeAttribute());
             // Make a note as "generated" to prevent recursive generation attempts
             CodeGenerationContext.AddClass(cls, classDeclaration);
 
@@ -302,7 +299,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             classDeclaration.CustomAttributes.Add(new CodeAttributeDeclaration("Serializable"));
             if (keys[0].ModelClass.Model.UseGeneratedCodeAttribute)
-                classDeclaration.CustomAttributes.Add(GetGeneratedCodeAttribute());
+                classDeclaration.CustomAttributes.Add(AttributeHelper.GetGeneratedCodeAttribute());
 
             List<CodeMemberField> fields = new List<CodeMemberField>();
 
@@ -530,7 +527,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         {
             CodeMemberProperty memberProperty =
                 GetMemberProperty(memberField, property.Name, property.ColumnType, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(), property.Description);
-            memberProperty.CustomAttributes.Add(GetKeyPropertyAttribute(property));
+            memberProperty.CustomAttributes.Add(property.GetKeyPropertyAttribute());
 
             return memberProperty;
         }
@@ -551,10 +548,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             {
                 // Composite keys must be handled in upper levels
                 case KeyType.None:
-                    attributeDecleration = GetPropertyAttribute(property);
+                    attributeDecleration = property.GetPropertyAttribute();
                     break;
                 case KeyType.PrimaryKey:
-                    attributeDecleration = GetPrimaryKeyAttribute(property);
+                    attributeDecleration = property.GetPrimaryKeyAttribute();
                     break;
             }
 
@@ -569,7 +566,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CodeMemberProperty memberProperty =
                 GetMemberProperty(memberField, property.Name, property.ColumnType, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(),
                                   property.Description);
-            memberProperty.CustomAttributes.Add(GetVersionAttribute(property));
+            memberProperty.CustomAttributes.Add(property.GetVersionAttribute());
 
             return memberProperty;
         }
@@ -580,7 +577,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CodeMemberProperty memberProperty =
                 GetMemberProperty(memberField, property.Name, property.ColumnType, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(),
                                   property.Description);
-            memberProperty.CustomAttributes.Add(GetTimestampAttribute(property));
+            memberProperty.CustomAttributes.Add(property.GetTimestampAttribute());
 
             return memberProperty;
         }
@@ -591,15 +588,15 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CodeMemberProperty memberProperty =
                 GetMemberPropertyWithoutType(memberField, propertyName, get, set, implementINotifyPropertyChanged, description);
 
-			if (_model.UseNullables != NullableUsage.No && IsNullable(propertyType) && !propertyNotNull)
+			if (_model.UseNullables != NullableUsage.No && TypeHelper.IsNullable(propertyType) && !propertyNotNull)
             {
                 if (_model.UseNullables == NullableUsage.WithHelperLibrary)
-                    memberProperty.Type = GetNullableTypeReferenceForHelper(propertyType);
+                    memberProperty.Type = TypeHelper.GetNullableTypeReferenceForHelper(propertyType);
                 else
-                    memberProperty.Type = GetNullableTypeReference(propertyType);
+                    memberProperty.Type = TypeHelper.GetNullableTypeReference(propertyType);
             }
             else
-                memberProperty.Type = new CodeTypeReference(GetSystemType(propertyType));
+                memberProperty.Type = new CodeTypeReference(TypeHelper.GetSystemType(propertyType));
 
             return memberProperty;
         }
@@ -683,15 +680,15 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private CodeMemberField GetMemberFieldOfProperty(ModelProperty property, Accessor accessor)
         {
-			if (_model.UseNullables != NullableUsage.No && IsNullable(property.ColumnType) && !property.NotNull)
+			if (_model.UseNullables != NullableUsage.No && TypeHelper.IsNullable(property.ColumnType) && !property.NotNull)
             {
                 if (_model.UseNullables == NullableUsage.WithHelperLibrary)
-                    return GetMemberField(property.Name, GetNullableTypeReferenceForHelper(property.ColumnType), accessor, property.Access);
+                    return GetMemberField(property.Name, TypeHelper.GetNullableTypeReferenceForHelper(property.ColumnType), accessor, property.Access);
                 else
-                    return GetMemberField(property.Name, GetNullableTypeReference(property.ColumnType), accessor, property.Access);
+                    return GetMemberField(property.Name, TypeHelper.GetNullableTypeReference(property.ColumnType), accessor, property.Access);
             }
             else
-                return GetMemberField(property.Name, GetSystemType(property.ColumnType), accessor, property.Access);
+                return GetMemberField(property.Name, TypeHelper.GetSystemType(property.ColumnType), accessor, property.Access);
         }
 
         private CodeMemberField GetMemberField(CodeTypeDeclaration classDeclaration, ModelProperty property)
@@ -705,11 +702,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     CodeMemberProperty memberProperty = GetActiveRecordMemberProperty(memberField, property);
                     classDeclaration.Members.Add(memberProperty);
                     if (property.IsValidatorSet())
-                        memberProperty.CustomAttributes.AddRange(GetValidationAttributes(property));
+                        memberProperty.CustomAttributes.AddRange(property.GetValidationAttributes());
                     break;
                 case PropertyType.Field:
                     memberField = GetMemberFieldOfProperty(property, property.Accessor);
-                    memberField.CustomAttributes.Add(GetFieldAttribute(property));
+                    memberField.CustomAttributes.Add(property.GetFieldAttribute());
                     break;
                 case PropertyType.Version:
                     memberField = GetMemberFieldOfProperty(property, Accessor.Private);
@@ -778,7 +775,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     break;
             }
 
-            memberField.Name = GetName(name, access);
+            memberField.Name = NamingHelper.GetName(name, access, _model.CaseOfPrivateFields);
 
             return memberField;
         }
@@ -795,8 +792,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CodeTypeDeclaration sourceClass = GenerateClass(relationship.Source, nameSpace);
 
             string propertyName = String.IsNullOrEmpty(relationship.TargetPropertyName)
-                                      ? Common.GetPlural(sourceClass.Name)
-                                      : Common.GetPlural(relationship.TargetPropertyName);
+                                      ? NamingHelper.GetPlural(sourceClass.Name)
+                                      : NamingHelper.GetPlural(relationship.TargetPropertyName);
             string propertyType = String.IsNullOrEmpty(relationship.TargetPropertyType)
                                       ? "IList"
                                       : relationship.TargetPropertyType;
@@ -817,7 +814,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                       relationship.TargetDescription);
             classDeclaration.Members.Add(memberProperty);
 
-            memberProperty.CustomAttributes.Add(GetHasManyAttribute(relationship));
+            memberProperty.CustomAttributes.Add(relationship.GetHasManyAttribute());
         }
 
         #endregion
@@ -853,7 +850,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                       relationship.SourceDescription);
             classDeclaration.Members.Add(memberProperty);
 
-            memberProperty.CustomAttributes.Add(GetBelongsToAttribute(relationship));
+            memberProperty.CustomAttributes.Add(relationship.GetBelongsToAttribute());
         }
 
         #endregion
@@ -879,8 +876,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CodeTypeDeclaration targetClass = GenerateClass(relationship.Target, nameSpace);
 
             string propertyName = String.IsNullOrEmpty(relationship.SourcePropertyName)
-                                      ? Common.GetPlural(relationship.Source.Name)
-                                      : Common.GetPlural(relationship.SourcePropertyName);
+                                      ? NamingHelper.GetPlural(relationship.Source.Name)
+                                      : NamingHelper.GetPlural(relationship.SourcePropertyName);
 
             string propertyType = String.IsNullOrEmpty(relationship.TargetPropertyType)
                                       ? "IList"
@@ -896,14 +893,14 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             CodeMemberProperty memberProperty;
             if (String.IsNullOrEmpty(relationship.SourceDescription))
-                memberProperty = GetMemberProperty(memberField, Common.GetPlural(propertyName), true, true, relationship.Target.DoesImplementINotifyPropertyChanged(), null);
+                memberProperty = GetMemberProperty(memberField, NamingHelper.GetPlural(propertyName), true, true, relationship.Target.DoesImplementINotifyPropertyChanged(), null);
             else
                 memberProperty =
-                    GetMemberProperty(memberField, Common.GetPlural(propertyName), true, true, relationship.Target.DoesImplementINotifyPropertyChanged(),
+                    GetMemberProperty(memberField, NamingHelper.GetPlural(propertyName), true, true, relationship.Target.DoesImplementINotifyPropertyChanged(),
                                       relationship.SourceDescription);
             classDeclaration.Members.Add(memberProperty);
 
-            memberProperty.CustomAttributes.Add(GetHasAndBelongsToAttribute(relationship, true));
+            memberProperty.CustomAttributes.Add(relationship.GetHasAndBelongsToAttributeFromSource());
         }
 
         private void GenerateHasAndBelongsToRelationFromSources(CodeTypeDeclaration classDeclaration, CodeNamespace nameSpace,
@@ -925,8 +922,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CodeTypeDeclaration sourceClass = GenerateClass(relationship.Source, nameSpace);
 
             string propertyName = String.IsNullOrEmpty(relationship.TargetPropertyName)
-                          ? Common.GetPlural(relationship.Target.Name)
-                          : Common.GetPlural(relationship.TargetPropertyName);
+                          ? NamingHelper.GetPlural(relationship.Target.Name)
+                          : NamingHelper.GetPlural(relationship.TargetPropertyName);
 
             string propertyType = String.IsNullOrEmpty(relationship.SourcePropertyType)
                                       ? "IList"
@@ -942,14 +939,14 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             CodeMemberProperty memberProperty;
             if (String.IsNullOrEmpty(relationship.TargetDescription))
-                memberProperty = GetMemberProperty(memberField, Common.GetPlural(propertyName), true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), null);
+                memberProperty = GetMemberProperty(memberField, NamingHelper.GetPlural(propertyName), true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), null);
             else
                 memberProperty =
-                    GetMemberProperty(memberField, Common.GetPlural(propertyName), true, true, relationship.Source.DoesImplementINotifyPropertyChanged(),
+                    GetMemberProperty(memberField, NamingHelper.GetPlural(propertyName), true, true, relationship.Source.DoesImplementINotifyPropertyChanged(),
                                       relationship.TargetDescription);
             classDeclaration.Members.Add(memberProperty);
 
-            memberProperty.CustomAttributes.Add(GetHasAndBelongsToAttribute(relationship, false));
+            memberProperty.CustomAttributes.Add(relationship.GetHasAndBelongsToAttributeFromTarget());
         }
 
         #endregion
@@ -973,7 +970,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                       relationship.SourceDescription);
             classDeclaration.Members.Add(memberProperty);
 
-            memberProperty.CustomAttributes.Add(GetOneToOneAttribute(relationship, true));
+            memberProperty.CustomAttributes.Add(relationship.GetOneToOneAttributeForSource());
         }
 
         private void GenerateOneToOneRelationFromSources(CodeTypeDeclaration classDeclaration, CodeNamespace nameSpace,
@@ -993,7 +990,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                       relationship.TargetDescription);
             classDeclaration.Members.Add(memberProperty);
 
-            memberProperty.CustomAttributes.Add(GetOneToOneAttribute(relationship, false));
+            memberProperty.CustomAttributes.Add(relationship.GetOneToOneAttributeForTarget());
         }
 
         #endregion
@@ -1016,682 +1013,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                       relationship.Description);
             classDeclaration.Members.Add(memberProperty);
 
-            memberProperty.CustomAttributes.Add(GetNestedAttribute(relationship));
+            memberProperty.CustomAttributes.Add(relationship.GetNestedAttribute());
         }
 
         #endregion
-
-        #endregion
-
-        #region Attribute
-
-        #region Validation
-
-        private CodeAttributeDeclaration[] GetValidationAttributes(ModelProperty property)
-        {
-            ArrayList list = property.GetValidatorsAsArrayList();
-            if (list != null && list.Count > 0)
-            {
-                CodeAttributeDeclaration[] result = new CodeAttributeDeclaration[list.Count];
-
-                for (int i = 0; i < list.Count; i++)
-                {
-                    Type type = list[i].GetType();
-                    if (type == typeof(ValidateConfirmation))
-                        result[i] = GetConfirmationAttribute((ValidateConfirmation)list[i]);
-                    else if (type == typeof(ValidateCreditCard))
-                        result[i] = GetCreditCardAttribute((ValidateCreditCard)list[i]);
-                    else if (type == typeof(ValidateEmail))
-                        result[i] = GetEmailAttribute((ValidateEmail)list[i]);
-                    else if (type == typeof(ValidateIsUnique))
-                        result[i] = GetIsUniqueAttribute((ValidateIsUnique)list[i]);
-                    else if (type == typeof(ValidateLength))
-                        result[i] = GetLengthAttribute((ValidateLength)list[i]);
-                    else if (type == typeof(ValidateNotEmpty))
-                        result[i] = GetNotEmptyAttribute((ValidateNotEmpty)list[i]);
-                    else if (type == typeof(ValidateRegExp))
-                        result[i] = GetRegularExpressionAttribute((ValidateRegExp)list[i]);
-                }
-
-                return result;
-            }
-
-            return null;
-        }
-
-        private CodeAttributeDeclaration GetRegularExpressionAttribute(ValidateRegExp validator)
-        {
-            // No default constructor. Must have the pattern property set.
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateRegExp");
-
-            attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.Pattern));
-
-            if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-
-            return attribute;
-        }
-
-        private CodeAttributeDeclaration GetNotEmptyAttribute(ValidateNotEmpty validator)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateNotEmpty");
-
-            if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-
-            return attribute;
-        }
-
-        private CodeAttributeDeclaration GetLengthAttribute(ValidateLength validator)
-        {
-            // Order should match one of the constructors.
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateLength");
-
-            if (validator.ExactLength != int.MinValue)
-            {
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ExactLength));
-
-                if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                    attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-            }
-            else if (validator.MinLength != int.MinValue || validator.MaxLenght != int.MaxValue)
-            {
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.MinLength));
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.MaxLenght));
-
-                if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                    attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-            }
-            else if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-
-            return attribute;
-        }
-
-        private CodeAttributeDeclaration GetIsUniqueAttribute(ValidateIsUnique validator)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateIsUnique");
-
-            if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-
-            return attribute;
-        }
-
-        private CodeAttributeDeclaration GetEmailAttribute(ValidateEmail validator)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateEmail");
-
-            if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-
-            return attribute;
-        }
-
-        private CodeAttributeDeclaration GetCreditCardAttribute(ValidateCreditCard validator)
-        {
-            // Order should match one of the constructors.
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateCreditCard");
-
-            if (validator.AllowedTypes != CardType.All)
-            {
-                ArrayList list = new ArrayList();
-
-                if ((validator.AllowedTypes & CardType.MasterCard) != 0)
-                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.MasterCard));
-                if ((validator.AllowedTypes & CardType.VISA) != 0)
-                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.VISA));
-                if ((validator.AllowedTypes & CardType.Amex) != 0)
-                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.Amex));
-                if ((validator.AllowedTypes & CardType.DinersClub) != 0)
-                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.DinersClub));
-                if ((validator.AllowedTypes & CardType.enRoute) != 0)
-                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.enRoute));
-                if ((validator.AllowedTypes & CardType.Discover) != 0)
-                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.Discover));
-                if ((validator.AllowedTypes & CardType.JCB) != 0)
-                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.JCB));
-                if ((validator.AllowedTypes & CardType.Unknown) != 0)
-                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.Unknown));
-
-                attribute.Arguments.Add(new CodeAttributeArgument(GetBinaryOr(list, 0)));
-
-                if (validator.Exceptions != null)
-                {
-                    // TODO: Add as array initializer 
-                    attribute.Arguments.Add(AttributeHelper.GetStringArrayAttributeArgument(validator.Exceptions));
-
-                }
-                if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                    attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-            }
-            else if (validator.Exceptions != null)
-            {
-                // TODO add as array init. as above :
-                //attribute.Arguments.Add(GetPrimitiveAttributeArgument("CreditCardValidator.CardType", validator.Exceptions));
-
-                if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                    attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-            }
-            else if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-
-            return attribute;
-        }
-
-        private CodeFieldReferenceExpression GetFieldReferenceForCreditCardEnum(Enum value)
-        {
-            return new CodeFieldReferenceExpression(
-                new CodeTypeReferenceExpression("Castle.ActiveRecord.Framework.Validators.CreditCardValidator.CardType"),
-                value.ToString());
-        }
-
-        private CodeAttributeDeclaration GetConfirmationAttribute(ValidateConfirmation validator)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateConfirmation");
-
-            attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ConfirmationFieldOrProperty));
-            if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-
-            return attribute;
-        }
-
-        #endregion
-
-        #region GeneratedCode
-
-        private CodeAttributeDeclaration GetGeneratedCodeAttribute()
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("System.CodeDom.Compiler.GeneratedCodeAttribute");
-
-            attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument("Altinoren.ActiveWriter.CustomTool.ActiveWriterTemplatedCodeGenerator"));
-            attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument("1.0.0.0")); // TODO: Hardcoded to avoid circular dependency
-
-            return attribute;
-        }
-
-        #endregion
-
-        # region DebuggerDisplay
-
-        private CodeAttributeDeclaration GetDebuggerDisplayAttribute(CodeTypeDeclaration classDeclaration, ModelProperty property)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("System.Diagnostics.DebuggerDisplay");
-
-            attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(property.Name, property.Name));
-
-            return attribute;
-        }
-
-        # endregion
-
-        #region ActiveRecord
-
-        private CodeAttributeDeclaration GetActiveRecordAttribute(ModelClass modelClass)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ActiveRecord");
-
-            if (!String.IsNullOrEmpty(modelClass.Table))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(modelClass.Table));
-            if (modelClass.Cache != CacheEnum.Undefined)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cache", "CacheEnum", modelClass.Cache));
-            if (!String.IsNullOrEmpty(modelClass.CustomAccess))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", modelClass.CustomAccess));
-            if (!String.IsNullOrEmpty(modelClass.DiscriminatorColumn))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("DiscriminatorColumn", modelClass.DiscriminatorColumn));
-            if (!String.IsNullOrEmpty(modelClass.DiscriminatorType))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("DiscriminatorType", modelClass.DiscriminatorType));
-            if (!String.IsNullOrEmpty(modelClass.DiscriminatorValue))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("DiscriminatorValue", modelClass.DiscriminatorValue));
-            if (modelClass.Lazy)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Lazy", modelClass.Lazy));
-            if (!String.IsNullOrEmpty(modelClass.Proxy))
-                attribute.Arguments.Add(AttributeHelper.GetNamedTypeAttributeArgument("Proxy", modelClass.Proxy));
-            if (!String.IsNullOrEmpty(modelClass.Schema))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Schema", modelClass.Schema));
-            if (!String.IsNullOrEmpty(modelClass.Where))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Where", modelClass.Where));
-            if (modelClass.DynamicInsert)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("DynamicInsert", modelClass.DynamicInsert));
-            if (modelClass.DynamicUpdate)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("DynamicUpdate", modelClass.DynamicUpdate));
-            if (!String.IsNullOrEmpty(modelClass.Persister))
-                attribute.Arguments.Add(AttributeHelper.GetNamedTypeAttributeArgument("Persister", modelClass.Persister));
-            if (modelClass.SelectBeforeUpdate)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("SelectBeforeUpdate", modelClass.SelectBeforeUpdate));
-            if (modelClass.Polymorphism != Polymorphism.Implicit)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Polymorphism", "Polymorphism", modelClass.Polymorphism));
-            if (!modelClass.Mutable)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Mutable", modelClass.Mutable));
-            if (modelClass.BatchSize != 1)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("BatchSize", modelClass.BatchSize));
-            if (modelClass.Locking != OptimisticLocking.Version)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Locking", "OptimisticLocking", modelClass.Locking));
-            if (!modelClass.UseAutoImport)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("UseAutoImport", modelClass.UseAutoImport));
-
-            return attribute;
-        }
-
-        #endregion
-
-        #region Property
-
-        private CodeAttributeDeclaration GetFieldAttribute(ModelProperty property)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("Field");
-
-            PopulatePropertyOrFieldAttribute(property, attribute);
-
-            return attribute;
-        }
-
-        private CodeAttributeDeclaration GetKeyPropertyAttribute(ModelProperty property)
-        {
-            // Why KeyPropertyAttribute doesn't have the same constructor signature as it's base class PropertyAttribute?
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("KeyProperty");
-
-            PopulateKeyPropertyAttribute(property, attribute);
-
-            return attribute;
-        }
-
-        private CodeAttributeDeclaration GetPropertyAttribute(ModelProperty property)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("Property");
-
-            PopulatePropertyOrFieldAttribute(property, attribute);
-
-            return attribute;
-        }
-
-        private CodeAttributeDeclaration GetVersionAttribute(ModelProperty property)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("Version");
-
-            PopulateVersionAttribute(property, attribute);
-
-            return attribute;
-        }
-
-        private CodeAttributeDeclaration GetTimestampAttribute(ModelProperty property)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("Timestamp");
-
-            PopulateTimestampAttribute(property, attribute);
-
-            return attribute;
-        }
-
-        private void PopulateKeyPropertyAttribute(ModelProperty property, CodeAttributeDeclaration attribute)
-        {
-            if (!String.IsNullOrEmpty(property.Column))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Column", property.Column));
-            attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnType", property.ColumnType.ToString()));
-            if (property.Access != PropertyAccess.Property)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", property.Access));
-            if (!String.IsNullOrEmpty(property.CustomAccess))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", property.CustomAccess));
-            if (!String.IsNullOrEmpty(property.Formula))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Formula", property.Formula));
-            if (!property.Insert)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Insert", property.Insert));
-            if (property.Length > 0)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Length", property.Length));
-            if (property.NotNull)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("NotNull", property.NotNull));
-            if (property.Unique)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Unique", property.Unique));
-            if (!String.IsNullOrEmpty(property.UnsavedValue))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("UnsavedValue", property.UnsavedValue));
-            if (!property.Update)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Update", property.Update));
-        }
-
-        private void PopulatePropertyOrFieldAttribute(ModelProperty property, CodeAttributeDeclaration attribute)
-        {
-            if (!String.IsNullOrEmpty(property.Column))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(property.Column));
-            attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnType", property.ColumnType.ToString()));
-            if (property.Access != PropertyAccess.Property)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", property.Access));
-            if (!String.IsNullOrEmpty(property.CustomAccess))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", property.CustomAccess));
-            if (!String.IsNullOrEmpty(property.Formula))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Formula", property.Formula));
-            if (!property.Insert)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Insert", property.Insert));
-            if (property.Length > 0)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Length", property.Length));
-            if (property.NotNull)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("NotNull", property.NotNull));
-            if (property.Unique)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Unique", property.Unique));
-            if (!property.Update)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Update", property.Update));
-            if (!String.IsNullOrEmpty(property.UniqueKey))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("UniqueKey", property.UniqueKey));
-            if (!String.IsNullOrEmpty(property.Index))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Index", property.Index));
-            if (!String.IsNullOrEmpty(property.SqlType))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("SqlType", property.SqlType));
-            if (!String.IsNullOrEmpty(property.Check))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Check", property.Check));
-        }
-
-        private void PopulateVersionAttribute(ModelProperty property, CodeAttributeDeclaration attribute)
-        {
-            if (!String.IsNullOrEmpty(property.Column))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(property.Column));
-            attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Type", property.ColumnType.ToString()));
-            if (property.Access != PropertyAccess.Property)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", property.Access));
-            if (!String.IsNullOrEmpty(property.CustomAccess))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", property.CustomAccess));
-        }
-
-        private void PopulateTimestampAttribute(ModelProperty property, CodeAttributeDeclaration attribute)
-        {
-            if (!String.IsNullOrEmpty(property.Column))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(property.Column));
-            if (property.Access != PropertyAccess.Property)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", property.Access));
-            if (!String.IsNullOrEmpty(property.CustomAccess))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", property.CustomAccess));
-        }
-
-        #endregion
-
-        #region Primary Key
-
-        private CodeAttributeDeclaration GetPrimaryKeyAttribute(ModelProperty property)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("PrimaryKey");
-
-            attribute.Arguments.Add(AttributeHelper.GetPrimitiveEnumAttributeArgument("PrimaryKeyType", property.Generator));
-            if (!String.IsNullOrEmpty(property.Column))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(property.Column));
-            attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnType", property.ColumnType.ToString()));
-            if (property.Access != PropertyAccess.Property)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", property.Access));
-            if (!String.IsNullOrEmpty(property.CustomAccess))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", property.CustomAccess));
-            if (property.Length > 0)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Length", property.Length));
-            if (!String.IsNullOrEmpty(property.Params))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Params", property.Params));
-            if (!String.IsNullOrEmpty(property.SequenceName))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("SequenceName", property.SequenceName));
-            if (!String.IsNullOrEmpty(property.UnsavedValue))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("UnsavedValue", property.UnsavedValue));
-
-            return attribute;
-        }
-
-        #endregion
-
-        #region HasMany
-
-        private CodeAttributeDeclaration GetHasManyAttribute(ManyToOneRelation relation)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("HasMany");
-
-            attribute.Arguments.Add(AttributeHelper.GetPrimitiveTypeAttributeArgument(CodeGenerationContext.GetTypeDeclaration(relation.Source).Name));
-            if (relation.TargetAccess != PropertyAccess.Property)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", relation.TargetAccess));
-            if (relation.TargetCache != CacheEnum.Undefined)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cache", "CacheEnum", relation.TargetCache));
-            if (relation.TargetCascade != ManyRelationCascadeEnum.None)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade", "ManyRelationCascadeEnum", relation.TargetCascade));
-            if (!String.IsNullOrEmpty(relation.TargetColumnKey))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnKey", relation.TargetColumnKey));
-            if (!String.IsNullOrEmpty(relation.TargetCustomAccess))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", relation.TargetCustomAccess));
-            if (relation.TargetRelationType == RelationType.Map)
-            {
-                // TODO: Index & IndexType ?
-            }
-            if (relation.TargetInverse)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Inverse", relation.TargetInverse));
-            if (relation.TargetLazy)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Lazy", relation.TargetLazy));
-            if (!String.IsNullOrEmpty(relation.TargetMapType))
-                attribute.Arguments.Add(AttributeHelper.GetNamedTypeAttributeArgument("MapType", relation.TargetMapType));
-            if (!String.IsNullOrEmpty(relation.TargetOrderBy))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("OrderBy", relation.TargetOrderBy));
-            if (relation.TargetRelationType != RelationType.Guess)
-                attribute.Arguments.Add(
-                    AttributeHelper.GetNamedEnumAttributeArgument("RelationType", "RelationType", relation.TargetRelationType));
-            if (!String.IsNullOrEmpty(relation.TargetSchema))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Schema", relation.TargetSchema));
-            if (relation.TargetRelationType == RelationType.Set && !String.IsNullOrEmpty(relation.TargetSort))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Sort", relation.TargetSort));
-            if (!String.IsNullOrEmpty(relation.TargetTable))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Table", relation.TargetTable));
-            if (!String.IsNullOrEmpty(relation.TargetWhere))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Where", relation.TargetWhere));
-            if (relation.TargetNotFoundBehaviour != NotFoundBehaviour.Default)
-                attribute.Arguments.Add(
-                    AttributeHelper.GetNamedEnumAttributeArgument("NotFoundBehaviour", "NotFoundBehaviour",
-                                                  relation.TargetNotFoundBehaviour));
-            if (!String.IsNullOrEmpty(relation.TargetIndexType))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("IndexType", relation.TargetIndexType));
-            if (!String.IsNullOrEmpty(relation.TargetIndex))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Index", relation.TargetIndex));
-            if (!String.IsNullOrEmpty(relation.TargetElement))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Element", relation.TargetElement));
-
-            return attribute;
-        }
-
-        #endregion
-
-        #region BelongsTo
-
-        private CodeAttributeDeclaration GetBelongsToAttribute(ManyToOneRelation relation)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("BelongsTo");
-            if (!string.IsNullOrEmpty(relation.SourceColumn))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(relation.SourceColumn));
-            if (relation.SourceCascade != CascadeEnum.None)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade", "CascadeEnum", relation.SourceCascade));
-            if (!String.IsNullOrEmpty(relation.SourceCustomAccess))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", relation.SourceCustomAccess));
-            if (!relation.SourceInsert)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Insert", relation.SourceInsert));
-            if (!relation.SourceNotNull)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("NotNull", relation.SourceNotNull));
-            if (relation.SourceOuterJoin != OuterJoinEnum.Auto)
-                attribute.Arguments.Add(
-                    AttributeHelper.GetNamedEnumAttributeArgument("OuterJoin", "OuterJoinEnum", relation.SourceOuterJoin));
-            if (!String.IsNullOrEmpty(relation.SourceType))
-                attribute.Arguments.Add(AttributeHelper.GetNamedTypeAttributeArgument("Type", relation.SourceType));
-            if (relation.SourceUnique)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Unique", relation.SourceUnique));
-            if (!relation.SourceUpdate)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Update", relation.SourceUpdate));
-            if (relation.SourceNotFoundBehaviour != NotFoundBehaviour.Default)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("NotFoundBehaviour", "NotFoundBehaviour", relation.SourceNotFoundBehaviour));
-
-            return attribute;
-        }
-
-        #endregion
-
-        #region HasAndBelongTo
-
-        private CodeAttributeDeclaration GetHasAndBelongsToAttribute(ManyToManyRelation relation, bool useSource)
-        {
-            CodeTypeDeclaration otherPart;
-
-            if (useSource)
-                otherPart = CodeGenerationContext.GetTypeDeclaration(relation.Target);
-            else
-                otherPart = CodeGenerationContext.GetTypeDeclaration(relation.Source);
-
-            if (otherPart == null)
-                throw new ArgumentNullException(
-                    "Cannot create HasAndBelongsToMany attribute. Cannot find code type declaration for the other part of the relationship.", (useSource ? relation.Source.Name : relation.Target.Name));
-
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("HasAndBelongsToMany");
-
-            if (useSource)
-            {
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveTypeAttributeArgument(relation.Target.Name));
-                if (relation.SourceAccess != PropertyAccess.Property)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", relation.SourceAccess));
-                if (relation.SourceCache != CacheEnum.Undefined)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cache", "CacheEnum", relation.SourceCache));
-                if (relation.SourceCascade != ManyRelationCascadeEnum.None)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade", "ManyRelationCascadeEnum", relation.SourceCascade));
-                if (!String.IsNullOrEmpty(relation.SourceCustomAccess))
-                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", relation.SourceCustomAccess));
-
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnRef", relation.TargetColumn));
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnKey", relation.SourceColumn));
-                if (relation.TargetRelationType == RelationType.Map)
-                {
-                    // TODO: Index & IndexType
-                }
-                if (relation.SourceInverse)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Inverse", relation.SourceInverse));
-                if (relation.SourceLazy)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Lazy", relation.SourceLazy));
-                if (!String.IsNullOrEmpty(relation.SourceMapType))
-                    attribute.Arguments.Add(AttributeHelper.GetNamedTypeAttributeArgument("MapType", relation.SourceMapType));
-                if (!String.IsNullOrEmpty(relation.SourceOrderBy))
-                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("OrderBy", relation.SourceOrderBy));
-                if (relation.SourceRelationType != RelationType.Guess)
-                    attribute.Arguments.Add(
-                        AttributeHelper.GetNamedEnumAttributeArgument("RelationType", "RelationType", relation.SourceRelationType));
-                if (relation.SourceRelationType == RelationType.Set && !String.IsNullOrEmpty(relation.SourceSort))
-                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Sort", relation.SourceSort));
-                if (!String.IsNullOrEmpty(relation.SourceWhere))
-                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Where", relation.SourceWhere));
-                if (relation.SourceNotFoundBehaviour != NotFoundBehaviour.Default)
-                    attribute.Arguments.Add(
-                        AttributeHelper.GetNamedEnumAttributeArgument("NotFoundBehaviour", "NotFoundBehaviour",
-                                                      relation.SourceNotFoundBehaviour));
-            }
-            else
-            {
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveTypeAttributeArgument(relation.Source.Name));
-                if (relation.TargetAccess != PropertyAccess.Property)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", relation.TargetAccess));
-                if (relation.TargetCache != CacheEnum.Undefined)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cache", "CacheEnum", relation.TargetCache));
-                if (relation.TargetCascade != ManyRelationCascadeEnum.None)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade", "ManyRelationCascadeEnum", relation.TargetCascade));
-                if (!String.IsNullOrEmpty(relation.TargetCustomAccess))
-                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", relation.TargetCustomAccess));
-
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnRef", relation.SourceColumn));
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnKey", relation.TargetColumn));
-                if (relation.TargetRelationType == RelationType.Map)
-                {
-                    // TODO: Index & IndexType
-                }
-                if (relation.TargetInverse)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Inverse", relation.TargetInverse));
-                if (relation.TargetLazy)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Lazy", relation.TargetLazy));
-                if (!String.IsNullOrEmpty(relation.TargetMapType))
-                    attribute.Arguments.Add(AttributeHelper.GetNamedTypeAttributeArgument("MapType", relation.TargetMapType));
-                if (!String.IsNullOrEmpty(relation.TargetOrderBy))
-                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("OrderBy", relation.TargetOrderBy));
-                if (relation.TargetRelationType != RelationType.Guess)
-                    attribute.Arguments.Add(
-                        AttributeHelper.GetNamedEnumAttributeArgument("RelationType", "RelationType", relation.TargetRelationType));
-                if (relation.TargetRelationType == RelationType.Set && !String.IsNullOrEmpty(relation.TargetSort))
-                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Sort", relation.TargetSort));
-                if (!String.IsNullOrEmpty(relation.TargetWhere))
-                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Where", relation.TargetWhere));
-                if (relation.TargetNotFoundBehaviour != NotFoundBehaviour.Default)
-                    attribute.Arguments.Add(
-                        AttributeHelper.GetNamedEnumAttributeArgument("NotFoundBehaviour", "NotFoundBehaviour",
-                                                      relation.TargetNotFoundBehaviour));
-            }
-
-            if (!String.IsNullOrEmpty(relation.Schema))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Schema", relation.Schema));
-            if (!String.IsNullOrEmpty(relation.Table))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Table", relation.Table));
-
-            return attribute;
-        }
-
-        #endregion
-
-        #region OneToOne
-
-        private CodeAttributeDeclaration GetOneToOneAttribute(OneToOneRelation relation, bool useSource)
-        {
-            CodeTypeDeclaration otherPart;
-
-            if (useSource)
-                otherPart = CodeGenerationContext.GetTypeDeclaration(relation.Target);
-            else
-                otherPart = CodeGenerationContext.GetTypeDeclaration(relation.Source);
-
-            if (otherPart == null)
-                throw new ArgumentNullException(
-                    "Cannot create OneToOne attribute. Cannot find code type declaration for the other part of the relationship.", (useSource ? relation.Source.Name : relation.Target.Name));
-
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("OneToOne");
-
-            if (useSource)
-            {
-                if (relation.SourceAccess != PropertyAccess.Property)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", relation.SourceAccess));
-                if (relation.SourceCascade != CascadeEnum.None)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade", "CascadeEnum", relation.SourceCascade));
-                if (relation.SourceConstrained)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Constrained", relation.SourceConstrained));
-                if (!String.IsNullOrEmpty(relation.SourceCustomAccess))
-                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", relation.SourceCustomAccess));
-                if (relation.SourceOuterJoin != OuterJoinEnum.Auto)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("OuterJoin", "OuterJoinEnum", relation.SourceOuterJoin));
-            }
-            else
-            {
-                if (relation.TargetAccess != PropertyAccess.Property)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", relation.TargetAccess));
-                if (relation.TargetCascade != CascadeEnum.None)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade", "CascadeEnum", relation.TargetCascade));
-                if (relation.TargetConstrained)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Constrained", relation.TargetConstrained));
-                if (!String.IsNullOrEmpty(relation.TargetCustomAccess))
-                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", relation.TargetCustomAccess));
-                if (relation.TargetOuterJoin != OuterJoinEnum.Auto)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("OuterJoin", "OuterJoinEnum", relation.TargetOuterJoin));
-            }
-
-            return attribute;
-        }
-
-        #endregion
-
-        #region Nested
-
-        private CodeAttributeDeclaration GetNestedAttribute(NestedClassReferencesModelClasses relation)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("Nested");
-
-            if (!string.IsNullOrEmpty(relation.ColumnPrefix))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(relation.ColumnPrefix));
-            if (!string.IsNullOrEmpty(relation.MapType))
-                attribute.Arguments.Add(AttributeHelper.GetNamedTypeAttributeArgument("MapType", relation.MapType));
-            if (relation.Insert)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Insert", relation.Insert));
-            if (relation.Update)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Update", relation.Update));
-
-            return attribute;
-        }
-
-        #endregion
-
 
         #endregion
 
@@ -1745,7 +1070,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     classDeclaration.Members.Add(memberField);
 
                     if (property.DebuggerDisplay)
-                        classDeclaration.CustomAttributes.Add(GetDebuggerDisplayAttribute(classDeclaration, property));
+                        classDeclaration.CustomAttributes.Add(property.GetDebuggerDisplayAttribute());
                 }
 
                 return classDeclaration;
@@ -1784,7 +1109,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                         classDeclaration.Members.Add(memberField);
 
                         if (property.DebuggerDisplay)
-                            classDeclaration.CustomAttributes.Add(GetDebuggerDisplayAttribute(classDeclaration, property));
+                            classDeclaration.CustomAttributes.Add(property.GetDebuggerDisplayAttribute());
                     }
                     else
                         compositeKeys.Add(property);
@@ -1862,153 +1187,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 return CodeGenerationContext.GetTypeDeclaration(cls);
         }
 
-        private bool IsNullable(NHibernateType type)
-        {
-            switch (type)
-            {
-                case NHibernateType.Int32:
-                case NHibernateType.Boolean:
-                case NHibernateType.TrueFalse:
-                case NHibernateType.YesNo:
-                case NHibernateType.DateTime:
-                case NHibernateType.Ticks:
-                case NHibernateType.Timestamp:
-                case NHibernateType.Decimal:
-                case NHibernateType.Double:
-                case NHibernateType.Int16:
-                case NHibernateType.Int64:
-                case NHibernateType.Single:
-                case NHibernateType.Byte:
-                case NHibernateType.Guid:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        private CodeTypeReference GetNullableTypeReferenceForHelper(NHibernateType type)
-        {
-            switch (type)
-            {
-                case NHibernateType.Int32:
-                    return new CodeTypeReference("NullableInt32");
-                case NHibernateType.Boolean:
-                case NHibernateType.TrueFalse:
-                case NHibernateType.YesNo:
-                    return new CodeTypeReference("NullableBoolean");
-                case NHibernateType.DateTime:
-                case NHibernateType.Ticks:
-                case NHibernateType.Timestamp:
-                    return new CodeTypeReference("NullableDateTime");
-                case NHibernateType.Decimal:
-                    return new CodeTypeReference("NullableDecimal");
-                case NHibernateType.Double:
-                    return new CodeTypeReference("NullableDouble");
-                case NHibernateType.Int16:
-                    return new CodeTypeReference("NullableInt16");
-                case NHibernateType.Int64:
-                    return new CodeTypeReference("NullableInt64");
-                case NHibernateType.Single:
-                    return new CodeTypeReference("NullableSingle");
-                case NHibernateType.Byte:
-                    return new CodeTypeReference("NullableByte");
-                case NHibernateType.Guid:
-                    return new CodeTypeReference("NullableGuid");
-                default:
-                    return new CodeTypeReference(GetSystemType(type));
-            }
-        }
-
-        private CodeTypeReference GetNullableTypeReference(NHibernateType type)
-        {
-            switch (type)
-            {
-                case NHibernateType.Int32:
-                case NHibernateType.Boolean:
-                case NHibernateType.TrueFalse:
-                case NHibernateType.YesNo:
-                case NHibernateType.DateTime:
-                case NHibernateType.Ticks:
-                case NHibernateType.Timestamp:
-                case NHibernateType.Decimal:
-                case NHibernateType.Double:
-                case NHibernateType.Int16:
-                case NHibernateType.Int64:
-                case NHibernateType.Single:
-                case NHibernateType.Byte:
-                case NHibernateType.Guid:
-                    return GetNullableTypeReference(GetSystemType(type));
-                default:
-                    return new CodeTypeReference(GetSystemType(type));
-            }
-        }
-
-        private CodeTypeReference GetNullableTypeReference(Type type)
-        {
-            CodeTypeReference reference = new CodeTypeReference("System.Nullable");
-            reference.TypeArguments.Add(type);
-
-            return reference;
-        }
-
-        private Type GetSystemType(NHibernateType type)
-        {
-            switch (type)
-            {
-                    // TODO: Combine and order most likely asc
-                case NHibernateType.AnsiChar:
-                case NHibernateType.Char:
-                    return typeof(string);
-                case NHibernateType.Boolean:
-                    return typeof(Boolean);
-                case NHibernateType.Byte:
-                    return typeof(Byte);
-                case NHibernateType.DateTime:
-                    return typeof(DateTime);
-                case NHibernateType.Decimal:
-                    return typeof(Decimal);
-                case NHibernateType.Double:
-                    return typeof(Double);
-                case NHibernateType.Guid:
-                    return typeof(Guid);
-                case NHibernateType.Int16:
-                    return typeof(Int16);
-                case NHibernateType.Int32:
-                    return typeof(Int32);
-                case NHibernateType.Int64:
-                    return typeof(Int64);
-                case NHibernateType.Single:
-                    return typeof(Single);
-                case NHibernateType.Ticks:
-                    return typeof(DateTime);
-                case NHibernateType.TimeSpan:
-                    return typeof(TimeSpan);
-                case NHibernateType.Timestamp:
-                    return typeof(DateTime);
-                case NHibernateType.TrueFalse:
-                    return typeof(Boolean);
-                case NHibernateType.YesNo:
-                    return typeof(Boolean);
-                case NHibernateType.AnsiString:
-                    return typeof(String);
-                case NHibernateType.CultureInfo:
-                    return typeof(CultureInfo);
-                case NHibernateType.Binary:
-                    return typeof(Byte[]);
-                case NHibernateType.Type:
-                    return typeof(Type);
-                case NHibernateType.String:
-                    return typeof(String);
-                case NHibernateType.StringClob:
-                    return typeof(String);
-                case NHibernateType.BinaryBlob:
-                    return typeof(Byte[]);
-                default:
-                    throw new ArgumentException("Unknown NHibernate type", type.ToString());
-            }
-        }
-
-        private CodeExpression GetBooleanAnd(List<CodeExpression> expressions, int i)
+        public static CodeExpression GetBooleanAnd(List<CodeExpression> expressions, int i)
         {
             if (i == expressions.Count - 2)
                 return
@@ -2020,7 +1199,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                      GetBooleanAnd(expressions, i + 1));
         }
 
-        private CodeExpression GetBinaryOr(ArrayList list, int indexOfLeft)
+        public static CodeExpression GetBinaryOr(ArrayList list, int indexOfLeft)
         {
             if (indexOfLeft + 1 == list.Count)
                 return (CodeExpression)list[0];
@@ -2036,7 +1215,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                      GetBinaryOr(list, indexOfLeft + 1));
         }
 
-        private CodeExpression GetXor(List<CodeExpression> expressions, int i)
+        private static CodeExpression GetXor(List<CodeExpression> expressions, int i)
         {
             if (i == expressions.Count - 2)
                 return new CodeMethodInvokeExpression(null, Common.XorHelperMethod, expressions[i], expressions[i + 1]);
@@ -2044,50 +1223,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 return
                     new CodeMethodInvokeExpression(null, Common.XorHelperMethod, expressions[i],
                                                    GetXor(expressions, i + 1));
-        }
-
-        private string GetName(string name, PropertyAccess access)
-        {
-            switch (access)
-            {
-                case PropertyAccess.Property:
-                    switch (_model.CaseOfPrivateFields)
-                    {
-                        case FieldCase.Unchanged:
-                            return name;
-                        case FieldCase.Camelcase:
-                            return Common.MakeCamel(name);
-                        case FieldCase.CamelcaseUnderscore:
-                            return "_" + Common.MakeCamel(name);
-                        case FieldCase.CamelcaseMUnderscore:
-                            return "m_" + Common.MakeCamel(name);
-                        case FieldCase.Pascalcase:
-                            return Common.MakePascal(name);
-                        case FieldCase.PascalcaseUnderscore:
-                            return "_" + Common.MakePascal(name);
-                        case FieldCase.PascalcaseMUnderscore:
-                            return "m_" + Common.MakePascal(name);
-                    }
-                    break;
-                case PropertyAccess.Field:
-                    return name;
-                case PropertyAccess.FieldCamelcase:
-                case PropertyAccess.NosetterCamelcase:
-                    return Common.MakeCamel(name);
-                case PropertyAccess.FieldCamelcaseUnderscore:
-                case PropertyAccess.NosetterCamelcaseUnderscore:
-                    return "_" + Common.MakeCamel(name);
-                case PropertyAccess.FieldPascalcaseMUnderscore:
-                case PropertyAccess.NosetterPascalcaseMUnderscore:
-                    return "m_" + Common.MakePascal(name);
-                case PropertyAccess.FieldLowercaseUnderscore:
-                case PropertyAccess.NosetterLowercaseUnderscore:
-                    return "_" + name.ToLowerInvariant();
-                case PropertyAccess.NosetterLowercase:
-                    return name.ToLowerInvariant();
-            }
-
-            return name;
         }
 
         private string GenerateCode(CodeCompileUnit compileUnit)

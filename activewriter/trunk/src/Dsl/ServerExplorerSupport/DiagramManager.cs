@@ -14,9 +14,9 @@
 
 namespace Altinoren.ActiveWriter.ServerExplorerSupport
 {
-    using System;
     using System.Collections.Generic;
     using Microsoft.VisualStudio.Modeling;
+    using CodeGeneration;
     
     internal class DiagramManager
     {
@@ -98,7 +98,7 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
             relation.SourceColumn = fkColumn;
             relation.TargetColumnKey = fkColumn;
             relation.TargetTable = fkClass.Table;
-            relation.TargetPropertyName = Common.GetPlural(fkClass.Name);
+            relation.TargetPropertyName = NamingHelper.GetPlural(fkClass.Name);
 
             return relation;
         }

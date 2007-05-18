@@ -30,13 +30,13 @@ namespace Altinoren.ActiveWriter
                 imports.Add(new CodeNamespaceImport(Common.GenericCollectionsNamespace));
                 imports.Add(new CodeNamespaceImport(Common.CollectionsNamespace));
                 imports.Add(new CodeNamespaceImport(Common.ActiveRecordNamespace));
-                if (this.UseNullables == NullableUsage.WithHelperLibrary)
+                if (UseNullables == NullableUsage.WithHelperLibrary)
                     imports.Add(new CodeNamespaceImport(Common.NullablesNamespace));
                 if (HasClassImplementsINotifyPropertyChanged())
                     imports.Add(new CodeNamespaceImport(Common.ComponentmodelNamespace));
-                if (this.AdditionalImports != null && this.AdditionalImports.Count > 0)
+                if (AdditionalImports != null && AdditionalImports.Count > 0)
                 {
-                    foreach (Import item in this.AdditionalImports)
+                    foreach (Import item in AdditionalImports)
                     {
                         if (!string.IsNullOrEmpty(item.Name))
                             imports.Add(new CodeNamespaceImport(item.Name));
@@ -53,10 +53,10 @@ namespace Altinoren.ActiveWriter
 
         private bool HasClassImplementsINotifyPropertyChanged()
         {
-            bool hasModelClass = this.Classes.Find(
+            bool hasModelClass = Classes.Find(
                                      delegate(ModelClass cls) { return cls.DoesImplementINotifyPropertyChanged(); }
                                      ) != null;
-            bool hasNestedClass = this.NestedClasses.Find(
+            bool hasNestedClass = NestedClasses.Find(
                                       delegate(NestedClass cls) { return cls.DoesImplementINotifyPropertyChanged(); }
                                       ) != null;
 
