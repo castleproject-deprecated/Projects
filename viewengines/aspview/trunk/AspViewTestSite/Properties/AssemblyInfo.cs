@@ -8,5 +8,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("AspView MonoRail ViewEngine")]
 [assembly: AssemblyCopyright("Copyright ©  2006")]
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("0.5.0.*")]
-[assembly: AssemblyFileVersion("0.5.0.0")]
+[assembly: AssemblyVersion("0.7.0.152")]
+[assembly: AssemblyFileVersion("0.7.0.152")]

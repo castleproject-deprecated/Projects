@@ -26,13 +26,22 @@ namespace Castle.MonoRail.Views.AspView
 	using Castle.MonoRail.Framework;
 	using Castle.Core;
 	using System.Runtime.Serialization;
+	using System.Diagnostics;
 
 	public class AspViewEngine : ViewEngineBase, IInitializable
 	{
+		private bool needsRecompiling = false;
 		static AspViewEngineOptions options;
-
+		static readonly Type[] viewConstructorArgumentTypes = new Type[4]
+			{
+				typeof(AspViewEngine),
+				typeof(TextWriter),
+				typeof(IRailsEngineContext),
+				typeof(Controller)
+			};
 		Hashtable compilations = Hashtable.Synchronized(new Hashtable(CaseInsensitiveStringComparer.Default));
-		private Hashtable constructors = new Hashtable();
+		Hashtable constructors = Hashtable.Synchronized(new Hashtable());
+
 		#region IInitializable Members
 
 		public AspViewBase CreateView(Type type, TextWriter output, IRailsEngineContext context, Controller controller)
@@ -50,40 +59,31 @@ namespace Castle.MonoRail.Views.AspView
 				InitializeConfig();
 			#region TODO
 			//TODO: think about CommonScripts implementation in c#/VB.NET 
-
-			//TODO: Add support for in-place compilation will have to insert dependency check
-			/*
-            ViewSourceLoader.ViewChanged += delegate(object sender, FileSystemEventArgs e)
-            {
-                if (e.FullPath.IndexOf(options.CommonScriptsDirectory) > -1)
-                {
-                    CompileCommonScripts();
-                    return;
-                }
-                compilations[e.Name] = null;
-            };
-			*/
 			#endregion
+
+			if (options.CompilerOptions.AutoRecompilation)
+			{
+				// invalidate compiled views cache on any change to the view sources
+				ViewSourceLoader.ViewChanged += delegate(object sender, FileSystemEventArgs e)
+				{
+					if (e.Name.EndsWith("." + ViewFileExtension, StringComparison.InvariantCultureIgnoreCase))
+					{
+						needsRecompiling = true;
+					}
+				};
+			}
 		}
 		#endregion
-
-
-		public string Extension { get { return ".aspx"; } }
-		/* DELETE
-		public string ViewRootDir { get { return ".aspx"; } }
-		 * */
 
 		#region ViewEngineBase implementation
 		public override bool HasTemplate(string templateName)
 		{
 			return ViewSourceLoader.HasTemplate(GetFileName(templateName));
 		}
-
 		public override void Process(IRailsEngineContext context, Controller controller, string templateName)
 		{
 			Process(context.Response.Output, context, controller, templateName);
 		}
-
 		public override void Process(TextWriter output, IRailsEngineContext context, Controller controller, string templateName)
 		{
 			string fileName = GetFileName(templateName);
@@ -123,30 +123,49 @@ namespace Castle.MonoRail.Views.AspView
 				layout.Render();
 			}
 		}
-		#endregion
-
-		private AspViewBase GetLayout(TextWriter output, IRailsEngineContext context, Controller controller)
+		public override string ViewFileExtension
 		{
-			string layoutTemplate = "layouts\\" + controller.LayoutName;
-			string layoutFileName = GetFileName(layoutTemplate);
-			AspViewBase layout = null;
-			layout = GetView(layoutFileName, output, context, controller);
-			layout.ViewOutput = new StringWriter();
-			return layout;
+			get { return "aspx"; }
+		}
+		#region NJS
+		public override object CreateJSGenerator(IRailsEngineContext context)
+		{
+			throw new RailsException("This version of AspView does not implements NJS.");
+		}
+		public override string JSGeneratorFileExtension
+		{
+			get { throw new RailsException("This version of AspView does not implements NJS."); }
+		}
+		public override void ProcessPartial(TextWriter output, IRailsEngineContext context, Controller controller, string partialName)
+		{
+			throw new RailsException("This version of AspView does not implements NJS.");
+		}
+		public override bool SupportsJSGeneration
+		{
+			get { return false; }
+		}
+		public override void GenerateJS(TextWriter output, IRailsEngineContext context, Controller controller, string templateName)
+		{
+			throw new RailsException("This version of AspView does not implements NJS.");
 		}
 
-		public AspViewBase GetView(string fileName, TextWriter output, IRailsEngineContext context, Controller controller)
+		#endregion
+		#endregion
+
+		public virtual AspViewBase GetView(string fileName, TextWriter output, IRailsEngineContext context, Controller controller)
 		{
 			fileName = NormalizeFileName(fileName);
 			string className = GetClassName(fileName);
-			// get cached view type
-			Type viewType = compilations[className] as Type;
-			// if not cached, compile and cache
-			if (viewType == null)
+			if (needsRecompiling)
 			{
-				viewType = CompileView(fileName, className);
-				compilations[className] = viewType;
+				needsRecompiling = false;
+				RecompileViews();
 			}
+
+			Type viewType = compilations[className] as Type;
+
+
+
 			if (viewType == null)
 				throw new RailsException("Cannot find view type for {0}.",
 					fileName);
@@ -165,67 +184,31 @@ namespace Castle.MonoRail.Views.AspView
 			return theView;
 		}
 
-
-		private Type CompileView(string fileName, string className)
+		protected virtual AspViewBase GetLayout(TextWriter output, IRailsEngineContext context, Controller controller)
 		{
-			/*
-			string viewSource = GetViewSource(fileName);
-			NameValueCollection sourcesList = CreateSourcesList(className, viewSource);
-			AspViewCompiler compiler = new AspViewCompiler(
-				new AspViewCompilerOptions(sourcesList, options.Debug, !options.SaveToDisk,
-				baseSavePath, false));
-			compiler.CompileSite()
-			CompilerResults results = compiler.Run();
-			if (results.Errors.Count > 0)
-			{
-				StringBuilder message = new StringBuilder();
-				foreach (CompilerError err in results.Errors)
-					message.AppendLine(err.ToString());
-				throw new RailsException(string.Format(
-					"Error while compiling'{0}':\r\n{1}",
-					fileName, message.ToString()));
-			}
-			Type type = results.CompiledAssembly.GetType(GetClassName(fileName));
-			if (type == null)
-				throw new RailsException(
-					"Cannot compile view '{0}'.",
-					fileName);
-			 * */
-			return null;// type;
+			string layoutTemplate = "layouts\\" + controller.LayoutName;
+			string layoutFileName = GetFileName(layoutTemplate);
+			AspViewBase layout = null;
+			layout = GetView(layoutFileName, output, context, controller);
+			layout.ViewOutput = new StringWriter();
+			return layout;
 		}
 
-		private string GetViewSource(string fileName)
+		private AspViewCompiler compiler = null;
+
+		protected virtual void RecompileViews()
 		{
-			IViewSource viewFile = ViewSourceLoader.GetViewSource(fileName);
-			string viewSource = string.Empty;
-			using (StreamReader sr = new StreamReader(viewFile.OpenViewStream()))
-			{
-				viewSource = sr.ReadToEnd();
-			}
-			if (viewSource == string.Empty)
-				throw new RailsException(
-					"Cannot read view '{0}'.",
-					fileName);
-			return viewSource;
+			if (compiler == null)
+				compiler = new AspViewCompiler(options.CompilerOptions);
+			compiler.CompileSite();
+			LoadPrecompiledViews();
 		}
 
 		private string GetFileName(string templateName)
 		{
-			return templateName + Extension;
+			return templateName + "." + ViewFileExtension;
 		}
 
-		public string GetTemplateName(string templateName)
-		{
-			throw new Exception("The method or operation is not implemented.");
-		}
-
-		static readonly Type[] viewConstructorArgumentTypes = new Type[4]
-			{
-				typeof(AspViewEngine),
-				typeof(TextWriter),
-				typeof(IRailsEngineContext),
-				typeof(Controller)
-			};
 
 		private void CacheViewType(Type viewType)
 		{
@@ -235,6 +218,9 @@ namespace Castle.MonoRail.Views.AspView
 
 		private void LoadPrecompiledViews()
 		{
+			compilations.Clear();
+			constructors.Clear();
+
 			Assembly precompiledViews = null;
 			try
 			{
@@ -277,31 +263,6 @@ namespace Castle.MonoRail.Views.AspView
 			NameValueCollection sourcesList = new NameValueCollection();
 			sourcesList.Add(className, source);
 			return sourcesList;
-		}
-
-		public override object CreateJSGenerator(IRailsEngineContext context)
-		{
-			throw new RailsException("This version of AspView does not implements NJS.");
-		}
-		public override string ViewFileExtension
-		{
-			get { return "aspx"; }
-		}
-		public override string JSGeneratorFileExtension
-		{
-			get { throw new RailsException("This version of AspView does not implements NJS."); }
-		}
-		public override void ProcessPartial(TextWriter output, IRailsEngineContext context, Controller controller, string partialName)
-		{
-			throw new RailsException("This version of AspView does not implements NJS.");
-		}
-		public override bool SupportsJSGeneration
-		{
-			get { return false; }
-		}
-		public override void GenerateJS(TextWriter output, IRailsEngineContext context, Controller controller, string templateName)
-		{
-			throw new RailsException("This version of AspView does not implements NJS.");
 		}
 
 	}

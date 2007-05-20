@@ -38,6 +38,7 @@ namespace Castle.MonoRail.AspView.Compiler
 		{
 			string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 			siteRoot = baseDirectory.Substring(0, baseDirectory.LastIndexOf("\\bin"));
+			Console.WriteLine("Compiling [" + siteRoot + "] ...");
 
 			InitializeConfig();
 
@@ -58,7 +59,7 @@ namespace Castle.MonoRail.AspView.Compiler
 			try
 			{
 				compiler.CompileSite(siteRoot);
-				Console.WriteLine("finish");
+				Console.WriteLine("[" + siteRoot + "] compilation finished.");
 				return 0;
 			}
 			catch (Exception ex)
@@ -120,7 +121,7 @@ namespace Castle.MonoRail.AspView.Compiler
 			AspViewConfigurationSection section = new AspViewConfigurationSection();
 			options = (AspViewEngineOptions)section.Create(null, null, aspViewNode);
 			if (options != null)
-				Console.WriteLine(options.CompilerOptions.Debug);
+				Console.WriteLine(options.CompilerOptions.Debug ? "Compiling in DEBUG mode" : "");
 		}
 
 	}

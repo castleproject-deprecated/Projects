@@ -381,9 +381,9 @@ namespace Castle.MonoRail.Views.AspView
         private string GetSubViewFileName(string subViewName)
         {
             if (subViewName[0] == '/' || subViewName[0] == '\\')
-                return subViewName + _viewEngine.Extension;
+                return subViewName + "." + _viewEngine.ViewFileExtension;
             else
-                return Path.Combine(ViewDirectory, subViewName + _viewEngine.Extension);
+                return Path.Combine(ViewDirectory, subViewName + "." + _viewEngine.ViewFileExtension);
         }
         /// <summary>
         /// Gets a parameter's value from the view's propery containers.

@@ -29,24 +29,34 @@ namespace Castle.MonoRail.Views.AspView
         {
 			bool? debug = null;
 			bool? inMemory = null;
+			bool? autoRecompilation = null;
 			string temporarySourceFilesDirectory = null;
 			bool? saveFiles = null;
-			List<string> references = new List<string>();
+			List<ReferencedAssembly> references = new List<ReferencedAssembly>();
 			string actionExtension = null;
 
 			if (section.Attributes["debug"] != null)
 				debug = bool.Parse(section.Attributes["debug"].Value);
 			if (section.Attributes["inMemory"] != null)
 				inMemory = bool.Parse(section.Attributes["inMemory"].Value);
+			if (section.Attributes["autoRecompilation"] != null)
+				autoRecompilation = bool.Parse(section.Attributes["autoRecompilation"].Value);
 			if (section.Attributes["temporarySourceFilesDirectory"] != null)
 				temporarySourceFilesDirectory = section.Attributes["temporarySourceFilesDirectory"].Value;
 			if (section.Attributes["saveFiles"] != null)
 				saveFiles = bool.Parse(section.Attributes["saveFiles"].Value);
 			foreach (XmlNode reference in section.SelectNodes("reference"))
-				references.Add(reference.Attributes["assembly"].Value);
+			{
+				string name = reference.Attributes["assembly"].Value;
+				ReferencedAssembly.AssemblySource source = ReferencedAssembly.AssemblySource.BinDirectory;
+				if (reference.Attributes["isFromGac"] != null)
+					if (reference.Attributes["isFromGac"].Value.Equals("true", StringComparison.InvariantCultureIgnoreCase))
+						source = ReferencedAssembly.AssemblySource.GlobalAssemblyCache;
+				references.Add(new ReferencedAssembly(name, source));
+			}
 
 			AspViewCompilerOptions compilerOptions = new AspViewCompilerOptions(
-				debug, inMemory, temporarySourceFilesDirectory, saveFiles, references);
+				debug, inMemory, autoRecompilation, temporarySourceFilesDirectory, saveFiles, references);
 
 			if (section.Attributes["actionExtension"] != null)
 			{

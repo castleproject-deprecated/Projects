@@ -2,8 +2,6 @@
 <%
     string[] strings;
  %>
- 
- 
 hello from index<br />
 This are the strings:<br />
 <%foreach (string s in strings) { %>

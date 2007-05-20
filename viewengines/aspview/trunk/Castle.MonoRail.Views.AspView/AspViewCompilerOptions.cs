@@ -25,16 +25,17 @@ namespace Castle.MonoRail.Views.AspView
 		#region members
 		private bool _debug = false;
 		private bool _inMemory = false;
+		private bool _autoRecompilation = false;
 		private bool _keepTemporarySourceFiles = false;
-		private string _temporarySourceFilesDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temporarySourceFiles");
-		private List<string> _assembliesToReference = new List<string>();
+		private string _temporarySourceFilesDirectory = "temporarySourceFiles";
+		private List<ReferencedAssembly> _assembliesToReference = new List<ReferencedAssembly>();
 
-		static readonly string[] defaultAssemblies = new string[4]
+		static readonly ReferencedAssembly[] defaultAssemblies = new ReferencedAssembly[4]
 			{
-				"System.dll",
-				"Castle.Core.dll",
-				"Castle.MonoRail.Views.AspView.dll",
-				"Castle.MonoRail.Framework.dll"
+				new ReferencedAssembly("System.dll", ReferencedAssembly.AssemblySource.GlobalAssemblyCache),
+				new ReferencedAssembly("Castle.Core.dll", ReferencedAssembly.AssemblySource.BinDirectory),
+				new ReferencedAssembly("Castle.MonoRail.Views.AspView.dll", ReferencedAssembly.AssemblySource.BinDirectory),
+				new ReferencedAssembly("Castle.MonoRail.Framework.dll", ReferencedAssembly.AssemblySource.BinDirectory)
 			};
 		#endregion
 
@@ -47,13 +48,15 @@ namespace Castle.MonoRail.Views.AspView
 		public AspViewCompilerOptions(
 			bool? debug,
 			bool? inMemory,
+			bool? autoRecompilation,
 			string temporarySourceFilesDirectory,
 			bool? keepTemporarySourceFiles,
-			IEnumerable<string> references)
+			IEnumerable<ReferencedAssembly> references)
 			: this()
 		{
 			if (debug.HasValue) _debug = debug.Value;
 			if (inMemory.HasValue) _inMemory = inMemory.Value;
+			if (autoRecompilation.HasValue) _autoRecompilation = autoRecompilation.Value;
 			if (keepTemporarySourceFiles.HasValue) _keepTemporarySourceFiles = keepTemporarySourceFiles.Value;
 			if (temporarySourceFilesDirectory != null) _temporarySourceFilesDirectory = temporarySourceFilesDirectory;
 			AddReferences(references);
@@ -86,6 +89,14 @@ namespace Castle.MonoRail.Views.AspView
 			set { _keepTemporarySourceFiles = value; }
 		}
 		/// <summary>
+		/// if true, the engine will recompile the view if the view sources are changed
+		/// </summary>
+		public bool AutoRecompilation
+		{
+			get { return _autoRecompilation; }
+			set { _autoRecompilation = value; }
+		}
+		/// <summary>
 		/// Location of the generated concrete classes, if saved.
 		/// Note that the user who runs the application must have Modify permissions on this path.
 		/// </summary>
@@ -97,13 +108,13 @@ namespace Castle.MonoRail.Views.AspView
 		/// <summary>
 		/// Gets list of assemblies that'll be referenced during the compile process by CompiledViews.dll
 		/// </summary>
-		public string[] References
+		public ReferencedAssembly[] References
 		{
 			get { return _assembliesToReference.ToArray(); }
 		}
 		#endregion
 
-		public void AddReferences(IEnumerable<string> referencesToAdd)
+		public void AddReferences(IEnumerable<ReferencedAssembly> referencesToAdd)
 		{
 			_assembliesToReference.AddRange(referencesToAdd);
 		}

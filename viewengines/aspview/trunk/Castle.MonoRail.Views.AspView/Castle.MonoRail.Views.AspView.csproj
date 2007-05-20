@@ -64,6 +64,7 @@
     <Compile Include="AspViewFile.cs" />
     <Compile Include="AspViewPreProcessor.cs" />
     <Compile Include="IViewFilter.cs" />
+    <Compile Include="ReferencedAssembly.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="VbPreProcessor.cs" />
     <Compile Include="CaseInsensitiveStringComparer.cs" />

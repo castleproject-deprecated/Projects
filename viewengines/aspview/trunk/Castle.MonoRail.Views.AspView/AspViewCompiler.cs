@@ -30,8 +30,14 @@ namespace Castle.MonoRail.Views.AspView
 		private CompilerParameters parameters;
 		private AspViewCompilerOptions options;
 		private AspViewPreProcessor preProcessor;
-		private static readonly string[] defaultAddedReferences = null;
-		private static readonly string defaultSiteRoot = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..");
+		private static readonly ReferencedAssembly[] defaultAddedReferences = null;
+		private static readonly string defaultSiteRoot = AppDomain.CurrentDomain.BaseDirectory;
+		private static readonly string defaultBinDirectory = Path.Combine(defaultSiteRoot, "bin");
+		private string targetDirectory = null;
+		private string binDirectory = null;
+
+		public string PathToAssembly = null;
+
 		#endregion
 
 		public AspViewCompiler(AspViewCompilerOptions options)
@@ -43,51 +49,52 @@ namespace Castle.MonoRail.Views.AspView
 
 		public void CompileSite()
 		{
-			CompileSite(defaultSiteRoot, defaultAddedReferences);
+			CompileSite(defaultSiteRoot);
 		}
 		public void CompileSite(string siteRoot)
 		{
+			binDirectory = Path.Combine(siteRoot, "bin");
+			targetDirectory = binDirectory;
 			CompileSite(siteRoot, defaultAddedReferences);
 		}
-		public void CompileSite(string[] references)
-		{
-			CompileSite(defaultSiteRoot, references);
-		}
 
-		public void CompileSite(string siteRoot, string[] references)
+		public void CompileSite(string siteRoot, ReferencedAssembly[] references)
 		{
 			List<AspViewFile> files = GetViewFiles(siteRoot);
 			if (files.Count == 0)
 				return;
 
-			string targetDirectory = Path.Combine(siteRoot, "bin");
 
 			preProcessor.Process(files);
 
 			List<AspViewFile> vbFiles = files.FindAll(delegate(AspViewFile file) { return (file.Language == ScriptingLanguage.VbNet); });
 			List<AspViewFile> csFiles = files.FindAll(delegate(AspViewFile file) { return (file.Language == ScriptingLanguage.CSharp); });
 
+
 			if (options.KeepTemporarySourceFiles)
 			{
-				string targetTemporarySourceFilesDirectory = Path.Combine(targetDirectory, options.TemporarySourceFilesDirectory);
+				string targetTemporarySourceFilesDirectory = options.TemporarySourceFilesDirectory;
+				if (!Path.IsPathRooted(targetTemporarySourceFilesDirectory))
+					targetTemporarySourceFilesDirectory = Path.Combine(targetDirectory, targetTemporarySourceFilesDirectory);
 				if (!Directory.Exists(targetTemporarySourceFilesDirectory))
 					Directory.CreateDirectory(targetTemporarySourceFilesDirectory);
 				foreach (AspViewFile file in files)
 					SaveFile(file, targetTemporarySourceFilesDirectory);
 			}
 
+			PathToAssembly = Compile(targetDirectory, csFiles, vbFiles, references);
+
+		}
+
+		private string Compile(string targetDirectory, List<AspViewFile> csFiles, List<AspViewFile> vbFiles, ReferencedAssembly[] references)
+		{
 			if (vbFiles.Count == 0)
-				CompileCSharpModule(targetDirectory, csFiles, references, true, null);
-			else
-			{
-				if (csFiles.Count == 0)
-					CompileVbModule(targetDirectory, vbFiles, references, true, null);
-				else
-				{
-					string vbModulePath = CompileVbModule(targetDirectory, vbFiles, references, false, null);
-					CompileCSharpModule(targetDirectory, csFiles, references, true, new string[1] { vbModulePath });
-				}
-			}
+				return CompileCSharpModule(targetDirectory, csFiles, references, true, null);
+			if (csFiles.Count == 0)
+				return CompileVbModule(targetDirectory, vbFiles, references, true, null);
+
+			string vbModulePath = CompileVbModule(targetDirectory, vbFiles, references, false, null);
+			return CompileCSharpModule(targetDirectory, csFiles, references, true, new string[1] { vbModulePath });
 		}
 
 		private List<AspViewFile> GetViewFiles(string siteRoot)
@@ -134,7 +141,7 @@ namespace Castle.MonoRail.Views.AspView
 
 		private string CompileModule(
 			CodeDomProvider codeProvider, string targetDirectory, List<AspViewFile> files,
-			string[] references, bool createAssembly, string[] modulesToAdd)
+			ReferencedAssembly[] references, bool createAssembly, string[] modulesToAdd)
 		{
 			if (!createAssembly)
 			{
@@ -144,13 +151,19 @@ namespace Castle.MonoRail.Views.AspView
 			}
 			else
 				parameters.OutputAssembly = Path.Combine(targetDirectory, "CompiledViews.dll");
+			List<ReferencedAssembly> actualReferences = new List<ReferencedAssembly>();
 			if (options.References != null)
-				foreach (string reference in options.References)
-					parameters.CompilerOptions += " /r:" + reference;
+				actualReferences.AddRange(options.References);
 			if (references != null)
-				foreach (string reference in references)
-					parameters.CompilerOptions += " /r:" + reference;
+				actualReferences.AddRange(references);
 
+			foreach (ReferencedAssembly reference in actualReferences)
+			{
+				string assemblyName = reference.Name;
+				if (reference.Source == ReferencedAssembly.AssemblySource.BinDirectory)
+					assemblyName = Path.Combine(targetDirectory, assemblyName);
+				parameters.CompilerOptions += " /r:\"" + assemblyName + "\"";
+			}
 
 			if (modulesToAdd != null && modulesToAdd.Length > 0)
 			{
@@ -158,7 +171,7 @@ namespace Castle.MonoRail.Views.AspView
 				sb.Append(" /addmodule: ");
 				foreach (string moduleToAdd in modulesToAdd)
 					sb.Append(Path.Combine(targetDirectory, moduleToAdd));
-				parameters.CompilerOptions += sb.ToString();
+				parameters.CompilerOptions += "\"" + sb.ToString() + "\"";
 			}
 
 			CompilerResults results;
@@ -188,11 +201,11 @@ namespace Castle.MonoRail.Views.AspView
 			}
 			return results.PathToAssembly;
 		}
-		private string CompileCSharpModule(string targetDirectory, List<AspViewFile> files, string[] references, bool createAssembly, string[] modulesToAdd)
+		private string CompileCSharpModule(string targetDirectory, List<AspViewFile> files, ReferencedAssembly[] references, bool createAssembly, string[] modulesToAdd)
 		{
 			return CompileModule(new CSharpCodeProvider(), targetDirectory, files, references, createAssembly, modulesToAdd);
 		}
-		private string CompileVbModule(string targetDirectory, List<AspViewFile> files, string[] references, bool createAssembly, string[] modulesToAdd)
+		private string CompileVbModule(string targetDirectory, List<AspViewFile> files, ReferencedAssembly[] references, bool createAssembly, string[] modulesToAdd)
 		{
 			return CompileModule(new VBCodeProvider(), targetDirectory, files, references, createAssembly, modulesToAdd);
 		}
