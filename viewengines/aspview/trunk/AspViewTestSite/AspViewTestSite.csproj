@@ -137,7 +137,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>copy "$(SolutionDir)vcompile\bin\debug\vcompile.*" $(TargetDir)
+    <PreBuildEvent>copy "$(SolutionDir)vcompile\bin\$(ConfigurationName)\vcompile.*" $(TargetDir)
 copy "$(SolutionDir)Solution Items\lib\castle\Castle.Components.Common.EmailSender.*" $(TargetDir)
 copy "$(SolutionDir)Solution Items\lib\castle\Castle.Components.Validator.*" $(TargetDir)
 copy "$(SolutionDir)Solution Items\lib\castle\Rhino.Components.*" $(TargetDir)</PreBuildEvent>
