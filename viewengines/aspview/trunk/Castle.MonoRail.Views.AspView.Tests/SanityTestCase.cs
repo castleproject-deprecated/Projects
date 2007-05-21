@@ -38,9 +38,7 @@ namespace Castle.MonoRail.Views.AspView.Tests
         hello from default layout
     </div>
     <div>
-         
- 
-hello from index<br />
+        hello from index<br />
 This are the strings:<br />
     string no 1<br />
     string no 2<br />
