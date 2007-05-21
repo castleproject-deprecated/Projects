@@ -239,7 +239,7 @@ namespace Castle.MonoRail.Views.AspView
 				{0}.Init(_context, {1});
 				{0}.Render();
 				if ({1}.ViewToRender != null)
-					OutputSubView({1}.ViewToRender, {1}.ContextVars);"
+					OutputSubView(""\\"" + {1}.ViewToRender, {1}.ContextVars);"
 				, contextName, componentName);
 		}
 

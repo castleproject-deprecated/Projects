@@ -221,12 +221,7 @@ namespace Castle.MonoRail.Views.AspView
         /// When overriden in a concrete view class, renders the view content to the output writer
         /// </summary>
         public abstract void Render();
-		/*  DELETE
-        protected virtual string ScriptDirectory
-        {
-            get { return _viewEngine.ViewRootDir; }
-        }
-		 * */
+
         /// <summary>
         /// Renders another view in place
         /// </summary>
@@ -240,7 +235,7 @@ namespace Castle.MonoRail.Views.AspView
         /// </summary>
         /// <param name="subViewName">The sub view's name</param>
         /// <param name="parameters">Parameters that can be sent to the sub view's Properties container</param>
-        protected void OutputSubView(string subViewName, IDictionary<string, object> parameters)
+        protected void OutputSubView(string subViewName, IDictionary parameters)
         {
 			OutputSubView(subViewName, _outputWriter, parameters);
         }
@@ -250,7 +245,7 @@ namespace Castle.MonoRail.Views.AspView
 		/// <param name="subViewName">The sub view's name</param>
 		/// <param name="parameters">Parameters that can be sent to the sub view's Properties container</param>
 		/// <param name="writer">The writer that will be used for the sub view's output</param>
-		protected void OutputSubView(string subViewName, TextWriter writer, IDictionary<string, object> parameters)
+		protected void OutputSubView(string subViewName, TextWriter writer, IDictionary parameters)
 		{
 			string subViewFileName = GetSubViewFileName(subViewName);
 			AspViewBase subView = _viewEngine.GetView(subViewFileName, writer, _context, _controller);
@@ -279,8 +274,8 @@ namespace Castle.MonoRail.Views.AspView
 		/// <param name="writer">The writer that will be used for the sub view's output</param>
 		internal void OutputSubView(string subViewName, TextWriter writer, params object[] arguments)
         {
-			IDictionary<string, object> parameters =
-				Utilities.ConvertArgumentsToParameters(arguments);
+			IDictionary parameters =
+				Utilities.ConvertArgumentsToParameters(arguments) as IDictionary;
             OutputSubView(subViewName, writer, parameters);
         }
 
