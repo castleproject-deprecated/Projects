@@ -286,12 +286,12 @@
             <DomainEnumerationMoniker Name="NHibernateType" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="3b717093-4359-4eef-8d1f-42bfb1384af6" Description="" Name="CustomColumnType" DisplayName="Custom Column Type" DefaultValue="String" Category="ActiveRecord">
+        <DomainProperty Id="3b717093-4359-4eef-8d1f-42bfb1384af6" Description="" Name="CustomColumnType" DisplayName="Custom Column Type" DefaultValue="" Category="ActiveRecord">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="b06eb038-c800-4217-bd0e-e2b00b157132" Description="" Name="CustomMemberType" DisplayName="Custom Member Type" DefaultValue="String" Category="ActiveRecord">
+        <DomainProperty Id="b06eb038-c800-4217-bd0e-e2b00b157132" Description="" Name="CustomMemberType" DisplayName="Custom Member Type" DefaultValue="" Category="ActiveRecord">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>

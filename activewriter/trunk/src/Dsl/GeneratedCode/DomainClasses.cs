@@ -4730,7 +4730,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for CustomColumnType
 		/// </summary>
-		private global::System.String customColumnTypePropertyStorage = "String";
+		private global::System.String customColumnTypePropertyStorage = string.Empty;
 		
 		/// <summary>
 		/// Gets or sets the value of CustomColumnType domain property.
@@ -4738,7 +4738,6 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelProperty/CustomColumnType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelProperty/CustomColumnType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelProperty/CustomColumnType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue("String")]
 		[DslModeling::DomainObjectId("3b717093-4359-4eef-8d1f-42bfb1384af6")]
 		public global::System.String CustomColumnType
 		{
@@ -4818,7 +4817,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for CustomMemberType
 		/// </summary>
-		private global::System.String customMemberTypePropertyStorage = "String";
+		private global::System.String customMemberTypePropertyStorage = string.Empty;
 		
 		/// <summary>
 		/// Gets or sets the value of CustomMemberType domain property.
@@ -4826,7 +4825,6 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelProperty/CustomMemberType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelProperty/CustomMemberType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelProperty/CustomMemberType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue("String")]
 		[DslModeling::DomainObjectId("b06eb038-c800-4217-bd0e-e2b00b157132")]
 		public global::System.String CustomMemberType
 		{

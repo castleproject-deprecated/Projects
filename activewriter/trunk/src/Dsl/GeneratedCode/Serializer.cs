@@ -4041,7 +4041,7 @@ namespace Altinoren.ActiveWriter
 				global::System.String propValue = instanceOfModelProperty.CustomColumnType;
 				if (!serializationContext.Result.Failed)
 				{
-					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "String") != 0))
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, string.Empty) != 0))
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("customColumnType", propValue);
 					}
@@ -4053,7 +4053,7 @@ namespace Altinoren.ActiveWriter
 				global::System.String propValue = instanceOfModelProperty.CustomMemberType;
 				if (!serializationContext.Result.Failed)
 				{
-					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "String") != 0))
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, string.Empty) != 0))
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("customMemberType", propValue);
 					}
