@@ -164,8 +164,11 @@ namespace Altinoren.ActiveWriter
         {
             if (!string.IsNullOrEmpty(Column))
                 attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(Column));
-            attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnType", ColumnType.ToString()));
-            if (Access != PropertyAccess.Property)
+			if (ColumnType == NHibernateType.Custom)
+				attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnType", CustomColumnType));
+			else
+				attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnType", ColumnType.ToString()));
+			if (Access != PropertyAccess.Property)
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", Access));
             if (!string.IsNullOrEmpty(CustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", CustomAccess));

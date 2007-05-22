@@ -136,6 +136,8 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(ModelClass), "ImplementINotifyPropertyChanged", ModelClass.ImplementINotifyPropertyChangedDomainPropertyId, typeof(ModelClass.ImplementINotifyPropertyChangedPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelProperty), "Column", ModelProperty.ColumnDomainPropertyId, typeof(ModelProperty.ColumnPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelProperty), "ColumnType", ModelProperty.ColumnTypeDomainPropertyId, typeof(ModelProperty.ColumnTypePropertyHandler)),
+				new DomainMemberInfo(typeof(ModelProperty), "CustomColumnType", ModelProperty.CustomColumnTypeDomainPropertyId, typeof(ModelProperty.CustomColumnTypePropertyHandler)),
+				new DomainMemberInfo(typeof(ModelProperty), "CustomMemberType", ModelProperty.CustomMemberTypeDomainPropertyId, typeof(ModelProperty.CustomMemberTypePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelProperty), "Formula", ModelProperty.FormulaDomainPropertyId, typeof(ModelProperty.FormulaPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelProperty), "Insert", ModelProperty.InsertDomainPropertyId, typeof(ModelProperty.InsertPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelProperty), "Length", ModelProperty.LengthDomainPropertyId, typeof(ModelProperty.LengthPropertyHandler)),
@@ -1151,6 +1153,12 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/YesNo.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		YesNo,
+		/// <summary>
+		/// Custom
+		/// Description for Altinoren.ActiveWriter.NHibernateType.Custom
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/Custom.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		Custom,
 	}
 }
 namespace Altinoren.ActiveWriter
@@ -1508,4 +1516,5 @@ namespace Altinoren.ActiveWriter
 	{
 	}
 }
+
 

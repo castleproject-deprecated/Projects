@@ -3261,6 +3261,40 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// CustomColumnType
+			if (!serializationContext.Result.Failed)
+			{
+				string attribCustomColumnType = reader.GetAttribute("customColumnType");
+				if (attribCustomColumnType != null)
+				{
+					global::System.String valueOfCustomColumnType;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCustomColumnType), out valueOfCustomColumnType))
+					{
+						instanceOfModelProperty.CustomColumnType = valueOfCustomColumnType;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "customColumnType", typeof(global::System.String), attribCustomColumnType);
+					}
+				}
+			}
+			// CustomMemberType
+			if (!serializationContext.Result.Failed)
+			{
+				string attribCustomMemberType = reader.GetAttribute("customMemberType");
+				if (attribCustomMemberType != null)
+				{
+					global::System.String valueOfCustomMemberType;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCustomMemberType), out valueOfCustomMemberType))
+					{
+						instanceOfModelProperty.CustomMemberType = valueOfCustomMemberType;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "customMemberType", typeof(global::System.String), attribCustomMemberType);
+					}
+				}
+			}
 			// Formula
 			if (!serializationContext.Result.Failed)
 			{
@@ -3999,6 +4033,26 @@ namespace Altinoren.ActiveWriter
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("columnType", serializedPropValue);
 					}
+				}
+			}
+			// CustomColumnType
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModelProperty.CustomColumnType;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("customColumnType", propValue);
+				}
+			}
+			// CustomMemberType
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModelProperty.CustomMemberType;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("customMemberType", propValue);
 				}
 			}
 			// Formula
@@ -18580,5 +18634,6 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
+
 
 

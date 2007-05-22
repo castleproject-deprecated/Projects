@@ -526,7 +526,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                                     ModelProperty property)
         {
             CodeMemberProperty memberProperty =
-                GetMemberProperty(memberField, property.Name, property.ColumnType, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(), property.Description);
+                GetMemberProperty(memberField, property.Name, property.ColumnType, null, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(), property.Description);
             memberProperty.CustomAttributes.Add(property.GetKeyPropertyAttribute());
 
             return memberProperty;
@@ -537,6 +537,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         {
             CodeMemberProperty memberProperty =
                 GetMemberProperty(memberField, property.Name, property.ColumnType,
+								  property.CustomMemberType,
 								  property.NotNull,
                                   true,
                                   true,
@@ -564,7 +565,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                                 ModelProperty property)
         {
             CodeMemberProperty memberProperty =
-                GetMemberProperty(memberField, property.Name, property.ColumnType, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(),
+                GetMemberProperty(memberField, property.Name, property.ColumnType, null, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(),
                                   property.Description);
             memberProperty.CustomAttributes.Add(property.GetVersionAttribute());
 
@@ -575,7 +576,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                                   ModelProperty property)
         {
             CodeMemberProperty memberProperty =
-                GetMemberProperty(memberField, property.Name, property.ColumnType, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(),
+                GetMemberProperty(memberField, property.Name, property.ColumnType, null, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(),
                                   property.Description);
             memberProperty.CustomAttributes.Add(property.GetTimestampAttribute());
 
@@ -583,7 +584,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         }
 
 		private CodeMemberProperty GetMemberProperty(CodeMemberField memberField, string propertyName,
-                                             NHibernateType propertyType, bool propertyNotNull, bool get, bool set, bool implementINotifyPropertyChanged, params string[] description)
+												NHibernateType propertyType, string propertyCustomMemberType, bool propertyNotNull, 
+												bool get, bool set, bool implementINotifyPropertyChanged, params string[] description)
 		{
             CodeMemberProperty memberProperty =
                 GetMemberPropertyWithoutType(memberField, propertyName, get, set, implementINotifyPropertyChanged, description);
@@ -596,7 +598,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     memberProperty.Type = TypeHelper.GetNullableTypeReference(propertyType);
             }
             else
-                memberProperty.Type = new CodeTypeReference(TypeHelper.GetSystemType(propertyType));
+				memberProperty.Type = new CodeTypeReference(TypeHelper.GetSystemType(propertyType, propertyCustomMemberType));
 
             return memberProperty;
         }
@@ -688,7 +690,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     return GetMemberField(property.Name, TypeHelper.GetNullableTypeReference(property.ColumnType), accessor, property.Access);
             }
             else
-                return GetMemberField(property.Name, TypeHelper.GetSystemType(property.ColumnType), accessor, property.Access);
+                return GetMemberField(property.Name, TypeHelper.GetSystemType(property.ColumnType, property.CustomMemberType), accessor, property.Access);
         }
 
         private CodeMemberField GetMemberField(CodeTypeDeclaration classDeclaration, ModelProperty property)

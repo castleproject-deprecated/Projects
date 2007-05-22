@@ -6,6 +6,7 @@
 - Shouldn't it also be good practice when setting the Key Type to Primary key it is always NotNUll=true? (Robert van Hoornaar )
 - Display watermark links on the design surface in an empty designer.
 - Display informative messages and progress in status bar during server explorer interactions.
+- Ability to define a nested class with a different property name than the nested class (Craig Neuwirt)
 
 Ayende:
 - Classes should probably have a default Id property. (?)

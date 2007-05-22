@@ -430,6 +430,10 @@
         <xsd:attribute name="column" type="xsd:string" />
         <!-- Property: ColumnType -->
         <xsd:attribute name="columnType" type="NHibernateType" />
+        <!-- Property: CustomColumnType -->
+        <xsd:attribute name="customColumnType" type="xsd:string" />
+        <!-- Property: CustomMemberType -->
+        <xsd:attribute name="customMemberType" type="xsd:string" />
         <!-- Property: Formula -->
         <xsd:attribute name="formula" type="xsd:string" />
         <!-- Property: Insert -->
@@ -1229,6 +1233,7 @@
       <xsd:enumeration value="Timestamp"/>
       <xsd:enumeration value="TrueFalse"/>
       <xsd:enumeration value="YesNo"/>
+      <xsd:enumeration value="Custom"/>
     </xsd:restriction>
   </xsd:simpleType>
   
@@ -1343,4 +1348,5 @@
   </xsd:simpleType>
   
 </xsd:schema>
+
 

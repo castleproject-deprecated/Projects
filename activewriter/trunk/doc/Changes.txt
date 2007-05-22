@@ -9,6 +9,7 @@ New:
 - Contrib-26: Add support for AR Nested / NH Component mappings. Allow the ability to specify a column prefix for active record. (thx: Adam Tybor)
 - Optionally generates classes implementing INotifyPropertyChanged.
 - Support for drag-drop from Server Explorer for MySQL databases. Requires MySQL Connector/Net (5.1). (Patch: Michael Morton)
+- Support for custom types through IUserType. See http://support.castleproject.org/browse/CONTRIB-28#action_11456 for usage. (Patch: Ricardo Stuven)
 
 Fixed:
 - Contrib-23: Produces CascadeEnum instead of ManyRelationCascadeEnum

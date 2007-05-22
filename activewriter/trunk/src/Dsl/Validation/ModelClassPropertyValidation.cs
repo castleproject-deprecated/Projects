@@ -132,5 +132,38 @@ namespace Altinoren.ActiveWriter
                                  "AW001ValidateDataTypeOfVersionOrTimestampError", this);
             }
         }
-    }
+
+		[ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
+		private void ValidateCustomTypePropertiesIfColumnTypeIsNotCustom(ValidationContext context)
+		{
+			if (ColumnType != NHibernateType.Custom && 
+				(!string.IsNullOrEmpty(CustomColumnType) || !string.IsNullOrEmpty(CustomMemberType)))
+			{
+				context.LogWarning("CustomColumnType and CustomMemberType will be ignored if ColumnType is not Custom.",
+								 "AW001CustomTypePropertiesIfColumnTypeIsNotCustom", this);
+			}
+		}
+
+		[ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
+		private void ValidateCustomTypePropertiesIfColumnTypeIsCustom(ValidationContext context)
+		{
+			if (ColumnType == NHibernateType.Custom &&
+				(string.IsNullOrEmpty(CustomColumnType) || string.IsNullOrEmpty(CustomMemberType)))
+			{
+				context.LogError("CustomColumnType and CustomMemberType must be set if ColumnType is Custom.",
+								 "AW001ValidateCustomTypePropertiesIfColumnTypeIsCustom", this);
+			}
+		}
+
+		[ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
+		private void ValidatePrimaryKeyInCustomType(ValidationContext context)
+		{
+			if (ColumnType == NHibernateType.Custom && KeyType != KeyType.None)
+			{
+				context.LogError("Custom types cannot be marked as keys.",
+								 "AW001ValidatePrimaryKeyInCustomType", this);
+			}
+		}
+
+	}
 }

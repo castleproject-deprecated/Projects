@@ -101,7 +101,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             }
         }
 
-        public static CodeTypeReference GetNullableTypeReference(Type type)
+        public static CodeTypeReference GetNullableTypeReference(string type)
         {
             CodeTypeReference reference = new CodeTypeReference("System.Nullable");
             reference.TypeArguments.Add(type);
@@ -109,58 +109,65 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             return reference;
         }
 
-        public static Type GetSystemType(NHibernateType type)
+		public static string GetSystemType(NHibernateType type)
+		{
+			return GetSystemType(type, null);
+		}
+
+		public static string GetSystemType(NHibernateType type, string customMemberType)
         {
             switch (type)
             {
                 // TODO: Combine and order most likely asc
                 case NHibernateType.AnsiChar:
                 case NHibernateType.Char:
-                    return typeof(string);
+                    return typeof(string).FullName;
                 case NHibernateType.Boolean:
-                    return typeof(Boolean);
+					return typeof(Boolean).FullName;
                 case NHibernateType.Byte:
-                    return typeof(Byte);
+					return typeof(Byte).FullName;
                 case NHibernateType.DateTime:
-                    return typeof(DateTime);
+					return typeof(DateTime).FullName;
                 case NHibernateType.Decimal:
-                    return typeof(Decimal);
+					return typeof(Decimal).FullName;
                 case NHibernateType.Double:
-                    return typeof(Double);
+					return typeof(Double).FullName;
                 case NHibernateType.Guid:
-                    return typeof(Guid);
+					return typeof(Guid).FullName;
                 case NHibernateType.Int16:
-                    return typeof(Int16);
+					return typeof(Int16).FullName;
                 case NHibernateType.Int32:
-                    return typeof(Int32);
+					return typeof(Int32).FullName;
                 case NHibernateType.Int64:
-                    return typeof(Int64);
+					return typeof(Int64).FullName;
                 case NHibernateType.Single:
-                    return typeof(Single);
+					return typeof(Single).FullName;
                 case NHibernateType.Ticks:
-                    return typeof(DateTime);
+					return typeof(DateTime).FullName;
                 case NHibernateType.TimeSpan:
-                    return typeof(TimeSpan);
+					return typeof(TimeSpan).FullName;
                 case NHibernateType.Timestamp:
-                    return typeof(DateTime);
+					return typeof(DateTime).FullName;
                 case NHibernateType.TrueFalse:
-                    return typeof(Boolean);
+					return typeof(Boolean).FullName;
                 case NHibernateType.YesNo:
-                    return typeof(Boolean);
+					return typeof(Boolean).FullName;
                 case NHibernateType.AnsiString:
-                    return typeof(String);
+					return typeof(String).FullName;
                 case NHibernateType.CultureInfo:
-                    return typeof(CultureInfo);
-                case NHibernateType.Binary:
-                    return typeof(Byte[]);
+					return typeof(CultureInfo).FullName;
+				case NHibernateType.Binary:
+					return typeof(Byte[]).FullName;
                 case NHibernateType.Type:
-                    return typeof(Type);
+					return typeof(Type).FullName;
                 case NHibernateType.String:
-                    return typeof(String);
+					return typeof(String).FullName;
                 case NHibernateType.StringClob:
-                    return typeof(String);
+					return typeof(String).FullName;
                 case NHibernateType.BinaryBlob:
-                    return typeof(Byte[]);
+					return typeof(Byte[]).FullName;
+				case NHibernateType.Custom:
+					return customMemberType;
                 default:
                     throw new ArgumentException("Unknown NHibernate type", type.ToString());
             }

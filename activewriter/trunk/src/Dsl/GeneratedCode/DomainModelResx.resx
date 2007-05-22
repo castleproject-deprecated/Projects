@@ -713,6 +713,30 @@
     <value>ActiveRecord</value>
     <comment>Category for DomainProperty &apos;ColumnType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/CustomColumnType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;CustomColumnType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/CustomColumnType.DisplayName" xml:space="preserve">
+    <value>Custom Column Type</value>
+    <comment>DisplayName for DomainProperty &apos;CustomColumnType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/CustomColumnType.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;CustomColumnType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/CustomMemberType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;CustomMemberType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/CustomMemberType.DisplayName" xml:space="preserve">
+    <value>Custom Member Type</value>
+    <comment>DisplayName for DomainProperty &apos;CustomMemberType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/CustomMemberType.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;CustomMemberType&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ModelProperty/Formula.Description" xml:space="preserve">
     <value></value>
     <comment>Description for DomainProperty &apos;Formula&apos; on DomainClass &apos;ModelProperty&apos;</comment>
@@ -2821,6 +2845,14 @@
     <value>Description for Altinoren.ActiveWriter.NHibernateType.YesNo</value>
     <comment>Description for EnumerationLiteral &apos;YesNo&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Custom.DisplayName" xml:space="preserve">
+    <value>Custom</value>
+    <comment>Display name for EnumerationLiteral &apos;Custom&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NHibernateType/Custom.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.NHibernateType.Custom</value>
+    <comment>Description for EnumerationLiteral &apos;Custom&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.Accessor/Public.DisplayName" xml:space="preserve">
     <value>Public</value>
     <comment>Display name for EnumerationLiteral &apos;Public&apos; on DomainEnumeration &apos;Accessor&apos;</comment>
@@ -3410,5 +3442,6 @@ A DomainClass can be serialized as a moniker only if
     <comment>Toolbox item image</comment>
   </data>
 </root>
+
 
 

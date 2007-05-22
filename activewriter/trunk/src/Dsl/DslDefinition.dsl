@@ -286,6 +286,16 @@
             <DomainEnumerationMoniker Name="NHibernateType" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="3b717093-4359-4eef-8d1f-42bfb1384af6" Description="" Name="CustomColumnType" DisplayName="Custom Column Type" DefaultValue="String" Category="ActiveRecord">
+          <Type>
+			  <ExternalTypeMoniker Name="/System/String" />
+		  </Type>
+        </DomainProperty>
+        <DomainProperty Id="b06eb038-c800-4217-bd0e-e2b00b157132" Description="" Name="CustomMemberType" DisplayName="Custom Member Type" DefaultValue="String" Category="ActiveRecord">
+          <Type>
+			  <ExternalTypeMoniker Name="/System/String" />
+		  </Type>
+        </DomainProperty>
         <DomainProperty Id="5389a767-406a-408c-9b0c-877248abb696" Description="" Name="Formula" DisplayName="Formula" Category="ActiveRecord">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
@@ -1119,6 +1129,7 @@
         <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.Timestamp" Name="Timestamp" Value="" />
         <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.TrueFalse" Name="TrueFalse" Value="" />
         <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.YesNo" Name="YesNo" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.Custom" Name="Custom" Value="" />
       </Literals>
     </DomainEnumeration>
     <DomainEnumeration Name="Accessor" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.Accessor">
@@ -1556,6 +1567,12 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="columnType">
             <DomainPropertyMoniker Name="ModelProperty/ColumnType" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="customColumnType">
+            <DomainPropertyMoniker Name="ModelProperty/CustomColumnType" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="customMemberType">
+            <DomainPropertyMoniker Name="ModelProperty/CustomMemberType" />
           </XmlPropertyData>
           <XmlPropertyData XmlName="formula">
             <DomainPropertyMoniker Name="ModelProperty/Formula" />
