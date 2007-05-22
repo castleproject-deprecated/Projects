@@ -15,5 +15,12 @@
         </nestedClassReferencesModelClasses>
       </modelClasses>
     </nestedClass>
+    <nestedClass name="NestedClass2">
+      <modelClasses>
+        <nestedClassReferencesModelClasses propertyName="CustomizedName">
+          <modelClassMoniker name="/e70b229d-e099-4b06-94f5-ef4f3a424a07/NestingClass1" />
+        </nestedClassReferencesModelClasses>
+      </modelClasses>
+    </nestedClass>
   </nestedClasses>
 </model>

@@ -288,13 +288,13 @@
         </DomainProperty>
         <DomainProperty Id="3b717093-4359-4eef-8d1f-42bfb1384af6" Description="" Name="CustomColumnType" DisplayName="Custom Column Type" DefaultValue="String" Category="ActiveRecord">
           <Type>
-			  <ExternalTypeMoniker Name="/System/String" />
-		  </Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
         </DomainProperty>
         <DomainProperty Id="b06eb038-c800-4217-bd0e-e2b00b157132" Description="" Name="CustomMemberType" DisplayName="Custom Member Type" DefaultValue="String" Category="ActiveRecord">
           <Type>
-			  <ExternalTypeMoniker Name="/System/String" />
-		  </Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
         </DomainProperty>
         <DomainProperty Id="5389a767-406a-408c-9b0c-877248abb696" Description="" Name="Formula" DisplayName="Formula" Category="ActiveRecord">
           <Type>
@@ -996,6 +996,11 @@
           </Type>
         </DomainProperty>
         <DomainProperty Id="9010a202-2aaf-4c97-bd0f-87d48198dbc6" Description="Description for nested property on the model class. This will appear in a &lt;summary&gt; Xml comment." Name="Description" DisplayName="Description" Category="Code Generation">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="ec25892d-150f-4a9a-874b-7f80e97a2135" Description="Name of the property on the nesting class. If not suplied, ActiveWriter will use nested class' name." Name="PropertyName" DisplayName="Property Name" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
@@ -1858,6 +1863,9 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="description">
             <DomainPropertyMoniker Name="NestedClassReferencesModelClasses/Description" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="propertyName">
+            <DomainPropertyMoniker Name="NestedClassReferencesModelClasses/PropertyName" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

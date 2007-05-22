@@ -20,6 +20,8 @@ namespace Debugging.Tests {
         
         private NestedClass1 _nestedClass1;
         
+        private NestedClass2 _customizedName;
+        
         [Nested("columnPrefix", MapType=typeof(NestedClass1), Insert=true, Update=true)]
         public virtual NestedClass1 NestedClass1 {
             get {
@@ -27,6 +29,16 @@ namespace Debugging.Tests {
             }
             set {
                 this._nestedClass1 = value;
+            }
+        }
+        
+        [Nested(Insert=true, Update=true)]
+        public virtual NestedClass2 CustomizedName {
+            get {
+                return this._customizedName;
+            }
+            set {
+                this._customizedName = value;
             }
         }
     }
@@ -44,5 +56,8 @@ namespace Debugging.Tests {
                 this._nestedClass1Property = value;
             }
         }
+    }
+    
+    public partial class NestedClass2 {
     }
 }

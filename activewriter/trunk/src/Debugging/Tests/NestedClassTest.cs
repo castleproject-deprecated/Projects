@@ -46,5 +46,18 @@ namespace Debugging.Tests
             Assert.IsTrue(nestedAttribute.Update);
             Assert.IsTrue(nestedAttribute.MapType == typeof(NestedClass1));
         }
+        
+        [Test]
+        public void CanGenerateNestedPropertyWithCustomizedName()
+        {
+            Type type = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.NestingClass1");
+
+            PropertyInfo property = type.GetProperty("CustomizedName");
+            Assert.IsNotNull(property, "Customized nested property not generated");
+            object[] nestedAttributes = property.GetCustomAttributes(typeof(NestedAttribute), false);
+            Assert.IsTrue(nestedAttributes.Length == 1, "Did not generate NestedAttribute for customized nested property.");
+            NestedAttribute nestedAttribute = nestedAttributes[0] as NestedAttribute;
+            Assert.IsNotNull(nestedAttribute, "Did not generate NestedAttribute for customized nested property.");
+        }
     }
 }

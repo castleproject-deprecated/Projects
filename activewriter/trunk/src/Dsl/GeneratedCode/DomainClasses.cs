@@ -4721,23 +4721,24 @@ namespace Altinoren.ActiveWriter
 		
 		#endregion
 		#region CustomColumnType domain property code
-
+		
 		/// <summary>
 		/// CustomColumnType domain property Id.
 		/// </summary>
 		public static readonly global::System.Guid CustomColumnTypeDomainPropertyId = new global::System.Guid(0x3b717093, 0x4359, 0x4eef, 0x8d, 0x1f, 0x42, 0xbf, 0xb1, 0x38, 0x4a, 0xf6);
-
+		
 		/// <summary>
 		/// Storage for CustomColumnType
 		/// </summary>
-		private global::System.String customColumnTypePropertyStorage = string.Empty;
-
+		private global::System.String customColumnTypePropertyStorage = "String";
+		
 		/// <summary>
 		/// Gets or sets the value of CustomColumnType domain property.
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelProperty/CustomColumnType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelProperty/CustomColumnType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelProperty/CustomColumnType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue("String")]
 		[DslModeling::DomainObjectId("3b717093-4359-4eef-8d1f-42bfb1384af6")]
 		public global::System.String CustomColumnType
 		{
@@ -4758,12 +4759,12 @@ namespace Altinoren.ActiveWriter
 		internal sealed partial class CustomColumnTypePropertyHandler : DslModeling::DomainPropertyValueHandler<ModelProperty, global::System.String>
 		{
 			private CustomColumnTypePropertyHandler() { }
-
+		
 			/// <summary>
 			/// Gets the singleton instance of the ModelProperty.CustomColumnType domain property value handler.
 			/// </summary>
 			public static readonly CustomColumnTypePropertyHandler Instance = new CustomColumnTypePropertyHandler();
-
+		
 			/// <summary>
 			/// Gets the Id of the ModelProperty.CustomColumnType domain property.
 			/// </summary>
@@ -4775,7 +4776,7 @@ namespace Altinoren.ActiveWriter
 					return CustomColumnTypeDomainPropertyId;
 				}
 			}
-
+			
 			/// <summary>
 			/// Gets a strongly-typed value of the property on specified element.
 			/// </summary>
@@ -4786,7 +4787,7 @@ namespace Altinoren.ActiveWriter
 				if (element == null) throw new global::System.ArgumentNullException("element");
 				return element.customColumnTypePropertyStorage;
 			}
-
+		
 			/// <summary>
 			/// Sets property value on an element.
 			/// </summary>
@@ -4795,7 +4796,7 @@ namespace Altinoren.ActiveWriter
 			public override sealed void SetValue(ModelProperty element, global::System.String newValue)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
-
+		
 				global::System.String oldValue = GetValue(element);
 				if (newValue != oldValue)
 				{
@@ -4805,26 +4806,27 @@ namespace Altinoren.ActiveWriter
 				}
 			}
 		}
-
+		
 		#endregion
 		#region CustomMemberType domain property code
-
+		
 		/// <summary>
 		/// CustomMemberType domain property Id.
 		/// </summary>
-		public static readonly global::System.Guid CustomMemberTypeDomainPropertyId = new global::System.Guid(0xb06eb038, 0xc800, 0x4217, 0xbd, 0xe, 0xe2, 0xb0, 0xb, 0x15, 0x71, 0x32);
-
+		public static readonly global::System.Guid CustomMemberTypeDomainPropertyId = new global::System.Guid(0xb06eb038, 0xc800, 0x4217, 0xbd, 0x0e, 0xe2, 0xb0, 0x0b, 0x15, 0x71, 0x32);
+		
 		/// <summary>
 		/// Storage for CustomMemberType
 		/// </summary>
-		private global::System.String customMemberTypePropertyStorage = string.Empty;
-
+		private global::System.String customMemberTypePropertyStorage = "String";
+		
 		/// <summary>
 		/// Gets or sets the value of CustomMemberType domain property.
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelProperty/CustomMemberType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelProperty/CustomMemberType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelProperty/CustomMemberType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue("String")]
 		[DslModeling::DomainObjectId("b06eb038-c800-4217-bd0e-e2b00b157132")]
 		public global::System.String CustomMemberType
 		{
@@ -4845,12 +4847,12 @@ namespace Altinoren.ActiveWriter
 		internal sealed partial class CustomMemberTypePropertyHandler : DslModeling::DomainPropertyValueHandler<ModelProperty, global::System.String>
 		{
 			private CustomMemberTypePropertyHandler() { }
-
+		
 			/// <summary>
 			/// Gets the singleton instance of the ModelProperty.CustomMemberType domain property value handler.
 			/// </summary>
 			public static readonly CustomMemberTypePropertyHandler Instance = new CustomMemberTypePropertyHandler();
-
+		
 			/// <summary>
 			/// Gets the Id of the ModelProperty.CustomMemberType domain property.
 			/// </summary>
@@ -4862,7 +4864,7 @@ namespace Altinoren.ActiveWriter
 					return CustomMemberTypeDomainPropertyId;
 				}
 			}
-
+			
 			/// <summary>
 			/// Gets a strongly-typed value of the property on specified element.
 			/// </summary>
@@ -4873,7 +4875,7 @@ namespace Altinoren.ActiveWriter
 				if (element == null) throw new global::System.ArgumentNullException("element");
 				return element.customMemberTypePropertyStorage;
 			}
-
+		
 			/// <summary>
 			/// Sets property value on an element.
 			/// </summary>
@@ -4882,7 +4884,7 @@ namespace Altinoren.ActiveWriter
 			public override sealed void SetValue(ModelProperty element, global::System.String newValue)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
-
+		
 				global::System.String oldValue = GetValue(element);
 				if (newValue != oldValue)
 				{
@@ -4892,7 +4894,7 @@ namespace Altinoren.ActiveWriter
 				}
 			}
 		}
-
+		
 		#endregion
 		#region Formula domain property code
 		

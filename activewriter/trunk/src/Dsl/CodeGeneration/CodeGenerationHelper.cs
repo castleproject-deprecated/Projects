@@ -1003,15 +1003,19 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         {
             CodeTypeDeclaration sourceClass = GenerateNestedClass(relationship.NestedClass, nameSpace);
 
-            CodeMemberField memberField = GetMemberField(sourceClass.Name, sourceClass.Name, Accessor.Private, PropertyAccess.Property);
+            string propertyName = String.IsNullOrEmpty(relationship.PropertyName)
+                          ? sourceClass.Name
+                          : relationship.PropertyName;
+
+            CodeMemberField memberField = GetMemberField(propertyName, sourceClass.Name, Accessor.Private, PropertyAccess.Property);
             classDeclaration.Members.Add(memberField);
 
             CodeMemberProperty memberProperty;
             if (String.IsNullOrEmpty(relationship.Description))
-                memberProperty = GetMemberProperty(memberField, sourceClass.Name, true, true, relationship.ModelClass.DoesImplementINotifyPropertyChanged(), null);
+                memberProperty = GetMemberProperty(memberField, propertyName, true, true, relationship.ModelClass.DoesImplementINotifyPropertyChanged(), null);
             else
                 memberProperty =
-                    GetMemberProperty(memberField, sourceClass.Name, true, true, relationship.ModelClass.DoesImplementINotifyPropertyChanged(),
+                    GetMemberProperty(memberField, propertyName, true, true, relationship.ModelClass.DoesImplementINotifyPropertyChanged(),
                                       relationship.Description);
             classDeclaration.Members.Add(memberProperty);
 

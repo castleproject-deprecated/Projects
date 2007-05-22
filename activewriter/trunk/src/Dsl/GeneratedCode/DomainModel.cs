@@ -247,6 +247,7 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(NestedClassReferencesModelClasses), "Update", NestedClassReferencesModelClasses.UpdateDomainPropertyId, typeof(NestedClassReferencesModelClasses.UpdatePropertyHandler)),
 				new DomainMemberInfo(typeof(NestedClassReferencesModelClasses), "ColumnPrefix", NestedClassReferencesModelClasses.ColumnPrefixDomainPropertyId, typeof(NestedClassReferencesModelClasses.ColumnPrefixPropertyHandler)),
 				new DomainMemberInfo(typeof(NestedClassReferencesModelClasses), "Description", NestedClassReferencesModelClasses.DescriptionDomainPropertyId, typeof(NestedClassReferencesModelClasses.DescriptionPropertyHandler)),
+				new DomainMemberInfo(typeof(NestedClassReferencesModelClasses), "PropertyName", NestedClassReferencesModelClasses.PropertyNameDomainPropertyId, typeof(NestedClassReferencesModelClasses.PropertyNamePropertyHandler)),
 			};
 		}
 		/// <summary>
@@ -1516,5 +1517,4 @@ namespace Altinoren.ActiveWriter
 	{
 	}
 }
-
 

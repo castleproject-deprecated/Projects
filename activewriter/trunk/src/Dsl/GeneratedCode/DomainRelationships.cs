@@ -9121,6 +9121,95 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region PropertyName domain property code
+		
+		/// <summary>
+		/// PropertyName domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid PropertyNameDomainPropertyId = new global::System.Guid(0xec25892d, 0x150f, 0x4a9a, 0x87, 0x4b, 0x7f, 0x80, 0xe9, 0x7a, 0x21, 0x35);
+		
+		/// <summary>
+		/// Storage for PropertyName
+		/// </summary>
+		private global::System.String propertyNamePropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of PropertyName domain property.
+		/// Name of the property on the nesting class. If not suplied, ActiveWriter will use
+		/// nested class' name.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/PropertyName.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/PropertyName.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/PropertyName.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainObjectId("ec25892d-150f-4a9a-874b-7f80e97a2135")]
+		public global::System.String PropertyName
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return propertyNamePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				PropertyNamePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the NestedClassReferencesModelClasses.PropertyName domain property.
+		/// </summary>
+		internal sealed partial class PropertyNamePropertyHandler : DslModeling::DomainPropertyValueHandler<NestedClassReferencesModelClasses, global::System.String>
+		{
+			private PropertyNamePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the NestedClassReferencesModelClasses.PropertyName domain property value handler.
+			/// </summary>
+			public static readonly PropertyNamePropertyHandler Instance = new PropertyNamePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the NestedClassReferencesModelClasses.PropertyName domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return PropertyNameDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(NestedClassReferencesModelClasses element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.propertyNamePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(NestedClassReferencesModelClasses element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.propertyNamePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region NestedClass link accessor
 		/// <summary>
 		/// Get the list of NestedClassReferencesModelClasses links to a NestedClass.

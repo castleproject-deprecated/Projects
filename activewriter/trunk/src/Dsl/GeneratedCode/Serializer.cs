@@ -4041,8 +4041,10 @@ namespace Altinoren.ActiveWriter
 				global::System.String propValue = instanceOfModelProperty.CustomColumnType;
 				if (!serializationContext.Result.Failed)
 				{
-					if (!string.IsNullOrEmpty(propValue))
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "String") != 0))
+					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("customColumnType", propValue);
+					}
 				}
 			}
 			// CustomMemberType
@@ -4051,8 +4053,10 @@ namespace Altinoren.ActiveWriter
 				global::System.String propValue = instanceOfModelProperty.CustomMemberType;
 				if (!serializationContext.Result.Failed)
 				{
-					if (!string.IsNullOrEmpty(propValue))
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "String") != 0))
+					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("customMemberType", propValue);
+					}
 				}
 			}
 			// Formula
@@ -13736,6 +13740,23 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// PropertyName
+			if (!serializationContext.Result.Failed)
+			{
+				string attribPropertyName = reader.GetAttribute("propertyName");
+				if (attribPropertyName != null)
+				{
+					global::System.String valueOfPropertyName;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribPropertyName), out valueOfPropertyName))
+					{
+						instanceOfNestedClassReferencesModelClasses.PropertyName = valueOfPropertyName;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "propertyName", typeof(global::System.String), attribPropertyName);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -14174,6 +14195,16 @@ namespace Altinoren.ActiveWriter
 				{
 					if (!string.IsNullOrEmpty(propValue))
 						writer.WriteAttributeString("description", propValue);
+				}
+			}
+			// PropertyName
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfNestedClassReferencesModelClasses.PropertyName;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("propertyName", propValue);
 				}
 			}
 		}
@@ -18634,6 +18665,5 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
-
 
 

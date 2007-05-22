@@ -2293,6 +2293,18 @@
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;Description&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/PropertyName.Description" xml:space="preserve">
+    <value>Name of the property on the nesting class. If not suplied, ActiveWriter will use nested class&apos; name.</value>
+    <comment>Description for DomainProperty &apos;PropertyName&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/PropertyName.DisplayName" xml:space="preserve">
+    <value>Property Name</value>
+    <comment>DisplayName for DomainProperty &apos;PropertyName&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/PropertyName.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;PropertyName&apos; on DomainClass &apos;NestedClassReferencesModelClasses&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/NestedClass.Description" xml:space="preserve">
     <value>Description for Altinoren.ActiveWriter.NestedClassReferencesModelClasses.NestedClass</value>
     <comment>Description for DomainRole &apos;NestedClass&apos; on DomainRelationship &apos;NestedClassReferencesModelClasses&apos;</comment>
@@ -3442,6 +3454,5 @@ A DomainClass can be serialized as a moniker only if
     <comment>Toolbox item image</comment>
   </data>
 </root>
-
 
 

@@ -21,5 +21,18 @@
         <classShapeMoniker Id="df37cb92-6241-4980-8dcf-432aba1050bd" />
       </nodes>
     </nestedConnector>
+    <nestedClassShape Id="776ede69-aeae-402a-9ab0-2a45b9b7beb4" absoluteBounds="3, 1.75, 1.5, 0.71745849609375023">
+      <nestedClassMoniker name="/e70b229d-e099-4b06-94f5-ef4f3a424a07/NestedClass2" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6a7ef8ca-83fe-4cd7-93ce-d8c6626f76d5" absoluteBounds="3.015, 2.16, 1.4700000000000002, 0.20745849609375" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+      </nestedChildShapes>
+    </nestedClassShape>
+    <nestedConnector edgePoints="[(3 : 2.10872924804687); (1.25 : 2.10872924804687); (1.25 : 1.21745849609375)]" manuallyRouted="false" fixedFrom="Algorithm" fixedTo="Algorithm" TargetRelationshipDomainClassId="6d7cfc22-da01-49be-87ae-387c801c09a5">
+      <relativeChildShapes />
+      <nodes>
+        <nestedClassShapeMoniker Id="776ede69-aeae-402a-9ab0-2a45b9b7beb4" />
+        <classShapeMoniker Id="df37cb92-6241-4980-8dcf-432aba1050bd" />
+      </nodes>
+    </nestedConnector>
   </nestedChildShapes>
 </activeRecordMapping>

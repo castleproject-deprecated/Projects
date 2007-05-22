@@ -1112,6 +1112,12 @@
         <xsd:documentation>Description for nested property on the model class. This will appear in a &lt;summary&gt; Xml comment.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
+    <!-- Property: PropertyName -->
+    <xsd:attribute name="propertyName" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Name of the property on the nesting class. If not suplied, ActiveWriter will use nested class&apos; name.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
   </xsd:complexType>
   
   <!-- NestedClassReferencesModelClasses Moniker -->
@@ -1348,5 +1354,4 @@
   </xsd:simpleType>
   
 </xsd:schema>
-
 

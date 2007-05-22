@@ -10,6 +10,7 @@ New:
 - Optionally generates classes implementing INotifyPropertyChanged.
 - Support for drag-drop from Server Explorer for MySQL databases. Requires MySQL Connector/Net (5.1). (Patch: Michael Morton)
 - Support for custom types through IUserType. See http://support.castleproject.org/browse/CONTRIB-28#action_11456 for usage. (Patch: Ricardo Stuven)
+- Ability to define a nested class with a different property name than the nested class (Idea: Craig Neuwirt)
 
 Fixed:
 - Contrib-23: Produces CascadeEnum instead of ManyRelationCascadeEnum
