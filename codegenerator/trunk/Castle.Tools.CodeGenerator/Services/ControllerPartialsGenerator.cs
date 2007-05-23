@@ -46,7 +46,13 @@ namespace Castle.Tools.CodeGenerator.Services
 
       base.Visit(node);
     }
-    #endregion
+
+	  public override void Visit(WizardControllerTreeNode node)
+	  {
+		  Visit((ControllerTreeNode) node);
+	  }
+
+  	#endregion
 
     #region Methods
     protected virtual CodeStatement AddPropertyToPropertyBag(string property)

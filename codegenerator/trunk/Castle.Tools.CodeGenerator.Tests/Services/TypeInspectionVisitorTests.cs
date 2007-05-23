@@ -1,10 +1,7 @@
-using System;
 using System.Collections.Generic;
-
-using ICSharpCode.NRefactory.Parser.AST;
-
-using Rhino.Mocks;
+using ICSharpCode.NRefactory.Ast;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace Castle.Tools.CodeGenerator.Services
 {
@@ -27,7 +24,7 @@ namespace Castle.Tools.CodeGenerator.Services
       _typeResolver = _mocks.CreateMock<ITypeResolver>();
       _visitor = new TypeInspectionVisitor(_typeResolver);
 
-      _type = new TypeDeclaration(Modifier.Public, new List<AttributeSection>());
+      _type = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>());
       _type.Name = "SomeType";
       _namespace = new NamespaceDeclaration("SomeNamespace");
       _namespace.AddChild(_type);
@@ -43,7 +40,7 @@ namespace Castle.Tools.CodeGenerator.Services
       _namespace.Children.Clear();
 
       _mocks.ReplayAll();
-      _visitor.Visit(_type, null);
+      _visitor.VisitTypeDeclaration(_type, null);
       _mocks.VerifyAll();
     }
 
@@ -55,11 +52,11 @@ namespace Castle.Tools.CodeGenerator.Services
 
       using (_mocks.Unordered())
       {
-        _typeResolver.UseNamespace("SomeNamespace",true);
+        _typeResolver.UseNamespace("SomeNamespace");
       }
 
       _mocks.ReplayAll();
-      _visitor.Visit(_namespace, null);
+      _visitor.VisitNamespaceDeclaration(_namespace, null);
       _mocks.VerifyAll();
     }
 
@@ -72,14 +69,14 @@ namespace Castle.Tools.CodeGenerator.Services
       }
 
       _mocks.ReplayAll();
-      _visitor.Visit(_type, null);
+      _visitor.VisitTypeDeclaration(_type, null);
       _mocks.VerifyAll();
     }
 
     [Test]
     public void VisitTypeDeclaration_NonNamespaceParent_Ignores()
     {
-      TypeDeclaration childType = new TypeDeclaration(Modifier.Public, new List<AttributeSection>());
+      TypeDeclaration childType = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>());
       childType.Parent = _type;
 
       using (_mocks.Unordered())
@@ -87,7 +84,7 @@ namespace Castle.Tools.CodeGenerator.Services
       }
 
       _mocks.ReplayAll();
-      _visitor.Visit(childType, null);
+      _visitor.VisitTypeDeclaration(childType, null);
       _mocks.VerifyAll();
     }
 
@@ -104,7 +101,7 @@ namespace Castle.Tools.CodeGenerator.Services
       }
 
       _mocks.ReplayAll();
-      _visitor.Visit(usings, null);
+      _visitor.VisitUsingDeclaration(usings, null);
       _mocks.VerifyAll();
     }
 
@@ -121,7 +118,7 @@ namespace Castle.Tools.CodeGenerator.Services
       }
 
       _mocks.ReplayAll();
-      _visitor.Visit(usings, null);
+      _visitor.VisitUsingDeclaration(usings, null);
       _mocks.VerifyAll();
     }
   	#endregion	

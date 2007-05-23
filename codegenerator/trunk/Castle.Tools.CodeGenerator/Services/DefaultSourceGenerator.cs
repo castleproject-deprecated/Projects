@@ -121,13 +121,66 @@ namespace Castle.Tools.CodeGenerator.Services
 
     public void AddFieldPropertyConstructorInitialize(CodeTypeDeclaration type, string name, string fieldType)
     {
+	  // Probably not the best assumption? --jlewalle
+	  // Probably....but it works for now ;) -- lee
+	  CodeConstructor constructor = (CodeConstructor)type.Members[1];
+
       CodeMemberField field = NewField(name, fieldType);
       CodeMemberProperty property = NewGetFieldProperty(name, field);
+  
+	  for (int i = 0; i < type.Members.Count; i++)
+	  {
+		  if (type.Members[i] is CodeMemberField)
+		  {
+			  CodeMemberField fieldMember = (CodeMemberField) type.Members[i];
+
+			  if (fieldMember.Name == field.Name)
+			  {
+				  // Another field already exists with the name we are about to create the new field with.
+				  // This occurs during the use of wizardsteps.
+
+				  if (fieldMember.Type.BaseType.EndsWith("AreaNode"))
+				  {
+					  foreach (CodeStatement codeStatement in constructor.Statements)
+					  {
+					  	if (codeStatement is CodeAssignStatement)
+					  	{
+					  		CodeAssignStatement codeAssignStatement = (CodeAssignStatement) codeStatement;
+
+					  		if (codeAssignStatement.Left is CodeFieldReferenceExpression)
+					  		{
+					  			CodeFieldReferenceExpression codeFieldReferenceExpression =
+					  				(CodeFieldReferenceExpression) codeAssignStatement.Left;
+
+					  			if (codeFieldReferenceExpression.TargetObject is CodeThisReferenceExpression)
+					  			{
+					  				if (codeFieldReferenceExpression.FieldName == fieldMember.Name)
+					  					codeFieldReferenceExpression.FieldName += "Area";
+					  			}
+					  		}
+					  	}
+					  }
+
+				  	  fieldMember.Name += "Area";
+				  	  
+					  CodeMemberProperty fieldMemberProperty = (CodeMemberProperty) type.Members[i - 1];
+				  	  fieldMemberProperty.Name += "Area";
+				  	  fieldMemberProperty.GetStatements.RemoveAt(0);
+					  fieldMemberProperty.GetStatements.Insert(0, new CodeMethodReturnStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), fieldMember.Name)));
+
+					  field.Name += "Controller";
+
+					  property.Name += "Controller";
+					  property.GetStatements.RemoveAt(0);
+					  property.GetStatements.Insert(0, new CodeMethodReturnStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), field.Name)));
+				  }
+			  }
+		  }
+	  }
 
       type.Members.Add(property);
       type.Members.Add(field);
-      // Probably not the best assumption? --jlewalle
-      CodeConstructor constructor = (CodeConstructor)type.Members[1];
+
       constructor.Statements.Add(
         new CodeAssignStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), field.Name),
                                 new CodeObjectCreateExpression(field.Type,

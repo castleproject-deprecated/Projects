@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-
-using ICSharpCode.NRefactory.Parser;
+using ICSharpCode.NRefactory;
 
 namespace Castle.Tools.CodeGenerator.Services
 {

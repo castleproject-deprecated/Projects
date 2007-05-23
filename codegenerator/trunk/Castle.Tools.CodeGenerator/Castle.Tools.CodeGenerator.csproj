@@ -32,13 +32,13 @@
   <ItemGroup>
     <Reference Include="Castle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\castle\build\net-2.0\debug\Castle.Core.dll</HintPath>
+      <HintPath>..\Libraries\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.MonoRail.Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\castle\build\net-2.0\debug\Castle.MonoRail.Framework.dll</HintPath>
+      <HintPath>..\Libraries\Castle.MonoRail.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.NRefactory, Version=2.0.0.1, Culture=neutral, PublicKeyToken=efe927acf176eea2, processorArchitecture=MSIL">
+    <Reference Include="ICSharpCode.NRefactory, Version=3.0.0.2520, Culture=neutral, PublicKeyToken=efe927acf176eea2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
@@ -107,6 +107,8 @@
     <Compile Include="Services\ViewComponentVisitor.cs" />
     <Compile Include="Services\ViewMapGenerator.cs" />
     <Compile Include="Services\ViewSourceMapper.cs" />
+    <Compile Include="Services\WizardStepMapGenerator.cs" />
+    <Compile Include="Services\WizardStepPageVisitor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Castle.Tools.CodeGenerator.snk" />
@@ -119,10 +121,9 @@
   -->
   <Target Name="AfterBuild">
     <CreateItem Include="$(OutputPath)$(AssemblyName).dll;$(OutputPath)ICSharpCode.NRefactory.dll;$(MSBuildProjectDirectory)\..\$(AssemblyName).targets">
-      <Output ItemName="InstallFiles" TaskParameter="Include"/>
+      <Output ItemName="InstallFiles" TaskParameter="Include" />
     </CreateItem>
     <MakeDir Directories="$(MSBuildExtensionsPath)\$(AssemblyName)" />
     <Copy SourceFiles="@(InstallFiles)" DestinationFolder="$(MSBuildExtensionsPath)\$(AssemblyName)" />
   </Target>
-  
 </Project>

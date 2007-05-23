@@ -1,6 +1,5 @@
 using System;
-
-using ICSharpCode.NRefactory.Parser.AST;
+using ICSharpCode.NRefactory.Ast;
 
 namespace Castle.Tools.CodeGenerator.Services
 {
@@ -14,16 +13,16 @@ namespace Castle.Tools.CodeGenerator.Services
     #endregion
 
     #region AbstractAstVisitor Members
-    public override object Visit(TypeDeclaration typeDeclaration, object data)
+	public override object VisitTypeDeclaration(TypeDeclaration typeDeclaration, object data)
     {
       string typeNamespace = GetNamespace(typeDeclaration);
       if (String.IsNullOrEmpty(typeNamespace))
-        return base.Visit(typeDeclaration, data);
+		  return base.VisitTypeDeclaration(typeDeclaration, data);
 
       string name = typeNamespace + "." + typeDeclaration.Name;
-      this.TypeResolver.AddTableEntry(name);
+      TypeResolver.AddTableEntry(name);
 
-      return base.Visit(typeDeclaration, data);
+	  return base.VisitTypeDeclaration(typeDeclaration, data);
     }
     #endregion
   }

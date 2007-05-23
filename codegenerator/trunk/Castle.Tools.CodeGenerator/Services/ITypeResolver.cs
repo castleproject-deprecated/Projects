@@ -1,5 +1,5 @@
 using System;
-using ICSharpCode.NRefactory.Parser.AST;
+using ICSharpCode.NRefactory.Ast;
 
 namespace Castle.Tools.CodeGenerator.Services
 {

@@ -64,7 +64,12 @@ namespace Castle.Tools.CodeGenerator.Services
       return ToMethodSignatureName(name, names);
     }
 
-    public string ToMethodSignatureName(string name, string[] types)
+  	public string ToWizardStepWrapperName(string name)
+  	{
+  		return name + "WizardStepNode";
+  	}
+
+  	public string ToMethodSignatureName(string name, string[] types)
     {
       StringBuilder sb = new StringBuilder();
       sb.Append(name);

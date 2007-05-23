@@ -94,6 +94,102 @@ namespace Castle.Tools.CodeGenerator.Services
       CodeTypeDeclaration type = CodeDomAssert.AssertHasType(_source.Ccu, "RootHomeControllerNode");
       CodeDomAssert.AssertNotHasField(type, "_services");
     }
-    #endregion
+
+	[Test]
+	public void VisitControllerTreeNode_AreaExistsWithSameNameAsController_AppendsSuffixToAreaNodeField()
+	{
+		BuildTestTree();
+
+		_mocks.ReplayAll();
+		_generator.Visit(_root);
+		_mocks.VerifyAll();
+
+		CodeTypeDeclaration type = CodeDomAssert.AssertHasType(_source.Ccu, "RootParentAreaNode");
+		CodeMemberField areaField = (CodeMemberField) type.Members[3];
+		Assert.AreEqual("_childArea", areaField.Name);
+	}
+
+	[Test]
+	public void VisitControllerTreeNode_AreaExistsWithSameNameAsController_AppendsSuffixToAreaNodeProperty()
+	{
+		BuildTestTree();
+
+		_mocks.ReplayAll();
+		_generator.Visit(_root);
+		_mocks.VerifyAll();
+
+		CodeTypeDeclaration type = CodeDomAssert.AssertHasType(_source.Ccu, "RootParentAreaNode");
+		CodeMemberProperty areaProperty = (CodeMemberProperty)type.Members[2];
+		Assert.AreEqual("ChildArea", areaProperty.Name);
+		CodeMethodReturnStatement statement = (CodeMethodReturnStatement)areaProperty.GetStatements[0];
+		Assert.AreEqual("_childArea", ((CodeFieldReferenceExpression)statement.Expression).FieldName);
+	}
+
+  	[Test]
+	  public void VisitControllerTreeNode_AreaExistsWithSameNameAsController_AppendsSuffixToControllerNodeField()
+	  {
+		  BuildTestTree();
+
+		  _mocks.ReplayAll();
+		  _generator.Visit(_root);
+		  _mocks.VerifyAll();
+
+		  CodeTypeDeclaration type = CodeDomAssert.AssertHasType(_source.Ccu, "RootParentAreaNode");
+		  CodeMemberField controllerField = (CodeMemberField)type.Members[5];
+		  Assert.AreEqual("_childController", controllerField.Name);
+	  }
+
+	  [Test]
+	  public void VisitControllerTreeNode_AreaExistsWithSameNameAsController_AppendsSuffixToControllerNodeProperty()
+	  {
+		  BuildTestTree();
+
+		  _mocks.ReplayAll();
+		  _generator.Visit(_root);
+		  _mocks.VerifyAll();
+
+		  CodeTypeDeclaration type = CodeDomAssert.AssertHasType(_source.Ccu, "RootParentAreaNode");
+		  CodeMemberProperty controllerProperty = (CodeMemberProperty)type.Members[4];
+		  Assert.AreEqual("ChildController", controllerProperty.Name);
+	  	CodeMethodReturnStatement statement = (CodeMethodReturnStatement) controllerProperty.GetStatements[0];
+	  	Assert.AreEqual("_childController", ((CodeFieldReferenceExpression) statement.Expression).FieldName);
+	  }
+
+	  [Test]
+	  public void VisitControllerTreeNode_AreaExistsWithSameNameAsController_AppendsSuffixToConstructorFieldReferences()
+	  {
+		  BuildTestTree();
+
+		  _mocks.ReplayAll();
+		  _generator.Visit(_root);
+		  _mocks.VerifyAll();
+
+		  CodeTypeDeclaration type = CodeDomAssert.AssertHasType(_source.Ccu, "RootParentAreaNode");
+		  CodeConstructor constructor = (CodeConstructor)type.Members[1];
+	  	  Assert.AreEqual(3, constructor.Statements.Count);
+	  	  
+		  CodeAssignStatement areaAssignment = (CodeAssignStatement) constructor.Statements[1];
+	  	  CodeFieldReferenceExpression areaFieldReference = (CodeFieldReferenceExpression) areaAssignment.Left;
+		  Assert.AreEqual("_childArea", areaFieldReference.FieldName);
+	  	  
+	      CodeAssignStatement controllerAssignment = (CodeAssignStatement) constructor.Statements[2];
+		  CodeFieldReferenceExpression controllerFieldReference = (CodeFieldReferenceExpression)controllerAssignment.Left;
+		  Assert.AreEqual("_childController", controllerFieldReference.FieldName);
+	  }
+	#endregion
+
+  	#region Supporting methods
+  	private void BuildTestTree()
+  	{
+  		AreaTreeNode parentAreaNode = new AreaTreeNode("Parent");
+  		_root.AddChild(parentAreaNode);
+
+  		AreaTreeNode childAreaNode = new AreaTreeNode("Child");
+  		parentAreaNode.AddChild(childAreaNode);
+
+  		ControllerTreeNode controllerNode = new ControllerTreeNode("ChildController", "ControllerNamespace");
+  		parentAreaNode.AddChild(controllerNode);
+  	}
+  	#endregion
   }
 }

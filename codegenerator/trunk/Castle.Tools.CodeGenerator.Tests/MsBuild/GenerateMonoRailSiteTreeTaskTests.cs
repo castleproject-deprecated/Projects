@@ -1,21 +1,18 @@
 using System;
 using System.CodeDom;
-using System.Collections.Generic;
+using System.Collections;
 using System.IO;
 using System.Reflection;
 using Castle.Tools.CodeGenerator.Model;
 using Castle.Tools.CodeGenerator.Services;
-using ICSharpCode.NRefactory.Parser;
-using ICSharpCode.NRefactory.Parser.AST;
+using ICSharpCode.NRefactory;
+using ICSharpCode.NRefactory.Ast;
 using Microsoft.Build.BuildEngine;
 using Microsoft.Build.Framework;
-
-using Rhino.Mocks;
 using NUnit.Framework;
-
+using Rhino.Mocks;
 using Rhino.Mocks.Constraints;
-
-using ILogger = Castle.Tools.CodeGenerator.Services.ILogger;
+using ILogger=Castle.Tools.CodeGenerator.Services.ILogger;
 
 namespace Castle.Tools.CodeGenerator.MsBuild
 {
@@ -277,7 +274,7 @@ namespace Castle.Tools.CodeGenerator.MsBuild
     #endregion
 
     #region IBuildEngine Members
-    public virtual bool BuildProjectFile(string projectFileName, string[] targetNames, System.Collections.IDictionary globalProperties, System.Collections.IDictionary targetOutputs)
+    public virtual bool BuildProjectFile(string projectFileName, string[] targetNames, IDictionary globalProperties, IDictionary targetOutputs)
     {
       throw new Exception("The method or operation is not implemented.");
     }

@@ -50,5 +50,10 @@ namespace Castle.Tools.CodeGenerator.Services
     {
       Accept(node.Children);
     }
+
+	  public virtual void Visit(WizardControllerTreeNode node)
+	  {
+	  	Accept(node.Children);
+	  }
   }
 }

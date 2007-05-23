@@ -1,7 +1,5 @@
-using System;
-
-using ICSharpCode.NRefactory.Parser;
-using ICSharpCode.NRefactory.Parser.AST;
+using ICSharpCode.NRefactory.Ast;
+using ICSharpCode.NRefactory.Visitors;
 
 namespace Castle.Tools.CodeGenerator.Services
 {
@@ -26,8 +24,8 @@ namespace Castle.Tools.CodeGenerator.Services
     #endregion
 
     #region AbstractAstVisitor Members
-    public override object Visit(UsingDeclaration usingDeclaration, object data)
-    {
+  	public override object VisitUsingDeclaration(UsingDeclaration usingDeclaration, object data)
+  	{
       foreach (Using usingLine in usingDeclaration.Usings)
       {
         if (usingLine.IsAlias)
@@ -35,14 +33,15 @@ namespace Castle.Tools.CodeGenerator.Services
         else
           _typeResolver.UseNamespace(usingLine.Name);
       }
-      return base.Visit(usingDeclaration, data);
+      return base.VisitUsingDeclaration(usingDeclaration, data);
     }
 
-    public override object Visit(NamespaceDeclaration namespaceDeclaration, object data)
-    {
-      _typeResolver.UseNamespace(namespaceDeclaration.Name, true);
-      return base.Visit(namespaceDeclaration, data);
-    }
+
+  	public override object VisitNamespaceDeclaration(NamespaceDeclaration namespaceDeclaration, object data)
+  	{
+		_typeResolver.UseNamespace(namespaceDeclaration.Name);
+		return base.VisitNamespaceDeclaration(namespaceDeclaration, data);
+  	}
     #endregion
 
     #region Private Members

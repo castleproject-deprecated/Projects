@@ -191,6 +191,54 @@ namespace Castle.Tools.CodeGenerator.Model
     #endregion
   }
 
+	public class WizardControllerTreeNode : ControllerTreeNode
+	{
+		#region Member Data
+
+		private string[] _wizardStepPages;
+
+		#endregion
+
+		#region Properties
+
+		public string[] WizardStepPages
+		{
+			get { return _wizardStepPages; }
+			set { _wizardStepPages = value; }
+		}
+
+		#endregion
+
+		#region WizardControllerTreeNode
+
+		public WizardControllerTreeNode(string name, string controllerNamespace, string[] wizardStepPages)
+			: base(name, controllerNamespace)
+		{
+			_wizardStepPages = wizardStepPages;
+		}
+
+		#endregion
+
+		#region Methods
+
+		public override string ToString()
+		{
+			if (_wizardStepPages.Length > 0)
+			{
+				string types = string.Empty;
+				
+				Array.ForEach(_wizardStepPages, delegate(string wizardStepPage) { types += wizardStepPage + ","; });
+				types = types.Remove(types.Length - 1);
+
+				return String.Format("{0}<{1}>", base.ToString(), types);
+			}
+			else
+				return base.ToString();
+		}
+
+		#endregion
+	}
+
   public class ActionTreeNode : TreeNode
   {
     #region Properties

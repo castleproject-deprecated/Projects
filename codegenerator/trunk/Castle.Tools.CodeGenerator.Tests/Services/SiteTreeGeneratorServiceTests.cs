@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
-using ICSharpCode.NRefactory.Parser;
-using ICSharpCode.NRefactory.Parser.AST;
-using Rhino.Mocks;
+using ICSharpCode.NRefactory;
+using ICSharpCode.NRefactory.Ast;
 using NUnit.Framework;
-
+using Rhino.Mocks;
 using Rhino.Mocks.Constraints;
 
 namespace Castle.Tools.CodeGenerator.Services
@@ -57,11 +54,11 @@ namespace Castle.Tools.CodeGenerator.Services
       using (_mocks.Unordered())
       {
         Expect.Call(_parserFactory.CreateCSharpParser(null)).Constraints(Is.NotNull()).Return(_parser);
-        _parser.ParseMethodBodies = false;
+        _parser.ParseMethodBodies = true;
         _parser.Parse();
         _typeResolver.Clear();
         Expect.Call(_parser.CompilationUnit).Return(unit);
-        Expect.Call(_visitor.Visit(unit, null)).Return(null);
+        Expect.Call(_visitor.VisitCompilationUnit(unit, null)).Return(null);
         _sources.Add(_path, _parser);
       }
 

@@ -2,14 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Castle.Tools.CodeGenerator.Model;
-using ICSharpCode.NRefactory.Parser;
-using ICSharpCode.NRefactory.Parser.AST;
-using Rhino.Mocks;
+using ICSharpCode.NRefactory;
+using ICSharpCode.NRefactory.Ast;
 using NUnit.Framework;
-
+using Rhino.Mocks;
 using Rhino.Mocks.Constraints;
-
-using Attribute=ICSharpCode.NRefactory.Parser.AST.Attribute;
+using Attribute=ICSharpCode.NRefactory.Ast.Attribute;
 
 namespace Castle.Tools.CodeGenerator.Services
 {
@@ -40,29 +38,29 @@ namespace Castle.Tools.CodeGenerator.Services
     [Test]
     public void VisitTypeDeclaration_NotController_DoesNothing()
     {
-      TypeDeclaration type = new TypeDeclaration(Modifier.Public, new List<AttributeSection>());
+      TypeDeclaration type = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>());
       type.Name = "SomeRandomType";
 
       _mocks.ReplayAll();
-      _visitor.Visit(type, null);
+	  _visitor.VisitTypeDeclaration(type, null);
       _mocks.VerifyAll();
     }
 
     [Test]
     public void VisitTypeDeclaration_AControllerNotPartial_DoesNothing()
     {
-      TypeDeclaration type = new TypeDeclaration(Modifier.Public, new List<AttributeSection>());
+      TypeDeclaration type = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>());
       type.Name = "SomeRandomController";
 
       _mocks.ReplayAll();
-      _visitor.Visit(type, null);
+	  _visitor.VisitTypeDeclaration(type, null);
       _mocks.VerifyAll();
     }
 
     [Test]
     public void VisitTypeDeclaration_AControllerNoChildren_PushesAndPops()
     {
-      TypeDeclaration type = new TypeDeclaration(Modifier.Public | Modifier.Partial, new List<AttributeSection>());
+      TypeDeclaration type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>());
       type.Name = "SomeRandomController";
 
       using (_mocks.Unordered())
@@ -72,14 +70,14 @@ namespace Castle.Tools.CodeGenerator.Services
       }
 
       _mocks.ReplayAll();
-      _visitor.Visit(type, null);
+	  _visitor.VisitTypeDeclaration(type, null);
       _mocks.VerifyAll();
     }
 
     [Test]
     public void VisitTypeDeclaration_AControllerNoChildrenWithArea_PushesAndPops()
     {
-      TypeDeclaration type = new TypeDeclaration(Modifier.Public | Modifier.Partial, new List<AttributeSection>());
+      TypeDeclaration type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>());
       type.Name = "SomeRandomController";
       type.Attributes.Add(CreateAreaAttributeCode("ControllerDetails", "Area", new PrimitiveExpression("AnArea", "AnArea")));
 
@@ -93,14 +91,14 @@ namespace Castle.Tools.CodeGenerator.Services
       }
 
       _mocks.ReplayAll();
-      _visitor.Visit(type, null);
+	  _visitor.VisitTypeDeclaration(type, null);
       _mocks.VerifyAll();
     }
 
     [Test]
     public void VisitTypeDeclaration_AControllerNoChildrenTrickyAreaValue_IgnoresAreaAttribute()
     {
-      TypeDeclaration type = new TypeDeclaration(Modifier.Public | Modifier.Partial, new List<AttributeSection>());
+      TypeDeclaration type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>());
       type.Name = "SomeRandomController";
       type.Attributes.Add(CreateAreaAttributeCode("ControllerDetails", "Area", new AddressOfExpression(new PrimitiveExpression("ThisNeverHappens", "Ok?"))));
 
@@ -111,14 +109,14 @@ namespace Castle.Tools.CodeGenerator.Services
       }
 
       _mocks.ReplayAll();
-      _visitor.Visit(type, null);
+	  _visitor.VisitTypeDeclaration(type, null);
       _mocks.VerifyAll();
     }
 
     [Test]
     public void VisitTypeDeclaration_AControllerTrickyAttribute_IgnoresAttribute()
     {
-      TypeDeclaration type = new TypeDeclaration(Modifier.Public | Modifier.Partial, new List<AttributeSection>());
+      TypeDeclaration type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>());
       type.Name = "SomeRandomController";
       type.Attributes.Add(CreateAreaAttributeCode("NotControllerDetails", "NotArea", new PrimitiveExpression("NotAnArea", "NotAnArea")));
 
@@ -129,28 +127,28 @@ namespace Castle.Tools.CodeGenerator.Services
       }
 
       _mocks.ReplayAll();
-      _visitor.Visit(type, null);
+      _visitor.VisitTypeDeclaration(type, null);
       _mocks.VerifyAll();
     }
 
     [Test]
     public void VisitMethodDeclaration_ProtectedMember_DoesNothing()
     {
-      MethodDeclaration method = new MethodDeclaration("Action", Modifier.Protected, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
+      MethodDeclaration method = new MethodDeclaration("Action", Modifiers.Protected, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
 
       using (_mocks.Unordered())
       {
       }
 
       _mocks.ReplayAll();
-      _visitor.Visit(method, null);
+	  _visitor.VisitMethodDeclaration(method, null);
       _mocks.VerifyAll();
     }
 
     [Test]
     public void VisitMethodDeclaration_ActionMemberNoArguments_CreatesEntryInNode()
     {
-      MethodDeclaration method = new MethodDeclaration("Action", Modifier.Public, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
+      MethodDeclaration method = new MethodDeclaration("Action", Modifiers.Public, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
       ControllerTreeNode node = new ControllerTreeNode("SomeController", "SomeNamespace");
 
       using (_mocks.Unordered())
@@ -159,7 +157,7 @@ namespace Castle.Tools.CodeGenerator.Services
       }
 
       _mocks.ReplayAll();
-      _visitor.Visit(method, null);
+      _visitor.VisitMethodDeclaration(method, null);
       _mocks.VerifyAll();
       
       Assert.AreEqual("Action", node.Children[0].Name);
@@ -169,7 +167,7 @@ namespace Castle.Tools.CodeGenerator.Services
     [Test]
     public void VisitMethodDeclaration_ActionMemberNoArgumentsIsVirtual_CreatesEntryInNode()
     {
-      MethodDeclaration method = new MethodDeclaration("Action", Modifier.Public | Modifier.Virtual, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
+      MethodDeclaration method = new MethodDeclaration("Action", Modifiers.Public | Modifiers.Virtual, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
       ControllerTreeNode node = new ControllerTreeNode("SomeController", "SomeNamespace");
 
       using (_mocks.Unordered())
@@ -178,7 +176,7 @@ namespace Castle.Tools.CodeGenerator.Services
       }
 
       _mocks.ReplayAll();
-      _visitor.Visit(method, null);
+      _visitor.VisitMethodDeclaration(method, null);
       _mocks.VerifyAll();
       
       Assert.AreEqual("Action", node.Children[0].Name);
@@ -188,7 +186,7 @@ namespace Castle.Tools.CodeGenerator.Services
     [Test]
     public void VisitMethodDeclaration_ActionMemberStandardArgument_CreatesEntryInNode()
     {
-      MethodDeclaration method = new MethodDeclaration("Action", Modifier.Public, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
+      MethodDeclaration method = new MethodDeclaration("Action", Modifiers.Public, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
       method.Parameters.Add(new ParameterDeclarationExpression(new TypeReference("bool"), "parameter"));
       ControllerTreeNode node = new ControllerTreeNode("SomeController", "SomeNamespace");
 
@@ -201,7 +199,7 @@ namespace Castle.Tools.CodeGenerator.Services
       }
 
       _mocks.ReplayAll();
-      _visitor.Visit(method, null);
+      _visitor.VisitMethodDeclaration(method, null);
       _mocks.VerifyAll();
       
       Assert.AreEqual("Action", node.Children[0].Name);
@@ -213,9 +211,9 @@ namespace Castle.Tools.CodeGenerator.Services
     private static AttributeSection CreateAreaAttributeCode(string attributeName, string argumentName, Expression valueExpression)
     {
       NamedArgumentExpression argument = new NamedArgumentExpression(argumentName, valueExpression);
-      Attribute attribute = new Attribute(attributeName, new List<Expression>(), new List<NamedArgumentExpression>());
+	  Attribute attribute = new Attribute(attributeName, new List<Expression>(), new List<NamedArgumentExpression>());
       attribute.NamedArguments.Add(argument);
-      AttributeSection attributeSection = new AttributeSection("IDontKnow", new List<Attribute>());
+	  AttributeSection attributeSection = new AttributeSection("IDontKnow", new List<Attribute>());
       attributeSection.Attributes.Add(attribute);
       return attributeSection;
     }
@@ -251,7 +249,7 @@ namespace Castle.Tools.CodeGenerator.Services
       using (_mocks.Unordered())
       {
       	_typeResolver.UseNamespace("System");
-        _typeResolver.UseNamespace("SomeNamespace",true);
+        _typeResolver.UseNamespace("SomeNamespace");
         Expect.Call(_typeResolver.Resolve(new TypeReference("DateTime"))).Constraints(Is.Matching(new Predicate<TypeReference>(delegate(TypeReference reference) {
           return reference.SystemType == "DateTime";
         }))).Return("System.DateTime[]");
@@ -261,17 +259,46 @@ namespace Castle.Tools.CodeGenerator.Services
       Parse(MethodWithSystemTypeArrayParameter);
       _mocks.VerifyAll();
     }
+
+	  [Test]
+	  public void Parsing_WizardController_()
+	  {
+		  using (_mocks.Unordered())
+		  {
+			  _typeResolver.UseNamespace("System");
+			  _typeResolver.UseNamespace("SomeNamespace");
+		  }
+
+		  _mocks.ReplayAll();
+		  Parse(WizardControllerType, true);
+		  _mocks.VerifyAll();
+
+	  	  TreeNode node = _treeService.Peek;
+	
+		  Assert.AreEqual(1, node.Children.Count);
+
+	  	  WizardControllerTreeNode wizardControllerTreeNode = (WizardControllerTreeNode) node.Children[0];
+		
+		  Assert.AreEqual(2, wizardControllerTreeNode.WizardStepPages.Length);
+		  Assert.AreEqual("FirstStep", wizardControllerTreeNode.WizardStepPages[0]);
+		  Assert.AreEqual("SecondStep", wizardControllerTreeNode.WizardStepPages[1]);
+	  }
     #endregion
 
     #region Sources
-    protected void Parse(string source)
+	protected void Parse(string source)
+    {
+		Parse(source, false);
+	}
+    
+	protected void Parse(string source, bool parseMethodBodies)
     {
       using (StringReader reader = new StringReader(source))
       {
         IParser parser = new NRefactoryParserFactory().CreateCSharpParser(reader);
-        parser.ParseMethodBodies = false;
+		parser.ParseMethodBodies = parseMethodBodies;
         parser.Parse();
-        _visitor.Visit(parser.CompilationUnit, null);
+        _visitor.VisitCompilationUnit(parser.CompilationUnit, null);
       }
     }
 
@@ -297,6 +324,41 @@ namespace SomeNamespace
   }
 }
 ";
+
+	public static string WizardControllerType = @"
+using System;
+namespace SomeNamespace
+{
+  public partial class SomeController : IWizardController
+  {
+		public void OnWizardStart()
+		{
+			// Some comments
+			int i = 10;
+			int j = i + 10;
+		}
+
+		public bool OnBeforeStep(string wizardName, string stepName, WizardStepPage step)
+		{
+			return true;
+		}
+
+		public void OnAfterStep(string wizardName, string stepName, WizardStepPage step)
+		{
+		}
+
+		public WizardStepPage[] GetSteps(IRailsEngineContext context)
+		{
+			return new WizardStepPage[]
+			{
+				new FirstStep(),
+				IoC.Resolve<SecondStep>()
+			};
+		}
+  }
+}
+";
+
     #endregion
   }
 }

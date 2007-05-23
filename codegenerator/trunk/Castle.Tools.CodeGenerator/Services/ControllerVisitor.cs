@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-
-using ICSharpCode.NRefactory.Parser.AST;
-using Attribute = ICSharpCode.NRefactory.Parser.AST.Attribute;
+using System.Reflection;
+using Castle.MonoRail.Framework;
+using ICSharpCode.NRefactory.Ast;
 
 using Castle.Tools.CodeGenerator.Model;
 
@@ -25,29 +25,47 @@ namespace Castle.Tools.CodeGenerator.Services
     #endregion
 
     #region AbstractAstVisitor Members
-    public override object Visit(MethodDeclaration methodDeclaration, object data)
-    {
-      if ((methodDeclaration.Modifier & Modifier.Public) != Modifier.Public)
+
+  	public override object VisitMethodDeclaration(MethodDeclaration methodDeclaration, object data)
+  	{
+        if ((methodDeclaration.Modifier & Modifiers.Public) != Modifiers.Public)
       {
         return null;
       }
-
+	  
       ControllerTreeNode controllerNode = (ControllerTreeNode)_treeService.Peek;
+	
+		if (controllerNode is WizardControllerTreeNode)
+		{
+			Type wizardControllerInterface = typeof (IWizardController);
+
+			MethodInfo[] methodInfos = wizardControllerInterface.GetMethods(BindingFlags.Public | BindingFlags.Instance);
+
+			if ((methodDeclaration.Name == "GetSteps") && (methodDeclaration.Body.Children.Count > 0))
+			{
+				(controllerNode as WizardControllerTreeNode).WizardStepPages = GetWizardStepPages(methodDeclaration.Body);
+				
+				return null;
+			}
+			else if (Array.Exists(methodInfos, delegate(MethodInfo methodInfo) { return methodInfo.Name == methodDeclaration.Name; }))
+				return null;
+		}
 
       ActionTreeNode action = new ActionTreeNode(methodDeclaration.Name);
 
       foreach (ParameterDeclarationExpression parameter in methodDeclaration.Parameters)
       {
-        string typeName = this.TypeResolver.Resolve(parameter.TypeReference);
+        string typeName = TypeResolver.Resolve(parameter.TypeReference);
         action.AddChild(new ParameterTreeNode(parameter.ParameterName, typeName));
       }
       controllerNode.AddChild(action, true);
 
-      return base.Visit(methodDeclaration, data);
+	  return base.VisitMethodDeclaration(methodDeclaration, data);
     }
 
-    public override object Visit(TypeDeclaration typeDeclaration, object data)
-    {
+
+  	public override object VisitTypeDeclaration(TypeDeclaration typeDeclaration, object data)
+  	{
       if (!IsController(typeDeclaration))
       {
         return null;
@@ -70,10 +88,13 @@ namespace Castle.Tools.CodeGenerator.Services
         }
       }
       
-      ControllerTreeNode node = new ControllerTreeNode(typeDeclaration.Name, typeNamespace);
+      ControllerTreeNode node = IsWizardController(typeDeclaration)
+		? new WizardControllerTreeNode(typeDeclaration.Name, typeNamespace, new string[0])
+		: new ControllerTreeNode(typeDeclaration.Name, typeNamespace);
+
       _treeService.PushNode(node);
 
-      object r = base.Visit(typeDeclaration, data);
+	  object r = base.VisitTypeDeclaration(typeDeclaration, data);
 
       if (!String.IsNullOrEmpty(area))
       {
@@ -93,11 +114,11 @@ namespace Castle.Tools.CodeGenerator.Services
     protected virtual bool IsController(TypeDeclaration typeDeclaration)
     {
       bool isController = 
-        typeDeclaration.Name.EndsWith("Controller") && (typeDeclaration.Modifier & Modifier.Partial) == Modifier.Partial;
+        typeDeclaration.Name.EndsWith("Controller") && (typeDeclaration.Modifier & Modifiers.Partial) == Modifiers.Partial;
 
         if(!isController)
         {
-            if( (typeDeclaration.Modifier & Modifier.Partial) != Modifier.Partial)
+            if( (typeDeclaration.Modifier & Modifiers.Partial) != Modifiers.Partial)
             {
                 _logger.LogInfo("Controller Source for " + typeDeclaration.Name +
                                 " will not be included in the generated sitemap because it is not a partial type");
@@ -113,11 +134,17 @@ namespace Castle.Tools.CodeGenerator.Services
         return isController;
     }
 
+	  protected virtual bool IsWizardController(TypeDeclaration typeDeclaration)
+	  {
+	  	return typeDeclaration.BaseTypes.Exists(
+	  			delegate(TypeReference typeReference) { return typeReference.ToString() == "IWizardController"; });
+	  }
+
     protected virtual string GetArea(TypeDeclaration typeDeclaration)
     {
       foreach (AttributeSection attributeSection in typeDeclaration.Attributes)
       {
-        foreach (Attribute attribute in attributeSection.Attributes)
+        foreach (ICSharpCode.NRefactory.Ast.Attribute attribute in attributeSection.Attributes)
         {
           if (attribute.Name == "ControllerDetails")
           {
@@ -133,6 +160,32 @@ namespace Castle.Tools.CodeGenerator.Services
       }
       return null;
     }
+
+	  protected virtual string[] GetWizardStepPages(BlockStatement getStepsBody)
+	  {
+	  	ReturnStatement returnStatement = (ReturnStatement) getStepsBody.Children[getStepsBody.Children.Count - 1];
+	  	ArrayCreateExpression arrayCreateExpression = (ArrayCreateExpression) returnStatement.Expression;
+		List<string> types = new List<string>();
+
+	  	arrayCreateExpression.ArrayInitializer.CreateExpressions.ForEach(delegate(Expression expression)
+    	{
+			if (expression is ObjectCreateExpression)
+			{
+				ObjectCreateExpression objectCreateExpression = (ObjectCreateExpression) expression;
+
+				types.Add(objectCreateExpression.CreateType.Type);
+			}
+			else if (expression is InvocationExpression)
+    		{
+    			InvocationExpression invocationExpression = (InvocationExpression) expression;
+    			
+				if (invocationExpression.TypeArguments.Count == 1)
+					types.Add(invocationExpression.TypeArguments[0].Type);
+    		}
+    	});
+
+	  	return types.ToArray();
+	  }
 
     protected virtual string ResolvePrimitiveValue(Expression expression)
     {

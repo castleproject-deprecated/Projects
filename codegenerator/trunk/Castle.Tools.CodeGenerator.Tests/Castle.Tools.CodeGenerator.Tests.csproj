@@ -30,13 +30,13 @@
   <ItemGroup>
     <Reference Include="Castle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\castle\build\net-2.0\debug\Castle.Core.dll</HintPath>
+      <HintPath>..\Libraries\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.MonoRail.Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\castle\build\net-2.0\debug\Castle.MonoRail.Framework.dll</HintPath>
+      <HintPath>..\Libraries\Castle.MonoRail.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.NRefactory, Version=2.0.0.1, Culture=neutral, PublicKeyToken=efe927acf176eea2, processorArchitecture=MSIL">
+    <Reference Include="ICSharpCode.NRefactory, Version=3.0.0.2520, Culture=neutral, PublicKeyToken=efe927acf176eea2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
@@ -45,7 +45,7 @@
     <Reference Include="Microsoft.Build.Utilities" />
     <Reference Include="nunit.framework, Version=2.2.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\castle\build\net-2.0\debug\nunit.framework.dll</HintPath>
+      <HintPath>..\Libraries\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.Mocks, Version=3.0.1.526, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -84,6 +84,8 @@
     <Compile Include="Services\ViewComponentVisitorTests.cs" />
     <Compile Include="Services\ViewMapGeneratorTests.cs" />
     <Compile Include="Services\ViewSourceMapperTests.cs" />
+    <Compile Include="Services\WizardStepMapGeneratorTests.cs" />
+    <Compile Include="Services\WizardStepPageVisitorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Castle.Tools.CodeGenerator\Castle.Tools.CodeGenerator.csproj">

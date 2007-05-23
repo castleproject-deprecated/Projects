@@ -185,7 +185,7 @@ namespace Castle.Tools.CodeGenerator.MsBuild
 
                 ViewComponentVisitor visitor = new ViewComponentVisitor(_logger, _typeResolver, _treeService);
             	string filePath = item.GetMetadata("FullPath");
-            	visitor.Visit(_sourceStorage.GetParsedSource(filePath).CompilationUnit, null);
+            	visitor.VisitCompilationUnit(_sourceStorage.GetParsedSource(filePath).CompilationUnit, null);
             }
 
             foreach (ITaskItem item in this.ControllerSources)
@@ -194,7 +194,7 @@ namespace Castle.Tools.CodeGenerator.MsBuild
 
                 ControllerVisitor visitor = new ControllerVisitor(_logger, _typeResolver, _treeService);
             	string filePath = item.GetMetadata("FullPath");
-            	visitor.Visit(_sourceStorage.GetParsedSource(filePath).CompilationUnit, null);
+            	visitor.VisitCompilationUnit(_sourceStorage.GetParsedSource(filePath).CompilationUnit, null);
             }
 
             foreach (ITaskItem bi in this.ViewSources)
@@ -227,6 +227,7 @@ namespace Castle.Tools.CodeGenerator.MsBuild
             _generators.Add(new ViewMapGenerator(_logger, _source, _naming, this.Namespace, serviceType));
             _generators.Add(new ControllerPartialsGenerator(_logger, _source, _naming, this.Namespace, serviceType));
             _generators.Add(new ControllerMapGenerator(_logger, _source, _naming, this.Namespace, serviceType));
+			_generators.Add(new WizardStepMapGenerator(_logger, _source, _naming, this.Namespace, serviceType));
         }
 
         protected virtual void CreateGeneratedItems()

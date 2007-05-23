@@ -41,7 +41,8 @@ namespace Castle.Tools.CodeGenerator.Services
       type.Members.Add(constructor);
 
       CodeTypeDeclaration parent = _typeStack.Peek();
-      _source.AddFieldPropertyConstructorInitialize(parent, _naming.ToControllerName(node.Name), type.Name);
+
+	  _source.AddFieldPropertyConstructorInitialize(parent, _naming.ToControllerName(node.Name), type.Name);
 
       type.Members.Add(
         _source.CreateReadOnlyProperty("Views", new CodeTypeReference(node.PathNoSlashes + _naming.ToViewWrapperName(node.Name)),
@@ -58,6 +59,27 @@ namespace Castle.Tools.CodeGenerator.Services
       type.Members.Add(
         _source.CreateReadOnlyProperty("Actions", new CodeTypeReference(node.PathNoSlashes + _naming.ToActionWrapperName(node.Name)), _source.This));
     }
-    #endregion
+
+	  public override void Visit(WizardControllerTreeNode node)
+	  {
+		  Visit((ControllerTreeNode) node);
+
+	  	  CodeNamespace codeNamespace = _source.LookupNamespace(_namespace);
+
+	  		foreach (CodeTypeDeclaration type in codeNamespace.Types)
+	  		{
+	  			if (type.Name == (node.PathNoSlashes + _naming.ToControllerWrapperName(node.Name)))
+	  			{
+					type.Members.Add(
+						_source.CreateReadOnlyProperty("Steps", new CodeTypeReference(node.PathNoSlashes + _naming.ToWizardStepWrapperName(node.Name)),
+							new CodeObjectCreateExpression(
+								new CodeTypeReference(node.PathNoSlashes + _naming.ToWizardStepWrapperName(node.Name)),
+								new CodeFieldReferenceExpression(_source.This, _naming.ToMemberVariableName(_serviceIdentifier)))));
+
+	  				break;
+	  			}
+	  		}
+	  }
+  	#endregion
   }
 }

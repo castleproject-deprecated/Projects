@@ -20,7 +20,7 @@ namespace Castle.Tools.CodeGenerator.Services
     #endregion
 
     #region Methods
-    public override void Visit(ControllerTreeNode node)
+  	public override void Visit(ControllerTreeNode node)
     {
       CodeTypeDeclaration type = GenerateTypeDeclaration(_namespace, node.PathNoSlashes + _naming.ToActionWrapperName(node.Name));
 
@@ -72,7 +72,12 @@ namespace Castle.Tools.CodeGenerator.Services
       }
 
       base.Visit(node);
-    }
+  }
+
+  public override void Visit(WizardControllerTreeNode node)
+  {
+	  Visit((ControllerTreeNode)node);
+  }
     #endregion
 
     #region Methods

@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
-
 using Castle.Tools.CodeGenerator.Model;
-
-using ICSharpCode.NRefactory.Parser.AST;
-using Rhino.Mocks;
+using ICSharpCode.NRefactory.Ast;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace Castle.Tools.CodeGenerator.Services
 {
@@ -45,25 +42,25 @@ namespace Castle.Tools.CodeGenerator.Services
       }
 
       _mocks.ReplayAll();
-      _visitor.Visit(cu, null);
+      _visitor.VisitCompilationUnit(cu, null);
       _mocks.VerifyAll();
     }
 
     [Test]
     public void VisitTypeDeclaration_NotViewComponent_DoesNothing()
     {
-      TypeDeclaration type = new TypeDeclaration(Modifier.Public, new List<AttributeSection>());
+      TypeDeclaration type = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>());
       type.Name = "SomeRandomType";
 
       _mocks.ReplayAll();
-      _visitor.Visit(type, null);
+	  _visitor.VisitTypeDeclaration(type, null);
       _mocks.VerifyAll();
     }
 
     [Test]
     public void VisitTypeDeclaration_AViewComponentNoChildren_PushesAndPops()
     {
-      TypeDeclaration type = new TypeDeclaration(Modifier.Public | Modifier.Partial, new List<AttributeSection>());
+      TypeDeclaration type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>());
       type.Name = "SomeRandomComponent";
 
       using (_mocks.Unordered())
@@ -73,7 +70,7 @@ namespace Castle.Tools.CodeGenerator.Services
       }
 
       _mocks.ReplayAll();
-      _visitor.Visit(type, null);
+      _visitor.VisitTypeDeclaration(type, null);
       _mocks.VerifyAll();
     }
     #endregion

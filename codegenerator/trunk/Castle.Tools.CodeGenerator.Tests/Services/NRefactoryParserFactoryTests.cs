@@ -1,10 +1,7 @@
-using System;
 using System.IO;
-
-using ICSharpCode.NRefactory.Parser;
-
-using Rhino.Mocks;
+using ICSharpCode.NRefactory;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace Castle.Tools.CodeGenerator.Services
 {

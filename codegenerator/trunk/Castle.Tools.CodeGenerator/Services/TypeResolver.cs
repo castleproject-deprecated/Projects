@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using ICSharpCode.NRefactory.Parser.AST;
+using System.Web;
+using ICSharpCode.NRefactory.Ast;
 
 namespace Castle.Tools.CodeGenerator.Services
 {
@@ -92,7 +93,7 @@ namespace Castle.Tools.CodeGenerator.Services
 
     protected static IEnumerable<Assembly> GetAssemblies()
     {
-      yield return typeof(System.Web.HttpPostedFile).Assembly;
+      yield return typeof(HttpPostedFile).Assembly;
       foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
       {
         yield return assembly;

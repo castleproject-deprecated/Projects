@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-
-using ICSharpCode.NRefactory.Parser;
+using ICSharpCode.NRefactory;
 
 namespace Castle.Tools.CodeGenerator.Services
 {
@@ -26,16 +24,16 @@ namespace Castle.Tools.CodeGenerator.Services
     #endregion
 
     #region Methods
-    public void Parse(IAstVisitor visitor, string path)
+	public void Parse(IAstVisitor visitor, string path)
     {
       using (TextReader reader = File.OpenText(path))
       {
         IParser parser = _parserFactory.CreateCSharpParser(reader);
-        parser.ParseMethodBodies = false;
+        parser.ParseMethodBodies = true;
         parser.Parse();
 
         _typeResolver.Clear();
-        visitor.Visit(parser.CompilationUnit, null);
+        visitor.VisitCompilationUnit(parser.CompilationUnit, null);
         _cache.Add(path, parser);
       }
     }
