@@ -30,7 +30,20 @@ namespace Castle.Tools.CodeGenerator.Services
       _primitiveTypes["uint"] = typeof(uint);
       _primitiveTypes["uint?"] = typeof(uint?);
     }
-    #endregion
+
+    public TypeResolver()
+    {
+    }
+
+
+  	public TypeResolver(List<TypeTableEntry> typeEntries, List<string> usings, Dictionary<string, string> aliases)
+  	{
+  		_typeEntries = typeEntries;
+  		_usings = usings;
+  		_aliases = aliases;
+  	}
+
+  	#endregion
 
     #region Methods
     public void AddTableEntry(string fullName)

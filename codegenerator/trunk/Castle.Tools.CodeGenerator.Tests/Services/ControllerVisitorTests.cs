@@ -248,8 +248,8 @@ namespace Castle.Tools.CodeGenerator.Services
     {
       using (_mocks.Unordered())
       {
+	  _typeResolver.UseNamespace("SomeNamespace", true);
       	_typeResolver.UseNamespace("System");
-        _typeResolver.UseNamespace("SomeNamespace");
         Expect.Call(_typeResolver.Resolve(new TypeReference("DateTime"))).Constraints(Is.Matching(new Predicate<TypeReference>(delegate(TypeReference reference) {
           return reference.SystemType == "DateTime";
         }))).Return("System.DateTime[]");
@@ -263,27 +263,28 @@ namespace Castle.Tools.CodeGenerator.Services
 	  [Test]
 	  public void Parsing_WizardController_()
 	  {
-		  using (_mocks.Unordered())
-		  {
-			  _typeResolver.UseNamespace("System");
-			  _typeResolver.UseNamespace("SomeNamespace");
-		  }
+	  	using (_mocks.Unordered())
+	  	{
+	  		_typeResolver.UseNamespace("SomeNamespace", true);
+	  		_typeResolver.UseNamespace("System");
+	  	}
 
-		  _mocks.ReplayAll();
-		  Parse(WizardControllerType, true);
-		  _mocks.VerifyAll();
+	  	_mocks.ReplayAll();
+	  	Parse(WizardControllerType, true);
+	  	_mocks.VerifyAll();
 
-	  	  TreeNode node = _treeService.Peek;
-	
-		  Assert.AreEqual(1, node.Children.Count);
+	  	TreeNode node = _treeService.Peek;
 
-	  	  WizardControllerTreeNode wizardControllerTreeNode = (WizardControllerTreeNode) node.Children[0];
-		
-		  Assert.AreEqual(2, wizardControllerTreeNode.WizardStepPages.Length);
-		  Assert.AreEqual("FirstStep", wizardControllerTreeNode.WizardStepPages[0]);
-		  Assert.AreEqual("SecondStep", wizardControllerTreeNode.WizardStepPages[1]);
+	  	Assert.AreEqual(1, node.Children.Count);
+
+	  	WizardControllerTreeNode wizardControllerTreeNode = (WizardControllerTreeNode) node.Children[0];
+
+	  	Assert.AreEqual(2, wizardControllerTreeNode.WizardStepPages.Length);
+	  	Assert.AreEqual("FirstStep", wizardControllerTreeNode.WizardStepPages[0]);
+	  	Assert.AreEqual("SecondStep", wizardControllerTreeNode.WizardStepPages[1]);
 	  }
-    #endregion
+
+  	#endregion
 
     #region Sources
 	protected void Parse(string source)

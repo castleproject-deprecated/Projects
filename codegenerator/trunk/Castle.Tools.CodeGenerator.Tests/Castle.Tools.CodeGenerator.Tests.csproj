@@ -80,6 +80,7 @@
     <Compile Include="Services\DefaultTreeCreationServiceTests.cs" />
     <Compile Include="Services\TypeInspectionVisitorTests.cs" />
     <Compile Include="Services\TypeResolverTests.cs" />
+    <Compile Include="Services\TypeResolvingVisitorTests.cs" />
     <Compile Include="Services\TypeTableEntryTests.cs" />
     <Compile Include="Services\ViewComponentVisitorTests.cs" />
     <Compile Include="Services\ViewMapGeneratorTests.cs" />

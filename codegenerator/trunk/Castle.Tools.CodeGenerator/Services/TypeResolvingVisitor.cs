@@ -39,7 +39,7 @@ namespace Castle.Tools.CodeGenerator.Services
 
   	public override object VisitNamespaceDeclaration(NamespaceDeclaration namespaceDeclaration, object data)
   	{
-		_typeResolver.UseNamespace(namespaceDeclaration.Name);
+		_typeResolver.UseNamespace(namespaceDeclaration.Name,true);
 		return base.VisitNamespaceDeclaration(namespaceDeclaration, data);
   	}
     #endregion
