@@ -10,23 +10,34 @@ Step 1 - Install VS SDK
 
 Step 2 - Build Castle.VisualStudio.NVelocityLanguageService
 -----------------------------------------------------------
+- Ensure you have checked out \Castle.NVelocity\ from the castle contrib repository as well. Both Castle.NVelocity
+  and CVSI folders need to be located the same as they are on the repository. The easiest option is to checkout
+  the entire contrib.
 - Open \CVSI\trunk\src\Castle.VisualStudio.NVelocityLanguageService\Castle.VisualStudio.NVelocityLanguageService.sln
   in Visual Studio.
-- Go into the project properties under Debug set these values (without the quotes):
+- Go into the project properties, under Debug set these values (without the quotes):
   Set "Start external program" to "C:\Program Files\Microsoft Visual Studio 8\Common7\IDE\devenv.exe"
   Set "Command line arguments" to "/rootsuffix Exp"
 - Run the solution without debugging.
 
-
-You will now be able to use the experimental hive of Visual Studio to open *.vm and *.njs files.
+Step 3 - Use Castle Visual Studio Integration
+---------------------------------------------
+- You will now be able to use the experimental hive of Visual Studio to open *.vm and *.njs files. When you want to
+  open an NVelocity file you do not need start Visual Studio via the CVSI project, you can just run Visual Studio
+  under the experimental hive as mentioned below because Visual Studio will be using the binaries you registered
+  the last time you built CVSI.
 
 +=================+
 |      Notes      |
 +=================+
 - You can start the Visual Studio experimental hive copy at anytime via the
   "Start Visual Studio 2005 under Experimental hive" menu item in the start menu.
+- If you installed the SDK into the 64bit Program Files directory or changed the default directory then you
+  will need to update the path to the targets file in the Castle.VisualStudio.NVelocityLanguageService.csproj
+  file.
 
 +=================+
 |  Known Issues   |
 +=================+
-- You cannot have multiple files open at once because they each overwrite each other scanner state information.
+- You cannot have multiple NVelocity files open at once because they all overwrite the same scanner state used
+  by the other files. As a workaround, you can run multiple instances of Visual Studio to open multiple files.
