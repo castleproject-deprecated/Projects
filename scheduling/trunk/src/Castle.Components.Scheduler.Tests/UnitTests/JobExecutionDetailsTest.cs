@@ -23,13 +23,15 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
     [Author("Jeff Brown", "jeff@ingenio.com")]
     public class JobExecutionDetailsTest : BaseUnitTest
     {
+        private static readonly Guid SchedulerGuid = Guid.NewGuid();
+
         [Test]
         public void ConstructorSetsProperties()
         {
-            DateTime now = DateTime.Now;
-            JobExecutionDetails details = new JobExecutionDetails("foo", now);
+            DateTime now = DateTime.UtcNow;
+            JobExecutionDetails details = new JobExecutionDetails(SchedulerGuid, now);
 
-            Assert.AreEqual("foo", details.SchedulerName);
+            Assert.AreEqual(SchedulerGuid, details.SchedulerGuid);
             Assert.AreEqual(now, details.StartTime);
             Assert.IsNull(details.EndTime);
             Assert.IsFalse(details.Succeeded);
@@ -37,16 +39,9 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void ConstructorThrowsIfSchedulerNameIsNull()
-        {
-            new JobExecutionDetails(null, DateTime.Now);
-        }
-
-        [Test]
         public void EndTime_GetterAndSetter()
         {
-            JobExecutionDetails details = new JobExecutionDetails("foo", DateTime.Now);
+            JobExecutionDetails details = new JobExecutionDetails(SchedulerGuid, DateTime.UtcNow);
 
             details.EndTime = new DateTime(1970, 1, 2);
             Assert.AreEqual(new DateTime(1970, 1, 2), details.EndTime);
@@ -55,7 +50,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Test]
         public void Succeeded_GetterAndSetter()
         {
-            JobExecutionDetails details = new JobExecutionDetails("foo", DateTime.Now);
+            JobExecutionDetails details = new JobExecutionDetails(SchedulerGuid, DateTime.UtcNow);
 
             details.Succeeded = true;
             Assert.IsTrue(details.Succeeded);
@@ -64,7 +59,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Test]
         public void StatusMessage_GetterAndSetter()
         {
-            JobExecutionDetails details = new JobExecutionDetails("foo", DateTime.Now);
+            JobExecutionDetails details = new JobExecutionDetails(SchedulerGuid, DateTime.UtcNow);
 
             details.StatusMessage = "Test test test";
             Assert.AreEqual("Test test test", details.StatusMessage);
@@ -74,7 +69,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ArgumentNullException))]
         public void StatusMessage_ThrowsIfValueIsNull()
         {
-            JobExecutionDetails details = new JobExecutionDetails("foo", DateTime.Now);
+            JobExecutionDetails details = new JobExecutionDetails(SchedulerGuid, DateTime.UtcNow);
             details.StatusMessage = null;
         }
 
@@ -83,8 +78,8 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Row(true)]
         public void ClonePerformsADeepCopy(bool useGenericClonable)
         {
-            DateTime now = DateTime.Now;
-            JobExecutionDetails details = new JobExecutionDetails("foo", now);
+            DateTime now = DateTime.UtcNow;
+            JobExecutionDetails details = new JobExecutionDetails(SchedulerGuid, now);
             details.EndTime = DateTime.MaxValue;
             details.Succeeded = true;
             details.StatusMessage = "Blah";
@@ -94,7 +89,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
 
             Assert.AreNotSame(details, clone);
 
-            Assert.AreEqual("foo", clone.SchedulerName);
+            Assert.AreEqual(SchedulerGuid, clone.SchedulerGuid);
             Assert.AreEqual(now, clone.StartTime);
             Assert.AreEqual(DateTime.MaxValue, clone.EndTime);
             Assert.IsTrue(clone.Succeeded);

@@ -22,6 +22,15 @@ namespace Castle.Components.Scheduler
     /// A job scheduler schedules jobs for execution.
     /// It may optionally provide job persistence, clustering and other features.
     /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Each scheduler instance is uniquely identified by a GUID which is used
+    /// to track ownership of running jobs.  A running job associated with a
+    /// scheduler whose GUID is no longer valid is considered orphaned and is
+    /// assigned a failure result for that execution.  The orphaned job will
+    /// then be rescheduled according to its trigger.
+    /// </para>
+    /// </remarks>
     /// <todo>
     /// Optionally track job history.
     /// Provide events for instrumentation.
@@ -42,7 +51,23 @@ namespace Castle.Components.Scheduler
         bool IsRunning { get; }
 
         /// <summary>
-        /// Gets the name of the scheduler, never null.
+        /// Gets the globally unique ID of the scheduler instance.
+        /// </summary>
+        /// <remarks>
+        /// The GUID is used to track ownership of resources that
+        /// are transiently owned by a scheduler instance.  The system
+        /// ensures that when the GUID associated with a scheduler instance
+        /// is invalidated (say by failing to update its record in a persistent
+        /// store for a preset time) all of its associated resources should
+        /// be released.  In particular, if the scheduler instance terminated
+        /// abnormally while it had running jobs, these jobs will eventually
+        /// be considered orphaned and will be rescheduled by other scheduler
+        /// instances per the job's trigger.
+        /// </remarks>
+        Guid Guid { get; }
+
+        /// <summary>
+        /// Gets the name of the scheduler instance, never null.
         /// The name might not be unique.
         /// </summary>
         string Name { get; }

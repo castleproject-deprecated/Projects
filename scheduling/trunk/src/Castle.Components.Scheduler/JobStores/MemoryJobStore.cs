@@ -25,72 +25,101 @@ namespace Castle.Components.Scheduler.JobStores
     /// It does not support persistence or clustering.
     /// </summary>
     [Singleton]
-    public class MemoryJobStore : IJobStore
+    public class MemoryJobStore : BaseJobStore
     {
-        private Dictionary<string, VersionedJobDetails> jobStatusTable;
-        private bool isDisposed;
+        private Dictionary<string, VersionedJobDetails> jobs;
 
         /// <summary>
         /// Creates an in-process memory job store initially without any jobs.
         /// </summary>
         public MemoryJobStore()
         {
-            jobStatusTable = new Dictionary<string, VersionedJobDetails>();
+            jobs = new Dictionary<string, VersionedJobDetails>();
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
-            lock (jobStatusTable)
+            lock (jobs)
             {
-                isDisposed = true;
-                jobStatusTable.Clear();
+                IsDisposed = true;
+                jobs.Clear();
 
-                Monitor.PulseAll(jobStatusTable);
+                Monitor.PulseAll(jobs);
             }
         }
 
-        public IJobWatcher CreateJobWatcher(string schedulerName)
+        public override void RegisterScheduler(Guid schedulerGuid, string schedulerName)
         {
             if (schedulerName == null)
                 throw new ArgumentNullException("schedulerName");
 
             ThrowIfDisposed();
 
-            return new JobWatcher(this);
+            // The memory job store has no use for the registration information itself.
         }
 
-        public JobDetails GetJobDetails(string jobName)
+        public override void UnregisterScheduler(Guid schedulerGuid)
+        {
+            lock (jobs)
+            {
+                ThrowIfDisposed();
+                
+                // Orphan any jobs that are still running.
+                bool jobsWereOrphaned = false;
+                foreach (VersionedJobDetails job in jobs.Values)
+                {
+                    JobExecutionDetails execution = job.LastJobExecutionDetails;
+                    if (job.JobState == JobState.Running && execution.SchedulerGuid == schedulerGuid)
+                    {
+                        job.JobState = JobState.Orphaned;
+                        jobsWereOrphaned = true;
+                    }
+                }
+
+                if (jobsWereOrphaned)
+                    SignalBlockedThreads();
+            }
+        }
+
+        public override IJobWatcher CreateJobWatcher(Guid schedulerGuid)
+        {
+            ThrowIfDisposed();
+
+            return new JobWatcher(this, schedulerGuid);
+        }
+
+        public override JobDetails GetJobDetails(string jobName)
         {
             if (jobName == null)
                 throw new ArgumentNullException("jobName");
 
-            lock (jobStatusTable)
+            lock (jobs)
             {
                 ThrowIfDisposed();
 
                 VersionedJobDetails jobDetails;
-                if (jobStatusTable.TryGetValue(jobName, out jobDetails))
+                if (jobs.TryGetValue(jobName, out jobDetails))
                     return jobDetails.Clone();
 
                 return null;
             }
         }
 
-        public void SaveJobDetails(JobDetails jobDetails)
+        public override void SaveJobDetails(JobDetails jobDetails)
         {
             if (jobDetails == null)
                 throw new ArgumentNullException("jobStatus");
 
             VersionedJobDetails versionedJobDetails = (VersionedJobDetails) jobDetails;
 
-            lock (jobStatusTable)
+            lock (jobs)
             {
                 ThrowIfDisposed();
 
                 string jobName = jobDetails.JobSpec.Name;
 
                 VersionedJobDetails existingJobDetails;
-                if (! jobStatusTable.TryGetValue(jobName, out existingJobDetails))
+                if (! jobs.TryGetValue(jobName, out existingJobDetails))
                     throw new ConcurrentModificationException("The job details could not be saved because the job was concurrently deleted.");
 
                 if (existingJobDetails.Version != versionedJobDetails.Version)
@@ -98,22 +127,22 @@ namespace Castle.Components.Scheduler.JobStores
 
                 versionedJobDetails.Version += 1;
                 versionedJobDetails.JobSpec.Trigger.IsDirty = false;
-                jobStatusTable[jobName] = (VersionedJobDetails) versionedJobDetails.Clone();
+                jobs[jobName] = (VersionedJobDetails) versionedJobDetails.Clone();
 
-                Monitor.PulseAll(jobStatusTable);
+                Monitor.PulseAll(jobs);
             }
         }
 
-        public bool CreateJob(JobSpec jobSpec, JobData jobData, DateTime creationTime, CreateJobConflictAction conflictAction)
+        public override bool CreateJob(JobSpec jobSpec, JobData jobData, DateTime creationTime, CreateJobConflictAction conflictAction)
         {
             if (jobSpec == null)
                 throw new ArgumentNullException("jobSpec");
 
-            lock (jobStatusTable)
+            lock (jobs)
             {
                 ThrowIfDisposed();
 
-                if (jobStatusTable.ContainsKey(jobSpec.Name))
+                if (jobs.ContainsKey(jobSpec.Name))
                 {
                     if (conflictAction == CreateJobConflictAction.Ignore)
                         return false;
@@ -125,45 +154,45 @@ namespace Castle.Components.Scheduler.JobStores
                 VersionedJobDetails jobDetails = new VersionedJobDetails(jobSpec, creationTime, 0);
                 jobDetails.JobData = jobData;
 
-                jobStatusTable[jobSpec.Name] = jobDetails;
-                Monitor.PulseAll(jobStatusTable);
+                jobs[jobSpec.Name] = jobDetails;
+                Monitor.PulseAll(jobs);
                 return true;
             }
         }
 
-        public bool DeleteJob(string jobName)
+        public override bool DeleteJob(string jobName)
         {
             if (jobName == null)
                 throw new ArgumentNullException("jobName");
 
-            lock (jobStatusTable)
+            lock (jobs)
             {
                 ThrowIfDisposed();
 
-                if (!jobStatusTable.Remove(jobName))
+                if (!jobs.Remove(jobName))
                     return false;
 
-                Monitor.PulseAll(jobStatusTable);
+                Monitor.PulseAll(jobs);
                 return true;
             }
         }
 
-        private void SignalBlockedThreads()
+        protected override void SignalBlockedThreads()
         {
-            lock (jobStatusTable)
-                Monitor.PulseAll(jobStatusTable);
+            lock (jobs)
+                Monitor.PulseAll(jobs);
         }
 
-        private JobDetails GetNextJobToProcessOrWaitUntilSignaled()
+        protected override JobDetails GetNextJobToProcessOrWaitUntilSignaled(Guid schedulerGuid)
         {
-            lock (jobStatusTable)
+            lock (jobs)
             {
                 ThrowIfDisposed();
 
-                DateTime now = DateTime.UtcNow;
+                DateTime timeBasis = DateTime.UtcNow;
                 DateTime? waitNextTriggerFireTime = null;
 
-                foreach (VersionedJobDetails jobDetails in jobStatusTable.Values)
+                foreach (VersionedJobDetails jobDetails in jobs.Values)
                 {
                     switch (jobDetails.JobState)
                     {
@@ -172,7 +201,7 @@ namespace Castle.Components.Scheduler.JobStores
                             {
                                 DateTime jobNextTriggerFireTime = jobDetails.NextTriggerFireTime.Value.ToUniversalTime();
 
-                                if (jobNextTriggerFireTime > now)
+                                if (jobNextTriggerFireTime > timeBasis)
                                 {
                                     if (!waitNextTriggerFireTime.HasValue || jobNextTriggerFireTime < waitNextTriggerFireTime.Value)
                                         waitNextTriggerFireTime = jobNextTriggerFireTime;
@@ -197,57 +226,18 @@ namespace Castle.Components.Scheduler.JobStores
                     // Need to ensure that wait time in millis will fit in a 32bit integer, otherwise the
                     // Monitor.Wait will throw an ArgumentException (even when using the TimeSpan based overload).
                     // This can happen when the next trigger fire time is very far out into the future like DateTime.MaxValue.
-                    TimeSpan waitTimeSpan = waitNextTriggerFireTime.Value - now;
+                    TimeSpan waitTimeSpan = waitNextTriggerFireTime.Value - timeBasis;
                     int waitMillis = (int) Math.Min(int.MaxValue, waitTimeSpan.TotalMilliseconds);
-                    Monitor.Wait(jobStatusTable, waitMillis);
+
+                    Monitor.Wait(jobs, waitMillis);
                 }
                 else
                 {
-                    Monitor.Wait(jobStatusTable);
+                    Monitor.Wait(jobs);
                 }
             }
 
             return null;
-        }
-
-        private void ThrowIfDisposed()
-        {
-            if (isDisposed)
-                throw new ObjectDisposedException(GetType().Name);
-        }
-
-        private class JobWatcher : IJobWatcher
-        {
-            private volatile MemoryJobStore jobStore;
-
-            public JobWatcher(MemoryJobStore jobStore)
-            {
-                this.jobStore = jobStore;
-            }
-
-            public void Dispose()
-            {
-                MemoryJobStore cachedJobStore = jobStore;
-                if (cachedJobStore != null)
-                {
-                    jobStore = null;
-                    cachedJobStore.SignalBlockedThreads();
-                }
-            }
-
-            public JobDetails GetNextJobToProcess()
-            {
-                for (;;)
-                {
-                    MemoryJobStore cachedJobStore = jobStore;
-                    if (cachedJobStore == null)
-                        return null;
-
-                    JobDetails jobDetails = jobStore.GetNextJobToProcessOrWaitUntilSignaled();
-                    if (jobDetails != null)
-                        return jobDetails;
-                }
-            }
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Castle.Components.Scheduler
     [Serializable]
     public class JobExecutionDetails : ICloneable<JobExecutionDetails>
     {
-        private string schedulerName;
+        private Guid schedulerGuid;
         private DateTime startTime;
         private DateTime? endTime;
         private bool succeeded;
@@ -46,26 +46,22 @@ namespace Castle.Components.Scheduler
         /// <summary>
         /// Creates job execution details.
         /// </summary>
-        /// <param name="schedulerName">The name of the scheduler that is running the job</param>
+        /// <param name="schedulerGuid">The Guid of the scheduler that is running the job</param>
         /// <param name="startTime">The start time</param>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="schedulerName"/> is null</exception>
-        public JobExecutionDetails(string schedulerName, DateTime startTime)
+        public JobExecutionDetails(Guid schedulerGuid, DateTime startTime)
         {
-            if (schedulerName == null)
-                throw new ArgumentNullException("schedulerName");
-
-            this.schedulerName = schedulerName;
+            this.schedulerGuid = schedulerGuid;
             this.startTime = startTime;
 
             statusMessage = "Unknown";
         }
 
         /// <summary>
-        /// Gets the name of the scheduler that is running the job, never null.
+        /// Gets the GUID of the scheduler that is running the job, never null.
         /// </summary>
-        public string SchedulerName
+        public Guid SchedulerGuid
         {
-            get { return schedulerName; }
+            get { return schedulerGuid; }
         }
 
         /// <summary>
@@ -125,7 +121,7 @@ namespace Castle.Components.Scheduler
         /// <returns>The cloned job execution details</returns>
         public virtual JobExecutionDetails Clone()
         {
-            JobExecutionDetails clone = new JobExecutionDetails(schedulerName, startTime);
+            JobExecutionDetails clone = new JobExecutionDetails(schedulerGuid, startTime);
 
             clone.endTime = endTime;
             clone.succeeded = succeeded;

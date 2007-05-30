@@ -79,7 +79,7 @@ namespace Castle.Components.Scheduler
         /// </summary>
         /// <remarks>
         /// The implementation should use the value of the <paramref name="timeBasis"/>
-        /// parameter to evaluate its scheduling rules rather than calling <see cref="DateTime.Now" />.
+        /// parameter to evaluate its scheduling rules rather than calling <see cref="DateTime.UtcNow" />.
         /// </remarks>
         /// <param name="condition">The reason the trigger is being scheduled</param>
         /// <param name="timeBasis">The time to use as a basis for evaluating scheduling rules and

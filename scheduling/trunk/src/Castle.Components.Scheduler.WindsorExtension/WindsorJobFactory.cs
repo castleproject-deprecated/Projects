@@ -13,21 +13,19 @@
 // limitations under the License.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Castle.Core;
 using Castle.MicroKernel;
 
-namespace Castle.Components.Scheduler
+namespace Castle.Components.Scheduler.WindsorExtension
 {
     /// <summary>
-    /// The component job factory constructs instances of <see cref="IJob" /> by
+    /// The Windsor job factory constructs instances of <see cref="IJob" /> by
     /// asking the Castle MicroKernel to resolve a component that implements the 
     /// <see cref="IJob" /> service and whose component key equals the requested job key.
     /// </summary>
     [Singleton]
-    public class ComponentJobFactory : IJobFactory
+    public class WindsorJobFactory : IJobFactory
     {
         private IKernel kernel;
 
@@ -35,7 +33,7 @@ namespace Castle.Components.Scheduler
         /// Creates a component job factory based on the specified IoC kernel.
         /// </summary>
         /// <param name="kernel">The IoC kernel to use for component resolution</param>
-        public ComponentJobFactory(IKernel kernel)
+        public WindsorJobFactory(IKernel kernel)
         {
             this.kernel = kernel;
         }
@@ -49,7 +47,7 @@ namespace Castle.Components.Scheduler
             catch (Exception ex)
             {
                 throw new SchedulerException(String.Format(CultureInfo.CurrentCulture,
-                    "Cannot create IJob component with key '{0}'.", jobKey), ex);
+                                                           "Cannot create IJob component with key '{0}'.", jobKey), ex);
             }
         }
     }

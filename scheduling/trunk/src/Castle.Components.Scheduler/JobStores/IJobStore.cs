@@ -13,8 +13,6 @@
 // limitations under the License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Castle.Components.Scheduler.JobStores
 {
@@ -24,13 +22,50 @@ namespace Castle.Components.Scheduler.JobStores
     public interface IJobStore : IDisposable
     {
         /// <summary>
+        /// Returns true if the job store has been disposed.
+        /// </summary>
+        bool IsDisposed { get; }
+
+        /// <summary>
+        /// Registers a scheduler instance with the job store.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The scheduler instance must register itself with the job store before it ever
+        /// attempts to run jobs.
+        /// </para>
+        /// <para>
+        /// The scheduler instance may register itself with the job store multiple times
+        /// and is not considered an error.  It may even re-register itself after a call
+        /// to <see cref="UnregisterScheduler" />.
+        /// </para>
+        /// </remarks>
+        /// <param name="schedulerGuid">The scheduler's GUID</param>
+        /// <param name="schedulerName">The scheduler's name</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="schedulerName"/> is null</exception>
+        /// <exception cref="ObjectDisposedException">Thrown if the job store has been disposed</exception>
+        void RegisterScheduler(Guid schedulerGuid, string schedulerName);
+
+        /// <summary>
+        /// Unregisters a scheduler instance from the job store.
+        /// </summary>
+        /// <remarks>
+        /// The scheduler instance should unregister itself from the job store just before
+        /// it shuts down to ensure that any resources it owns are reclaimed.  All jobs currently
+        /// being executed by the scheduler instance are orphaned.  The job store may also
+        /// automatically unregister a scheduler instance if it discovers that it no longer exists
+        /// (in some implementation defined manner).
+        /// </remarks>
+        /// <param name="schedulerGuid">The scheduler's GUID</param>
+        void UnregisterScheduler(Guid schedulerGuid);
+
+        /// <summary>
         /// Gets a job watcher for the job store.
         /// </summary>
         /// <returns>The job watcher</returns>
-        /// <param name="schedulerName">The name of the scheduler that is watching the job store</param>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="schedulerName"/> is null</exception>
+        /// <param name="schedulerGuid">The GUID of the scheduler that is watching the job store</param>
         /// <exception cref="ObjectDisposedException">Thrown if the job store has been disposed</exception>
-        IJobWatcher CreateJobWatcher(string schedulerName);
+        IJobWatcher CreateJobWatcher(Guid schedulerGuid);
 
         /// <summary>
         /// Gets the details of the job with the specified name.
@@ -43,7 +78,7 @@ namespace Castle.Components.Scheduler.JobStores
         JobDetails GetJobDetails(string jobName);
 
         /// <summary>
-        /// SAves the job details details of the job.
+        /// Saves the job details details of the job.
         /// </summary>
         /// <param name="jobDetails">The job details to save</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="jobDetails"/> is null</exception>

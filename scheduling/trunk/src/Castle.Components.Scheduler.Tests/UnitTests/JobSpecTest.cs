@@ -22,7 +22,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
     [Author("Jeff Brown", "jeff@ingenio.com")]
     public class JobSpecTest : BaseUnitTest
     {
-        private Trigger trigger = PeriodicTrigger.CreateDailyTrigger(DateTime.Now);
+        private Trigger trigger = PeriodicTrigger.CreateDailyTrigger(DateTime.UtcNow);
 
         [Test]
         public void ConstructorSetsProperties()

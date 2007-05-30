@@ -13,27 +13,27 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Logging;
+using Castle.Components.Scheduler.Tests.UnitTests;
 using Castle.MicroKernel;
 using MbUnit.Framework;
 using Rhino.Mocks;
 
-namespace Castle.Components.Scheduler.Tests.UnitTests
+namespace Castle.Components.Scheduler.WindsorExtension.Tests.UnitTests
 {
     [TestFixture]
-    [TestsOn(typeof(ComponentJobFactory))]
+    [TestsOn(typeof(WindsorJobFactory))]
     [Author("Jeff Brown", "jeff@ingenio.com")]
-    public class ComponentJobFactoryTest : BaseUnitTest
+    public class WindsorJobFactoryTest : BaseUnitTest
     {
         private IKernel kernel;
-        private ComponentJobFactory factory;
+        private WindsorJobFactory factory;
 
         public override void SetUp()
         {
             base.SetUp();
 
             kernel = Mocks.CreateMock<IKernel>();
-            factory = new ComponentJobFactory(kernel);
+            factory = new WindsorJobFactory(kernel);
         }
 
         [Test]

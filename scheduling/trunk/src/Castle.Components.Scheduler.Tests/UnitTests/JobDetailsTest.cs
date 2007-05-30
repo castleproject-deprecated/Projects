@@ -22,12 +22,13 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
     [Author("Jeff Brown", "jeff@ingenio.com")]
     public class JobDetailsTest : BaseUnitTest
     {
-        private JobSpec jobSpec = new JobSpec("abc", "some job", "with.this.key", PeriodicTrigger.CreateDailyTrigger(DateTime.Now));
+        private static readonly Guid SchedulerGuid = Guid.NewGuid();
+        private JobSpec jobSpec = new JobSpec("abc", "some job", "with.this.key", PeriodicTrigger.CreateDailyTrigger(DateTime.UtcNow));
 
         [Test]
         public void ConstructorSetsProperties()
         {
-            DateTime now = DateTime.Now;
+            DateTime now = DateTime.UtcNow;
             JobDetails jobDetails = new JobDetails(jobSpec, now);
             Assert.AreSame(jobSpec, jobDetails.JobSpec);
             Assert.AreEqual(now, jobDetails.CreationTime);
@@ -42,13 +43,13 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ArgumentNullException))]
         public void ConstructorThrowsWhenJobSpecIsNull()
         {
-            new JobDetails(null, DateTime.Now);
+            new JobDetails(null, DateTime.UtcNow);
         }
 
         [Test]
         public void JobState_GetterAndSetter()
         {
-            JobDetails jobDetails = new JobDetails(jobSpec, DateTime.Now);
+            JobDetails jobDetails = new JobDetails(jobSpec, DateTime.UtcNow);
 
             jobDetails.JobState = JobState.Scheduled;
             Assert.AreEqual(JobState.Scheduled, jobDetails.JobState);
@@ -57,7 +58,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Test]
         public void NextTriggerFireTime_GetterAndSetter()
         {
-            JobDetails jobDetails = new JobDetails(jobSpec, DateTime.Now);
+            JobDetails jobDetails = new JobDetails(jobSpec, DateTime.UtcNow);
 
             jobDetails.NextTriggerFireTime = new DateTime(1970, 1, 1);
             Assert.AreEqual(new DateTime(1970, 1, 1), jobDetails.NextTriggerFireTime);
@@ -66,7 +67,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Test]
         public void NextTriggerMisfireThreshold_GetterAndSetter()
         {
-            JobDetails jobDetails = new JobDetails(jobSpec, DateTime.Now);
+            JobDetails jobDetails = new JobDetails(jobSpec, DateTime.UtcNow);
 
             jobDetails.NextTriggerMisfireThreshold = new TimeSpan(0, 1, 0);
             Assert.AreEqual(new TimeSpan(0, 1, 0), jobDetails.NextTriggerMisfireThreshold);
@@ -75,9 +76,9 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Test]
         public void LastJobExecutionDetails_GetterAndSetter()
         {
-            JobDetails jobDetails = new JobDetails(jobSpec, DateTime.Now);
+            JobDetails jobDetails = new JobDetails(jobSpec, DateTime.UtcNow);
 
-            JobExecutionDetails jobExecutionDetails = new JobExecutionDetails("foo", DateTime.Now);
+            JobExecutionDetails jobExecutionDetails = new JobExecutionDetails(SchedulerGuid, DateTime.UtcNow);
             jobDetails.LastJobExecutionDetails = jobExecutionDetails;
             Assert.AreSame(jobExecutionDetails, jobDetails.LastJobExecutionDetails);
         }
@@ -85,7 +86,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Test]
         public void JobData_GetterAndSetter()
         {
-            JobDetails jobDetails = new JobDetails(jobSpec, DateTime.Now);
+            JobDetails jobDetails = new JobDetails(jobSpec, DateTime.UtcNow);
 
             JobData jobData = new JobData();
             jobDetails.JobData = jobData;
@@ -97,11 +98,11 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Row(true)]
         public void ClonePerformsADeepCopy(bool useGenericClonable)
         {
-            JobDetails jobDetails = new JobDetails(jobSpec, DateTime.Now);
+            JobDetails jobDetails = new JobDetails(jobSpec, DateTime.UtcNow);
             jobDetails.JobData = new JobData();
-            jobDetails.LastJobExecutionDetails = new JobExecutionDetails("foo", DateTime.Now);
+            jobDetails.LastJobExecutionDetails = new JobExecutionDetails(SchedulerGuid, DateTime.UtcNow);
             jobDetails.JobState = JobState.Scheduled;
-            jobDetails.NextTriggerFireTime = DateTime.Now;
+            jobDetails.NextTriggerFireTime = DateTime.UtcNow;
             jobDetails.NextTriggerMisfireThreshold = TimeSpan.MaxValue;
 
             JobDetails clone = useGenericClonable ? jobDetails.Clone()

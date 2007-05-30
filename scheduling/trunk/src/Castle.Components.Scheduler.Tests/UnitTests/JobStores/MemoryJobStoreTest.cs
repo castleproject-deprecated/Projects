@@ -25,11 +25,9 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
     [Author("Jeff Brown", "jeff@ingenio.com")]
     public class MemoryJobStoreTest : BaseJobStoreTest
     {
-        public override void SetUp()
+        protected override BaseJobStore CreateJobStore()
         {
-            base.SetUp();
-
-            JobStore = new MemoryJobStore();
+            return new MemoryJobStore();
         }
     }
 }

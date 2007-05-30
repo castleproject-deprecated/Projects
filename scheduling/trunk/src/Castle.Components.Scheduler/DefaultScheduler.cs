@@ -32,7 +32,7 @@ namespace Castle.Components.Scheduler
     /// The <see cref="IJobRunner" /> executes jobs asynchronously.
     /// </summary>
     [Singleton]
-    public class DefaultScheduler : IScheduler
+    public class DefaultScheduler : IScheduler, IInitializable
     {
         /// <summary>
         /// Gets the default error recovery delay in seconds.
@@ -42,6 +42,9 @@ namespace Castle.Components.Scheduler
         private readonly object syncRoot = new object();
 
         private bool isDisposed;
+        private bool isInitialized;
+
+        private Guid guid;
         private string name;
         private IJobRunner jobRunner;
         private IJobStore jobStore;
@@ -53,7 +56,7 @@ namespace Castle.Components.Scheduler
         private int errorRecoveryDelayInSeconds;
 
         /// <summary>
-        /// Creates a default scheduler.
+        /// Creates a scheduler with a default name.
         /// </summary>
         /// <param name="jobStore">The job store</param>
         /// <param name="jobRunner">The job runner</param>
@@ -72,6 +75,7 @@ namespace Castle.Components.Scheduler
             logger = NullLogger.Instance;
             errorRecoveryDelayInSeconds = DefaultErrorRecoveryDelayInSeconds;
 
+            guid = Guid.NewGuid();
             name = GetDefaultName();
         }
 
@@ -104,6 +108,25 @@ namespace Castle.Components.Scheduler
         public bool IsRunning
         {
             get { return currentJobWatcher != null; }
+        }
+
+        /// <summary>
+        /// Gets the globally unique ID of the scheduler instance.
+        /// </summary>
+        /// <remarks>
+        /// The GUID is used to track ownership of resources that
+        /// are transiently owned by a scheduler instance.  The system
+        /// ensures that when the GUID associated with a scheduler instance
+        /// is invalidated (say by failing to update its record in a persistent
+        /// store for a preset time) all of its associated resources should
+        /// be released.  In particular, if the scheduler instance terminated
+        /// abnormally while it had running jobs, these jobs will eventually
+        /// be considered orphaned and will be rescheduled by other scheduler
+        /// instances per the job's trigger.
+        /// </remarks>
+        public Guid Guid
+        {
+            get { return guid; }
         }
 
         /// <summary>
@@ -147,13 +170,49 @@ namespace Castle.Components.Scheduler
             }
         }
 
+        /// <summary>
+        /// Initializes the scheduler instance and registers it with the <see cref="IJobStore" />.
+        /// </summary>
+        /// <remarks>
+        /// This method must be called after the scheduler's properties have been set
+        /// and before the scheduler is used.
+        /// </remarks>
+        public void Initialize()
+        {
+            lock (syncRoot)
+            {
+                ThrowIfDisposed();
+
+                if (!isInitialized)
+                {
+                    jobStore.RegisterScheduler(guid, name);
+                    isInitialized = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Disposes the scheduler instance and unregisters it from the <see cref="IJobStore" />.
+        /// </summary>
+        /// <remarks>
+        /// Any jobs currently being run by the scheduler will be orphaned.
+        /// </remarks>
         public void Dispose()
         {
-            if (!isDisposed)
-            {
-                Stop();
+            InternalStop(false);
 
-                isDisposed = true;
+            lock (syncRoot)
+            {
+                if (!isDisposed)
+                {
+                    if (isInitialized)
+                    {
+                        jobStore.UnregisterScheduler(guid);
+                        isInitialized = false;
+                    }
+
+                    isDisposed = true;
+                }
             }
         }
 
@@ -162,11 +221,12 @@ namespace Castle.Components.Scheduler
             lock (syncRoot)
             {
                 ThrowIfDisposed();
+                ThrowIfNotInitialized();
 
                 if (currentJobWatcher != null)
                     return;
 
-                currentJobWatcher = jobStore.CreateJobWatcher(name);
+                currentJobWatcher = jobStore.CreateJobWatcher(guid);
                 currentJobWatcherThread = new Thread(WatchTriggeredJobs);
                 currentJobWatcherThread.IsBackground = true;
                 currentJobWatcherThread.Name = String.Format(CultureInfo.CurrentCulture, "Job Watcher for '{0}'.", name);
@@ -176,11 +236,20 @@ namespace Castle.Components.Scheduler
 
         public void Stop()
         {
+            InternalStop(true);
+        }
+
+        private void InternalStop(bool throwIfInvalidState)
+        {
             Thread threadToJoin;
 
             lock (syncRoot)
             {
-                ThrowIfDisposed();
+                if (throwIfInvalidState)
+                {
+                    ThrowIfDisposed();
+                    ThrowIfNotInitialized();
+                }
 
                 if (currentJobWatcher == null)
                     return;
@@ -205,6 +274,7 @@ namespace Castle.Components.Scheduler
                 throw new ArgumentNullException("jobName");
 
             ThrowIfDisposed();
+            ThrowIfNotInitialized();
 
             return jobStore.GetJobDetails(jobName);
         }
@@ -215,8 +285,9 @@ namespace Castle.Components.Scheduler
                 throw new ArgumentNullException("jobSpec");
 
             ThrowIfDisposed();
+            ThrowIfNotInitialized();
 
-            return jobStore.CreateJob(jobSpec, jobData, DateTime.Now, conflictAction);
+            return jobStore.CreateJob(jobSpec, jobData, DateTime.UtcNow, conflictAction);
         }
 
         public bool DeleteJob(string jobName)
@@ -225,6 +296,7 @@ namespace Castle.Components.Scheduler
                 throw new ArgumentNullException("jobName");
 
             ThrowIfDisposed();
+            ThrowIfNotInitialized();
 
             return jobStore.DeleteJob(jobName);
         }
@@ -364,7 +436,7 @@ namespace Castle.Components.Scheduler
 
                             logger.Warn(completedInvariantViolationMessage);
 
-                            jobDetails.LastJobExecutionDetails = new JobExecutionDetails(name, DateTime.MinValue);
+                            jobDetails.LastJobExecutionDetails = new JobExecutionDetails(guid, DateTime.MinValue);
                             jobDetails.LastJobExecutionDetails.Succeeded = false;
                             jobDetails.LastJobExecutionDetails.StatusMessage = completedInvariantViolationMessage;
                             jobDetails.LastJobExecutionDetails.EndTime = timeBasis;
@@ -381,7 +453,7 @@ namespace Castle.Components.Scheduler
 
                         if (jobDetails.LastJobExecutionDetails == null)
                         {
-                            jobDetails.LastJobExecutionDetails = new JobExecutionDetails(name, DateTime.MinValue);
+                            jobDetails.LastJobExecutionDetails = new JobExecutionDetails(guid, DateTime.MinValue);
                             orphanedMessage += "  In addition, the job's LastJobExecutionDetails property was null in violation of the scheduler's invariants.";
                         }
 
@@ -429,7 +501,7 @@ namespace Castle.Components.Scheduler
 
                     case TriggerScheduleAction.ExecuteJob:
                         jobDetails.JobState = JobState.Running;
-                        jobDetails.LastJobExecutionDetails = new JobExecutionDetails(name, timeBasis);
+                        jobDetails.LastJobExecutionDetails = new JobExecutionDetails(guid, timeBasis);
                         jobStore.SaveJobDetails(jobDetails);
 
                         BeginExecuteJob(jobDetails);
@@ -483,7 +555,7 @@ namespace Castle.Components.Scheduler
                     "Job runner failed to start the job due to an exception:\n{0}", ex);
                 jobDetails.JobState = JobState.Completed;
 
-                ScheduleJob(jobDetails);
+                jobStore.SaveJobDetails(jobDetails);
             }
         }
 
@@ -535,7 +607,7 @@ namespace Castle.Components.Scheduler
 
                 jobDetails.JobState = JobState.Completed;
 
-                ScheduleJob(jobDetails);
+                jobStore.SaveJobDetails(jobDetails);
             }
             catch (Exception ex)
             {
@@ -550,6 +622,12 @@ namespace Castle.Components.Scheduler
         {
             if (isDisposed)
                 throw new ObjectDisposedException(GetType().Name);
+        }
+
+        private void ThrowIfNotInitialized()
+        {
+            if (!isInitialized)
+                throw new SchedulerException("The scheduler instance has not been initialized.");
         }
 
         private static string GetDefaultName()

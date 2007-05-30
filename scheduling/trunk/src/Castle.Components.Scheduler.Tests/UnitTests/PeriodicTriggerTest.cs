@@ -27,7 +27,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Test]
         public void ConstructorSetsProperties()
         {
-            DateTime now = DateTime.Now;
+            DateTime now = DateTime.UtcNow;
             TimeSpan interval = new TimeSpan(0, 1, 30);
             PeriodicTrigger trigger = new PeriodicTrigger(now, DateTime.MaxValue, interval, 33);
 
@@ -44,21 +44,21 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Constructor_ThrowsIfPeriodIsZero()
         {
-            new PeriodicTrigger(DateTime.Now, null, TimeSpan.Zero, null);
+            new PeriodicTrigger(DateTime.UtcNow, null, TimeSpan.Zero, null);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Constructor_ThrowsIfPeriodIsNegative()
         {
-            new PeriodicTrigger(DateTime.Now, null, TimeSpan.MinValue, null);
+            new PeriodicTrigger(DateTime.UtcNow, null, TimeSpan.MinValue, null);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Constructor_ThrowsIfJobExecutionCountIsNegative()
         {
-            new PeriodicTrigger(DateTime.Now, null, null, -1);
+            new PeriodicTrigger(DateTime.UtcNow, null, null, -1);
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             trigger.StartTime = value;
             Assert.IsFalse(trigger.IsDirty);
 
-            value = DateTime.Now;
+            value = DateTime.UtcNow;
             trigger.StartTime = value;
             Assert.AreEqual(value, trigger.StartTime);
             Assert.IsTrue(trigger.IsDirty);
@@ -80,12 +80,12 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         public void EndTime_SettingANewValueMakesTriggerDirty()
         {
             DateTime value = DateTime.MinValue;
-            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.Now, value, null, null);
+            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.UtcNow, value, null, null);
 
             trigger.EndTime = value;
             Assert.IsFalse(trigger.IsDirty);
 
-            value = DateTime.Now;
+            value = DateTime.UtcNow;
             trigger.EndTime = value;
             Assert.AreEqual(value, trigger.EndTime);
             Assert.IsTrue(trigger.IsDirty);
@@ -95,7 +95,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         public void Period_SettingANewValueMakesTriggerDirty()
         {
             TimeSpan value = TimeSpan.MaxValue;
-            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.Now, null, value, null);
+            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.UtcNow, null, value, null);
 
             trigger.Period = value;
             Assert.IsFalse(trigger.IsDirty);
@@ -110,7 +110,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Period_ThrowsIfValueIsZero()
         {
-            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.Now, null, null, null);
+            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.UtcNow, null, null, null);
             trigger.Period = TimeSpan.Zero;
         }
 
@@ -118,14 +118,14 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Period_ThrowsIfValueIsNegative()
         {
-            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.Now, null, null, null);
+            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.UtcNow, null, null, null);
             trigger.Period = TimeSpan.MinValue;
         }
 
         [Test]
         public void JobExecutionCountRemaining_SettingANewValueMakesTriggerDirty()
         {
-            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.Now, null, null, 33);
+            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.UtcNow, null, null, 33);
 
             trigger.JobExecutionCountRemaining = 33;
             Assert.IsFalse(trigger.IsDirty);
@@ -139,14 +139,14 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void JobExecutionCountRemaining_ThrowsIfValueIsNegative()
         {
-            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.Now, null, null, null);
+            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.UtcNow, null, null, null);
             trigger.JobExecutionCountRemaining = -1;
         }
 
         [Test]
         public void MisfireAction_SettingANewValueMakesTriggerDirty()
         {
-            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.Now, null, null, null);
+            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.UtcNow, null, null, null);
 
             trigger.MisfireAction = PeriodicTrigger.DefaultMisfireAction;
             Assert.IsFalse(trigger.IsDirty);
@@ -159,7 +159,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Test]
         public void MisfireThreshold_SettingANewValueMakesTriggerDirty()
         {
-            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.Now, null, null, null);
+            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.UtcNow, null, null, null);
 
             trigger.MisfireThreshold = null;
             Assert.IsFalse(trigger.IsDirty);
@@ -173,15 +173,15 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void MisfireThreshold_ThrowsIfValueIsNegative()
         {
-            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.Now, null, null, null);
+            PeriodicTrigger trigger = new PeriodicTrigger(DateTime.UtcNow, null, null, null);
             trigger.MisfireThreshold = TimeSpan.MinValue;
         }
 
         [Test]
         public void CreateDailyTrigger()
         {
-            DateTime now = DateTime.Now;
-            PeriodicTrigger trigger = PeriodicTrigger.CreateDailyTrigger(DateTime.Now);
+            DateTime now = DateTime.UtcNow;
+            PeriodicTrigger trigger = PeriodicTrigger.CreateDailyTrigger(DateTime.UtcNow);
 
             Assert.AreEqual(now, trigger.StartTime);
             Assert.AreEqual(new TimeSpan(24, 0, 0), trigger.Period);
@@ -192,8 +192,8 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Test]
         public void CreateOneShotTrigger()
         {
-            DateTime now = DateTime.Now;
-            PeriodicTrigger trigger = PeriodicTrigger.CreateOneShotTrigger(DateTime.Now);
+            DateTime now = DateTime.UtcNow;
+            PeriodicTrigger trigger = PeriodicTrigger.CreateOneShotTrigger(DateTime.UtcNow);
 
             Assert.AreEqual(now, trigger.StartTime);
             Assert.IsNull(trigger.Period);
@@ -206,7 +206,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Row(true)]
         public void ClonePerformsADeepCopy(bool useGenericClonable)
         {
-            DateTime now = DateTime.Now;
+            DateTime now = DateTime.UtcNow;
             PeriodicTrigger trigger = new PeriodicTrigger(now, DateTime.MaxValue, TimeSpan.MaxValue, 42);
             trigger.MisfireAction = TriggerScheduleAction.DeleteJob;
             trigger.MisfireThreshold = TimeSpan.MaxValue;
@@ -388,7 +388,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         public void ScheduleThrowsIfConditionIsUnrecognized()
         {
             PeriodicTrigger trigger = new PeriodicTrigger(new DateTime(1970, 1, 5), null, new TimeSpan(3, 0, 0, 0), null);
-            trigger.Schedule((TriggerScheduleCondition) 9999, DateTime.Now);
+            trigger.Schedule((TriggerScheduleCondition) 9999, DateTime.UtcNow);
         }
     }
 }

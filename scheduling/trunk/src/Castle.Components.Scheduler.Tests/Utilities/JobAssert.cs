@@ -24,6 +24,25 @@ namespace Castle.Components.Scheduler.Tests.Utilities
     /// </summary>
     public static class JobAssert
     {
+        /// <summary>
+        /// Determines if two dates are equal while compensating for inaccuracies in date representation.
+        /// </summary>
+        /// <param name="expected"></param>
+        /// <param name="actual"></param>
+        public static void AreEqualUpToErrorLimit(DateTime expected, DateTime actual)
+        {
+            actual = actual.ToUniversalTime();
+            expected = expected.ToUniversalTime();
+            Assert.Between(actual, expected.AddMilliseconds(-500), expected.AddMilliseconds(500));
+        }
+
+        public static void AreEqualUpToErrorLimit(DateTime? expected, DateTime? actual)
+        {
+            Assert.AreEqual(expected.HasValue, actual.HasValue, "Are both null or non-null?");
+            if (expected.HasValue)
+                AreEqualUpToErrorLimit(expected.Value, actual.Value);
+        }
+
         public static void AreEqual(Trigger expected, Trigger actual)
         {
             if (expected == null)
@@ -35,8 +54,7 @@ namespace Castle.Components.Scheduler.Tests.Utilities
             Assert.IsNotNull(actual);
             Assert.IsInstanceOfType(expected.GetType(), actual);
             Assert.AreEqual(expected.IsActive, actual.IsActive);
-            //Assert.AreEqual(expected.IsDirty, actual.IsDirty);
-            Assert.AreEqual(expected.NextFireTime, actual.NextFireTime);
+            AreEqualUpToErrorLimit(expected.NextFireTime, actual.NextFireTime);
             Assert.AreEqual(expected.NextMisfireThreshold, actual.NextMisfireThreshold);
         }
 
@@ -49,9 +67,9 @@ namespace Castle.Components.Scheduler.Tests.Utilities
             }
 
             Assert.IsNotNull(actual);
-            Assert.AreEqual(expected.SchedulerName, actual.SchedulerName);
-            Assert.AreEqual(expected.StartTime, actual.StartTime);
-            Assert.AreEqual(expected.EndTime, actual.EndTime);
+            Assert.AreEqual(expected.SchedulerGuid, actual.SchedulerGuid);
+            AreEqualUpToErrorLimit(expected.StartTime, actual.StartTime);
+            AreEqualUpToErrorLimit(expected.EndTime, actual.EndTime);
             Assert.AreEqual(expected.StatusMessage, actual.StatusMessage);
             Assert.AreEqual(expected.Succeeded, actual.Succeeded);
         }
@@ -96,7 +114,7 @@ namespace Castle.Components.Scheduler.Tests.Utilities
             AreEqual(expected.JobSpec, actual.JobSpec);
             AreEqual(expected.JobData, actual.JobData);
             Assert.AreEqual(expected.JobState, actual.JobState);
-            Assert.AreEqual(expected.NextTriggerFireTime, actual.NextTriggerFireTime);
+            AreEqualUpToErrorLimit(expected.NextTriggerFireTime, actual.NextTriggerFireTime);
             Assert.AreEqual(expected.NextTriggerMisfireThreshold, actual.NextTriggerMisfireThreshold);
             AreEqual(expected.LastJobExecutionDetails, actual.LastJobExecutionDetails);
         }

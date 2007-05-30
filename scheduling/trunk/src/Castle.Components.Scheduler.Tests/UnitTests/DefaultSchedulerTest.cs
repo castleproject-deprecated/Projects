@@ -41,6 +41,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         private delegate bool EndExecuteDelegate(IAsyncResult asyncResult);
 
         private DefaultScheduler scheduler;
+        private DefaultScheduler uninitializedScheduler;
         private IJobStore mockJobStore;
         private IJobRunner mockJobRunner;
         private ILogger mockLogger;
@@ -64,9 +65,21 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
 
             dummyJobData = new JobData();
             dummyJobSpec = new JobSpec("foo", "bar", "key", mockTrigger);
-            dummyJobDetails = new JobDetails(dummyJobSpec, DateTime.Now);
+            dummyJobDetails = new JobDetails(dummyJobSpec, DateTime.UtcNow);
 
             isWoken = false;
+
+            // Ensure the scheduler is initialized.
+            mockJobStore.RegisterScheduler(scheduler.Guid, scheduler.Name);
+            Mocks.Replay(mockJobStore);
+            scheduler.Initialize();
+            Mocks.Verify(mockJobStore);
+            Mocks.BackToRecord(mockJobStore);
+
+            mockJobStore.UnregisterScheduler(scheduler.Guid);
+
+            // Create a separate uninitialized scheduler for certain tests.
+            uninitializedScheduler = new DefaultScheduler(mockJobStore, mockJobRunner);
         }
 
         public override void TearDown()
@@ -83,6 +96,8 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ArgumentNullException))]
         public void Constructor_ThrowsWhenJobStoreIsNull()
         {
+            Mocks.ReplayAll();
+
             new DefaultScheduler(null, mockJobRunner);
         }
 
@@ -90,12 +105,24 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ArgumentNullException))]
         public void Constructor_ThrowsWhenJobRunnerIsNull()
         {
+            Mocks.ReplayAll();
+
             new DefaultScheduler(mockJobStore, null);
+        }
+
+        [Test]
+        public void HasNonEmptyGuid()
+        {
+            Mocks.ReplayAll();
+
+            Assert.AreNotEqual(Guid.Empty, scheduler.Guid);
         }
 
         [Test]
         public void Name_GetterAndSetter()
         {
+            Mocks.ReplayAll();
+           
             Assert.IsNotNull(scheduler.Name); // has a default name
 
             scheduler.Name = "Test";
@@ -106,12 +133,16 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ArgumentNullException))]
         public void Name_ThrowsIfValueIsNull()
         {
+            Mocks.ReplayAll();
+           
             scheduler.Name = null;
         }
 
         [Test]
         public void Logger_GetterAndSetter()
         {
+            Mocks.ReplayAll();
+           
             Assert.AreSame(NullLogger.Instance, scheduler.Logger);
 
             scheduler.Logger = mockLogger;
@@ -122,12 +153,16 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ArgumentNullException))]
         public void Logger_ThrowsIfValueIsNull()
         {
+            Mocks.ReplayAll();
+
             scheduler.Logger = null;
         }
 
         [Test]
         public void ErrorRecoveryDelayInSeconds_GetterAndSetter()
         {
+            Mocks.ReplayAll();
+
             Assert.AreEqual(DefaultScheduler.DefaultErrorRecoveryDelayInSeconds, scheduler.ErrorRecoveryDelayInSeconds);
 
             scheduler.ErrorRecoveryDelayInSeconds = 25;
@@ -138,12 +173,16 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ErrorRecoveryDelayInSeconds_ThrowsIfValueIsNegative()
         {
+            Mocks.ReplayAll();
+
             scheduler.ErrorRecoveryDelayInSeconds = -1;
         }
 
         [Test]
         public void DisposeDoesNotThrowWhenCalledMultipleTimes()
         {
+            Mocks.ReplayAll();
+
             Assert.IsFalse(scheduler.IsDisposed);
 
             scheduler.Dispose();
@@ -167,6 +206,8 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ArgumentNullException))]
         public void GetJobDetails_ThrowsIfNameIsNull()
         {
+            Mocks.ReplayAll();
+
             scheduler.GetJobDetails(null);
         }
 
@@ -174,8 +215,19 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ObjectDisposedException))]
         public void GetJobDetails_ThrowsIfDisposed()
         {
+            Mocks.ReplayAll();
+
             scheduler.Dispose();
             scheduler.GetJobDetails("test");
+        }
+
+        [Test]
+        [ExpectedException(typeof(SchedulerException))]
+        public void GetJobDetails_ThrowsIfNotInitialized()
+        {
+            Mocks.ReplayAll();
+
+            uninitializedScheduler.GetJobDetails("test");
         }
 
         [Test]
@@ -192,6 +244,8 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ArgumentNullException))]
         public void DeleteJob_ThrowsIfNameIsNull()
         {
+            Mocks.ReplayAll();
+
             scheduler.DeleteJob(null);
         }
 
@@ -199,14 +253,25 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ObjectDisposedException))]
         public void DeleteJob_ThrowsIfDisposed()
         {
+            Mocks.ReplayAll();
+
             scheduler.Dispose();
             scheduler.DeleteJob("test");
         }
 
         [Test]
+        [ExpectedException(typeof(SchedulerException))]
+        public void DeleteJob_ThrowsIfNotInitialized()
+        {
+            Mocks.ReplayAll();
+
+            uninitializedScheduler.DeleteJob("test");
+        }
+
+        [Test]
         public void CreateJob_DelegatesToJobStore()
         {
-            mockJobStore.CreateJob(dummyJobSpec, dummyJobData, DateTime.Now, CreateJobConflictAction.Update);
+            mockJobStore.CreateJob(dummyJobSpec, dummyJobData, DateTime.UtcNow, CreateJobConflictAction.Update);
             LastCall.Constraints(Is.Same(dummyJobSpec), Is.Same(dummyJobData), Is.Anything(), Is.Equal(CreateJobConflictAction.Update)).Return(true);
 
             Mocks.ReplayAll();
@@ -218,6 +283,8 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ArgumentNullException))]
         public void CreateJob_ThrowsIfSpecIsNull()
         {
+            Mocks.ReplayAll();
+
             scheduler.CreateJob(null, dummyJobData, CreateJobConflictAction.Update);
         }
 
@@ -225,8 +292,19 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ObjectDisposedException))]
         public void CreateJob_ThrowsIfDisposed()
         {
+            Mocks.ReplayAll();
+
             scheduler.Dispose();
             scheduler.CreateJob(dummyJobSpec, dummyJobData, CreateJobConflictAction.Update);
+        }
+
+        [Test]
+        [ExpectedException(typeof(SchedulerException))]
+        public void CreateJob_ThrowsIfNotInitialized()
+        {
+            Mocks.ReplayAll();
+
+            uninitializedScheduler.CreateJob(dummyJobSpec, dummyJobData, CreateJobConflictAction.Update);
         }
 
         [Test]
@@ -245,6 +323,8 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Test]
         public void StopWithoutStartDoesNotCrash()
         {
+            Mocks.ReplayAll();
+
             scheduler.Stop();
             Assert.IsFalse(scheduler.IsRunning);
         }
@@ -266,6 +346,8 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ObjectDisposedException))]
         public void Start_ThrowsIfDisposed()
         {
+            Mocks.ReplayAll();
+
             scheduler.Dispose();
             scheduler.Start();
         }
@@ -274,19 +356,39 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [ExpectedException(typeof(ObjectDisposedException))]
         public void Stop_ThrowsIfDisposed()
         {
+            Mocks.ReplayAll();
+
             scheduler.Dispose();
             scheduler.Stop();
         }
 
         [Test]
+        [ExpectedException(typeof(SchedulerException))]
+        public void Start_ThrowsIfNotInitialized()
+        {
+            Mocks.ReplayAll();
+
+            uninitializedScheduler.Start();
+        }
+
+        [Test]
+        [ExpectedException(typeof(SchedulerException))]
+        public void Stop_ThrowsIfNotInitialized()
+        {
+            Mocks.ReplayAll();
+
+            uninitializedScheduler.Stop();
+        }
+
+        [Test]
         public void SchedulePendingJob_WithSkipAction()
         {
-            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.Now);
+            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.UtcNow);
             jobDetails.JobState = JobState.Pending;
 
             PrepareMockJobWatcher(jobDetails);
 
-            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.Now))
+            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.UtcNow))
                 .Constraints(Is.Equal(TriggerScheduleCondition.FirstTime), Is.Anything())
                 .Return(TriggerScheduleAction.Skip);
             Expect.Call(mockTrigger.NextFireTime).Return(new DateTime(1970, 1, 5));
@@ -307,32 +409,27 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         }
 
         [RowTest]
-        public void ScheduleTriggeredJob_WithExecuteAction()
-        {
-        }
-
-        [RowTest]
         [Row(false, false, false)]
         [Row(true, false, false)]
         [Row(true, true, true)]
         public void ScheduleOrphanJob_WithStopAction(bool lastExecutionDetailsNotNull,
             bool lastExecutionSucceeded, bool lastEndTimeNotNull)
         {
-            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.Now);
+            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.UtcNow);
             jobDetails.JobState = JobState.Orphaned;
 
             if (lastExecutionDetailsNotNull)
             {
-                jobDetails.LastJobExecutionDetails = new JobExecutionDetails(scheduler.Name, DateTime.Now);
+                jobDetails.LastJobExecutionDetails = new JobExecutionDetails(scheduler.Guid, DateTime.UtcNow);
                 jobDetails.LastJobExecutionDetails.Succeeded = lastExecutionSucceeded;
 
                 if (lastEndTimeNotNull)
-                    jobDetails.LastJobExecutionDetails.EndTime = DateTime.Now;
+                    jobDetails.LastJobExecutionDetails.EndTime = DateTime.UtcNow;
             }
 
             PrepareMockJobWatcher(jobDetails);
 
-            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.JobFailed, DateTime.Now))
+            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.JobFailed, DateTime.UtcNow))
                 .Constraints(Is.Equal(TriggerScheduleCondition.JobFailed), Is.Anything())
                 .Return(TriggerScheduleAction.DeleteJob);
             Expect.Call(mockTrigger.NextFireTime).Return(null);
@@ -350,7 +447,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             Assert.IsNull(jobDetails.NextTriggerMisfireThreshold);
             Assert.IsNull(jobDetails.JobData);
             Assert.IsNotNull(jobDetails.LastJobExecutionDetails);
-            Assert.AreEqual(scheduler.Name, jobDetails.LastJobExecutionDetails.SchedulerName);
+            Assert.AreEqual(scheduler.Guid, jobDetails.LastJobExecutionDetails.SchedulerGuid);
             Assert.AreEqual(false, jobDetails.LastJobExecutionDetails.Succeeded);
             Assert.IsNotNull(jobDetails.LastJobExecutionDetails.EndTime);
         }
@@ -362,21 +459,21 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         public void ScheduleCompletedJob_WithStopAction(bool lastExecutionDetailsNotNull,
             bool lastExecutionSucceeded, bool lastEndTimeNotNull, TriggerScheduleCondition expectedCondition)
         {
-            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.Now);
+            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.UtcNow);
             jobDetails.JobState = JobState.Completed;
 
             if (lastExecutionDetailsNotNull)
             {
-                jobDetails.LastJobExecutionDetails = new JobExecutionDetails(scheduler.Name, DateTime.Now);
+                jobDetails.LastJobExecutionDetails = new JobExecutionDetails(scheduler.Guid, DateTime.UtcNow);
                 jobDetails.LastJobExecutionDetails.Succeeded = lastExecutionSucceeded;
 
                 if (lastEndTimeNotNull)
-                    jobDetails.LastJobExecutionDetails.EndTime = DateTime.Now;
+                    jobDetails.LastJobExecutionDetails.EndTime = DateTime.UtcNow;
             }
 
             PrepareMockJobWatcher(jobDetails);
 
-            Expect.Call(mockTrigger.Schedule(expectedCondition, DateTime.Now))
+            Expect.Call(mockTrigger.Schedule(expectedCondition, DateTime.UtcNow))
                 .Constraints(Is.Equal(expectedCondition), Is.Anything())
                 .Return(TriggerScheduleAction.Stop);
             Expect.Call(mockTrigger.NextFireTime).Return(null);
@@ -394,7 +491,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             Assert.IsNull(jobDetails.NextTriggerMisfireThreshold);
             Assert.IsNull(jobDetails.JobData);
             Assert.IsNotNull(jobDetails.LastJobExecutionDetails);
-            Assert.AreEqual(scheduler.Name, jobDetails.LastJobExecutionDetails.SchedulerName);
+            Assert.AreEqual(scheduler.Guid, jobDetails.LastJobExecutionDetails.SchedulerGuid);
             Assert.AreEqual(lastExecutionSucceeded, jobDetails.LastJobExecutionDetails.Succeeded);
             Assert.IsNotNull(jobDetails.LastJobExecutionDetails.EndTime);
         }
@@ -471,12 +568,16 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
 
             PrepareJobForExecution(execute.BeginInvoke, execute.EndInvoke);
 
+            /* Note: We used to drop back into ScheduleJob again immediately after a job completed.
+             *       That's a cheap optimization but it makes it more difficult to ensure that
+             *       the scheduler will shut down cleanly since it could just keep re-executing the job.
             TriggerScheduleCondition expectedCondition = jobSucceeds ? TriggerScheduleCondition.JobSucceeded : TriggerScheduleCondition.JobFailed;
-            Expect.Call(mockTrigger.Schedule(expectedCondition, DateTime.Now))
+            Expect.Call(mockTrigger.Schedule(expectedCondition, DateTime.UtcNow))
                 .Constraints(Is.Equal(expectedCondition), Is.Anything())
                 .Return(TriggerScheduleAction.Stop);
             Expect.Call(mockTrigger.NextFireTime).Return(null);
             Expect.Call(mockTrigger.NextMisfireThreshold).Return(null);
+             */
 
             mockJobStore.SaveJobDetails(null);
             LastCall.IgnoreArguments().Do((SaveJobDetailsDelegate) delegate(JobDetails completedJobDetails)
@@ -485,7 +586,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
                 Assert.AreEqual(dummyJobSpec.Name, completedJobDetails.JobSpec.Name);
 
                 Assert.IsNotNull(completedJobDetails.LastJobExecutionDetails);
-                Assert.AreEqual(scheduler.Name, completedJobDetails.LastJobExecutionDetails.SchedulerName);
+                Assert.AreEqual(scheduler.Guid, completedJobDetails.LastJobExecutionDetails.SchedulerGuid);
                 Assert.GreaterEqualThan(completedJobDetails.LastJobExecutionDetails.StartTime, completedJobDetails.CreationTime);
                 Assert.IsNotNull(completedJobDetails.LastJobExecutionDetails.EndTime);
                 Assert.GreaterEqualThan(completedJobDetails.LastJobExecutionDetails.EndTime, completedJobDetails.LastJobExecutionDetails.StartTime);
@@ -515,11 +616,15 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
                 return true;
             });
 
-            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.JobFailed, DateTime.Now))
+            /* Note: We used to drop back into ScheduleJob again immediately after a job completed.
+             *       That's a cheap optimization but it makes it more difficult to ensure that
+             *       the scheduler will shut down cleanly since it could just keep re-executing the job.
+            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.JobFailed, DateTime.UtcNow))
                 .Constraints(Is.Equal(TriggerScheduleCondition.JobFailed), Is.Anything())
                 .Return(TriggerScheduleAction.Stop);
             Expect.Call(mockTrigger.NextFireTime).Return(null);
             Expect.Call(mockTrigger.NextMisfireThreshold).Return(null);
+             */
 
             mockJobStore.SaveJobDetails(null);
             LastCall.IgnoreArguments().Do((SaveJobDetailsDelegate)delegate(JobDetails completedJobDetails)
@@ -528,7 +633,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
                 Assert.AreEqual(dummyJobSpec.Name, completedJobDetails.JobSpec.Name);
 
                 Assert.IsNotNull(completedJobDetails.LastJobExecutionDetails);
-                Assert.AreEqual(scheduler.Name, completedJobDetails.LastJobExecutionDetails.SchedulerName);
+                Assert.AreEqual(scheduler.Guid, completedJobDetails.LastJobExecutionDetails.SchedulerGuid);
                 Assert.GreaterEqualThan(completedJobDetails.LastJobExecutionDetails.StartTime, completedJobDetails.CreationTime);
                 Assert.IsNotNull(completedJobDetails.LastJobExecutionDetails.EndTime);
                 Assert.GreaterEqualThan(completedJobDetails.LastJobExecutionDetails.EndTime, completedJobDetails.LastJobExecutionDetails.StartTime);
@@ -557,11 +662,15 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
 
             PrepareJobForExecution(execute.BeginInvoke, execute.EndInvoke);
 
-            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.JobSucceeded, DateTime.Now))
+            /* Note: We used to drop back into ScheduleJob again immediately after a job completed.
+             *       That's a cheap optimization but it makes it more difficult to ensure that
+             *       the scheduler will shut down cleanly since it could just keep re-executing the job.
+            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.JobSucceeded, DateTime.UtcNow))
                 .Constraints(Is.Equal(TriggerScheduleCondition.JobSucceeded), Is.Anything())
                 .Return(TriggerScheduleAction.Stop);
             Expect.Call(mockTrigger.NextFireTime).Return(null);
             Expect.Call(mockTrigger.NextMisfireThreshold).Return(null);
+             */
 
             mockJobStore.SaveJobDetails(null);
             LastCall.IgnoreArguments().Do((SaveJobDetailsDelegate)delegate
@@ -582,7 +691,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Row((JobState)9999)] // invalid job state
         public void SchedulerHandlesUnexpectedJobStateReceivedFromWatcherByStoppingTheTrigger(JobState jobState)
         {
-            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.Now);
+            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.UtcNow);
             jobDetails.JobState = jobState;
 
             PrepareMockJobWatcher(jobDetails);
@@ -619,7 +728,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             mockJobWatcher.Dispose();
             LastCall.Repeat.AtLeastOnce();
 
-            Expect.Call(mockJobStore.CreateJobWatcher(scheduler.Name)).Return(mockJobWatcher);
+            Expect.Call(mockJobStore.CreateJobWatcher(scheduler.Guid)).Return(mockJobWatcher);
 
             Mocks.ReplayAll();
 
@@ -654,7 +763,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
                     throw new Exception("Yikes!  We're trying to shut down here!");
             });
 
-            Expect.Call(mockJobStore.CreateJobWatcher(scheduler.Name)).Return(mockJobWatcher);
+            Expect.Call(mockJobStore.CreateJobWatcher(scheduler.Guid)).Return(mockJobWatcher);
 
             Mocks.ReplayAll();
 
@@ -671,10 +780,10 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             // but the mock job store will throw Expection during SaveJobDetails.
             // On the second call to GetNextJobToProcess the mock job watcher will cause us to wake up.
             // There should be a total delay at least as big as the error recovery delay.
-            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.Now);
+            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.UtcNow);
             jobDetails.JobState = JobState.Pending;
 
-            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.Now))
+            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.UtcNow))
                 .Constraints(Is.Equal(TriggerScheduleCondition.FirstTime), Is.Anything())
                 .Return(TriggerScheduleAction.Stop);
             Expect.Call(mockTrigger.NextFireTime).Return(new DateTime(1970, 1, 5));
@@ -695,7 +804,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             mockJobWatcher.Dispose();
             LastCall.Repeat.AtLeastOnce();
 
-            Expect.Call(mockJobStore.CreateJobWatcher(scheduler.Name)).Return(mockJobWatcher);
+            Expect.Call(mockJobStore.CreateJobWatcher(scheduler.Guid)).Return(mockJobWatcher);
 
             Mocks.ReplayAll();
 
@@ -713,10 +822,10 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             // but the mock job store will throw ConcurrentModificationException during SaveJobDetails.
             // On the second call to GetNextJobToProcess the mock job watcher will cause us to wake up.
             // There should be no noticeable delay, particularly not one as big as the error recovery delay.
-            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.Now);
+            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.UtcNow);
             jobDetails.JobState = JobState.Pending;
 
-            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.Now))
+            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.UtcNow))
                 .Constraints(Is.Equal(TriggerScheduleCondition.FirstTime), Is.Anything())
                 .Return(TriggerScheduleAction.Stop);
             Expect.Call(mockTrigger.NextFireTime).Return(new DateTime(1970, 1, 5));
@@ -737,7 +846,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             mockJobWatcher.Dispose();
             LastCall.Repeat.AtLeastOnce();
 
-            Expect.Call(mockJobStore.CreateJobWatcher(scheduler.Name)).Return(mockJobWatcher);
+            Expect.Call(mockJobStore.CreateJobWatcher(scheduler.Guid)).Return(mockJobWatcher);
 
             Mocks.ReplayAll();
 
@@ -752,12 +861,12 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Row((TriggerScheduleAction) 9999)] // invalid trigger action
         public void ScheduleHandlesUnexpectedActionReceivedFromTriggerByStoppingTheTrigger(TriggerScheduleAction action)
         {
-            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.Now);
+            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.UtcNow);
             jobDetails.JobState = JobState.Pending;
 
             PrepareMockJobWatcher(jobDetails);
 
-            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.Now))
+            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.UtcNow))
                 .Constraints(Is.Equal(TriggerScheduleCondition.FirstTime), Is.Anything())
                 .Return(action);
             Expect.Call(mockTrigger.NextFireTime).Return(new DateTime(1970, 1, 5));
@@ -780,12 +889,12 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Test]
         public void ScheduleHandlesTriggerExceptionByStoppingTheTrigger()
         {
-            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.Now);
+            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.UtcNow);
             jobDetails.JobState = JobState.Pending;
 
             PrepareMockJobWatcher(jobDetails);
 
-            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.Now))
+            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.UtcNow))
                 .Constraints(Is.Equal(TriggerScheduleCondition.FirstTime), Is.Anything())
                 .Throw(new Exception("Oh no!")); // throw an exception from the trigger
 
@@ -809,7 +918,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         private void PrepareJobForExecution(BeingExecuteDelegate beginExecute,
             EndExecuteDelegate endExecute)
         {
-            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.Now);
+            JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.UtcNow);
             jobDetails.JobState = JobState.Pending;
 
             PrepareMockJobWatcher(jobDetails);
@@ -825,7 +934,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             {
                 Assert.AreEqual(JobState.Running, jobDetails.JobState);
                 Assert.IsNotNull(jobDetails.LastJobExecutionDetails);
-                Assert.AreEqual(scheduler.Name, jobDetails.LastJobExecutionDetails.SchedulerName);
+                Assert.AreEqual(scheduler.Guid, jobDetails.LastJobExecutionDetails.SchedulerGuid);
                 Assert.GreaterEqualThan(jobDetails.LastJobExecutionDetails.StartTime, jobDetails.CreationTime);
                 Assert.IsNull(jobDetails.LastJobExecutionDetails.EndTime);
                 Assert.IsFalse(jobDetails.LastJobExecutionDetails.Succeeded);
@@ -844,7 +953,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         /// <param name="jobDetails">The job details to yield</param>
         private void PrepareMockJobWatcher(JobDetails jobDetails)
         {
-            Expect.Call(mockJobStore.CreateJobWatcher(scheduler.Name)).
+            Expect.Call(mockJobStore.CreateJobWatcher(scheduler.Guid)).
                 Return(new MockJobWatcher(jobDetails));
         }
 

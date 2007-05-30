@@ -34,7 +34,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
 
             scheduler = Mocks.CreateMock<IScheduler>();
             logger = Mocks.CreateMock<ILogger>();
-            jobSpec = new JobSpec("abc", "some job", "with.this.key", PeriodicTrigger.CreateDailyTrigger(DateTime.Now));
+            jobSpec = new JobSpec("abc", "some job", "with.this.key", PeriodicTrigger.CreateDailyTrigger(DateTime.UtcNow));
             jobData = new JobData();
             Mocks.ReplayAll();
         }
