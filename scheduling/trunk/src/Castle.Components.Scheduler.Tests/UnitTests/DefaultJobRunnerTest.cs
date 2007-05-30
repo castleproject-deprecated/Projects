@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using Castle.Core.Logging;
 using MbUnit.Framework;
 using Rhino.Mocks;
@@ -34,7 +35,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         }
 
         [Test]
-        public void CreateRunnerAndExecuteJob()
+        public void CreateRunnerAndExecuteJob_NoCallback()
         {
             JobExecutionContext context = new JobExecutionContext(
                 Mocks.CreateMock<IScheduler>(), Mocks.CreateMock<ILogger>(),
@@ -55,6 +56,47 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             Assert.IsFalse(asyncResult.CompletedSynchronously);
             Assert.IsTrue(runner.EndExecute(asyncResult));
             Assert.IsTrue(asyncResult.IsCompleted);
+        }
+
+        [Test]
+        public void CreateRunnerAndExecuteJob_WithCallback()
+        {
+            JobExecutionContext context = new JobExecutionContext(
+                Mocks.CreateMock<IScheduler>(), Mocks.CreateMock<ILogger>(),
+                new JobSpec("job", "description", "key", Mocks.CreateMock<Trigger>()), null);
+
+            IJobFactory jobFactory = Mocks.CreateMock<IJobFactory>();
+            IJob job = Mocks.CreateMock<IJob>();
+
+            Expect.Call(jobFactory.GetJob("key")).Return(job);
+            Expect.Call(job.Execute(context)).Return(true);
+
+            Mocks.ReplayAll();
+
+            DefaultJobRunner runner = new DefaultJobRunner(jobFactory);
+
+            IAsyncResult resultPassedToCallback = null;
+            object barrier = new object();
+
+            IAsyncResult asyncResult = runner.BeginExecute(context, delegate(IAsyncResult r)
+            {
+                resultPassedToCallback = r;
+
+                lock (barrier)
+                    Monitor.PulseAll(barrier);
+            }, "state");
+
+            lock (barrier)
+                if (resultPassedToCallback == null)
+                    Monitor.Wait(barrier, 10000);
+
+            Assert.AreEqual("state", asyncResult.AsyncState);
+            Assert.IsNotNull(asyncResult.AsyncWaitHandle);
+            Assert.IsFalse(asyncResult.CompletedSynchronously);
+            Assert.IsTrue(runner.EndExecute(asyncResult));
+            Assert.IsTrue(asyncResult.IsCompleted);
+
+            Assert.AreSame(asyncResult, resultPassedToCallback);
         }
 
         [Test]

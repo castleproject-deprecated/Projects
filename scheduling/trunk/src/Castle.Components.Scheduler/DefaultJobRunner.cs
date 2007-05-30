@@ -60,8 +60,9 @@ namespace Castle.Components.Scheduler
             }
 
             ExecuteDelegate executeDelegate = job.Execute;
-            IAsyncResult inner = executeDelegate.BeginInvoke(context, asyncCallback, asyncState);
-            return new CompositeAsyncResult(inner, executeDelegate);
+            CompositeAsyncResult result = new CompositeAsyncResult(executeDelegate, asyncCallback);
+            result.Inner = executeDelegate.BeginInvoke(context, result.Callback, asyncState);
+            return result;
         }
 
         public bool EndExecute(IAsyncResult asyncResult)
@@ -74,16 +75,18 @@ namespace Castle.Components.Scheduler
         {
             private IAsyncResult inner;
             private ExecuteDelegate executeDelegate;
+            private AsyncCallback asyncCallback;
 
-            public CompositeAsyncResult(IAsyncResult inner, ExecuteDelegate executeDelegate)
+            public CompositeAsyncResult(ExecuteDelegate executeDelegate, AsyncCallback asyncCallback)
             {
-                this.inner = inner;
                 this.executeDelegate = executeDelegate;
+                this.asyncCallback = asyncCallback;
             }
 
             public IAsyncResult Inner
             {
                 get { return inner; }
+                set { inner = value; }
             }
 
             public ExecuteDelegate ExecuteDelegate
@@ -109,6 +112,12 @@ namespace Castle.Components.Scheduler
             public bool CompletedSynchronously
             {
                 get { return inner.CompletedSynchronously; }
+            }
+
+            public void Callback(IAsyncResult asyncResult)
+            {
+                if (asyncCallback != null)
+                    asyncCallback(this);
             }
         }
     }

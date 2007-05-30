@@ -502,6 +502,7 @@ namespace Castle.Components.Scheduler
                     case TriggerScheduleAction.ExecuteJob:
                         jobDetails.JobState = JobState.Running;
                         jobDetails.LastJobExecutionDetails = new JobExecutionDetails(guid, timeBasis);
+                        jobDetails.LastJobExecutionDetails.StatusMessage = "Running.";
                         jobStore.SaveJobDetails(jobDetails);
 
                         BeginExecuteJob(jobDetails);
