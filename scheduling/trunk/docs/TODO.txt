@@ -89,3 +89,11 @@ ICalendar or IDateSequence perhaps...
 
 7. Provide a more natural means of specifying schedules.  eg. "every day at 12:00am", or "every monday, every tuesday, every thursday", or "01/01 3pm, 02/03 4pm", or "every day except saturday".
 
+
+8. Allow jobs to update their displayed status in real-time.
+
+
+9. Allow running jobs to be interrupted.  This requires some extra
+API to support interruption and the addition of an optional IInterruptibleJob
+interface (or similar) to allow jobs to control how they are interrupted.
+
