@@ -75,3 +75,17 @@ ensuring that jobs are released in FIFO order.
 
 
 5. Integrate other schedulers like Quartz.Net or even out-of-process schedulers like ActiveBatch.
+
+
+6. Refactor PeriodicTrigger to make it easier to specify different recurrence schedules.  A recurrence schedule might have an interface like this:
+
+ICalendar or IDateSequence perhaps...
+{
+    bool IsInSequence(DateTime dateTime);
+    DateTime GetSuccessor(DateTime dateTime);
+    DateTime GetPredecessor(DateTime dateTime);
+}
+
+
+7. Provide a more natural means of specifying schedules.  eg. "every day at 12:00am", or "every monday, every tuesday, every thursday", or "01/01 3pm, 02/03 4pm", or "every day except saturday".
+
