@@ -147,29 +147,52 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
         [RowTest]
         [Row(CreateJobConflictAction.Ignore)]
         [Row(CreateJobConflictAction.Update)]
+        [Row(CreateJobConflictAction.Replace)]
         [Row(CreateJobConflictAction.Throw)]
         public void CreateJob_ReturnsTrueIfCreated(CreateJobConflictAction conflictAction)
         {
-            Assert.IsTrue(jobStore.CreateJob(dummyJobSpec, dummyJobData, DateTime.UtcNow, conflictAction));
+            Assert.IsTrue(jobStore.CreateJob(dummyJobSpec, DateTime.UtcNow, conflictAction));
         }
 
         [RowTest]
         [Row(CreateJobConflictAction.Ignore, false)]
         [Row(CreateJobConflictAction.Update, true)]
-        [Row(CreateJobConflictAction.Throw, false, ExpectedException=typeof(SchedulerException))]
+        [Row(CreateJobConflictAction.Replace, true)]
+        [Row(CreateJobConflictAction.Throw, false, ExpectedException = typeof(SchedulerException))]
         public void CreateJob_HandlesDuplicatesAccordingToConflictAction(CreateJobConflictAction conflictAction,
             bool expectedResult)
         {
-            Assert.IsTrue(jobStore.CreateJob(dummyJobSpec, dummyJobData, DateTime.UtcNow, CreateJobConflictAction.Ignore));
+            Assert.IsTrue(jobStore.CreateJob(dummyJobSpec, new DateTime(2007, 5, 31), CreateJobConflictAction.Ignore));
 
-            Assert.AreEqual(expectedResult, jobStore.CreateJob(dummyJobSpec, dummyJobData, DateTime.UtcNow, conflictAction));
+            Assert.AreEqual(expectedResult, jobStore.CreateJob(dummyJobSpec, new DateTime(2007, 6, 1), conflictAction));
+
+            if (expectedResult)
+            {
+                JobDetails jobDetails = jobStore.GetJobDetails(dummyJobSpec.Name);
+
+                // In Update mode, the creation time should remain the same as the original job.
+                // We should also preserve its history (though we don't check this right now.  -- TODO)
+                if (conflictAction == CreateJobConflictAction.Update)
+                    DateTimeAssert.AreEqualIncludingKind(new DateTime(2007, 5, 31, 0, 0, 0, DateTimeKind.Utc), jobDetails.CreationTimeUtc);
+                
+                // In Replace mode, the creation time should be that of the newly created job.
+                if (conflictAction == CreateJobConflictAction.Replace)
+                    DateTimeAssert.AreEqualIncludingKind(new DateTime(2007, 6, 1, 0, 0, 0, DateTimeKind.Utc), jobDetails.CreationTimeUtc);
+            }
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void CreateJob_ThrowsIfJobSpecIsNull()
         {
-            jobStore.CreateJob(null, null, DateTime.UtcNow, CreateJobConflictAction.Ignore);
+            jobStore.CreateJob(null, DateTime.UtcNow, CreateJobConflictAction.Ignore);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void CreateJob_ThrowsIfConflictActionIsInvalid()
+        {
+            jobStore.CreateJob(dummyJobSpec, DateTime.UtcNow, (CreateJobConflictAction) 9999);
         }
 
         [Test]
@@ -177,25 +200,162 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
         public void CreateJob_ThrowsIfDisposed()
         {
             jobStore.Dispose();
-            jobStore.CreateJob(dummyJobSpec, dummyJobData, DateTime.UtcNow, CreateJobConflictAction.Ignore);
+            jobStore.CreateJob(dummyJobSpec, DateTime.UtcNow, CreateJobConflictAction.Ignore);
+        }
+
+        [Test]
+        public void UpdateJob_CanRenameJobsAndAlterOtherProperties()
+        {
+            Mocks.ReplayAll();
+
+            JobDetails originalJob = CreateRunningJob("originalJob");
+
+            JobSpec updatedJobSpec = new JobSpec("updatedJob", "This is updated.", "The new key",
+                PeriodicTrigger.CreateOneShotTrigger(new DateTime(2000, 3, 4)));
+
+            jobStore.UpdateJob("originalJob", updatedJobSpec);
+
+            Assert.IsNull(jobStore.GetJobDetails("originalJob"), "The job should not be accessible under its original name.");
+
+            // The job gets a new job spec, but all other properties should be preserved including
+            // the job's execution history.
+            JobDetails updatedJob = jobStore.GetJobDetails("updatedJob");
+
+            JobDetails expectedUpdatedJob = originalJob.Clone();
+            expectedUpdatedJob.JobSpec = updatedJobSpec;
+
+            JobAssert.AreEqual(expectedUpdatedJob, updatedJob);
+        }
+
+        [RowTest]
+        [Row(JobState.Pending, JobState.Pending)]
+        [Row(JobState.Scheduled, JobState.Pending)]
+        [Row(JobState.Triggered, JobState.Triggered)]
+        [Row(JobState.Running, JobState.Running)]
+        [Row(JobState.Completed, JobState.Completed)]
+        [Row(JobState.Orphaned, JobState.Orphaned)]
+        [Row(JobState.Stopped, JobState.Stopped)]
+        public void UpdateJob_ResetsTheJobStateAppropriately(JobState initialJobState, JobState expectedJobState)
+        {
+            Mocks.ReplayAll();
+
+            // Create a job in the specified initial state.
+            JobDetails job = CreatePendingJob("job", DateTime.UtcNow);
+            job.JobState = initialJobState;
+            jobStore.SaveJobDetails(job);
+
+            // Update it.
+            jobStore.UpdateJob("job", job.JobSpec);
+
+            // Ensure its state has been updated appropriately.
+            JobDetails updatedJob = jobStore.GetJobDetails("job");
+            Assert.AreEqual(expectedJobState, updatedJob.JobState);
+        }
+
+        [Test]
+        [ExpectedException(typeof(SchedulerException))]
+        public void UpdateJob_ThrowsIfNoJobExistsWithTheOriginalName()
+        {
+            Mocks.ReplayAll();
+
+            jobStore.UpdateJob("noSuchJob", dummyJobSpec);
+        }
+
+        [Test]
+        [ExpectedException(typeof(SchedulerException))]
+        public void UpdateJob_ThrowsIfJobWithNewNameAlreadyExists()
+        {
+            Mocks.ReplayAll();
+
+            JobDetails thisJob = CreatePendingJob("thisJob", DateTime.UtcNow);
+            CreatePendingJob("thatJob", DateTime.UtcNow);
+
+            thisJob.JobSpec.Name = "thatJob";
+            jobStore.UpdateJob("thisJob", thisJob.JobSpec);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void UpdateJob_ThrowsIfNameIsNull()
+        {
+            Mocks.ReplayAll();
+
+            jobStore.UpdateJob(null, dummyJobSpec);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void UpdateJob_ThrowsIfNameIsEmpty()
+        {
+            Mocks.ReplayAll();
+
+            jobStore.UpdateJob("", dummyJobSpec);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void UpdateJob_ThrowsIfJobSpecIsNull()
+        {
+            Mocks.ReplayAll();
+
+            jobStore.UpdateJob("job", null);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ObjectDisposedException))]
+        public void UpdateJob_ThrowsIfDisposed()
+        {
+            Mocks.ReplayAll();
+
+            jobStore.Dispose();
+            jobStore.UpdateJob("test", dummyJobSpec);
+        }
+
+        [Test]
+        public void ListJobNames_ReturnsAllActiveJobNamesAndExcludesAnyDeletedJobs()
+        {
+            Mocks.ReplayAll();
+
+            CreatePendingJob("thisJob", DateTime.UtcNow);
+
+            JobDetails thatJob = CreatePendingJob("thatJob", DateTime.UtcNow);
+            thatJob.JobSpec.Name = "thatJobRenamed";
+            jobStore.UpdateJob("thatJob", thatJob.JobSpec);
+
+            CreatePendingJob("deletedJob", DateTime.UtcNow);
+            jobStore.DeleteJob("deletedJob");
+
+            string[] jobNames = jobStore.ListJobNames();
+            Assert.AreEqual(2, jobNames.Length);
+            Assert.In("thisJob", jobNames);
+            Assert.In("thatJobRenamed", jobNames);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ObjectDisposedException))]
+        public void ListJobNames_ThrowsIfDisposed()
+        {
+            Mocks.ReplayAll();
+
+            jobStore.Dispose();
+            jobStore.ListJobNames();
         }
 
         [Test]
         public void GetJobDetails_ReturnsCorrectDetailsAfterCreateJob()
         {
             DateTime creationTime = DateTime.UtcNow;
-            Assert.IsTrue(jobStore.CreateJob(dummyJobSpec, dummyJobData, creationTime, CreateJobConflictAction.Throw));
+            Assert.IsTrue(jobStore.CreateJob(dummyJobSpec, creationTime, CreateJobConflictAction.Throw));
 
             JobDetails jobDetails = jobStore.GetJobDetails(dummyJobSpec.Name);
             Assert.IsNotNull(jobDetails);
 
             JobAssert.AreEqual(dummyJobSpec, jobDetails.JobSpec);
-            JobAssert.AreEqual(dummyJobData, jobDetails.JobData);
 
-            JobAssert.AreEqualUpToErrorLimit(creationTime, jobDetails.CreationTime);
+            JobAssert.AreEqualUpToErrorLimit(creationTime, jobDetails.CreationTimeUtc);
             Assert.AreEqual(JobState.Pending, jobDetails.JobState);
             Assert.IsNull(jobDetails.LastJobExecutionDetails);
-            Assert.IsNull(jobDetails.NextTriggerFireTime);
+            Assert.IsNull(jobDetails.NextTriggerFireTimeUtc);
             Assert.IsNull(jobDetails.NextTriggerMisfireThreshold);
         }
 
@@ -224,23 +384,22 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
         public void SaveJobDetails_RoundTripWithGetJobDetails()
         {
             // Create job and set details.
-            Assert.IsTrue(jobStore.CreateJob(dummyJobSpec, dummyJobData, DateTime.UtcNow, CreateJobConflictAction.Throw));
+            Assert.IsTrue(jobStore.CreateJob(dummyJobSpec, DateTime.UtcNow, CreateJobConflictAction.Throw));
             JobDetails savedJobDetails = jobStore.GetJobDetails(dummyJobSpec.Name);
 
             savedJobDetails.JobState = JobState.Running;
             savedJobDetails.LastJobExecutionDetails = new JobExecutionDetails(SchedulerGuid, DateTime.UtcNow);
             savedJobDetails.LastJobExecutionDetails.StatusMessage = "Status";
             savedJobDetails.LastJobExecutionDetails.Succeeded = true;
-            savedJobDetails.LastJobExecutionDetails.EndTime = new DateTime(1969, 12, 31);
-            savedJobDetails.NextTriggerFireTime = new DateTime(1970, 1, 1);
+            savedJobDetails.LastJobExecutionDetails.EndTimeUtc = new DateTime(1969, 12, 31);
+            savedJobDetails.NextTriggerFireTimeUtc = new DateTime(1970, 1, 1);
             savedJobDetails.NextTriggerMisfireThreshold = new TimeSpan(0, 1, 0);
-            savedJobDetails.JobData.State["key"] = "new value";
-            savedJobDetails.JobSpec.Trigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.MaxValue);
-            dummyJobSpec.Trigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.MaxValue);
+            savedJobDetails.JobSpec.JobData = new JobData();
+            savedJobDetails.JobSpec.JobData.State["key"] = "new value";
+            savedJobDetails.JobSpec.Trigger.Schedule(TriggerScheduleCondition.Latch, DateTime.MaxValue, null);
+            dummyJobSpec.Trigger.Schedule(TriggerScheduleCondition.Latch, DateTime.MaxValue, null);
 
-            Assert.IsTrue(savedJobDetails.JobSpec.Trigger.IsDirty);
             jobStore.SaveJobDetails(savedJobDetails);
-            Assert.IsFalse(savedJobDetails.JobSpec.Trigger.IsDirty);
 
             // Check job details.
             JobDetails loadedJobDetails = jobStore.GetJobDetails(dummyJobSpec.Name);
@@ -258,7 +417,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
         [ExpectedException(typeof(ObjectDisposedException))]
         public void SaveJobDetails_ThrowsIfDisposed()
         {
-            jobStore.CreateJob(dummyJobSpec, dummyJobData, DateTime.UtcNow, CreateJobConflictAction.Throw);
+            jobStore.CreateJob(dummyJobSpec, DateTime.UtcNow, CreateJobConflictAction.Throw);
             JobDetails savedJobDetails = jobStore.GetJobDetails(dummyJobSpec.Name);
 
             jobStore.Dispose();
@@ -294,7 +453,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
         [Test]
         public void DeleteJobMakesTheJobInaccessibleToSubsequentGetJobDetails()
         {
-            Assert.IsTrue(jobStore.CreateJob(dummyJobSpec, dummyJobData, DateTime.UtcNow, CreateJobConflictAction.Throw));
+            Assert.IsTrue(jobStore.CreateJob(dummyJobSpec, DateTime.UtcNow, CreateJobConflictAction.Throw));
             Assert.IsTrue(jobStore.DeleteJob(dummyJobSpec.Name));
             Assert.IsNull(jobStore.GetJobDetails(dummyJobSpec.Name));
         }
@@ -398,7 +557,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
 
             // Ensure we tolerate a few odd cases where data may not be available like it should.
             JobDetails scheduled2 = CreateScheduledJob("scheduled2", new DateTime(1970, 1, 2));
-            scheduled2.NextTriggerFireTime = null;
+            scheduled2.NextTriggerFireTimeUtc = null;
             jobStore.SaveJobDetails(scheduled2);
 
             JobDetails completed2 = CreateCompletedJob("completed2", new DateTime(1970, 1, 1));
@@ -406,7 +565,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
             jobStore.SaveJobDetails(completed2);
 
             JobDetails orphaned2 = CreateOrphanedJob("orphaned2", new DateTime(1970, 1, 3));
-            orphaned2.LastJobExecutionDetails.EndTime = null;
+            orphaned2.LastJobExecutionDetails.EndTimeUtc = null;
             jobStore.SaveJobDetails(orphaned2);
 
             // Populate a table of expected jobs.
@@ -466,7 +625,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
         protected JobDetails CreatePendingJob(string jobName, DateTime creationTime)
         {
             jobStore.CreateJob(new JobSpec(jobName, "", "key", PeriodicTrigger.CreateOneShotTrigger(creationTime)),
-                dummyJobData, creationTime, CreateJobConflictAction.Throw);
+                creationTime, CreateJobConflictAction.Throw);
             return jobStore.GetJobDetails(jobName);
         }
 
@@ -474,7 +633,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
         {
             JobDetails job = CreatePendingJob(jobName, new DateTime(1970, 1, 1));
             job.JobState = JobState.Scheduled;
-            job.NextTriggerFireTime = triggerFireTime;
+            job.NextTriggerFireTimeUtc = triggerFireTime;
             jobStore.SaveJobDetails(job);
             return job;
         }
@@ -483,7 +642,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
         {
             JobDetails job = CreatePendingJob(jobName, new DateTime(1970, 1, 1));
             job.JobState = JobState.Triggered;
-            job.NextTriggerFireTime = triggerFireTime;
+            job.NextTriggerFireTimeUtc = triggerFireTime;
             jobStore.SaveJobDetails(job);
             return job;
         }
@@ -493,7 +652,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
             JobDetails job = CreatePendingJob(jobName, new DateTime(1970, 1, 1));
             job.JobState = JobState.Orphaned;
             job.LastJobExecutionDetails = new JobExecutionDetails(SchedulerGuid, new DateTime(1970, 1, 1));
-            job.LastJobExecutionDetails.EndTime = executionEndTime;
+            job.LastJobExecutionDetails.EndTimeUtc = executionEndTime;
             jobStore.SaveJobDetails(job);
             return job;
         }
@@ -503,7 +662,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
             JobDetails job = CreatePendingJob(jobName, new DateTime(1970, 1, 1));
             job.JobState = JobState.Completed;
             job.LastJobExecutionDetails = new JobExecutionDetails(SchedulerGuid, new DateTime(1970, 1, 1));
-            job.LastJobExecutionDetails.EndTime = executionEndTime;
+            job.LastJobExecutionDetails.EndTimeUtc = executionEndTime;
             jobStore.SaveJobDetails(job);
             return job;
         }

@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using Castle.Components.Scheduler.Tests.Utilities;
 using MbUnit.Framework;
 
 namespace Castle.Components.Scheduler.Tests.UnitTests
@@ -57,8 +58,9 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
                 (JobData) ((ICloneable) jobData).Clone();
 
             Assert.AreNotSame(jobData, clone);
-
             Assert.AreNotSame(dict, clone.State);
+
+            JobAssert.AreEqual(jobData, clone);
         }
     }
 }

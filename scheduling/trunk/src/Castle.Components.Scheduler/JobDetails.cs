@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Castle.Components.Scheduler.Utilities;
 
 namespace Castle.Components.Scheduler
 {
@@ -38,11 +39,10 @@ namespace Castle.Components.Scheduler
     public class JobDetails : ICloneable<JobDetails>
     {
         private JobSpec jobSpec;
-        private DateTime creationTime;
+        private DateTime creationTimeUtc;
 
-        private JobData jobData;
         private JobState jobState;
-        private DateTime? nextTriggerFireTime;
+        private DateTime? nextTriggerFireTimeUtc;
         private TimeSpan? nextTriggerMisfireThreshold;
         private JobExecutionDetails lastJobExecutionDetails;
 
@@ -50,45 +50,39 @@ namespace Castle.Components.Scheduler
         /// Creates job details for a newly created job.
         /// </summary>
         /// <param name="jobSpec">The job's specification</param>
-        /// <param name="creationTime">The time when the job was created</param>
+        /// <param name="creationTimeUtc">The UTC time when the job was created</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="jobSpec"/> is null</exception>
-        public JobDetails(JobSpec jobSpec, DateTime creationTime)
+        public JobDetails(JobSpec jobSpec, DateTime creationTimeUtc)
         {
             if (jobSpec == null)
                 throw new ArgumentNullException("jobSpec");
 
             this.jobSpec = jobSpec;
-            this.creationTime = creationTime;
+            this.creationTimeUtc = DateTimeUtils.AssumeUniversalTime(creationTimeUtc);
         }
 
         /// <summary>
-        /// Gets the job's specification.
+        /// Gets or sets the job's specification.
         /// </summary>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null</exception>
         public JobSpec JobSpec
         {
             get { return jobSpec; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("value");
+                jobSpec = value;
+            }
         }
 
         /// <summary>
-        /// Gets the time when the job was created.
+        /// Gets or sets the UTC time when the job was created.
         /// </summary>
-        public DateTime CreationTime
+        public DateTime CreationTimeUtc
         {
-            get { return creationTime; }
-        }
-
-        /// <summary>
-        /// Gets or sets a serializable data structure that passes parameters to
-        /// a job and persists its state across executions.  May be null if the
-        /// data is not persistent.
-        /// </summary>
-        /// <remarks>
-        /// Initially null.
-        /// </remarks>
-        public JobData JobData
-        {
-            get { return jobData; }
-            set { jobData = value; }
+            get { return creationTimeUtc; }
+            set { creationTimeUtc = DateTimeUtils.AssumeUniversalTime(value); }
         }
 
         /// <summary>
@@ -104,16 +98,16 @@ namespace Castle.Components.Scheduler
         }
 
         /// <summary>
-        /// Gets or sets the time when the trigger is next scheduled to fire or null if the
+        /// Gets or sets the UTC time when the trigger is next scheduled to fire or null if the
         /// trigger is not scheduled to fire again based on a time signal.
         /// </summary>
         /// <remarks>
         /// Initially null.
         /// </remarks>
-        public DateTime? NextTriggerFireTime
+        public DateTime? NextTriggerFireTimeUtc
         {
-            get { return nextTriggerFireTime; }
-            set { nextTriggerFireTime = value; }
+            get { return nextTriggerFireTimeUtc; }
+            set { nextTriggerFireTimeUtc = DateTimeUtils.AssumeUniversalTime(value); }
         }
 
         /// <summary>
@@ -146,7 +140,7 @@ namespace Castle.Components.Scheduler
         /// <returns>The cloned job details</returns>
         public virtual JobDetails Clone()
         {
-            JobDetails clone = new JobDetails(jobSpec.Clone(), creationTime);
+            JobDetails clone = new JobDetails(jobSpec.Clone(), creationTimeUtc);
             CopyTo(clone);
             return clone;
         }
@@ -160,9 +154,9 @@ namespace Castle.Components.Scheduler
         /// <param name="target">The target</param>
         protected virtual void CopyTo(JobDetails target)
         {
-            target.jobData = jobData.Clone();
+            target.JobSpec = jobSpec.Clone();
             target.jobState = jobState;
-            target.nextTriggerFireTime = nextTriggerFireTime;
+            target.nextTriggerFireTimeUtc = nextTriggerFireTimeUtc;
             target.nextTriggerMisfireThreshold = nextTriggerMisfireThreshold;
 
             if (lastJobExecutionDetails != null)

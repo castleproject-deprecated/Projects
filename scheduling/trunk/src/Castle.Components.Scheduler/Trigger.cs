@@ -33,26 +33,6 @@ namespace Castle.Components.Scheduler
     [Serializable]
     public abstract class Trigger : ICloneable<Trigger>
     {
-        [NonSerialized]
-        private bool isDirty;
-
-        /// <summary>
-        /// Creates a trigger initially in the clear state.
-        /// </summary>
-        protected Trigger()
-        {
-        }
-
-        /// <summary>
-        /// Gets or sets whether the trigger's internal state has been modified
-        /// and needs to be saved back to the persistence store.
-        /// </summary>
-        public virtual bool IsDirty
-        {
-            get { return isDirty; }
-            set { isDirty = value; }
-        }
-
         /// <summary>
         /// Returns true if the trigger is active and may fire again sometime.
         /// If this method returns false, the scheduler may choose to remove the trigger
@@ -61,10 +41,10 @@ namespace Castle.Components.Scheduler
         public abstract bool IsActive { get; }
 
         /// <summary>
-        /// Gets the time when the trigger is next scheduled to fire or null if the
+        /// Gets the UTC time when the trigger is next scheduled to fire or null if the
         /// trigger is not scheduled to fire again based on a time signal.
         /// </summary>
-        public abstract DateTime? NextFireTime { get; }
+        public abstract DateTime? NextFireTimeUtc { get; }
 
         /// <summary>
         /// Gets the amount of time by which the trigger is permitted to miss the next
@@ -78,14 +58,18 @@ namespace Castle.Components.Scheduler
         /// and informs the scheduler as to what action should be taken.
         /// </summary>
         /// <remarks>
-        /// The implementation should use the value of the <paramref name="timeBasis"/>
+        /// The implementation should use the value of the <paramref name="timeBasisUtc"/>
         /// parameter to evaluate its scheduling rules rather than calling <see cref="DateTime.UtcNow" />.
         /// </remarks>
         /// <param name="condition">The reason the trigger is being scheduled</param>
-        /// <param name="timeBasis">The time to use as a basis for evaluating scheduling rules and
+        /// <param name="timeBasisUtc">The UTC time to use as a basis for evaluating scheduling rules and
         /// that should be considered as referring to "Now."</param>
+        /// <param name="lastJobExecutionDetails">The results of the most recent job execution which may be
+        /// used to provide different trigger responses based on whether a job succeeded or failed.
+        /// The value is null if the job has never executed.</param>
         /// <returns>The action that the scheduler should perform in response</returns>
-        public abstract TriggerScheduleAction Schedule(TriggerScheduleCondition condition, DateTime timeBasis);
+        public abstract TriggerScheduleAction Schedule(TriggerScheduleCondition condition, DateTime timeBasisUtc,
+            JobExecutionDetails lastJobExecutionDetails);
 
         /// <summary>
         /// Clones the trigger including a deep copy of all properties.

@@ -12,10 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Castle.Components.Scheduler
 {
     /// <summary>
@@ -25,9 +21,10 @@ namespace Castle.Components.Scheduler
     public enum TriggerScheduleCondition
     {
         /// <summary>
-        /// This is the first time the trigger is being scheduled since the job was created.
+        /// The scheduler is asking the trigger when it will fire next because
+        /// the job has just been created, been updated or completed execution.
         /// </summary>
-        FirstTime,
+        Latch,
 
         /// <summary>
         /// The time last specified as the trigger's schedule time has arrived within
@@ -39,16 +36,6 @@ namespace Castle.Components.Scheduler
         /// The time last specified as the trigger's schedule time was missed by a duration
         /// in excess of the tolerance established by the trigger's misfire threshold.
         /// </summary>
-        Misfire,
-
-        /// <summary>
-        /// The job was executed and succeeded.
-        /// </summary>
-        JobSucceeded,
-
-        /// <summary>
-        /// The job was executed and failed.
-        /// </summary>
-        JobFailed
+        Misfire
     }
 }

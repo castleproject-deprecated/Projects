@@ -71,9 +71,13 @@ namespace Castle.Components.Scheduler.JobStores
 
         public abstract void SaveJobDetails(JobDetails jobDetails);
 
-        public abstract bool CreateJob(JobSpec jobSpec, JobData jobData, DateTime creationTime, CreateJobConflictAction conflictAction);
+        public abstract bool CreateJob(JobSpec jobSpec, DateTime creationTimeUtc, CreateJobConflictAction conflictAction);
+
+        public abstract void UpdateJob(string existingJobName, JobSpec updatedJobSpec);
 
         public abstract bool DeleteJob(string jobName);
+
+        public abstract string[] ListJobNames();
 
         /// <summary>
         /// Signals all threads blocked on <see cref="GetNextJobToProcessOrWaitUntilSignaled" />.

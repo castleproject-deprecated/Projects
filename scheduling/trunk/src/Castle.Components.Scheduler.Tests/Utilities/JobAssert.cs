@@ -54,7 +54,7 @@ namespace Castle.Components.Scheduler.Tests.Utilities
             Assert.IsNotNull(actual);
             Assert.IsInstanceOfType(expected.GetType(), actual);
             Assert.AreEqual(expected.IsActive, actual.IsActive);
-            AreEqualUpToErrorLimit(expected.NextFireTime, actual.NextFireTime);
+            AreEqualUpToErrorLimit(expected.NextFireTimeUtc, actual.NextFireTimeUtc);
             Assert.AreEqual(expected.NextMisfireThreshold, actual.NextMisfireThreshold);
         }
 
@@ -68,8 +68,8 @@ namespace Castle.Components.Scheduler.Tests.Utilities
 
             Assert.IsNotNull(actual);
             Assert.AreEqual(expected.SchedulerGuid, actual.SchedulerGuid);
-            AreEqualUpToErrorLimit(expected.StartTime, actual.StartTime);
-            AreEqualUpToErrorLimit(expected.EndTime, actual.EndTime);
+            AreEqualUpToErrorLimit(expected.StartTimeUtc, actual.StartTimeUtc);
+            AreEqualUpToErrorLimit(expected.EndTimeUtc, actual.EndTimeUtc);
             Assert.AreEqual(expected.StatusMessage, actual.StatusMessage);
             Assert.AreEqual(expected.Succeeded, actual.Succeeded);
         }
@@ -99,6 +99,7 @@ namespace Castle.Components.Scheduler.Tests.Utilities
             Assert.AreEqual(expected.Description, actual.Description);
             Assert.AreEqual(expected.JobKey, actual.JobKey);
             AreEqual(expected.Trigger, actual.Trigger);
+            AreEqual(expected.JobData, actual.JobData);
         }
 
         public static void AreEqual(JobDetails expected, JobDetails actual)
@@ -110,11 +111,10 @@ namespace Castle.Components.Scheduler.Tests.Utilities
             }
 
             Assert.IsNotNull(actual);
-            Assert.AreEqual(expected.CreationTime, actual.CreationTime);
+            Assert.AreEqual(expected.CreationTimeUtc, actual.CreationTimeUtc);
             AreEqual(expected.JobSpec, actual.JobSpec);
-            AreEqual(expected.JobData, actual.JobData);
             Assert.AreEqual(expected.JobState, actual.JobState);
-            AreEqualUpToErrorLimit(expected.NextTriggerFireTime, actual.NextTriggerFireTime);
+            AreEqualUpToErrorLimit(expected.NextTriggerFireTimeUtc, actual.NextTriggerFireTimeUtc);
             Assert.AreEqual(expected.NextTriggerMisfireThreshold, actual.NextTriggerMisfireThreshold);
             AreEqual(expected.LastJobExecutionDetails, actual.LastJobExecutionDetails);
         }

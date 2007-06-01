@@ -79,7 +79,7 @@ BEGIN
 				LastExecutionEndTime = @LastExecutionEndTime,
 				LastExecutionSucceeded = @LastExecutionSucceeded,
 				LastExecutionStatusMessage = @LastExecutionStatusMessage,
-				Version = @Version + 1				
+				Version = @Version + 1
 			FROM SCHED_Jobs J
 			INNER JOIN SCHED_Clusters C ON C.ClusterID = J.ClusterID
 			WHERE C.ClusterName = @ClusterName AND J.JobName = @JobName AND J.Version = @Version

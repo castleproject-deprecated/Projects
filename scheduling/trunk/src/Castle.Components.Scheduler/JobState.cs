@@ -24,7 +24,7 @@ namespace Castle.Components.Scheduler
     public enum JobState
     {
         /// <summary>
-        /// The job has just been created and has not been scheduled for the first time yet.
+        /// The job has just been created or updated and is waiting to be scheduled.
         /// </summary>
         Pending = 0,
 

@@ -22,18 +22,18 @@ using MbUnit.Framework;
 
 namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
 {
-    [TestsOn(typeof(AdoNetJobStore))]
+    [TestsOn(typeof(PersistentJobStore))]
     [Author("Jeff Brown", "jeff@ingenio.com")]
-    public abstract class AdoNetJobStoreTest : BaseJobStoreTest
+    public abstract class PersistentJobStoreTest : BaseJobStoreTest
     {
-        new public AdoNetJobStore JobStore
+        new public PersistentJobStore JobStore
         {
-            get { return (AdoNetJobStore)base.JobStore; }
+            get { return (PersistentJobStore)base.JobStore; }
         }
 
         protected override BaseJobStore CreateJobStore()
         {
-            AdoNetJobStore jobStore = CreateAdoNetJobStore();
+            PersistentJobStore jobStore = CreatePersistentJobStore();
             Assert.AreEqual(15, jobStore.PollIntervalInSeconds);
             Assert.AreEqual(120, jobStore.SchedulerExpirationTimeInSeconds);
 
@@ -42,13 +42,13 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
             return jobStore;
         }
 
-        protected abstract AdoNetJobStore CreateAdoNetJobStore();
+        protected abstract PersistentJobStore CreatePersistentJobStore();
 
         /// <summary>
         /// Sets whether subsequent Db connection requests for the specified job store
         /// should be caused to fail.
         /// </summary>
-        protected abstract void SetBrokenConnectionMocking(AdoNetJobStore jobStore, bool brokenConnections);
+        protected abstract void SetBrokenConnectionMocking(PersistentJobStore jobStore, bool brokenConnections);
 
         [Test]
         public void ClusterName_GetterAndSetter()
@@ -109,12 +109,6 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
         }
 
         [Test]
-        public void ConnectionString_LooksSane()
-        {
-            Assert.IsNotNull(JobStore.ConnectionString);
-        }
-
-        [Test]
         [ExpectedException(typeof(SchedulerException))]
         public void RegisterScheduler_WrapsExceptionIfDbConnectionFailureOccurs()
         {
@@ -141,7 +135,17 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
             Mocks.ReplayAll();
 
             SetBrokenConnectionMocking(JobStore, true);
-            JobStore.CreateJob(dummyJobSpec, null, DateTime.UtcNow, CreateJobConflictAction.Ignore);
+            JobStore.CreateJob(dummyJobSpec, DateTime.UtcNow, CreateJobConflictAction.Ignore);
+        }
+
+        [Test]
+        [ExpectedException(typeof(SchedulerException))]
+        public void UpdateJob_WrapsExceptionIfDbConnectionFailureOccurs()
+        {
+            Mocks.ReplayAll();
+
+            SetBrokenConnectionMocking(JobStore, true);
+            JobStore.UpdateJob("foo", dummyJobSpec);
         }
 
         [Test]
@@ -165,6 +169,38 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
         }
 
         [Test]
+        public void UpdateJob_IncrementsVersionNumber()
+        {
+            Mocks.ReplayAll();
+
+            VersionedJobDetails jobDetails = (VersionedJobDetails)CreatePendingJob("job", DateTime.UtcNow);
+            int originalVersion = jobDetails.Version;
+
+            jobDetails.JobSpec.Name = "renamedJob";
+            JobStore.UpdateJob("job", jobDetails.JobSpec);
+
+            VersionedJobDetails updatedJobDetails = (VersionedJobDetails)JobStore.GetJobDetails("renamedJob");
+            Assert.AreEqual(originalVersion + 1, updatedJobDetails.Version, "Version number of saved object should be incremented in database.");
+        }
+
+        [Test]
+        public void SaveJobDetails_IncrementsVersionNumber()
+        {
+            Mocks.ReplayAll();
+
+            VersionedJobDetails jobDetails = (VersionedJobDetails) CreatePendingJob("job", DateTime.UtcNow);
+            int originalVersion = jobDetails.Version;
+
+            jobDetails.JobState = JobState.Stopped;
+            JobStore.SaveJobDetails(jobDetails);
+
+            Assert.AreEqual(originalVersion + 1, jobDetails.Version, "Version number of original object should be incremented in place.");
+
+            VersionedJobDetails updatedJobDetails = (VersionedJobDetails)JobStore.GetJobDetails("job");
+            Assert.AreEqual(originalVersion + 1, updatedJobDetails.Version, "Version number of saved object should be incremented in database.");
+        }
+
+        [Test]
         [ExpectedException(typeof(SchedulerException))]
         public void SaveJobDetails_WrapsExceptionIfDbConnectionFailureOccurs()
         {
@@ -174,6 +210,16 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
 
             SetBrokenConnectionMocking(JobStore, true);
             JobStore.SaveJobDetails(jobDetails);
+        }
+
+        [Test]
+        [ExpectedException(typeof(SchedulerException))]
+        public void ListJobNames_WrapsExceptionIfDbConnectionFailureOccurs()
+        {
+            Mocks.ReplayAll();
+
+            SetBrokenConnectionMocking(JobStore, true);
+            JobStore.ListJobNames();
         }
 
         [Test]
@@ -215,7 +261,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
             // Now get a new scheduler.
             // Its next job up for processing should be the one that we created earlier
             // but now it will be Orphaned.
-            AdoNetJobStore newJobStore = CreateAdoNetJobStore();
+            PersistentJobStore newJobStore = CreatePersistentJobStore();
             newJobStore.SchedulerExpirationTimeInSeconds = 1;
             newJobStore.PollIntervalInSeconds = 1;
 
@@ -225,7 +271,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
             Assert.AreEqual("running-job", orphanedJob.JobSpec.Name);
             Assert.AreEqual(JobState.Orphaned, orphanedJob.JobState);
             Assert.AreEqual(false, orphanedJob.LastJobExecutionDetails.Succeeded);
-            Assert.IsNotNull(orphanedJob.LastJobExecutionDetails.EndTime);
+            Assert.IsNotNull(orphanedJob.LastJobExecutionDetails.EndTimeUtc);
         }
     }
 }

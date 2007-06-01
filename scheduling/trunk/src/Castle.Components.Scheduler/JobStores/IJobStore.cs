@@ -92,18 +92,34 @@ namespace Castle.Components.Scheduler.JobStores
 
         /// <summary>
         /// Creates a job.
+        /// If the job already exists, takes the specified alternative conflict action.
         /// </summary>
         /// <param name="jobSpec">The job specification</param>
-        /// <param name="jobData">The initial job data, or null if none</param>
-        /// <param name="creationTime">The creation time to record</param>
+        /// <param name="creationTimeUtc">The UTC creation time to record.</param>
         /// <param name="conflictAction">The action to take if a job with the
         /// same name already exists</param>
         /// <returns>True if the job was created or updated, false if a conflict occurred
         /// and no changes were made</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="jobSpec"/> is null</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="conflictAction"/> is not a defined value</exception>
         /// <exception cref="SchedulerException">Thrown if an error occurs</exception>
         /// <exception cref="ObjectDisposedException">Thrown if the job store has been disposed</exception>
-        bool CreateJob(JobSpec jobSpec, JobData jobData, DateTime creationTime, CreateJobConflictAction conflictAction);
+        bool CreateJob(JobSpec jobSpec, DateTime creationTimeUtc, CreateJobConflictAction conflictAction);
+
+        /// <summary>
+        /// Updates an existing job.
+        /// If the job's status is <see cref="JobState.Scheduled" /> (but not any other state) it
+        /// is reset to <see cref="JobState.Pending" /> so that the trigger can be re-evaluated in case
+        /// it was changed by the update.
+        /// </summary>
+        /// <param name="existingJobName">The name of the existing job to update</param>
+        /// <param name="updatedJobSpec">The updated job specification</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="existingJobName"/> or
+        /// <paramref name="updatedJobSpec"/> is null</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="existingJobName"/> is an empty string</exception>
+        /// <exception cref="SchedulerException">Thrown if an error occurs or if the job does not exist</exception>
+        /// <exception cref="ObjectDisposedException">Thrown if the scheduler has been disposed</exception>
+        void UpdateJob(string existingJobName, JobSpec updatedJobSpec);
 
         /// <summary>
         /// Deletes the job with the specified name.
@@ -114,5 +130,13 @@ namespace Castle.Components.Scheduler.JobStores
         /// <exception cref="SchedulerException">Thrown if an error occurs</exception>
         /// <exception cref="ObjectDisposedException">Thrown if the job store has been disposed</exception>
         bool DeleteJob(string jobName);
+
+        /// <summary>
+        /// Gets the names of all jobs.
+        /// </summary>
+        /// <returns>The names of all jobs</returns>
+        /// <exception cref="SchedulerException">Thrown if an error occurs</exception>
+        /// <exception cref="ObjectDisposedException">Thrown if the scheduler has been disposed</exception>
+        string[] ListJobNames();
     }
 }

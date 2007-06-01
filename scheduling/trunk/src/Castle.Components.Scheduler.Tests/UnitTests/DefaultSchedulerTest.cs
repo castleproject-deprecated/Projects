@@ -269,14 +269,99 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         }
 
         [Test]
-        public void CreateJob_DelegatesToJobStore()
+        public void UpdateJob_DelegatesToJobStore()
         {
-            mockJobStore.CreateJob(dummyJobSpec, dummyJobData, DateTime.UtcNow, CreateJobConflictAction.Update);
-            LastCall.Constraints(Is.Same(dummyJobSpec), Is.Same(dummyJobData), Is.Anything(), Is.Equal(CreateJobConflictAction.Update)).Return(true);
+            mockJobStore.UpdateJob("testJob", dummyJobSpec);
 
             Mocks.ReplayAll();
 
-            Assert.IsTrue(scheduler.CreateJob(dummyJobSpec, dummyJobData, CreateJobConflictAction.Update));
+            scheduler.UpdateJob("testJob", dummyJobSpec);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void UpdateJob_ThrowsIfNameIsNull()
+        {
+            Mocks.ReplayAll();
+
+            scheduler.UpdateJob(null, dummyJobSpec);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void UpdateJob_ThrowsIfNameIsEmpty()
+        {
+            Mocks.ReplayAll();
+
+            scheduler.UpdateJob("", dummyJobSpec);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void UpdateJob_ThrowsIfJobSpecIsNull()
+        {
+            Mocks.ReplayAll();
+
+            scheduler.UpdateJob("job", null);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ObjectDisposedException))]
+        public void UpdateJob_ThrowsIfDisposed()
+        {
+            Mocks.ReplayAll();
+
+            scheduler.Dispose();
+            scheduler.UpdateJob("test", dummyJobSpec);
+        }
+
+        [Test]
+        [ExpectedException(typeof(SchedulerException))]
+        public void UpdateJob_ThrowsIfNotInitialized()
+        {
+            Mocks.ReplayAll();
+
+            uninitializedScheduler.UpdateJob("test", dummyJobSpec);
+        }
+
+        [Test]
+        public void ListJobNames_DelegatesToJobStore()
+        {
+            Expect.Call(mockJobStore.ListJobNames()).Return(new string[] { "a", "b" });
+
+            Mocks.ReplayAll();
+
+            CollectionAssert.AreElementsEqual(new string[] { "a", "b" }, scheduler.ListJobNames());
+        }
+
+        [Test]
+        [ExpectedException(typeof(ObjectDisposedException))]
+        public void ListJobNames_ThrowsIfDisposed()
+        {
+            Mocks.ReplayAll();
+
+            scheduler.Dispose();
+            scheduler.ListJobNames();
+        }
+
+        [Test]
+        [ExpectedException(typeof(SchedulerException))]
+        public void ListJobNames_ThrowsIfNotInitialized()
+        {
+            Mocks.ReplayAll();
+
+            uninitializedScheduler.ListJobNames();
+        }
+
+        [Test]
+        public void CreateJob_DelegatesToJobStore()
+        {
+            mockJobStore.CreateJob(dummyJobSpec, DateTime.UtcNow, CreateJobConflictAction.Update);
+            LastCall.Constraints(Is.Same(dummyJobSpec), Is.Anything(), Is.Equal(CreateJobConflictAction.Update)).Return(true);
+
+            Mocks.ReplayAll();
+
+            Assert.IsTrue(scheduler.CreateJob(dummyJobSpec, CreateJobConflictAction.Update));
         }
 
         [Test]
@@ -285,7 +370,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         {
             Mocks.ReplayAll();
 
-            scheduler.CreateJob(null, dummyJobData, CreateJobConflictAction.Update);
+            scheduler.CreateJob(null, CreateJobConflictAction.Update);
         }
 
         [Test]
@@ -295,7 +380,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             Mocks.ReplayAll();
 
             scheduler.Dispose();
-            scheduler.CreateJob(dummyJobSpec, dummyJobData, CreateJobConflictAction.Update);
+            scheduler.CreateJob(dummyJobSpec, CreateJobConflictAction.Update);
         }
 
         [Test]
@@ -304,7 +389,16 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         {
             Mocks.ReplayAll();
 
-            uninitializedScheduler.CreateJob(dummyJobSpec, dummyJobData, CreateJobConflictAction.Update);
+            uninitializedScheduler.CreateJob(dummyJobSpec, CreateJobConflictAction.Update);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void CreateJob_ThrowsIfConflictActionIsInvalid()
+        {
+            Mocks.ReplayAll();
+
+            scheduler.CreateJob(dummyJobSpec, (CreateJobConflictAction)9999);
         }
 
         [Test]
@@ -388,10 +482,10 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
 
             PrepareMockJobWatcher(jobDetails);
 
-            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.UtcNow))
-                .Constraints(Is.Equal(TriggerScheduleCondition.FirstTime), Is.Anything())
+            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.Latch, DateTime.UtcNow, null))
+                .Constraints(Is.Equal(TriggerScheduleCondition.Latch), Is.Anything(), Is.Null())
                 .Return(TriggerScheduleAction.Skip);
-            Expect.Call(mockTrigger.NextFireTime).Return(new DateTime(1970, 1, 5));
+            Expect.Call(mockTrigger.NextFireTimeUtc).Return(new DateTime(1970, 1, 5, 0, 0, 0, DateTimeKind.Utc));
             Expect.Call(mockTrigger.NextMisfireThreshold).Return(new TimeSpan(0, 1, 0));
 
             mockJobStore.SaveJobDetails(jobDetails);
@@ -402,9 +496,9 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             RunSchedulerUntilWake();
 
             Assert.AreEqual(JobState.Scheduled, jobDetails.JobState);
-            Assert.AreEqual(new DateTime(1970, 1, 5), jobDetails.NextTriggerFireTime);
+            DateTimeAssert.AreEqualIncludingKind(new DateTime(1970, 1, 5, 0, 0, 0, DateTimeKind.Utc), jobDetails.NextTriggerFireTimeUtc);
             Assert.AreEqual(new TimeSpan(0, 1, 0), jobDetails.NextTriggerMisfireThreshold);
-            Assert.IsNull(jobDetails.JobData);
+            Assert.IsNull(jobDetails.JobSpec.JobData);
             Assert.IsNull(jobDetails.LastJobExecutionDetails);
         }
 
@@ -424,15 +518,15 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
                 jobDetails.LastJobExecutionDetails.Succeeded = lastExecutionSucceeded;
 
                 if (lastEndTimeNotNull)
-                    jobDetails.LastJobExecutionDetails.EndTime = DateTime.UtcNow;
+                    jobDetails.LastJobExecutionDetails.EndTimeUtc = DateTime.UtcNow;
             }
 
             PrepareMockJobWatcher(jobDetails);
 
-            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.JobFailed, DateTime.UtcNow))
-                .Constraints(Is.Equal(TriggerScheduleCondition.JobFailed), Is.Anything())
+            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.Latch, DateTime.UtcNow, null))
+                .Constraints(Is.Equal(TriggerScheduleCondition.Latch), Is.Anything(), Property.Value("Succeeded", false))
                 .Return(TriggerScheduleAction.DeleteJob);
-            Expect.Call(mockTrigger.NextFireTime).Return(null);
+            Expect.Call(mockTrigger.NextFireTimeUtc).Return(null);
             Expect.Call(mockTrigger.NextMisfireThreshold).Return(null);
 
             mockJobStore.DeleteJob(jobDetails.JobSpec.Name);
@@ -443,21 +537,21 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             RunSchedulerUntilWake();
 
             Assert.AreEqual(JobState.Orphaned, jobDetails.JobState);
-            Assert.IsNull(jobDetails.NextTriggerFireTime);
+            Assert.IsNull(jobDetails.NextTriggerFireTimeUtc);
             Assert.IsNull(jobDetails.NextTriggerMisfireThreshold);
-            Assert.IsNull(jobDetails.JobData);
+            Assert.IsNull(jobDetails.JobSpec.JobData);
             Assert.IsNotNull(jobDetails.LastJobExecutionDetails);
             Assert.AreEqual(scheduler.Guid, jobDetails.LastJobExecutionDetails.SchedulerGuid);
             Assert.AreEqual(false, jobDetails.LastJobExecutionDetails.Succeeded);
-            Assert.IsNotNull(jobDetails.LastJobExecutionDetails.EndTime);
+            Assert.IsNotNull(jobDetails.LastJobExecutionDetails.EndTimeUtc);
         }
         
         [RowTest]
-        [Row(false, false, false, TriggerScheduleCondition.JobFailed)]
-        [Row(true, false, false, TriggerScheduleCondition.JobFailed)]
-        [Row(true, true, true, TriggerScheduleCondition.JobSucceeded)]
+        [Row(false, false, false)]
+        [Row(true, false, false)]
+        [Row(true, true, true)]
         public void ScheduleCompletedJob_WithStopAction(bool lastExecutionDetailsNotNull,
-            bool lastExecutionSucceeded, bool lastEndTimeNotNull, TriggerScheduleCondition expectedCondition)
+            bool lastExecutionSucceeded, bool lastEndTimeNotNull)
         {
             JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.UtcNow);
             jobDetails.JobState = JobState.Completed;
@@ -468,15 +562,15 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
                 jobDetails.LastJobExecutionDetails.Succeeded = lastExecutionSucceeded;
 
                 if (lastEndTimeNotNull)
-                    jobDetails.LastJobExecutionDetails.EndTime = DateTime.UtcNow;
+                    jobDetails.LastJobExecutionDetails.EndTimeUtc = DateTime.UtcNow;
             }
 
             PrepareMockJobWatcher(jobDetails);
 
-            Expect.Call(mockTrigger.Schedule(expectedCondition, DateTime.UtcNow))
-                .Constraints(Is.Equal(expectedCondition), Is.Anything())
+            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.Latch, DateTime.UtcNow, null))
+                .Constraints(Is.Equal(TriggerScheduleCondition.Latch), Is.Anything(), Property.Value("Succeeded", lastExecutionSucceeded))
                 .Return(TriggerScheduleAction.Stop);
-            Expect.Call(mockTrigger.NextFireTime).Return(null);
+            Expect.Call(mockTrigger.NextFireTimeUtc).Return(null);
             Expect.Call(mockTrigger.NextMisfireThreshold).Return(null);
 
             mockJobStore.SaveJobDetails(jobDetails);
@@ -487,13 +581,13 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             RunSchedulerUntilWake();
 
             Assert.AreEqual(JobState.Stopped, jobDetails.JobState);
-            Assert.IsNull(jobDetails.NextTriggerFireTime);
+            Assert.IsNull(jobDetails.NextTriggerFireTimeUtc);
             Assert.IsNull(jobDetails.NextTriggerMisfireThreshold);
-            Assert.IsNull(jobDetails.JobData);
+            Assert.IsNull(jobDetails.JobSpec.JobData);
             Assert.IsNotNull(jobDetails.LastJobExecutionDetails);
             Assert.AreEqual(scheduler.Guid, jobDetails.LastJobExecutionDetails.SchedulerGuid);
             Assert.AreEqual(lastExecutionSucceeded, jobDetails.LastJobExecutionDetails.Succeeded);
-            Assert.IsNotNull(jobDetails.LastJobExecutionDetails.EndTime);
+            Assert.IsNotNull(jobDetails.LastJobExecutionDetails.EndTimeUtc);
         }
 
         [RowTest]
@@ -514,7 +608,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             jobDetails.JobState = JobState.Triggered;
 
             if (nextTriggerFireTimeNotNull)
-                jobDetails.NextTriggerFireTime = schedTime;
+                jobDetails.NextTriggerFireTimeUtc = schedTime;
             if (nextTriggerMisfireThresholdNotNull)
                 jobDetails.NextTriggerMisfireThreshold = misfire ? new TimeSpan(0, 0, 2) : new TimeSpan(0, 1, 0);
 
@@ -522,10 +616,10 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
 
             TriggerScheduleCondition expectedCondition = misfire ? TriggerScheduleCondition.Misfire : TriggerScheduleCondition.Fire;
 
-            Expect.Call(mockTrigger.Schedule(expectedCondition, DateTime.MinValue))
-                .Constraints(Is.Equal(expectedCondition), Is.Anything())
+            Expect.Call(mockTrigger.Schedule(expectedCondition, DateTime.MinValue, null))
+                .Constraints(Is.Equal(expectedCondition), Is.Anything(), Is.Null())
                 .Return(TriggerScheduleAction.Skip);
-            Expect.Call(mockTrigger.NextFireTime).Return(new DateTime(1970, 1, 5));
+            Expect.Call(mockTrigger.NextFireTimeUtc).Return(new DateTime(1970, 1, 5, 0, 0 ,0, DateTimeKind.Utc));
             Expect.Call(mockTrigger.NextMisfireThreshold).Return(new TimeSpan(0, 2, 0));
 
             mockJobStore.SaveJobDetails(jobDetails);
@@ -536,9 +630,9 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             RunSchedulerUntilWake();
 
             Assert.AreEqual(JobState.Scheduled, jobDetails.JobState);
-            Assert.AreEqual(new DateTime(1970, 1, 5), jobDetails.NextTriggerFireTime);
+            DateTimeAssert.AreEqualIncludingKind(new DateTime(1970, 1, 5, 0, 0, 0, DateTimeKind.Utc), jobDetails.NextTriggerFireTimeUtc);
             Assert.AreEqual(new TimeSpan(0, 2, 0), jobDetails.NextTriggerMisfireThreshold);
-            Assert.IsNull(jobDetails.JobData);
+            Assert.IsNull(jobDetails.JobSpec.JobData);
             Assert.IsNull(jobDetails.LastJobExecutionDetails);
         }
 
@@ -587,15 +681,15 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
 
                 Assert.IsNotNull(completedJobDetails.LastJobExecutionDetails);
                 Assert.AreEqual(scheduler.Guid, completedJobDetails.LastJobExecutionDetails.SchedulerGuid);
-                Assert.GreaterEqualThan(completedJobDetails.LastJobExecutionDetails.StartTime, completedJobDetails.CreationTime);
-                Assert.IsNotNull(completedJobDetails.LastJobExecutionDetails.EndTime);
-                Assert.GreaterEqualThan(completedJobDetails.LastJobExecutionDetails.EndTime, completedJobDetails.LastJobExecutionDetails.StartTime);
+                Assert.GreaterEqualThan(completedJobDetails.LastJobExecutionDetails.StartTimeUtc, completedJobDetails.CreationTimeUtc);
+                Assert.IsNotNull(completedJobDetails.LastJobExecutionDetails.EndTimeUtc);
+                Assert.GreaterEqualThan(completedJobDetails.LastJobExecutionDetails.EndTimeUtc, completedJobDetails.LastJobExecutionDetails.StartTimeUtc);
                 Assert.AreEqual(jobSucceeds, completedJobDetails.LastJobExecutionDetails.Succeeded);
 
                 if (!jobThrows)
-                    JobAssert.AreEqual(newJobData, completedJobDetails.JobData);
+                    JobAssert.AreEqual(newJobData, completedJobDetails.JobSpec.JobData);
                 else
-                    Assert.IsNull(completedJobDetails.JobData);
+                    Assert.IsNull(completedJobDetails.JobSpec.JobData);
 
                 Wake();
             });
@@ -634,11 +728,11 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
 
                 Assert.IsNotNull(completedJobDetails.LastJobExecutionDetails);
                 Assert.AreEqual(scheduler.Guid, completedJobDetails.LastJobExecutionDetails.SchedulerGuid);
-                Assert.GreaterEqualThan(completedJobDetails.LastJobExecutionDetails.StartTime, completedJobDetails.CreationTime);
-                Assert.IsNotNull(completedJobDetails.LastJobExecutionDetails.EndTime);
-                Assert.GreaterEqualThan(completedJobDetails.LastJobExecutionDetails.EndTime, completedJobDetails.LastJobExecutionDetails.StartTime);
+                Assert.GreaterEqualThan(completedJobDetails.LastJobExecutionDetails.StartTimeUtc, completedJobDetails.CreationTimeUtc);
+                Assert.IsNotNull(completedJobDetails.LastJobExecutionDetails.EndTimeUtc);
+                Assert.GreaterEqualThan(completedJobDetails.LastJobExecutionDetails.EndTimeUtc, completedJobDetails.LastJobExecutionDetails.StartTimeUtc);
                 Assert.AreEqual(false, completedJobDetails.LastJobExecutionDetails.Succeeded);
-                Assert.IsNull(completedJobDetails.JobData);
+                Assert.IsNull(completedJobDetails.JobSpec.JobData);
 
                 Wake();
             });
@@ -704,10 +798,10 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             RunSchedulerUntilWake();
 
             Assert.AreEqual(JobState.Stopped, jobDetails.JobState);
-            Assert.IsNull(jobDetails.NextTriggerFireTime);
+            Assert.IsNull(jobDetails.NextTriggerFireTimeUtc);
             Assert.IsNull(jobDetails.NextTriggerMisfireThreshold);
             Assert.IsNull(jobDetails.LastJobExecutionDetails);
-            Assert.IsNull(jobDetails.JobData);
+            Assert.IsNull(jobDetails.JobSpec.JobData);
         }
 
         [Test]
@@ -783,10 +877,10 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.UtcNow);
             jobDetails.JobState = JobState.Pending;
 
-            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.UtcNow))
-                .Constraints(Is.Equal(TriggerScheduleCondition.FirstTime), Is.Anything())
+            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.Latch, DateTime.UtcNow, null))
+                .Constraints(Is.Equal(TriggerScheduleCondition.Latch), Is.Anything(), Is.Null())
                 .Return(TriggerScheduleAction.Stop);
-            Expect.Call(mockTrigger.NextFireTime).Return(new DateTime(1970, 1, 5));
+            Expect.Call(mockTrigger.NextFireTimeUtc).Return(new DateTime(1970, 1, 5, 0, 0, 0, DateTimeKind.Utc));
             Expect.Call(mockTrigger.NextMisfireThreshold).Return(new TimeSpan(0, 1, 0));
 
             mockJobStore.SaveJobDetails(jobDetails);
@@ -825,10 +919,10 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             JobDetails jobDetails = new JobDetails(dummyJobSpec, DateTime.UtcNow);
             jobDetails.JobState = JobState.Pending;
 
-            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.UtcNow))
-                .Constraints(Is.Equal(TriggerScheduleCondition.FirstTime), Is.Anything())
+            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.Latch, DateTime.UtcNow, null))
+                .Constraints(Is.Equal(TriggerScheduleCondition.Latch), Is.Anything(), Is.Null())
                 .Return(TriggerScheduleAction.Stop);
-            Expect.Call(mockTrigger.NextFireTime).Return(new DateTime(1970, 1, 5));
+            Expect.Call(mockTrigger.NextFireTimeUtc).Return(new DateTime(1970, 1, 5, 0, 0, 0, DateTimeKind.Utc));
             Expect.Call(mockTrigger.NextMisfireThreshold).Return(new TimeSpan(0, 1, 0));
 
             mockJobStore.SaveJobDetails(jobDetails);
@@ -866,10 +960,10 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
 
             PrepareMockJobWatcher(jobDetails);
 
-            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.UtcNow))
-                .Constraints(Is.Equal(TriggerScheduleCondition.FirstTime), Is.Anything())
+            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.Latch, DateTime.UtcNow, null))
+                .Constraints(Is.Equal(TriggerScheduleCondition.Latch), Is.Anything(), Is.Null())
                 .Return(action);
-            Expect.Call(mockTrigger.NextFireTime).Return(new DateTime(1970, 1, 5));
+            Expect.Call(mockTrigger.NextFireTimeUtc).Return(new DateTime(1970, 1, 5, 0, 0, 0, DateTimeKind.Utc));
             Expect.Call(mockTrigger.NextMisfireThreshold).Return(new TimeSpan(0, 1, 0));
 
             mockJobStore.SaveJobDetails(jobDetails);
@@ -880,10 +974,10 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             RunSchedulerUntilWake();
 
             Assert.AreEqual(JobState.Stopped, jobDetails.JobState);
-            Assert.IsNull(jobDetails.NextTriggerFireTime);
+            Assert.IsNull(jobDetails.NextTriggerFireTimeUtc);
             Assert.IsNull(jobDetails.NextTriggerMisfireThreshold);
             Assert.IsNull(jobDetails.LastJobExecutionDetails);
-            Assert.IsNull(jobDetails.JobData);
+            Assert.IsNull(jobDetails.JobSpec.JobData);
         }
 
         [Test]
@@ -894,8 +988,8 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
 
             PrepareMockJobWatcher(jobDetails);
 
-            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.UtcNow))
-                .Constraints(Is.Equal(TriggerScheduleCondition.FirstTime), Is.Anything())
+            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.Latch, DateTime.UtcNow, null))
+                .Constraints(Is.Equal(TriggerScheduleCondition.Latch), Is.Anything(), Is.Null())
                 .Throw(new Exception("Oh no!")); // throw an exception from the trigger
 
             mockJobStore.SaveJobDetails(jobDetails);
@@ -906,10 +1000,10 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             RunSchedulerUntilWake();
 
             Assert.AreEqual(JobState.Stopped, jobDetails.JobState);
-            Assert.IsNull(jobDetails.NextTriggerFireTime);
+            Assert.IsNull(jobDetails.NextTriggerFireTimeUtc);
             Assert.IsNull(jobDetails.NextTriggerMisfireThreshold);
             Assert.IsNull(jobDetails.LastJobExecutionDetails);
-            Assert.IsNull(jobDetails.JobData);
+            Assert.IsNull(jobDetails.JobSpec.JobData);
         }
 
         /// <summary>
@@ -923,10 +1017,10 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
 
             PrepareMockJobWatcher(jobDetails);
 
-            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.FirstTime, DateTime.MinValue))
-                .Constraints(Is.Equal(TriggerScheduleCondition.FirstTime), Is.Anything())
+            Expect.Call(mockTrigger.Schedule(TriggerScheduleCondition.Latch, DateTime.MinValue, null))
+                .Constraints(Is.Equal(TriggerScheduleCondition.Latch), Is.Anything(), Is.Null())
                 .Return(TriggerScheduleAction.ExecuteJob);
-            Expect.Call(mockTrigger.NextFireTime).Return(null);
+            Expect.Call(mockTrigger.NextFireTimeUtc).Return(null);
             Expect.Call(mockTrigger.NextMisfireThreshold).Return(null);
 
             mockJobStore.SaveJobDetails(jobDetails);
@@ -935,8 +1029,8 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
                 Assert.AreEqual(JobState.Running, jobDetails.JobState);
                 Assert.IsNotNull(jobDetails.LastJobExecutionDetails);
                 Assert.AreEqual(scheduler.Guid, jobDetails.LastJobExecutionDetails.SchedulerGuid);
-                Assert.GreaterEqualThan(jobDetails.LastJobExecutionDetails.StartTime, jobDetails.CreationTime);
-                Assert.IsNull(jobDetails.LastJobExecutionDetails.EndTime);
+                Assert.GreaterEqualThan(jobDetails.LastJobExecutionDetails.StartTimeUtc, jobDetails.CreationTimeUtc);
+                Assert.IsNull(jobDetails.LastJobExecutionDetails.EndTimeUtc);
                 Assert.IsFalse(jobDetails.LastJobExecutionDetails.Succeeded);
             });
 

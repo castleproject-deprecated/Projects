@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System;
+using Castle.Components.Scheduler.Tests.Utilities;
 using MbUnit.Framework;
 
 namespace Castle.Components.Scheduler.Tests.UnitTests
@@ -32,6 +33,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             Assert.AreEqual("some job", spec.Description);
             Assert.AreEqual("with this key", spec.JobKey);
             Assert.AreSame(trigger, spec.Trigger);
+            Assert.IsNull(spec.JobData);
         }
 
         [Test]
@@ -69,22 +71,117 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             new JobSpec("abc", "some job", "with this key", null);
         }
 
-        [RowTest]
-        [Row(false)]
-        [Row(true)]
-        public void ClonePerformsADeepCopy(bool useGenericClonable)
+        [Test]
+        public void Name_GetterAndSetter()
         {
             JobSpec spec = new JobSpec("abc", "some job", "with this key", trigger);
+
+            spec.Name = "new name";
+            Assert.AreEqual("new name", spec.Name);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Name_ThrowsIfValueIsNull()
+        {
+            JobSpec spec = new JobSpec("abc", "some job", "with this key", trigger);
+
+            spec.Name = null;
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Name_ThrowsIfValueIsEmpty()
+        {
+            JobSpec spec = new JobSpec("abc", "some job", "with this key", trigger);
+
+            spec.Name = "";
+        }
+
+        [Test]
+        public void Description_GetterAndSetter()
+        {
+            JobSpec spec = new JobSpec("abc", "some job", "with this key", trigger);
+
+            spec.Description = "new description";
+            Assert.AreEqual("new description", spec.Description);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Description_ThrowsIfValueIsNull()
+        {
+            JobSpec spec = new JobSpec("abc", "some job", "with this key", trigger);
+
+            spec.Description = null;
+        }
+
+        [Test]
+        public void JobKey_GetterAndSetter()
+        {
+            JobSpec spec = new JobSpec("abc", "some job", "with this key", trigger);
+
+            spec.JobKey = "new key";
+            Assert.AreEqual("new key", spec.JobKey);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void JobKey_ThrowsIfValueIsNull()
+        {
+            JobSpec spec = new JobSpec("abc", "some job", "with this key", trigger);
+
+            spec.JobKey = null;
+        }
+
+        [Test]
+        public void Trigger_GetterAndSetter()
+        {
+            JobSpec spec = new JobSpec("abc", "some job", "with this key", trigger);
+
+            Trigger newTrigger = PeriodicTrigger.CreateDailyTrigger(DateTime.UtcNow);
+            spec.Trigger = newTrigger;
+            Assert.AreSame(newTrigger, spec.Trigger);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Trigger_ThrowsIfValueIsNull()
+        {
+            JobSpec spec = new JobSpec("abc", "some job", "with this key", trigger);
+
+            spec.Trigger = null;
+        }
+
+        [Test]
+        public void JobData_GetterAndSetter()
+        {
+            JobSpec spec = new JobSpec("abc", "some job", "with this key", trigger);
+
+            JobData jobData = new JobData();
+            spec.JobData = jobData;
+            Assert.AreSame(jobData, spec.JobData);
+        }
+
+        [RowTest]
+        [Row(false, false)]
+        [Row(true, false)]
+        [Row(true, true)]
+        public void ClonePerformsADeepCopy(bool useGenericClonable, bool jobDataIsNull)
+        {
+            JobSpec spec = new JobSpec("abc", "some job", "with this key", trigger);
+            spec.JobData = jobDataIsNull ? null : new JobData();
+
             JobSpec clone = useGenericClonable ? spec.Clone()
                 : (JobSpec) ((ICloneable) spec).Clone();
 
             Assert.AreNotSame(spec, clone);
-
-            Assert.AreEqual("abc", clone.Name);
-            Assert.AreEqual("some job", clone.Description);
-            Assert.AreEqual("with this key", clone.JobKey);
-            Assert.IsNotNull(clone.Trigger);
             Assert.AreNotSame(trigger, clone.Trigger);
+
+            if (! jobDataIsNull)
+                Assert.AreNotSame(spec.JobData, clone.JobData);
+
+            JobAssert.AreEqual(spec, clone);
         }
     }
 }

@@ -43,6 +43,7 @@ namespace Castle.Components.Scheduler
         private string description;
         private string jobKey;
         private Trigger trigger;
+        private JobData jobData;
 
         /// <summary>
         /// Creates a job specification.
@@ -75,36 +76,81 @@ namespace Castle.Components.Scheduler
         }
 
         /// <summary>
-        /// Gets the unique name of this scheduled job.
+        /// Gets or sets the unique name of this scheduled job.
         /// </summary>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="value"/> is an empty string</exception>
         public string Name
         {
             get { return name; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("value");
+                if (value.Length == 0)
+                    throw new ArgumentException("value");
+                name = value;
+            }
         }
 
         /// <summary>
-        /// Gets the description of the scheduled job.
+        /// Gets or sets the description of the scheduled job.
         /// </summary>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null</exception>
         public string Description
         {
             get { return description; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("value");
+                description = value;
+            }
         }
 
         /// <summary>
-        /// Gets the key that is used by a <see cref="IJobFactory" />
+        /// Gets or sets the key that is used by a <see cref="IJobFactory" />
         /// to construct an <see cref="IJob" /> instance when the job is to be executed.
         /// </summary>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null</exception>
         public string JobKey
         {
             get { return jobKey; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("value");
+                jobKey = value;
+            }
         }
 
         /// <summary>
-        /// Gets the trigger that determines when the job is scheduled to run.
+        /// Gets or sets the trigger that determines when the job is scheduled to run.
         /// </summary>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null</exception>
         public Trigger Trigger
         {
             get { return trigger; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("value");
+                trigger = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a serializable data structure that passes parameters to
+        /// a job and persists its state across executions.  May be null if the
+        /// data is not persistent.
+        /// </summary>
+        /// <remarks>
+        /// Initially null.
+        /// </remarks>
+        public JobData JobData
+        {
+            get { return jobData; }
+            set { jobData = value; }
         }
 
         /// <summary>
@@ -114,6 +160,9 @@ namespace Castle.Components.Scheduler
         public virtual JobSpec Clone()
         {
             JobSpec clone = new JobSpec(name, description, jobKey, trigger.Clone());
+
+            if (jobData != null)
+                clone.jobData = jobData.Clone();
 
             return clone;
         }

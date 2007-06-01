@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System;
+using Castle.Components.Scheduler.Tests.Utilities;
 using MbUnit.Framework;
 
 namespace Castle.Components.Scheduler.Tests.UnitTests
@@ -28,13 +29,11 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Test]
         public void ConstructorSetsProperties()
         {
-            DateTime now = DateTime.UtcNow;
-            JobDetails jobDetails = new JobDetails(jobSpec, now);
+            JobDetails jobDetails = new JobDetails(jobSpec, new DateTime(2000, 4, 2));
             Assert.AreSame(jobSpec, jobDetails.JobSpec);
-            Assert.AreEqual(now, jobDetails.CreationTime);
+            DateTimeAssert.AreEqualIncludingKind(new DateTime(2000, 4, 2, 0, 0, 0, DateTimeKind.Utc), jobDetails.CreationTimeUtc);
             Assert.AreEqual(JobState.Pending, jobDetails.JobState);
-            Assert.IsNull(jobDetails.JobData);
-            Assert.IsNull(jobDetails.NextTriggerFireTime);
+            Assert.IsNull(jobDetails.NextTriggerFireTimeUtc);
             Assert.IsNull(jobDetails.NextTriggerMisfireThreshold);
             Assert.IsNull(jobDetails.LastJobExecutionDetails);
         }
@@ -47,6 +46,24 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         }
 
         [Test]
+        public void JobSpec_GetterAndSetter()
+        {
+            JobDetails jobDetails = new JobDetails(jobSpec, DateTime.UtcNow);
+
+            JobSpec newJobSpec = jobSpec.Clone();
+            jobDetails.JobSpec = newJobSpec;
+            Assert.AreSame(newJobSpec, jobDetails.JobSpec);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void JobSpec_ThrowsIfValueIsNull()
+        {
+            JobDetails jobDetails = new JobDetails(jobSpec, DateTime.UtcNow);
+            jobDetails.JobSpec = null;
+        }
+
+        [Test]
         public void JobState_GetterAndSetter()
         {
             JobDetails jobDetails = new JobDetails(jobSpec, DateTime.UtcNow);
@@ -56,12 +73,21 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         }
 
         [Test]
-        public void NextTriggerFireTime_GetterAndSetter()
+        public void CreationTimeUtc_GetterAndSetter()
         {
             JobDetails jobDetails = new JobDetails(jobSpec, DateTime.UtcNow);
 
-            jobDetails.NextTriggerFireTime = new DateTime(1970, 1, 1);
-            Assert.AreEqual(new DateTime(1970, 1, 1), jobDetails.NextTriggerFireTime);
+            jobDetails.CreationTimeUtc = new DateTime(1970, 1, 1);
+            DateTimeAssert.AreEqualIncludingKind(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc), jobDetails.CreationTimeUtc);
+        }
+
+        [Test]
+        public void NextTriggerFireTimeUtc_GetterAndSetter()
+        {
+            JobDetails jobDetails = new JobDetails(jobSpec, DateTime.UtcNow);
+
+            jobDetails.NextTriggerFireTimeUtc = new DateTime(1970, 1, 1);
+            DateTimeAssert.AreEqualIncludingKind(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc), jobDetails.NextTriggerFireTimeUtc);
         }
 
         [Test]
@@ -83,42 +109,25 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
             Assert.AreSame(jobExecutionDetails, jobDetails.LastJobExecutionDetails);
         }
 
-        [Test]
-        public void JobData_GetterAndSetter()
-        {
-            JobDetails jobDetails = new JobDetails(jobSpec, DateTime.UtcNow);
-
-            JobData jobData = new JobData();
-            jobDetails.JobData = jobData;
-            Assert.AreSame(jobData, jobDetails.JobData);
-        }
-
         [RowTest]
         [Row(false)]
         [Row(true)]
         public void ClonePerformsADeepCopy(bool useGenericClonable)
         {
             JobDetails jobDetails = new JobDetails(jobSpec, DateTime.UtcNow);
-            jobDetails.JobData = new JobData();
             jobDetails.LastJobExecutionDetails = new JobExecutionDetails(SchedulerGuid, DateTime.UtcNow);
             jobDetails.JobState = JobState.Scheduled;
-            jobDetails.NextTriggerFireTime = DateTime.UtcNow;
+            jobDetails.NextTriggerFireTimeUtc = DateTime.UtcNow;
             jobDetails.NextTriggerMisfireThreshold = TimeSpan.MaxValue;
 
             JobDetails clone = useGenericClonable ? jobDetails.Clone()
                 : (JobDetails)((ICloneable)jobDetails).Clone();
 
             Assert.AreNotSame(jobDetails, clone);
-
-            Assert.IsNotNull(clone.JobSpec);
             Assert.AreNotSame(jobDetails.JobSpec, clone.JobSpec);
-            Assert.IsNotNull(clone.JobData);
-            Assert.AreNotSame(jobDetails.JobData, clone.JobData);
-            Assert.IsNotNull(clone.LastJobExecutionDetails);
             Assert.AreNotSame(jobDetails.LastJobExecutionDetails, clone.LastJobExecutionDetails);
-            Assert.AreEqual(jobDetails.JobState, clone.JobState);
-            Assert.AreEqual(jobDetails.NextTriggerFireTime, clone.NextTriggerFireTime);
-            Assert.AreEqual(jobDetails.NextTriggerMisfireThreshold, clone.NextTriggerMisfireThreshold);
+
+            JobAssert.AreEqual(jobDetails, clone);
         }
 
     }

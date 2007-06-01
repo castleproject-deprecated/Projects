@@ -33,7 +33,7 @@ namespace Castle.Components.Scheduler.JobStores
         /// </para>
         /// <para>
         /// The watcher also identifies jobs in the <see cref="JobState.Scheduled" /> state whose
-        /// <see cref="JobDetails.NextTriggerFireTime"/> is null or has elapsed, automatically moves
+        /// <see cref="JobDetails.NextTriggerFireTimeUtc"/> is null or has elapsed, automatically moves
         /// them to the <see cref="JobState.Triggered" /> state, and eventually returns them.
         /// </para>
         /// </summary>

@@ -21,6 +21,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Castle.Components.Scheduler.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Castle.Components.Scheduler.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Castle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
@@ -46,7 +48,8 @@
     <Compile Include="IJobRunner.cs" />
     <Compile Include="JobExecutionDetails.cs" />
     <Compile Include="JobState.cs" />
-    <Compile Include="JobStores\AdoNetJobStore.cs" />
+    <Compile Include="JobStores\PersistentJobStore.cs" />
+    <Compile Include="JobStores\AdoNetJobStoreDao.cs" />
     <Compile Include="JobStores\BaseJobStore.cs" />
     <Compile Include="JobStores\ConcurrentModificationException.cs" />
     <Compile Include="CreateJobConflictAction.cs" />
@@ -57,8 +60,10 @@
     <Compile Include="IScheduler.cs" />
     <Compile Include="JobDetails.cs" />
     <Compile Include="JobStores\IJobStore.cs" />
+    <Compile Include="JobStores\IJobStoreDao.cs" />
     <Compile Include="JobStores\IJobWatcher.cs" />
     <Compile Include="JobStores\SqlServerJobStore.cs" />
+    <Compile Include="JobStores\SqlServerJobStoreDao.cs" />
     <Compile Include="PeriodicTrigger.cs" />
     <Compile Include="Trigger.cs" />
     <Compile Include="JobData.cs" />
@@ -68,6 +73,8 @@
     <Compile Include="JobStores\MemoryJobStore.cs" />
     <Compile Include="TriggerScheduleAction.cs" />
     <Compile Include="TriggerScheduleCondition.cs" />
+    <Compile Include="Utilities\DateTimeUtils.cs" />
+    <Compile Include="Utilities\DbUtils.cs" />
     <Compile Include="VersionedJobDetails.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

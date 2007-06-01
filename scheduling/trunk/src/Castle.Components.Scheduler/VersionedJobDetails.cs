@@ -52,7 +52,7 @@ namespace Castle.Components.Scheduler
 
         public override JobDetails Clone()
         {
-            VersionedJobDetails clone = new VersionedJobDetails(JobSpec.Clone(), CreationTime, version);
+            VersionedJobDetails clone = new VersionedJobDetails(JobSpec.Clone(), CreationTimeUtc, version);
             CopyTo(clone);
             return clone;
         }

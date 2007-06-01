@@ -13,14 +13,6 @@
 // limitations under the License.
 
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Globalization;
-using System.IO;
-using System.Runtime.Serialization.Formatters;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Threading;
 using Castle.Core;
 
 namespace Castle.Components.Scheduler.JobStores
@@ -29,21 +21,33 @@ namespace Castle.Components.Scheduler.JobStores
     /// The SQL Server job store maintains all job state in a SQL Server database.
     /// </summary>
     [Singleton]
-    public class SqlServerJobStore : AdoNetJobStore
+    public class SqlServerJobStore : PersistentJobStore
     {
         /// <summary>
-        /// Creates a SQL Server job store connected to a database.
+        /// Creates a SQL Server job store.
         /// </summary>
         /// <param name="connectionString">The database connection string</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="connectionString"/> is null</exception>
         public SqlServerJobStore(string connectionString)
-            : base(connectionString, "@")
+            : this(new SqlServerJobStoreDao(connectionString))
         {
         }
 
-        protected override IDbConnection CreateConnection()
+        /// <summary>
+        /// Creates a SQL Server job store using the specified DAO.
+        /// </summary>
+        /// <param name="jobStoreDao"></param>
+        public SqlServerJobStore(SqlServerJobStoreDao jobStoreDao)
+            : base(jobStoreDao)
         {
-            return new SqlConnection(ConnectionString);
+        }
+
+        /// <summary>
+        /// Gets the connection string.
+        /// </summary>
+        public string ConnectionString
+        {
+            get { return ((SqlServerJobStoreDao) JobStoreDao).ConnectionString; }
         }
     }
 }

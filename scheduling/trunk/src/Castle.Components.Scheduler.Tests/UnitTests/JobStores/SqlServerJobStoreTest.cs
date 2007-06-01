@@ -24,7 +24,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
     [TestFixture(TimeOut = 1)]
     [TestsOn(typeof(SqlServerJobStore))]
     [Author("Jeff Brown", "jeff@ingenio.com")]
-    public class SqlServerJobStoreTest : AdoNetJobStoreTest
+    public class SqlServerJobStoreTest : PersistentJobStoreTest
     {
         private const string ConnectionString = "server=.; database=SchedulerTestDb; uid=SchedulerTestUser; pwd=test;";
 
@@ -35,15 +35,42 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
             base.SetUp();
         }
 
-        protected override AdoNetJobStore CreateAdoNetJobStore()
+        [Test]
+        public void StandardConstructorCreatesDaoWithExpectedConnectionString()
         {
-            return new InstrumentedSqlServerJobStore(ConnectionString);
+            SqlServerJobStore jobStore = new SqlServerJobStore(ConnectionString);
+            Assert.AreEqual(ConnectionString, jobStore.ConnectionString);
         }
 
-        protected override void SetBrokenConnectionMocking(AdoNetJobStore jobStore, bool brokenConnections)
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void StandardConstructorThrowsIfConnectionStringIsNull()
         {
-            InstrumentedSqlServerJobStore instrumentedJobStore = (InstrumentedSqlServerJobStore)jobStore;
-            instrumentedJobStore.BrokenConnections = brokenConnections;
+            new SqlServerJobStore((string) null);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void DaoConstructorThrowsIfDaoIsNull()
+        {
+            new SqlServerJobStore((SqlServerJobStoreDao)null);
+        }
+
+        [Test]
+        public void ConnectionStringIsSameAsWasOriginallySpecified()
+        {
+            Assert.AreEqual(ConnectionString, ((SqlServerJobStore) JobStore).ConnectionString);
+        }
+
+        protected override PersistentJobStore CreatePersistentJobStore()
+        {
+            return new SqlServerJobStore(new InstrumentedSqlServerJobStoreDao(ConnectionString));
+        }
+
+        protected override void SetBrokenConnectionMocking(PersistentJobStore jobStore, bool brokenConnections)
+        {
+            InstrumentedSqlServerJobStoreDao dao = (InstrumentedSqlServerJobStoreDao)jobStore.JobStoreDao;
+            dao.BrokenConnections = brokenConnections;
         }
 
         protected void PurgeAllData()
@@ -58,11 +85,11 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
             }
         }
 
-        private class InstrumentedSqlServerJobStore : SqlServerJobStore
+        private class InstrumentedSqlServerJobStoreDao : SqlServerJobStoreDao
         {
             private bool brokenConnections;
 
-            public InstrumentedSqlServerJobStore(string connectionString)
+            public InstrumentedSqlServerJobStoreDao(string connectionString)
                 : base(connectionString)
             {
             }

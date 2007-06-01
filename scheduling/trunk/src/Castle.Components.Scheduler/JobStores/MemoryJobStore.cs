@@ -126,38 +126,94 @@ namespace Castle.Components.Scheduler.JobStores
                     throw new ConcurrentModificationException("The job details could not be saved because the job was concurrently modified.");
 
                 versionedJobDetails.Version += 1;
-                versionedJobDetails.JobSpec.Trigger.IsDirty = false;
                 jobs[jobName] = (VersionedJobDetails) versionedJobDetails.Clone();
 
                 Monitor.PulseAll(jobs);
             }
         }
 
-        public override bool CreateJob(JobSpec jobSpec, JobData jobData, DateTime creationTime, CreateJobConflictAction conflictAction)
+        public override bool CreateJob(JobSpec jobSpec, DateTime creationTimeUtc, CreateJobConflictAction conflictAction)
         {
             if (jobSpec == null)
+                throw new ArgumentNullException("jobSpec");
+            if (!Enum.IsDefined(typeof(CreateJobConflictAction), conflictAction))
+                throw new ArgumentOutOfRangeException("conflictAction");
+
+            lock (jobs)
+            {
+                ThrowIfDisposed();
+
+                VersionedJobDetails existingJobDetails;
+                if (jobs.TryGetValue(jobSpec.Name, out existingJobDetails))
+                {
+                    switch (conflictAction)
+                    {
+                        case CreateJobConflictAction.Ignore:
+                            return false;
+
+                        case CreateJobConflictAction.Update:
+                            InternalUpdateJob(existingJobDetails, jobSpec);
+                            return true;
+
+                        case CreateJobConflictAction.Replace:
+                            break;
+
+                        case CreateJobConflictAction.Throw:
+                            throw new SchedulerException(String.Format(CultureInfo.CurrentCulture,
+                                "There is already a job with name '{0}'.", jobSpec.Name));
+                    }
+                }
+
+                VersionedJobDetails jobDetails = new VersionedJobDetails(jobSpec.Clone(), creationTimeUtc, 0);
+
+                jobs[jobSpec.Name] = jobDetails;
+                Monitor.PulseAll(jobs);
+                return true;
+            }
+        }
+
+        public override void UpdateJob(string existingJobName, JobSpec updatedJobSpec)
+        {
+            if (existingJobName == null)
+                throw new ArgumentNullException("existingJobName");
+            if (existingJobName.Length == 0)
+                throw new ArgumentException("existingJobName");
+            if (updatedJobSpec == null)
                 throw new ArgumentNullException("jobSpec");
 
             lock (jobs)
             {
                 ThrowIfDisposed();
 
-                if (jobs.ContainsKey(jobSpec.Name))
-                {
-                    if (conflictAction == CreateJobConflictAction.Ignore)
-                        return false;
-                    if (conflictAction != CreateJobConflictAction.Update)
-                        throw new SchedulerException(String.Format(CultureInfo.CurrentCulture,
-                            "There is already a job with name '{0}'.", jobSpec.Name));
-                }
+                VersionedJobDetails existingJobDetails;
+                if (! jobs.TryGetValue(existingJobName, out existingJobDetails))
+                    throw new SchedulerException(String.Format(CultureInfo.CurrentCulture,
+                        "There is no existing job named '{0}'.", existingJobName));
 
-                VersionedJobDetails jobDetails = new VersionedJobDetails(jobSpec, creationTime, 0);
-                jobDetails.JobData = jobData;
-
-                jobs[jobSpec.Name] = jobDetails;
-                Monitor.PulseAll(jobs);
-                return true;
+                InternalUpdateJob(existingJobDetails, updatedJobSpec);
             }
+        }
+
+        private void InternalUpdateJob(VersionedJobDetails existingJobDetails, JobSpec updatedJobSpec)
+        {
+            if (existingJobDetails.JobSpec.Name != updatedJobSpec.Name)
+            {
+                if (jobs.ContainsKey(updatedJobSpec.Name))
+                    throw new SchedulerException(String.Format(CultureInfo.CurrentCulture,
+                        "Cannot rename job '{0}' to '{1}' because there already exists another job with the new name.",
+                        existingJobDetails.JobSpec.Name, updatedJobSpec.Name));
+
+                jobs.Remove(existingJobDetails.JobSpec.Name);
+                jobs.Add(updatedJobSpec.Name, existingJobDetails);
+            }
+
+            existingJobDetails.Version += 1;
+            existingJobDetails.JobSpec = updatedJobSpec.Clone();
+
+            if (existingJobDetails.JobState == JobState.Scheduled)
+                existingJobDetails.JobState = JobState.Pending;
+
+            Monitor.PulseAll(jobs);
         }
 
         public override bool DeleteJob(string jobName)
@@ -174,6 +230,18 @@ namespace Castle.Components.Scheduler.JobStores
 
                 Monitor.PulseAll(jobs);
                 return true;
+            }
+        }
+
+        public override string[] ListJobNames()
+        {
+            lock (jobs)
+            {
+                ThrowIfDisposed();
+
+                string[] jobNames = new string[jobs.Count];
+                jobs.Keys.CopyTo(jobNames, 0);
+                return jobNames;
             }
         }
 
@@ -197,14 +265,14 @@ namespace Castle.Components.Scheduler.JobStores
                     switch (jobDetails.JobState)
                     {
                         case JobState.Scheduled:
-                            if (jobDetails.NextTriggerFireTime.HasValue)
+                            if (jobDetails.NextTriggerFireTimeUtc.HasValue)
                             {
-                                DateTime jobNextTriggerFireTime = jobDetails.NextTriggerFireTime.Value.ToUniversalTime();
+                                DateTime jobNextTriggerFireTimeUtc = jobDetails.NextTriggerFireTimeUtc.Value;
 
-                                if (jobNextTriggerFireTime > timeBasis)
+                                if (jobNextTriggerFireTimeUtc > timeBasis)
                                 {
-                                    if (!waitNextTriggerFireTime.HasValue || jobNextTriggerFireTime < waitNextTriggerFireTime.Value)
-                                        waitNextTriggerFireTime = jobNextTriggerFireTime;
+                                    if (!waitNextTriggerFireTime.HasValue || jobNextTriggerFireTimeUtc < waitNextTriggerFireTime.Value)
+                                        waitNextTriggerFireTime = jobNextTriggerFireTimeUtc;
                                     break;
                                 }
                             }

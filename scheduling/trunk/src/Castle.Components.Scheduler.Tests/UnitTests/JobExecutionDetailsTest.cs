@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using Castle.Components.Scheduler.Tests.Utilities;
 using MbUnit.Framework;
 
 namespace Castle.Components.Scheduler.Tests.UnitTests
@@ -28,23 +29,22 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         [Test]
         public void ConstructorSetsProperties()
         {
-            DateTime now = DateTime.UtcNow;
-            JobExecutionDetails details = new JobExecutionDetails(SchedulerGuid, now);
+            JobExecutionDetails details = new JobExecutionDetails(SchedulerGuid, new DateTime(2000, 3, 4));
 
             Assert.AreEqual(SchedulerGuid, details.SchedulerGuid);
-            Assert.AreEqual(now, details.StartTime);
-            Assert.IsNull(details.EndTime);
+            DateTimeAssert.AreEqualIncludingKind(new DateTime(2000, 3, 4, 0, 0, 0, DateTimeKind.Utc), details.StartTimeUtc);
+            Assert.IsNull(details.EndTimeUtc);
             Assert.IsFalse(details.Succeeded);
             Assert.AreEqual("Unknown", details.StatusMessage);
         }
 
         [Test]
-        public void EndTime_GetterAndSetter()
+        public void EndTimeUtc_GetterAndSetter()
         {
             JobExecutionDetails details = new JobExecutionDetails(SchedulerGuid, DateTime.UtcNow);
 
-            details.EndTime = new DateTime(1970, 1, 2);
-            Assert.AreEqual(new DateTime(1970, 1, 2), details.EndTime);
+            details.EndTimeUtc = new DateTime(1970, 1, 2);
+            DateTimeAssert.AreEqualIncludingKind(new DateTime(1970, 1, 2, 0, 0, 0, DateTimeKind.Utc), details.EndTimeUtc);
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
         {
             DateTime now = DateTime.UtcNow;
             JobExecutionDetails details = new JobExecutionDetails(SchedulerGuid, now);
-            details.EndTime = DateTime.MaxValue;
+            details.EndTimeUtc = new DateTime(2000, 3, 4);
             details.Succeeded = true;
             details.StatusMessage = "Blah";
 
@@ -89,11 +89,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests
 
             Assert.AreNotSame(details, clone);
 
-            Assert.AreEqual(SchedulerGuid, clone.SchedulerGuid);
-            Assert.AreEqual(now, clone.StartTime);
-            Assert.AreEqual(DateTime.MaxValue, clone.EndTime);
-            Assert.IsTrue(clone.Succeeded);
-            Assert.AreEqual("Blah", clone.StatusMessage);
+            JobAssert.AreEqual(details, clone);
         }
     }
 }

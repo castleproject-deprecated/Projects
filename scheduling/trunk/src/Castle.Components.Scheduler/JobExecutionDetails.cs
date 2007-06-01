@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Castle.Components.Scheduler.Utilities;
 
 namespace Castle.Components.Scheduler
 {
@@ -38,8 +39,8 @@ namespace Castle.Components.Scheduler
     public class JobExecutionDetails : ICloneable<JobExecutionDetails>
     {
         private Guid schedulerGuid;
-        private DateTime startTime;
-        private DateTime? endTime;
+        private DateTime startTimeUtc;
+        private DateTime? endTimeUtc;
         private bool succeeded;
         private string statusMessage;
 
@@ -47,11 +48,11 @@ namespace Castle.Components.Scheduler
         /// Creates job execution details.
         /// </summary>
         /// <param name="schedulerGuid">The Guid of the scheduler that is running the job</param>
-        /// <param name="startTime">The start time</param>
-        public JobExecutionDetails(Guid schedulerGuid, DateTime startTime)
+        /// <param name="startTimeUtc">The UTC start time</param>
+        public JobExecutionDetails(Guid schedulerGuid, DateTime startTimeUtc)
         {
             this.schedulerGuid = schedulerGuid;
-            this.startTime = startTime;
+            this.startTimeUtc = DateTimeUtils.AssumeUniversalTime(startTimeUtc);
 
             statusMessage = "Unknown";
         }
@@ -65,23 +66,23 @@ namespace Castle.Components.Scheduler
         }
 
         /// <summary>
-        /// Gets the time when the job started.
+        /// Gets the UTC time when the job started.
         /// </summary>
-        public DateTime StartTime
+        public DateTime StartTimeUtc
         {
-            get { return startTime; }
+            get { return startTimeUtc; }
         }
 
         /// <summary>
-        /// Gets or sets the time when the job ended or null if it is still running.
+        /// Gets or sets the UTC time when the job ended or null if it is still running.
         /// </summary>
         /// <remarks>
         /// The default value is null.
         /// </remarks>
-        public DateTime? EndTime
+        public DateTime? EndTimeUtc
         {
-            get { return endTime; }
-            set { endTime = value; }
+            get { return endTimeUtc; }
+            set { endTimeUtc = DateTimeUtils.AssumeUniversalTime(value); }
         }
 
         /// <summary>
@@ -121,9 +122,9 @@ namespace Castle.Components.Scheduler
         /// <returns>The cloned job execution details</returns>
         public virtual JobExecutionDetails Clone()
         {
-            JobExecutionDetails clone = new JobExecutionDetails(schedulerGuid, startTime);
+            JobExecutionDetails clone = new JobExecutionDetails(schedulerGuid, startTimeUtc);
 
-            clone.endTime = endTime;
+            clone.endTimeUtc = endTimeUtc;
             clone.succeeded = succeeded;
             clone.statusMessage = statusMessage;
 

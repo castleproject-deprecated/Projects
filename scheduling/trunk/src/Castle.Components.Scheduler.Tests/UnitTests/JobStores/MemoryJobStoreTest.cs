@@ -29,5 +29,37 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
         {
             return new MemoryJobStore();
         }
+
+        [Test]
+        public void UpdateJob_IncrementsVersionNumber()
+        {
+            Mocks.ReplayAll();
+
+            VersionedJobDetails jobDetails = (VersionedJobDetails)CreatePendingJob("job", DateTime.UtcNow);
+            int originalVersion = jobDetails.Version;
+
+            jobDetails.JobSpec.Name = "renamedJob";
+            JobStore.UpdateJob("job", jobDetails.JobSpec);
+
+            VersionedJobDetails updatedJobDetails = (VersionedJobDetails)JobStore.GetJobDetails("renamedJob");
+            Assert.AreEqual(originalVersion + 1, updatedJobDetails.Version, "Version number of saved object should be incremented in database.");
+        }
+
+        [Test]
+        public void SaveJobDetails_IncrementsVersionNumber()
+        {
+            Mocks.ReplayAll();
+
+            VersionedJobDetails jobDetails = (VersionedJobDetails)CreatePendingJob("job", DateTime.UtcNow);
+            int originalVersion = jobDetails.Version;
+
+            jobDetails.JobState = JobState.Stopped;
+            JobStore.SaveJobDetails(jobDetails);
+
+            Assert.AreEqual(originalVersion + 1, jobDetails.Version, "Version number of original object should be incremented in place.");
+
+            VersionedJobDetails updatedJobDetails = (VersionedJobDetails)JobStore.GetJobDetails("job");
+            Assert.AreEqual(originalVersion + 1, updatedJobDetails.Version, "Version number of saved object should be incremented in memory too.");
+        }
     }
 }

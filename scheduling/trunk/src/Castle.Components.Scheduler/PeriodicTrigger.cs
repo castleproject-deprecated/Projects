@@ -14,6 +14,7 @@
 
 using System;
 using System.Globalization;
+using Castle.Components.Scheduler.Utilities;
 
 namespace Castle.Components.Scheduler
 {
@@ -31,22 +32,22 @@ namespace Castle.Components.Scheduler
         /// </summary>
         public const TriggerScheduleAction DefaultMisfireAction = TriggerScheduleAction.Skip;
 
-        private DateTime startTime;
-        private DateTime? endTime;
+        private DateTime startTimeUtc;
+        private DateTime? endTimeUtc;
         private TimeSpan? period;
         private int? jobExecutionCountRemaining;
+        private bool isFirstTime;
 
         private TimeSpan? misfireThreshold;
         private TriggerScheduleAction misfireAction;
 
-        private bool isJobExecutionPending;
-        private DateTime? nextFireTime;
+        private DateTime? nextFireTimeUtc;
 
         /// <summary>
         /// Creates a periodic trigger.
         /// </summary>
-        /// <param name="startTime">The date and time when the trigger will first fire</param>
-        /// <param name="endTime">The date and time when the trigger must stop firing.
+        /// <param name="startTimeUtc">The UTC date and time when the trigger will first fire</param>
+        /// <param name="endTimeUtc">The UTC date and time when the trigger must stop firing.
         /// If the time is set to null, the trigger may continue firing indefinitely.</param>
         /// <param name="period">The recurrence period of the trigger.
         /// If the period is set to null, the trigger will fire exactly once
@@ -57,17 +58,18 @@ namespace Castle.Components.Scheduler
         /// may execute is unlimited.</param>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="period"/> is negative or zero</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="jobExecutionCount"/> is negative</exception>
-        public PeriodicTrigger(DateTime startTime, DateTime? endTime, TimeSpan? period, int? jobExecutionCount)
+        public PeriodicTrigger(DateTime startTimeUtc, DateTime? endTimeUtc, TimeSpan? period, int? jobExecutionCount)
         {
             if (period.HasValue && period.Value.Ticks <= 0)
                 throw new ArgumentOutOfRangeException("value", "The recurrence period must not be negative or zero.");
             if (jobExecutionCount.HasValue && jobExecutionCount.Value < 0)
                 throw new ArgumentOutOfRangeException("value", "The job execution count remaining must not be negative.");
 
-            this.startTime = startTime;
-            this.endTime = endTime;
+            this.startTimeUtc = DateTimeUtils.AssumeUniversalTime(startTimeUtc);
+            this.endTimeUtc = DateTimeUtils.AssumeUniversalTime(endTimeUtc);
             this.period = period;
             this.jobExecutionCountRemaining = jobExecutionCount;
+            this.isFirstTime = true;
 
             misfireAction = DefaultMisfireAction;
         }
@@ -75,54 +77,44 @@ namespace Castle.Components.Scheduler
         /// <summary>
         /// Creates a trigger that fires exactly once at the specified time.
         /// </summary>
-        /// <param name="time">The time at which the trigger should fire</param>
+        /// <param name="fireTimeUtc">The UTC time at which the trigger should fire</param>
         /// <returns>The one-shot trigger</returns>
-        public static PeriodicTrigger CreateOneShotTrigger(DateTime time)
+        public static PeriodicTrigger CreateOneShotTrigger(DateTime fireTimeUtc)
         {
-            return new PeriodicTrigger(time, null, null, 1);
+            return new PeriodicTrigger(fireTimeUtc, null, null, 1);
         }
 
 
         /// <summary>
-        /// Creates a trigger that fires every day beginning at the specified start time.
+        /// Creates a trigger that fires every 24 hours beginning at the specified start time.
         /// </summary>
-        /// <param name="startTime">The date and time when the trigger will first fire</param>
-        public static PeriodicTrigger CreateDailyTrigger(DateTime startTime)
+        /// <remarks>
+        /// This method does not take into account local time variations such as Daylight
+        /// Saving Time.  Use a more sophisticated calendar-based trigger for that purpose.
+        /// </remarks>
+        /// <param name="startTimeUtc">The UTC date and time when the trigger will first fire</param>
+        public static PeriodicTrigger CreateDailyTrigger(DateTime startTimeUtc)
         {
-            return new PeriodicTrigger(startTime, null, new TimeSpan(24, 0, 0), null);
+            return new PeriodicTrigger(startTimeUtc, null, new TimeSpan(24, 0, 0), null);
         }
 
         /// <summary>
-        /// Gets or sets the date and time when the trigger will first fire.
+        /// Gets or sets the UTC date and time when the trigger will first fire.
         /// </summary>
-        public DateTime StartTime
+        public DateTime StartTimeUtc
         {
-            get { return startTime; }
-            set
-            {
-                if (startTime != value)
-                {
-                    IsDirty = true;
-                    startTime = value;
-                }
-            }
+            get { return startTimeUtc; }
+            set{ startTimeUtc = DateTimeUtils.AssumeUniversalTime(value); }
         }
 
         /// <summary>
-        /// Gets or sets the date and time when the trigger must stop firing.
+        /// Gets or sets the UTC date and time when the trigger must stop firing.
         /// If the time is set to null, the trigger may continue firing indefinitely.
         /// </summary>
-        public DateTime? EndTime
+        public DateTime? EndTimeUtc
         {
-            get { return endTime; }
-            set
-            {
-                if (endTime != value)
-                {
-                    IsDirty = true;
-                    endTime = value;
-                }
-            }
+            get { return endTimeUtc; }
+            set { endTimeUtc = DateTimeUtils.AssumeUniversalTime(value); }
         }
 
         /// <summary>
@@ -139,11 +131,7 @@ namespace Castle.Components.Scheduler
                 if (value.HasValue && value.Value.Ticks <= 0)
                     throw new ArgumentOutOfRangeException("value", "The recurrence period must not be negative or zero.");
 
-                if (period != value)
-                {
-                    IsDirty = true;
-                    period = value;
-                }
+                period = value;
             }
         }
 
@@ -163,11 +151,7 @@ namespace Castle.Components.Scheduler
                 if (value.HasValue && value.Value < 0)
                     throw new ArgumentOutOfRangeException("value", "The job execution count remaining must not be negative.");
 
-                if (jobExecutionCountRemaining != value)
-                {
-                    IsDirty = true;
-                    jobExecutionCountRemaining = value;
-                }
+                jobExecutionCountRemaining = value;
             }
         }
         
@@ -187,11 +171,7 @@ namespace Castle.Components.Scheduler
                 if (value.HasValue && value.Value.Ticks < 0)
                     throw new ArgumentOutOfRangeException("value", "The misfire threshold must not be negative.");
 
-                if (misfireThreshold != value)
-                {
-                    IsDirty = true;
-                    misfireThreshold = value;
-                }
+                misfireThreshold = value;
             }
         }
 
@@ -204,19 +184,38 @@ namespace Castle.Components.Scheduler
         public TriggerScheduleAction MisfireAction
         {
             get { return misfireAction; }
-            set
-            {
-                if (misfireAction != value)
-                {
-                    IsDirty = true;
-                    misfireAction = value;
-                }
-            }
+            set { misfireAction = value; }
         }
 
-        public override DateTime?  NextFireTime
+        /// <summary>
+        /// Gets or sets whether the next trigger firing should occur at <see cref="StartTimeUtc" />
+        /// or at the next recurrence period according to <see cref="Period" />.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This property is initially set to true when the trigger is created so that missing
+        /// the time specified by <see cref="StartTimeUtc" /> is considered a misfire.
+        /// Once the first time is processed, the property is set to false and the trigger will
+        /// skip over as many recurrence periods as needed to catch up with real time.
+        /// </para>
+        /// <para>
+        /// It may be useful to initialize this property to false after creating the trigger
+        /// if you do not care whether the trigger fires at the designated start time and
+        /// simply wish to ensure that it followed the expected recurrence pattern.  However,
+        /// if the <see cref="Period" /> is null, then the trigger will not fire if the time
+        /// indicated by <see cref="StartTimeUtc" /> has already passed and will immediately
+        /// become inactive.
+        /// </para>
+        /// </remarks>
+        public bool IsFirstTime
         {
-	        get { return nextFireTime; }
+            get { return isFirstTime; }
+            set { isFirstTime = value; }
+        }
+
+        public override DateTime? NextFireTimeUtc
+        {
+	        get { return nextFireTimeUtc; }
         }
 
         public override TimeSpan? NextMisfireThreshold
@@ -226,43 +225,37 @@ namespace Castle.Components.Scheduler
 
         public override bool IsActive
         {
-            get { return isJobExecutionPending || nextFireTime.HasValue; }
+            get { return ! jobExecutionCountRemaining.HasValue || jobExecutionCountRemaining.Value > 0; }
         }
 
         public override Trigger Clone()
         {
-            PeriodicTrigger clone = new PeriodicTrigger(startTime, endTime, period, jobExecutionCountRemaining);
-            clone.isJobExecutionPending = isJobExecutionPending;
-            clone.nextFireTime = nextFireTime;
+            PeriodicTrigger clone = new PeriodicTrigger(startTimeUtc, endTimeUtc, period, jobExecutionCountRemaining);
+            clone.nextFireTimeUtc = nextFireTimeUtc;
             clone.misfireThreshold = misfireThreshold;
             clone.misfireAction = misfireAction;
-            clone.IsDirty = IsDirty;
+            clone.isFirstTime = isFirstTime;
 
             return clone;
         }
 
-        public override TriggerScheduleAction Schedule(TriggerScheduleCondition condition, DateTime timeBasis)
+        public override TriggerScheduleAction Schedule(TriggerScheduleCondition condition, DateTime timeBasisUtc,
+            JobExecutionDetails lastJobExecutionDetails)
         {
-            IsDirty = true;
+            timeBasisUtc = DateTimeUtils.AssumeUniversalTime(timeBasisUtc);
 
             switch (condition)
             {
-                case TriggerScheduleCondition.FirstTime:
-                    // If this is the first time, then set the schedule time to the start time then
-                    // return.  The scheduler should come back soon to check whether the trigger has (mis)fired
-                    // so we'll execute the job later on when we get back here.
-                    return ScheduleSuggestedAction(TriggerScheduleAction.Skip, timeBasis, true);
+                case TriggerScheduleCondition.Latch:
+                    return ScheduleSuggestedAction(TriggerScheduleAction.Skip, timeBasisUtc);
 
                 case TriggerScheduleCondition.Misfire:
-                    return ScheduleSuggestedAction(misfireAction, timeBasis, false);
+                    isFirstTime = false;
+                    return ScheduleSuggestedAction(misfireAction, timeBasisUtc);
 
                 case TriggerScheduleCondition.Fire:
-                    return ScheduleSuggestedAction(TriggerScheduleAction.ExecuteJob, timeBasis, false);
-
-                case TriggerScheduleCondition.JobSucceeded:
-                case TriggerScheduleCondition.JobFailed:
-                    isJobExecutionPending = false;
-                    return ScheduleSuggestedAction(TriggerScheduleAction.Skip, timeBasis, false);
+                    isFirstTime = false;
+                    return ScheduleSuggestedAction(TriggerScheduleAction.ExecuteJob, timeBasisUtc);
 
                 default:
                     throw new SchedulerException(String.Format(CultureInfo.CurrentCulture,
@@ -270,7 +263,7 @@ namespace Castle.Components.Scheduler
             }
         }
 
-        private TriggerScheduleAction ScheduleSuggestedAction(TriggerScheduleAction action, DateTime timeBasis, bool isFirstTime)
+        private TriggerScheduleAction ScheduleSuggestedAction(TriggerScheduleAction action, DateTime timeBasisUtc)
         {
             switch (action)
             {
@@ -283,24 +276,23 @@ namespace Castle.Components.Scheduler
                         break;
 
                     // If the end time has passed then stop.
-                    if (endTime.HasValue && timeBasis > endTime.Value)
+                    if (endTimeUtc.HasValue && timeBasisUtc > endTimeUtc.Value)
                         break;
 
                     // If the start time is still in the future then hold off until then.
-                    if (timeBasis < startTime)
+                    if (timeBasisUtc < startTimeUtc)
                     {
-                        nextFireTime = startTime;
+                        nextFireTimeUtc = startTimeUtc;
                         return TriggerScheduleAction.Skip;
                     }
 
                     // Otherwise execute the job.
-                    nextFireTime = null;
+                    nextFireTimeUtc = null;
                     jobExecutionCountRemaining -= 1;
-                    isJobExecutionPending = true;
                     return TriggerScheduleAction.ExecuteJob;
 
                 case TriggerScheduleAction.DeleteJob:
-                    nextFireTime = null;
+                    nextFireTimeUtc = null;
                     jobExecutionCountRemaining = 0;
                     return TriggerScheduleAction.DeleteJob;
 
@@ -310,9 +302,9 @@ namespace Castle.Components.Scheduler
                         break;
 
                     // If the start time is still in the future then hold off until then.
-                    if (isFirstTime || timeBasis < startTime)
+                    if (isFirstTime || timeBasisUtc < startTimeUtc)
                     {
-                        nextFireTime = startTime;
+                        nextFireTimeUtc = startTimeUtc;
                         return TriggerScheduleAction.Skip;
                     }
 
@@ -322,12 +314,12 @@ namespace Castle.Components.Scheduler
                         break;
 
                     // Compute when the next occurrence should be.
-                    TimeSpan timeSinceStart = timeBasis - startTime;
+                    TimeSpan timeSinceStart = timeBasisUtc - startTimeUtc;
                     TimeSpan timeSinceLastPeriod = new TimeSpan(timeSinceStart.Ticks % period.Value.Ticks);
-                    nextFireTime = timeBasis + period - timeSinceLastPeriod;
+                    nextFireTimeUtc = timeBasisUtc + period - timeSinceLastPeriod;
                     
                     // If the next occurrence is past the end time then stop.
-                    if (nextFireTime > endTime)
+                    if (nextFireTimeUtc > endTimeUtc)
                         break;
 
                     // Otherwise we're good.
@@ -335,7 +327,7 @@ namespace Castle.Components.Scheduler
             }
 
             // Stop the trigger.
-            nextFireTime = null;
+            nextFireTimeUtc = null;
             jobExecutionCountRemaining = 0;
             return TriggerScheduleAction.Stop;
         }

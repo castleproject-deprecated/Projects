@@ -279,15 +279,32 @@ namespace Castle.Components.Scheduler
             return jobStore.GetJobDetails(jobName);
         }
 
-        public bool CreateJob(JobSpec jobSpec, JobData jobData, CreateJobConflictAction conflictAction)
+        public bool CreateJob(JobSpec jobSpec, CreateJobConflictAction conflictAction)
         {
             if (jobSpec == null)
+                throw new ArgumentNullException("jobSpec");
+            if (!Enum.IsDefined(typeof(CreateJobConflictAction), conflictAction))
+                throw new ArgumentOutOfRangeException("conflictAction");
+
+            ThrowIfDisposed();
+            ThrowIfNotInitialized();
+
+            return jobStore.CreateJob(jobSpec, DateTime.UtcNow, conflictAction);
+        }
+
+        public void UpdateJob(string existingJobName, JobSpec updatedJobSpec)
+        {
+            if (existingJobName == null)
+                throw new ArgumentNullException("existingJobName");
+            if (existingJobName.Length == 0)
+                throw new ArgumentException("existingJobName");
+            if (updatedJobSpec == null)
                 throw new ArgumentNullException("jobSpec");
 
             ThrowIfDisposed();
             ThrowIfNotInitialized();
 
-            return jobStore.CreateJob(jobSpec, jobData, DateTime.UtcNow, conflictAction);
+            jobStore.UpdateJob(existingJobName, updatedJobSpec);
         }
 
         public bool DeleteJob(string jobName)
@@ -299,6 +316,14 @@ namespace Castle.Components.Scheduler
             ThrowIfNotInitialized();
 
             return jobStore.DeleteJob(jobName);
+        }
+
+        public string[] ListJobNames()
+        {
+            ThrowIfDisposed();
+            ThrowIfNotInitialized();
+
+            return jobStore.ListJobNames();
         }
 
         private void WatchTriggeredJobs(object arg)
@@ -385,19 +410,19 @@ namespace Castle.Components.Scheduler
                 switch (jobDetails.JobState)
                 {
                     case JobState.Pending:
-                        action = trigger.Schedule(TriggerScheduleCondition.FirstTime, timeBasis);
+                        action = trigger.Schedule(TriggerScheduleCondition.Latch, timeBasis, jobDetails.LastJobExecutionDetails);
                         break;
 
                     case JobState.Triggered:
-                        if (jobDetails.NextTriggerFireTime.HasValue)
+                        if (jobDetails.NextTriggerFireTimeUtc.HasValue)
                         {
-                            DateTime nextScheduledTime = jobDetails.NextTriggerFireTime.Value;
+                            DateTime nextScheduledTime = jobDetails.NextTriggerFireTimeUtc.Value;
                             TimeSpan difference = timeBasis - nextScheduledTime;
 
                             if (! jobDetails.NextTriggerMisfireThreshold.HasValue
                                 || difference <= jobDetails.NextTriggerMisfireThreshold.Value)
                             {
-                                action = trigger.Schedule(TriggerScheduleCondition.Fire, timeBasis);
+                                action = trigger.Schedule(TriggerScheduleCondition.Fire, timeBasis, jobDetails.LastJobExecutionDetails);
                                 break;
                             }
                         }
@@ -409,23 +434,17 @@ namespace Castle.Components.Scheduler
                                 jobDetails.JobSpec.Name);
                         }
 
-                        action = trigger.Schedule(TriggerScheduleCondition.Misfire, timeBasis);
+                        action = trigger.Schedule(TriggerScheduleCondition.Misfire, timeBasis, jobDetails.LastJobExecutionDetails);
                         break;
 
                     case JobState.Completed:
                         if (jobDetails.LastJobExecutionDetails != null)
                         {
-                            if (!jobDetails.LastJobExecutionDetails.EndTime.HasValue)
+                            if (!jobDetails.LastJobExecutionDetails.EndTimeUtc.HasValue)
                             {
                                 logger.WarnFormat("Job '{0}' was in the Completed state but its EndTime property was null in violatoin of the scheduler's invariants.  "
                                     + "It has been set to the current time.", jobDetails.JobSpec.Name);
-                                jobDetails.LastJobExecutionDetails.EndTime = timeBasis;
-                            }
-
-                            if (jobDetails.LastJobExecutionDetails.Succeeded)
-                            {
-                                action = trigger.Schedule(TriggerScheduleCondition.JobSucceeded, timeBasis);
-                                break;
+                                jobDetails.LastJobExecutionDetails.EndTimeUtc = timeBasis;
                             }
                         }
                         else
@@ -439,10 +458,10 @@ namespace Castle.Components.Scheduler
                             jobDetails.LastJobExecutionDetails = new JobExecutionDetails(guid, DateTime.MinValue);
                             jobDetails.LastJobExecutionDetails.Succeeded = false;
                             jobDetails.LastJobExecutionDetails.StatusMessage = completedInvariantViolationMessage;
-                            jobDetails.LastJobExecutionDetails.EndTime = timeBasis;
+                            jobDetails.LastJobExecutionDetails.EndTimeUtc = timeBasis;
                         }
 
-                        action = trigger.Schedule(TriggerScheduleCondition.JobFailed, timeBasis);
+                        action = trigger.Schedule(TriggerScheduleCondition.Latch, timeBasis, jobDetails.LastJobExecutionDetails);
                         break;
 
                     case JobState.Orphaned:
@@ -461,9 +480,9 @@ namespace Castle.Components.Scheduler
 
                         jobDetails.LastJobExecutionDetails.Succeeded = false;
                         jobDetails.LastJobExecutionDetails.StatusMessage = orphanedMessage;
-                        jobDetails.LastJobExecutionDetails.EndTime = timeBasis;
+                        jobDetails.LastJobExecutionDetails.EndTimeUtc = timeBasis;
 
-                        action = trigger.Schedule(TriggerScheduleCondition.JobFailed, timeBasis);
+                        action = trigger.Schedule(TriggerScheduleCondition.Latch, timeBasis, jobDetails.LastJobExecutionDetails);
                         break;
 
                     default:
@@ -472,7 +491,7 @@ namespace Castle.Components.Scheduler
                         return TriggerScheduleAction.Stop;
                 }
 
-                jobDetails.NextTriggerFireTime = trigger.NextFireTime;
+                jobDetails.NextTriggerFireTimeUtc = trigger.NextFireTimeUtc;
                 jobDetails.NextTriggerMisfireThreshold = trigger.NextMisfireThreshold;
                 return action;
             }
@@ -518,7 +537,7 @@ namespace Castle.Components.Scheduler
                 }
 
                 jobDetails.JobState = JobState.Stopped;
-                jobDetails.NextTriggerFireTime = null;
+                jobDetails.NextTriggerFireTimeUtc = null;
                 jobDetails.NextTriggerMisfireThreshold = null;
                 jobStore.SaveJobDetails(jobDetails);
             }
@@ -534,11 +553,11 @@ namespace Castle.Components.Scheduler
         private void BeginExecuteJob(JobDetails jobDetails)
         {
             ILogger jobLogger = logger.CreateChildLogger("Job: " + jobDetails.JobSpec.Name);
-            JobExecutionContext context = new JobExecutionContext(this, jobLogger, jobDetails.JobSpec, jobDetails.JobData);
+            JobExecutionContext context = new JobExecutionContext(this, jobLogger, jobDetails.JobSpec, jobDetails.JobSpec.JobData);
             try
             {
                 jobLogger.InfoFormat("Job '{0}' started at {1}.",
-                    jobDetails.JobSpec.Name, jobDetails.LastJobExecutionDetails.StartTime);
+                    jobDetails.JobSpec.Name, jobDetails.LastJobExecutionDetails.StartTimeUtc);
 
                 JobExecuteAsyncState asyncState = new JobExecuteAsyncState(jobDetails, context);
                 jobRunner.BeginExecute(context, EndExecuteJob, asyncState);
@@ -551,7 +570,7 @@ namespace Castle.Components.Scheduler
                     jobDetails.JobSpec.Name);
 
                 jobDetails.LastJobExecutionDetails.Succeeded = false;
-                jobDetails.LastJobExecutionDetails.EndTime = endTime;
+                jobDetails.LastJobExecutionDetails.EndTimeUtc = endTime;
                 jobDetails.LastJobExecutionDetails.StatusMessage = String.Format(CultureInfo.CurrentCulture,
                     "Job runner failed to start the job due to an exception:\n{0}", ex);
                 jobDetails.JobState = JobState.Completed;
@@ -574,7 +593,7 @@ namespace Castle.Components.Scheduler
                     DateTime endTime = DateTime.UtcNow;
 
                     jobDetails.LastJobExecutionDetails.Succeeded = succeeded;
-                    jobDetails.LastJobExecutionDetails.EndTime = endTime;
+                    jobDetails.LastJobExecutionDetails.EndTimeUtc = endTime;
 
                     if (succeeded)
                     {
@@ -591,7 +610,7 @@ namespace Castle.Components.Scheduler
                         jobDetails.LastJobExecutionDetails.StatusMessage = "Completed with an unspecified error.";
                     }
 
-                    jobDetails.JobData = context.JobData;
+                    jobDetails.JobSpec.JobData = context.JobData;
                 }
                 catch (Exception ex)
                 {
@@ -601,7 +620,7 @@ namespace Castle.Components.Scheduler
                         jobDetails.JobSpec.Name, endTime);
 
                     jobDetails.LastJobExecutionDetails.Succeeded = false;
-                    jobDetails.LastJobExecutionDetails.EndTime = endTime;
+                    jobDetails.LastJobExecutionDetails.EndTimeUtc = endTime;
                     jobDetails.LastJobExecutionDetails.StatusMessage = String.Format(CultureInfo.CurrentCulture,
                         "Job execution failed with an exception:\n{0}", ex);
                 }

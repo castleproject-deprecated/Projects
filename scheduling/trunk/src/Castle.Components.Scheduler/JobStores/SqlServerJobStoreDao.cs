@@ -14,36 +14,30 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 
-namespace Castle.Components.Scheduler
+namespace Castle.Components.Scheduler.JobStores
 {
     /// <summary>
-    /// Specifies how to handle the case where a job with the same name
-    /// has already been created.
+    /// A job store DAO for SQL Server databases.
     /// </summary>
-    public enum CreateJobConflictAction
+    public class SqlServerJobStoreDao : AdoNetJobStoreDao
     {
         /// <summary>
-        /// Throws an exception.
+        /// Creates a SQL Server job store.
         /// </summary>
-        Throw,
+        /// <param name="connectionString">The database connection string</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="connectionString"/> is null</exception>
+        public SqlServerJobStoreDao(string connectionString)
+            : base(connectionString, "@")
+        {
+        }
 
-        /// <summary>
-        /// Updates the existing job.
-        /// The job's history is preserved.
-        /// </summary>
-        Update,
-
-        /// <summary>
-        /// Replaces the existing job.
-        /// The job's history is discarded as if it had been deleted before being recreated.
-        /// </summary>
-        Replace,
-
-        /// <summary>
-        /// Ignores the conflict and does not change the existing job.
-        /// </summary>
-        Ignore
+        protected override IDbConnection CreateConnection()
+        {
+            return new SqlConnection(ConnectionString);
+        }
     }
 }

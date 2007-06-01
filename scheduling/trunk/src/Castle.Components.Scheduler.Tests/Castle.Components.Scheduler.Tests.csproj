@@ -50,10 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UnitTests\BaseUnitTest.cs" />
+    <Compile Include="UnitTests\DateTimeUtilsTest.cs" />
     <Compile Include="UnitTests\DefaultJobRunnerTest.cs" />
     <Compile Include="UnitTests\DefaultSchedulerTest.cs" />
-    <Compile Include="UnitTests\JobStores\AdoNetJobStoreTest.cs" />
+    <Compile Include="UnitTests\JobStores\PersistentJobStoreTest.cs" />
     <Compile Include="UnitTests\JobStores\SqlServerJobStoreTest.cs" />
+    <Compile Include="Utilities\DateTimeAssert.cs" />
     <Compile Include="Utilities\JobAssert.cs" />
     <Compile Include="UnitTests\JobDataTest.cs" />
     <Compile Include="UnitTests\JobExecutionContextTest.cs" />
