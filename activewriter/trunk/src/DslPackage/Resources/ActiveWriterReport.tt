@@ -26,6 +26,7 @@ limitations under the License.
 	propertyBag.Add("Generic.Model", this.Model);
 	propertyBag.Add("Generic.Namespace", "%NAMESPACE%");
 	propertyBag.Add("Generic.ProcessID", "%PID%");
+	propertyBag.Add("Generic.ModelFileFullName", @"%MODELFILEFULLNAME%");
 	
 	CodeGenerationHelper helper = new CodeGenerationHelper(propertyBag);
 	helper.Generate();

@@ -62,7 +62,7 @@ namespace Altinoren.ActiveWriter
         {
             if (this.GenerateMonoRailProject && string.IsNullOrEmpty(this.MonoRailProjectPath))
             {
-                context.LogError("MonoRail project must have a path defined", "AW001ValidateMonoRailProjectPath", this);
+                context.LogError("MonoRail project must have a path defined", "AW001ValidateMonoRailProjectPathError", this);
             }
         }
 
@@ -78,6 +78,15 @@ namespace Altinoren.ActiveWriter
                         context.LogError("Class " + cls.Name + " is Lazy but model will not generate virtual properties. Change UseVirtualProperties to true.", "AW001ValidateVirtualPropertyWithoutLazyModelClassError", cls);
                     }
                 }
+            }
+        }
+
+        [ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
+        private void ValidateActiveRecordAssemblyName(ValidationContext context)
+        {
+            if (this.Target == CodeGenerationTarget.NHibernate && string.IsNullOrEmpty(this.ActiveRecordAssemblyName))
+            {
+                context.LogError("Target is NHibernate but ActiveRecord Assembly Name is not supplied.", "AW001ValidateActiveRecordAssemblyNameError", this);
             }
         }
     }

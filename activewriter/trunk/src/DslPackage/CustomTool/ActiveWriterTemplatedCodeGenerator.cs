@@ -33,7 +33,9 @@ namespace Altinoren.ActiveWriter.CustomTool
 
             DTE dte = DTEHelper.GetDTE(currentProcess.Id.ToString());
 
-            switch (DTEHelper.GetProjectLanguage(dte.ActiveDocument.ProjectItem.ContainingProject))
+            ProjectItem projectItem = dte.Solution.FindProjectItem(inputFileName);
+
+            switch (DTEHelper.GetProjectLanguage(projectItem.ContainingProject))
             {
                 case CodeLanguage.CSharp:
                     fileExtension = "cs";
@@ -53,6 +55,7 @@ namespace Altinoren.ActiveWriter.CustomTool
             inputFileContent =
                 manager.GetObject("ActiveWriterReport").ToString()
                     .Replace("%MODELFILE%", fi.Name)
+                    .Replace("%MODELFILEFULLNAME%", fi.FullName)
                     .Replace("%NAMESPACE%", FileNameSpace)
                     .Replace("%EXT%", fileExtension)
                     .Replace("%PID%", currentProcess.Id.ToString());

@@ -45,6 +45,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private Hashtable _propertyBag = null;
         private DTE _dte = null;
 
+        private string _modelFileName = null;
+        private string _modelFilePath = null;
+        ProjectItem _projectItem = null;
+
         #endregion
 
         #region ctors
@@ -61,7 +65,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             _dte = ServerExplorerSupport.DTEHelper.GetDTE(_propertyBag["Generic.ProcessID"].ToString());
             _propertyBag.Add("Generic.DTE", _dte);
 
-            switch (ServerExplorerSupport.DTEHelper.GetProjectLanguage(_dte.ActiveDocument.ProjectItem.ContainingProject))
+            _modelFileName = (string)_propertyBag["Generic.ModelFileFullName"];
+            _modelFilePath = Path.GetDirectoryName(_modelFileName);
+            _projectItem = _dte.Solution.FindProjectItem(_modelFileName);
+
+            switch (ServerExplorerSupport.DTEHelper.GetProjectLanguage(_projectItem.ContainingProject))
             {
                 case CodeLanguage.CSharp:
                     _provider = new CSharpCodeProvider();
@@ -159,7 +167,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
                 foreach (KeyValuePair<string, string> pair in nHibernateConfigs)
                 {
-                    string path = Path.Combine(_dte.ActiveDocument.Path, RemoveNamespaceFromStart(pair.Key) + ".hbm.xml");
+                    string path = Path.Combine(_modelFilePath, RemoveNamespaceFromStart(pair.Key) + ".hbm.xml");
                     using (StreamWriter writer = new StreamWriter(path, false, Encoding.Unicode))
                     {
                         writer.Write(pair.Value);
@@ -168,7 +176,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     ProjectItem item = null;
 
                     if (_model.RelateWithActiwFile)
-                        item = _dte.ActiveDocument.ProjectItem.ProjectItems.AddFromFile(path);
+                        item = _projectItem.ProjectItems.AddFromFile(path);
                     else
                         item = _dte.ItemOperations.AddExistingItem(path);
 

@@ -53,47 +53,47 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\INotifyPropertyChangedTest.cs" />
+    <Compile Include="Tests\GeneratedCodeGenericTestModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GeneratedCodeGenericTestModel.actiw</DependentUpon>
+    </Compile>
     <Compile Include="Tests\GeneratedCodeINotifyPropertyChangedTestModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeneratedCodeINotifyPropertyChangedTestModel.actiw</DependentUpon>
     </Compile>
-    <Compile Include="Tests\NestedClassTest.cs" />
     <Compile Include="Tests\GeneratedCodeNestedTestModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeneratedCodeNestedTestModel.actiw</DependentUpon>
     </Compile>
-    <Compile Include="Tests\GeneratedCodeNHibernateTest.cs" />
     <Compile Include="Tests\GeneratedCodeNHibernateTestModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeneratedCodeNHibernateTestModel.actiw</DependentUpon>
     </Compile>
-    <Compile Include="Tests\GeneratedCodeGenericTestModel.cs">
-      <DependentUpon>GeneratedCodeGenericTestModel.actiw</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Tests\GeneratedCodeRuntimeTest.cs" />
-    <Compile Include="Tests\GeneratedCodeRuntimeTestModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GeneratedCodeRuntimeTestModel.actiw</DependentUpon>
-    </Compile>
-    <Compile Include="Tests\GeneratedCodeTest.cs" />
     <Compile Include="Tests\GeneratedCodeNonGenericTestModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeneratedCodeNonGenericTestModel.actiw</DependentUpon>
     </Compile>
-    <Compile Include="Tests\GeneratedCodeVirtualPropertyTest.cs" />
+    <Compile Include="Tests\GeneratedCodeRuntimeTestModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GeneratedCodeRuntimeTestModel.actiw</DependentUpon>
+    </Compile>
     <Compile Include="Tests\GeneratedCodeVirtualPropertyTestModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeneratedCodeVirtualPropertyTestModel.actiw</DependentUpon>
     </Compile>
+    <Compile Include="Tests\INotifyPropertyChangedTest.cs" />
+    <Compile Include="Tests\NestedClassTest.cs" />
+    <Compile Include="Tests\GeneratedCodeNHibernateTest.cs" />
+    <Compile Include="Tests\GeneratedCodeRuntimeTest.cs" />
+    <Compile Include="Tests\GeneratedCodeTest.cs" />
+    <Compile Include="Tests\GeneratedCodeVirtualPropertyTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ReadMe-Tests.txt" />
+    <Content Include="TestMacros.vb" />
     <EmbeddedResource Include="Tests\NHBlog.hbm.xml">
       <DependentUpon>GeneratedCodeNHibernateTestModel.actiw</DependentUpon>
     </EmbeddedResource>
