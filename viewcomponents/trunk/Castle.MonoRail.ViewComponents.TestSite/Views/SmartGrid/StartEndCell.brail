@@ -1,0 +1,14 @@
+<%
+component SmartGrid, {@source: users}:
+	section startHeaderCell:
+	%>
+		<th>Header 
+	<%
+	end
+	section startCell:
+	%>
+		<td>Cell - 
+	<%
+	end
+end
+%>

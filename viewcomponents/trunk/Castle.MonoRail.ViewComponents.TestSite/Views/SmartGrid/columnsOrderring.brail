@@ -1,0 +1,8 @@
+<%
+component SmartGrid, {@source: users,
+    @columns: [
+          @Email,
+          @Name
+     ] 
+} 
+%>

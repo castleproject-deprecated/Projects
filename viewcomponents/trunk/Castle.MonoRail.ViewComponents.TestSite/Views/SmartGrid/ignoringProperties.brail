@@ -1,0 +1,3 @@
+<%
+component SmartGrid, {@source: users, @displayManager: false, @displayId: false}
+%>

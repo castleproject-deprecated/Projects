@@ -1,0 +1,21 @@
+<%
+component SmartGrid, {@source: users,
+    @columns: [
+          @Email,
+          @Name
+     ]
+} :
+	section moreHeader:
+	%>
+		<th>edit</th>
+		<th>delete</th>
+	<%
+	end
+	section more:
+	%>
+		<td>Edit - ${item.Name}</td>
+		<td>Remove - ${item.Name}</td>
+	<%
+	end
+end
+%>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.1 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xml:lang="en"
+	  lang="en">
+	<head>
+		<title>Exesto</title>
+		<link rel="stylesheet"
+			  type="text/css"
+			  href="/style.css"
+			  media="screen, print" />
+		${Ajax.InstallScripts()}
+		${Scriptaculous.InstallScripts()}
+	</head>
+	<body>
+
+		<div class="left">
+
+			<div class="header">
+				<h2>
+					<span>
+						Logged on as: ${context.CurrentUser.Identity.Name}
+					</span>
+				</h2>
+				<h1>Castle.MonoRail.ViewComponents:<br/> Sample Site</h1>
+			</div>
+
+			<div class="content">
+				${ChildOutput}
+			</div>
+
+		
+
+			<div class="right">
+
+				<div class="round">
+					<div class="roundtl">
+						<span></span>
+					</div>
+					<div class="roundtr">
+						<span></span>
+					</div>
+					<div class="clearer">
+						<span></span>
+					</div>
+				</div>
+
+				<div class="subnav">
+
+					<h3>Grid</h3>
+					<ul>
+						<li>
+							<a href="/grid/index.rails">Basic Usage</a>
+						</li>
+						<li>
+							<a href="/grid/Alternate.rails">Alternate Rows</a>
+						</li>
+						<li>
+							<a href="/grid/Empty.rails">Empty data source</a>
+						</li>
+						<li>
+							<a href="/grid/OverrideEmpty.rails">Override Empty Rendering</a>
+						</li>
+					</ul>
+
+					<h3>Smart grid component</h3>
+					<ul>
+						<li>
+							<a href="/smartgrid/index.rails">Basic Usage</a>
+						</li>
+						<li>
+							<a href="/smartgrid/ignoringProperties.rails">Ignoring Properties</a>
+						</li>
+						<li>
+							<a href="/smartgrid/columnsOrderring.rails">Columns Orderring</a>
+						</li>
+						<li>
+							<a href="/smartgrid/OverridingHeaderBehavior.rails">Overriding Header Behavior</a>
+						</li>
+						<li>
+							<a href="/smartgrid/OverridingColumnBehavior.rails">Overriding Column Behavior</a>
+						</li>
+						<li>
+							<a href="/smartgrid/Empty.rails">Empty</a>
+						</li>
+						<li>
+							<a href="/smartgrid/More.rails">Handling additional columns</a>
+						</li>
+						<li>
+							<a href="/smartgrid/StartEndCell.rails">Start & End Cell behaviors</a>
+						</li>
+					</ul>
+				</div>
+
+
+				<div class="round">
+					<div class="roundbl">
+						<span></span>
+					</div>
+					<div class="roundbr">
+						<span></span>
+					</div>
+					<span class="clearer"></span>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="footer">Initial template design by <a href="http://arcsin.se">Arcsin</a>  <br />
+					Courtesy <a href="http://www.openwebdesign.org">Open Web Design</a>.
+		</div>
+
+	</body>
+
+</html>

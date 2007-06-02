@@ -1,0 +1,14 @@
+<%
+component SmartGrid, {@source: users,
+    @columns: [
+          @Email,
+          @Name
+     ] 
+}:
+	section emailHeader:
+	%>
+		<th style="padding-right: 150px;">Email</th>
+	<%
+	end
+end
+%>
