@@ -35,10 +35,8 @@ namespace Altinoren.ActiveWriter.UIEditors
             this.cancelButton = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.addButton = new System.Windows.Forms.ToolStripDropDownButton();
-            this.confirmationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.creditCardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.emailToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.uniqueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lengthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notEmptyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.regularExpressionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -103,10 +101,8 @@ namespace Altinoren.ActiveWriter.UIEditors
             // 
             this.addButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.addButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.confirmationToolStripMenuItem,
             this.creditCardToolStripMenuItem,
             this.emailToolStripMenuItem,
-            this.uniqueToolStripMenuItem,
             this.lengthToolStripMenuItem,
             this.notEmptyToolStripMenuItem,
             this.regularExpressionToolStripMenuItem});
@@ -114,14 +110,6 @@ namespace Altinoren.ActiveWriter.UIEditors
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(51, 22);
             this.addButton.Text = "Add...";
-            // 
-            // confirmationToolStripMenuItem
-            // 
-            this.confirmationToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.confirmationToolStripMenuItem.Name = "confirmationToolStripMenuItem";
-            this.confirmationToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.confirmationToolStripMenuItem.Text = "Confirmation";
-            this.confirmationToolStripMenuItem.Click += new System.EventHandler(this.confirmationToolStripMenuItem_Click);
             // 
             // creditCardToolStripMenuItem
             // 
@@ -139,14 +127,6 @@ namespace Altinoren.ActiveWriter.UIEditors
             this.emailToolStripMenuItem.Text = "Email";
             this.emailToolStripMenuItem.Click += new System.EventHandler(this.emailToolStripMenuItem_Click);
             // 
-            // uniqueToolStripMenuItem
-            // 
-            this.uniqueToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.uniqueToolStripMenuItem.Name = "uniqueToolStripMenuItem";
-            this.uniqueToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.uniqueToolStripMenuItem.Text = "Unique";
-            this.uniqueToolStripMenuItem.Click += new System.EventHandler(this.uniqueToolStripMenuItem_Click);
-            // 
             // lengthToolStripMenuItem
             // 
             this.lengthToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -160,7 +140,7 @@ namespace Altinoren.ActiveWriter.UIEditors
             this.notEmptyToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.notEmptyToolStripMenuItem.Name = "notEmptyToolStripMenuItem";
             this.notEmptyToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.notEmptyToolStripMenuItem.Text = "Not Empty";
+            this.notEmptyToolStripMenuItem.Text = "Non Empty";
             this.notEmptyToolStripMenuItem.Click += new System.EventHandler(this.notEmptyToolStripMenuItem_Click);
             // 
             // regularExpressionToolStripMenuItem
@@ -219,10 +199,8 @@ namespace Altinoren.ActiveWriter.UIEditors
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripDropDownButton addButton;
         private System.Windows.Forms.ToolStripButton removeButton;
-        private System.Windows.Forms.ToolStripMenuItem confirmationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem creditCardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem emailToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem uniqueToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lengthToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem notEmptyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem regularExpressionToolStripMenuItem;

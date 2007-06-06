@@ -957,7 +957,7 @@ namespace Altinoren.ActiveWriter
 		
 		/// <summary>
 		/// Gets or sets the value of BaseClassName domain property.
-		/// Defins the base class to be inherited. Does have no effect if Use Base Class
+		/// Defines the base class to be inherited. Does have no effect if Use Base Class
 		/// property is set to false.
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/BaseClassName.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
@@ -1406,7 +1406,8 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of AssemblyPath domain property.
 		/// Provides assembly load path for Castle.ActiveRecord.dll and related assemblies.
 		/// If required assemblies are in GAC, this setting is omitted. If not and is this
-		/// setting is blank an error will be thrown during code generation.
+		/// setting is blank, or required assemblies not found under the given path if they
+		/// are not in the GAC, an error will be thrown during code generation.
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/AssemblyPath.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/AssemblyPath.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
@@ -1490,16 +1491,17 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for ActiveRecordAssemblyName
 		/// </summary>
-		private global::System.String activeRecordAssemblyNamePropertyStorage = "Castle.ActiveRecord, Version=0.0.1.3, Culture=neutral, PublicKeyToken=407dd0808d44fbdc";
+		private global::System.String activeRecordAssemblyNamePropertyStorage = "Castle.ActiveRecord";
 		
 		/// <summary>
 		/// Gets or sets the value of ActiveRecordAssemblyName domain property.
-		/// Provides assembly name to be used during code generation.
+		/// Provides assembly name to be used during code generation. You can provide a
+		/// fully qualified assembly name to target a specific version from the GAC.
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ActiveRecordAssemblyName.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/ActiveRecordAssemblyName.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ActiveRecordAssemblyName.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue("Castle.ActiveRecord, Version=0.0.1.3, Culture=neutral, PublicKeyToken=407dd0808d44fbdc")]
+		[global::System.ComponentModel.DefaultValue("Castle.ActiveRecord")]
 		[DslModeling::DomainObjectId("16c1464a-bb58-41bb-ad6b-46b957eec2a2")]
 		public global::System.String ActiveRecordAssemblyName
 		{
@@ -1579,16 +1581,17 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for NHibernateAssemblyName
 		/// </summary>
-		private global::System.String nHibernateAssemblyNamePropertyStorage = "NHibernate, Version=1.2.0.3001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4";
+		private global::System.String nHibernateAssemblyNamePropertyStorage = "NHibernate";
 		
 		/// <summary>
 		/// Gets or sets the value of NHibernateAssemblyName domain property.
-		/// Provides assembly name to be used during code generation.
+		/// Provides assembly name to be used during code generation. You can provide a
+		/// fully qualified assembly name to target a specific version from the GAC.
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/NHibernateAssemblyName.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/NHibernateAssemblyName.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/NHibernateAssemblyName.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue("NHibernate, Version=1.2.0.3001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4")]
+		[global::System.ComponentModel.DefaultValue("NHibernate")]
 		[DslModeling::DomainObjectId("a0bcb53c-a856-4a8d-9245-f973dfb023d3")]
 		public global::System.String NHibernateAssemblyName
 		{

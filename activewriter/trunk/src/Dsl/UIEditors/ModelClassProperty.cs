@@ -59,9 +59,9 @@ namespace Altinoren.ActiveWriter
                 new XmlSerializer(typeof (ArrayList),
                                   new Type[]
                                       {
-                                          typeof (ValidateConfirmation), typeof (ValidateCreditCard),
-                                          typeof (ValidateEmail), typeof (ValidateIsUnique), typeof (ValidateLength),
-                                          typeof (ValidateNotEmpty), typeof (ValidateRegExp)
+                                          typeof (ValidateCreditCard),
+                                          typeof (ValidateEmail), typeof (ValidateLength),
+                                          typeof (ValidateNonEmpty), typeof (ValidateRegExp)
                                       });
             return serializer.Deserialize(reader) as ArrayList;
         }
@@ -70,7 +70,7 @@ namespace Altinoren.ActiveWriter
         {
             StringBuilder builder = new StringBuilder();
             StringWriter writer = new StringWriter(builder);
-            XmlSerializer serializer = new XmlSerializer(typeof(ArrayList), new Type[] { typeof(ValidateConfirmation), typeof(ValidateCreditCard), typeof(ValidateEmail), typeof(ValidateIsUnique), typeof(ValidateLength), typeof(ValidateNotEmpty), typeof(ValidateRegExp) });
+            XmlSerializer serializer = new XmlSerializer(typeof(ArrayList), new Type[] { typeof(ValidateCreditCard), typeof(ValidateEmail), typeof(ValidateLength), typeof(ValidateNonEmpty), typeof(ValidateRegExp) });
             serializer.Serialize(writer, list);
             return writer.ToString();
         }

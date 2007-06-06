@@ -254,7 +254,7 @@
     <comment>Category for DomainProperty &apos;UseBaseClass&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.Model/BaseClassName.Description" xml:space="preserve">
-    <value>Defins the base class to be inherited. Does have no effect if Use Base Class property is set to false.</value>
+    <value>Defines the base class to be inherited. Does have no effect if Use Base Class property is set to false.</value>
     <comment>Description for DomainProperty &apos;BaseClassName&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.Model/BaseClassName.DisplayName" xml:space="preserve">
@@ -310,7 +310,7 @@
     <comment>Category for DomainProperty &apos;Target&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.Model/AssemblyPath.Description" xml:space="preserve">
-    <value>Provides assembly load path for Castle.ActiveRecord.dll and related assemblies. If required assemblies are in GAC, this setting is omitted. If not and is this setting is blank an error will be thrown during code generation.</value>
+    <value>Provides assembly load path for Castle.ActiveRecord.dll and related assemblies. If required assemblies are in GAC, this setting is omitted. If not and is this setting is blank, or required assemblies not found under the given path if they are not in the GAC, an error will be thrown during code generation.</value>
     <comment>Description for DomainProperty &apos;AssemblyPath&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.Model/AssemblyPath.DisplayName" xml:space="preserve">
@@ -322,7 +322,7 @@
     <comment>Category for DomainProperty &apos;AssemblyPath&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.Model/ActiveRecordAssemblyName.Description" xml:space="preserve">
-    <value>Provides assembly name to be used during code generation.</value>
+    <value>Provides assembly name to be used during code generation. You can provide a fully qualified assembly name to target a specific version from the GAC.</value>
     <comment>Description for DomainProperty &apos;ActiveRecordAssemblyName&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.Model/ActiveRecordAssemblyName.DisplayName" xml:space="preserve">
@@ -334,7 +334,7 @@
     <comment>Category for DomainProperty &apos;ActiveRecordAssemblyName&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.Model/NHibernateAssemblyName.Description" xml:space="preserve">
-    <value>Provides assembly name to be used during code generation.</value>
+    <value>Provides assembly name to be used during code generation. You can provide a fully qualified assembly name to target a specific version from the GAC.</value>
     <comment>Description for DomainProperty &apos;NHibernateAssemblyName&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.Model/NHibernateAssemblyName.DisplayName" xml:space="preserve">

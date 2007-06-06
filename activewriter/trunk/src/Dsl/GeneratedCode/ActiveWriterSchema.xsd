@@ -117,7 +117,7 @@
     <!-- Property: BaseClassName -->
     <xsd:attribute name="baseClassName" type="xsd:string" >
       <xsd:annotation>
-        <xsd:documentation>Defins the base class to be inherited. Does have no effect if Use Base Class property is set to false.</xsd:documentation>
+        <xsd:documentation>Defines the base class to be inherited. Does have no effect if Use Base Class property is set to false.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
     <!-- Property: GeneratesDoubleDerived -->
@@ -147,19 +147,19 @@
     <!-- Property: AssemblyPath -->
     <xsd:attribute name="assemblyPath" type="xsd:string" >
       <xsd:annotation>
-        <xsd:documentation>Provides assembly load path for Castle.ActiveRecord.dll and related assemblies. If required assemblies are in GAC, this setting is omitted. If not and is this setting is blank an error will be thrown during code generation.</xsd:documentation>
+        <xsd:documentation>Provides assembly load path for Castle.ActiveRecord.dll and related assemblies. If required assemblies are in GAC, this setting is omitted. If not and is this setting is blank, or required assemblies not found under the given path if they are not in the GAC, an error will be thrown during code generation.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
     <!-- Property: ActiveRecordAssemblyName -->
     <xsd:attribute name="activeRecordAssemblyName" type="xsd:string" >
       <xsd:annotation>
-        <xsd:documentation>Provides assembly name to be used during code generation.</xsd:documentation>
+        <xsd:documentation>Provides assembly name to be used during code generation. You can provide a fully qualified assembly name to target a specific version from the GAC.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
     <!-- Property: NHibernateAssemblyName -->
     <xsd:attribute name="nHibernateAssemblyName" type="xsd:string" >
       <xsd:annotation>
-        <xsd:documentation>Provides assembly name to be used during code generation.</xsd:documentation>
+        <xsd:documentation>Provides assembly name to be used during code generation. You can provide a fully qualified assembly name to target a specific version from the GAC.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
     <!-- Property: RelateWithActiwFile -->

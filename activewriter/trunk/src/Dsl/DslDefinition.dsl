@@ -53,7 +53,7 @@
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="ddcc1b4e-07e8-4331-9778-f7cb46375cc1" Description="Defins the base class to be inherited. Does have no effect if Use Base Class property is set to false." Name="BaseClassName" DisplayName="Base Class Name" Category="Code Generation">
+        <DomainProperty Id="ddcc1b4e-07e8-4331-9778-f7cb46375cc1" Description="Defines the base class to be inherited. Does have no effect if Use Base Class property is set to false." Name="BaseClassName" DisplayName="Base Class Name" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
@@ -78,17 +78,17 @@
             <DomainEnumerationMoniker Name="CodeGenerationTarget" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="c2197ab7-cf01-432f-b44d-ebbb4bdea14d" Description="Provides assembly load path for Castle.ActiveRecord.dll and related assemblies. If required assemblies are in GAC, this setting is omitted. If not and is this setting is blank an error will be thrown during code generation." Name="AssemblyPath" DisplayName="Assembly Path" Category="Code Generation (NHibernate)">
+        <DomainProperty Id="c2197ab7-cf01-432f-b44d-ebbb4bdea14d" Description="Provides assembly load path for Castle.ActiveRecord.dll and related assemblies. If required assemblies are in GAC, this setting is omitted. If not and is this setting is blank, or required assemblies not found under the given path if they are not in the GAC, an error will be thrown during code generation." Name="AssemblyPath" DisplayName="Assembly Path" Category="Code Generation (NHibernate)">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="16c1464a-bb58-41bb-ad6b-46b957eec2a2" Description="Provides assembly name to be used during code generation." Name="ActiveRecordAssemblyName" DisplayName="Active Record Assembly Name" DefaultValue="Castle.ActiveRecord, Version=0.0.1.3, Culture=neutral, PublicKeyToken=407dd0808d44fbdc" Category="Code Generation (NHibernate)">
+        <DomainProperty Id="16c1464a-bb58-41bb-ad6b-46b957eec2a2" Description="Provides assembly name to be used during code generation. You can provide a fully qualified assembly name to target a specific version from the GAC." Name="ActiveRecordAssemblyName" DisplayName="Active Record Assembly Name" DefaultValue="Castle.ActiveRecord" Category="Code Generation (NHibernate)">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="a0bcb53c-a856-4a8d-9245-f973dfb023d3" Description="Provides assembly name to be used during code generation." Name="NHibernateAssemblyName" DisplayName="NHibernate Assembly Name" DefaultValue="NHibernate, Version=1.2.0.3001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4" Category="Code Generation (NHibernate)">
+        <DomainProperty Id="a0bcb53c-a856-4a8d-9245-f973dfb023d3" Description="Provides assembly name to be used during code generation. You can provide a fully qualified assembly name to target a specific version from the GAC." Name="NHibernateAssemblyName" DisplayName="NHibernate Assembly Name" DefaultValue="NHibernate" Category="Code Generation (NHibernate)">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>

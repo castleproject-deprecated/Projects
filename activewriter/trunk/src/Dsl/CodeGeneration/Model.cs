@@ -30,6 +30,8 @@ namespace Altinoren.ActiveWriter
                 imports.Add(new CodeNamespaceImport(Common.GenericCollectionsNamespace));
                 imports.Add(new CodeNamespaceImport(Common.CollectionsNamespace));
                 imports.Add(new CodeNamespaceImport(Common.ActiveRecordNamespace));
+                if (HasClassWithValidators())
+                    imports.Add(new CodeNamespaceImport(Common.ValidatorNamespace));
                 if (UseNullables == NullableUsage.WithHelperLibrary)
                     imports.Add(new CodeNamespaceImport(Common.NullablesNamespace));
                 if (HasClassImplementsINotifyPropertyChanged())
@@ -50,6 +52,24 @@ namespace Altinoren.ActiveWriter
         #endregion
 
         #region Private Methods
+
+        private bool HasClassWithValidators()
+        {
+            bool hasClass = this.Classes.Find(
+                                delegate(ModelClass cls)
+                                {
+                                    return cls.HasPropertyWithValidators();
+                                }
+                                ) != null;
+            bool hasNestedClass = this.NestedClasses.Find(
+                                delegate(NestedClass cls)
+                                {
+                                    return cls.HasPropertyWithValidators();
+                                }
+                                ) != null;
+
+            return hasClass || hasNestedClass;
+        }
 
         private bool HasClassImplementsINotifyPropertyChanged()
         {

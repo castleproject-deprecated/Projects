@@ -81,12 +81,10 @@
       <LastGenOutput>SerializationHelper.cs</LastGenOutput>
     </None>
     <Compile Include="ARValidators\AbstractValidation.cs" />
-    <Compile Include="ARValidators\ValidateConfirmation.cs" />
     <Compile Include="ARValidators\ValidateCreditCard.cs" />
     <Compile Include="ARValidators\ValidateEmail.cs" />
-    <Compile Include="ARValidators\ValidateIsUnique.cs" />
     <Compile Include="ARValidators\ValidateLength.cs" />
-    <Compile Include="ARValidators\ValidateNotEmpty.cs" />
+    <Compile Include="ARValidators\ValidateNonEmpty.cs" />
     <Compile Include="ARValidators\ValidateRegExp.cs" />
     <Compile Include="CalculatedProperties\ModelClass.cs" />
     <Compile Include="CodeGeneration\AttributeHelper.cs" />

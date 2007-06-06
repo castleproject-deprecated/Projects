@@ -34,7 +34,7 @@ namespace Debugging.Tests
         [Test]
         public void CanGenerateHbmXml()
         {
-            string resource = GetResource("Debugging.Tests.NHBlog.hbm.xml");
+            string resource = GetResource("Debugging.Tests.Models.NHBlog.hbm.xml");
             Assert.IsNotNull(resource, "Could not get generated xml.hbm resource");
         }
     }

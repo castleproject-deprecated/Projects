@@ -20,6 +20,7 @@ namespace Altinoren.ActiveWriter
         public static string[] ARAttributes = new string[] {"ActiveRecord", "Property", "Field", "PrimaryKey", "CompositeKey", "HasMany", "BelongsTo", "HasAndBelongsToMany"};
         public static string CompositeClassNameSuffix = "CompositeKey";
         public static string ActiveRecordNamespace = "Castle.ActiveRecord";
+        public static string ValidatorNamespace = "Castle.Components.Validator";
         public static string CollectionsNamespace = "System.Collections";
         public static string GenericCollectionsNamespace = "System.Collections.Generic";
         public static string SystemNamespace = "System";

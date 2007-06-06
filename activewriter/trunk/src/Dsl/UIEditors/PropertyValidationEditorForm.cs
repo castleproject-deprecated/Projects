@@ -66,10 +66,6 @@ namespace Altinoren.ActiveWriter.UIEditors
             validatorList.SelectedIndex = list.Count - 1;
         }
 
-        private void confirmationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Add(new ValidateConfirmation());
-        }
 
         private void creditCardToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -81,11 +77,6 @@ namespace Altinoren.ActiveWriter.UIEditors
             Add(new ValidateEmail());
         }
 
-        private void uniqueToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Add(new ValidateIsUnique());
-        }
-
         private void lengthToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Add(new ValidateLength());
@@ -93,7 +84,7 @@ namespace Altinoren.ActiveWriter.UIEditors
 
         private void notEmptyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Add(new ValidateNotEmpty());
+            Add(new ValidateNonEmpty());
         }
 
         private void regularExpressionToolStripMenuItem_Click(object sender, EventArgs e)

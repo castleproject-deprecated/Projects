@@ -109,18 +109,14 @@ namespace Altinoren.ActiveWriter
                 for (int i = 0; i < list.Count; i++)
                 {
                     Type type = list[i].GetType();
-                    if (type == typeof(ValidateConfirmation))
-                        result[i] = GetConfirmationAttribute((ValidateConfirmation)list[i]);
-                    else if (type == typeof(ValidateCreditCard))
+                    if (type == typeof(ValidateCreditCard))
                         result[i] = GetCreditCardAttribute((ValidateCreditCard)list[i]);
                     else if (type == typeof(ValidateEmail))
                         result[i] = GetEmailAttribute((ValidateEmail)list[i]);
-                    else if (type == typeof(ValidateIsUnique))
-                        result[i] = GetIsUniqueAttribute((ValidateIsUnique)list[i]);
                     else if (type == typeof(ValidateLength))
                         result[i] = GetLengthAttribute((ValidateLength)list[i]);
-                    else if (type == typeof(ValidateNotEmpty))
-                        result[i] = GetNotEmptyAttribute((ValidateNotEmpty)list[i]);
+                    else if (type == typeof(ValidateNonEmpty))
+                        result[i] = GetNonEmptyAttribute((ValidateNonEmpty)list[i]);
                     else if (type == typeof(ValidateRegExp))
                         result[i] = GetRegularExpressionAttribute((ValidateRegExp)list[i]);
                 }
@@ -228,9 +224,9 @@ namespace Altinoren.ActiveWriter
             return attribute;
         }
 
-        private CodeAttributeDeclaration GetNotEmptyAttribute(ValidateNotEmpty validator)
+        private CodeAttributeDeclaration GetNonEmptyAttribute(ValidateNonEmpty validator)
         {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateNotEmpty");
+            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateNonEmpty");
 
             if (!string.IsNullOrEmpty(validator.ErrorMessage))
                 attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
@@ -259,16 +255,6 @@ namespace Altinoren.ActiveWriter
                     attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
             }
             else if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-
-            return attribute;
-        }
-
-        private CodeAttributeDeclaration GetIsUniqueAttribute(ValidateIsUnique validator)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateIsUnique");
-
-            if (!string.IsNullOrEmpty(validator.ErrorMessage))
                 attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
 
             return attribute;
@@ -340,17 +326,6 @@ namespace Altinoren.ActiveWriter
             return new CodeFieldReferenceExpression(
                 new CodeTypeReferenceExpression("Castle.ActiveRecord.Framework.Validators.CreditCardValidator.CardType"),
                 value.ToString());
-        }
-
-        private CodeAttributeDeclaration GetConfirmationAttribute(ValidateConfirmation validator)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateConfirmation");
-
-            attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ConfirmationFieldOrProperty));
-            if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-
-            return attribute;
         }
 
         #endregion

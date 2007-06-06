@@ -33,6 +33,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\assemblies\Castle.ActiveRecord.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.Components.Validator, Version=0.0.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\assemblies\Castle.Components.Validator.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\assemblies\log4net.dll</HintPath>
@@ -53,37 +57,37 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\GeneratedCodeGenericTestModel.cs">
+    <Compile Include="Tests\Models\GeneratedCodeGenericTestModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeneratedCodeGenericTestModel.actiw</DependentUpon>
     </Compile>
-    <Compile Include="Tests\GeneratedCodeINotifyPropertyChangedTestModel.cs">
+    <Compile Include="Tests\Models\GeneratedCodeINotifyPropertyChangedTestModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeneratedCodeINotifyPropertyChangedTestModel.actiw</DependentUpon>
     </Compile>
-    <Compile Include="Tests\GeneratedCodeNestedTestModel.cs">
+    <Compile Include="Tests\Models\GeneratedCodeNestedTestModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeneratedCodeNestedTestModel.actiw</DependentUpon>
     </Compile>
-    <Compile Include="Tests\GeneratedCodeNHibernateTestModel.cs">
+    <Compile Include="Tests\Models\GeneratedCodeNHibernateTestModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeneratedCodeNHibernateTestModel.actiw</DependentUpon>
     </Compile>
-    <Compile Include="Tests\GeneratedCodeNonGenericTestModel.cs">
+    <Compile Include="Tests\Models\GeneratedCodeNonGenericTestModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeneratedCodeNonGenericTestModel.actiw</DependentUpon>
     </Compile>
-    <Compile Include="Tests\GeneratedCodeRuntimeTestModel.cs">
+    <Compile Include="Tests\Models\GeneratedCodeRuntimeTestModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeneratedCodeRuntimeTestModel.actiw</DependentUpon>
     </Compile>
-    <Compile Include="Tests\GeneratedCodeVirtualPropertyTestModel.cs">
+    <Compile Include="Tests\Models\GeneratedCodeVirtualPropertyTestModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeneratedCodeVirtualPropertyTestModel.actiw</DependentUpon>
@@ -98,47 +102,47 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Run.bat" />
-    <None Include="Tests\GeneratedCodeGenericTestModel.actiw.diagram">
+    <None Include="Tests\Models\GeneratedCodeGenericTestModel.actiw.diagram">
       <DependentUpon>GeneratedCodeGenericTestModel.actiw</DependentUpon>
     </None>
-    <None Include="Tests\GeneratedCodeINotifyPropertyChangedTestModel.actiw">
+    <None Include="Tests\Models\GeneratedCodeINotifyPropertyChangedTestModel.actiw">
       <Generator>ActiveWriterCodeGenerator</Generator>
       <LastGenOutput>GeneratedCodeINotifyPropertyChangedTestModel.cs</LastGenOutput>
     </None>
-    <None Include="Tests\GeneratedCodeINotifyPropertyChangedTestModel.actiw.diagram" />
-    <None Include="Tests\GeneratedCodeNestedTestModel.actiw">
+    <None Include="Tests\Models\GeneratedCodeINotifyPropertyChangedTestModel.actiw.diagram" />
+    <None Include="Tests\Models\GeneratedCodeNestedTestModel.actiw">
       <Generator>ActiveWriterCodeGenerator</Generator>
       <LastGenOutput>GeneratedCodeNestedTestModel.cs</LastGenOutput>
     </None>
-    <None Include="Tests\GeneratedCodeNestedTestModel.actiw.diagram" />
-    <None Include="Tests\GeneratedCodeNHibernateTestModel.actiw">
+    <None Include="Tests\Models\GeneratedCodeNestedTestModel.actiw.diagram" />
+    <None Include="Tests\Models\GeneratedCodeNHibernateTestModel.actiw">
       <Generator>ActiveWriterCodeGenerator</Generator>
       <LastGenOutput>GeneratedCodeNHibernateTestModel.cs</LastGenOutput>
     </None>
-    <None Include="Tests\GeneratedCodeNHibernateTestModel.actiw.diagram">
+    <None Include="Tests\Models\GeneratedCodeNHibernateTestModel.actiw.diagram">
       <DependentUpon>GeneratedCodeNHibernateTestModel.actiw</DependentUpon>
     </None>
-    <None Include="Tests\GeneratedCodeGenericTestModel.actiw">
+    <None Include="Tests\Models\GeneratedCodeGenericTestModel.actiw">
       <Generator>ActiveWriterCodeGenerator</Generator>
       <LastGenOutput>GeneratedCodeGenericTestModel.cs</LastGenOutput>
     </None>
-    <None Include="Tests\GeneratedCodeNonGenericTestModel.actiw.diagram">
+    <None Include="Tests\Models\GeneratedCodeNonGenericTestModel.actiw.diagram">
       <DependentUpon>GeneratedCodeNonGenericTestModel.actiw</DependentUpon>
     </None>
-    <None Include="Tests\GeneratedCodeNonGenericTestModel.actiw">
+    <None Include="Tests\Models\GeneratedCodeNonGenericTestModel.actiw">
       <Generator>ActiveWriterCodeGenerator</Generator>
       <LastGenOutput>GeneratedCodeNonGenericTestModel.cs</LastGenOutput>
     </None>
-    <None Include="Tests\GeneratedCodeRuntimeTestModel.actiw">
+    <None Include="Tests\Models\GeneratedCodeRuntimeTestModel.actiw">
       <Generator>ActiveWriterCodeGenerator</Generator>
       <LastGenOutput>GeneratedCodeRuntimeTestModel.cs</LastGenOutput>
     </None>
-    <None Include="Tests\GeneratedCodeRuntimeTestModel.actiw.diagram" />
-    <None Include="Tests\GeneratedCodeVirtualPropertyTestModel.actiw">
+    <None Include="Tests\Models\GeneratedCodeRuntimeTestModel.actiw.diagram" />
+    <None Include="Tests\Models\GeneratedCodeVirtualPropertyTestModel.actiw">
       <Generator>ActiveWriterCodeGenerator</Generator>
       <LastGenOutput>GeneratedCodeVirtualPropertyTestModel.cs</LastGenOutput>
     </None>
-    <None Include="Tests\GeneratedCodeVirtualPropertyTestModel.actiw.diagram" />
+    <None Include="Tests\Models\GeneratedCodeVirtualPropertyTestModel.actiw.diagram" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
@@ -146,10 +150,10 @@
   <ItemGroup>
     <Content Include="ReadMe-Tests.txt" />
     <Content Include="TestMacros.vb" />
-    <EmbeddedResource Include="Tests\NHBlog.hbm.xml">
+    <EmbeddedResource Include="Tests\Models\NHBlog.hbm.xml">
       <DependentUpon>GeneratedCodeNHibernateTestModel.actiw</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tests\NHPost.hbm.xml">
+    <EmbeddedResource Include="Tests\Models\NHPost.hbm.xml">
       <DependentUpon>GeneratedCodeNHibernateTestModel.actiw</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

@@ -17,11 +17,11 @@ namespace Altinoren.ActiveWriter.ARValidators
     using System;
 
     [Serializable]
-	public class ValidateNotEmpty : AbstractValidation
+	public class ValidateNonEmpty : AbstractValidation
 	{
-        public ValidateNotEmpty()
+        public ValidateNonEmpty()
         {
-            base.friendlyName = "Not Empty";
+            base.friendlyName = "Non Empty";
         }
 	}
 }

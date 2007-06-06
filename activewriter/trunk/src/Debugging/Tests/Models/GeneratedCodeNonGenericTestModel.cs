@@ -13,6 +13,7 @@ namespace Debugging.Tests {
     using System.Collections.Generic;
     using System.Collections;
     using Castle.ActiveRecord;
+    using Castle.Components.Validator;
     using System.ComponentModel;
     using System.Text;
     
@@ -51,11 +52,8 @@ namespace Debugging.Tests {
         }
         
         [Property(ColumnType="String")]
-        [ValidateConfirmation("...")]
         [ValidateCreditCard()]
         [ValidateEmail()]
-        [ValidateIsUnique()]
-        [ValidateNotEmpty()]
         [ValidateRegExp("...")]
         [ValidateLength(20)]
         public string PropertyWithValidators {

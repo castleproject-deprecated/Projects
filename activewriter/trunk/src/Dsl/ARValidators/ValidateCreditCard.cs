@@ -37,7 +37,7 @@ namespace Altinoren.ActiveWriter.ARValidators
         }
 
         [Category("Card")]
-        [Description("An array of card numbers to skip checking for (eg. gateway test numbers). Only digits should be provided for the exceptions.")]
+        [Description("An array of card numbers to skip checking for (eg. gateway test numbers).")]
         public string[] Exceptions
         {
             get { return _exceptions; }
@@ -48,41 +48,41 @@ namespace Altinoren.ActiveWriter.ARValidators
     [Flags, Serializable]
 	public enum CardType
 	{
-		/// <summary>
-		/// MasterCard Card
-		/// </summary>
-		MasterCard = 0x0001,
-		/// <summary>
-		/// VISA Card
-		/// </summary>
-		VISA = 0x0002,
-		/// <summary>
-		/// American Express Card
-		/// </summary>
-		Amex = 0x0004,
-		/// <summary>
-		/// Diners Club Card
-		/// </summary>
-		DinersClub = 0x0008,
-		/// <summary>
-		/// enRoute Card
-		/// </summary>
-		enRoute = 0x0010,
-		/// <summary>
-		/// Discover Card
-		/// </summary>
-		Discover = 0x0020,
-		/// <summary>
-		/// JCB Card
-		/// </summary>
-		JCB = 0x0040,
-		/// <summary>
-		/// Unkown card
-		/// </summary>
-		Unknown = 0x0080,
-		/// <summary>
-		/// All (known) cards
-		/// </summary>
-		All = Amex | DinersClub | Discover | Discover | enRoute | JCB | MasterCard | VISA,
+        /// <summary>
+        /// MasterCard Card
+        /// </summary>
+        MasterCard = 0x0001,
+        /// <summary>
+        /// VISA Card
+        /// </summary>
+        VISA = 0x0002,
+        /// <summary>
+        /// American Express Card
+        /// </summary>
+        Amex = 0x0004,
+        /// <summary>
+        /// Diners Club Card
+        /// </summary>
+        DinersClub = 0x0008,
+        /// <summary>
+        /// enRoute Card
+        /// </summary>
+        enRoute = 0x0010,
+        /// <summary>
+        /// Discover Card
+        /// </summary>
+        Discover = 0x0020,
+        /// <summary>
+        /// JCB Card
+        /// </summary>
+        JCB = 0x0040,
+        /// <summary>
+        /// Unkown card
+        /// </summary>
+        Unknown = 0x0080,
+        /// <summary>
+        /// All (known) cards
+        /// </summary>
+        All = Amex | DinersClub | Discover | Discover | enRoute | JCB | MasterCard | VISA
 	}
 }

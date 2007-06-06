@@ -1320,7 +1320,7 @@ namespace Altinoren.ActiveWriter
 				global::System.String propValue = instanceOfModel.ActiveRecordAssemblyName;
 				if (!serializationContext.Result.Failed)
 				{
-					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "Castle.ActiveRecord, Version=0.0.1.3, Culture=neutral, PublicKeyToken=407dd0808d44fbdc") != 0))
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "Castle.ActiveRecord") != 0))
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("activeRecordAssemblyName", propValue);
 					}
@@ -1332,7 +1332,7 @@ namespace Altinoren.ActiveWriter
 				global::System.String propValue = instanceOfModel.NHibernateAssemblyName;
 				if (!serializationContext.Result.Failed)
 				{
-					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "NHibernate, Version=1.2.0.3001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4") != 0))
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "NHibernate") != 0))
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("nHibernateAssemblyName", propValue);
 					}
