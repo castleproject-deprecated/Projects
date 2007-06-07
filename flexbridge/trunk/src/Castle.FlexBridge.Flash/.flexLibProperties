@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties version="1">
+  <includeClasses>
+    <classEntry path="Castle.FlexBridge.Flash.Common.AbstractMethodError"/>
+    <classEntry path="Castle.FlexBridge.Flash.Common.AsyncTask"/>
+    <classEntry path="Castle.FlexBridge.Flash.Common.AsyncTaskEvent"/>
+    <classEntry path="Castle.FlexBridge.Flash.Common.AsyncTaskHolder"/>
+    <classEntry path="Castle.FlexBridge.Flash.Common.AsyncTaskResponder"/>
+    <classEntry path="Castle.FlexBridge.Flash.Common.FunctionResponder"/>
+    <classEntry path="Castle.FlexBridge.Flash.Common.IDisposable"/>
+    <classEntry path="Castle.FlexBridge.Flash.Common.IInitializable"/>
+    <classEntry path="Castle.FlexBridge.Flash.Common.NotImplementedError"/>
+    <classEntry path="Castle.FlexBridge.Flash.Common.NotSupportedError"/>
+    <classEntry path="Castle.FlexBridge.Flash.Common.ResponderUtils"/>
+    <classEntry path="Castle.FlexBridge.Flash.Common.Uri"/>
+    <classEntry path="Castle.FlexBridge.Flash.Common.UriBuilder"/>
+    <classEntry path="Castle.FlexBridge.Flash.Kernel.BaseComponentHandler"/>
+    <classEntry path="Castle.FlexBridge.Flash.Kernel.ComponentModel"/>
+    <classEntry path="Castle.FlexBridge.Flash.Kernel.DefaultComponentActivator"/>
+    <classEntry path="Castle.FlexBridge.Flash.Kernel.DefaultComponentModelBuilder"/>
+    <classEntry path="Castle.FlexBridge.Flash.Kernel.DefaultKernel"/>
+    <classEntry path="Castle.FlexBridge.Flash.Kernel.DependencyModel"/>
+    <classEntry path="Castle.FlexBridge.Flash.Kernel.ExternalComponentActivator"/>
+    <classEntry path="Castle.FlexBridge.Flash.Kernel.IComponentActivator"/>
+    <classEntry path="Castle.FlexBridge.Flash.Kernel.IComponentHandler"/>
+    <classEntry path="Castle.FlexBridge.Flash.Kernel.IComponentModelBuilder"/>
+    <classEntry path="Castle.FlexBridge.Flash.Kernel.IKernel"/>
+    <classEntry path="Castle.FlexBridge.Flash.Kernel.KernelError"/>
+    <classEntry path="Castle.FlexBridge.Flash.Kernel.Lifestyle"/>
+    <classEntry path="Castle.FlexBridge.Flash.Kernel.SingletonComponentHandler"/>
+    <classEntry path="Castle.FlexBridge.Flash.Kernel.TransientComponentHandler"/>
+    <classEntry path="Castle.FlexBridge.Flash.Reflection.Any"/>
+    <classEntry path="Castle.FlexBridge.Flash.Reflection.ClassInfo"/>
+    <classEntry path="Castle.FlexBridge.Flash.Reflection.ConstantInfo"/>
+    <classEntry path="Castle.FlexBridge.Flash.Reflection.ConstructorInfo"/>
+    <classEntry path="Castle.FlexBridge.Flash.Reflection.FieldInfo"/>
+    <classEntry path="Castle.FlexBridge.Flash.Reflection.MemberInfo"/>
+    <classEntry path="Castle.FlexBridge.Flash.Reflection.MethodInfo"/>
+    <classEntry path="Castle.FlexBridge.Flash.Reflection.ParameterInfo"/>
+    <classEntry path="Castle.FlexBridge.Flash.Reflection.PropertyInfo"/>
+    <classEntry path="Castle.FlexBridge.Flash.Reflection.ReflectionUtils"/>
+    <classEntry path="Castle.FlexBridge.Flash.Reflection.Void"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

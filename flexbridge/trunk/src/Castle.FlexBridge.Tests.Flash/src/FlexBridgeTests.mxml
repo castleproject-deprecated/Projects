@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+	xmlns="*"
+	xmlns:flexunit="flexunit.flexui.*"
+	creationComplete="onCreationComplete()">
+	
+	<mx:Script>
+	<![CDATA[
+		import UnitTests.Kernel.DefaultKernelTest;
+		import UnitTests.Reflection.ReflectionUtilsTest;
+		import IntegrationTests.Harness.MethodResult;
+		import IntegrationTests.Harness.RemoteObjectTestProxy;
+		import flash.net.registerClassAlias;
+		import flexunit.framework.TestSuite;
+		
+		private var remoteObjectTestProxy:RemoteObjectTestProxy;
+		
+		private function onCreationComplete():void
+		{
+			var mode:String = "testRunner";
+			
+			if (mode == "integrationTestHarness")
+			{
+				runIntegrationTestHarness();
+			}
+			else
+			{
+				runTestRunner();
+			}
+ 		}
+ 		
+ 		private function runIntegrationTestHarness():void
+ 		{
+			registerClassAlias("Harness.MethodResult", MethodResult);
+			
+			remoteObjectTestProxy = new RemoteObjectTestProxy();
+			remoteObjectTestProxy.installExternalInterface();
+ 		}
+ 		
+ 		private function runTestRunner():void
+ 		{
+ 			testRunner.test = createSuite();
+ 			testRunner.startTest();
+ 		}
+		
+		private function createSuite():TestSuite
+		{
+ 			var suite:TestSuite = new TestSuite();
+ 			
+ 			suite.addTestSuite(ReflectionUtilsTest);
+ 			suite.addTestSuite(DefaultKernelTest);
+ 			
+ 			return suite;
+ 		}
+	]]>
+	</mx:Script>
+
+	<flexunit:TestRunnerBase id="testRunner" width="100%" height="100%" />
+</mx:Application>

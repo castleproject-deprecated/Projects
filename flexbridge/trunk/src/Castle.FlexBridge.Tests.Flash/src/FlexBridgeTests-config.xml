@@ -1,0 +1,14 @@
+<flex-config>
+	<compiler>
+		<locale>en_US</locale>
+	</compiler>
+	
+	<use-network>true</use-network>
+	
+	<metadata>
+		<publisher>Castle Project</publisher>
+		<title>Castle FlexBridge Tests</title>
+		<description>Castle FlexBridge Tests</description>		
+		<language>EN</language>
+	</metadata>
+</flex-config>
