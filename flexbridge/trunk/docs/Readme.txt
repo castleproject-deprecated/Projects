@@ -5,7 +5,7 @@ by Jeff Brown.
 Overview
 ========
 
-The Castle.FlexBridge project provides remoting and data services for interoperation
+The Castle.FlexBridge project offers remoting and data services interoperation
 with Adobe Flex (tm).  It should not be confused with Adobe's Flex (tm)-Ajax Bridge
 project or other official Adobe products.
 

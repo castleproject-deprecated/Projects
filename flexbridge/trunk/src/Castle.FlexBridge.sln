@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.FlexBridge", "Castle
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.FlexBridge.Tests", "Castle.FlexBridge.Tests\Castle.FlexBridge.Tests.csproj", "{F4A2C94F-9FC7-410C-A831-7F38FE578BF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.FlexBridge.Tests.WebResources", "Castle.FlexBridge.Tests.WebResources\Castle.FlexBridge.Tests.WebResources.csproj", "{179AA723-979A-419F-9549-C31436D7329D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{F78E856F-C532-4174-9BF6-46C062109AD8}"
 	ProjectSection(SolutionItems) = preProject
 		..\docs\Readme.txt = ..\docs\Readme.txt
@@ -27,10 +25,6 @@ Global
 		{F4A2C94F-9FC7-410C-A831-7F38FE578BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4A2C94F-9FC7-410C-A831-7F38FE578BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4A2C94F-9FC7-410C-A831-7F38FE578BF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{179AA723-979A-419F-9549-C31436D7329D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{179AA723-979A-419F-9549-C31436D7329D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{179AA723-979A-419F-9549-C31436D7329D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{179AA723-979A-419F-9549-C31436D7329D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

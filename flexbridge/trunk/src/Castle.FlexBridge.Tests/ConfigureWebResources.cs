@@ -29,10 +29,13 @@ namespace Castle.FlexBridge.Tests
     /// </summary>
     public static class ConfigureWebResources
     {
-        private const string WebResourcesRelativePath = "..\\..\\Castle.FlexBridge.Tests.WebResources";
         private const int PortNumber = 3700;
 
         private static Cassini.Server cassiniServer;
+
+        public const string TestRunnerMode = "testRunner";
+        public const string TestReportMode = "testReport";
+        public const string IntegrationTestHarnessMode = "integrationTestHarness";
 
         /// <summary>
         /// Gets the WebResources root Url.
@@ -43,23 +46,25 @@ namespace Castle.FlexBridge.Tests
         }
 
         /// <summary>
-        /// Gets the Url of the FlexHarness.
+        /// Gets the Url of the FlexBridge flash-based test harness for the
+        /// specified mode.
         /// </summary>
-        public static string FlexHarnessUrl
+        /// <param name="mode">The mode for the test harness</param>
+        public static string GetHarnessUrl(string mode)
         {
-            get { return WebResourcesRootUrl + "FlexHarness/bin/FlexHarness.html"; }
-            //get { return "http://localhost.:3700/FlexHarness/bin/FlexHarness-debug.html?debug=true"; }
+            return WebResourcesRootUrl + "Flash/FlexBridgeTests.html?mode=" + mode;
+            //get { return "http://localhost.:3700/Harness/FlexBridgeTests-debug.html?debug=true"; }
         }
 
         [SetUp]
         public static void SetUp()
         {
             string testsBin = Path.GetDirectoryName(typeof(ConfigureWebResources).Assembly.Location);
-            string webResourcesPath = Path.GetFullPath(Path.Combine(testsBin, WebResourcesRelativePath));
+            string webResourcesPath = Path.GetDirectoryName(Path.GetFullPath(testsBin));
 
-            if (Directory.Exists(webResourcesPath))
+            if (File.Exists(Path.Combine(webResourcesPath, "Web.config")))
             {
-                Console.WriteLine("Starting Cassini on port {0} to host WebResources project in '{1}'.",
+                Console.WriteLine("Starting Cassini on port {0} to host web resources in '{1}'.",
                     PortNumber, webResourcesPath);
 
                 cassiniServer = new Cassini.Server(PortNumber, "/", webResourcesPath);
@@ -67,7 +72,7 @@ namespace Castle.FlexBridge.Tests
             }
             else
             {
-                Console.WriteLine("Warning: Expected to find WebResources project in '{0}' "
+                Console.WriteLine("Warning: Expected to find Web.config in '{0}' "
                     + "based on the location of the tests assembly but it was not there.\n"
                     + "Some tests may fail unless those resources are loaded in a web server at port {1}",
                     webResourcesPath, PortNumber);

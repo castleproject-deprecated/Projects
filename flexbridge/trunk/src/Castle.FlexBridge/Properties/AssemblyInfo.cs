@@ -22,9 +22,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Castle.FlexBridge")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Ingenio")]
+[assembly: AssemblyCompany("Castle Project")]
 [assembly: AssemblyProduct("Castle.FlexBridge")]
-[assembly: AssemblyCopyright("Copyright Â© Castle Project 2007")]
+[assembly: AssemblyCopyright("Copyright © Castle Project 2007")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

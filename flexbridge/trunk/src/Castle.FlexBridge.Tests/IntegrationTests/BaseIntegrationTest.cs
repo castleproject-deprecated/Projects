@@ -32,6 +32,7 @@ namespace Castle.FlexBridge.Tests.IntegrationTests
     public abstract class BaseIntegrationTest : IFlashExternalInterface
     {
         private IE browser;
+        private string harnessMode = ConfigureWebResources.IntegrationTestHarnessMode;
 
         /// <summary>
         /// Gets the WatiN Internet Explorer browser handle.
@@ -41,10 +42,20 @@ namespace Castle.FlexBridge.Tests.IntegrationTests
             get { return browser; }
         }
 
+        /// <summary>
+        /// Gets or sets the value of the "mode" option to include in the
+        /// Url when loading the Flex test harness.
+        /// </summary>
+        public string HarnessMode
+        {
+            get { return harnessMode; }
+            set { harnessMode = value; }
+        }
+
         [SetUp]
         public virtual void SetUp()
         {
-            browser = new IE(ConfigureWebResources.FlexHarnessUrl);
+            browser = new IE(ConfigureWebResources.GetHarnessUrl(harnessMode));
             browser.WaitForComplete();
         }
 
@@ -58,14 +69,14 @@ namespace Castle.FlexBridge.Tests.IntegrationTests
             }
         }
 
-        protected Element GetFlexHarnessElement()
+        protected Element GetFlashPlayerElement()
         {
-            return browser.Element(Find.ById("FlexHarness"));
+            return browser.Element(Find.ById("FlexBridgeTests"));
         }
 
         public object InvokeMethod(string methodName, params object[] args)
         {
-            object flashElement = GetFlexHarnessElement().HTMLElement;
+            object flashElement = GetFlashPlayerElement().HTMLElement;
             object result = flashElement.GetType().InvokeMember(methodName,
                 BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.Public,
                 null, flashElement, args);

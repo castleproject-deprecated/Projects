@@ -5,6 +5,7 @@
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F4A2C94F-9FC7-410C-A831-7F38FE578BF1}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Castle.FlexBridge.Tests</RootNamespace>
@@ -54,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IntegrationTests\BaseIntegrationTest.cs" />
+    <Compile Include="IntegrationTests\FlexBridgeClientSideTestSuite.cs" />
     <Compile Include="IntegrationTests\IFlashExternalInterface.cs" />
     <Compile Include="IntegrationTests\MethodResult.cs" />
     <Compile Include="IntegrationTests\RemoteObjectTest.cs" />
@@ -91,10 +93,6 @@
     <Compile Include="UnitTests\Serialization\Mapping\PrimitiveMapperTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Castle.FlexBridge.Tests.WebResources\Castle.FlexBridge.Tests.WebResources.csproj">
-      <Project>{179AA723-979A-419F-9549-C31436D7329D}</Project>
-      <Name>Castle.FlexBridge.Tests.WebResources</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Castle.FlexBridge\Castle.FlexBridge.csproj">
       <Project>{3C816C91-7CD8-40FE-9768-FDE7248726C7}</Project>
       <Name>Castle.FlexBridge</Name>
@@ -103,7 +101,21 @@
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Readme.txt" />
+    <Content Include="WEB-INF\flex\services-config.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FlexGateway.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Flash\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v8.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -111,4 +123,19 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

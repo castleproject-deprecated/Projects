@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<componentPackage>
+	<component id="AsyncTaskHolder" class="castle.flexbridge.common.AsyncTaskHolder" />
+</componentPackage>

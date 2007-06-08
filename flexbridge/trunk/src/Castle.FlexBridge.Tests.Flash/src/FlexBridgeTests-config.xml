@@ -1,6 +1,7 @@
 <flex-config>
 	<compiler>
 		<locale>en_US</locale>
+		<verbose-stacktraces>true</verbose-stacktraces>
 	</compiler>
 	
 	<use-network>true</use-network>

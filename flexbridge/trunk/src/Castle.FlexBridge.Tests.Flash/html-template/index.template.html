@@ -1,4 +1,3 @@
-<!-- saved from url=(0014)about:internet -->
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -62,6 +61,7 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 	// embed the Flash Content SWF when all tests are passed
 	AC_FL_RunContent(
 			"src", "${swf}",
+			"FlashVars", document.location.search.length != 0 ? document.location.search.substring(1) : "",
 			"width", "${width}",
 			"height", "${height}",
 			"align", "middle",

@@ -1,0 +1,7 @@
+<flex-config>
+	<compiler>
+		<locale>en_US</locale>
+	</compiler>
+	
+	<use-network>true</use-network>
+</flex-config>

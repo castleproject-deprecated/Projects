@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launchConfiguration type="com.adobe.flexbuilder.debug.launchConfigurationType.flash">
+<stringAttribute key="com.adobe.flexbuilder.debug.ATTR_APPLICATION" value="src/FlexBridgeTests.mxml"/>
+<stringAttribute key="com.adobe.flexbuilder.debug.ATTR_RUN_URL" value="C:\Source\CastleContrib\flexbridge\trunk\src\Castle.FlexBridge.Tests.Flash\bin\FlexBridgeTests.html"/>
+<stringAttribute key="com.adobe.flexbuilder.debug.ATTR_DEBUG_URL" value="C:\Source\CastleContrib\flexbridge\trunk\src\Castle.FlexBridge.Tests.Flash\bin\FlexBridgeTests-debug.html"/>
+<stringAttribute key="com.adobe.flexbuilder.debug.ATTR_PROJECT" value="Castle.FlexBridge.Tests.Flash"/>
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
+<listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
+</listAttribute>
+<booleanAttribute key="com.adobe.flexbuilder.debug.ATTR_USE_DEFAULT_URLS" value="false"/>
+</launchConfiguration>

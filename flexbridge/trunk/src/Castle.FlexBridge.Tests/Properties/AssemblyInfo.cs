@@ -24,7 +24,7 @@ using MbUnit.Framework;
 [assembly: AssemblyTitle("Castle.FlexBridge.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Ingenio")]
+[assembly: AssemblyCompany("Castle Project")]
 [assembly: AssemblyProduct("Castle.FlexBridge.Tests")]
 [assembly: AssemblyCopyright("Copyright © Castle Project 2007")]
 [assembly: AssemblyTrademark("")]

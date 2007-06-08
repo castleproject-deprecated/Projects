@@ -31,7 +31,7 @@ namespace Castle.FlexBridge.Tests.IntegrationTests
         [Test]
         public void EnsureWebResourcesAreAvailable()
         {
-            Assert.IsNotNull(GetFlexHarnessElement());
+            Assert.IsNotNull(GetFlashPlayerElement());
         }
     }
 }
