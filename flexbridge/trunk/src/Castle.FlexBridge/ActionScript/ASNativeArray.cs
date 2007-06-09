@@ -99,8 +99,7 @@ namespace Castle.FlexBridge.ActionScript
         /// <param name="mapper">The mapper to use for mapping the array to ActionScript on demand</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="nativeArray"/> or <paramref name="mapper"/> is null</exception>
         /// <exception cref="InvalidOperationException">Thrown if the object has already been initialized</exception>
-        public void SetProperties(object nativeArray, IActionScriptSerializer serializer,
-            IASNativeArrayMapper mapper)
+        public void SetProperties(object nativeArray, IASNativeArrayMapper mapper)
         {
             if (IsInitialized)
                 throw new InvalidOperationException("The object's properties may not be set once initialized.");

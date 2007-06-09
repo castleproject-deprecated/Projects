@@ -1,28 +1,28 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <actionScriptProperties mainApplicationPath="FlexBridgeTests.mxml" version="1">
-  <compiler additionalCompilerArguments="" copyDependentFiles="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="false" htmlPlayerVersion="9.0.0" htmlPlayerVersionCheck="true" outputFolderPath="bin" sourceFolderPath="src" strict="true" warn="true">
-    <compilerSourcePath/>
-    <libraryPath>
-      <libraryPathEntry kind="3" linkType="2" path="${FRAMEWORKS}/libs/playerglobal.swc"/>
-      <libraryPathEntry kind="3" linkType="1" path="${FRAMEWORKS}/libs/utilities.swc"/>
-      <libraryPathEntry kind="3" linkType="1" path="${FRAMEWORKS}/libs/flex.swc" sourcepath="${FRAMEWORKS}/source"/>
-      <libraryPathEntry kind="3" linkType="1" path="${FRAMEWORKS}/libs/framework.swc" sourcepath="${FRAMEWORKS}/source"/>
-      <libraryPathEntry kind="3" linkType="1" path="${FRAMEWORKS}/libs/rpc.swc"/>
-      <libraryPathEntry kind="3" linkType="1" path="${FRAMEWORKS}/libs/charts.swc" sourcepath="${FRAMEWORKS}/source"/>
-      <libraryPathEntry kind="1" linkType="1" path="${FRAMEWORKS}/locale/{locale}"/>
-      <libraryPathEntry kind="3" linkType="1" path="/Castle.FlexBridge.Flash/bin/Castle.FlexBridge.Flash.swc" sourcepath="/Castle.FlexBridge.Flash/src"/>
-      <libraryPathEntry kind="3" linkType="1" path="C:\Source\CastleContrib\flexbridge\trunk\libs\FlexUnit\bin\flexunit.swc"/>
-      <libraryPathEntry kind="3" linkType="1" path="C:\Source\CastleContrib\flexbridge\trunk\libs\RemoteObjectAMF0\bin\renaun_com_RemoteObjectAMF0.swc"/>
-    </libraryPath>
-    <sourceAttachmentPath>
-      <sourceAttachmentPathEntry kind="3" linkType="1" path="${FRAMEWORKS}/libs/flex.swc" sourcepath="${FRAMEWORKS}/source"/>
-      <sourceAttachmentPathEntry kind="3" linkType="1" path="${FRAMEWORKS}/libs/framework.swc" sourcepath="${FRAMEWORKS}/source"/>
-      <sourceAttachmentPathEntry kind="3" linkType="1" path="${FRAMEWORKS}/libs/charts.swc" sourcepath="${FRAMEWORKS}/source"/>
-      <sourceAttachmentPathEntry kind="3" linkType="1" path="/Castle.FlexBridge.Flash/bin/Castle.FlexBridge.Flash.swc" sourcepath="/Castle.FlexBridge.Flash/src"/>
-    </sourceAttachmentPath>
-  </compiler>
-  <applications>
-    <application path="FlexBridgeTests.mxml"/>
-  </applications>
-  <buildCSSFiles/>
+<compiler additionalCompilerArguments="-services C:\Source\CastleContrib\flexbridge\trunk\src\Castle.FlexBridge.Tests\WEB-INF\flex\services-config.xml" copyDependentFiles="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="false" htmlPlayerVersion="9.0.0" htmlPlayerVersionCheck="true" outputFolderPath="bin" sourceFolderPath="src" strict="true" warn="true">
+<compilerSourcePath/>
+<libraryPath>
+<libraryPathEntry kind="3" linkType="2" path="${FRAMEWORKS}/libs/playerglobal.swc"/>
+<libraryPathEntry kind="3" linkType="1" path="${FRAMEWORKS}/libs/utilities.swc"/>
+<libraryPathEntry kind="3" linkType="1" path="${FRAMEWORKS}/libs/flex.swc" sourcepath="${FRAMEWORKS}/source"/>
+<libraryPathEntry kind="3" linkType="1" path="${FRAMEWORKS}/libs/framework.swc" sourcepath="${FRAMEWORKS}/source"/>
+<libraryPathEntry kind="3" linkType="1" path="${FRAMEWORKS}/libs/rpc.swc"/>
+<libraryPathEntry kind="3" linkType="1" path="${FRAMEWORKS}/libs/charts.swc" sourcepath="${FRAMEWORKS}/source"/>
+<libraryPathEntry kind="1" linkType="1" path="${FRAMEWORKS}/locale/{locale}"/>
+<libraryPathEntry kind="3" linkType="1" path="/Castle.FlexBridge.Flash/bin/Castle.FlexBridge.Flash.swc" sourcepath="/Castle.FlexBridge.Flash/src"/>
+<libraryPathEntry kind="3" linkType="1" path="C:\Source\CastleContrib\flexbridge\trunk\libs\FlexUnit\bin\flexunit.swc"/>
+<libraryPathEntry kind="3" linkType="1" path="C:\Source\CastleContrib\flexbridge\trunk\libs\RemoteObjectAMF0\bin\renaun_com_RemoteObjectAMF0.swc"/>
+</libraryPath>
+<sourceAttachmentPath>
+<sourceAttachmentPathEntry kind="3" linkType="1" path="${FRAMEWORKS}/libs/flex.swc" sourcepath="${FRAMEWORKS}/source"/>
+<sourceAttachmentPathEntry kind="3" linkType="1" path="${FRAMEWORKS}/libs/framework.swc" sourcepath="${FRAMEWORKS}/source"/>
+<sourceAttachmentPathEntry kind="3" linkType="1" path="${FRAMEWORKS}/libs/charts.swc" sourcepath="${FRAMEWORKS}/source"/>
+<sourceAttachmentPathEntry kind="3" linkType="1" path="/Castle.FlexBridge.Flash/bin/Castle.FlexBridge.Flash.swc" sourcepath="/Castle.FlexBridge.Flash/src"/>
+</sourceAttachmentPath>
+</compiler>
+<applications>
+<application path="FlexBridgeTests.mxml"/>
+</applications>
+<buildCSSFiles/>
 </actionScriptProperties>

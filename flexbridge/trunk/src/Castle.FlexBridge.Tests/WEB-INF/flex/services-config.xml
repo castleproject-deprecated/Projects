@@ -15,6 +15,19 @@
         </properties>
       </destination>
 
+      <destination id="trusted-gateway">
+        <channels>
+          <channel ref="gateway-amf" />
+        </channels>
+        <properties>
+          <source>*</source>
+        </properties>
+
+        <security>
+          <security-constraint ref="trusted-users" />
+        </security>
+      </destination>
+
       <destination id="secure-gateway">
         <channels>
           <channel ref="secure-gateway-amf" />
@@ -32,7 +45,7 @@
 
   <security>
     <security-constraint id="trusted-users">
-      <login-command class="Castle.FlexBridge.LoginCommand" server="FlexBridge" />
+      <login-command class="Castle.FlexBridge.Messaging.Security.LoginCommand" server="FlexBridge" />
     </security-constraint>
   </security>
   

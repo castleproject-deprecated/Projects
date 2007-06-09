@@ -48,9 +48,20 @@ namespace Castle.FlexBridge.Tests.IntegrationTests
             AssertSuccessfulResult(result);
         }
 
+        [Test]
+        public void LoginTest()
+        {
+            remoteObjectTestProxy.Initialize(RemoteObjectTestProxy.TrustedGatewayDestination, AMFObjectEncoding.AMF3);
+            remoteObjectTestProxy.SetCredentials("user", "password");
+            MethodResult result = remoteObjectTestProxy.InvokeMethod("test", "a", "b", "c");
+
+            AssertSuccessfulResult(result);
+        }
+
         private static void AssertSuccessfulResult(MethodResult result)
         {
-            Assert.IsNull(result.FaultMessage);
+            if (result.FaultMessage != null)
+                Assert.Fail("Method call failed:\n{0}", result.FaultMessage);
         }
     }
 }

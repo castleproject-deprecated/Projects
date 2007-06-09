@@ -105,7 +105,7 @@ package castle.flexbridge.tests.integrationTestHarness
 		{
 			try
 			{
-				return byteArray.readByte();
+				return byteArray.readByte() & 0xff;
 			}
 			catch (ex:EOFError)
 			{

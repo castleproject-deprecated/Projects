@@ -5,7 +5,7 @@
 	</compiler>
 	
 	<use-network>true</use-network>
-	
+		
 	<metadata>
 		<publisher>Castle Project</publisher>
 		<title>Castle FlexBridge Tests</title>

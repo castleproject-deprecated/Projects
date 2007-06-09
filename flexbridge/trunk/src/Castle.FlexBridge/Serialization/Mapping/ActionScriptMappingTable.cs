@@ -270,7 +270,7 @@ namespace Castle.FlexBridge.Serialization.Mapping
         /// </summary>
         /// <remarks>
         /// This method is equivalent to calling <see cref="RegisterType(Type)" />
-        /// for each public <see cref="Type" /> in the <param name="assembly" /> that is
+        /// for each public <see cref="Type" /> in the <paramref name="assembly" /> that is
         /// decorated with <see cref="ActionScriptClassAttribute" />.
         /// </remarks>
         /// <param name="assembly">The assembly to search for serializable types</param>

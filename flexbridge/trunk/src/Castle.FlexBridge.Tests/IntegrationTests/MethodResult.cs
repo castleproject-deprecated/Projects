@@ -16,7 +16,7 @@ using Castle.FlexBridge.Serialization;
 
 namespace Castle.FlexBridge.Tests.IntegrationTests
 {
-    [ActionScriptClass("FlexHarness.MethodResult")]
+    [ActionScriptClass("integrationTestHarness.MethodResult")]
     public class MethodResult
     {
         [ActionScriptProperty("faultMessage")]

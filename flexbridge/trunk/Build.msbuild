@@ -1,0 +1,81 @@
+<Project DefaultTargets="Clean;Build;Test" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootDir>$(MSBuildProjectDirectory)</RootDir>
+    <BuildDir>$(RootDir)\build</BuildDir>
+    <LibsDir>$(RootDir)\libs</LibsDir>
+    <SourceDir>$(RootDir)\src</SourceDir>
+    <FlexBinDir>$(LibsDir)\Flex\bin</FlexBinDir>
+    <MSBuildCommunityTasksPath>$(LibsDir)\MSBuildCommunityTasks</MSBuildCommunityTasksPath>
+
+    <ComponentNamespace>http://tempuri.org/flexbridge</ComponentNamespace>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
+
+  <Target Name="Build"
+          DependsOnTargets="Build-CastleFlexBridge;Build-CastleFlexBridgeFlash;Build-CastleFlexBridgeTests;Build-CastleFlexBridgeTestsFlash">
+  </Target>
+
+  <Target Name="Clean"
+          DependsOnTargets="Clean-CastleFlexBridge">
+    <RemoveDir Directories="$(BuildDir)"
+               Condition="Exists('$(BuildDir)')" />
+    <Delete Files="$(SourceDir)\Castle.FlexBridge.Tests\Flash\FlexBridgeTests.swf"
+            Condition="Exists('$(SourceDir)\Castle.FlexBridge.Tests\Flash\FlexBridgeTests.swf')" />
+  </Target>
+
+  <Target Name="Test">
+    <Exec Command="&quot;$(LibsDir)\MbUnit\bin\MbUnit.Cons.exe&quot; &quot;$(SourceDir)\Castle.FlexBridge.Tests\bin\Castle.FlexBridge.Tests.dll&quot;" />
+  </Target>
+
+  <Target Name="Build-CastleFlexBridge"
+          DependsOnTargets="CreateBuildDir">
+    <MSBuild Projects="$(SourceDir)\Castle.FlexBridge\Castle.FlexBridge.csproj"
+             Targets="Build"
+             Properties="
+               Configuration=Release;
+             " />
+
+    <Copy SourceFiles="$(SourceDir)\Castle.FlexBridge\bin\Castle.FlexBridge.dll"
+          DestinationFolder="$(BuildDir)" />
+  </Target>
+
+  <Target Name="Clean-CastleFlexBridge">
+    <MSBuild Projects="$(SourceDir)\Castle.FlexBridge\Castle.FlexBridge.csproj"
+             Targets="Clean"
+             Properties="
+               Configuration=Release;
+             " />
+  </Target>
+
+  <Target Name="Build-CastleFlexBridgeTests"
+          DependsOnTargets="Build-CastleFlexBridge;Build-CastleFlexBridgeTestsFlash">
+    <MSBuild Projects="$(SourceDir)\Castle.FlexBridge\Castle.FlexBridge.csproj"
+             Targets="Build"
+             Properties="
+               Configuration=Release;
+             " />
+  </Target>
+
+  <Target Name="Build-CastleFlexBridgeFlash"
+          DependsOnTargets="CreateBuildDir">
+    <XmlQuery XmlFileName="$(SourceDir)\Castle.FlexBridge.Flash\.flexLibProperties"
+              XPath="//classEntry/@path">
+      <Output TaskParameter="Values" ItemName="FlexBridgeFlashClass" />
+    </XmlQuery>
+    <CreateProperty Value="@(FlexBridgeFlashClass, ' ')">
+      <Output TaskParameter="Value" PropertyName="FlexBridgeFlashClasses" />
+    </CreateProperty>
+
+    <Exec Command="&quot;$(FlexBinDir)\compc&quot; -namespace &quot;$(ComponentNamespace)&quot; &quot;$(SourceDir)\Castle.FlexBridge.Flash\src\Castle.FlexBridge.Flash-manifest.xml&quot; -include-namespaces &quot;$(ComponentNamespace)&quot; -include-classes $(FlexBridgeFlashClasses) -load-config+=&quot;$(SourceDir)\Castle.FlexBridge.Flash\src\Castle.FlexBridge.Flash-config.xml&quot; -source-path &quot;$(SourceDir)\Castle.FlexBridge.Flash\src&quot; -output &quot;$(BuildDir)\Castle.FlexBridge.Flash.swc&quot;" />
+  </Target>
+
+  <Target Name="Build-CastleFlexBridgeTestsFlash"
+          DependsOnTargets="Build-CastleFlexBridgeFlash">
+    <Exec Command="&quot;$(FlexBinDir)\mxmlc&quot; -context-root / -services &quot;$(SourceDir)\Castle.FlexBridge.Tests\WEB-INF\flex\services-config.xml&quot; -library-path+=&quot;$(BuildDir)\Castle.FlexBridge.Flash.swc&quot; -library-path+=&quot;$(LibsDir)\FlexUnit\bin\flexunit.swc&quot; -library-path+=&quot;$(LibsDir)\RemoteObjectAMF0\bin\renaun_com_RemoteObjectAMF0.swc&quot; -output &quot;$(SourceDir)\Castle.FlexBridge.Tests\Flash\FlexBridgeTests.swf&quot; &quot;$(SourceDir)\Castle.FlexBridge.Tests.Flash\src\FlexBridgeTests.mxml&quot;" />
+  </Target>
+
+  <Target Name="CreateBuildDir">
+    <MakeDir Directories="$(BuildDir)" />
+  </Target>
+</Project>

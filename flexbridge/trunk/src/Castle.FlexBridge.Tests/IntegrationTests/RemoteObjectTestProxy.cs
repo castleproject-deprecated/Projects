@@ -37,6 +37,7 @@ namespace Castle.FlexBridge.Tests.IntegrationTests
         private const int ResponseTimeoutSeconds = 10;
 
         public const string GatewayDestination = "gateway";
+        public const string TrustedGatewayDestination = "trusted-gateway";
         public const string SecureGatewayDestination = "secure-gateway";
 
         private MappedActionScriptSerializerFactory serializerFactory;
