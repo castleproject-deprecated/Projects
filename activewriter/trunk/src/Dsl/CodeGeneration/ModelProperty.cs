@@ -107,19 +107,7 @@ namespace Altinoren.ActiveWriter
                 CodeAttributeDeclaration[] result = new CodeAttributeDeclaration[list.Count];
 
                 for (int i = 0; i < list.Count; i++)
-                {
-                    Type type = list[i].GetType();
-                    if (type == typeof(ValidateCreditCard))
-                        result[i] = GetCreditCardAttribute((ValidateCreditCard)list[i]);
-                    else if (type == typeof(ValidateEmail))
-                        result[i] = GetEmailAttribute((ValidateEmail)list[i]);
-                    else if (type == typeof(ValidateLength))
-                        result[i] = GetLengthAttribute((ValidateLength)list[i]);
-                    else if (type == typeof(ValidateNonEmpty))
-                        result[i] = GetNonEmptyAttribute((ValidateNonEmpty)list[i]);
-                    else if (type == typeof(ValidateRegExp))
-                        result[i] = GetRegularExpressionAttribute((ValidateRegExp)list[i]);
-                }
+                    result[i] = ((AbstractValidation) list[i]).GetAttributeDeclaration();
 
                 return result;
             }
@@ -211,125 +199,6 @@ namespace Altinoren.ActiveWriter
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", CustomAccess));
         }
 
-        private CodeAttributeDeclaration GetRegularExpressionAttribute(ValidateRegExp validator)
-        {
-            // No default constructor. Must have the pattern property set.
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateRegExp");
-
-            attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.Pattern));
-
-            if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-
-            return attribute;
-        }
-
-        private CodeAttributeDeclaration GetNonEmptyAttribute(ValidateNonEmpty validator)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateNonEmpty");
-
-            if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-
-            return attribute;
-        }
-
-        private CodeAttributeDeclaration GetLengthAttribute(ValidateLength validator)
-        {
-            // Order should match one of the constructors.
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateLength");
-
-            if (validator.ExactLength != int.MinValue)
-            {
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ExactLength));
-
-                if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                    attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-            }
-            else if (validator.MinLength != int.MinValue || validator.MaxLenght != int.MaxValue)
-            {
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.MinLength));
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.MaxLenght));
-
-                if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                    attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-            }
-            else if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-
-            return attribute;
-        }
-
-        private CodeAttributeDeclaration GetEmailAttribute(ValidateEmail validator)
-        {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateEmail");
-
-            if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-
-            return attribute;
-        }
-
-        private CodeAttributeDeclaration GetCreditCardAttribute(ValidateCreditCard validator)
-        {
-            // Order should match one of the constructors.
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateCreditCard");
-
-            if (validator.AllowedTypes != CardType.All)
-            {
-                ArrayList list = new ArrayList();
-
-                if ((validator.AllowedTypes & CardType.MasterCard) != 0)
-                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.MasterCard));
-                if ((validator.AllowedTypes & CardType.VISA) != 0)
-                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.VISA));
-                if ((validator.AllowedTypes & CardType.Amex) != 0)
-                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.Amex));
-                if ((validator.AllowedTypes & CardType.DinersClub) != 0)
-                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.DinersClub));
-                if ((validator.AllowedTypes & CardType.enRoute) != 0)
-                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.enRoute));
-                if ((validator.AllowedTypes & CardType.Discover) != 0)
-                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.Discover));
-                if ((validator.AllowedTypes & CardType.JCB) != 0)
-                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.JCB));
-                if ((validator.AllowedTypes & CardType.Unknown) != 0)
-                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.Unknown));
-
-                attribute.Arguments.Add(new CodeAttributeArgument(CodeGenerationHelper.GetBinaryOr(list, 0)));
-
-                if (validator.Exceptions != null)
-                {
-                    // TODO: Add as array initializer 
-                    attribute.Arguments.Add(AttributeHelper.GetStringArrayAttributeArgument(validator.Exceptions));
-
-                }
-                if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                    attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-            }
-            else if (validator.Exceptions != null)
-            {
-                // TODO add as array init. as above :
-                //attribute.Arguments.Add(GetPrimitiveAttributeArgument("CreditCardValidator.CardType", validator.Exceptions));
-
-                if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                    attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-            }
-            else if (!string.IsNullOrEmpty(validator.ErrorMessage))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(validator.ErrorMessage));
-
-            return attribute;
-        }
-
-        private CodeFieldReferenceExpression GetFieldReferenceForCreditCardEnum(Enum value)
-        {
-            return new CodeFieldReferenceExpression(
-                new CodeTypeReferenceExpression("Castle.ActiveRecord.Framework.Validators.CreditCardValidator.CardType"),
-                value.ToString());
-        }
-
         #endregion
-
-
     }
 }

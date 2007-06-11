@@ -16,26 +16,26 @@ namespace Altinoren.ActiveWriter.ARValidators
 {
     using System;
     using System.CodeDom;
-    using System.ComponentModel;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using CodeGeneration;
 
     [Serializable]
-	public class ValidateRegExp: AbstractValidation
+    public class ValidateSameAs : AbstractValidation
 	{
-	    private string _pattern;
+	    private string _propertyToCompare;
 
-        public ValidateRegExp()
+        public ValidateSameAs()
         {
-            base.friendlyName = "Regular Expression";
+            base.friendlyName = "Same As";
         }
 
-        [Category("Regular Expression")]
-        [Description("The pattern to match.")]
-	    public string Pattern
+        [Category("Same As")]
+        [Description("The property to compare.")]
+        public string PropertyToCompare
 	    {
-	        get { return _pattern; }
-	        set { _pattern = value; }
+            get { return _propertyToCompare; }
+            set { _propertyToCompare = value; }
 	    }
 
         public override bool IsValid(List<string> errorList)
@@ -43,24 +43,23 @@ namespace Altinoren.ActiveWriter.ARValidators
             if (errorList == null)
                 throw new ArgumentNullException("errorList");
 
-            if (string.IsNullOrEmpty(_pattern))
+            if (string.IsNullOrEmpty(_propertyToCompare))
             {
-                errorList.Add("ValidateRegExp: Pattern is required.");
+                errorList.Add("ValidateSameAs: A property name to compare is not supplied.");
                 return false;
             }
 
             return true;
         }
-
         public override CodeAttributeDeclaration GetAttributeDeclaration()
         {
             List<string> errorList = new List<string>();
             if (!IsValid(errorList))
                 throw new ArgumentException(errorList[0]);
 
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateRegExp");
+            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateSameAs");
 
-            attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(_pattern));
+            attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(_propertyToCompare));
 
             base.AddAttributeArguments(attribute, ErrorMessagePlacement.UnOrdered);
             return attribute;

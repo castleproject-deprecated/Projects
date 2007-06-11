@@ -17,7 +17,15 @@ using System.Collections.Generic;
 namespace Altinoren.ActiveWriter.ARValidators
 {
     using System;
+    using System.CodeDom;
     using System.ComponentModel;
+    using CodeGeneration;
+
+    public enum ErrorMessagePlacement
+    {
+        First,
+        UnOrdered
+    }
 
     [Flags]
     public enum RunWhen
@@ -45,10 +53,10 @@ namespace Altinoren.ActiveWriter.ARValidators
     public abstract class AbstractValidation
     {
         private string _errorMessage;
-        private int executionOrder = 0;
-        private RunWhen runWhen = RunWhen.Everytime;
+        private int _executionOrder = 0;
+        private RunWhen _runWhen = RunWhen.Everytime;
         protected string friendlyName;
-        private string castleFriendlyName;
+        private string _castleFriendlyName;
 
         [CategoryAttribute("Errors")]
         [Description("The error message to display if invalid.")]
@@ -62,24 +70,24 @@ namespace Altinoren.ActiveWriter.ARValidators
         [Description("Defines when to run the validation. Defaults to \"Everytime\"")]
         public RunWhen RunWhen
         {
-            get { return runWhen; }
-            set { runWhen = value; }
+            get { return _runWhen; }
+            set { _runWhen = value; }
         }
 
         [CategoryAttribute("Validation")]
         [Description("Validation execution order.")]
         public int ExecutionOrder
         {
-            get { return executionOrder; }
-            set { executionOrder = value; }
+            get { return _executionOrder; }
+            set { _executionOrder = value; }
         }
 
         [CategoryAttribute("Validation")]
         [Description("Friendly name of the target property.")]
         public string FriendlyName
         {
-            get { return castleFriendlyName; }
-            set { castleFriendlyName = value; }
+            get { return _castleFriendlyName; }
+            set { _castleFriendlyName = value; }
         }
 
         public override string ToString()
@@ -94,6 +102,33 @@ namespace Altinoren.ActiveWriter.ARValidators
         public virtual bool IsValid(List<string> errorList)
         {
             return true;
+        }
+
+        public virtual CodeAttributeDeclaration GetAttributeDeclaration()
+        {
+            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration();
+
+            AddAttributeArguments(attribute, ErrorMessagePlacement.UnOrdered);
+
+            return attribute;
+        }
+
+        protected void AddAttributeArguments(CodeAttributeDeclaration attribute, ErrorMessagePlacement placement)
+        {
+            // Set validator use a non standard ctor order.
+            if (!string.IsNullOrEmpty(_errorMessage))
+            {
+                if (placement == ErrorMessagePlacement.First)
+                    attribute.Arguments.Insert(0, AttributeHelper.GetPrimitiveAttributeArgument(_errorMessage));
+                else
+                    attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(_errorMessage));
+            }
+            if (!string.IsNullOrEmpty(_castleFriendlyName))
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("FriendlyName", _castleFriendlyName));
+            if (_executionOrder != 0)
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ExecutionOrder", _executionOrder));
+            if (_runWhen != RunWhen.Everytime)
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("RunWhen", "RunWhen", _runWhen));
         }
     }
 }

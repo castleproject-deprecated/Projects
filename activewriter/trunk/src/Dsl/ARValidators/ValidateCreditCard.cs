@@ -15,7 +15,10 @@
 namespace Altinoren.ActiveWriter.ARValidators
 {
 	using System;
-    using System.ComponentModel;
+	using System.CodeDom;
+	using System.Collections;
+	using System.ComponentModel;
+	using CodeGeneration;
 
     [Serializable]
     public class ValidateCreditCard : AbstractValidation
@@ -42,6 +45,56 @@ namespace Altinoren.ActiveWriter.ARValidators
         {
             get { return _exceptions; }
             set { _exceptions = value; }
+        }
+
+        public override CodeAttributeDeclaration GetAttributeDeclaration()
+        {
+            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateCreditCard");
+
+            if (this._allowedTypes != CardType.All)
+            {
+                ArrayList list = new ArrayList();
+
+                if ((_allowedTypes & CardType.MasterCard) != 0)
+                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.MasterCard));
+                if ((_allowedTypes & CardType.VISA) != 0)
+                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.VISA));
+                if ((_allowedTypes & CardType.Amex) != 0)
+                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.Amex));
+                if ((_allowedTypes & CardType.DinersClub) != 0)
+                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.DinersClub));
+                if ((_allowedTypes & CardType.enRoute) != 0)
+                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.enRoute));
+                if ((_allowedTypes & CardType.Discover) != 0)
+                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.Discover));
+                if ((_allowedTypes & CardType.JCB) != 0)
+                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.JCB));
+                if ((_allowedTypes & CardType.Unknown) != 0)
+                    list.Add(GetFieldReferenceForCreditCardEnum(CardType.Unknown));
+
+                attribute.Arguments.Add(new CodeAttributeArgument(CodeGenerationHelper.GetBinaryOr(list, 0)));
+
+                if (_exceptions != null)
+                {
+                    // TODO: Add as array initializer 
+                    attribute.Arguments.Add(AttributeHelper.GetStringArrayAttributeArgument(_exceptions));
+                }
+            }
+            else if (_exceptions != null)
+            {
+                // TODO add as array init. as above :
+                //attribute.Arguments.Add(GetPrimitiveAttributeArgument("CreditCardValidator.CardType", validator.Exceptions));
+            }
+
+            base.AddAttributeArguments(attribute, ErrorMessagePlacement.UnOrdered);
+            return attribute;
+        }
+
+        private CodeFieldReferenceExpression GetFieldReferenceForCreditCardEnum(Enum value)
+        {
+            return new CodeFieldReferenceExpression(
+                new CodeTypeReferenceExpression("CreditCardValidator.CardType"),
+                value.ToString());
         }
 	}
 

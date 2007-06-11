@@ -81,6 +81,17 @@
       <LastGenOutput>SerializationHelper.cs</LastGenOutput>
     </None>
     <Compile Include="ARValidators\AbstractValidation.cs" />
+    <Compile Include="ARValidators\ValidateSingle.cs" />
+    <Compile Include="ARValidators\ValidateSet.cs" />
+    <Compile Include="ARValidators\ValidateSameAs.cs" />
+    <Compile Include="ARValidators\ValidateRange.cs" />
+    <Compile Include="ARValidators\ValidateInteger.cs" />
+    <Compile Include="ARValidators\ValidateGroupNotEmpty.cs" />
+    <Compile Include="ARValidators\ValidateDouble.cs" />
+    <Compile Include="ARValidators\ValidateDecimal.cs" />
+    <Compile Include="ARValidators\ValidateCollectionNotEmpty.cs" />
+    <Compile Include="ARValidators\ValidateDateTime.cs" />
+    <Compile Include="ARValidators\ValidateDate.cs" />
     <Compile Include="ARValidators\ValidateCreditCard.cs" />
     <Compile Include="ARValidators\ValidateEmail.cs" />
     <Compile Include="ARValidators\ValidateLength.cs" />

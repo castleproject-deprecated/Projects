@@ -16,36 +16,33 @@ namespace Altinoren.ActiveWriter.ARValidators
 {
     using System;
     using System.CodeDom;
-    using System.ComponentModel;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using CodeGeneration;
 
     [Serializable]
-	public class ValidateRegExp: AbstractValidation
+	public class ValidateGroupNotEmpty: AbstractValidation
 	{
-	    private string _pattern;
+        private string _group;
 
-        public ValidateRegExp()
+        public ValidateGroupNotEmpty()
         {
-            base.friendlyName = "Regular Expression";
+            base.friendlyName = "Group Not Empty";
         }
 
-        [Category("Regular Expression")]
-        [Description("The pattern to match.")]
-	    public string Pattern
-	    {
-	        get { return _pattern; }
-	        set { _pattern = value; }
-	    }
+        [Category("Group")]
+        [Description("Name of the property group to validate together")]
+        public string Group
+        {
+            get { return _group; }
+            set { _group = value; }
+        }
 
         public override bool IsValid(List<string> errorList)
         {
-            if (errorList == null)
-                throw new ArgumentNullException("errorList");
-
-            if (string.IsNullOrEmpty(_pattern))
+            if (string.IsNullOrEmpty(_group))
             {
-                errorList.Add("ValidateRegExp: Pattern is required.");
+                errorList.Add("ValidateGroupNotEmpty: Group is required");
                 return false;
             }
 
@@ -58,9 +55,9 @@ namespace Altinoren.ActiveWriter.ARValidators
             if (!IsValid(errorList))
                 throw new ArgumentException(errorList[0]);
 
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateRegExp");
+            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateGroupNotEmpty");
 
-            attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(_pattern));
+            attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(_group));
 
             base.AddAttributeArguments(attribute, ErrorMessagePlacement.UnOrdered);
             return attribute;

@@ -24,6 +24,25 @@ namespace Altinoren.ActiveWriter
     public partial class ModelProperty
     {
         private string validatorPropertyStorage = null;
+        private readonly static Type[] _availableTypes = new Type[]
+            {
+                typeof(ValidateCollectionNotEmpty),
+                typeof (ValidateCreditCard),
+                typeof(ValidateDate),
+                typeof(ValidateDateTime),
+                typeof(ValidateDecimal),
+                typeof(ValidateDouble),
+                typeof(ValidateEmail),
+                typeof(ValidateGroupNotEmpty),
+                typeof(ValidateInteger),
+                typeof(ValidateLength),
+                typeof(ValidateNonEmpty),
+                typeof(ValidateRange),
+                typeof(ValidateRegExp),
+                typeof(ValidateSameAs),
+                typeof(ValidateSet),
+                typeof(ValidateSingle)
+            };
 
         public bool IsValidatorSet()
         {
@@ -56,13 +75,7 @@ namespace Altinoren.ActiveWriter
         {
             StringReader reader = new StringReader(value);
             XmlSerializer serializer =
-                new XmlSerializer(typeof (ArrayList),
-                                  new Type[]
-                                      {
-                                          typeof (ValidateCreditCard),
-                                          typeof (ValidateEmail), typeof (ValidateLength),
-                                          typeof (ValidateNonEmpty), typeof (ValidateRegExp)
-                                      });
+                new XmlSerializer(typeof (ArrayList), _availableTypes);
             return serializer.Deserialize(reader) as ArrayList;
         }
 
@@ -70,7 +83,7 @@ namespace Altinoren.ActiveWriter
         {
             StringBuilder builder = new StringBuilder();
             StringWriter writer = new StringWriter(builder);
-            XmlSerializer serializer = new XmlSerializer(typeof(ArrayList), new Type[] { typeof(ValidateCreditCard), typeof(ValidateEmail), typeof(ValidateLength), typeof(ValidateNonEmpty), typeof(ValidateRegExp) });
+            XmlSerializer serializer = new XmlSerializer(typeof(ArrayList), _availableTypes);
             serializer.Serialize(writer, list);
             return writer.ToString();
         }

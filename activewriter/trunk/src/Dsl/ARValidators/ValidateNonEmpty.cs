@@ -15,6 +15,7 @@
 namespace Altinoren.ActiveWriter.ARValidators
 {
     using System;
+    using System.CodeDom;
 
     [Serializable]
 	public class ValidateNonEmpty : AbstractValidation
@@ -22,6 +23,14 @@ namespace Altinoren.ActiveWriter.ARValidators
         public ValidateNonEmpty()
         {
             base.friendlyName = "Non Empty";
+        }
+
+        public override CodeAttributeDeclaration GetAttributeDeclaration()
+        {
+            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateNonEmpty");
+
+            base.AddAttributeArguments(attribute, ErrorMessagePlacement.UnOrdered);
+            return attribute;
         }
 	}
 }

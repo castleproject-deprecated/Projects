@@ -6,7 +6,7 @@ namespace Altinoren.ActiveWriter.UIEditors
     using System.Collections;
     using System.Collections.Generic;
     using System.Windows.Forms;
-    using Altinoren.ActiveWriter.ARValidators;
+    using ARValidators;
 
     // Had some problems with CollectionEditor. I'm writing my own. Ugly, but works for now.
     public partial class PropertyValidationEditorForm : Form
@@ -90,6 +90,63 @@ namespace Altinoren.ActiveWriter.UIEditors
         private void regularExpressionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Add(new ValidateRegExp());
+        }
+
+        private void collectionNotEmptyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO: Disabled in the UI. Waiting for http://support.castleproject.org/browse/COMP-28
+            Add(new ValidateCollectionNotEmpty());
+        }
+
+        private void dateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Add(new ValidateDate());
+        }
+
+        private void dateTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Add(new ValidateDateTime());
+        }
+
+        private void decimalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Add(new ValidateDecimal());
+        }
+
+        private void doubleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Add(new ValidateDouble());
+        }
+
+        private void groupNotEmptyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO: Disabled in the UI. Waiting for http://support.castleproject.org/browse/COMP-28
+            Add(new ValidateGroupNotEmpty());
+        }
+
+        private void integerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Add(new ValidateInteger());
+        }
+
+        private void rangeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Add(new ValidateRange());
+        }
+
+        private void sameAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Add(new ValidateSameAs());
+        }
+
+        private void setToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Add(new ValidateSet());
+        }
+
+        private void singleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Add(new ValidateSingle());
         }
 
         private void removeButton_Click(object sender, EventArgs e)

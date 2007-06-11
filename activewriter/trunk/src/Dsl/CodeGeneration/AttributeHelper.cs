@@ -46,6 +46,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             return new CodeAttributeArgument(new CodeSnippetExpression(String.Format("\"{0} = {{1}}\"", name, value)));
         }
 
+        public static CodeAttributeArgument GetPrimitiveAttributeArgumentUsingSnippet(string value)
+        {
+            return new CodeAttributeArgument(new CodeSnippetExpression(value));
+        }
+
         public static CodeAttributeArgument GetPrimitiveAttributeArgument(object o)
         {
             return new CodeAttributeArgument(new CodePrimitiveExpression(o));

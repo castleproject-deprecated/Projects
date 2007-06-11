@@ -15,14 +15,17 @@
 namespace Altinoren.ActiveWriter.ARValidators
 {
     using System;
+    using System.CodeDom;
+    using System.Collections.Generic;
     using System.ComponentModel;
+    using CodeGeneration;
 
     [Serializable]
     public class ValidateLength : AbstractValidation
 	{
 	    private int _exactLength = int.MinValue;
 	    private int _minLength = int.MinValue;
-	    private int _maxLenght = int.MaxValue;
+	    private int _maxLength = int.MaxValue;
 
         public ValidateLength()
         {
@@ -47,10 +50,78 @@ namespace Altinoren.ActiveWriter.ARValidators
 
         [Category("Length")]
         [Description("The maximum length, or int.MaxValue if this should not be tested.")]
-	    public int MaxLenght
+	    public int MaxLength
 	    {
-	        get { return _maxLenght; }
-	        set { _maxLenght = value; }
+	        get { return _maxLength; }
+	        set { _maxLength = value; }
 	    }
+
+        public override bool IsValid(List<string> errorList)
+        {
+            bool result = true;
+
+            if (_exactLength != int.MinValue && _exactLength < 0 && _minLength == int.MinValue && _maxLength == int.MaxValue)
+            {
+                errorList.Add("ValidateLength: Exact lenght should be set to a non-negative number.");
+                result = false;
+            }
+
+            if (_exactLength == int.MinValue && _minLength == int.MinValue && _maxLength == int.MaxValue)
+            {
+                errorList.Add("ValidateLength: Both minLength and maxLength were set in such as way that neither would be tested. At least one must be tested.");
+                result = false;
+            }
+
+            if (_exactLength != int.MinValue && _minLength != int.MinValue && _maxLength != int.MaxValue)
+            {
+                errorList.Add("ValidateLenght: Either exact lenght or a min / max combination should be set.");
+            }
+
+            if (_minLength > _maxLength)
+            {
+                errorList.Add("ValidateLenght: The maxLength parameter must be greater than the minLength parameter.");
+                result = false;
+            }
+
+            if (_minLength != int.MinValue && _minLength < 0)
+            {
+                errorList.Add("ValidateLenght: The minLength parameter must be set to either int.MinValue or a non-negative number.");
+                result = false;
+            }
+            
+            if (_maxLength < 0)
+            {
+                errorList.Add("ValidateLenght: The maxLength parameter must be set to either int.MaxValue or a non-negative number.");
+                result = false;
+            }
+
+            return result;
+        }
+
+        public override CodeAttributeDeclaration GetAttributeDeclaration()
+        {
+            List<string> errorList = new List<string>();
+            if (!IsValid(errorList))
+                throw new ArgumentException(errorList[0]);
+
+            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateLength");
+
+            if (_exactLength != int.MinValue)
+                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(_exactLength));
+            else
+            {
+                if (_minLength != int.MinValue)
+                    attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(_minLength));
+                else
+                    attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgumentUsingSnippet("Int32.MinValue"));
+                if (_maxLength != int.MaxValue)
+                    attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(_maxLength));
+                else
+                    attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgumentUsingSnippet("Int32.MaxValue"));
+            }
+
+            base.AddAttributeArguments(attribute, ErrorMessagePlacement.UnOrdered);
+            return attribute;
+        }
 	}
 }

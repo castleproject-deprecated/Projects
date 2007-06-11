@@ -142,20 +142,11 @@ namespace Debugging.Tests
             Type type = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.ClassWithProperties");
             PropertyInfo property = type.GetProperty("PropertyWithValidators");
 
-            //ValidateConfirmationAttribute confirmationAttribute = property.GetCustomAttributes(typeof(ValidateConfirmationAttribute), false)[0] as ValidateConfirmationAttribute;
-            //Assert.IsNotNull(confirmationAttribute);
-
             ValidateCreditCardAttribute ccAttribute = property.GetCustomAttributes(typeof(ValidateCreditCardAttribute), false)[0] as ValidateCreditCardAttribute;
             Assert.IsNotNull(ccAttribute);
 
             ValidateEmailAttribute emailAttribute = property.GetCustomAttributes(typeof(ValidateEmailAttribute), false)[0] as ValidateEmailAttribute;
             Assert.IsNotNull(emailAttribute);
-
-            //ValidateIsUniqueAttribute uniqueAttribute = property.GetCustomAttributes(typeof(ValidateIsUniqueAttribute), false)[0] as ValidateIsUniqueAttribute;
-            //Assert.IsNotNull(uniqueAttribute);
-
-            //ValidateNotEmptyAttribute notEmptyAttribute = property.GetCustomAttributes(typeof(ValidateNotEmptyAttribute), false)[0] as ValidateNotEmptyAttribute;
-            //Assert.IsNotNull(notEmptyAttribute);
 
             ValidateRegExpAttribute regExpAttribute = property.GetCustomAttributes(typeof(ValidateRegExpAttribute), false)[0] as ValidateRegExpAttribute;
             Assert.IsNotNull(regExpAttribute);
@@ -163,6 +154,35 @@ namespace Debugging.Tests
             ValidateLengthAttribute lengthAttribute = property.GetCustomAttributes(typeof(ValidateLengthAttribute), false)[0] as ValidateLengthAttribute;
             Assert.IsNotNull(lengthAttribute);
 
+            ValidateDateAttribute dateAttribute = property.GetCustomAttributes(typeof(ValidateDateAttribute), false)[0] as ValidateDateAttribute;
+            Assert.IsNotNull(dateAttribute);
+
+            ValidateDateTimeAttribute dateTimeAttribute = property.GetCustomAttributes(typeof(ValidateDateTimeAttribute), false)[0] as ValidateDateTimeAttribute;
+            Assert.IsNotNull(dateTimeAttribute);
+
+            ValidateDecimalAttribute decimalAttribute = property.GetCustomAttributes(typeof(ValidateDecimalAttribute), false)[0] as ValidateDecimalAttribute;
+            Assert.IsNotNull(decimalAttribute);
+
+            ValidateDoubleAttribute doubleAttribute = property.GetCustomAttributes(typeof(ValidateDoubleAttribute), false)[0] as ValidateDoubleAttribute;
+            Assert.IsNotNull(doubleAttribute);
+
+            ValidateIntegerAttribute integerAttribute = property.GetCustomAttributes(typeof(ValidateIntegerAttribute), false)[0] as ValidateIntegerAttribute;
+            Assert.IsNotNull(integerAttribute);
+
+            ValidateNonEmptyAttribute nonEmptyAttribute = property.GetCustomAttributes(typeof(ValidateNonEmptyAttribute), false)[0] as ValidateNonEmptyAttribute;
+            Assert.IsNotNull(nonEmptyAttribute);
+
+            ValidateRangeAttribute rangeAttribute = property.GetCustomAttributes(typeof(ValidateRangeAttribute), false)[0] as ValidateRangeAttribute;
+            Assert.IsNotNull(rangeAttribute);
+
+            ValidateSameAsAttribute sameAsAttribute = property.GetCustomAttributes(typeof(ValidateSameAsAttribute), false)[0] as ValidateSameAsAttribute;
+            Assert.IsNotNull(sameAsAttribute);
+
+            ValidateSetAttribute setAttribute = property.GetCustomAttributes(typeof(ValidateSetAttribute), false)[0] as ValidateSetAttribute;
+            Assert.IsNotNull(setAttribute);
+
+            ValidateSingleAttribute singleAttribute = property.GetCustomAttributes(typeof(ValidateSingleAttribute), false)[0] as ValidateSingleAttribute;
+            Assert.IsNotNull(singleAttribute);
         }
 
         [Test]

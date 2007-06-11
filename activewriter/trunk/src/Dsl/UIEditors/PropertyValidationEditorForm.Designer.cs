@@ -35,11 +35,22 @@ namespace Altinoren.ActiveWriter.UIEditors
             this.cancelButton = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.addButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.collectionNotEmptyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.creditCardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dateTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.decimalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.doubleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.emailToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupNotEmptyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.integerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lengthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notEmptyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.regularExpressionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sameAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.singleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeButton = new System.Windows.Forms.ToolStripButton();
             this.errors = new System.Windows.Forms.ErrorProvider(this.components);
             this.toolStrip1.SuspendLayout();
@@ -101,37 +112,99 @@ namespace Altinoren.ActiveWriter.UIEditors
             // 
             this.addButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.addButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.collectionNotEmptyToolStripMenuItem,
             this.creditCardToolStripMenuItem,
+            this.dateToolStripMenuItem,
+            this.dateTimeToolStripMenuItem,
+            this.decimalToolStripMenuItem,
+            this.doubleToolStripMenuItem,
             this.emailToolStripMenuItem,
+            this.groupNotEmptyToolStripMenuItem,
+            this.integerToolStripMenuItem,
             this.lengthToolStripMenuItem,
             this.notEmptyToolStripMenuItem,
-            this.regularExpressionToolStripMenuItem});
+            this.rangeToolStripMenuItem,
+            this.regularExpressionToolStripMenuItem,
+            this.sameAsToolStripMenuItem,
+            this.setToolStripMenuItem,
+            this.singleToolStripMenuItem});
             this.addButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(51, 22);
             this.addButton.Text = "Add...";
             // 
+            // collectionNotEmptyToolStripMenuItem
+            // 
+            this.collectionNotEmptyToolStripMenuItem.Name = "collectionNotEmptyToolStripMenuItem";
+            this.collectionNotEmptyToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.collectionNotEmptyToolStripMenuItem.Text = "Collection Not Empty";
+            this.collectionNotEmptyToolStripMenuItem.Visible = false;
+            this.collectionNotEmptyToolStripMenuItem.Click += new System.EventHandler(this.collectionNotEmptyToolStripMenuItem_Click);
+            // 
             // creditCardToolStripMenuItem
             // 
             this.creditCardToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.creditCardToolStripMenuItem.Name = "creditCardToolStripMenuItem";
-            this.creditCardToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.creditCardToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.creditCardToolStripMenuItem.Text = "Credit Card";
             this.creditCardToolStripMenuItem.Click += new System.EventHandler(this.creditCardToolStripMenuItem_Click);
+            // 
+            // dateToolStripMenuItem
+            // 
+            this.dateToolStripMenuItem.Name = "dateToolStripMenuItem";
+            this.dateToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.dateToolStripMenuItem.Text = "Date";
+            this.dateToolStripMenuItem.Click += new System.EventHandler(this.dateToolStripMenuItem_Click);
+            // 
+            // dateTimeToolStripMenuItem
+            // 
+            this.dateTimeToolStripMenuItem.Name = "dateTimeToolStripMenuItem";
+            this.dateTimeToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.dateTimeToolStripMenuItem.Text = "Date Time";
+            this.dateTimeToolStripMenuItem.Click += new System.EventHandler(this.dateTimeToolStripMenuItem_Click);
+            // 
+            // decimalToolStripMenuItem
+            // 
+            this.decimalToolStripMenuItem.Name = "decimalToolStripMenuItem";
+            this.decimalToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.decimalToolStripMenuItem.Text = "Decimal";
+            this.decimalToolStripMenuItem.Click += new System.EventHandler(this.decimalToolStripMenuItem_Click);
+            // 
+            // doubleToolStripMenuItem
+            // 
+            this.doubleToolStripMenuItem.Name = "doubleToolStripMenuItem";
+            this.doubleToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.doubleToolStripMenuItem.Text = "Double";
+            this.doubleToolStripMenuItem.Click += new System.EventHandler(this.doubleToolStripMenuItem_Click);
             // 
             // emailToolStripMenuItem
             // 
             this.emailToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.emailToolStripMenuItem.Name = "emailToolStripMenuItem";
-            this.emailToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.emailToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.emailToolStripMenuItem.Text = "Email";
             this.emailToolStripMenuItem.Click += new System.EventHandler(this.emailToolStripMenuItem_Click);
+            // 
+            // groupNotEmptyToolStripMenuItem
+            // 
+            this.groupNotEmptyToolStripMenuItem.Name = "groupNotEmptyToolStripMenuItem";
+            this.groupNotEmptyToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.groupNotEmptyToolStripMenuItem.Text = "Group Not Empty";
+            this.groupNotEmptyToolStripMenuItem.Visible = false;
+            this.groupNotEmptyToolStripMenuItem.Click += new System.EventHandler(this.groupNotEmptyToolStripMenuItem_Click);
+            // 
+            // integerToolStripMenuItem
+            // 
+            this.integerToolStripMenuItem.Name = "integerToolStripMenuItem";
+            this.integerToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.integerToolStripMenuItem.Text = "Integer";
+            this.integerToolStripMenuItem.Click += new System.EventHandler(this.integerToolStripMenuItem_Click);
             // 
             // lengthToolStripMenuItem
             // 
             this.lengthToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.lengthToolStripMenuItem.Name = "lengthToolStripMenuItem";
-            this.lengthToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.lengthToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.lengthToolStripMenuItem.Text = "Length";
             this.lengthToolStripMenuItem.Click += new System.EventHandler(this.lengthToolStripMenuItem_Click);
             // 
@@ -139,17 +212,45 @@ namespace Altinoren.ActiveWriter.UIEditors
             // 
             this.notEmptyToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.notEmptyToolStripMenuItem.Name = "notEmptyToolStripMenuItem";
-            this.notEmptyToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.notEmptyToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.notEmptyToolStripMenuItem.Text = "Non Empty";
             this.notEmptyToolStripMenuItem.Click += new System.EventHandler(this.notEmptyToolStripMenuItem_Click);
+            // 
+            // rangeToolStripMenuItem
+            // 
+            this.rangeToolStripMenuItem.Name = "rangeToolStripMenuItem";
+            this.rangeToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.rangeToolStripMenuItem.Text = "Range";
+            this.rangeToolStripMenuItem.Click += new System.EventHandler(this.rangeToolStripMenuItem_Click);
             // 
             // regularExpressionToolStripMenuItem
             // 
             this.regularExpressionToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.regularExpressionToolStripMenuItem.Name = "regularExpressionToolStripMenuItem";
-            this.regularExpressionToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.regularExpressionToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.regularExpressionToolStripMenuItem.Text = "Regular Expression";
             this.regularExpressionToolStripMenuItem.Click += new System.EventHandler(this.regularExpressionToolStripMenuItem_Click);
+            // 
+            // sameAsToolStripMenuItem
+            // 
+            this.sameAsToolStripMenuItem.Name = "sameAsToolStripMenuItem";
+            this.sameAsToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.sameAsToolStripMenuItem.Text = "Same As";
+            this.sameAsToolStripMenuItem.Click += new System.EventHandler(this.sameAsToolStripMenuItem_Click);
+            // 
+            // setToolStripMenuItem
+            // 
+            this.setToolStripMenuItem.Name = "setToolStripMenuItem";
+            this.setToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.setToolStripMenuItem.Text = "Set";
+            this.setToolStripMenuItem.Click += new System.EventHandler(this.setToolStripMenuItem_Click);
+            // 
+            // singleToolStripMenuItem
+            // 
+            this.singleToolStripMenuItem.Name = "singleToolStripMenuItem";
+            this.singleToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.singleToolStripMenuItem.Text = "Single";
+            this.singleToolStripMenuItem.Click += new System.EventHandler(this.singleToolStripMenuItem_Click);
             // 
             // removeButton
             // 
@@ -197,13 +298,24 @@ namespace Altinoren.ActiveWriter.UIEditors
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripDropDownButton addButton;
         private System.Windows.Forms.ToolStripButton removeButton;
+        private System.Windows.Forms.ErrorProvider errors;
+        private System.Windows.Forms.ToolStripDropDownButton addButton;
+        private System.Windows.Forms.ToolStripMenuItem collectionNotEmptyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem creditCardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dateTimeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem decimalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem doubleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem emailToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem groupNotEmptyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem integerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lengthToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem notEmptyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rangeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem regularExpressionToolStripMenuItem;
-        private System.Windows.Forms.ErrorProvider errors;
+        private System.Windows.Forms.ToolStripMenuItem sameAsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem singleToolStripMenuItem;
     }
 }

@@ -18,18 +18,18 @@ namespace Altinoren.ActiveWriter.ARValidators
     using System.CodeDom;
 
     [Serializable]
-	public class ValidateEmail: AbstractValidation
+	public class ValidateDate: AbstractValidation
 	{
-        public ValidateEmail()
+        public ValidateDate()
         {
-            base.friendlyName = "Email";
+            base.friendlyName = "Date";
         }
 
         public override CodeAttributeDeclaration GetAttributeDeclaration()
         {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("ValidateEmail");
+            CodeAttributeDeclaration attribute = base.GetAttributeDeclaration();
+            attribute.Name = "ValidateDate";
 
-            base.AddAttributeArguments(attribute, ErrorMessagePlacement.UnOrdered);
             return attribute;
         }
 	}

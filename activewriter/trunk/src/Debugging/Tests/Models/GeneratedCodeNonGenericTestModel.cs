@@ -52,10 +52,25 @@ namespace Debugging.Tests {
         }
         
         [Property(ColumnType="String")]
-        [ValidateCreditCard()]
-        [ValidateEmail()]
-        [ValidateRegExp("...")]
-        [ValidateLength(20)]
+        [ValidateCreditCard((CreditCardValidator.CardType.MasterCard | CreditCardValidator.CardType.VISA), new string[] {
+                "exception1",
+                "exception2"}, "Dummy error message", FriendlyName="frindlyName", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
+        [ValidateEmail("errror", FriendlyName="email", ExecutionOrder=2, RunWhen=RunWhen.Insert)]
+        [ValidateRegExp("...", "error", FriendlyName="regexp", ExecutionOrder=3)]
+        [ValidateLength(10, "error", FriendlyName="length", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
+        [ValidateDate("error", FriendlyName="dt", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
+        [ValidateDateTime("error", FriendlyName="dtm", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
+        [ValidateDecimal("error", FriendlyName="dec", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
+        [ValidateDouble("error", FriendlyName="double", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
+        [ValidateInteger("error", FriendlyName="int", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
+        [ValidateNonEmpty("error", FriendlyName="ne", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
+        [ValidateRange(0, 120, "error", FriendlyName="range", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
+        [ValidateSameAs("propertyname", "error", FriendlyName="same", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
+        [ValidateSet("error", new string[] {
+                "string1",
+                "string2"}, FriendlyName="set", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
+        [ValidateSingle("error", FriendlyName="single", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
+        [ValidateSet(typeof(System.UriFormat), "error", FriendlyName="set2", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
         public string PropertyWithValidators {
             get {
                 return this._propertyWithValidators;
