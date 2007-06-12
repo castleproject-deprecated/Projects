@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Controls:Dialog
+	close="close()"
+	showCloseButton="true"
+	layout="vertical"
+	modal="false"
+	minWidth="400"
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:Controls="castle.flexbridge.controls.*">
+	<mx:Script>
+	<![CDATA[
+		/**
+		 * The error message.
+		 */
+		[Bindable]
+		public var errorMessage:String = null;
+		
+		/**
+		 * The associated error details.
+		 */
+		[Bindable]
+		public var errorDetails:String = null;
+		
+		/**
+		 * Shows an error dialog.
+		 *
+		 * @param title The title for the dialog.
+		 * @param errorMessage The error message.
+		 * @param errorDetails The error details.
+		 */
+		public static function show(title:String, errorMessage:String, errorDetails:String = null):ErrorDialog
+		{
+			var errorDialog:ErrorDialog = new ErrorDialog();
+			
+			errorDialog.title = title;
+			errorDialog.errorMessage = errorMessage;
+			errorDialog.errorDetails = errorDetails;
+			errorDialog.open();
+			
+			return errorDialog;
+		}
+		
+		/**
+		 * Shows an error dialog.
+		 *
+		 * @param title The title for the dialog.
+		 * @param errorMessage The error message.
+		 * @param error The error.
+		 */
+		public static function showError(title:String, errorMessage:String, error:Error = null):ErrorDialog
+		{
+			var errorDetails:String = error != null ? error.getStackTrace() : null;
+			
+			return show(title, errorMessage, errorDetails);
+		}
+	]]>
+	</mx:Script>
+	
+	<mx:Text width="100%" selectable="true"
+		text="{ errorMessage }" />
+	
+	<mx:HBox width="100%" horizontalAlign="right">
+		<mx:Button label="OK" click="close()" />
+		<mx:Button
+			visible="{ errorDetails != null &amp;&amp; errorDetails.length > 0 }"
+			label="{ currentState == 'ShowDetails' ? '&lt;&lt; Details' : 'Details &gt;&gt;' }"
+			click="currentState = currentState == 'ShowDetails' ? '' : 'ShowDetails'" />
+	</mx:HBox>
+	
+	<Controls:states>
+		<mx:State name="ShowDetails">
+			<mx:AddChild relativeTo="{this}" position="lastChild">
+				<mx:target>
+					<mx:VBox width="100%" height="100%">
+						<mx:HRule width="100%" />
+						<mx:TextArea width="100%" height="100%"
+							editable="false" wordWrap="true" condenseWhite="true"
+							minHeight="200"
+							text="{ errorDetails }" />						
+					</mx:VBox>
+				</mx:target>
+			</mx:AddChild>
+		</mx:State>
+	</Controls:states>
+	
+</Controls:Dialog>

@@ -1,4 +1,13 @@
 <?xml version="1.0"?>
 <componentPackage>
+	<component id="ActiveText" class="castle.flexbridge.controls.ActiveText" />
+	<component id="ActiveTextArea" class="castle.flexbridge.controls.ActiveTextArea" />
 	<component id="AsyncTaskHolder" class="castle.flexbridge.common.AsyncTaskHolder" />
+	<component id="AsyncTaskController" class="castle.flexbridge.controls.AsyncTaskController" />
+	<component id="AsyncTaskStatusOverlay" class="castle.flexbridge.controls.AsyncTaskStatusOverlay" />
+	<component id="Dialog" class="castle.flexbridge.controls.Dialog" />
+	<component id="ErrorDialog" class="castle.flexbridge.controls.ErrorDialog" />
+	<component id="Icon" class="castle.flexbridge.controls.Icon" />
+	<component id="SizeableTitleWindow" class="castle.flexbridge.controls.SizeableTitleWindow" />
+	<component id="SmartRepeater" class="castle.flexbridge.controls.SmartRepeater" />
 </componentPackage>

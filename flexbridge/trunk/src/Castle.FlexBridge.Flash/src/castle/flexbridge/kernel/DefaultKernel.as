@@ -21,8 +21,8 @@ package castle.flexbridge.kernel
 	 */
 	public class DefaultKernel implements IKernel
 	{
-		private var _handlersByServiceType:Dictionary = new Dictionary(); /* of String to Array of IComponentHandler */
-		private var _handlersByComponentKey:Dictionary = new Dictionary(); /* of String to IComponentHandler */
+		private var _handlersByServiceType:Dictionary; /* dictionary of Class to Array of IComponentHandler */
+		private var _handlersByComponentKey:Object; /* dictionary of String to IComponentHandler */
 		private var _componentModelBuilder:IComponentModelBuilder;
 
 		/**
@@ -30,6 +30,8 @@ package castle.flexbridge.kernel
 		 */		
 		public function DefaultKernel()
 		{
+			_handlersByServiceType = new Dictionary();
+			_handlersByComponentKey = new Object();
 		}
 		
 		public function get componentModelBuilder():IComponentModelBuilder

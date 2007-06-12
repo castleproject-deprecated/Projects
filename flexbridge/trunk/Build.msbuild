@@ -50,7 +50,7 @@
 
   <Target Name="Build-CastleFlexBridgeTests"
           DependsOnTargets="Build-CastleFlexBridge;Build-CastleFlexBridgeTestsFlash">
-    <MSBuild Projects="$(SourceDir)\Castle.FlexBridge\Castle.FlexBridge.csproj"
+    <MSBuild Projects="$(SourceDir)\Castle.FlexBridge.Tests\Castle.FlexBridge.Tests.csproj"
              Targets="Build"
              Properties="
                Configuration=Release;

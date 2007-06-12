@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Container
+	visible="true"
+	paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+	currentState="{ getStateName(controller != null ? controller.status : AsyncTask.STATUS_PENDING) }"
+	xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Style source="assets/AsyncTaskStatusOverlay.css" />
+	
+	<mx:Metadata>
+	<![CDATA[
+		/**
+		 * An AsyncTaskStatusOverlay displays a LOADING or ERROR banner
+		 * on top of its child control when its controller's status is set
+		 * to AsyncTask.PENDING or AsyncTask.ERROR respectively.
+		 *
+		 * TODO: Localize this component and make it more configurable.
+		 */
+	]]>
+	</mx:Metadata>
+
+	<mx:Script>
+	<![CDATA[
+		import mx.core.EdgeMetrics;
+		import mx.core.UIComponent;
+		import mx.containers.BoxDirection;
+		import castle.flexbridge.common.AsyncTask;
+		
+		/**
+		 * The primary orientation of the overlay.
+		 * Must be either BoxDirection.VERTICAL or BoxDirection.HORIZONTAL.
+		 * Default is horizontal.
+		 */
+	    [Bindable]
+	    [Inspectable(category="General", enumeration="vertical,horizontal", defaultValue="vertical")]
+		public var direction:String = BoxDirection.HORIZONTAL;
+		
+		/**
+		 * The task controller.
+		 */
+		[Bindable]
+		public var controller:AsyncTaskController;
+
+		/**
+		 * The message to display when in the pending state.
+		 */
+		[Bindable]
+		public var pendingMessage:String = "Working...";
+		
+		/**
+		 * The message to display in the title of the error dialog when an error occurs.
+		 */
+		[Bindable]
+		public var errorDialogTitle:String = "Error";
+		
+		/**
+		 * The message to display when an error occurs.
+		 */
+		[Bindable]
+		public var errorMessage:String = "An error occurred!";
+		
+		private function getStateName(status:int):String
+		{
+			if (status == AsyncTask.STATUS_OK)
+				return "result";
+				
+			if (status == AsyncTask.STATUS_ERROR)
+				return "error";
+				
+			return "pending";
+		}
+		
+		private function get child():UIComponent
+		{
+			return UIComponent(getChildAt(0));
+		}
+		
+		private function showErrorDetails():void
+		{
+			var error:Error = controller.error as Error;
+			if (error != null)
+				ErrorDialog.showError(errorDialogTitle, errorMessage, error);
+		}
+		
+		override protected function measure():void
+		{
+			super.measure();
+	
+			var child:UIComponent = this.child;
+			
+			var vm:EdgeMetrics = viewMetricsAndPadding;	
+			var wPadding:Number = vm.left + vm.right;
+			var hPadding:Number = vm.top + vm.bottom;
+	
+			measuredMinWidth = child.minWidth + wPadding;
+			measuredMinHeight = child.minHeight + hPadding;
+			measuredWidth = child.getExplicitOrMeasuredWidth() + wPadding;
+			measuredHeight = child.getExplicitOrMeasuredHeight() + hPadding;
+		}
+
+		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+		{
+			super.updateDisplayList(unscaledWidth, unscaledHeight);
+
+			var child:UIComponent = this.child;
+			var overlayBox:Box = this.overlayBox;
+
+			var vm:EdgeMetrics = viewMetricsAndPadding;	
+			var wPadding:Number = vm.left + vm.right;
+			var hPadding:Number = vm.top + vm.bottom;
+	
+			var newWidth:Number = unscaledWidth - wPadding;
+			var newHeight:Number = unscaledHeight - hPadding;
+			var left:Number = vm.left;
+			var top:Number = vm.top;
+
+			if (!isNaN(child.percentWidth))
+			{
+				if (newWidth > child.maxWidth)
+					newWidth = child.maxWidth;
+			}
+			else
+			{
+				if (newWidth > child.explicitWidth)
+					newWidth = child.explicitWidth;
+			}
+	
+			if (!isNaN(child.percentHeight))
+			{
+				if (newHeight > child.maxHeight)
+					newHeight = child.maxHeight;
+			}
+			else
+			{
+				if (newHeight > child.explicitHeight)
+					newHeight = child.explicitHeight;
+			}
+	
+			if (child.width != newWidth || child.height != newHeight)
+				child.setActualSize(newWidth, newHeight);
+			if (child.x != left || child.y != top)
+				child.move(left, top);
+				
+			if (overlayBox.width != newWidth || overlayBox.height != newHeight)
+				overlayBox.setActualSize(newWidth, newHeight);
+			if (overlayBox.x != left || overlayBox.y != top)
+				overlayBox.move(left, top);
+		}
+	]]>
+	</mx:Script>
+	
+	<mx:states>
+		<mx:State name="overlayBaseState">
+			<mx:overrides>
+				<mx:AddChild>
+					<mx:target>
+						<mx:Box id="overlayBox"
+							direction="{ direction }" />
+					</mx:target>
+				</mx:AddChild>
+			</mx:overrides>
+		</mx:State>
+		
+		<mx:State name="pending" basedOn="overlayBaseState">
+			<mx:overrides>
+				<mx:AddChild relativeTo="{ overlayBox }">
+					<mx:target>
+						<mx:Label styleName="asyncTaskStatusOverlayPendingLabel"
+							text="{ pendingMessage }" />
+					</mx:target>
+				</mx:AddChild>
+				
+				<mx:SetProperty target="{ overlayBox }"
+					name="styleName" value="asyncTaskStatusOverlayPendingBox" />
+			</mx:overrides>
+		</mx:State>
+	
+		<mx:State name="error" basedOn="overlayBaseState">
+			<mx:overrides>
+				<mx:AddChild relativeTo="{ overlayBox }">
+					<mx:target>
+						<mx:Label styleName="asyncTaskStatusOverlayErrorLabel"
+							text="{ errorMessage }" />
+					</mx:target>
+				</mx:AddChild>
+
+				<mx:AddChild relativeTo="{ overlayBox }">
+					<mx:target>
+						<mx:Button styleName="asyncTaskStatusOverlayErrorDetailsButton"
+							width="18" height="18" label="+"
+							click="showErrorDetails()"
+							toolTip="Click to show detailed error information." />
+					</mx:target>
+				</mx:AddChild>
+				
+				<mx:SetProperty target="{ overlayBox }"
+					name="styleName" value="asyncTaskStatusOverlayErrorBox" />
+			</mx:overrides>
+		</mx:State>
+	
+		<mx:State name="result">
+		</mx:State>
+	</mx:states>
+</mx:Container>

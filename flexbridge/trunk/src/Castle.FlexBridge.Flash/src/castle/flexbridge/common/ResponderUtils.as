@@ -19,7 +19,7 @@ package castle.flexbridge.common
 	/**
 	 * Utilities for working with IResponder.
 	 */
-	public class ResponderUtils
+	public final class ResponderUtils
 	{
 		/**
 		 * Notifies multiple responders with a result.

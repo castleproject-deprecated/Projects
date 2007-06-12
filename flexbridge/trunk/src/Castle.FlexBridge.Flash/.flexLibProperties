@@ -1,48 +1,75 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties version="1">
-<includeClasses>
-<classEntry path="castle.flexbridge.kernel.DefaultComponentModelBuilder"/>
-<classEntry path="castle.flexbridge.kernel.IComponentActivator"/>
-<classEntry path="castle.flexbridge.reflection.MethodInfo"/>
-<classEntry path="castle.flexbridge.reflection.ParameterInfo"/>
-<classEntry path="castle.flexbridge.common.NotSupportedError"/>
-<classEntry path="castle.flexbridge.kernel.Lifestyle"/>
-<classEntry path="castle.flexbridge.kernel.IComponentHandler"/>
-<classEntry path="castle.flexbridge.common.UriBuilder"/>
-<classEntry path="castle.flexbridge.kernel.TransientComponentHandler"/>
-<classEntry path="castle.flexbridge.kernel.BaseComponentHandler"/>
-<classEntry path="castle.flexbridge.kernel.IKernel"/>
-<classEntry path="castle.flexbridge.kernel.IComponentModelBuilder"/>
-<classEntry path="castle.flexbridge.kernel.SingletonComponentHandler"/>
-<classEntry path="castle.flexbridge.reflection.ClassInfo"/>
-<classEntry path="castle.flexbridge.reflection.FieldInfo"/>
-<classEntry path="castle.flexbridge.kernel.DependencyModel"/>
-<classEntry path="castle.flexbridge.reflection.ConstantInfo"/>
-<classEntry path="castle.flexbridge.kernel.DefaultComponentActivator"/>
-<classEntry path="castle.flexbridge.kernel.ComponentModel"/>
-<classEntry path="castle.flexbridge.common.AsyncTaskHolder"/>
-<classEntry path="castle.flexbridge.reflection.Any"/>
-<classEntry path="castle.flexbridge.kernel.ExternalComponentActivator"/>
-<classEntry path="castle.flexbridge.reflection.MemberInfo"/>
-<classEntry path="castle.flexbridge.common.IInitializable"/>
-<classEntry path="castle.flexbridge.common.FunctionResponder"/>
-<classEntry path="castle.flexbridge.common.IDisposable"/>
-<classEntry path="castle.flexbridge.common.AsyncTaskEvent"/>
-<classEntry path="castle.flexbridge.common.AsyncTaskResponder"/>
-<classEntry path="castle.flexbridge.reflection.Void"/>
-<classEntry path="castle.flexbridge.common.AsyncTask"/>
-<classEntry path="castle.flexbridge.kernel.KernelError"/>
-<classEntry path="castle.flexbridge.reflection.ReflectionUtils"/>
-<classEntry path="castle.flexbridge.common.NotImplementedError"/>
-<classEntry path="castle.flexbridge.common.Uri"/>
-<classEntry path="castle.flexbridge.reflection.ConstructorInfo"/>
-<classEntry path="castle.flexbridge.common.AbstractMethodError"/>
-<classEntry path="castle.flexbridge.kernel.DefaultKernel"/>
-<classEntry path="castle.flexbridge.reflection.PropertyInfo"/>
-<classEntry path="castle.flexbridge.common.ResponderUtils"/>
-</includeClasses>
-<includeResources/>
-<namespaceManifests>
-<namespaceManifestEntry manifest="Castle.FlexBridge.Flash-manifest.xml" namespace="http://tempuri.org/flexbridge"/>
-</namespaceManifests>
+  <includeClasses>
+    <classEntry path="castle.flexbridge.collections.ArrayUtils"/>
+    <classEntry path="castle.flexbridge.collections.CollectionDelta"/>
+    <classEntry path="castle.flexbridge.collections.CollectionDeltaEvent"/>
+    <classEntry path="castle.flexbridge.collections.CollectionDeltaKind"/>
+    <classEntry path="castle.flexbridge.collections.CollectionUtils"/>
+    <classEntry path="castle.flexbridge.collections.LazyList"/>
+    <classEntry path="castle.flexbridge.collections.ListUtils"/>
+    <classEntry path="castle.flexbridge.collections.Set"/>
+    <classEntry path="castle.flexbridge.common.AbstractMethodError"/>
+    <classEntry path="castle.flexbridge.common.AsyncTask"/>
+    <classEntry path="castle.flexbridge.common.AsyncTaskEvent"/>
+    <classEntry path="castle.flexbridge.common.AsyncTaskHolder"/>
+    <classEntry path="castle.flexbridge.common.AsyncTaskResponder"/>
+    <classEntry path="castle.flexbridge.common.FunctionResponder"/>
+    <classEntry path="castle.flexbridge.common.HtmlUtils"/>
+    <classEntry path="castle.flexbridge.common.IDisposable"/>
+    <classEntry path="castle.flexbridge.common.IInitializable"/>
+    <classEntry path="castle.flexbridge.common.NotImplementedError"/>
+    <classEntry path="castle.flexbridge.common.NotSupportedError"/>
+    <classEntry path="castle.flexbridge.common.ResponderUtils"/>
+    <classEntry path="castle.flexbridge.common.TimeInterval"/>
+    <classEntry path="castle.flexbridge.common.Uri"/>
+    <classEntry path="castle.flexbridge.common.UriBuilder"/>
+    <classEntry path="castle.flexbridge.controls.ActiveText"/>
+    <classEntry path="castle.flexbridge.controls.ActiveTextArea"/>
+    <classEntry path="castle.flexbridge.controls.ActiveTextEvent"/>
+    <classEntry path="castle.flexbridge.controls.AsyncTaskController"/>
+    <classEntry path="castle.flexbridge.controls.AsyncTaskStatusOverlay"/>
+    <classEntry path="castle.flexbridge.controls.Dialog"/>
+    <classEntry path="castle.flexbridge.controls.DialogEvent"/>
+    <classEntry path="castle.flexbridge.controls.DialogResult"/>
+    <classEntry path="castle.flexbridge.controls.ErrorDialog"/>
+    <classEntry path="castle.flexbridge.controls.Icon"/>
+    <classEntry path="castle.flexbridge.controls.SizeableTitleWindow"/>
+    <classEntry path="castle.flexbridge.controls.SmartRepeater"/>
+    <classEntry path="castle.flexbridge.controls.activeTextClasses.ActiveTextFieldMixin"/>
+    <classEntry path="castle.flexbridge.controls.activeTextClasses.EmbeddedComponentInfo"/>
+    <classEntry path="castle.flexbridge.controls.factories.IComponentFactory"/>
+    <classEntry path="castle.flexbridge.controls.factories.IconFactory"/>
+    <classEntry path="castle.flexbridge.controls.factories.TypedComponentFactory"/>
+    <classEntry path="castle.flexbridge.kernel.BaseComponentHandler"/>
+    <classEntry path="castle.flexbridge.kernel.ComponentModel"/>
+    <classEntry path="castle.flexbridge.kernel.DefaultComponentActivator"/>
+    <classEntry path="castle.flexbridge.kernel.DefaultComponentModelBuilder"/>
+    <classEntry path="castle.flexbridge.kernel.DefaultKernel"/>
+    <classEntry path="castle.flexbridge.kernel.DependencyModel"/>
+    <classEntry path="castle.flexbridge.kernel.ExternalComponentActivator"/>
+    <classEntry path="castle.flexbridge.kernel.IComponentActivator"/>
+    <classEntry path="castle.flexbridge.kernel.IComponentHandler"/>
+    <classEntry path="castle.flexbridge.kernel.IComponentModelBuilder"/>
+    <classEntry path="castle.flexbridge.kernel.IKernel"/>
+    <classEntry path="castle.flexbridge.kernel.KernelError"/>
+    <classEntry path="castle.flexbridge.kernel.Lifestyle"/>
+    <classEntry path="castle.flexbridge.kernel.SingletonComponentHandler"/>
+    <classEntry path="castle.flexbridge.kernel.TransientComponentHandler"/>
+    <classEntry path="castle.flexbridge.reflection.Any"/>
+    <classEntry path="castle.flexbridge.reflection.ClassInfo"/>
+    <classEntry path="castle.flexbridge.reflection.ConstantInfo"/>
+    <classEntry path="castle.flexbridge.reflection.ConstructorInfo"/>
+    <classEntry path="castle.flexbridge.reflection.FieldInfo"/>
+    <classEntry path="castle.flexbridge.reflection.MemberInfo"/>
+    <classEntry path="castle.flexbridge.reflection.MethodInfo"/>
+    <classEntry path="castle.flexbridge.reflection.ParameterInfo"/>
+    <classEntry path="castle.flexbridge.reflection.PropertyInfo"/>
+    <classEntry path="castle.flexbridge.reflection.ReflectionUtils"/>
+    <classEntry path="castle.flexbridge.reflection.Void"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests>
+    <namespaceManifestEntry manifest="Castle.FlexBridge.Flash-manifest.xml" namespace="http://tempuri.org/flexbridge"/>
+  </namespaceManifests>
 </flexLibProperties>

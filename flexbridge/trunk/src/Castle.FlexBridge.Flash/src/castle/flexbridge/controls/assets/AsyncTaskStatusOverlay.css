@@ -1,0 +1,52 @@
+
+.asyncTaskStatusOverlayPendingBox
+{
+	background-color: #ffffdd;
+	
+	border-style: solid;
+	
+	horizontal-align: center;
+	vertical-align: middle;
+	
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.asyncTaskStatusOverlayPendingLabel
+{
+	font-style: italic;
+	font-weight: normal;
+}
+
+.asyncTaskStatusOverlayErrorBox
+{
+	background-color: #ffdddd;
+	
+	border-style: solid;
+	
+	horizontal-align: center;
+	vertical-align: middle;
+	
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.asyncTaskStatusOverlayErrorLabel
+{
+	font-style: italic;
+	font-weight: bold;
+}
+
+.asyncTaskStatusOverlayErrorDetailsButton
+{
+	corner-radius: 8px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	horizontal-gap: 0px;
+}
