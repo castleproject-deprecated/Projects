@@ -1,7 +1,8 @@
 <flex-config>
 	<main-title>Castle.FlexBridge Flex API</main-title>
 	<window-title>Castle.FlexBridge Flex API</window-title>
-
+	<footer>Copyright 2007 Castle Project - http://www.castleproject.org/</footer>
+		
 	<packages>
 		<package>
 			<string>castle.flexbridge.collections</string>
