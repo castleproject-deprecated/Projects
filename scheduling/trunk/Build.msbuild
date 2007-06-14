@@ -1,0 +1,72 @@
+<Project DefaultTargets="Clean;Build;Test" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootDir>$(MSBuildProjectDirectory)</RootDir>
+    <BuildDir>$(RootDir)\build</BuildDir>
+    <BuildBinDir>$(BuildDir)\bin</BuildBinDir>
+    <BuildDbDir>$(BuildDir)\db</BuildDbDir>
+    <BuildReportsDir>$(BuildDir)\reports</BuildReportsDir>
+    <BuildDocsDir>$(BuildDir)\docs</BuildDocsDir>
+    <LibsDir>$(RootDir)\libs</LibsDir>
+    <SourceDir>$(RootDir)\src</SourceDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <CSharpProject Include="$(SourceDir)\Castle.Components.Scheduler\Castle.Components.Scheduler.csproj" />
+    <CSharpProject Include="$(SourceDir)\Castle.Components.Scheduler.WindsorExtension\Castle.Components.Scheduler.WindsorExtension.csproj" />
+    <CSharpProject Include="$(SourceDir)\Castle.Components.Scheduler.Tests\Castle.Components.Scheduler.Tests.csproj" />
+
+    <Binary Include="$(SourceDir)\Castle.Components.Scheduler\bin\Castle.Components.Scheduler.dll" />
+    <Binary Include="$(SourceDir)\Castle.Components.Scheduler\bin\Castle.Components.Scheduler.xml" />
+    <Binary Include="$(SourceDir)\Castle.Components.Scheduler.WindsorExtension\bin\Castle.Components.Scheduler.WindsorExtension.dll" />
+    <Binary Include="$(SourceDir)\Castle.Components.Scheduler.WindsorExtension\bin\Castle.Components.Scheduler.WindsorExtension.xml" />
+
+    <DbScript Include="$(SourceDir)\Castle.Components.Scheduler.Db\**\*.sql" />
+
+    <TestAssembly Include="$(SourceDir)\Castle.Components.Scheduler.Tests\bin\Castle.Components.Scheduler.Tests.dll" />
+  </ItemGroup>
+
+  <Target Name="Build"
+          DependsOnTargets="Build-CSharpProjects">
+    <Copy SourceFiles="@(Binary)"
+          DestinationFolder="$(BuildBinDir)" />
+    <Copy SourceFiles="@(DbScript)"
+          DestinationFolder="$(BuildDbDir)\%(RecursiveDir)" />
+  </Target>
+
+  <Target Name="Clean"
+          DependsOnTargets="Clean-CSharpProjects">
+    <RemoveDir Directories="$(BuildDir)"
+               Condition="Exists('$(BuildDir)')" />
+  </Target>
+
+  <Target Name="Test">
+    <Exec Command="&quot;$(LibsDir)\MbUnit\bin\MbUnit.Cons.exe&quot; /report-type:Html /report-folder:&quot;$(BuildReportsDir)&quot; /show-reports @(TestAssembly->'&quot;%(Identity)&quot;', ' ')" />
+  </Target>
+
+  <Target Name="BuildDotNetDocs">
+  </Target>
+
+  <Target Name="Release"
+          DependsOnTargets="Clean;Build;Test;BuildDotNetDocs" />
+
+  <Target Name="Build-CSharpProjects"
+          DependsOnTargets="CreateBuildDir">
+    <MSBuild Projects="@(CSharpProjects)"
+             Targets="Build"
+             Properties="
+               Configuration=Release;
+             " />
+  </Target>
+
+  <Target Name="Clean-CSharpProjects">
+    <MSBuild Projects="@(CSharpProjects)"
+             Targets="Clean"
+             Properties="
+               Configuration=Release;
+             " />
+  </Target>
+
+  <Target Name="CreateBuildDir">
+    <MakeDir Directories="$(BuildDir);$(BuildBinDir);$(BuildReportsDir);$(BuildDocsDir);$(BuildDbDir)" />
+  </Target>
+</Project>
