@@ -1,0 +1,35 @@
+<flex-config>
+	<main-title>Castle.FlexBridge Flex API</main-title>
+	<window-title>Castle.FlexBridge Flex API</window-title>
+
+	<packages>
+		<package>
+			<string>castle.flexbridge.collections</string>
+			<string>Collection classes and utilities.</string>
+		</package>
+		<package>
+			<string>castle.flexbridge.common</string>
+			<string>Common framework code, error types and utilities.</string>
+		</package>
+		<package>
+			<string>castle.flexbridge.controls</string>
+			<string>Common controls.</string>
+		</package>
+		<package>
+			<string>castle.flexbridge.controls.activeTextClasses</string>
+			<string>Classes used with the ActiveText and ActiveTextArea controls.</string>
+		</package>
+		<package>
+			<string>castle.flexbridge.controls.factories</string>
+			<string>Factories for controls that are embedded in non-MXML markup.</string>
+		</package>
+		<package>
+			<string>castle.flexbridge.kernel</string>
+			<string>Inversion of control container.</string>
+		</package>
+		<package>
+			<string>castle.flexbridge.reflection</string>
+			<string>Reflection utilities and wrapper classes.</string>
+		</package>
+	</packages>
+</flex-config>

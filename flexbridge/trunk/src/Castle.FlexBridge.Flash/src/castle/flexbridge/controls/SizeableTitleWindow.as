@@ -37,33 +37,33 @@ package castle.flexbridge.controls
 	 */
 	public class SizeableTitleWindow extends TitleWindow
 	{
-		private const dragThreshold:int = 5;
+		private static const dragThreshold:int = 5;
 
-		private const CURSOR_STYLE_NONE:int = -1;
-		private const CURSOR_STYLE_NE:int   = 0;
-		private const CURSOR_STYLE_N:int    = 1;
-		private const CURSOR_STYLE_NW:int   = 2;
-		private const CURSOR_STYLE_W:int    = 3;
-		private const CURSOR_STYLE_SW:int   = 4;
-		private const CURSOR_STYLE_S:int    = 5;
-		private const CURSOR_STYLE_SE:int   = 6;
-		private const CURSOR_STYLE_E:int    = 7;
-		private const CURSOR_STYLE_MOVE:int = 8;
+		private static const CURSOR_STYLE_NONE:int = -1;
+		private static const CURSOR_STYLE_NE:int   = 0;
+		private static const CURSOR_STYLE_N:int    = 1;
+		private static const CURSOR_STYLE_NW:int   = 2;
+		private static const CURSOR_STYLE_W:int    = 3;
+		private static const CURSOR_STYLE_SW:int   = 4;
+		private static const CURSOR_STYLE_S:int    = 5;
+		private static const CURSOR_STYLE_SE:int   = 6;
+		private static const CURSOR_STYLE_E:int    = 7;
+		private static const CURSOR_STYLE_MOVE:int = 8;
 		
 		[Embed(source="assets/Cursor_Symbol_NS.gif")]
-		private static const CURSOR_SYMBOL_NS:Class;
+		private static var CURSOR_SYMBOL_NS:Class; // FIXME: Should be 'const' but asdoc produces a bogus warning.
 
 		[Embed(source="assets/Cursor_Symbol_NESW.gif")]
-		private static const CURSOR_SYMBOL_NESW:Class;
+		private static var CURSOR_SYMBOL_NESW:Class; // FIXME: Should be 'const' but asdoc produces a bogus warning.
 		
 		[Embed(source="assets/Cursor_Symbol_WE.gif")]
-		private static const CURSOR_SYMBOL_WE:Class;
+		private static var CURSOR_SYMBOL_WE:Class; // FIXME: Should be 'const' but asdoc produces a bogus warning.
 
 		[Embed(source="assets/Cursor_Symbol_NWSE.gif")]
-		private static const CURSOR_SYMBOL_NWSE:Class;
+		private static var CURSOR_SYMBOL_NWSE:Class; // FIXME: Should be 'const' but asdoc produces a bogus warning.
 								
 		[Embed(source="assets/Cursor_Symbol_All.gif")]
-		private static const CURSOR_SYMBOL_ALL:Class;
+		private static var CURSOR_SYMBOL_ALL:Class; // FIXME: Should be 'const' but asdoc produces a bogus warning.
 
 		private var _showDragCursor:Boolean = false;
 		private var _enableResize:Boolean = true;

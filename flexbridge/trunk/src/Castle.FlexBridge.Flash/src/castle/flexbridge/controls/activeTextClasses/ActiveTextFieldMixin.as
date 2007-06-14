@@ -99,7 +99,7 @@ package castle.flexbridge.controls.activeTextClasses
 		// that we can obtain consistent metrics for a non-breaking space character
 		// when embedding controls within the text field.
 		[Embed(source="../assets/ActiveTextField.ttf", fontName="ActiveTextField", mimeType="application/x-font-truetype")]
-		private static const ACTIVE_TEXT_FIELD_FONT:Class;
+		private static var ACTIVE_TEXT_FIELD_FONT:Class; // FIXME: Should be 'const' but asdoc produces a bogus warning.
 		private static const ACTIVE_TEXT_FIELD_FONT_NAME:String = "ActiveTextField";
 		
 		private static var _defaultDeviceFontNBSPWidthRatio:Number;

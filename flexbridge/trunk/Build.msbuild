@@ -5,6 +5,7 @@
     <BuildBinDir>$(BuildDir)\bin</BuildBinDir>
     <BuildReportsDir>$(BuildDir)\reports</BuildReportsDir>
     <BuildDocsDir>$(BuildDir)\docs</BuildDocsDir>
+    <BuildTempDir>$(BuildDir)\temp</BuildTempDir>
     <LibsDir>$(RootDir)\libs</LibsDir>
     <SourceDir>$(RootDir)\src</SourceDir>
     <FlexBinDir>$(LibsDir)\Flex\bin</FlexBinDir>
@@ -13,14 +14,24 @@
     <ComponentNamespace>http://www.castleproject.org/flexbridge</ComponentNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <CSharpProject Include="$(SourceDir)\Castle.FlexBridge\Castle.FlexBridge.csproj" />
+    <CSharpProject Include="$(SourceDir)\Castle.FlexBridge\Castle.FlexBridge.Tests.csproj" />
+
+    <Binary Include="$(SourceDir)\Castle.FlexBridge\bin\Castle.FlexBridge.dll" />
+    <Binary Include="$(SourceDir)\Castle.FlexBridge\bin\Castle.FlexBridge.xml" />
+
+    <TestAssembly Include="$(SourceDir)\Castle.FlexBridge.Tests\bin\Castle.FlexBridge.Tests.dll" />
+  </ItemGroup>
+
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
 
   <Target Name="Build"
-          DependsOnTargets="Build-CastleFlexBridge;Build-CastleFlexBridgeFlash;Build-CastleFlexBridgeTests;Build-CastleFlexBridgeTestsFlash">
+          DependsOnTargets="Build-CSharpProjects;Build-CastleFlexBridgeFlash;Build-CastleFlexBridgeTestsFlash">
   </Target>
 
   <Target Name="Clean"
-          DependsOnTargets="Clean-CastleFlexBridge">
+          DependsOnTargets="Clean-CSharpProjects">
     <RemoveDir Directories="$(BuildDir)"
                Condition="Exists('$(BuildDir)')" />
     <Delete Files="$(SourceDir)\Castle.FlexBridge.Tests\Flash\FlexBridgeTests.swf"
@@ -28,40 +39,51 @@
   </Target>
 
   <Target Name="Test">
-    <Exec Command="&quot;$(LibsDir)\MbUnit\bin\MbUnit.Cons.exe&quot; /report-type:Html /report-folder:&quot;$(BuildReportsDir)&quot; /show-reports &quot;$(SourceDir)\Castle.FlexBridge.Tests\bin\Castle.FlexBridge.Tests.dll&quot;" />
+    <Exec Command="&quot;$(LibsDir)\MbUnit\bin\MbUnit.Cons.exe&quot; /report-type:Html /report-folder:&quot;$(BuildReportsDir)&quot; /show-reports @(TestAssembly->'&quot;%(Identity)&quot;', ' ')" />
   </Target>
 
-  <Target Name="Build-CastleFlexBridge"
+  <Target Name="BuildFlexDocs"
+          DependsOnTargets="CreateBuildDir;PopulateFlexBridgeFlashClasses">
+    <MakeDir Directories="$(BuildDocsDir)\Flex" />
+
+    <!-- HACK: Workaround an issue with 'asdoc' where it encounters
+               Access Denied errors when trying to copy the '.svn'
+               folder inside 'templates\images'.  We create a temporary
+               copy of the templates without the offending '.svn' folders. -->
+    <CreateItem Include="$(LibsDir)\Flex\asdoc\templates\**"
+                Exclude="$(LibsDir)\Flex\asdoc\templates\**\.svn\**">
+      <Output TaskParameter="Include" ItemName="TemplateFile" />
+    </CreateItem>
+    <Copy SourceFiles="@(TemplateFile)"
+          DestinationFolder="$(BuildTempDir)\templates\%(RecursiveDir)" />
+
+    <Exec Command="&quot;$(FlexBinDir)\asdoc&quot; -namespace &quot;$(ComponentNamespace)&quot; &quot;$(SourceDir)\Castle.FlexBridge.Flash\src\Castle.FlexBridge.Flash-manifest.xml&quot; -load-config+=&quot;$(SourceDir)\Castle.FlexBridge.Flash\src\Castle.FlexBridge.Flash-config.xml&quot; -load-config+=&quot;$(SourceDir)\Castle.FlexBridge.Flash\src\Castle.FlexBridge.Flash-asdoc-config.xml&quot; -source-path &quot;$(SourceDir)\Castle.FlexBridge.Flash\src&quot; -doc-classes $(FlexBridgeFlashClasses) -templates-path &quot;$(BuildTempDir)\templates&quot; -output &quot;$(BuildDocsDir)\Flex&quot;" />
+  </Target>
+
+  <Target Name="BuildDotNetDocs">
+  </Target>
+
+  <Target Name="Release"
+          DependsOnTargets="Clean;Build;Test;BuildFlexDocs;BuildDotNetDocs" />
+
+  <Target Name="Build-CSharpProjects"
           DependsOnTargets="CreateBuildDir">
-    <MSBuild Projects="$(SourceDir)\Castle.FlexBridge\Castle.FlexBridge.csproj"
+    <MSBuild Projects="@(CSharpProjects)"
              Targets="Build"
              Properties="
                Configuration=Release;
              " />
-
-    <Copy SourceFiles="$(SourceDir)\Castle.FlexBridge\bin\Castle.FlexBridge.dll"
-          DestinationFolder="$(BuildBinDir)" />
   </Target>
 
-  <Target Name="Clean-CastleFlexBridge">
-    <MSBuild Projects="$(SourceDir)\Castle.FlexBridge\Castle.FlexBridge.csproj"
+  <Target Name="Clean-CSharpProjects">
+    <MSBuild Projects="@(CSharpProjects)"
              Targets="Clean"
              Properties="
                Configuration=Release;
              " />
   </Target>
 
-  <Target Name="Build-CastleFlexBridgeTests"
-          DependsOnTargets="Build-CastleFlexBridge;Build-CastleFlexBridgeTestsFlash">
-    <MSBuild Projects="$(SourceDir)\Castle.FlexBridge.Tests\Castle.FlexBridge.Tests.csproj"
-             Targets="Build"
-             Properties="
-               Configuration=Release;
-             " />
-  </Target>
-
-  <Target Name="Build-CastleFlexBridgeFlash"
-          DependsOnTargets="CreateBuildDir">
+  <Target Name="PopulateFlexBridgeFlashClasses">
     <XmlQuery XmlFileName="$(SourceDir)\Castle.FlexBridge.Flash\.flexLibProperties"
               XPath="//classEntry/@path">
       <Output TaskParameter="Values" ItemName="FlexBridgeFlashClass" />
@@ -69,7 +91,10 @@
     <CreateProperty Value="@(FlexBridgeFlashClass, ' ')">
       <Output TaskParameter="Value" PropertyName="FlexBridgeFlashClasses" />
     </CreateProperty>
+  </Target>
 
+  <Target Name="Build-CastleFlexBridgeFlash"
+          DependsOnTargets="CreateBuildDir;PopulateFlexBridgeFlashClasses">
     <Exec Command="&quot;$(FlexBinDir)\compc&quot; -namespace &quot;$(ComponentNamespace)&quot; &quot;$(SourceDir)\Castle.FlexBridge.Flash\src\Castle.FlexBridge.Flash-manifest.xml&quot; -include-namespaces &quot;$(ComponentNamespace)&quot; -include-classes $(FlexBridgeFlashClasses) -load-config+=&quot;$(SourceDir)\Castle.FlexBridge.Flash\src\Castle.FlexBridge.Flash-config.xml&quot; -source-path &quot;$(SourceDir)\Castle.FlexBridge.Flash\src&quot; -output &quot;$(BuildBinDir)\Castle.FlexBridge.Flash.swc&quot;" />
   </Target>
 
@@ -79,6 +104,6 @@
   </Target>
 
   <Target Name="CreateBuildDir">
-    <MakeDir Directories="$(BuildDir);$(BuildBinDir);$(BuildReportsDir);$(BuildDocsDir)" />
+    <MakeDir Directories="$(BuildDir);$(BuildBinDir);$(BuildReportsDir);$(BuildDocsDir);$(BuildTempDir)" />
   </Target>
 </Project>
