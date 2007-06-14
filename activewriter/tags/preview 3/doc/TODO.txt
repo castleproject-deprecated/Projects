@@ -1,0 +1,17 @@
+- Extract Nested menu command, which extracts some of the properties into a nested class or select one of the existing nested classes.
+- When adding a new property, handle enter key properly in toolwindow.
+- Double derived?
+- Import?
+- Sync. attribute properties with AR trunk.
+- Shouldn't it also be good practice when setting the Key Type to Primary key it is always NotNUll=true? (Robert van Hoornaar )
+- Display watermark links on the design surface in an empty designer.
+- Display informative messages and progress in status bar during server explorer interactions.
+- Implement ValidateNotSameAttribute support.
+- Implement ValidateCollectionNotEmpty and ValidateGroupNotEmpty attributes when COMP-28 is resolved.
+
+Ayende:
+- Classes should probably have a default Id property. (?)
+- While you can specify discriminators, there doesn’t seem to be a way to use inheritance. (Implementing Type hierarchies)
+- On the Northwind database, dragging the Customers table generate a PK of type System.Char
+- Another option to consider is to use the inflector to singularize the table tables when dragging from server explorer.
+

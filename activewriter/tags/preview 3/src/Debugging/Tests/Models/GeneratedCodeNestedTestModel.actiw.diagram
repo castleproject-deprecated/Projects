@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<activeRecordMapping dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" isCompleteView="false" name="GeneratedCodeNestedTestModel">
+  <modelMoniker Id="e70b229d-e099-4b06-94f5-ef4f3a424a07" />
+  <nestedChildShapes>
+    <classShape Id="df37cb92-6241-4980-8dcf-432aba1050bd" absoluteBounds="0.5, 0.5, 1.5, 0.71745849609375023">
+      <modelClassMoniker name="/e70b229d-e099-4b06-94f5-ef4f3a424a07/NestingClass1" />
+      <nestedChildShapes>
+        <elementListCompartment Id="310ff325-d361-4c8d-80a4-cee5c275f0f6" absoluteBounds="0.51499999999999968, 0.91000000000000014, 1.4700000000000002, 0.20745849609375" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+      </nestedChildShapes>
+    </classShape>
+    <nestedClassShape Id="ca4a2f32-5356-4c8a-a5cc-17ace65cbc6b" absoluteBounds="3, 0.5, 1.5, 0.88180582682291675">
+      <nestedClassMoniker name="/e70b229d-e099-4b06-94f5-ef4f3a424a07/NestedClass1" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2a3ce3b0-67a1-4fab-bf8a-9500c22c5f31" absoluteBounds="3.0149999999999997, 0.91000000000000014, 1.4700000000000002, 0.37180582682291663" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+      </nestedChildShapes>
+    </nestedClassShape>
+    <nestedConnector edgePoints="[(3 : 0.858729248046875); (2 : 0.858729248046875)]" manuallyRouted="false" fixedFrom="NotFixed" fixedTo="NotFixed" TargetRelationshipDomainClassId="6d7cfc22-da01-49be-87ae-387c801c09a5">
+      <relativeChildShapes />
+      <nodes>
+        <nestedClassShapeMoniker Id="ca4a2f32-5356-4c8a-a5cc-17ace65cbc6b" />
+        <classShapeMoniker Id="df37cb92-6241-4980-8dcf-432aba1050bd" />
+      </nodes>
+    </nestedConnector>
+    <nestedClassShape Id="776ede69-aeae-402a-9ab0-2a45b9b7beb4" absoluteBounds="3, 1.75, 1.5, 0.71745849609375023">
+      <nestedClassMoniker name="/e70b229d-e099-4b06-94f5-ef4f3a424a07/NestedClass2" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6a7ef8ca-83fe-4cd7-93ce-d8c6626f76d5" absoluteBounds="3.015, 2.16, 1.4700000000000002, 0.20745849609375" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+      </nestedChildShapes>
+    </nestedClassShape>
+    <nestedConnector edgePoints="[(3 : 2.10872924804687); (1.25 : 2.10872924804687); (1.25 : 1.21745849609375)]" manuallyRouted="false" fixedFrom="NotFixed" fixedTo="NotFixed" TargetRelationshipDomainClassId="6d7cfc22-da01-49be-87ae-387c801c09a5">
+      <relativeChildShapes />
+      <nodes>
+        <nestedClassShapeMoniker Id="776ede69-aeae-402a-9ab0-2a45b9b7beb4" />
+        <classShapeMoniker Id="df37cb92-6241-4980-8dcf-432aba1050bd" />
+      </nodes>
+    </nestedConnector>
+  </nestedChildShapes>
+</activeRecordMapping>

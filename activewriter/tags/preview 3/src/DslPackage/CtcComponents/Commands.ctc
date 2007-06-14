@@ -1,0 +1,91 @@
+// Copyright 2006 Gokhan Altinoren - http://altinoren.com/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+//
+// This file contains custom command definitions.
+//
+// NOTE: Each time commands are added or changed, the "version" parameter to the
+// ProvideMenuResource attribute in Shell\Package.dslddt should be incremented.
+// This causes Visual Studio to re-merge the menu definitions for the package.
+// Otherwise, changes won't take effect until the next time devenv /setup is run.
+//
+
+#include "stdidcmd.h"
+#include "vsshlids.h"
+#include "msobtnid.h"
+#include "virtkeys.h"
+#include "DSLToolsCmdID.h"
+#include "..\GeneratedCode\GeneratedCmd.h"
+
+#define cmdidClassDetails	0x805
+
+CMDS_SECTION guidPkg
+
+	MENUS_BEGIN
+		GENERATED_MENUS
+		// Add additional menu definitions here.
+		// NewMenu, Relative to Group, Priority, Type, Name, Text;
+	MENUS_END
+
+	NEWGROUPS_BEGIN
+		GENERATED_GROUPS
+		// Add additional menu group definitions here.
+		// NewGroup, Parent Group, Priority;
+	NEWGROUPS_END
+
+	BUTTONS_BEGIN
+		GENERATED_BUTTONS
+		// Add additional button definitions here.
+		// Command, Parent Group, Priority, Image, Type, Visibility, Text;
+		guidCmdSet:cmdidClassDetails, guidSHLMainMenu:IDG_VS_WNDO_OTRWNDWS1, 0x0100, OI_NOID, BUTTON, DIS_DEF, "ActiveWriter Class Details";
+	BUTTONS_END
+
+	BITMAPS_BEGIN
+	BITMAPS_END
+
+CMDS_END
+
+CMDUSED_SECTION
+CMDUSED_END
+
+CMDPLACEMENT_SECTION
+	GENERATED_CMDPLACEMENT
+	// Add additional command placements here.
+	// Command, Group, Priority;
+CMDPLACEMENT_END
+
+VISIBILITY_SECTION
+	GENERATED_VISIBILITY
+	// Add additional visibility definitions here.
+	// Command, GUID when visible;
+VISIBILITY_END
+
+//////////////////////////////////////////////////////////////////////////////
+// KEYBINDINGS_SECTION
+// 
+// This sections defines the keystroke mappings for the commands.
+//
+// The Keystate field is done using the following:
+//	A = Alt, S = Shift, C = Control, W = Windows Key
+//
+// Example of the Keystate assignment, if you want a two key combination
+// of Ctrl-X, Ctrl-Shift-C then the syntax would be :
+//
+//	'x':C:'c':CS
+//
+//////////////////////////////////////////////////////////////////////////////
+
+KEYBINDINGS_SECTION
+	// Command, when available, emulation, keystate;
+KEYBINDINGS_END

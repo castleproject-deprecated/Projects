@@ -1,0 +1,1357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema id="ActiveWriterSchema" targetNamespace="http://schemas.microsoft.com/dsltools/ActiveWriter" elementFormDefault="qualified" xmlns="http://schemas.microsoft.com/dsltools/ActiveWriter" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <!-- Model -->
+  <xsd:element name="model" type="Model" />
+  <xsd:complexType name="Model">
+    <xsd:annotation>
+      <xsd:documentation>Domain model</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence minOccurs="0" maxOccurs="1">
+      <!-- Property: AdditionalImports -->
+      <xsd:element name="additionalImports" type="xsd:string" minOccurs="0" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>List of additional imports to be added to the generated class.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <!-- Relationship: ModelHasClass -->
+      <xsd:element name="classes" minOccurs="0" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>Instances of ModelHasClass</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded" >
+              <xsd:element ref="modelHasClass">
+                <xsd:annotation>
+                  <xsd:documentation>[Relationship deriving from ModelHasClass needs to be serialized in full-form]</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="modelClass" >
+                <xsd:annotation>
+                  <xsd:documentation>[Target role-player]</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:choice>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <!-- Relationship: ModelHasNestedClasses -->
+      <xsd:element name="nestedClasses" minOccurs="0" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>Instances of ModelHasNestedClasses</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded" >
+              <xsd:element ref="modelHasNestedClasses">
+                <xsd:annotation>
+                  <xsd:documentation>[Relationship deriving from ModelHasNestedClasses needs to be serialized in full-form]</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="nestedClass" >
+                <xsd:annotation>
+                  <xsd:documentation>[Target role-player]</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:choice>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <!-- Id -->
+    <xsd:attribute name="Id" type="xsd:string">
+      <xsd:annotation>
+        <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- dslVersion -->
+    <xsd:attribute name="dslVersion" type="xsd:string">
+      <xsd:annotation>
+        <xsd:documentation>Version of the model serialized in this file.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: UseNullables -->
+    <xsd:attribute name="useNullables" type="NullableUsage" >
+      <xsd:annotation>
+        <xsd:documentation>Instructs ActiveWriter to generate code using nullables where possible.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: CaseOfPrivateFields -->
+    <xsd:attribute name="caseOfPrivateFields" type="FieldCase" >
+      <xsd:annotation>
+        <xsd:documentation>Tells ActiveWriter how to name private fields of properties if the Access of Property is PropertyAccess.Property (Default)</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: GenerateMonoRailProject -->
+    <xsd:attribute name="generateMonoRailProject" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>Tells ActiveWriter to generate a seperate MonoRail project with View and Controller code, taking this file&apos;s output as the model.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: MonoRailProjectName -->
+    <xsd:attribute name="monoRailProjectName" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Name of the MonoRail project. If a project with the same name already exists in the solution, it won&apos;t be added to the solution.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: MonoRailProjectPath -->
+    <xsd:attribute name="monoRailProjectPath" type="xsd:string" />
+    <!-- Property: MonoRailDefaultLayout -->
+    <xsd:attribute name="monoRailDefaultLayout" type="xsd:string" />
+    <!-- Property: MonoRailDefaultRescue -->
+    <xsd:attribute name="monoRailDefaultRescue" type="xsd:string" />
+    <!-- Property: MonoRailViewFileExtension -->
+    <xsd:attribute name="monoRailViewFileExtension" type="xsd:string" />
+    <!-- Property: UseGenerics -->
+    <xsd:attribute name="useGenerics" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>Instructs ActiveWriter to generate code using generic collections where possible. This setting is overridable in class level.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: UseBaseClass -->
+    <xsd:attribute name="useBaseClass" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>Instructs ActiveWriter to generate classes inherited from a base class. If Base Class Name property is empty, ActiveRecordBase or ActiveRecordBase&lt;T&gt; will be used depending on the Use generics property.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: BaseClassName -->
+    <xsd:attribute name="baseClassName" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Defines the base class to be inherited. Does have no effect if Use Base Class property is set to false.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: GeneratesDoubleDerived -->
+    <xsd:attribute name="generatesDoubleDerived" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>If true, will generate a base class with all functionality and a derived partial class to support customization through overrides.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: DoubleDerivedNameSuffix -->
+    <xsd:attribute name="doubleDerivedNameSuffix" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Suffix appended to base class names in double derived code generation. Defaults to &quot;Base&quot;, if not supplied.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: UseGeneratedCodeAttribute -->
+    <xsd:attribute name="useGeneratedCodeAttribute" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>Instructs ActiveWriter to decorate each class with GeneratedCodeAttribute. Some tools evaluate existance of this attribute to handle code differently.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: Target -->
+    <xsd:attribute name="target" type="CodeGenerationTarget" >
+      <xsd:annotation>
+        <xsd:documentation>Defines the experimental code generation target.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: AssemblyPath -->
+    <xsd:attribute name="assemblyPath" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Provides assembly load path for Castle.ActiveRecord.dll and related assemblies. If required assemblies are in GAC, this setting is omitted. If not and is this setting is blank, or required assemblies not found under the given path if they are not in the GAC, an error will be thrown during code generation.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: ActiveRecordAssemblyName -->
+    <xsd:attribute name="activeRecordAssemblyName" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Provides assembly name to be used during code generation. You can provide a fully qualified assembly name to target a specific version from the GAC.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: NHibernateAssemblyName -->
+    <xsd:attribute name="nHibernateAssemblyName" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Provides assembly name to be used during code generation. You can provide a fully qualified assembly name to target a specific version from the GAC.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: RelateWithActiwFile -->
+    <xsd:attribute name="relateWithActiwFile" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>Instructs ActiveWriter to add hbm.xml file as a nested file of this .actiw file. Otherwise, file will be added as a standalone item to the project.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: UseVirtualProperties -->
+    <xsd:attribute name="useVirtualProperties" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>Instructs ActiveWriter to generate virtual properties where possible.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: Namespace -->
+    <xsd:attribute name="namespace" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>The namespace to be used in generated code. If not supplied (default), ActiveWriter will use the namespace from the native project structure.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: ImplementINotifyPropertyChanged -->
+    <xsd:attribute name="implementINotifyPropertyChanged" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>Instructs ActiveWriter to implement INotifyPropertyChanged interface in each class generated. This setting is overridable in class level.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+  
+  <!-- Model Moniker -->
+  <xsd:element name="modelMoniker" type="ModelMoniker" />
+  <xsd:complexType name="ModelMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for Model instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="Id" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+  
+  <!-- ModelClass -->
+  <xsd:element name="modelClass" type="ModelClass" substitutionGroup="modelElementWithAccess" />
+  <xsd:complexType name="ModelClass">
+    <xsd:annotation>
+      <xsd:documentation>A class of the domain</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="ModelElementWithAccess">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Relationship: ManyToOneRelation -->
+          <xsd:element name="targets" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Instances of ManyToOneRelation</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element ref="manyToOneRelation" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                    <xsd:documentation>[Instance of ManyToOneRelation needs to be serialized in full-form]</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+          <!-- Relationship: ClassHasProperty -->
+          <xsd:element name="properties" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Instances of ClassHasProperty</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:choice minOccurs="0" maxOccurs="unbounded" >
+                  <xsd:element ref="classHasProperty">
+                    <xsd:annotation>
+                      <xsd:documentation>[Relationship deriving from ClassHasProperty needs to be serialized in full-form]</xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element ref="modelProperty" >
+                    <xsd:annotation>
+                      <xsd:documentation>[Target role-player]</xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:element>
+                </xsd:choice>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+          <!-- Relationship: ManyToManyRelation -->
+          <xsd:element name="manyToManyTargets" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Instances of ManyToManyRelation</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element ref="manyToManyRelation" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                    <xsd:documentation>[Instance of ManyToManyRelation needs to be serialized in full-form]</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+          <!-- Relationship: OneToOneRelation -->
+          <xsd:element name="oneToOneTarget" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Instance of OneToOneRelation</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element ref="oneToOneRelation" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                    <xsd:documentation>[Instance of OneToOneRelation needs to be serialized in full-form]</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+        <!-- Property: Cache -->
+        <xsd:attribute name="cache" type="CacheEnum" />
+        <!-- Property: DiscriminatorColumn -->
+        <xsd:attribute name="discriminatorColumn" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Discriminator column for a table inheritance modeling</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: DiscriminatorType -->
+        <xsd:attribute name="discriminatorType" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Column type (like string or integer) for the discriminator column</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: DiscriminatorValue -->
+        <xsd:attribute name="discriminatorValue" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Value that represents the target class on the discriminator column</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Lazy -->
+        <xsd:attribute name="lazy" type="xsd:boolean" >
+          <xsd:annotation>
+            <xsd:documentation>Enable lazy loading for the type</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Proxy -->
+        <xsd:attribute name="proxy" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Associates a proxy type with the target type</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Schema -->
+        <xsd:attribute name="schema" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Schema name associated with the type</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Table -->
+        <xsd:attribute name="table" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Table name associated with the type</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Where -->
+        <xsd:attribute name="where" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>SQL condition to retrieve objects</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: DynamicInsert -->
+        <xsd:attribute name="dynamicInsert" type="xsd:boolean" >
+          <xsd:annotation>
+            <xsd:documentation>Specifies that INSERT SQL should be generated at runtime and contains only the columns whose values are not null.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: DynamicUpdate -->
+        <xsd:attribute name="dynamicUpdate" type="xsd:boolean" >
+          <xsd:annotation>
+            <xsd:documentation>Specifies that UPDATE SQL should be generated at runtime and contains only those columns whose values have changed.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Persister -->
+        <xsd:attribute name="persister" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Specifies a custom IEntityPersister.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: SelectBeforeUpdate -->
+        <xsd:attribute name="selectBeforeUpdate" type="xsd:boolean" >
+          <xsd:annotation>
+            <xsd:documentation>Specifies that NHibernate should never perform an SQL UPDATE unless it is certain that an  object is actually modified. In certain cases (actually, only when a transient object has been associated with a new session using update()), this means that NHibernate will perform an extra SQL SELECT to determine if an UPDATE is actually required.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Polymorphism -->
+        <xsd:attribute name="polymorphism" type="Polymorphism" >
+          <xsd:annotation>
+            <xsd:documentation>Determines whether implicit or explicit query polymorphism is used.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Mutable -->
+        <xsd:attribute name="mutable" type="xsd:boolean" >
+          <xsd:annotation>
+            <xsd:documentation>Specifies that instances of the class are (not) mutable.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: BatchSize -->
+        <xsd:attribute name="batchSize" type="xsd:integer" >
+          <xsd:annotation>
+            <xsd:documentation>Specify a &quot;batch size&quot; for fetching instances of this class by identifier.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Locking -->
+        <xsd:attribute name="locking" type="OptimisticLocking" />
+        <!-- Property: UseAutoImport -->
+        <xsd:attribute name="useAutoImport" type="xsd:boolean" >
+          <xsd:annotation>
+            <xsd:documentation>The auto-import attribute lets us use unqualified class names in the query language, by default. The assembly and namespace attributes specify the assembly where persistent classes are located and the namespace they are declared in.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: BaseClassName -->
+        <xsd:attribute name="baseClassName" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>If set and if model level base class usage is set, overrides any base class defined in the model.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: UseGenerics -->
+        <xsd:attribute name="useGenerics" type="InheritableBoolean" >
+          <xsd:annotation>
+            <xsd:documentation>If set (other than Inherit), overrides model level generics generation for this class.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: ImplementINotifyPropertyChanged -->
+        <xsd:attribute name="implementINotifyPropertyChanged" type="InheritableBoolean" >
+          <xsd:annotation>
+            <xsd:documentation>Instructs ActiveWriter to implement INotifyPropertyChanged interface in this class.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- ModelClass Moniker -->
+  <xsd:element name="modelClassMoniker" type="ModelClassMoniker" substitutionGroup="modelElementWithAccessMoniker" />
+  <xsd:complexType name="ModelClassMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for ModelClass instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="ModelElementWithAccessMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- ModelProperty -->
+  <xsd:element name="modelProperty" type="ModelProperty" substitutionGroup="modelElementWithAccess" />
+  <xsd:complexType name="ModelProperty">
+    <xsd:annotation>
+      <xsd:documentation>A property or field of a class</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="ModelElementWithAccess">
+        <!-- Id -->
+        <xsd:attribute name="Id" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Column -->
+        <xsd:attribute name="column" type="xsd:string" />
+        <!-- Property: ColumnType -->
+        <xsd:attribute name="columnType" type="NHibernateType" />
+        <!-- Property: CustomColumnType -->
+        <xsd:attribute name="customColumnType" type="xsd:string" />
+        <!-- Property: CustomMemberType -->
+        <xsd:attribute name="customMemberType" type="xsd:string" />
+        <!-- Property: Formula -->
+        <xsd:attribute name="formula" type="xsd:string" />
+        <!-- Property: Insert -->
+        <xsd:attribute name="insert" type="xsd:boolean" />
+        <!-- Property: Length -->
+        <xsd:attribute name="length" type="xsd:integer" />
+        <!-- Property: NotNull -->
+        <xsd:attribute name="notNull" type="xsd:boolean" />
+        <!-- Property: Unique -->
+        <xsd:attribute name="unique" type="xsd:boolean" />
+        <!-- Property: UnsavedValue -->
+        <xsd:attribute name="unsavedValue" type="xsd:string" />
+        <!-- Property: Update -->
+        <xsd:attribute name="update" type="xsd:boolean" />
+        <!-- Property: Generator -->
+        <xsd:attribute name="generator" type="PrimaryKeyType" />
+        <!-- Property: KeyType -->
+        <xsd:attribute name="keyType" type="KeyType" >
+          <xsd:annotation>
+            <xsd:documentation>Denotes if the property is a normal property, a key or part of of a primary key.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Params -->
+        <xsd:attribute name="params" type="xsd:string" />
+        <!-- Property: SequenceName -->
+        <xsd:attribute name="sequenceName" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Name of the sequence to be used for the primary key. Required when Generator is Sequence.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Accessor -->
+        <xsd:attribute name="accessor" type="Accessor" >
+          <xsd:annotation>
+            <xsd:documentation>Accessor of the property.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: CompositeKeyName -->
+        <xsd:attribute name="compositeKeyName" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Name of the composite key class to be generated.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: PropertyType -->
+        <xsd:attribute name="propertyType" type="PropertyType" >
+          <xsd:annotation>
+            <xsd:documentation>Type of the property.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: DebuggerDisplay -->
+        <xsd:attribute name="debuggerDisplay" type="xsd:boolean" >
+          <xsd:annotation>
+            <xsd:documentation>Decorates the class this property belongs to with DebuggerDisplay attribute, using this property as the display source. Example:  [DebuggerDisplay(&quot;Name = {Name}&quot;)]</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Validator -->
+        <xsd:attribute name="validator" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Defines validators to be used on the property.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: UniqueKey -->
+        <xsd:attribute name="uniqueKey" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>A unique-key attribute can be used to group columns in a single unit key constraint.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Index -->
+        <xsd:attribute name="index" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Specifies the name of a (multi-column) index.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: SqlType -->
+        <xsd:attribute name="sqlType" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Overrides the default column type.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Check -->
+        <xsd:attribute name="check" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Create an SQL check constraint on either column or table.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- ModelProperty Moniker -->
+  <xsd:element name="modelPropertyMoniker" type="ModelPropertyMoniker" substitutionGroup="modelElementWithAccessMoniker" />
+  <xsd:complexType name="ModelPropertyMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for ModelProperty instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="ModelElementWithAccessMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- ModelElementWithAccess -->
+  <xsd:element name="modelElementWithAccess" abstract="true" type="ModelElementWithAccess" substitutionGroup="namedElement" />
+  <xsd:complexType name="ModelElementWithAccess" abstract="true" >
+    <xsd:complexContent>
+      <xsd:extension base="NamedElement">
+        <!-- Property: CustomAccess -->
+        <xsd:attribute name="customAccess" type="xsd:string" />
+        <!-- Property: Access -->
+        <xsd:attribute name="access" type="PropertyAccess" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- ModelElementWithAccess Moniker -->
+  <xsd:element name="modelElementWithAccessMoniker" abstract="true" type="ModelElementWithAccessMoniker" substitutionGroup="namedElementMoniker" />
+  <xsd:complexType name="ModelElementWithAccessMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for ModelElementWithAccess instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="NamedElementMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- NamedElement -->
+  <xsd:element name="namedElement" abstract="true" type="NamedElement" />
+  <xsd:complexType name="NamedElement" abstract="true" >
+    <!-- Property: Name -->
+    <xsd:attribute name="name" type="xsd:string" use="required" >
+      <xsd:annotation>
+        <xsd:documentation>Name of the element</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: Description -->
+    <xsd:attribute name="description" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Description of the element. This will appear in a &lt;summary&gt; Xml comment.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+  
+  <!-- NamedElement Moniker -->
+  <xsd:element name="namedElementMoniker" abstract="true" type="NamedElementMoniker" />
+  <xsd:complexType name="NamedElementMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for NamedElement instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="name" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+  
+  <!-- NestedClass -->
+  <xsd:element name="nestedClass" type="NestedClass" substitutionGroup="namedElement" />
+  <xsd:complexType name="NestedClass">
+    <xsd:complexContent>
+      <xsd:extension base="NamedElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Relationship: NestedClassHasProperties -->
+          <xsd:element name="properties" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Instances of NestedClassHasProperties</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:choice minOccurs="0" maxOccurs="unbounded" >
+                  <xsd:element ref="nestedClassHasProperties">
+                    <xsd:annotation>
+                      <xsd:documentation>[Relationship deriving from NestedClassHasProperties needs to be serialized in full-form]</xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element ref="modelProperty" >
+                    <xsd:annotation>
+                      <xsd:documentation>[Target role-player]</xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:element>
+                </xsd:choice>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+          <!-- Relationship: NestedClassReferencesModelClasses -->
+          <xsd:element name="modelClasses" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Instances of NestedClassReferencesModelClasses</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element ref="nestedClassReferencesModelClasses" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                    <xsd:documentation>[Instance of NestedClassReferencesModelClasses needs to be serialized in full-form]</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+        <!-- Property: ImplementINotifyPropertyChanged -->
+        <xsd:attribute name="implementINotifyPropertyChanged" type="InheritableBoolean" >
+          <xsd:annotation>
+            <xsd:documentation>Instructs ActiveWriter to implement INotifyPropertyChanged interface in this class.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- NestedClass Moniker -->
+  <xsd:element name="nestedClassMoniker" type="NestedClassMoniker" substitutionGroup="namedElementMoniker" />
+  <xsd:complexType name="NestedClassMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for NestedClass instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="NamedElementMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- ModelHasClass -->
+  <xsd:element name="modelHasClass" abstract="true" type="ModelHasClass" />
+  <xsd:complexType name="ModelHasClass" abstract="true" >
+    <xsd:sequence minOccurs="0" maxOccurs="1">
+      <!-- Target end ModelClass -->
+      <xsd:element ref="modelClass" minOccurs="1" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>[Target role-player]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <!-- ModelHasClass Moniker -->
+  <xsd:element name="modelHasClassMoniker" abstract="true" type="ModelHasClassMoniker" />
+  <xsd:complexType name="ModelHasClassMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for ModelHasClass instance.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:complexType>
+  
+  <!-- ManyToOneRelation -->
+  <xsd:element name="manyToOneRelation" type="ManyToOneRelation" />
+  <xsd:complexType name="ManyToOneRelation">
+    <xsd:annotation>
+      <xsd:documentation>Maps a many to one association</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence minOccurs="0" maxOccurs="1">
+      <!-- Target end ModelClass -->
+      <xsd:element ref="modelClassMoniker" minOccurs="1" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>[Target role-player]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <!-- Id -->
+    <xsd:attribute name="Id" type="xsd:string">
+      <xsd:annotation>
+        <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: TargetCache -->
+    <xsd:attribute name="targetCache" type="CacheEnum" />
+    <!-- Property: TargetCascade -->
+    <xsd:attribute name="targetCascade" type="ManyRelationCascadeEnum" />
+    <!-- Property: TargetColumnKey -->
+    <xsd:attribute name="targetColumnKey" type="xsd:string" />
+    <!-- Property: TargetCustomAccess -->
+    <xsd:attribute name="targetCustomAccess" type="xsd:string" />
+    <!-- Property: TargetInverse -->
+    <xsd:attribute name="targetInverse" type="xsd:boolean" />
+    <!-- Property: TargetLazy -->
+    <xsd:attribute name="targetLazy" type="xsd:boolean" />
+    <!-- Property: TargetMapType -->
+    <xsd:attribute name="targetMapType" type="xsd:string" />
+    <!-- Property: TargetOrderBy -->
+    <xsd:attribute name="targetOrderBy" type="xsd:string" />
+    <!-- Property: TargetRelationType -->
+    <xsd:attribute name="targetRelationType" type="RelationType" />
+    <!-- Property: TargetSchema -->
+    <xsd:attribute name="targetSchema" type="xsd:string" />
+    <!-- Property: TargetSort -->
+    <xsd:attribute name="targetSort" type="xsd:string" />
+    <!-- Property: TargetTable -->
+    <xsd:attribute name="targetTable" type="xsd:string" />
+    <!-- Property: TargetWhere -->
+    <xsd:attribute name="targetWhere" type="xsd:string" />
+    <!-- Property: TargetDescription -->
+    <xsd:attribute name="targetDescription" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Description of the property. This will appear in a &lt;summary&gt; Xml comment.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: TargetPropertyName -->
+    <xsd:attribute name="targetPropertyName" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Name of the property in the generated code. If not supplied, ActiveWriter will use the source class name in plural form.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: TargetPropertyType -->
+    <xsd:attribute name="targetPropertyType" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Type of the property. If not supplied, ActiveWriter will use IList by default.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: SourceCascade -->
+    <xsd:attribute name="sourceCascade" type="CascadeEnum" />
+    <!-- Property: SourceColumn -->
+    <xsd:attribute name="sourceColumn" type="xsd:string" />
+    <!-- Property: SourceCustomAccess -->
+    <xsd:attribute name="sourceCustomAccess" type="xsd:string" />
+    <!-- Property: SourceInsert -->
+    <xsd:attribute name="sourceInsert" type="xsd:boolean" />
+    <!-- Property: SourceNotNull -->
+    <xsd:attribute name="sourceNotNull" type="xsd:boolean" />
+    <!-- Property: SourceOuterJoin -->
+    <xsd:attribute name="sourceOuterJoin" type="OuterJoinEnum" />
+    <!-- Property: SourceType -->
+    <xsd:attribute name="sourceType" type="xsd:string" />
+    <!-- Property: SourceUnique -->
+    <xsd:attribute name="sourceUnique" type="xsd:boolean" />
+    <!-- Property: SourceUpdate -->
+    <xsd:attribute name="sourceUpdate" type="xsd:boolean" />
+    <!-- Property: SourceDescription -->
+    <xsd:attribute name="sourceDescription" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Description of the property. This will appear in a &lt;summary&gt; Xml comment.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: TargetAccess -->
+    <xsd:attribute name="targetAccess" type="PropertyAccess" >
+      <xsd:annotation>
+        <xsd:documentation>The access strategy.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: SourcePropertyName -->
+    <xsd:attribute name="sourcePropertyName" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Name of the property. If not suplied, ActiveWriter will use target class name.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: SourceNotFoundBehaviour -->
+    <xsd:attribute name="sourceNotFoundBehaviour" type="NotFoundBehaviour" >
+      <xsd:annotation>
+        <xsd:documentation>Gets or sets the way broken relations are handled.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: TargetNotFoundBehaviour -->
+    <xsd:attribute name="targetNotFoundBehaviour" type="NotFoundBehaviour" >
+      <xsd:annotation>
+        <xsd:documentation>Gets or sets the way broken relations are handled.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: TargetElement -->
+    <xsd:attribute name="targetElement" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Use for simple types.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: TargetIndexType -->
+    <xsd:attribute name="targetIndexType" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Only used with maps.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: TargetIndex -->
+    <xsd:attribute name="targetIndex" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Only used with maps or list.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+  
+  <!-- ManyToOneRelation Moniker -->
+  <xsd:element name="manyToOneRelationMoniker" type="ManyToOneRelationMoniker" />
+  <xsd:complexType name="ManyToOneRelationMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for ManyToOneRelation instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="Id" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+  
+  <!-- ClassHasProperty -->
+  <xsd:element name="classHasProperty" abstract="true" type="ClassHasProperty" />
+  <xsd:complexType name="ClassHasProperty" abstract="true" >
+    <xsd:sequence minOccurs="0" maxOccurs="1">
+      <!-- Target end ModelProperty -->
+      <xsd:element ref="modelProperty" minOccurs="1" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>[Target role-player]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <!-- ClassHasProperty Moniker -->
+  <xsd:element name="classHasPropertyMoniker" abstract="true" type="ClassHasPropertyMoniker" />
+  <xsd:complexType name="ClassHasPropertyMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for ClassHasProperty instance.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:complexType>
+  
+  <!-- ManyToManyRelation -->
+  <xsd:element name="manyToManyRelation" type="ManyToManyRelation" />
+  <xsd:complexType name="ManyToManyRelation">
+    <xsd:annotation>
+      <xsd:documentation>Maps a many to many association with an association table</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence minOccurs="0" maxOccurs="1">
+      <!-- Target end ModelClass -->
+      <xsd:element ref="modelClassMoniker" minOccurs="1" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>[Target role-player]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <!-- Id -->
+    <xsd:attribute name="Id" type="xsd:string">
+      <xsd:annotation>
+        <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: SourceCache -->
+    <xsd:attribute name="sourceCache" type="CacheEnum" />
+    <!-- Property: SourceCascade -->
+    <xsd:attribute name="sourceCascade" type="ManyRelationCascadeEnum" />
+    <!-- Property: SourceColumn -->
+    <xsd:attribute name="sourceColumn" type="xsd:string" />
+    <!-- Property: SourceCustomAccess -->
+    <xsd:attribute name="sourceCustomAccess" type="xsd:string" />
+    <!-- Property: SourceInverse -->
+    <xsd:attribute name="sourceInverse" type="xsd:boolean" />
+    <!-- Property: SourceLazy -->
+    <xsd:attribute name="sourceLazy" type="xsd:boolean" />
+    <!-- Property: SourceMapType -->
+    <xsd:attribute name="sourceMapType" type="xsd:string" />
+    <!-- Property: SourceOrderBy -->
+    <xsd:attribute name="sourceOrderBy" type="xsd:string" />
+    <!-- Property: SourceRelationType -->
+    <xsd:attribute name="sourceRelationType" type="RelationType" />
+    <!-- Property: Schema -->
+    <xsd:attribute name="schema" type="xsd:string" />
+    <!-- Property: SourceSort -->
+    <xsd:attribute name="sourceSort" type="xsd:string" />
+    <!-- Property: Table -->
+    <xsd:attribute name="table" type="xsd:string" />
+    <!-- Property: SourceWhere -->
+    <xsd:attribute name="sourceWhere" type="xsd:string" />
+    <!-- Property: TargetCache -->
+    <xsd:attribute name="targetCache" type="CacheEnum" />
+    <!-- Property: TargetCascade -->
+    <xsd:attribute name="targetCascade" type="ManyRelationCascadeEnum" />
+    <!-- Property: TargetColumn -->
+    <xsd:attribute name="targetColumn" type="xsd:string" />
+    <!-- Property: TargetCustomAccess -->
+    <xsd:attribute name="targetCustomAccess" type="xsd:string" />
+    <!-- Property: TargetInverse -->
+    <xsd:attribute name="targetInverse" type="xsd:boolean" />
+    <!-- Property: TargetLazy -->
+    <xsd:attribute name="targetLazy" type="xsd:boolean" />
+    <!-- Property: TargetMapType -->
+    <xsd:attribute name="targetMapType" type="xsd:string" />
+    <!-- Property: TargetOrderBy -->
+    <xsd:attribute name="targetOrderBy" type="xsd:string" />
+    <!-- Property: TargetRelationType -->
+    <xsd:attribute name="targetRelationType" type="RelationType" />
+    <!-- Property: TargetSort -->
+    <xsd:attribute name="targetSort" type="xsd:string" />
+    <!-- Property: TargetWhere -->
+    <xsd:attribute name="targetWhere" type="xsd:string" />
+    <!-- Property: SourceDescription -->
+    <xsd:attribute name="sourceDescription" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Description of the property. This will appear in a &lt;summary&gt; Xml comment.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: TargetDescription -->
+    <xsd:attribute name="targetDescription" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Description of the property. This will appear in a &lt;summary&gt; Xml comment.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: SourceAccess -->
+    <xsd:attribute name="sourceAccess" type="PropertyAccess" />
+    <!-- Property: TargetAccess -->
+    <xsd:attribute name="targetAccess" type="PropertyAccess" />
+    <!-- Property: SourcePropertyType -->
+    <xsd:attribute name="sourcePropertyType" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Type of the property. If not supplied, ActiveWriter will use IList by default.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: TargetPropertyType -->
+    <xsd:attribute name="targetPropertyType" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Type of the property. If not supplied, ActiveWriter will use IList by default.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: SourcePropertyName -->
+    <xsd:attribute name="sourcePropertyName" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Name of the property in the generated code. If not supplied, ActiveWriter will use the target class name in plural form.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: TargetPropertyName -->
+    <xsd:attribute name="targetPropertyName" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Name of the property in the generated code. If not supplied, ActiveWriter will use the source class name in plural form.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: TargetNotFoundBehaviour -->
+    <xsd:attribute name="targetNotFoundBehaviour" type="NotFoundBehaviour" >
+      <xsd:annotation>
+        <xsd:documentation>Gets or sets the way broken relations are handled.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: SourceNotFoundBehaviour -->
+    <xsd:attribute name="sourceNotFoundBehaviour" type="NotFoundBehaviour" >
+      <xsd:annotation>
+        <xsd:documentation>Gets or sets the way broken relations are handled.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+  
+  <!-- ManyToManyRelation Moniker -->
+  <xsd:element name="manyToManyRelationMoniker" type="ManyToManyRelationMoniker" />
+  <xsd:complexType name="ManyToManyRelationMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for ManyToManyRelation instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="Id" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+  
+  <!-- OneToOneRelation -->
+  <xsd:element name="oneToOneRelation" type="OneToOneRelation" />
+  <xsd:complexType name="OneToOneRelation">
+    <xsd:annotation>
+      <xsd:documentation>Associates a foreign table where the current class and the target class share their primary key.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence minOccurs="0" maxOccurs="1">
+      <!-- Target end ModelClass -->
+      <xsd:element ref="modelClassMoniker" minOccurs="1" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>[Target role-player]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <!-- Property: SourceAccess -->
+    <xsd:attribute name="sourceAccess" type="PropertyAccess" />
+    <!-- Property: SourceCascade -->
+    <xsd:attribute name="sourceCascade" type="CascadeEnum" />
+    <!-- Property: SourceConstrained -->
+    <xsd:attribute name="sourceConstrained" type="xsd:boolean" />
+    <!-- Property: SourceCustomAccess -->
+    <xsd:attribute name="sourceCustomAccess" type="xsd:string" />
+    <!-- Property: SourceOuterJoin -->
+    <xsd:attribute name="sourceOuterJoin" type="OuterJoinEnum" />
+    <!-- Property: TargetAccess -->
+    <xsd:attribute name="targetAccess" type="PropertyAccess" />
+    <!-- Property: TargetCascade -->
+    <xsd:attribute name="targetCascade" type="CascadeEnum" />
+    <!-- Property: TargetConstrained -->
+    <xsd:attribute name="targetConstrained" type="xsd:boolean" />
+    <!-- Property: TargetCustomAccess -->
+    <xsd:attribute name="targetCustomAccess" type="xsd:string" />
+    <!-- Property: TargetOuterJoin -->
+    <xsd:attribute name="targetOuterJoin" type="OuterJoinEnum" />
+    <!-- Property: SourceDescription -->
+    <xsd:attribute name="sourceDescription" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Description of the property. This will appear in a &lt;summary&gt; Xml comment.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: TargetDescription -->
+    <xsd:attribute name="targetDescription" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Description of the property. This will appear in a &lt;summary&gt; Xml comment.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+  
+  <!-- OneToOneRelation Moniker -->
+  <xsd:element name="oneToOneRelationMoniker" abstract="true" type="OneToOneRelationMoniker" />
+  <xsd:complexType name="OneToOneRelationMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for OneToOneRelation instance.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:complexType>
+  
+  <!-- ModelHasNestedClasses -->
+  <xsd:element name="modelHasNestedClasses" abstract="true" type="ModelHasNestedClasses" />
+  <xsd:complexType name="ModelHasNestedClasses" abstract="true" >
+    <xsd:sequence minOccurs="0" maxOccurs="1">
+      <!-- Target end NestedClass -->
+      <xsd:element ref="nestedClass" minOccurs="1" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>[Target role-player]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <!-- ModelHasNestedClasses Moniker -->
+  <xsd:element name="modelHasNestedClassesMoniker" abstract="true" type="ModelHasNestedClassesMoniker" />
+  <xsd:complexType name="ModelHasNestedClassesMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for ModelHasNestedClasses instance.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:complexType>
+  
+  <!-- NestedClassHasProperties -->
+  <xsd:element name="nestedClassHasProperties" abstract="true" type="NestedClassHasProperties" />
+  <xsd:complexType name="NestedClassHasProperties" abstract="true" >
+    <xsd:sequence minOccurs="0" maxOccurs="1">
+      <!-- Target end ModelProperty -->
+      <xsd:element ref="modelProperty" minOccurs="1" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>[Target role-player]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <!-- NestedClassHasProperties Moniker -->
+  <xsd:element name="nestedClassHasPropertiesMoniker" abstract="true" type="NestedClassHasPropertiesMoniker" />
+  <xsd:complexType name="NestedClassHasPropertiesMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for NestedClassHasProperties instance.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:complexType>
+  
+  <!-- NestedClassReferencesModelClasses -->
+  <xsd:element name="nestedClassReferencesModelClasses" type="NestedClassReferencesModelClasses" />
+  <xsd:complexType name="NestedClassReferencesModelClasses">
+    <xsd:sequence minOccurs="0" maxOccurs="1">
+      <!-- Target end ModelClass -->
+      <xsd:element ref="modelClassMoniker" minOccurs="1" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>[Target role-player]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <!-- Property: MapType -->
+    <xsd:attribute name="mapType" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Allows one to reference a different type than the property type</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: Insert -->
+    <xsd:attribute name="insert" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>Set to false to ignore this nested component when updating entities of this ActiveRecord class.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: Update -->
+    <xsd:attribute name="update" type="xsd:boolean" />
+    <!-- Property: ColumnPrefix -->
+    <xsd:attribute name="columnPrefix" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Set to false to ignore this nested component when inserting entities of this ActiveRecord class.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: Description -->
+    <xsd:attribute name="description" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Description for nested property on the model class. This will appear in a &lt;summary&gt; Xml comment.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: PropertyName -->
+    <xsd:attribute name="propertyName" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Name of the property on the nesting class. If not suplied, ActiveWriter will use nested class&apos; name.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+  
+  <!-- NestedClassReferencesModelClasses Moniker -->
+  <xsd:element name="nestedClassReferencesModelClassesMoniker" abstract="true" type="NestedClassReferencesModelClassesMoniker" />
+  <xsd:complexType name="NestedClassReferencesModelClassesMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for NestedClassReferencesModelClasses instance.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:complexType>
+  
+  <!-- Enum PropertyAccess -->
+  <xsd:simpleType name="PropertyAccess">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Property"/>
+      <xsd:enumeration value="FieldCamelcase"/>
+      <xsd:enumeration value="FieldCamelcaseUnderscore"/>
+      <xsd:enumeration value="FieldPascalcaseMUnderscore"/>
+      <xsd:enumeration value="FieldLowercaseUnderscore"/>
+      <xsd:enumeration value="NosetterCamelcase"/>
+      <xsd:enumeration value="NosetterCamelcaseUnderscore"/>
+      <xsd:enumeration value="NosetterPascalcaseMUnderscore"/>
+      <xsd:enumeration value="NosetterLowercaseUnderscore"/>
+      <xsd:enumeration value="Field"/>
+      <xsd:enumeration value="NosetterLowercase"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum CacheEnum -->
+  <xsd:simpleType name="CacheEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Undefined"/>
+      <xsd:enumeration value="ReadOnly"/>
+      <xsd:enumeration value="ReadWrite"/>
+      <xsd:enumeration value="NonStrictReadWrite"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum PrimaryKeyType -->
+  <xsd:simpleType name="PrimaryKeyType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="None"/>
+      <xsd:enumeration value="Identity"/>
+      <xsd:enumeration value="Sequence"/>
+      <xsd:enumeration value="HiLo"/>
+      <xsd:enumeration value="SeqHiLo"/>
+      <xsd:enumeration value="UuidHex"/>
+      <xsd:enumeration value="UuidString"/>
+      <xsd:enumeration value="Guid"/>
+      <xsd:enumeration value="GuidComb"/>
+      <xsd:enumeration value="Native"/>
+      <xsd:enumeration value="Assigned"/>
+      <xsd:enumeration value="Foreign"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum KeyType -->
+  <xsd:simpleType name="KeyType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="None"/>
+      <xsd:enumeration value="PrimaryKey"/>
+      <xsd:enumeration value="CompositeKey"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum CascadeEnum -->
+  <xsd:simpleType name="CascadeEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="None"/>
+      <xsd:enumeration value="All"/>
+      <xsd:enumeration value="SaveUpdate"/>
+      <xsd:enumeration value="Delete"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum OuterJoinEnum -->
+  <xsd:simpleType name="OuterJoinEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Auto"/>
+      <xsd:enumeration value="True"/>
+      <xsd:enumeration value="False"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum RelationType -->
+  <xsd:simpleType name="RelationType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Guess"/>
+      <xsd:enumeration value="Bag"/>
+      <xsd:enumeration value="Set"/>
+      <xsd:enumeration value="IdBag"/>
+      <xsd:enumeration value="Map"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum NHibernateType -->
+  <xsd:simpleType name="NHibernateType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="AnsiChar"/>
+      <xsd:enumeration value="Single"/>
+      <xsd:enumeration value="AnsiString"/>
+      <xsd:enumeration value="CultureInfo"/>
+      <xsd:enumeration value="Binary"/>
+      <xsd:enumeration value="Type"/>
+      <xsd:enumeration value="String"/>
+      <xsd:enumeration value="StringClob"/>
+      <xsd:enumeration value="BinaryBlob"/>
+      <xsd:enumeration value="Boolean"/>
+      <xsd:enumeration value="Byte"/>
+      <xsd:enumeration value="Char"/>
+      <xsd:enumeration value="DateTime"/>
+      <xsd:enumeration value="Decimal"/>
+      <xsd:enumeration value="Double"/>
+      <xsd:enumeration value="Guid"/>
+      <xsd:enumeration value="Int16"/>
+      <xsd:enumeration value="Int32"/>
+      <xsd:enumeration value="Int64"/>
+      <xsd:enumeration value="Ticks"/>
+      <xsd:enumeration value="TimeSpan"/>
+      <xsd:enumeration value="Timestamp"/>
+      <xsd:enumeration value="TrueFalse"/>
+      <xsd:enumeration value="YesNo"/>
+      <xsd:enumeration value="Custom"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum Accessor -->
+  <xsd:simpleType name="Accessor">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Public"/>
+      <xsd:enumeration value="Private"/>
+      <xsd:enumeration value="Protected"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum PropertyType -->
+  <xsd:simpleType name="PropertyType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Property"/>
+      <xsd:enumeration value="Field"/>
+      <xsd:enumeration value="Version"/>
+      <xsd:enumeration value="Timestamp"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum FieldCase -->
+  <xsd:simpleType name="FieldCase">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Unchanged"/>
+      <xsd:enumeration value="Camelcase"/>
+      <xsd:enumeration value="CamelcaseUnderscore"/>
+      <xsd:enumeration value="CamelcaseMUnderscore"/>
+      <xsd:enumeration value="Pascalcase"/>
+      <xsd:enumeration value="PascalcaseUnderscore"/>
+      <xsd:enumeration value="PascalcaseMUnderscore"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum CodeLanguage -->
+  <xsd:simpleType name="CodeLanguage">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="CSharp"/>
+      <xsd:enumeration value="VB"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum NullableUsage -->
+  <xsd:simpleType name="NullableUsage">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="No"/>
+      <xsd:enumeration value="Native"/>
+      <xsd:enumeration value="WithHelperLibrary"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum Polymorphism -->
+  <xsd:simpleType name="Polymorphism">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Implicit"/>
+      <xsd:enumeration value="Explicit"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum OptimisticLocking -->
+  <xsd:simpleType name="OptimisticLocking">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="None"/>
+      <xsd:enumeration value="Version"/>
+      <xsd:enumeration value="Dirty"/>
+      <xsd:enumeration value="All"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum NotFoundBehaviour -->
+  <xsd:simpleType name="NotFoundBehaviour">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Default"/>
+      <xsd:enumeration value="Exception"/>
+      <xsd:enumeration value="Ignore"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum CodeGenerationTarget -->
+  <xsd:simpleType name="CodeGenerationTarget">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="ActiveRecord"/>
+      <xsd:enumeration value="NHibernate"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum ManyRelationCascadeEnum -->
+  <xsd:simpleType name="ManyRelationCascadeEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="None"/>
+      <xsd:enumeration value="All"/>
+      <xsd:enumeration value="SaveUpdate"/>
+      <xsd:enumeration value="Delete"/>
+      <xsd:enumeration value="AllDeleteOrphan"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum InheritableBoolean -->
+  <xsd:simpleType name="InheritableBoolean">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="True"/>
+      <xsd:enumeration value="Inherit"/>
+      <xsd:enumeration value="False"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum DomainEnumeration1 -->
+  <xsd:simpleType name="DomainEnumeration1">
+    <xsd:restriction base="xsd:string">
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+</xsd:schema>
+

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<activeRecordMapping dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" isCompleteView="false" name="GeneratedCodeNHibernateTestModel">
+  <modelMoniker Id="8ddba27c-80c3-48bc-9295-5f8a94949a89" />
+  <nestedChildShapes>
+    <classShape Id="4f33e912-bd5a-435b-8870-82256f115496" absoluteBounds="0.5, 0.5, 1.5, 1.0461531575520833">
+      <modelClassMoniker name="/8ddba27c-80c3-48bc-9295-5f8a94949a89/NHBlog" />
+      <nestedChildShapes>
+        <elementListCompartment Id="86c29d37-b1d0-48dc-b181-7c47d87ce8c8" absoluteBounds="0.515, 0.91000000000000014, 1.4700000000000002, 0.53615315755208326" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="704d0357-d1c6-4b04-98b8-fb98bab1e9a8" absoluteBounds="0.5, 2.125, 1.5, 1.7035424804687502">
+      <modelClassMoniker name="/8ddba27c-80c3-48bc-9295-5f8a94949a89/NHPost" />
+      <nestedChildShapes>
+        <elementListCompartment Id="567c9535-0bb1-4dc9-8008-7176695e14af" absoluteBounds="0.515, 2.535, 1.4700000000000002, 1.19354248046875" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+      </nestedChildShapes>
+    </classShape>
+    <manyToOneConnector edgePoints="[(1.25 : 2.125); (1.25 : 1.54615315755208)]" manuallyRouted="false" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <manyToOneRelationMoniker Id="16f467a4-960b-403d-a9e9-2bdc434bd1e5" />
+      <relativeChildShapes />
+      <nodes>
+        <classShapeMoniker Id="704d0357-d1c6-4b04-98b8-fb98bab1e9a8" />
+        <classShapeMoniker Id="4f33e912-bd5a-435b-8870-82256f115496" />
+      </nodes>
+    </manyToOneConnector>
+  </nestedChildShapes>
+</activeRecordMapping>
