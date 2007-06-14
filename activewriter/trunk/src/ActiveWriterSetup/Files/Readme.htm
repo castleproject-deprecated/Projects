@@ -5,7 +5,7 @@
 	</head>
 	<body style="font-family: Verdana, Arial, Helvetica; font-size: 10pt;">
         <strong>
-        ActiveWriter Preview 2</strong><br />
+        ActiveWriter Preview 3</strong><br />
         <br />
         ActiveWriter is a visual designer, an addin for Visual Studio 2005, to design a domain
         model and to generate code decorated with <a href="http://www.castleproject.org/index.php/ActiveRecord"
@@ -16,18 +16,20 @@
         above first, there are tons of information to begin with and a great forum if you
         need some help.<br />
         <br />
+        Please see <a href="http://using.castleproject.org/display/Contrib/ActiveWriter">using.castleproject.org</a> for the documentation.<br />
+        <br />
         <strong>
         Info, bugs, suggestions and feature requests<br />
         </strong>
         Latest binaries of ActiveWriter and other ActiveWriter information is available at <a href="http://altinoren.com" target="_blank">altinoren.com</a>. Source code
-        is available through Castle Project's Contrib SVN repository at&nbsp; http://svn.castleproject.org:8080/svn/castlecontrib/
+        is available through Castle Project's Contrib SVN repository at&nbsp; https://svn.castleproject.org/svn/castlecontrib/activewriter/
         . Please
         send bugs, suggestions and feature request through the Navigation pane of the site
         or directly to me through <a href="mailto:gokhan@altinoren.com">
             gokhan@altinoren.com</a>.<br />
         <br />
         <strong>Thanks To</strong><br />
-        ActiveRecord team for the great and well supported library, NHibernate and Hibernate
+        <a href="http://www.castleproject.org">Castle</a> team for the great and well supported library, NHibernate and Hibernate
         community for making this chain-reaction possible, Microsoft <a href="http://msdn.microsoft.com/vstudio/dsltools/">
             DSL Tools</a> team
         for making DSL modelling this easy, everyone at DSL Tools 
@@ -42,7 +44,42 @@
         <br />
         Gokhan Altinoren<br />
         <br />
+        <strong>Preview 3 Release - 14/06/2007<br />
+        </strong>
         <br />
+        What's new:<br />
+        <ul>
+            <li>Now optionally generates NHibernate hbm.xml files.</li>
+            <li>Namespace in generated code is now customizable (Idea: Robert van Hoornaar)</li>
+            <li>Imports in generated code is now customizable (Idea: Robert van Hoornaar)</li>
+            <li>Model classes can override model level base class definition. (Patch: Robert van
+                Hoornaar)</li>
+            <li>Model classes can override model level generics generation. (Idea: Robert van Hoornaar)</li>
+            <li>Contrib-26: Add support for AR Nested / NH Component mappings. Allow the ability
+                to specify a column prefix for active record. (thx: Adam Tybor)</li>
+            <li>Optionally generates classes implementing INotifyPropertyChanged.</li>
+            <li>Support for drag-drop from Server Explorer for MySQL databases. Requires MySQL Connector/Net
+                (5.1). (Patch: Michael Morton)</li>
+            <li>Support for custom types through IUserType. See http://support.castleproject.org/browse/CONTRIB-28#action_11456
+                for usage. (Patch: Ricardo Stuven)</li>
+            <li>Ability to define a nested class with a different property name than the nested
+                class (Idea: Craig Neuwirt)</li>
+        </ul>
+        Fixes:<br />
+        <br />
+        <ul>
+            <li>Contrib-23: Produces CascadeEnum instead of ManyRelationCascadeEnum</li>
+            <li>Ability to generate virtual properties to support Lazy properly (thx: Ayende)</li>
+            <li>Make sure that Char and AnsiChar types are treated as a System.String types, instead
+                of System.Char types (patch: Ayende)</li>
+            <li>HasAndbelongToMany does not take custom property names and not found behavior into
+                account.</li>
+            <li>Can’t add a Many To Many relationship to 2 entities when the Class and Table names
+                are different.</li>
+            <li>Column keys in many-to-one relations is not optional. (Patch: Robert van Hoornaar)</li>
+            <li>Partially fixing NHibernate code generation errors. Now works with a workaround.</li>
+            <li>Nullable types only when NotNull=false (Patch: Ricardo Stuven)</li>
+        </ul>
         <strong>Preview 2 Release - 18/03/2007<br />
             <br />
         </strong>What's new:<br />
