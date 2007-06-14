@@ -15,6 +15,12 @@
     <CSharpProject Include="$(SourceDir)\Castle.Components.Scheduler.WindsorExtension\Castle.Components.Scheduler.WindsorExtension.csproj" />
     <CSharpProject Include="$(SourceDir)\Castle.Components.Scheduler.Tests\Castle.Components.Scheduler.Tests.csproj" />
 
+    <Binary Include="$(LibsDir)\Castle\bin\Castle.Core.dll" />
+    <Binary Include="$(LibsDir)\Castle\bin\Castle.Core.xml" />
+    <Binary Include="$(LibsDir)\Castle\bin\Castle.MicroKernel.dll" />
+    <Binary Include="$(LibsDir)\Castle\bin\Castle.MicroKernel.xml" />
+    <Binary Include="$(LibsDir)\Castle\bin\Castle.Windsor.dll" />
+    <Binary Include="$(LibsDir)\Castle\bin\Castle.Windsor.xml" />
     <Binary Include="$(SourceDir)\Castle.Components.Scheduler\bin\Castle.Components.Scheduler.dll" />
     <Binary Include="$(SourceDir)\Castle.Components.Scheduler\bin\Castle.Components.Scheduler.xml" />
     <Binary Include="$(SourceDir)\Castle.Components.Scheduler.WindsorExtension\bin\Castle.Components.Scheduler.WindsorExtension.dll" />
@@ -44,6 +50,7 @@
   </Target>
 
   <Target Name="BuildDotNetDocs">
+    <Exec Command="&quot;$(LibsDir)\NDoc2\NDocConsole.exe&quot; -documenter=MSDN-Web -project=&quot;$(SourceDir)\Castle.Components.Scheduler.ndoc&quot;" />
   </Target>
 
   <Target Name="Release"
