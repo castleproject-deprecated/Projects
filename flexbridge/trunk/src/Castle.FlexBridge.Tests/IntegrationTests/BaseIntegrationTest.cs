@@ -81,6 +81,9 @@ namespace Castle.FlexBridge.Tests.IntegrationTests
                 BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.Public,
                 null, flashElement, args);
 
+            if (result == DBNull.Value)
+                result = null;
+
             return result;
         }
     }

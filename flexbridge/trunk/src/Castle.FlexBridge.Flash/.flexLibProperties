@@ -14,6 +14,7 @@
     <classEntry path="castle.flexbridge.common.AsyncTaskEvent"/>
     <classEntry path="castle.flexbridge.common.AsyncTaskHolder"/>
     <classEntry path="castle.flexbridge.common.AsyncTaskResponder"/>
+    <classEntry path="castle.flexbridge.common.Base64"/>
     <classEntry path="castle.flexbridge.common.FunctionResponder"/>
     <classEntry path="castle.flexbridge.common.HtmlUtils"/>
     <classEntry path="castle.flexbridge.common.IDisposable"/>
@@ -70,6 +71,6 @@
   </includeClasses>
   <includeResources/>
   <namespaceManifests>
-    <namespaceManifestEntry manifest="Castle.FlexBridge.Flash-manifest.xml" namespace="http://tempuri.org/flexbridge"/>
+    <namespaceManifestEntry manifest="Castle.FlexBridge.Flash-manifest.xml" namespace="http://www.castleproject.org/flexbridge"/>
   </namespaceManifests>
 </flexLibProperties>

@@ -2,12 +2,15 @@
   <PropertyGroup>
     <RootDir>$(MSBuildProjectDirectory)</RootDir>
     <BuildDir>$(RootDir)\build</BuildDir>
+    <BuildBinDir>$(BuildDir)\bin</BuildBinDir>
+    <BuildReportsDir>$(BuildDir)\reports</BuildReportsDir>
+    <BuildDocsDir>$(BuildDir)\docs</BuildDocsDir>
     <LibsDir>$(RootDir)\libs</LibsDir>
     <SourceDir>$(RootDir)\src</SourceDir>
     <FlexBinDir>$(LibsDir)\Flex\bin</FlexBinDir>
     <MSBuildCommunityTasksPath>$(LibsDir)\MSBuildCommunityTasks</MSBuildCommunityTasksPath>
 
-    <ComponentNamespace>http://tempuri.org/flexbridge</ComponentNamespace>
+    <ComponentNamespace>http://www.castleproject.org/flexbridge</ComponentNamespace>
   </PropertyGroup>
 
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
@@ -25,7 +28,7 @@
   </Target>
 
   <Target Name="Test">
-    <Exec Command="&quot;$(LibsDir)\MbUnit\bin\MbUnit.Cons.exe&quot; &quot;$(SourceDir)\Castle.FlexBridge.Tests\bin\Castle.FlexBridge.Tests.dll&quot;" />
+    <Exec Command="&quot;$(LibsDir)\MbUnit\bin\MbUnit.Cons.exe&quot; /report-type:Html /report-folder:&quot;$(BuildReportsDir)&quot; /show-reports &quot;$(SourceDir)\Castle.FlexBridge.Tests\bin\Castle.FlexBridge.Tests.dll&quot;" />
   </Target>
 
   <Target Name="Build-CastleFlexBridge"
@@ -37,7 +40,7 @@
              " />
 
     <Copy SourceFiles="$(SourceDir)\Castle.FlexBridge\bin\Castle.FlexBridge.dll"
-          DestinationFolder="$(BuildDir)" />
+          DestinationFolder="$(BuildBinDir)" />
   </Target>
 
   <Target Name="Clean-CastleFlexBridge">
@@ -67,15 +70,15 @@
       <Output TaskParameter="Value" PropertyName="FlexBridgeFlashClasses" />
     </CreateProperty>
 
-    <Exec Command="&quot;$(FlexBinDir)\compc&quot; -namespace &quot;$(ComponentNamespace)&quot; &quot;$(SourceDir)\Castle.FlexBridge.Flash\src\Castle.FlexBridge.Flash-manifest.xml&quot; -include-namespaces &quot;$(ComponentNamespace)&quot; -include-classes $(FlexBridgeFlashClasses) -load-config+=&quot;$(SourceDir)\Castle.FlexBridge.Flash\src\Castle.FlexBridge.Flash-config.xml&quot; -source-path &quot;$(SourceDir)\Castle.FlexBridge.Flash\src&quot; -output &quot;$(BuildDir)\Castle.FlexBridge.Flash.swc&quot;" />
+    <Exec Command="&quot;$(FlexBinDir)\compc&quot; -namespace &quot;$(ComponentNamespace)&quot; &quot;$(SourceDir)\Castle.FlexBridge.Flash\src\Castle.FlexBridge.Flash-manifest.xml&quot; -include-namespaces &quot;$(ComponentNamespace)&quot; -include-classes $(FlexBridgeFlashClasses) -load-config+=&quot;$(SourceDir)\Castle.FlexBridge.Flash\src\Castle.FlexBridge.Flash-config.xml&quot; -source-path &quot;$(SourceDir)\Castle.FlexBridge.Flash\src&quot; -output &quot;$(BuildBinDir)\Castle.FlexBridge.Flash.swc&quot;" />
   </Target>
 
   <Target Name="Build-CastleFlexBridgeTestsFlash"
           DependsOnTargets="Build-CastleFlexBridgeFlash">
-    <Exec Command="&quot;$(FlexBinDir)\mxmlc&quot; -context-root / -services &quot;$(SourceDir)\Castle.FlexBridge.Tests\WEB-INF\flex\services-config.xml&quot; -library-path+=&quot;$(BuildDir)\Castle.FlexBridge.Flash.swc&quot; -library-path+=&quot;$(LibsDir)\FlexUnit\bin\flexunit.swc&quot; -library-path+=&quot;$(LibsDir)\RemoteObjectAMF0\bin\renaun_com_RemoteObjectAMF0.swc&quot; -output &quot;$(SourceDir)\Castle.FlexBridge.Tests\Flash\FlexBridgeTests.swf&quot; &quot;$(SourceDir)\Castle.FlexBridge.Tests.Flash\src\FlexBridgeTests.mxml&quot;" />
+    <Exec Command="&quot;$(FlexBinDir)\mxmlc&quot; -context-root / -services &quot;$(SourceDir)\Castle.FlexBridge.Tests\WEB-INF\flex\services-config.xml&quot; -library-path+=&quot;$(BuildBinDir)\Castle.FlexBridge.Flash.swc&quot; -library-path+=&quot;$(LibsDir)\FlexUnit\bin\flexunit.swc&quot; -library-path+=&quot;$(LibsDir)\RemoteObjectAMF0\bin\renaun_com_RemoteObjectAMF0.swc&quot; -output &quot;$(SourceDir)\Castle.FlexBridge.Tests\Flash\FlexBridgeTests.swf&quot; &quot;$(SourceDir)\Castle.FlexBridge.Tests.Flash\src\FlexBridgeTests.mxml&quot;" />
   </Target>
 
   <Target Name="CreateBuildDir">
-    <MakeDir Directories="$(BuildDir)" />
+    <MakeDir Directories="$(BuildDir);$(BuildBinDir);$(BuildReportsDir);$(BuildDocsDir)" />
   </Target>
 </Project>

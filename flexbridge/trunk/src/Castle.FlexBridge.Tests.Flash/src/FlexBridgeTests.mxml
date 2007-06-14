@@ -21,10 +21,9 @@
 	
 	<mx:Script>
 	<![CDATA[
+		import castle.flexbridge.tests.UnitTestSuite;
 	    import flexunit.runner.BaseTestRunner;
 	    import flexunit.framework.TestResult;
-	    import castle.flexbridge.tests.kernel.DefaultKernelTest;
-	    import castle.flexbridge.tests.reflection.ReflectionUtilsTest;
 	    import castle.flexbridge.tests.integrationTestHarness.MethodResult;
 	    import castle.flexbridge.tests.integrationTestHarness.RemoteObjectTestProxy;
 	    import mx.utils.URLUtil;
@@ -76,7 +75,7 @@
  		{
  		    this.currentState = "testRunner";
  		    
- 			testRunner.test = createSuite();
+ 			testRunner.test = new UnitTestSuite();
  			testRunner.startTest();
  		}
  		
@@ -87,7 +86,7 @@
  		    ExternalInterface.addCallback("getTestReport", getTestReport);
  		    
  		    testReport = new TestReport();
- 		    testReport.runTests(createSuite()).onCompletionDo(function(result:Object, error:Error):void
+ 		    testReport.runTests(new UnitTestSuite()).onCompletionDo(function(result:Object, error:Error):void
  		    {
  		        finalTestReport = testReport.report;
  	        });
@@ -96,16 +95,6 @@
  		private function getTestReport():String
  		{
  		    return finalTestReport;
- 		}
-		
-		private function createSuite():TestSuite
-		{
- 			var suite:TestSuite = new TestSuite();
- 			
- 			suite.addTestSuite(ReflectionUtilsTest);
- 			suite.addTestSuite(DefaultKernelTest);
- 			
- 			return suite;
  		}
 	]]>
 	</mx:Script>

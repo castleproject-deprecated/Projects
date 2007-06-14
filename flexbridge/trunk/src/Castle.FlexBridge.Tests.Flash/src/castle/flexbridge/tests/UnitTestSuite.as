@@ -12,21 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package castle.flexbridge.collections
+package castle.flexbridge.tests
 {
-	import mx.events.CollectionEventKind;
+	import flexunit.framework.TestSuite;
+	import castle.flexbridge.tests.reflection.ReflectionUtilsTest;
+	import castle.flexbridge.tests.kernel.DefaultKernelTest;
+	import castle.flexbridge.tests.common.Base64Test;
 	
-	/**
-	 * An enumeration of <code>CollectionDelta</code> kinds.
-	 */
-	public final class CollectionDeltaKind
+	public class UnitTestSuite extends TestSuite
 	{
-		public static const ADD:String = CollectionEventKind.ADD;
-		public static const MOVE:String = CollectionEventKind.MOVE;
-		public static const REFRESH:String = CollectionEventKind.REFRESH;
-		public static const REMOVE:String = CollectionEventKind.REMOVE;
-		public static const REPLACE:String = CollectionEventKind.REPLACE;
-		public static const RESET:String = CollectionEventKind.RESET;
-		public static const UPDATE:String = CollectionEventKind.UPDATE;		
+		public function UnitTestSuite()
+		{
+ 			addTestSuite(ReflectionUtilsTest);
+ 			addTestSuite(DefaultKernelTest);
+ 			addTestSuite(Base64Test);
+		}
 	}
 }

@@ -22,10 +22,10 @@ package castle.flexbridge.tests.integrationTestHarness
 	import mx.rpc.Responder;
 	import mx.rpc.Fault;
 	import flash.utils.ByteArray;
-	import mx.utils.Base64Encoder;
 	import flash.net.ObjectEncoding;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.events.FaultEvent;
+	import castle.flexbridge.common.Base64;
 	
 	/**
 	 * Provides support for testing RemoteObject interfacing.

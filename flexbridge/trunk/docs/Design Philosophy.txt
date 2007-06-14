@@ -1,0 +1,85 @@
+Castle.FlexBridge
+by Jeff Brown.
+
+>> http://using.castleproject.org/display/Contrib/Castle.FlexBridge
+
+
+Design Philosophy
+=================
+
+0. Test everything thoroughly.  Write unit tests _and_ integration tests!
+
+   This one speaks for itself.
+
+1. Don't allocate unnecessary objects.
+
+   Some AMF implementations create lots of Arrays, Lists or Dictionaries that they just
+   don't need or that usually remain empty.  Use flyweights like EmptyArray and
+   EmptyDictionary to capture common cases.  For other circumstances, allow the use of
+   interface types so that the client is not locked into a particular IList
+   or IDictionary representation, particularly if the client has a perfectly good object
+   already at hand so there's no sense forcing its contents to be copied.
+   
+   For flyweights, see EmptyArray, EmptyDictionary and ASClass.UntypedDynamicClass.
+   For interface types, see ASObject, ASArray and others.
+   
+2. Don't mandate object representation.  
+
+   The user might have very definite ideas about how an object should be represented.
+   As long as an object can satisfy a minimal interface for serialization purposes,
+   allow it to be used.  Don't unnecessarily restrict the layout of objects.  In particular,
+   this makes it easy to define very efficient adapters for various types.
+   
+   See IActionScriptObject, IActionScriptByteArray, and others.
+
+3. Keep the core serialization code simple.
+
+   The core serialization code is already complicated by binary data representation
+   and I/O concerns, don't push any more behavior into it than strictly necessary.
+   In particular, don't force the serialization code to know about all sorts of special
+   object mapping concerns like how a List might be coerced into an array.  It is
+   possible for the serialization code to be completely isolated from such concerns if
+   we don't mandate object representation.  (see #2)
+
+   See how AMF0ObjectWriter and AMF3ObjectWriter delegate data mapping concerns to
+   IASValue and the IActionScriptSerializer.  The visitor pattern is put to good use
+   here to eliminate run-time type checks and to abstract the internal representation
+   of the IASValue instances from their consumers.
+
+4. Immutable types make things easier.
+
+   ASClass and other built-in ActionScript wrapper types are deliberately
+   designed to restrict the kinds of changes that can be made to the object after it
+   has been constructed.  This makes it possible for us to perform stricter checks
+   on object invariants to catch any mistakes sooner.  Moreover, it enables us
+   to make stronger assumptions about object state.  For instance, we can use
+   ASClass.UntypedDynamicClass as a flyweight only because ASClass is immutable.
+   
+   See ASClass, ASObject, and others.
+
+5. Don't skimp on runtime assertions.
+
+   The serialization code performs extra checks to ensure that the layout of the
+   objects being serialized is sane.  These tests are quite cheap to perform and
+   pay off big time in bug-catching potential.
+
+6. If your feature is really cool, can you think of a way it might be implemented
+   as an add-on extension?
+   
+   Built-in magic is usually great.  Most clients appreciate being able to do lots of cool
+   things out of the box.  However, it's even better if the clients can also get in
+   on the show to do a little prestidigitation of their own or to tweak how the
+   built-in magic works a little bit.
+   
+   Usually the best policy is to ensure that you provide consistent interfaces
+   to support all of the magic your framework provides.  Don't do things behind the
+   scenes where the client cannot control them.  Providing these interfaces makes
+   the architecture cleaner and opens up many avenues for extension.  It's also a
+   good idea to provide a means to opt-out of the magic someplace.
+
+   Notice how providing built-in infrastructure for mapping between ActionScript and
+   native types pays off by making it easy to extend the framework with new custom
+   mappings of all sorts.  It simplifies the framework and even enables a performance
+   optimization because mappers can be looked up in a hashtable based on the properties
+   of the objects to be mapped rather than by evaluating a long sequence of runtime type
+   tests tucked away in some dark corner.

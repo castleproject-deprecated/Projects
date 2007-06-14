@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package castle.flexbridge.tests.integrationTestHarness
+package castle.flexbridge.common
 {
 	import flash.utils.ByteArray;
 	import flash.errors.EOFError;
@@ -20,7 +20,7 @@ package castle.flexbridge.tests.integrationTestHarness
 	/**
 	 * Performs Base64 encoding and decoding of ByteArrays.
 	 */
-	public class Base64
+	public final class Base64
 	{
 		private static const base64PaddingByte:int = '='.charCodeAt(0) as int;
 		
@@ -29,8 +29,14 @@ package castle.flexbridge.tests.integrationTestHarness
 		
 		initializeLookupTables();
 		
+		/**
+		 * Encodes a ByteArray in Base64.
+		 * @param byteArray The ByteArray to encode.
+		 * @return The Base64 encoded string.
+		 */
 		public static function encode(byteArray:ByteArray):String
 		{
+			byteArray.position = 0;
 			var resultBuffer:ByteArray = new ByteArray();
 			
 			for (;;)
@@ -67,6 +73,11 @@ package castle.flexbridge.tests.integrationTestHarness
 			return resultBuffer.toString();
 		}
 		
+		/**
+		 * Decodes a ByteArray from Base64.
+		 * @param string The Base64 encoded string.
+		 * @return The decoded ByteArray.
+		 */
 		public static function decode(string:String):ByteArray
 		{
 			var stringBuffer:StringBuffer = new StringBuffer(string, base64Values);

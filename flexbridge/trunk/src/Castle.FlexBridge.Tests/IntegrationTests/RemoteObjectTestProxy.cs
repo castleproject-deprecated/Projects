@@ -76,7 +76,7 @@ namespace Castle.FlexBridge.Tests.IntegrationTests
             for (int i = 0; Debugger.IsAttached || i < ResponseTimeoutSeconds * 1000 / ResponsePollMilliseconds; i++)
             {
                 object resultValue = externalInterface.InvokeMethod("remoteObjectTestProxy_GetLastMethodResult");
-                if (resultValue != DBNull.Value)
+                if (resultValue != null)
                 {
                     string amfBase64Result = (string)resultValue;
                     byte[] amfResult = Convert.FromBase64String(amfBase64Result);
