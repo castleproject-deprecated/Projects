@@ -1,4 +1,4 @@
-Preview 2.1
+Preview 3
 
 New:
 - Now optionally generates NHibernate hbm.xml files.
