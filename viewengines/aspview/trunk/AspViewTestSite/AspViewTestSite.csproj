@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Helpers\Index.aspx" />
+    <Content Include="Views\Home\NullableValueTypesWithDefaultValue.aspx" />
     <Content Include="Views\Home\DefaultValues.aspx" />
     <Content Include="Views\Home\SiteRoot.aspx" />
     <Content Include="Views\Home\SubViewSample.aspx" />

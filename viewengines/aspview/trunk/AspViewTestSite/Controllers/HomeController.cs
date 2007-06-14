@@ -27,7 +27,9 @@ namespace AspViewTestSite
             strings[2] = "string no 3";
             PropertyBag["strings"] = strings;
         }
-
+		public void NullableValueTypesWithDefaultValue()
+		{
+		}
         public void Print(string theText)
         {
             CancelView();

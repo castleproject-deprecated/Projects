@@ -32,5 +32,15 @@ namespace Castle.MonoRail.Views.AspView.Tests
             DoGet("home/DefaultValues.rails");
             AssertReplyEqualTo(expected);
         }
+
+		[Test]
+		public void NullableValueTypesWithDefaultValue()
+		{
+			#region expected
+			string expected = @"0";
+			#endregion
+			DoGet("home/NullableValueTypesWithDefaultValue.rails");
+			AssertReplyEqualTo(expected);
+		}
     }
 }

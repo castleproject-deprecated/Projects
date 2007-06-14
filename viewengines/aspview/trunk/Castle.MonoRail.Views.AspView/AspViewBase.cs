@@ -389,7 +389,7 @@ namespace Castle.MonoRail.Views.AspView
         protected object GetParameter(string parameterName)
         {
             object value;
-            if (!TryGetParameter(parameterName, out value))
+            if (!TryGetParameter(parameterName, out value, null))
                 throw new RailsException("Parameter '" + parameterName + "' was not found!");
             return value;
         }
@@ -403,8 +403,7 @@ namespace Castle.MonoRail.Views.AspView
         protected object GetParameter(string parameterName, object defaultValue)
         {
             object value;
-            if (!TryGetParameter(parameterName, out value))
-                value = defaultValue;
+			TryGetParameter(parameterName, out value, defaultValue);
             return value;
         }
         /// <summary>
@@ -413,7 +412,7 @@ namespace Castle.MonoRail.Views.AspView
         /// <param name="parameterName">The parameter's name</param>
         /// <param name="parameter">The parameter's value</param>
         /// <returns>True if the property is found, False elsewhere</returns>
-        protected bool TryGetParameter(string parameterName, out object parameter)
+        protected bool TryGetParameter(string parameterName, out object parameter, object defaultValue)
         {
             if (_properties.ContainsKey(parameterName))
             {
@@ -428,8 +427,8 @@ namespace Castle.MonoRail.Views.AspView
                     return true;
                 }
 			if (ParentView != null)
-				return ParentView.TryGetParameter(parameterName, out parameter);
-            parameter = null;
+				return ParentView.TryGetParameter(parameterName, out parameter, defaultValue);
+            parameter = defaultValue;
             return false;
         }
         /// <summary>
