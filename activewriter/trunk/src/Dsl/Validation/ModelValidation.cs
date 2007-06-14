@@ -89,5 +89,14 @@ namespace Altinoren.ActiveWriter
                 context.LogError("Target is NHibernate but ActiveRecord Assembly Name is not supplied.", "AW001ValidateActiveRecordAssemblyNameError", this);
             }
         }
+		
+		[ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
+        private void ValidateNHibernateAssemblyName(ValidationContext context)
+        {
+            if (this.Target == CodeGenerationTarget.NHibernate && string.IsNullOrEmpty(this.NHibernateAssemblyName))
+            {
+				context.LogError("Target is NHibernate but NHibernate Assembly Name is not supplied.", "AW001ValidateNHibernateAssemblyNameError", this);
+            }
+        }
     }
 }

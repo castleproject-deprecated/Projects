@@ -177,12 +177,12 @@ namespace Altinoren.ActiveWriter
             
             if (composits.Count > 1)
             {
-                KeyType keyType = composits[0].KeyType;
+                PropertyAccess access = composits[0].Access;
 
                 if (composits.FindAll(
                     delegate(ModelProperty property)
                     {
-                        return (property.KeyType != keyType);
+						return (property.Access != access);
                     }
                     ).Count > 0)
                     context.LogError("All composite keys must have the same Access value.",
