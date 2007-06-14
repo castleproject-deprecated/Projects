@@ -67,7 +67,7 @@ namespace Castle.MonoRail.Views.AspView
 					file.Language = ScriptingLanguage.VbNet;
 					break;
 				default:
-					throw new AspViewException("Unsupported view language '{0}'", languageName);
+					throw new AspViewException("Unsupported view language [{0}] in view [{1}]", languageName, file.ViewName);
 			}
 		}
 
