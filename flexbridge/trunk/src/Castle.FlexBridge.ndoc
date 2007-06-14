@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<project SchemaVersion="2.0">
+    <assemblies>
+        <assembly location="..\build\bin\Castle.FlexBridge.dll" documentation="..\build\bin\Castle.FlexBridge.xml" />
+    </assemblies>
+    <namespaces>
+        <namespace name="Castle.FlexBridge.ActionScript">ActionScript wrapper classes for all native ActionScript datatypes.  Wrappers are used to represent ActionScript objects during serialization and deserialization.  Ordinarily these wrappers are mapped to .Net classes automatically if a suitable .Net counterpart exists.</namespace>
+        <namespace name="Castle.FlexBridge.Collections">Collection classes and utilities.</namespace>
+        <namespace name="Castle.FlexBridge.Gateway">The Flash remoting gateway.</namespace>
+        <namespace name="Castle.FlexBridge.Messaging">Flash messaging framework.</namespace>
+        <namespace name="Castle.FlexBridge.Messaging.DebugEvents">Classes representing messages used to communicate with the Flash debugger.</namespace>
+        <namespace name="Castle.FlexBridge.Messaging.Messages">Classes representing messages used during Flash remoting.</namespace>
+        <namespace name="Castle.FlexBridge.Messaging.Services">Services that participate in the Flash messaging framework.</namespace>
+        <namespace name="Castle.FlexBridge.Serialization">Provides AMF serialization and ActionScript and .Net object mapping.</namespace>
+        <namespace name="Castle.FlexBridge.Serialization.AMF">Adobe Active Message Format protocol implementation.</namespace>
+        <namespace name="Castle.FlexBridge.Serialization.Factories">Factories for types used during ActionScript and .Net object mapping.</namespace>
+        <namespace name="Castle.FlexBridge.Serialization.Mapping">Framework and built-in components for ActionScript and .Net object mapping.</namespace>
+        <namespace name="Castle.FlexBridge.Utilities">Common utilities.</namespace>
+    </namespaces>
+    <documenters>
+        <documenter name="Intellisense">
+            <property name="OutputDirectory" value="..\build\docs\.Net\" />
+            <property name="UseAssemblyShadowCache" value="False" />
+        </documenter>
+        <documenter name="MSDN-Web">
+            <property name="RootPageContainsNamespaces" value="True" />
+            <property name="OutputDirectory" value="..\build\docs\.Net\" />
+            <property name="HtmlHelpName" value="Castle.FlexBridge" />
+            <property name="Title" value="Castle.FlexBridge .Net API" />
+            <property name="UseAssemblyShadowCache" value="False" />
+            <property name="CopyrightText" value="Copyright 2007 Castle Project - http://www.castleproject.org/" />
+            <property name="CopyrightHref" value="http://www.castleproject.org/" />
+            <property name="IncludeDefaultThreadSafety" value="False" />
+            <property name="CleanIntermediates" value="True" />
+        </documenter>
+        <documenter name="MSDN-CHM">
+            <property name="OutputDirectory" value="..\build\docs\.Net\" />
+            <property name="HtmlHelpName" value="Castle.FlexBridge" />
+            <property name="Title" value="Castle.FlexBridge .Net API" />
+            <property name="IncludeDefaultThreadSafety" value="False" />
+            <property name="CleanIntermediates" value="True" />
+        </documenter>
+    </documenters>
+</project>

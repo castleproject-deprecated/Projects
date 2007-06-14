@@ -28,6 +28,8 @@
 
   <Target Name="Build"
           DependsOnTargets="Build-CSharpProjects;Build-CastleFlexBridgeFlash;Build-CastleFlexBridgeTestsFlash">
+    <Copy SourceFiles="@(Binary)"
+          DestinationFolder="$(BuildBinDir)" />
   </Target>
 
   <Target Name="Clean"
@@ -61,6 +63,7 @@
   </Target>
 
   <Target Name="BuildDotNetDocs">
+    <Exec Command="&quot;$(LibsDir)\NDoc2\NDocConsole.exe&quot; -documenter=MSDN-Web -project=&quot;$(SourceDir)\Castle.FlexBridge.ndoc&quot;" />
   </Target>
 
   <Target Name="Release"
