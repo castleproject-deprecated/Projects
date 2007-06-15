@@ -30,7 +30,9 @@
 			<div class="content">
 				${ChildOutput}
 			</div>
+
 		
+
 			<div class="right">
 
 				<div class="round">
@@ -97,6 +99,13 @@
 							<a href="/captcha/index.rails">Basic Usage</a>
 						</li>
 					</ul>
+					<h3>Column chart component</h3>
+					<ul>
+						<li>
+							<a href="/chart/index.rails">Sample Charts</a>
+						</li>
+					</ul>				
+					
 				</div>
 
 

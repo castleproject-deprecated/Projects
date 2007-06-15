@@ -1,0 +1,77 @@
+<h1>Sample Charts</h1>
+
+<div style="padding: 20px;">
+    <%
+    component ColumnChart, {@properties: sales1}
+    %>
+</div>
+<div style="padding: 20px;">
+    <%
+    component ColumnChart, {@properties: views1}
+    %>
+</div>
+<div style="padding: 20px;">
+    <%
+    component ColumnChart, {@properties: timescale1}:
+        section title:
+        %>
+          <div style="font-size:19px; color:red;">Time Series Chart</div>
+          <div style="font-size:8px; color:blue;">With A Custom Title</div>
+        <%
+        end
+    end
+    %>
+</div>
+<div style="padding: 20px;">
+    <br />
+    This chart tests that the chart structure stays intact when X axis labels and Y axis labels get crowded
+    <br />
+    <br />
+    <%
+    component ColumnChart, {@properties: timescale2}:
+        section title:
+        %>
+            <div style="font-size:19px; color:red;">Time Series Chart</div>
+            <div style="font-size:8px; color:blue;">With Crowded Axis Labels</div>
+        <%
+        end
+    end
+    %>
+</div>
+<div style="padding: 20px;">
+    <%
+    component ColumnChart, {@properties: viewsNoAxisUnitLabelsNorTitle}
+    %>
+</div>
+<div style="padding: 20px;">
+    <%
+    component ColumnChart, {@properties: salesBig}:
+        section xUnitLabel:
+        %>
+            <span class= "x-unit-label" style="font-family: 'Times New Roman', Serif; text-decoration: blink;">Region</span>
+        <%
+        end
+        section yUnitLabel:
+        %>
+            <span class= "y-unit-label" style="font-family: 'Times New Roman', Serif; text-decoration: blink;">Sales</span>
+        <%
+        end
+    end
+    %>
+</div>
+<div style="padding: 20px;">
+    <%
+    component ColumnChart, {@properties: empty}
+    %>
+</div>
+<div style="padding: 20px;">
+    <%
+    component ColumnChart, {@properties: sales1}:
+        section containerStart:
+        %>
+            <div class="custom-chart">
+        <%
+        end
+    end
+    %>
+</div>

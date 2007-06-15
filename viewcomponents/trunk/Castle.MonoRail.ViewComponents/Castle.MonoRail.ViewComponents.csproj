@@ -28,7 +28,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL" />
+    <Reference Include="Castle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.MonoRail.Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibs\Castle.MonoRail.Framework.dll</HintPath>
@@ -42,6 +45,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CaptchaComponent.cs" />
+    <Compile Include="CaptchaImage.cs" />
+    <Compile Include="CaptchaImageHandler.cs" />
+    <Compile Include="ChartDataItem.cs" />
+    <Compile Include="ColumnChart.cs" />
+    <Compile Include="ChartProperties.cs" />
     <Compile Include="GridComponent .cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmartGridComponent.cs" />

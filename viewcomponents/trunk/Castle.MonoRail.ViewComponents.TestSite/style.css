@@ -279,3 +279,156 @@ fieldset textarea
 {
 	padding-left: 15px;
 }
+
+.chart
+{
+	font-size: 10px;
+	font-family: Arial, Helvetica, Sans-Serif;
+}
+
+.chart .title
+{
+	padding: 0 0 20px 0;
+	font-size: 1.7em;
+	font-weight: bold;
+	text-align: center;
+}
+
+.chart .bar 
+{
+	background: #6f96df;
+	border-color: #6f96df;
+}
+
+.chart .x-label,
+.chart .y-label 
+{
+	font-size: 0.8em;
+	color: #999;
+}
+
+.chart .plot-area-column,
+.chart .plot-area-left-margin,
+.chart .plot-area-right-margin
+{
+	background-color: #f5f5f5;
+	border-top-style: solid;
+	border-top-width: 1px;
+}
+
+.chart .plot-area-column,
+.chart .plot-area-left-margin,
+.chart .plot-area-right-margin,
+.chart .grid-line
+{
+	border-color: #999;
+}
+
+.chart .plot-area-right-margin
+{
+	border-right-style: solid;
+}
+
+.chart .plot-area-left-margin
+{
+	border-left-style: solid;
+}
+
+.chart .grid-line 
+{
+	border-top-style: dotted;
+}
+
+.chart .x-unit-label 
+{
+	padding-top: 25px;
+	font-size: 1.2em;
+}
+
+.chart .y-unit-label 
+{
+	padding-right: 50px;
+	font-size: 1.2em;
+	background-color: transparent;
+}
+ 
+.chart .data-label 
+{
+	color: #265098;
+	font-size: 0.7em;
+}
+
+.custom-chart
+{
+	font-size: 10px;
+}
+
+.custom-chart .title
+{
+	padding: 0 0 15px 0;
+	font-weight: bold;
+	text-align: left;
+	color: #cc6600;
+}
+
+.custom-chart .bar
+{
+	background: #ffcc66;
+	border-color: #5b3c2a;
+}
+
+.custom-chart .x-label 
+{
+	font-size: 0.6em;
+}
+
+.custom-chart .y-label 
+{
+	font-size: 0.6em;
+}
+
+.custom-chart .plot-area-column,
+.custom-chart .plot-area-left-margin,
+.custom-chart .plot-area-right-margin,
+.custom-chart .grid-line
+{
+	border-color: #000;
+	border-top-width: 1px;
+}
+
+.custom-chart .plot-area-column,
+.custom-chart .plot-area-left-margin,
+.custom-chart .plot-area-right-margin
+{
+	border-top-style: dotted;
+}
+
+.custom-chart .plot-area-left-margin
+{
+	border-left-style: solid;
+}
+
+.custom-chart .gridline 
+{
+	border-top-style: dotted;
+}
+
+.custom-chart .x-unit-label
+{
+	padding-top: 20px;
+	font-size: 0.8em;
+	color: #cc6600;
+}
+
+.custom-chart .y-unit-label 
+{
+	padding-right: 40px;
+	font-size: 0.8em;
+	color: #cc6600;
+}
+
+.custom-chart .data-label 
+{
+	color: #cc6600;
+	font-size: 0.8em;
+}
