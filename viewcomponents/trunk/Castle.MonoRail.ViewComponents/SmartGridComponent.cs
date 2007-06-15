@@ -12,19 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.Collections;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
-
 namespace Castle.MonoRail.ViewComponents
 {
-    public class SmartGridComponent : GridComponent
+	using System;
+	using System.Collections;
+	using System.Reflection;
+	using System.Text.RegularExpressions;
+	using System.Collections.Generic;
+	
+	public class SmartGridComponent : GridComponent
     {
         private static readonly Hashtable validTypesCache = Hashtable.Synchronized(new Hashtable());
         private static readonly Hashtable propertiesCache = Hashtable.Synchronized(new Hashtable());
-        private PropertyInfo[] properties;
+        
+		private PropertyInfo[] properties;
 
         public override bool SupportsSection(string name)
         {
@@ -35,36 +36,50 @@ namespace Castle.MonoRail.ViewComponents
         {
             if (properties == null) //there are no rows, if this is the case
                 return false;
-            bool isAlternate = false;
-            foreach (object item in source)
+            
+			bool isAlternate = false;
+            
+			foreach (object item in source)
             {
                 PropertyBag["item"] = item;
-                if (isAlternate)
-                    RenderText("<tr class='grid_alternateItem'>");
+                
+				if (isAlternate)
+				{
+					RenderText("<tr class='grid_alternateItem'>");
+				}
                 else
-                    RenderText("<tr class='grid_item'>");
+				{
+					RenderText("<tr class='grid_item'>");
+				}
+
                 foreach (PropertyInfo property in properties)
                 {
-                    if (ValidPropertyToAutoGenerate(property) == false)
-                        continue;
-                    if (Context.HasSection(property.Name))
+                    if (ValidPropertyToAutoGenerate(property) == false) continue;
+                    
+					if (Context.HasSection(property.Name))
                     {
                         PropertyBag["value"] = property.GetValue(item, null);
                         Context.RenderSection(property.Name);
                         continue;
                     }
-                    RenderStartCell();
-                    object val = property.GetValue(item, null) ?? "null";
-                    RenderText(val.ToString());
+                    
+					RenderStartCell();
+                    
+					object val = property.GetValue(item, null) ?? "null";
+                    
+					RenderText(val.ToString());
                     RenderEndCell();
                 }
+
                 if (Context.HasSection("more"))
                 {
                     Context.RenderSection("more");
                 }
-                isAlternate = !isAlternate;
+                
+				isAlternate = !isAlternate;
                 RenderText("</tr>");
             }
+
             return true;
         }
 
@@ -91,17 +106,20 @@ namespace Castle.MonoRail.ViewComponents
         protected override void ShowHeader(IEnumerable source)
         {
             IEnumerator enumerator = source.GetEnumerator();
-            bool hasItem = enumerator.MoveNext();
-            if (hasItem == false)
+            
+			bool hasItem = enumerator.MoveNext();
+            
+			if (hasItem == false)
             {
                 return;
             }
-            object first = enumerator.Current;
+            
+			object first = enumerator.Current;
             InitializeProperties(first);
-            foreach (PropertyInfo property in properties)
+            
+			foreach (PropertyInfo property in properties)
             {
-                if (ValidPropertyToAutoGenerate(property) == false)
-                    continue;
+                if (ValidPropertyToAutoGenerate(property) == false) continue;
                 string overrideSection = property.Name + "Header";
                 if (Context.HasSection(overrideSection))
                 {
@@ -138,7 +156,6 @@ namespace Castle.MonoRail.ViewComponents
             RenderText("<th class='grid_header'>");
         }
 
-
         /// <summary>
         /// Split a PascalCase string into Pascal Case words.
         /// Note that if the string contains spaces, we assume it is already formatted
@@ -146,8 +163,7 @@ namespace Castle.MonoRail.ViewComponents
         /// </summary>
         private static string SplitPascalCase(string input)
         {
-            if (input.Contains(" "))
-                return input;
+            if (input.Contains(" ")) return input;
             return Regex.Replace(input, "([A-Z])", " $1", RegexOptions.Compiled);
         }
 

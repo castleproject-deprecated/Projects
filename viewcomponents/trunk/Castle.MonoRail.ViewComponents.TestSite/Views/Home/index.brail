@@ -1,4 +1,4 @@
-<h2>Welcome to Castle.MonoRail.ViewCompoennts sample site</h2>
+<h2>Welcome to Castle.MonoRail.ViewComponents sample site</h2>
 <p>
 	The following components are covered here. For full documentation about the components, please visit:
 	<a href="http://using.castleproject.org/display/Contrib/Castle.MonoRail.ViewComponents">http://using.castleproject.org/display/Contrib/Castle.MonoRail.ViewComponents</a>
@@ -6,7 +6,7 @@
 <p>
 	You can select the various samples from the side bar
 </p>
-<h4>Component doucmentation</h4>
+<h4>Component documentation</h4>
 <ul>
 	<li><a href="http://using.castleproject.org/display/Contrib/Grid+Component">Grid Component</a></li>
 	<li><a href="http://using.castleproject.org/display/Contrib/Smart+Grid+Component">Smart Grid Component</a></li>
