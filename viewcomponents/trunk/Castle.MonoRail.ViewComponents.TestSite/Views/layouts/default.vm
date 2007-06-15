@@ -11,8 +11,8 @@
 			  type="text/css"
 			  href="/style.css"
 			  media="screen, print" />
-		${Ajax.InstallScripts()}
-		${Scriptaculous.InstallScripts()}
+		$Ajax.InstallScripts()
+		$Scriptaculous.InstallScripts()
 	</head>
 	<body>
 
@@ -28,7 +28,7 @@
 			</div>
 
 			<div class="content">
-				${ChildOutput}
+				$ChildContent
 			</div>
 		
 			<div class="right">
@@ -98,7 +98,6 @@
 						</li>
 					</ul>
 				</div>
-
 
 				<div class="round">
 					<div class="roundbl">
