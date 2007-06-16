@@ -59,16 +59,19 @@ namespace Castle.FlexBridge.ActionScript
             get { return value; }
         }
 
+        /// <inheritdoc />
         public override ASTypeKind Kind
         {
             get { return ASTypeKind.Boolean; }
         }
 
+        /// <inheritdoc />
         public override void AcceptVisitor(IActionScriptSerializer serializer, IASValueVisitor visitor)
         {
             visitor.VisitBoolean(serializer, value);
         }
 
+        /// <inheritdoc />
         public override object GetNativeValue(Type nativeType)
         {
             return nativeType == typeof(bool) ? (object)value : null;

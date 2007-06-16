@@ -63,6 +63,7 @@ namespace Castle.FlexBridge.Serialization
             this.asReferenceCache = new Dictionary<ASReferenceCacheKey, object>();
         }
 
+        /// <inheritdoc />
         public IASValue ToASValue(object nativeValue)
         {
             try
@@ -131,6 +132,7 @@ namespace Castle.FlexBridge.Serialization
                 "Cannot find a suitable mapper for mapping type '{0}' to an ActionScript value.", nativeType.FullName));
         }
 
+        /// <inheritdoc />
         public object ToNative(IASValue asValue, Type nativeType)
         {
             try
@@ -256,6 +258,7 @@ namespace Castle.FlexBridge.Serialization
                 asValue.Kind, classAlias, nativeType != null ? nativeType.FullName : "<default>"));
         }
 
+        /// <inheritdoc />
         public IExternalizable CreateExternalizableInstance(string classAlias)
         {
             if (classAlias == null)
@@ -277,6 +280,7 @@ namespace Castle.FlexBridge.Serialization
                 classAlias));
         }
 
+        /// <inheritdoc />
         public string GetClassAlias(Type nativeType)
         {
             if (nativeType == null)

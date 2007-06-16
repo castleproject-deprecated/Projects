@@ -77,6 +77,7 @@ namespace Castle.FlexBridge.Serialization.Mapping
             RegisterMapper(new UInt64Mapper());
         }
 
+        /// <inheritdoc />
         public override IASSourceMapper GetASSourceMapper(ASSourceMappingDescriptor descriptor)
         {
             foreach (PrimitiveMapper mapper in mappers)
@@ -86,6 +87,7 @@ namespace Castle.FlexBridge.Serialization.Mapping
             return null;
         }
 
+        /// <inheritdoc />
         public override IASTargetMapper GetASTargetMapper(ASTargetMappingDescriptor descriptor)
         {
             foreach (PrimitiveMapper mapper in mappers)

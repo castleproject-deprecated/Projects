@@ -19,7 +19,6 @@
     <CSharpProject Include="$(SourceDir)\Castle.FlexBridge\Castle.FlexBridge.Tests.csproj" />
 
     <Binary Include="$(SourceDir)\Castle.FlexBridge\bin\Castle.FlexBridge.dll" />
-    <Binary Include="$(SourceDir)\Castle.FlexBridge\bin\Castle.FlexBridge.xml" />
 
     <TestAssembly Include="$(SourceDir)\Castle.FlexBridge.Tests\bin\Castle.FlexBridge.Tests.dll" />
   </ItemGroup>
@@ -30,6 +29,10 @@
           DependsOnTargets="Build-CSharpProjects;Build-CastleFlexBridgeFlash;Build-CastleFlexBridgeTestsFlash">
     <Copy SourceFiles="@(Binary)"
           DestinationFolder="$(BuildBinDir)" />
+
+    <!-- Produce clean Intellisense docs with "inheritdoc" accounted for. -->
+    <Exec Command="&quot;$(LibsDir)\NDoc2\NDocConsole.exe&quot; -documenter=Intellisense -project=&quot;$(SourceDir)\Castle.FlexBridge.ndoc&quot;" />
+    <Delete Files="$(BuildBinDir)\ndoc_qa.log;$(BuildBinDir)\ndoc_build.log" />
   </Target>
 
   <Target Name="Clean"

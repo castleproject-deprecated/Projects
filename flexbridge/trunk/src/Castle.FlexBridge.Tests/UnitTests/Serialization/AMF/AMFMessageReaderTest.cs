@@ -32,7 +32,6 @@ namespace Castle.FlexBridge.Tests.UnitTests.Serialization.AMF
         private AMFDataInput input;
         private MemoryStream stream;
         private IActionScriptSerializer serializer;
-        private AMFMessageReader messageReader;
 
         public override void SetUp()
         {
@@ -41,7 +40,6 @@ namespace Castle.FlexBridge.Tests.UnitTests.Serialization.AMF
             stream = new MemoryStream();
             serializer = Mocks.CreateMock<IActionScriptSerializer>();
             input = new AMFDataInput(stream, serializer);
-            messageReader = new AMFMessageReader(input);
         }
 
         [Test]
@@ -57,7 +55,7 @@ namespace Castle.FlexBridge.Tests.UnitTests.Serialization.AMF
                 0x00, 0x02, 0x74, 0x6f, 0x00, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0xff, 0xff, 0xff, 0xff, 0x05 // second body
             });
 
-            AMFMessage message = messageReader.ReadAMFMessage();
+            AMFMessage message = AMFMessageReader.ReadAMFMessage(input);
 
             Assert.AreEqual(0x1234, message.Version);
 
@@ -81,10 +79,10 @@ namespace Castle.FlexBridge.Tests.UnitTests.Serialization.AMF
         [Test]
         public void ReadMessageReturnsNullOnEndOfStream()
         {
-            Assert.IsNull(messageReader.ReadAMFMessage());
+            Assert.IsNull(AMFMessageReader.ReadAMFMessage(input));
 
             // Doing it a second time shouldn't hurt.
-            Assert.IsNull(messageReader.ReadAMFMessage());
+            Assert.IsNull(AMFMessageReader.ReadAMFMessage(input));
         }
 
         [Test]
@@ -94,7 +92,7 @@ namespace Castle.FlexBridge.Tests.UnitTests.Serialization.AMF
             SetStreamContents(new byte[] { 0 }); // an incomplete message!
 
             // Should encounter an EndOfStreamException and wrap it with an AMFException.
-            messageReader.ReadAMFMessage();
+            AMFMessageReader.ReadAMFMessage(input);
         }
 
         /// <summary>

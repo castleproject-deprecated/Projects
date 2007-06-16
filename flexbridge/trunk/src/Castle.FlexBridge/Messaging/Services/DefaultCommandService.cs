@@ -25,11 +25,13 @@ namespace Castle.FlexBridge.Messaging.Services
     /// </summary>
     public sealed class DefaultCommandService : BaseService
     {
+        /// <inheritdoc />
         public override bool OwnsMessageType(string messageClassAlias)
         {
             return messageClassAlias == CommandMessage.ClassAlias;
         }
 
+        /// <inheritdoc />
         public override IAsyncResult BeginProcessRequest(IAMFContext context, IMessage request, AsyncCallback callback,
             object asyncState)
         {
@@ -39,6 +41,7 @@ namespace Castle.FlexBridge.Messaging.Services
             return processor;
         }
 
+        /// <inheritdoc />
         public override IMessage EndProcessRequest(IAsyncResult asyncResult)
         {
             MessageProcessor processor = (MessageProcessor)asyncResult;

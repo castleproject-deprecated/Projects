@@ -25,16 +25,30 @@ namespace Castle.FlexBridge.Serialization.AMF
     [Serializable]
     public class AMFException : Exception
     {
+        /// <summary>
+        /// Creates an exception.
+        /// </summary>
+        /// <param name="message">The exception message</param>
         public AMFException(string message)
             : base(message)
         {
         }
 
+        /// <summary>
+        /// Creates an exception.
+        /// </summary>
+        /// <param name="message">The exception message</param>
+        /// <param name="inner">The inner exception or null if none</param>
         public AMFException(string message, Exception inner)
             : base(message, inner)
         {
         }
 
+        /// <summary>
+        /// Creates an exception from serialization data.
+        /// </summary>
+        /// <param name="info">The serialization info</param>
+        /// <param name="context">The streaming context</param>
         protected AMFException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

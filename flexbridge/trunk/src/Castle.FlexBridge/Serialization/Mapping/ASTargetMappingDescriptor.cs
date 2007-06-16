@@ -48,16 +48,19 @@ namespace Castle.FlexBridge.Serialization.Mapping
             get { return sourceNativeType; }
         }
 
+        /// <inheritdoc />
         public override int GetHashCode()
         {
             return sourceNativeType.GetHashCode();
         }
 
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
             return obj is ASTargetMappingDescriptor && Equals((ASTargetMappingDescriptor)obj);
         }
 
+        /// <inheritdoc />
         public bool Equals(ASTargetMappingDescriptor other)
         {
             return sourceNativeType == other.sourceNativeType;

@@ -25,16 +25,19 @@ namespace Castle.FlexBridge.Messaging.Services
     /// </summary>
     public sealed class AuthenticationService : BaseService
     {
+        /// <inheritdoc />
         public override bool OwnsMessageType(string messageClassAlias)
         {
             return messageClassAlias == CommandMessage.AuthenticationMessageRefType;
         }
 
+        /// <inheritdoc />
         public override IAsyncResult BeginProcessRequest(IAMFContext context, IMessage request, AsyncCallback callback, object asyncState)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
         public override IMessage EndProcessRequest(IAsyncResult asyncResult)
         {
             throw new NotImplementedException();

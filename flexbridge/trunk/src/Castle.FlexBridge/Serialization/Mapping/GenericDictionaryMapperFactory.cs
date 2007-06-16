@@ -56,6 +56,7 @@ namespace Castle.FlexBridge.Serialization.Mapping
                 factories.Add(factory);
         }
 
+        /// <inheritdoc />
         public override IASSourceMapper GetASSourceMapper(ASSourceMappingDescriptor descriptor)
         {
             if ((descriptor.SourceKind == ASTypeKind.Array || descriptor.SourceKind == ASTypeKind.Object)
@@ -71,6 +72,7 @@ namespace Castle.FlexBridge.Serialization.Mapping
             return null;
         }
 
+        /// <inheritdoc />
         public override IASTargetMapper GetASTargetMapper(ASTargetMappingDescriptor descriptor)
         {
             Type[] genericTypeArgs = MappingUtils.GetGenericDictionaryTypeArgs(descriptor.SourceNativeType);

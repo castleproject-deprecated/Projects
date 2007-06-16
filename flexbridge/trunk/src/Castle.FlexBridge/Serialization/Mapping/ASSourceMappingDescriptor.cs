@@ -87,16 +87,19 @@ namespace Castle.FlexBridge.Serialization.Mapping
             get { return targetNativeType; }
         }
 
+        /// <inheritdoc />
         public override int GetHashCode()
         {
             return sourceKind.GetHashCode() ^ sourceClassAlias.GetHashCode() ^ sourceContentFlags.GetHashCode() ^ targetNativeType.GetHashCode();
         }
 
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
             return obj is ASSourceMappingDescriptor && Equals((ASSourceMappingDescriptor)obj);
         }
 
+        /// <inheritdoc />
         public bool Equals(ASSourceMappingDescriptor other)
         {
             return sourceKind == other.sourceKind

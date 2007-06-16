@@ -23,22 +23,20 @@ namespace Castle.FlexBridge.Serialization.AMF
     /// <summary>
     /// Reads AMF messages from a stream.
     /// </summary>
-    public class AMFMessageReader
+    public static class AMFMessageReader
     {
-        private AMFDataInput input;
-
-        public AMFMessageReader(AMFDataInput input)
-        {
-            this.input = input;
-        }
-
         /// <summary>
-        /// Reads an AMF message.
+        /// Reads an AMF message from an input stream.
         /// </summary>
+        /// <param name="input">The input stream</param>
         /// <returns>The AMF message that was read, or null on end of stream</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is null</exception>
         /// <exception cref="AMFException">Thrown if an exception occurred while writing the message</exception>
-        public AMFMessage ReadAMFMessage()
+        public static AMFMessage ReadAMFMessage(AMFDataInput input)
         {
+            if (input == null)
+                throw new ArgumentNullException("input");
+
             try
             {
                 // Check for end of stream.
@@ -57,7 +55,7 @@ namespace Castle.FlexBridge.Serialization.AMF
                 }
 
                 // Okay, there's data.  From now on, if we see EndOfStreamException it's an error!
-                return UncheckedReadAMFMessage(firstByte);
+                return UncheckedReadAMFMessage(input, firstByte);
             }
             catch (Exception ex)
             {
@@ -66,11 +64,12 @@ namespace Castle.FlexBridge.Serialization.AMF
         }
 
         /// <summary>
-        /// Reads an AMF message and bubbles up exceptions.
+        /// Reads an AMF message from an input stream and bubbles up exceptions.
         /// </summary>
+        /// <param name="input">The input stream</param>
         /// <param name="firstByte">The first byte of the message</param>
         /// <returns>The AMF message that was read</returns>
-        private AMFMessage UncheckedReadAMFMessage(byte firstByte)
+        private static AMFMessage UncheckedReadAMFMessage(AMFDataInput input, byte firstByte)
         {
             byte secondVersionByte = input.ReadByte();
             ushort version = (ushort) ((firstByte << 8) | secondVersionByte);
@@ -78,51 +77,55 @@ namespace Castle.FlexBridge.Serialization.AMF
             int headerCount = input.ReadUnsignedShort();
             AMFHeader[] headers = new AMFHeader[headerCount];
             for (int i = 0; i < headerCount; i++)
-                headers[i] = ReadAMFHeader();
+                headers[i] = ReadAMFHeader(input);
 
             int bodyCount = input.ReadUnsignedShort();
             AMFBody[] bodies = new AMFBody[bodyCount];
             for (int i = 0; i < bodyCount; i++)
-                bodies[i] = ReadAMFBody();
+                bodies[i] = ReadAMFBody(input);
 
             return new AMFMessage(version, headers, bodies);
         }
 
         /// <summary>
-        /// Reads an AMF header.
+        /// Reads an AMF header from an input stream.
         /// </summary>
+        /// <param name="input">The input stream</param>
         /// <returns>The AMF header that was read</returns>
-        private AMFHeader ReadAMFHeader()
+        private static AMFHeader ReadAMFHeader(AMFDataInput input)
         {
             string name = input.ReadShortString();
             bool mustUnderstand = input.ReadBoolean();
             int headerLength = input.ReadInt();
 
-            IASValue content = ReadAMFContent(headerLength);
+            IASValue content = ReadAMFContent(input, headerLength);
 
             return new AMFHeader(name, mustUnderstand, content);
         }
 
         /// <summary>
-        /// Reads an AMF body.
+        /// Reads an AMF body from an input stream.
         /// </summary>
+        /// <param name="input">The input stream</param>
         /// <returns>The AMF body that was read</returns>
-        private AMFBody ReadAMFBody()
+        private static AMFBody ReadAMFBody(AMFDataInput input)
         {
             string requestTarget = input.ReadShortString();
             string responseTarget = input.ReadShortString();
             int bodyLength = input.ReadInt();
 
-            IASValue content = ReadAMFContent(bodyLength);
+            IASValue content = ReadAMFContent(input, bodyLength);
 
             return new AMFBody(requestTarget, responseTarget, content);
         }
 
         /// <summary>
-        /// Reads AMF content.
+        /// Reads AMF content from an input stream.
         /// </summary>
+        /// <param name="input">The input stream</param>
+        /// <param name="contentLength">The length of the content to read in bytes</param>
         /// <returns>The content object</returns>
-        private IASValue ReadAMFContent(int contentLength)
+        private static IASValue ReadAMFContent(AMFDataInput input, int contentLength)
         {
             input.BeginObjectStream();
             try

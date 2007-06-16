@@ -35,16 +35,19 @@ namespace Castle.FlexBridge.ActionScript
         {
         }
 
+        /// <inheritdoc />
         public override ASTypeKind Kind
         {
             get { return ASTypeKind.Unsupported; }
         }
 
+        /// <inheritdoc />
         public override void AcceptVisitor(IActionScriptSerializer serializer, IASValueVisitor visitor)
         {
             visitor.VisitUnsupported(serializer);
         }
 
+        /// <inheritdoc />
         public override object GetNativeValue(Type nativeType)
         {
             return nativeType == typeof(ASUnsupported) ? ASUnsupported.Value : null;

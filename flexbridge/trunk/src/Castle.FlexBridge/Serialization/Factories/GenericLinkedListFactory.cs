@@ -31,11 +31,13 @@ namespace Castle.FlexBridge.Serialization.Factories
         {
         }
 
+        /// <inheritdoc />
         public bool CanCreateInstance<T>(Type baseType)
         {
             return baseType.IsAssignableFrom(typeof(LinkedList<T>));
         }
 
+        /// <inheritdoc />
         public ICollection<T> CreateInstance<T>(Type baseType, int initialCapacity)
         {
             return new LinkedList<T>();

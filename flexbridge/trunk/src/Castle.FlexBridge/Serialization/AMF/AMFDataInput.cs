@@ -105,11 +105,13 @@ namespace Castle.FlexBridge.Serialization.AMF
             inObjectStream = false;
         }
 
+        /// <inheritdoc />
         public bool ReadBoolean()
         {
             return ReadByte() != 0;
         }
 
+        /// <inheritdoc />
         public byte ReadByte()
         {
             int value = stream.ReadByte();
@@ -119,6 +121,7 @@ namespace Castle.FlexBridge.Serialization.AMF
             return (byte) value;
         }
 
+        /// <inheritdoc />
         public void ReadBytes(byte[] bytes, int offset, int count)
         {
             int actualCount = stream.Read(bytes, offset, count);
@@ -126,6 +129,7 @@ namespace Castle.FlexBridge.Serialization.AMF
                 ThrowEndOfStreamException();
         }
 
+        /// <inheritdoc />
         public double ReadDouble()
         {
             ReadBytes(buffer, 0, 8);
@@ -138,6 +142,7 @@ namespace Castle.FlexBridge.Serialization.AMF
             return BitConverter.Int64BitsToDouble(bits);
         }
 
+        /// <inheritdoc />
         public float ReadFloat()
         {
             ReadBytes(buffer, 0, 4);
@@ -150,11 +155,13 @@ namespace Castle.FlexBridge.Serialization.AMF
             return BitConverter.ToSingle(buffer, 4);
         }
 
+        /// <inheritdoc />
         public int ReadInt()
         {
             return unchecked((int)ReadUnsignedInt());
         }
 
+        /// <inheritdoc />
         public IASValue ReadObject()
         {
             if (!inObjectStream)
@@ -163,11 +170,13 @@ namespace Castle.FlexBridge.Serialization.AMF
             return objectReader.ReadObject();
         }
 
+        /// <inheritdoc />
         public short ReadShort()
         {
             return unchecked((short)ReadUnsignedShort());
         }
 
+        /// <inheritdoc />
         public uint ReadUnsignedInt()
         {
             ReadBytes(buffer, 0, 4);
@@ -175,6 +184,7 @@ namespace Castle.FlexBridge.Serialization.AMF
             return unchecked((uint) ((buffer[0] << 24) | (buffer[1] << 16) | (buffer[2] << 8) | buffer[3]));
         }
 
+        /// <inheritdoc />
         public ushort ReadUnsignedShort()
         {
             ReadBytes(buffer, 0, 2);
@@ -182,11 +192,13 @@ namespace Castle.FlexBridge.Serialization.AMF
             return unchecked((ushort)((buffer[0] << 8) | buffer[1]));
         }
 
+        /// <inheritdoc />
         public string ReadUTF()
         {
             return ReadShortString();
         }
 
+        /// <inheritdoc />
         public string ReadUTFBytes(int length)
         {
             if (length == 0)

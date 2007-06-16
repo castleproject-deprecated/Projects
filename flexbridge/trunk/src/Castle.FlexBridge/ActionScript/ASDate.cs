@@ -113,11 +113,13 @@ namespace Castle.FlexBridge.ActionScript
             return ToDateTime(millisecondsSinceEpoch, timeZoneOffsetMinutes);
         }
 
+        /// <inheritdoc />
         public override int GetHashCode()
         {
             return millisecondsSinceEpoch.GetHashCode() ^ timeZoneOffsetMinutes;
         }
 
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
             ASDate other = obj as ASDate;
@@ -125,16 +127,19 @@ namespace Castle.FlexBridge.ActionScript
                 && other.timeZoneOffsetMinutes == timeZoneOffsetMinutes;
         }
 
+        /// <inheritdoc />
         public override ASTypeKind Kind
         {
             get { return ASTypeKind.Date; }
         }
 
+        /// <inheritdoc />
         public override void AcceptVisitor(IActionScriptSerializer serializer, IASValueVisitor visitor)
         {
             visitor.VisitDate(serializer, millisecondsSinceEpoch, timeZoneOffsetMinutes);
         }
 
+        /// <inheritdoc />
         public override object GetNativeValue(Type nativeType)
         {
             return nativeType == typeof(DateTime) ? (object) ToDateTime() : null;

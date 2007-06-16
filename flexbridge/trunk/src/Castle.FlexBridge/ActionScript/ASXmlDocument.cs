@@ -114,32 +114,32 @@ namespace Castle.FlexBridge.ActionScript
             }
         }
 
-        public string ToXmlString()
-        {
-            return XmlString;
-        }
-
+        /// <inheritdoc />
         public override ASTypeKind Kind
         {
             get { return ASTypeKind.Xml; }
         }
 
+        /// <inheritdoc />
         public override void AcceptVisitor(IActionScriptSerializer serializer, IASValueVisitor visitor)
         {
             visitor.VisitXml(serializer, XmlString);
         }
 
+        /// <inheritdoc />
         public override object GetNativeValue(Type nativeType)
         {
             return nativeType == typeof(XmlDocument) ? XmlDocument : null;
         }
 
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
             ASXmlDocument other = obj as ASXmlDocument;
             return other != null && XmlString == other.XmlString;
         }
 
+        /// <inheritdoc />
         public override int GetHashCode()
         {
             return XmlString.GetHashCode();

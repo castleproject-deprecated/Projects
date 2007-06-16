@@ -25,11 +25,14 @@ namespace Castle.FlexBridge.Messaging.Services
     /// </summary>
     public abstract class BaseService : IService
     {
+        /// <inheritdoc />
         public abstract bool OwnsMessageType(string messageClassAlias);
 
+        /// <inheritdoc />
         public abstract IAsyncResult BeginProcessRequest(IAMFContext context, IMessage request, AsyncCallback callback,
             object asyncState);
 
+        /// <inheritdoc />
         public abstract IMessage EndProcessRequest(IAsyncResult asyncResult);
     }
 }

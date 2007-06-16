@@ -131,26 +131,31 @@ namespace Castle.FlexBridge.Serialization.AMF
             inObjectStream = false;
         }
 
+        /// <inheritdoc />
         public void WriteByte(byte value)
         {
             stream.WriteByte(value);
         }
 
+        /// <inheritdoc />
         public void WriteBytes(byte[] bytes)
         {
             stream.Write(bytes, 0, bytes.Length);
         }
 
+        /// <inheritdoc />
         public void WriteBytes(byte[] bytes, int offset, int count)
         {
             stream.Write(bytes, offset, count);
         }
 
+        /// <inheritdoc />
         public void WriteBoolean(bool value)
         {
             stream.WriteByte(value ? (byte)1 : (byte)0);
         }
 
+        /// <inheritdoc />
         public void WriteDouble(double value)
         {
             long bits = BitConverter.DoubleToInt64Bits(value);
@@ -165,6 +170,7 @@ namespace Castle.FlexBridge.Serialization.AMF
             WriteByte(unchecked((byte)bits));
         }
 
+        /// <inheritdoc />
         public void WriteFloat(float value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
@@ -175,11 +181,13 @@ namespace Castle.FlexBridge.Serialization.AMF
             WriteByte(bytes[0]);
         }
 
+        /// <inheritdoc />
         public void WriteInt(int value)
         {
             WriteUnsignedInt(unchecked((uint)value));
         }
 
+        /// <inheritdoc />
         public void WriteObject(IASValue value)
         {
             if (!inObjectStream)
@@ -188,17 +196,20 @@ namespace Castle.FlexBridge.Serialization.AMF
             objectWriter.WriteObject(value);
         }
 
+        /// <inheritdoc />
         public void WriteShort(short value)
         {
             WriteUnsignedShort(unchecked((ushort)value));
         }
 
+        /// <inheritdoc />
         public void WriteUnsignedShort(ushort value)
         {
             WriteByte(unchecked((byte)(value >> 8)));
             WriteByte(unchecked((byte)value));
         }
 
+        /// <inheritdoc />
         public void WriteUnsignedInt(uint value)
         {
             WriteByte(unchecked((byte)(value >> 24)));
@@ -207,11 +218,13 @@ namespace Castle.FlexBridge.Serialization.AMF
             WriteByte(unchecked((byte)value));
         }
 
+        /// <inheritdoc />
         public void WriteUTF(string value)
         {
             WriteShortString(value);
         }
 
+        /// <inheritdoc />
         public void WriteUTFBytes(string value)
         {
             byte[] bytes = utf8Encoding.GetBytes(value);

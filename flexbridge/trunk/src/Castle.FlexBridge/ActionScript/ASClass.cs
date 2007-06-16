@@ -87,11 +87,13 @@ namespace Castle.FlexBridge.ActionScript
             get { return memberNames; }
         }
 
+        /// <inheritdoc />
         public override int GetHashCode()
         {
             return classAlias.GetHashCode();
         }
 
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(this, obj))
@@ -118,6 +120,10 @@ namespace Castle.FlexBridge.ActionScript
             return false;
         }
 
+        /// <summary>
+        /// Returns the class alias or "&lt;untyped&gt;" if none.
+        /// </summary>
+        /// <returns>A string description of the class</returns>
         public override string ToString()
         {
             return classAlias.Length != 0 ? classAlias : "<untyped>";

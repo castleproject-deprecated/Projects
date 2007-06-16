@@ -35,6 +35,7 @@ namespace Castle.FlexBridge.Serialization.Mapping
             getMapperInstance = GetMapperInstance<object>;
         }
 
+        /// <inheritdoc />
         public override IASSourceMapper GetASSourceMapper(ASSourceMappingDescriptor descriptor)
         {
             if ((descriptor.SourceKind == ASTypeKind.Array || descriptor.SourceKind == ASTypeKind.ByteArray)
@@ -48,6 +49,7 @@ namespace Castle.FlexBridge.Serialization.Mapping
             return null;
         }
 
+        /// <inheritdoc />
         public override IASTargetMapper GetASTargetMapper(ASTargetMappingDescriptor descriptor)
         {
             if (descriptor.SourceNativeType.IsArray && descriptor.SourceNativeType.GetArrayRank() == 1)

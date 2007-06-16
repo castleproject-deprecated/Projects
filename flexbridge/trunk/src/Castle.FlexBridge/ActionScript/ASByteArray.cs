@@ -101,17 +101,20 @@ namespace Castle.FlexBridge.ActionScript
             }
         }
 
+        /// <inheritdoc />
         public override ASTypeKind Kind
         {
             get { return ASTypeKind.ByteArray; }
         }
 
+        /// <inheritdoc />
         public override void AcceptVisitor(IActionScriptSerializer serializer, IASValueVisitor visitor)
         {
             ArraySegment<byte>[] segments = new ArraySegment<byte>[] { bytes };
             visitor.VisitByteArray(serializer, bytes.Count, segments);
         }
 
+        /// <inheritdoc />
         public override object GetNativeValue(Type nativeType)
         {
             if (nativeType == typeof(byte[])

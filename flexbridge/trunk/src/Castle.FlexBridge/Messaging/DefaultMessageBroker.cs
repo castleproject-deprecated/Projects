@@ -48,6 +48,7 @@ namespace Castle.FlexBridge.Messaging
                 RegisterBuiltInServices();
         }
 
+        /// <inheritdoc />
         public IAsyncResult BeginProcessRequest(IAMFContext context, IMessage request, AsyncCallback callback,
             object asyncState)
         {
@@ -63,6 +64,7 @@ namespace Castle.FlexBridge.Messaging
             return processor;
         }
 
+        /// <inheritdoc />
         public IMessage EndProcessRequest(IAsyncResult asyncResult)
         {
             if (asyncResult == null)
@@ -72,6 +74,7 @@ namespace Castle.FlexBridge.Messaging
             return processor.EndTask();
         }
 
+        /// <inheritdoc />
         public void RegisterService(IService service)
         {
             if (service == null)
@@ -83,6 +86,7 @@ namespace Castle.FlexBridge.Messaging
             }
         }
 
+        /// <inheritdoc />
         public IService GetServiceForMessageClassAlias(string messageClassAlias)
         {
             if (messageClassAlias == null)
@@ -115,6 +119,7 @@ namespace Castle.FlexBridge.Messaging
             }
         }
 
+        /// <inheritdoc />
         public IService GetServiceForMessage(IActionScriptSerializer serializer, IMessage message)
         {
             if (serializer == null)

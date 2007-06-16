@@ -128,16 +128,19 @@ namespace Castle.FlexBridge.ActionScript
             this.mapper = mapper;
         }
 
+        /// <inheritdoc />
         public override bool IsInitialized
         {
             get { return nativeObject != null; }
         }
 
+        /// <inheritdoc />
         public override ASTypeKind Kind
         {
             get { return ASTypeKind.Object; }
         }
 
+        /// <inheritdoc />
         public override ASValueContentFlags ContentFlags
         {
             get
@@ -147,6 +150,7 @@ namespace Castle.FlexBridge.ActionScript
             }
         }
 
+        /// <inheritdoc />
         public override void AcceptVisitor(IActionScriptSerializer serializer, IASValueVisitor visitor)
         {
             ThrowIfNotInitialized();
@@ -154,6 +158,7 @@ namespace Castle.FlexBridge.ActionScript
             mapper.AcceptVisitor(serializer, @class, nativeObject, visitor);
         }
 
+        /// <inheritdoc />
         public override object GetNativeValue(Type nativeType)
         {
             if (IsInitialized)
@@ -165,6 +170,7 @@ namespace Castle.FlexBridge.ActionScript
             return base.GetNativeValue(nativeType);
         }
 
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
             if (!IsInitialized)
@@ -174,6 +180,7 @@ namespace Castle.FlexBridge.ActionScript
             return other != null && nativeObject.Equals(other.GetNativeValue(null));
         }
 
+        /// <inheritdoc />
         public override int GetHashCode()
         {
             if (!IsInitialized)

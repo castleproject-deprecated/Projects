@@ -48,6 +48,7 @@ namespace Castle.FlexBridge.Serialization.Mapping
             get { return mappingTable; }
         }
 
+        /// <inheritdoc />
         public override IASSourceMapper GetASSourceMapper(ASSourceMappingDescriptor descriptor)
         {
             if (descriptor.SourceKind == ASTypeKind.Object)
@@ -62,6 +63,7 @@ namespace Castle.FlexBridge.Serialization.Mapping
             return null;
         }
 
+        /// <inheritdoc />
         public override IASTargetMapper GetASTargetMapper(ASTargetMappingDescriptor descriptor)
         {
             ActionScriptClassMapping classMapping = mappingTable.GetClassMappingByType(descriptor.SourceNativeType);

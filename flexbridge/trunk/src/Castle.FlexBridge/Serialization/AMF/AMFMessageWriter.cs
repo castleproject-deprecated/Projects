@@ -13,36 +13,33 @@
 // limitations under the License.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using Castle.FlexBridge.ActionScript;
-using Castle.FlexBridge.Serialization;
 
 namespace Castle.FlexBridge.Serialization.AMF
 {
     /// <summary>
     /// Writes AMF messages to a stream.
     /// </summary>
-    public class AMFMessageWriter
+    public static class AMFMessageWriter
     {
-        private AMFDataOutput output;
-
-        public AMFMessageWriter(AMFDataOutput output)
-        {
-            this.output = output;
-        }
-
         /// <summary>
-        /// Writes an AMF message.
+        /// Writes an AMF message to an output stream.
         /// </summary>
+        /// <param name="output">The output stream</param>
         /// <param name="message">The message to write</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="output"/> or
+        /// <paramref name="message"/> is null</exception>
         /// <exception cref="AMFException">Thrown if an exception occurred while writing the message</exception>
-        public void WriteAMFMessage(AMFMessage message)
+        public static void WriteAMFMessage(AMFDataOutput output, AMFMessage message)
         {
+            if (output == null)
+                throw new ArgumentNullException("output");
+            if (message == null)
+                throw new ArgumentNullException("message");
+
             try
             {
-                UncheckedWriteAMFMessage(message);
+                UncheckedWriteAMFMessage(output, message);
             }
             catch (Exception ex)
             {
@@ -51,53 +48,57 @@ namespace Castle.FlexBridge.Serialization.AMF
         }
 
         /// <summary>
-        /// Writes an AMF message and bubbles up exceptions.
+        /// Writes an AMF message to an output stream and bubbles up exceptions.
         /// </summary>
+        /// <param name="output">The output stream</param>
         /// <param name="message">The message to write</param>
-        private void UncheckedWriteAMFMessage(AMFMessage message)
+        private static void UncheckedWriteAMFMessage(AMFDataOutput output, AMFMessage message)
         {
             output.WriteUnsignedShort(message.Version);
 
             output.WriteUnsignedShort((ushort)message.Headers.Count);
             foreach (AMFHeader header in message.Headers)
-                WriteAMFHeader(header);
+                WriteAMFHeader(output, header);
 
             output.WriteUnsignedShort((ushort)message.Bodies.Count);
             foreach (AMFBody body in message.Bodies)
-                WriteAMFBody(body);
+                WriteAMFBody(output, body);
         }
 
         /// <summary>
         /// Writes an AMF header.
         /// </summary>
+        /// <param name="output">The output stream</param>
         /// <param name="header">The header to write</param>
-        private void WriteAMFHeader(AMFHeader header)
+        private static void WriteAMFHeader(AMFDataOutput output, AMFHeader header)
         {
             output.WriteShortString(header.Name);
             output.WriteBoolean(header.MustUnderstand);
             output.WriteUnsignedInt(0xffffffff); // header length ignored
 
-            WriteAMFContent(header.Content);
+            WriteAMFContent(output, header.Content);
         }
 
         /// <summary>
         /// Writes an AMF body.
         /// </summary>
+        /// <param name="output">The output stream</param>
         /// <param name="body">The body to write</param>
-        private void WriteAMFBody(AMFBody body)
+        private static void WriteAMFBody(AMFDataOutput output, AMFBody body)
         {
             output.WriteShortString(body.RequestTarget);
             output.WriteShortString(body.ResponseTarget);
             output.WriteUnsignedInt(0xffffffff); // body length ignored
 
-            WriteAMFContent(body.Content);
+            WriteAMFContent(output, body.Content);
         }
 
         /// <summary>
         /// Writes AMF content.
         /// </summary>
+        /// <param name="output">The output stream</param>
         /// <param name="content">The content to write</param>
-        private void WriteAMFContent(IASValue content)
+        private static void WriteAMFContent(AMFDataOutput output, IASValue content)
         {
             output.BeginObjectStream();
             try

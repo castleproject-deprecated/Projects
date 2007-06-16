@@ -32,7 +32,6 @@ namespace Castle.FlexBridge.Tests.UnitTests.Serialization.AMF
         private AMFDataOutput output;
         private MemoryStream stream;
         private IActionScriptSerializer serializer;
-        private AMFMessageWriter messageWriter;
 
         public override void SetUp()
         {
@@ -41,7 +40,6 @@ namespace Castle.FlexBridge.Tests.UnitTests.Serialization.AMF
             stream = new MemoryStream();
             serializer = Mocks.CreateMock<IActionScriptSerializer>();
             output = new AMFDataOutput(stream, serializer);
-            messageWriter = new AMFMessageWriter(output);
         }
 
         [Test]
@@ -55,7 +53,7 @@ namespace Castle.FlexBridge.Tests.UnitTests.Serialization.AMF
             message.Bodies.Add(new AMFBody("to", "from", new ASString("123")));
             message.Bodies.Add(new AMFBody("to", "from", null));
             
-            messageWriter.WriteAMFMessage(message);
+            AMFMessageWriter.WriteAMFMessage(output, message);
 
             CollectionAssert.AreElementsEqual(new byte[] {
                 0x12, 0x34, // version
@@ -85,7 +83,7 @@ namespace Castle.FlexBridge.Tests.UnitTests.Serialization.AMF
             message.Version = 0x1234;
             message.Headers.Add(new AMFHeader("abc", true, mockValue));
 
-            messageWriter.WriteAMFMessage(message);
+            AMFMessageWriter.WriteAMFMessage(output, message);
         }
     }
 }

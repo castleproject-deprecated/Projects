@@ -31,11 +31,13 @@ namespace Castle.FlexBridge.Serialization.Factories
         {
         }
 
+        /// <inheritdoc />
         public bool CanCreateInstance<TKey, TValue>(Type baseType)
         {
             return baseType.IsAssignableFrom(typeof(Dictionary<TKey, TValue>));
         }
 
+        /// <inheritdoc />
         public IDictionary<TKey, TValue> CreateInstance<TKey, TValue>(Type baseType, int initialCapacity)
         {
             return new Dictionary<TKey, TValue>();

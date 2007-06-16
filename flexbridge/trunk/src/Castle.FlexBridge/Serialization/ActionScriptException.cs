@@ -23,16 +23,30 @@ namespace Castle.FlexBridge.Serialization
     [Serializable]
     public class ActionScriptException : Exception
     {
+        /// <summary>
+        /// Creates an exception.
+        /// </summary>
+        /// <param name="message">The exception message</param>
         public ActionScriptException(string message)
             : base(message)
         {
         }
 
+        /// <summary>
+        /// Creates an exception.
+        /// </summary>
+        /// <param name="message">The exception message</param>
+        /// <param name="inner">The inner exception or null if none</param>
         public ActionScriptException(string message, Exception inner)
             : base(message, inner)
         {
         }
 
+        /// <summary>
+        /// Creates an exception from serialization data.
+        /// </summary>
+        /// <param name="info">The serialization info</param>
+        /// <param name="context">The streaming context</param>
         protected ActionScriptException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

@@ -32,11 +32,13 @@ namespace Castle.FlexBridge.Serialization.Factories
         {
         }
 
+        /// <inheritdoc />
         public bool CanCreateInstance<T>(Type baseType)
         {
             return baseType.IsAssignableFrom(typeof(MixedArray<T>));
         }
 
+        /// <inheritdoc />
         public IMixedArray<T> CreateInstance<T>(Type baseType, int initialIndexedValueCapacity,
             int initialDynamicPropertyCapacity)
         {

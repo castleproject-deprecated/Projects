@@ -74,11 +74,13 @@ namespace Castle.FlexBridge.Gateway
             messageBroker = new DefaultMessageBroker(true);
         }
 
+        /// <inheritdoc />
         public bool IsReusable
         {
             get { return true; }
         }
 
+        /// <inheritdoc />
         public IAsyncResult BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, object asyncState)
         {
             if (httpContext.Request.ContentType == AMFRequestProcessor.AMFContentType)
@@ -95,12 +97,14 @@ namespace Castle.FlexBridge.Gateway
             }
         }
 
+        /// <inheritdoc />
         public void EndProcessRequest(IAsyncResult result)
         {
             AsyncTask task = (AsyncTask) result;
             task.EndTask();
         }
 
+        /// <inheritdoc />
         public void ProcessRequest(HttpContext httpContext)
         {
             EndProcessRequest(BeginProcessRequest(httpContext, null, null));
@@ -146,9 +150,7 @@ namespace Castle.FlexBridge.Gateway
 
                 // Read the AMF message and prepare the response context.
                 AMFDataInput dataInput = new AMFDataInput(context.HttpContext.Request.InputStream, context.Serializer);
-                AMFMessageReader reader = new AMFMessageReader(dataInput);
-
-                AMFMessage amfRequestMessage = reader.ReadAMFMessage();
+                AMFMessage amfRequestMessage = AMFMessageReader.ReadAMFMessage(dataInput);
                 context.Request.SetMessage(amfRequestMessage);
                 context.Response.PrepareResponseMessage(amfRequestMessage);
 
@@ -224,9 +226,8 @@ namespace Castle.FlexBridge.Gateway
 
                 // Generate the response.
                 AMFDataOutput dataOutput = new AMFDataOutput(context.HttpContext.Response.OutputStream, context.Serializer);
-                AMFMessageWriter writer = new AMFMessageWriter(dataOutput);
 
-                writer.WriteAMFMessage(context.Response.Message);
+                AMFMessageWriter.WriteAMFMessage(dataOutput, context.Response.Message);
 
                 context.HttpContext.Response.ContentType = AMFContentType;
                 context.HttpContext.Response.Cache.SetCacheability(HttpCacheability.NoCache);

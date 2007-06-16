@@ -46,27 +46,32 @@ namespace Castle.FlexBridge.ActionScript
             get { return value; }
         }
 
+        /// <inheritdoc />
         public override ASTypeKind Kind
         {
             get { return ASTypeKind.Int29; }
         }
 
+        /// <inheritdoc />
         public override void AcceptVisitor(IActionScriptSerializer serializer, IASValueVisitor visitor)
         {
             visitor.VisitInt29(serializer, value);
         }
 
+        /// <inheritdoc />
         public override object GetNativeValue(Type nativeType)
         {
             return nativeType == typeof(int) ? (object)value : null;
         }
 
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
             ASInt29 other = obj as ASInt29;
             return other != null && value == other.value;
         }
 
+        /// <inheritdoc />
         public override int GetHashCode()
         {
             return value;

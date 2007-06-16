@@ -55,6 +55,7 @@ namespace Castle.FlexBridge.Serialization.Mapping
                 factories.Add(factory);
         }
 
+        /// <inheritdoc />
         public override IASSourceMapper GetASSourceMapper(ASSourceMappingDescriptor descriptor)
         {
             if ((descriptor.SourceKind == ASTypeKind.Array || descriptor.SourceKind == ASTypeKind.ByteArray)
@@ -71,6 +72,7 @@ namespace Castle.FlexBridge.Serialization.Mapping
             return null;
         }
 
+        /// <inheritdoc />
         public override IASTargetMapper GetASTargetMapper(ASTargetMappingDescriptor descriptor)
         {
             // Note: We don't want to map arrays or dictionaries here.  Leave that up to a

@@ -289,16 +289,19 @@ namespace Castle.FlexBridge.ActionScript
             this.dynamicProperties = dynamicProperties;
         }
 
+        /// <inheritdoc />
         public override bool IsInitialized
         {
             get { return memberValues != null; }
         }
 
+        /// <inheritdoc />
         public override ASTypeKind Kind
         {
             get { return ASTypeKind.Object; }
         }
 
+        /// <inheritdoc />
         public override ASValueContentFlags ContentFlags
         {
             get
@@ -308,6 +311,7 @@ namespace Castle.FlexBridge.ActionScript
             }
         }
 
+        /// <inheritdoc />
         public override void AcceptVisitor(IActionScriptSerializer serializer, IASValueVisitor visitor)
         {
             ThrowIfNotInitialized();
@@ -315,6 +319,7 @@ namespace Castle.FlexBridge.ActionScript
             visitor.VisitObject(serializer, @class, memberValues, dynamicProperties, null);
         }
 
+        /// <inheritdoc />
         public override object GetNativeValue(Type nativeType)
         {
             if (IsInitialized)
