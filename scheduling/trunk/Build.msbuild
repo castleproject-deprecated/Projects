@@ -22,9 +22,7 @@
     <Binary Include="$(LibsDir)\Castle\bin\Castle.Windsor.dll" />
     <Binary Include="$(LibsDir)\Castle\bin\Castle.Windsor.xml" />
     <Binary Include="$(SourceDir)\Castle.Components.Scheduler\bin\Castle.Components.Scheduler.dll" />
-    <Binary Include="$(SourceDir)\Castle.Components.Scheduler\bin\Castle.Components.Scheduler.xml" />
     <Binary Include="$(SourceDir)\Castle.Components.Scheduler.WindsorExtension\bin\Castle.Components.Scheduler.WindsorExtension.dll" />
-    <Binary Include="$(SourceDir)\Castle.Components.Scheduler.WindsorExtension\bin\Castle.Components.Scheduler.WindsorExtension.xml" />
 
     <DbScript Include="$(SourceDir)\Castle.Components.Scheduler.Db\**\*.sql" />
 
@@ -37,6 +35,10 @@
           DestinationFolder="$(BuildBinDir)" />
     <Copy SourceFiles="@(DbScript)"
           DestinationFolder="$(BuildDbDir)\%(RecursiveDir)" />
+
+    <!-- Produce clean Intellisense docs with "inheritdoc" accounted for. -->
+    <Exec Command="&quot;$(LibsDir)\NDoc2\NDocConsole.exe&quot; -documenter=Intellisense -project=&quot;$(SourceDir)\Castle.Components.Scheduler.ndoc&quot;" />
+    <Delete Files="$(BuildBinDir)\ndoc_qa.log;$(BuildBinDir)\ndoc_build.log" />
   </Target>
 
   <Target Name="Clean"
@@ -50,7 +52,9 @@
   </Target>
 
   <Target Name="BuildDotNetDocs">
+    <!-- Produce the HTML docs. -->
     <Exec Command="&quot;$(LibsDir)\NDoc2\NDocConsole.exe&quot; -documenter=MSDN-Web -project=&quot;$(SourceDir)\Castle.Components.Scheduler.ndoc&quot;" />
+    <Delete Files="$(BuildDocsDir)\ndoc_qa.log;$(BuildDocsDir)\ndoc_build.log" />
   </Target>
 
   <Target Name="Release"

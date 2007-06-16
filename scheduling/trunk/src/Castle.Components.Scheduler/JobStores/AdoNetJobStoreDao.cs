@@ -477,6 +477,12 @@ namespace Castle.Components.Scheduler.JobStores
             }
         }
 
+        /// <summary>
+        /// Builds a job details object from the result set returned by the spSCHED_GetJobDetails
+        /// and spSCHED_GetNextJob stored procedures.
+        /// </summary>
+        /// <param name="reader">The reader for the result set</param>
+        /// <returns>The job details object</returns>
         protected virtual VersionedJobDetails BuildJobDetailsFromResultSet(IDataReader reader)
         {
             string jobName = reader.GetString(0);

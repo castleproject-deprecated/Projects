@@ -50,6 +50,7 @@ namespace Castle.Components.Scheduler
             set { version = value; }
         }
 
+        /// <inheritdoc />
         public override JobDetails Clone()
         {
             VersionedJobDetails clone = new VersionedJobDetails(JobSpec.Clone(), CreationTimeUtc, version);

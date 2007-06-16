@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <project SchemaVersion="2.0">
     <assemblies>
-        <assembly location="..\build\bin\Castle.Components.Scheduler.dll" documentation="..\build\bin\Castle.Components.Scheduler.xml" />
-        <assembly location="..\build\bin\Castle.Components.Scheduler.WindsorExtension.dll" documentation="..\build\bin\Castle.Components.Scheduler.WindsorExtension.xml" />
+        <assembly location="..\build\bin\Castle.Components.Scheduler.dll" documentation="Castle.Components.Scheduler\bin\Castle.Components.Scheduler.xml" />
+        <assembly location="..\build\bin\Castle.Components.Scheduler.WindsorExtension.dll" documentation="Castle.Components.Scheduler.WindsorExtension\bin\Castle.Components.Scheduler.WindsorExtension.xml" />
     </assemblies>
     <referencePaths>
         <referencePath path="..\build\bin" />
@@ -15,7 +15,8 @@
     </namespaces>
     <documenters>
         <documenter name="Intellisense">
-            <property name="OutputDirectory" value=".\intellisense\" />
+            <property name="OutputDirectory" value="..\build\bin\" />
+            <property name="UseAssemblyShadowCache" value="False" />
         </documenter>
         <documenter name="MSDN-Web">
             <property name="RootPageContainsNamespaces" value="True" />
@@ -29,9 +30,15 @@
             <property name="CleanIntermediates" value="True" />
         </documenter>
         <documenter name="MSDN-CHM">
-            <property name="OutputDirectory" value=".\doc\" />
-            <property name="HtmlHelpName" value="Documentation" />
-            <property name="Title" value="An NDoc documented library" />
+            <property name="RootPageContainsNamespaces" value="True" />
+            <property name="OutputDirectory" value="..\build\docs\" />
+            <property name="HtmlHelpName" value="Castle.Components.Scheduler" />
+            <property name="Title" value="Castle.Component.Scheduler API" />
+            <property name="UseAssemblyShadowCache" value="False" />
+            <property name="CopyrightText" value="Copyright 2007 Castle Project - http://www.castleproject.org/" />
+            <property name="CopyrightHref" value="http://www.castleproject.org/" />
+            <property name="IncludeDefaultThreadSafety" value="False" />
+            <property name="CleanIntermediates" value="True" />
         </documenter>
     </documenters>
 </project>

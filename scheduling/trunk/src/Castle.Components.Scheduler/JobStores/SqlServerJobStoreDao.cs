@@ -35,6 +35,7 @@ namespace Castle.Components.Scheduler.JobStores
         {
         }
 
+        /// <inheritdoc />
         protected override IDbConnection CreateConnection()
         {
             return new SqlConnection(ConnectionString);

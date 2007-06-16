@@ -37,6 +37,7 @@ namespace Castle.Components.Scheduler.JobStores
             jobs = new Dictionary<string, VersionedJobDetails>();
         }
 
+        /// <inheritdoc />
         public override void Dispose()
         {
             lock (jobs)
@@ -48,6 +49,7 @@ namespace Castle.Components.Scheduler.JobStores
             }
         }
 
+        /// <inheritdoc />
         public override void RegisterScheduler(Guid schedulerGuid, string schedulerName)
         {
             if (schedulerName == null)
@@ -58,6 +60,7 @@ namespace Castle.Components.Scheduler.JobStores
             // The memory job store has no use for the registration information itself.
         }
 
+        /// <inheritdoc />
         public override void UnregisterScheduler(Guid schedulerGuid)
         {
             lock (jobs)
@@ -81,6 +84,7 @@ namespace Castle.Components.Scheduler.JobStores
             }
         }
 
+        /// <inheritdoc />
         public override IJobWatcher CreateJobWatcher(Guid schedulerGuid)
         {
             ThrowIfDisposed();
@@ -88,6 +92,7 @@ namespace Castle.Components.Scheduler.JobStores
             return new JobWatcher(this, schedulerGuid);
         }
 
+        /// <inheritdoc />
         public override JobDetails GetJobDetails(string jobName)
         {
             if (jobName == null)
@@ -105,6 +110,7 @@ namespace Castle.Components.Scheduler.JobStores
             }
         }
 
+        /// <inheritdoc />
         public override void SaveJobDetails(JobDetails jobDetails)
         {
             if (jobDetails == null)
@@ -132,6 +138,7 @@ namespace Castle.Components.Scheduler.JobStores
             }
         }
 
+        /// <inheritdoc />
         public override bool CreateJob(JobSpec jobSpec, DateTime creationTimeUtc, CreateJobConflictAction conflictAction)
         {
             if (jobSpec == null)
@@ -172,6 +179,7 @@ namespace Castle.Components.Scheduler.JobStores
             }
         }
 
+        /// <inheritdoc />
         public override void UpdateJob(string existingJobName, JobSpec updatedJobSpec)
         {
             if (existingJobName == null)
@@ -216,6 +224,7 @@ namespace Castle.Components.Scheduler.JobStores
             Monitor.PulseAll(jobs);
         }
 
+        /// <inheritdoc />
         public override bool DeleteJob(string jobName)
         {
             if (jobName == null)
@@ -233,6 +242,7 @@ namespace Castle.Components.Scheduler.JobStores
             }
         }
 
+        /// <inheritdoc />
         public override string[] ListJobNames()
         {
             lock (jobs)
@@ -245,12 +255,14 @@ namespace Castle.Components.Scheduler.JobStores
             }
         }
 
+        /// <inheritdoc />
         protected override void SignalBlockedThreads()
         {
             lock (jobs)
                 Monitor.PulseAll(jobs);
         }
 
+        /// <inheritdoc />
         protected override JobDetails GetNextJobToProcessOrWaitUntilSignaled(Guid schedulerGuid)
         {
             lock (jobs)

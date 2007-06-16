@@ -44,6 +44,7 @@ namespace Castle.Components.Scheduler
             this.jobFactory = jobFactory;
         }
 
+        /// <inheritdoc />
         public IAsyncResult BeginExecute(JobExecutionContext context, AsyncCallback asyncCallback, object asyncState)
         {
             IJob job;
@@ -65,6 +66,7 @@ namespace Castle.Components.Scheduler
             return result;
         }
 
+        /// <inheritdoc />
         public bool EndExecute(IAsyncResult asyncResult)
         {
             CompositeAsyncResult compositeResult = (CompositeAsyncResult)asyncResult;

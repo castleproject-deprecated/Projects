@@ -30,6 +30,9 @@ namespace Castle.Components.Scheduler.JobStores
         private bool isDisposed;
         private ILogger logger;
 
+        /// <summary>
+        /// Creates a job store with a null logger.
+        /// </summary>
         protected BaseJobStore()
         {
             logger = NullLogger.Instance;
@@ -59,24 +62,34 @@ namespace Castle.Components.Scheduler.JobStores
             }
         }
 
+        /// <inheritdoc />
         public abstract void Dispose();
 
+        /// <inheritdoc />
         public abstract void RegisterScheduler(Guid schedulerGuid, string schedulerName);
 
+        /// <inheritdoc />
         public abstract void UnregisterScheduler(Guid schedulerGuid);
 
+        /// <inheritdoc />
         public abstract IJobWatcher CreateJobWatcher(Guid schedulerGuid);
 
+        /// <inheritdoc />
         public abstract JobDetails GetJobDetails(string jobName);
 
+        /// <inheritdoc />
         public abstract void SaveJobDetails(JobDetails jobDetails);
 
+        /// <inheritdoc />
         public abstract bool CreateJob(JobSpec jobSpec, DateTime creationTimeUtc, CreateJobConflictAction conflictAction);
 
+        /// <inheritdoc />
         public abstract void UpdateJob(string existingJobName, JobSpec updatedJobSpec);
 
+        /// <inheritdoc />
         public abstract bool DeleteJob(string jobName);
 
+        /// <inheritdoc />
         public abstract string[] ListJobNames();
 
         /// <summary>
@@ -110,12 +123,18 @@ namespace Castle.Components.Scheduler.JobStores
             private volatile BaseJobStore jobStore;
             private Guid schedulerGuid;
 
+            /// <summary>
+            /// Creates a job watcher for the specified job store and scheduler.
+            /// </summary>
+            /// <param name="jobStore">The job store to which to delegate the watching operations</param>
+            /// <param name="schedulerGuid">The scheduler GUID</param>
             public JobWatcher(BaseJobStore jobStore, Guid schedulerGuid)
             {
                 this.jobStore = jobStore;
                 this.schedulerGuid = schedulerGuid;
             }
 
+            /// <inheritdoc />
             public void Dispose()
             {
                 BaseJobStore cachedJobStore = jobStore;
@@ -126,6 +145,7 @@ namespace Castle.Components.Scheduler.JobStores
                 }
             }
 
+            /// <inheritdoc />
             public JobDetails GetNextJobToProcess()
             {
                 for (;;)

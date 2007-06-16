@@ -38,6 +38,7 @@ namespace Castle.Components.Scheduler.WindsorExtension
             this.kernel = kernel;
         }
 
+        /// <inheritdoc />
         public IJob GetJob(string jobKey)
         {
             try

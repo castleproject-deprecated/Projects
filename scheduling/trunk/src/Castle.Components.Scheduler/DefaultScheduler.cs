@@ -216,6 +216,7 @@ namespace Castle.Components.Scheduler
             }
         }
 
+        /// <inheritdoc />
         public void Start()
         {
             lock (syncRoot)
@@ -234,6 +235,7 @@ namespace Castle.Components.Scheduler
             }
         }
 
+        /// <inheritdoc />
         public void Stop()
         {
             InternalStop(true);
@@ -268,6 +270,7 @@ namespace Castle.Components.Scheduler
                 threadToJoin.Join();
         }
 
+        /// <inheritdoc />
         public JobDetails GetJobDetails(string jobName)
         {
             if (jobName == null)
@@ -279,6 +282,7 @@ namespace Castle.Components.Scheduler
             return jobStore.GetJobDetails(jobName);
         }
 
+        /// <inheritdoc />
         public bool CreateJob(JobSpec jobSpec, CreateJobConflictAction conflictAction)
         {
             if (jobSpec == null)
@@ -292,6 +296,7 @@ namespace Castle.Components.Scheduler
             return jobStore.CreateJob(jobSpec, DateTime.UtcNow, conflictAction);
         }
 
+        /// <inheritdoc />
         public void UpdateJob(string existingJobName, JobSpec updatedJobSpec)
         {
             if (existingJobName == null)
@@ -307,6 +312,7 @@ namespace Castle.Components.Scheduler
             jobStore.UpdateJob(existingJobName, updatedJobSpec);
         }
 
+        /// <inheritdoc />
         public bool DeleteJob(string jobName)
         {
             if (jobName == null)
@@ -318,6 +324,7 @@ namespace Castle.Components.Scheduler
             return jobStore.DeleteJob(jobName);
         }
 
+        /// <inheritdoc />
         public string[] ListJobNames()
         {
             ThrowIfDisposed();

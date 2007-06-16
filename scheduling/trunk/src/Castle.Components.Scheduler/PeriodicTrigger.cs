@@ -213,21 +213,25 @@ namespace Castle.Components.Scheduler
             set { isFirstTime = value; }
         }
 
+        /// <inheritdoc />
         public override DateTime? NextFireTimeUtc
         {
 	        get { return nextFireTimeUtc; }
         }
 
+        /// <inheritdoc />
         public override TimeSpan? NextMisfireThreshold
         {
             get { return misfireThreshold; }
         }
 
+        /// <inheritdoc />
         public override bool IsActive
         {
             get { return ! jobExecutionCountRemaining.HasValue || jobExecutionCountRemaining.Value > 0; }
         }
 
+        /// <inheritdoc />
         public override Trigger Clone()
         {
             PeriodicTrigger clone = new PeriodicTrigger(startTimeUtc, endTimeUtc, period, jobExecutionCountRemaining);
@@ -239,6 +243,7 @@ namespace Castle.Components.Scheduler
             return clone;
         }
 
+        /// <inheritdoc />
         public override TriggerScheduleAction Schedule(TriggerScheduleCondition condition, DateTime timeBasisUtc,
             JobExecutionDetails lastJobExecutionDetails)
         {
