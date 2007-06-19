@@ -1,6 +1,8 @@
 Castle.Components.Scheduler
 by Jeff Brown.
 
+>> http://using.castleproject.org/display/Contrib/Castle.Components.Scheduler
+
 
 Overview
 ========
@@ -16,18 +18,15 @@ easily mocked for testing.  The default implementation should suffice
 for most purposes.
 
 
-Motivation
-==========
+Documentation
+=============
 
-I wrote this library to solve a recurring problem (pardon the pun) that had
-not been satisfactorily addressed in several applications I have worked on.
-Robust job scheduling is such a common need and many tools are available.
+The API contains copious XML documentation regarding the usage of each component.
 
-Unfortunately at the time I wrote this, I had a specific business need for 
-lightweight in-process scheduling with clustering for .Net in a fully open source
-and redistributable form.  The problem was that I couldn't find one.
-Regrettably, Quartz.Net did not yet support the features I needed.
-So I wrote this simple one instead...
+For more in-depth documentation, installation instructions, and tutorial matter,
+please refer to the Wiki page below:
+
+http://using.castleproject.org/display/Contrib/Castle.Components.Scheduler
 
 
 Thanks
@@ -37,4 +36,3 @@ Many thanks to the developers of the Quartz and Quartz.Net projects.
 I have borrowed certain design ideas from these projects and found them to be
 most excellent.  With any luck I haven't thoroughly corrupted their intent!
 
-I looking forward to plugging Quartz.Net into this scheduling service someday!

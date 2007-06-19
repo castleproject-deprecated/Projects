@@ -8,6 +8,11 @@ Begin DataProject = "Castle.Components.Scheduler.Db"
          Provider = "{91510608-8809-4020-8897-FBA057E22D54}"
          Colorizer = 6
       End
+      Begin DBRefNode = "SchedulerTestDb.mdf"
+         ConnectStr = "Data Source=.;AttachDbFilename=""C:\Source\CastleContrib\scheduling\trunk\src\Castle.Components.Scheduler.Db\SqlServer\Data\SchedulerTestDb.mdf"";Initial Catalog=SchedulerTestDb;Integrated Security=True"
+         Provider = "{91510608-8809-4020-8897-FBA057E22D54}"
+         Colorizer = 6
+      End
    End
    Begin Folder = "SqlServer"
       Begin Folder = "Create Scripts"

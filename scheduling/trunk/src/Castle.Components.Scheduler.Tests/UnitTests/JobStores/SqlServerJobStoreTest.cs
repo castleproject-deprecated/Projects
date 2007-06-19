@@ -16,6 +16,7 @@ using System;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.IO;
 using Castle.Components.Scheduler.JobStores;
 using MbUnit.Framework;
 
@@ -26,7 +27,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
     [Author("Jeff Brown", "jeff@ingenio.com")]
     public class SqlServerJobStoreTest : PersistentJobStoreTest
     {
-        private const string ConnectionString = "server=.; database=SchedulerTestDb; uid=SchedulerTestUser; pwd=test;";
+        private string connectionString;
 
         public override void SetUp()
         {
@@ -35,11 +36,43 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
             base.SetUp();
         }
 
+        [TestFixtureSetUp]
+        public void TestFixtureSetUp()
+        {
+            // Use the existing attached Db if there is one.
+            connectionString = "server=.; database=SchedulerTestDb; uid=SchedulerTestUser; pwd=test;";
+
+            try
+            {
+                PurgeAllData();
+            }
+            catch (Exception ex1)
+            {
+                string testProjectBinPath = Path.GetDirectoryName(typeof(SqlServerJobStoreTest).Assembly.Location);
+                string dbPath = Path.GetFullPath(Path.Combine(testProjectBinPath, @"..\..\Castle.Components.Scheduler.Db\SqlServer\Data\SchedulerTestDb.mdf"));
+
+                Console.WriteLine("Could not connect to the SchedulerTestDb.\n"
+                    + "Attempting to attach it from {0}.", dbPath);
+
+                connectionString = "Data Source=.;AttachDbFilename=\"" + dbPath + "\";Initial Catalog=SchedulerTestDb;Integrated Security=True";
+                try
+                {
+                    PurgeAllData();
+                }
+                catch (Exception ex2)
+                {
+                    Assert.Fail("Could not connect to the SchedulerTestDb and could not attach it from {0}.\n\n"
+                        + "Initial connection attempt:\n{1}\n\n"
+                        + "Attached connection attempt:\n{2}", dbPath, ex1, ex2);
+                }
+            }
+        }
+
         [Test]
         public void StandardConstructorCreatesDaoWithExpectedConnectionString()
         {
-            SqlServerJobStore jobStore = new SqlServerJobStore(ConnectionString);
-            Assert.AreEqual(ConnectionString, jobStore.ConnectionString);
+            SqlServerJobStore jobStore = new SqlServerJobStore(connectionString);
+            Assert.AreEqual(connectionString, jobStore.ConnectionString);
         }
 
         [Test]
@@ -59,12 +92,12 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
         [Test]
         public void ConnectionStringIsSameAsWasOriginallySpecified()
         {
-            Assert.AreEqual(ConnectionString, ((SqlServerJobStore) JobStore).ConnectionString);
+            Assert.AreEqual(connectionString, ((SqlServerJobStore)JobStore).ConnectionString);
         }
 
         protected override PersistentJobStore CreatePersistentJobStore()
         {
-            return new SqlServerJobStore(new InstrumentedSqlServerJobStoreDao(ConnectionString));
+            return new SqlServerJobStore(new InstrumentedSqlServerJobStoreDao(connectionString));
         }
 
         protected override void SetBrokenConnectionMocking(PersistentJobStore jobStore, bool brokenConnections)
@@ -75,7 +108,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
 
         protected void PurgeAllData()
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand("spSCHED_TEST_PurgeAllData", connection);
                 command.CommandType = CommandType.StoredProcedure;

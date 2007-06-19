@@ -514,7 +514,7 @@ namespace Castle.Components.Scheduler.Tests.UnitTests.JobStores
             // Wait for job to become ready.
             Assert.LowerThan(DateTime.UtcNow, fireTime);
             JobDetails triggered = watcher.GetNextJobToProcess();
-            Assert.GreaterEqualThan(DateTime.UtcNow, fireTime);
+            Assert.GreaterEqualThan(DateTime.UtcNow, fireTime.Subtract(new TimeSpan(0, 0, 0, 0, 500))); // allow a little imprecision
 
             // Job should come back triggered.
             Assert.AreEqual("scheduled", triggered.JobSpec.Name);
