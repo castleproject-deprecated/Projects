@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <CSharpProject Include="$(SourceDir)\Castle.FlexBridge\Castle.FlexBridge.csproj" />
-    <CSharpProject Include="$(SourceDir)\Castle.FlexBridge\Castle.FlexBridge.Tests.csproj" />
+    <CSharpProject Include="$(SourceDir)\Castle.FlexBridge.Tests\Castle.FlexBridge.Tests.csproj" />
 
     <Binary Include="$(SourceDir)\Castle.FlexBridge\bin\Castle.FlexBridge.dll" />
 
