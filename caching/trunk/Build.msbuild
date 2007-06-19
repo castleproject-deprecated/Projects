@@ -1,0 +1,89 @@
+<Project DefaultTargets="Clean;Build;Test" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootDir>$(MSBuildProjectDirectory)</RootDir>
+    <BuildDir>$(RootDir)\build</BuildDir>
+    <BuildBinDir>$(BuildDir)\bin</BuildBinDir>
+    <BuildReportsDir>$(BuildDir)\reports</BuildReportsDir>
+    <BuildDocsDir>$(BuildDir)\docs</BuildDocsDir>
+    <LibsDir>$(RootDir)\libs</LibsDir>
+    <SourceDir>$(RootDir)\src</SourceDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <CSharpProject Include="$(SourceDir)\Castle.Components.Cache\Castle.Components.Cache.csproj" />
+    <CSharpProject Include="$(SourceDir)\Castle.Components.Cache.SysCache\Castle.Components.Cache.SysCache.csproj" />
+    <CSharpProject Include="$(SourceDir)\Castle.Components.Cache.Memcached\Castle.Components.Cache.Memcached.csproj" />
+    <CSharpProject Include="$(SourceDir)\Castle.Components.Cache.Tests\Castle.Components.Cache.Tests.csproj" />
+    <CSharpProject Include="$(SourceDir)\Castle.Components.Cache.SysCache.Tests\Castle.Components.Cache.SysCache.Tests.csproj" />
+    <CSharpProject Include="$(SourceDir)\Castle.Components.Cache.Memcached.Tests\Castle.Components.Cache.Memcached.Tests.csproj" />
+
+    <Binary Include="$(LibsDir)\Castle\bin\Castle.Core.dll" />
+    <Binary Include="$(LibsDir)\Castle\bin\Castle.Core.xml" />
+    <Binary Include="$(LibsDir)\Castle\bin\Castle.MicroKernel.dll" />
+    <Binary Include="$(LibsDir)\Castle\bin\Castle.MicroKernel.xml" />
+    <Binary Include="$(LibsDir)\Castle\bin\Castle.Windsor.dll" />
+    <Binary Include="$(LibsDir)\Castle\bin\Castle.Windsor.xml" />
+    <Binary Include="$(LibsDir)\MemcachedClient\bin\Memcached.ClientLibrary.dll" />
+    <Binary Include="$(LibsDir)\MemcachedClient\bin\Commons.dll" />
+    <Binary Include="$(LibsDir)\MemcachedClient\bin\ICSharpCode.SharpZipLib.dll" />
+    <Binary Include="$(LibsDir)\MemcachedClient\bin\log4net.dll" />
+    <Binary Include="$(LibsDir)\MemcachedServer\Memcached.exe" />
+    <Binary Include="$(SourceDir)\Castle.Components.Cache\bin\Castle.Components.Cache.dll" />
+    <Binary Include="$(SourceDir)\Castle.Components.Cache.SysCache\bin\Castle.Components.Cache.SysCache.dll" />
+    <Binary Include="$(SourceDir)\Castle.Components.Cache.Memcached\bin\Castle.Components.Cache.Memcached.dll" />
+
+    <TestAssembly Include="$(SourceDir)\Castle.Components.Cache.Tests\bin\Castle.Components.Cache.Tests.dll" />
+    <TestAssembly Include="$(SourceDir)\Castle.Components.Cache.SysCache.Tests\bin\Castle.Components.Cache.SysCache.Tests.dll" />
+    <TestAssembly Include="$(SourceDir)\Castle.Components.Cache.Memcached.Tests\bin\Castle.Components.Cache.Memcached.Tests.dll" />
+  </ItemGroup>
+
+  <Target Name="Build"
+          DependsOnTargets="Build-CSharpProjects">
+    <Copy SourceFiles="@(Binary)"
+          DestinationFolder="$(BuildBinDir)" />
+
+    <!-- Produce clean Intellisense docs with "inheritdoc" accounted for. -->
+    <Exec Command="&quot;$(LibsDir)\NDoc2\NDocConsole.exe&quot; -documenter=Intellisense -project=&quot;$(SourceDir)\Castle.Components.Cache.ndoc&quot;" />
+    <Delete Files="$(BuildBinDir)\ndoc_qa.log;$(BuildBinDir)\ndoc_build.log" />
+  </Target>
+
+  <Target Name="Clean"
+          DependsOnTargets="Clean-CSharpProjects">
+    <RemoveDir Directories="$(BuildDir)"
+               Condition="Exists('$(BuildDir)')" />
+  </Target>
+
+  <Target Name="Test">
+    <Exec Command="&quot;$(LibsDir)\MbUnit\bin\MbUnit.Cons.exe&quot; /report-type:Html /report-folder:&quot;$(BuildReportsDir)&quot; /show-reports @(TestAssembly->'&quot;%(Identity)&quot;', ' ')" />
+  </Target>
+
+  <Target Name="BuildDotNetDocs">
+    <!-- Produce the HTML docs. -->
+    <Exec Command="&quot;$(LibsDir)\NDoc2\NDocConsole.exe&quot; -documenter=MSDN-Web -project=&quot;$(SourceDir)\Castle.Components.Cache.ndoc&quot;" />
+    <Delete Files="$(BuildDocsDir)\ndoc_qa.log;$(BuildDocsDir)\ndoc_build.log" />
+  </Target>
+
+  <Target Name="Release"
+          DependsOnTargets="Clean;Build;Test;BuildDotNetDocs" />
+
+  <Target Name="Build-CSharpProjects"
+          DependsOnTargets="CreateBuildDir">
+    <MSBuild Projects="@(CSharpProject)"
+             Targets="Build"
+             Properties="
+               Configuration=Release;
+             " />
+  </Target>
+
+  <Target Name="Clean-CSharpProjects">
+    <MSBuild Projects="@(CSharpProject)"
+             Targets="Clean"
+             Properties="
+               Configuration=Release;
+             " />
+  </Target>
+
+  <Target Name="CreateBuildDir">
+    <MakeDir Directories="$(BuildDir);$(BuildBinDir);$(BuildReportsDir);$(BuildDocsDir)" />
+  </Target>
+</Project>

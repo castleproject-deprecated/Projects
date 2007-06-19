@@ -1,0 +1,1 @@
+Obtained from http://jehiah.cz/projects/memcached-win32/

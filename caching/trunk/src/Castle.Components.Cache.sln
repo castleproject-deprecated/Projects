@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Components.Cache", "Castle.Components.Cache\Castle.Components.Cache.csproj", "{1AF084C3-BE3E-4C99-8012-BF14960B7A14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Components.Cache.Tests", "Castle.Components.Cache.Tests\Castle.Components.Cache.Tests.csproj", "{434AB3F4-6345-4EEE-837B-0B7B1A3B7D5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Components.Cache.SysCache", "Castle.Components.Cache.SysCache\Castle.Components.Cache.SysCache.csproj", "{75C7DE3B-D601-4C0B-89A1-E769BFFB3C16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Components.Cache.SysCache.Tests", "Castle.Components.Cache.SysCache.Tests\Castle.Components.Cache.SysCache.Tests.csproj", "{333CFE36-974F-418A-A5B2-508AD8CD2FEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Components.Cache.Memcached", "Castle.Components.Cache.Memcached\Castle.Components.Cache.Memcached.csproj", "{3474D284-579A-48E2-B8AA-D692C1381FF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Components.Cache.Memcached.Tests", "Castle.Components.Cache.Memcached.Tests\Castle.Components.Cache.Memcached.Tests.csproj", "{6C9929A1-D361-48CB-A51E-C24D48F4875B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{BB71B9DC-2E0B-4437-9E25-647343A34C7E}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\TODO.txt = ..\docs\TODO.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1AF084C3-BE3E-4C99-8012-BF14960B7A14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AF084C3-BE3E-4C99-8012-BF14960B7A14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AF084C3-BE3E-4C99-8012-BF14960B7A14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AF084C3-BE3E-4C99-8012-BF14960B7A14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{434AB3F4-6345-4EEE-837B-0B7B1A3B7D5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{434AB3F4-6345-4EEE-837B-0B7B1A3B7D5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{434AB3F4-6345-4EEE-837B-0B7B1A3B7D5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{434AB3F4-6345-4EEE-837B-0B7B1A3B7D5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75C7DE3B-D601-4C0B-89A1-E769BFFB3C16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75C7DE3B-D601-4C0B-89A1-E769BFFB3C16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75C7DE3B-D601-4C0B-89A1-E769BFFB3C16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75C7DE3B-D601-4C0B-89A1-E769BFFB3C16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{333CFE36-974F-418A-A5B2-508AD8CD2FEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{333CFE36-974F-418A-A5B2-508AD8CD2FEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{333CFE36-974F-418A-A5B2-508AD8CD2FEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{333CFE36-974F-418A-A5B2-508AD8CD2FEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3474D284-579A-48E2-B8AA-D692C1381FF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3474D284-579A-48E2-B8AA-D692C1381FF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3474D284-579A-48E2-B8AA-D692C1381FF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3474D284-579A-48E2-B8AA-D692C1381FF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C9929A1-D361-48CB-A51E-C24D48F4875B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C9929A1-D361-48CB-A51E-C24D48F4875B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C9929A1-D361-48CB-A51E-C24D48F4875B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C9929A1-D361-48CB-A51E-C24D48F4875B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

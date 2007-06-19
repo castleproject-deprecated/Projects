@@ -1,0 +1,19 @@
+1. The Memcached wrapper contains an awful reflection-based hack to
+   support Dispose() and obtaining the name of an already created pool.
+   Should file a bug for this.
+
+2. There seems to be a delay before the first sockets in the pool become usable.
+   This can cause the tests to fail if a suitable delay is not inserted.
+
+3. Support cache dependencies.
+
+4. Enhance MemcachedCache to avoid redundant concurrent population of cache entries
+   when possible.  This is tricky.  Might be easier to confine the optimization
+   to the scope of a single process to avoid cross-process synchronization issues.
+
+5. Support advisory locking of cache entries.  (Maybe)
+
+6. Support statistics gathering, instrumentation and adaptive tuning features.  (Maybe)
+
+7. Decide based on use feedback whether to rename "GetOrPopulate" to something more
+   palatable like "LazyGet".
