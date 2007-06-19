@@ -44,7 +44,12 @@
   </Target>
 
   <Target Name="Test">
-    <Exec Command="&quot;$(LibsDir)\MbUnit\bin\MbUnit.Cons.exe&quot; /report-type:Html /report-folder:&quot;$(BuildReportsDir)&quot; /show-reports @(TestAssembly->'&quot;%(Identity)&quot;', ' ')" />
+    <Exec Command="&quot;$(LibsDir)\MbUnit\bin\MbUnit.Cons.exe&quot; /report-type:Html /report-folder:&quot;$(BuildReportsDir)&quot; /show-reports @(TestAssembly->'&quot;%(Identity)&quot;', ' ')"
+          IgnoreExitCode="true">
+      <Output TaskParameter="ExitCode" PropertyName="MbUnitExitCode" />
+    </Exec>
+    <Warning Text="Some MbUnit tests failed!"
+             Condition="'$(MbUnitExitCode)'!='0'" />
   </Target>
 
   <Target Name="BuildFlexDocs"
