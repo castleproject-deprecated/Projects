@@ -65,7 +65,7 @@ namespace Castle.Tools.CodeGenerator.Services
       List<string> parts = new List<string>(Path.GetDirectoryName(path).Split('\\', '/'));
       while (parts.Count > 0)
       {
-        if (parts[0] == _viewDirectory)
+        if (string.Compare(parts[0], _viewDirectory, true) == 0)
         {
           parts.RemoveAt(0);
           return parts.ToArray();

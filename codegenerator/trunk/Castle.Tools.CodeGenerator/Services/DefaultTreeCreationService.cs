@@ -42,7 +42,7 @@ namespace Castle.Tools.CodeGenerator.Services
     {
       foreach (TreeNode node in _nodes.Peek().Children)
       {
-        if (node.Name == name)
+        if (string.Compare(node.Name, name, true) == 0)
         {
           return node;
         }

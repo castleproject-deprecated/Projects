@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using ICSharpCode.NRefactory;
 
@@ -7,7 +8,7 @@ namespace Castle.Tools.CodeGenerator.Services
   public class DefaultSourceStorageService : IParsedSourceStorageService
   {
     #region Member Data
-    private Dictionary<string, IParser> _cache = new Dictionary<string, IParser>();
+    private Dictionary<string, IParser> _cache = new Dictionary<string, IParser>(StringComparer.CurrentCultureIgnoreCase);
     #endregion
 
     #region IParsedCodeCacheService Members
