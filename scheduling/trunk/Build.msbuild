@@ -62,7 +62,7 @@
 
   <Target Name="Build-CSharpProjects"
           DependsOnTargets="CreateBuildDir">
-    <MSBuild Projects="@(CSharpProjects)"
+    <MSBuild Projects="@(CSharpProject)"
              Targets="Build"
              Properties="
                Configuration=Release;
@@ -70,7 +70,7 @@
   </Target>
 
   <Target Name="Clean-CSharpProjects">
-    <MSBuild Projects="@(CSharpProjects)"
+    <MSBuild Projects="@(CSharpProject)"
              Targets="Clean"
              Properties="
                Configuration=Release;
