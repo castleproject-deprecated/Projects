@@ -32,7 +32,7 @@ namespace Castle.MonoRail.Views.AspView
 		private static readonly Regex findSubViewTags = new Regex("<subView:(?<viewName>[\\w\\.]+)\\s*(?<attributes>[\\w\"\\s=]*)\\s*>\\s*</subView:\\k<viewName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		private static readonly Regex findViewFiltersTags = new Regex("<filter:(?<filterName>\\w+)(?<attributes>[\\w\"\\s=]*)>(?<content>.*)</filter:\\k<filterName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 		private static readonly Regex findAttributes = new Regex("\\s*(?<name>\\w+)\\s*=\\s*\"(?<value>\\w*|\\s*<%=\\s*[\\w\\.\\(\\)]+\\s*%>\\s*)\"\\s*");
-		private static readonly Regex findViewComponentTags = new Regex("<component:(?<componentName>\\w+)(?<attributes>\\s*\\w+=\"[<][%]=\\s*[\\w\\.\\(\\)]+\\s*[%][>]\"|\\s*\\w+=\"\\w*\"|\\s*)>(?<content>.*?)</component:\\k<componentName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.IgnorePatternWhitespace);
+		private static readonly Regex findViewComponentTags = new Regex("<component:(?<componentName>\\w+)(?<attributes>(\\s*\\w+=\"[<][%]=\\s*[\\w\\.\\(\\)]+\\s*[%][>]\"|\\s*\\w+=\"\\w*\"|\\s*)*)>(?<content>.*?)</component:\\k<componentName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.IgnorePatternWhitespace);
 		private static readonly Regex findSectionTags = new Regex("<section:(?<sectionName>\\w+)(?<attributes>[\\w\"\\s=]*)>(?<content>.*)</section:\\k<sectionName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 		private static readonly string assemblyNamespace = "CompiledViews";
         private static readonly string assemblyFileName = assemblyNamespace + ".dll";
