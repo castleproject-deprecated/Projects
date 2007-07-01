@@ -16,10 +16,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
 {
     using System;
     using System.ComponentModel.Design;
-    using System.Diagnostics;
-    using System.Globalization;
     using System.Runtime.InteropServices;
-    using Microsoft.Win32;
     using Microsoft.VisualStudio;
     using Microsoft.VisualStudio.OLE.Interop;
     using Microsoft.VisualStudio.Shell;
@@ -68,13 +65,13 @@ namespace Castle.VisualStudio.NVelocityLanguageService
     // This attribute is used to register the informations needed to show the this package
     // in the Help/About dialog of Visual Studio.
     [InstalledProductRegistration(true, "#ProductName", "#ProductDetails", "0.1", IconResourceID = 100,
-        LanguageIndependentName = "NVelocity Language Service")]
+        LanguageIndependentName = "Castle Visual Studio Integration")]
     
     // In order be loaded inside Visual Studio in a machine that does not have the VS SDK
     // installed, the package needs to have a valid load key (it can be requested at 
     // http://msdn.microsoft.com/vstudio/extend/). This attributes tells the shell that this 
     // package has a load key embedded in its resources.
-    [ProvideLoadKey("Standard", "0.1", "NVelocity Language Service", "Castle Project", 1)]
+    [ProvideLoadKey("Standard", "0.1", "Castle Visual Studio Integration", "Jonathon Rossi", 1)]
 
     [Guid(NVelocityConstants.PackageGuidString)]
     //[ProvideAutoLoad("{8fe2df1d-e0da-4ebe-9d5c-415d40e487b5}")]
@@ -91,8 +88,8 @@ namespace Castle.VisualStudio.NVelocityLanguageService
         /// </summary>
         public NVelocityPackage()
         {
-            IServiceContainer container = this as IServiceContainer;
-            ServiceCreatorCallback callback = new ServiceCreatorCallback(CreateService);
+            IServiceContainer container = this;
+            ServiceCreatorCallback callback = CreateService;
             container.AddService(typeof(NVelocityLanguage), callback, true);
         }
 
@@ -139,7 +136,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                                               (uint)_OLECADVF.olecadvfRedrawOff |
                                               (uint)_OLECADVF.olecadvfWarningsOff;
                 crinfo[0].uIdleTimeInterval = 1000;
-                int hr = mgr.FRegisterComponent(this, crinfo, out componentID);
+                /*int hr = */mgr.FRegisterComponent(this, crinfo, out componentID);
             }
         }
 
@@ -248,7 +245,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                     "Could not get SVsResourceManager service. Make sure that the package is sited before calling this method");
             }
 
-            Guid packageGuid = this.GetType().GUID;
+            Guid packageGuid = GetType().GUID;
             int hr = resourceManager.LoadResourceString(
                 ref packageGuid, -1, resourceName, out resourceValue);
 

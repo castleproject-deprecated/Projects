@@ -14,17 +14,14 @@
 
 namespace Castle.VisualStudio.NVelocityLanguageService
 {
-    using System;
     using System.Collections.Generic;
-    using System.IO;
-    using System.Windows.Forms;
     using Castle.NVelocity;
     using Microsoft.VisualStudio.Package;
 
     public class NVelocityScanner : IScanner
     {
-        private Scanner scanner = new Scanner();
-        private List<Stack<ScannerState>> lineState = new List<Stack<ScannerState>>();
+        private readonly Scanner scanner = new Scanner();
+        private readonly List<Stack<ScannerState>> lineState = new List<Stack<ScannerState>>();
         private bool isScanningLine = false;
 
         public NVelocityScanner()

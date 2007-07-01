@@ -125,9 +125,12 @@
     <value>Resources\Package.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ProductName" xml:space="preserve">
-    <value>NVelocity Language Service</value>
+    <value>Castle Visual Studio Integration</value>
   </data>
   <data name="ProductVersion" xml:space="preserve">
     <value>0.1</value>
+  </data>
+  <data name="1" xml:space="preserve">
+    <value>PAHCQ9PJC3E3H9K9DAR0IZR1E8DZCQH0D9KEDZKZJ1JKI0PKRZE0D0QJRDC2E9D2IIMPCHCDPIM9E3HPA8MDRQI3JZKKZ3HAETMZCZIDHRACDID3K0PKARDDEDJ9MDPM</value>
   </data>
 </root>

@@ -15,7 +15,6 @@
 namespace Castle.VisualStudio.NVelocityLanguageService
 {
     using System;
-    using System.Collections.Generic;
     using System.Drawing;
     using System.Runtime.InteropServices;
     using Castle.NVelocity;
@@ -53,13 +52,12 @@ namespace Castle.VisualStudio.NVelocityLanguageService
     [Guid(NVelocityConstants.LanguageServiceGuidString)]
     public class NVelocityLanguage : LanguageService
     {
-        private NVelocityScanner scanner;
+        private NVelocityScanner lineScanner;
         private LanguagePreferences preferences;
 
-        private ColorableItem[] _colorableItems;
+        private readonly ColorableItem[] _colorableItems;
 
         public NVelocityLanguage()
-            : base()
         {
             #region Colorable Items
 
@@ -124,7 +122,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                 }
 
                 // Dispose the scanner
-                scanner = null;
+                lineScanner = null;
             }
             finally
             {
@@ -146,14 +144,14 @@ namespace Castle.VisualStudio.NVelocityLanguageService
 
         public override Source CreateSource(IVsTextLines buffer)
         {
-            return new Source(this, buffer, this.GetColorizer(buffer));
+            return new Source(this, buffer, GetColorizer(buffer));
         }
 
         public override IScanner GetScanner(IVsTextLines buffer)
         {
-            if (scanner == null)
-                scanner = new NVelocityScanner();
-            return scanner;
+            if (lineScanner == null)
+                lineScanner = new NVelocityScanner();
+            return lineScanner;
         }
 
         public override string Name
@@ -163,7 +161,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
 
         public override void OnIdle(bool periodic)
         {
-            Source src = GetSource(this.LastActiveTextView);
+            Source src = GetSource(LastActiveTextView);
             if (src != null && src.LastParseTime == Int32.MaxValue)
             {
                 src.LastParseTime = 0;
@@ -177,7 +175,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                 throw new ArgumentNullException("req");
 
             NVelocityAuthoringScope scope = new NVelocityAuthoringScope();
-            Source source = GetSource(req.FileName);
+            //Source source = GetSource(req.FileName);
             
             if (req.Reason == ParseReason.Check)
             {

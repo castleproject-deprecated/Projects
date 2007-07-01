@@ -14,20 +14,18 @@
 
 namespace Castle.NVelocity
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Text;
 
     public class Scanner
     {
-        private static char CR = '\r';
-        private static char LF = '\n';
+        private static readonly char CR = '\r';
+        private static readonly char LF = '\n';
 
         private Stack<ScannerState> state = new Stack<ScannerState>();
 
         private char ch;
-        private string source;
+        private string _source;
         private int pos = 1;
         private bool eof = false;
         private int lineNo = 1, linePos = 1;
@@ -35,7 +33,7 @@ namespace Castle.NVelocity
         private Position currPos = new Position(0, 0);
         private Position prevPos = new Position(0, 0);
 
-        private Dictionary<string, TokenType> nvKeywords = new Dictionary<string, TokenType>();
+        private readonly Dictionary<string, TokenType> nvKeywords = new Dictionary<string, TokenType>();
 
         private bool isLineScanner = false;
 
@@ -54,13 +52,13 @@ namespace Castle.NVelocity
         {
             if (restoredState != null)
             {
-                this.state = new Stack<ScannerState>(restoredState.ToArray());
+                state = new Stack<ScannerState>(restoredState.ToArray());
             }
         }
 
         public Stack<ScannerState> RetrieveState()
         {
-            return new Stack<ScannerState>(this.state.ToArray());
+            return new Stack<ScannerState>(state.ToArray());
         }
 
         public void SetSource(string source)
@@ -72,7 +70,7 @@ namespace Castle.NVelocity
             }
 
             ch = default(char);
-            this.source = source;
+            _source = source;
             pos = 1;
             eof = false;
             lineNo = 1;
@@ -111,13 +109,13 @@ namespace Castle.NVelocity
 
         private void GetCh()
         {
-            if (pos >= source.Length)
+            if (pos >= _source.Length)
             {
                 eof = true;
                 ch = default(char);
                 
                 // Increment linePos and pos so Positions are correct
-                if (pos == source.Length)
+                if (pos == _source.Length)
                 {
                     linePos++;
                     pos++;
@@ -127,7 +125,7 @@ namespace Castle.NVelocity
             {
                 if ((ch == CR) || (ch == LF))
                 {
-                    if ((ch != LF) || (pos < 1) || (source[pos - 2] != CR))
+                    if ((ch != LF) || (pos < 1) || (_source[pos - 2] != CR))
                     {
                         lineNo++;
                         linePos = 1;
@@ -136,7 +134,7 @@ namespace Castle.NVelocity
                 }
                 else
                     linePos++;
-                ch = source[pos++];
+                ch = _source[pos++];
             }
         }
 
@@ -148,9 +146,9 @@ namespace Castle.NVelocity
 
         private char LookAhead(int lookAhead)
         {
-            if (pos+lookAhead > source.Length)
+            if (pos+lookAhead > _source.Length)
                 return default(char);
-            return source[pos-1 + lookAhead];
+            return _source[pos-1 + lookAhead];
         }
 
         public Token GetToken()
@@ -158,7 +156,7 @@ namespace Castle.NVelocity
             if (ch == default(char))
                 return null;
 
-            Token token = new Token();
+            Token token;
 
             // Save the current position to the previous position
             prevPos = currPos;
@@ -222,7 +220,7 @@ namespace Castle.NVelocity
                     token = ScanTokenNVBrack();
                     break;
                 default:
-                    throw new ScannerError("Unknown state '" + currentState.ToString() + "'");
+                    throw new ScannerError("Unknown state '" + currentState + "'");
             }
 
             // Store the current position
@@ -234,7 +232,7 @@ namespace Castle.NVelocity
             if (token.Type == TokenType.Error)
             {
                 throw new ScannerError(string.Format("Unknown symbol '{0}' in state {1}",
-                    ch, state.Peek().ToString()));
+                    ch, state.Peek()));
             }
 
             return token;
@@ -265,7 +263,7 @@ namespace Castle.NVelocity
                             {
                                 token.Type = TokenType.XmlComment;
                                 ReadXmlComment();
-                                token.Image = source.Substring(startCommentPos - 1, pos - startCommentPos);
+                                token.Image = _source.Substring(startCommentPos - 1, pos - startCommentPos);
                             }
                             token.SetEndPosition(lineNo, linePos);
                             return token;
@@ -300,7 +298,7 @@ namespace Castle.NVelocity
                             GetCh();
                         if (ch == LF)
                             GetCh();
-                        token.Image = source.Substring(prevCommentPos, pos - prevCommentPos - 1);
+                        token.Image = _source.Substring(prevCommentPos, pos - prevCommentPos - 1);
                     }
                     else if (ch == '*')
                     {
@@ -339,7 +337,7 @@ namespace Castle.NVelocity
                     while (ch != '<' && ch != '#' && ch != '$' && !eof)
                         GetCh();
                     token.Type = TokenType.XmlText;
-                    token.Image = source.Substring(startPos - 1, pos - startPos);
+                    token.Image = _source.Substring(startPos - 1, pos - startPos);
                     break;
             }
 
@@ -375,7 +373,7 @@ namespace Castle.NVelocity
                 }
 
                 token.Type = TokenType.XmlComment;
-                token.Image = source.Substring(startPos - 1, pos - startPos);
+                token.Image = _source.Substring(startPos - 1, pos - startPos);
             }
 
             token.SetEndPosition(lineNo, linePos);
@@ -398,7 +396,7 @@ namespace Castle.NVelocity
                 while (char.IsLetterOrDigit(ch) || ch == '.' || ch == '-' || ch == '_' || ch == ':')
                     GetCh();
 
-                token.Image = source.Substring(startPos - 1, pos - startPos);
+                token.Image = _source.Substring(startPos - 1, pos - startPos);
 
                 if (state.Peek() == ScannerState.XmlTag)
                 {
@@ -497,7 +495,7 @@ namespace Castle.NVelocity
                 GetCh();
 
             token.Type = TokenType.XmlText;
-            token.Image = source.Substring(startPos - 1, pos - startPos);
+            token.Image = _source.Substring(startPos - 1, pos - startPos);
 
             token.SetEndPosition(lineNo, linePos);
 
@@ -544,7 +542,7 @@ namespace Castle.NVelocity
                 if (eof && !isLineScanner)
                     throw new ScannerError("End-of-file found but quoted string literal was not closed");
                 token.Type = TokenType.XmlAttributeText;
-                token.Image = source.Substring(startPos - 1, pos - startPos);
+                token.Image = _source.Substring(startPos - 1, pos - startPos);
             }
 
             token.SetEndPosition(lineNo, linePos);
@@ -583,7 +581,7 @@ namespace Castle.NVelocity
                 throw new ScannerError("Expected closing 'script' element");
 
             token.Type = TokenType.XmlText;
-            token.Image = source.Substring(startPos - 1, pos - startPos);
+            token.Image = _source.Substring(startPos - 1, pos - startPos);
 
             token.SetEndPosition(lineNo, linePos);
 
@@ -616,7 +614,7 @@ namespace Castle.NVelocity
                 }
 
                 token.Type = TokenType.NVMultilineComment;
-                token.Image = source.Substring(startPos - 1, pos - startPos);
+                token.Image = _source.Substring(startPos - 1, pos - startPos);
             }
 
             token.SetEndPosition(lineNo, linePos);
@@ -643,7 +641,7 @@ namespace Castle.NVelocity
                 while (char.IsLetter(ch))
                     GetCh();
                 token.Type = TokenType.NVDirectiveName;
-                token.Image = source.Substring(startPos - 1, pos - startPos);
+                token.Image = _source.Substring(startPos - 1, pos - startPos);
 
                 if (hasBraces)
                 {
@@ -764,7 +762,7 @@ namespace Castle.NVelocity
                 while (char.IsLetterOrDigit(ch) || ch == '_' || ch == '-')
                     GetCh();
                 token.Type = TokenType.NVIdentifier;
-                token.Image = source.Substring(startPos - 1, pos - startPos);
+                token.Image = _source.Substring(startPos - 1, pos - startPos);
             }
             else if (ch == '.')
             {
@@ -821,7 +819,7 @@ namespace Castle.NVelocity
             if (ch == '\'')
             {
                 token.Type = TokenType.NVStringLiteral;
-                token.Image = source.Substring(startPos - 1, pos - startPos);
+                token.Image = _source.Substring(startPos - 1, pos - startPos);
             }
             else
                 throw new ScannerError("Expected end of string literal");
@@ -869,7 +867,7 @@ namespace Castle.NVelocity
             if (!eof)
             {
                 token.Type = TokenType.NVStringLiteral;
-                token.Image = source.Substring(startPos - 1, pos - startPos);
+                token.Image = _source.Substring(startPos - 1, pos - startPos);
             }
             else
                 throw new ScannerError("Expected end of string literal");
@@ -933,7 +931,7 @@ namespace Castle.NVelocity
                 while (char.IsLetter(ch))
                     GetCh();
                 token.Type = TokenType.NVDictionaryKey;
-                token.Image = source.Substring(startPos - 1, pos - startPos);
+                token.Image = _source.Substring(startPos - 1, pos - startPos);
             }
             else if (ch == '=')
             {
@@ -1027,22 +1025,22 @@ namespace Castle.NVelocity
             }
         }
 
-        private void ConsumeNewLines()
-        {
-            while (ch == CR || ch == LF)
-            {
-                GetCh();
-            }
-        }
+        //private void ConsumeNewLines()
+        //{
+        //    while (ch == CR || ch == LF)
+        //    {
+        //        GetCh();
+        //    }
+        //}
 
         private char NextCharAfterWhiteSpace()
         {
             int offset = 0;
-            while ((pos + offset < source.Length) && char.IsWhiteSpace(source[pos - 1 + offset]))
+            while ((pos + offset < _source.Length) && char.IsWhiteSpace(_source[pos - 1 + offset]))
             {
                 offset++;
             }
-            return source[pos-1 + offset];
+            return _source[pos-1 + offset];
         }
 
         private void ReadXmlComment()
@@ -1095,7 +1093,7 @@ namespace Castle.NVelocity
                 throw new ScannerError("Expected end of NVelocity comment");
 
             token.Type = TokenType.NVSingleLineComment;
-            token.Image = source.Substring(startPos - 1, pos - startPos + 1);
+            token.Image = _source.Substring(startPos - 1, pos - startPos + 1);
             GetCh();
 
             return token;
@@ -1103,7 +1101,7 @@ namespace Castle.NVelocity
 
         private Token ReadNVelocityReference()
         {
-            Token token = token = ReadNVelocityIdentifier();
+            Token token = ReadNVelocityIdentifier();
             
             if (token.Type == TokenType.NVIdentifier)
                 state.Push(ScannerState.NVReferenceSelectors);
@@ -1126,7 +1124,7 @@ namespace Castle.NVelocity
             while (char.IsLetterOrDigit(ch) || ch == '_' || ch == '-')
                 GetCh();
 
-            string ident = source.Substring(startPos - 1, pos - startPos);
+            string ident = _source.Substring(startPos - 1, pos - startPos);
             if (nvKeywords.ContainsKey(ident))
             {
                 token.Type = nvKeywords[ident];
@@ -1160,7 +1158,7 @@ namespace Castle.NVelocity
                 while (char.IsDigit(ch))
                     GetCh();
                 token.Type = TokenType.NVIntegerLiteral;
-                token.Image = source.Substring(startPos - 1, pos - startPos);
+                token.Image = _source.Substring(startPos - 1, pos - startPos);
             }
             else
             {
