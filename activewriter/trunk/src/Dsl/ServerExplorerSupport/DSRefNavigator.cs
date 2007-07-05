@@ -233,9 +233,33 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
 
         public string GetConnectionName()
         {
-            return null;
+			foreach (DSRefNode child in FirstLevelChildNodes)
+			{
+            if (child.IsConnection && child.HasName)
+				return child.Name;
+			}
+          return null;
         }
 
         #endregion
+
+    	#region Private Methods
+
+		public IEnumerable<DSRefNode> FirstLevelChildNodes
+		{
+			get
+			{
+				DSRefNode root = new DSRefNode(RootNode, this);
+				DSRefNode child = root.GetFirstChildNode();
+				while (child != null)
+				{
+					yield return child;
+					child = child.GetNextSiblingNode();
+				}
+			}
+		}
+
+    	#endregion
+
     }
 }

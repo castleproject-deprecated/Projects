@@ -19,15 +19,17 @@ namespace Altinoren.ActiveWriter
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Data.Common;
     using System.Data.SqlClient;
     using System.Diagnostics;
     using System.IO;
     using System.Windows.Forms;
+    using Microsoft.VisualStudio.DataTools;
     using Microsoft.VisualStudio.Modeling;
     using Microsoft.VisualStudio.Modeling.Diagrams;
     using ServerExplorerSupport;
-    
+
     public partial class ActiveRecordMapping
     {
         private DiagramManager _manager = null;
@@ -77,7 +79,7 @@ namespace Altinoren.ActiveWriter
                         // do their own drag/drop manipulation on other data formats)
                         if (navigator.ContainsOnlyTables)
                             e.Effect = DragDropEffects.Copy;
-                }
+                        }
                 catch
                 {
                 }
@@ -104,7 +106,7 @@ namespace Altinoren.ActiveWriter
 
                         // Get connection info of the connection of selected tables
                         string providerType = null;
-                        DbConnection connection = ServerExplorerHelper.GetConnection(this.Store, out providerType);
+                        IDbConnection connection = ServerExplorerHelper.GetConnection(navigator, out providerType);
 
                         IDbHelper helper;
 
@@ -120,7 +122,7 @@ namespace Altinoren.ActiveWriter
                                 // TODO: Support Oracle
                                 // TODO: Support other databases with native providers.
                                 // TODO: Shall we ask the user to describe the underlying connection? Ex: OleDB but SQL is underlying etc.
-                                Log(string.Format("Failed: ActiveWriter does not support model generation through {0}.", providerType));
+								Log(string.Format(@"Failed: ActiveWriter does not support model generation through {0}. Supported providers: System.Data.SqlClient.SqlConnection, MySql.Data.MySqlClient.MySqlConnection. You can help us improve this functionality, though. See http://www.castleproject.org/others/contrib/index.html to access ActiveWriter source code under the contrib repository, and check Dsl\ServerExplorerSupport\IDbHelper.cs for the start.", providerType));
                                 return;
                         }
 
@@ -188,7 +190,7 @@ namespace Altinoren.ActiveWriter
             }
         }
 
-        private void PopulateClass(ModelClass cls, DbConnection connection, IDbHelper helper)
+        private void PopulateClass(ModelClass cls, IDbConnection connection, IDbHelper helper)
         {
             if (cls != null && connection != null)
             {
@@ -203,7 +205,7 @@ namespace Altinoren.ActiveWriter
                 // If the other side of the relation (PK part) is not in our model, we won't
                 // need the relation at all
                 _manager.FilterFKRelations(relationsFrom);
-                
+
                 // Properties
                 List<Column> columns = helper.GetProperties(cls);
                 if (columns != null && columns.Count > 0)
@@ -277,7 +279,7 @@ namespace Altinoren.ActiveWriter
         private void HandleRelations()
         {
             MatchRelations();
-            
+
             CreateRelations();
         }
 
@@ -285,7 +287,7 @@ namespace Altinoren.ActiveWriter
         {
             List<Relation> processed = new List<Relation>();
             List<Relation> toDelete = new List<Relation>();
-            
+
             foreach (Relation discoveredRelation in _relations)
             {
                 if (!processed.Contains(discoveredRelation))
@@ -311,7 +313,7 @@ namespace Altinoren.ActiveWriter
 
                         processed.Add(discoveredRelation);
                         processed.Add(match);
-                        
+
                         toDelete.Add(match);
                     }
                 }
@@ -351,7 +353,7 @@ namespace Altinoren.ActiveWriter
                     {
                         _manager.NewManyToOneRelation(discoveredRelation.PrimaryModelClass, discoveredRelation.ForeignModelClass, discoveredRelation.ForeignColumn);
                     }
-                }                         
+                }
             }
         }
 

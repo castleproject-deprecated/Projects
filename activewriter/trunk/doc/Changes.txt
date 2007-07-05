@@ -1,3 +1,13 @@
+Preview 4
+
+New:
+
+
+Fixed:
+- Server Explorer drag'n drop is now supported on international versions of VS. (Patch: Daniel Rothmaler)
+- Server Explorer support changed to VS Connection Service and its Connection Hierarchies, instead of the Server Explorer's UIHierarchies to
+  prevent the flicker during the hierarchy traversing process.
+
 Preview 3
 
 New:

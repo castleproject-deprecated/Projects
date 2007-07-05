@@ -16,10 +16,11 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
 {
     using System.Collections.Generic;
     using System.Data.Common;
+    using System.Data;
     
     internal interface IDbHelper
     {
-        DbConnection Connection { get; set; }
+        IDbConnection Connection { get; set; }
         List<Relation> GetPKRelations(ModelClass cls);
         List<Column> GetProperties(ModelClass cls);
         NHibernateType GetNHibernateType(string type);

@@ -35,6 +35,10 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
             get { return ((DSRefType & __DSREFTYPE.DSREFTYPE_TABLE) == __DSREFTYPE.DSREFTYPE_TABLE); }
         }
 
+      public bool IsConnection {
+        get { return ((DSRefType & __DSREFTYPE.DSREFTYPE_DATABASE) == __DSREFTYPE.DSREFTYPE_DATABASE); }
+      }
+
         public __DSREFTYPE DSRefType
         {
             get

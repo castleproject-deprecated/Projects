@@ -29,7 +29,7 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
             Connection = connection;
         }
 
-        public DbConnection Connection
+        public IDbConnection Connection
         {
             get { return _connection; }
             set { _connection = (SqlConnection) value; }
