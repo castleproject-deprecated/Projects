@@ -26,22 +26,22 @@ namespace Altinoren.ActiveWriter
         private string validatorPropertyStorage = null;
         private readonly static Type[] _availableTypes = new Type[]
             {
-                typeof(ValidateCollectionNotEmpty),
-                typeof (ValidateCreditCard),
-                typeof(ValidateDate),
-                typeof(ValidateDateTime),
-                typeof(ValidateDecimal),
-                typeof(ValidateDouble),
-                typeof(ValidateEmail),
-                typeof(ValidateGroupNotEmpty),
-                typeof(ValidateInteger),
-                typeof(ValidateLength),
-                typeof(ValidateNonEmpty),
-                typeof(ValidateRange),
-                typeof(ValidateRegExp),
-                typeof(ValidateSameAs),
-                typeof(ValidateSet),
-                typeof(ValidateSingle)
+            	typeof(ValidateCollectionNotEmpty),
+            	typeof(ValidateCreditCard),
+            	typeof(ValidateDate),
+            	typeof(ValidateDateTime),
+            	typeof(ValidateDecimal),
+            	typeof(ValidateDouble),
+            	typeof(ValidateEmail),
+            	typeof(ValidateGroupNotEmpty),
+            	typeof(ValidateInteger),
+            	typeof(ValidateLength),
+            	typeof(ValidateNonEmpty),
+            	typeof(ValidateRange),
+            	typeof(ValidateRegExp),
+            	typeof(ValidateSameAs),
+            	typeof(ValidateSet),
+            	typeof(ValidateSingle)
             };
 
         public bool IsValidatorSet()

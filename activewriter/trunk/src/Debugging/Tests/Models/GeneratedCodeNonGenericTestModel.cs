@@ -71,6 +71,8 @@ namespace Debugging.Tests {
                 "string2"}, FriendlyName="set", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
         [ValidateSingle("error", FriendlyName="single", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
         [ValidateSet(typeof(System.UriFormat), "error", FriendlyName="set2", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
+        [ValidateCollectionNotEmpty("Dummy error message", FriendlyName="friendlyNAme", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
+        [ValidateGroupNotEmpty("group", "Dummy error message", FriendlyName="friendlyName", ExecutionOrder=1, RunWhen=RunWhen.Insert)]
         public string PropertyWithValidators {
             get {
                 return this._propertyWithValidators;

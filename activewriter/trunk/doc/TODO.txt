@@ -7,7 +7,6 @@
 - Display watermark links on the design surface in an empty designer.
 - Display informative messages and progress in status bar during server explorer interactions.
 - Implement ValidateNotSameAttribute support.
-- Implement ValidateCollectionNotEmpty and ValidateGroupNotEmpty attributes when COMP-28 is resolved.
 - One-to-One Relation - Lazy Load (See Gabriel's post)
 - Would be nice if one could make the labels in the relations visible, that is the source and target property names...  (Gabriel)
 
