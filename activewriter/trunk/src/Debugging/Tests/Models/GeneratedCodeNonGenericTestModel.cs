@@ -293,4 +293,116 @@ namespace Debugging.Tests {
     [ActiveRecord()]
     public partial class ExplicitNonGenericClassInNonGenericModel : ActiveRecordBase {
     }
+    
+    [ActiveRecord()]
+    public partial class OneToOne_Target : ActiveRecordBase {
+        
+        private string _id;
+        
+        private OneToOne_Source _oneToOne_Source;
+        
+        [PrimaryKey(PrimaryKeyType.Native, ColumnType="String")]
+        public string id {
+            get {
+                return this._id;
+            }
+            set {
+                this._id = value;
+            }
+        }
+        
+        [OneToOne()]
+        public OneToOne_Source OneToOne_Source {
+            get {
+                return this._oneToOne_Source;
+            }
+            set {
+                this._oneToOne_Source = value;
+            }
+        }
+    }
+    
+    [ActiveRecord()]
+    public partial class OneToOne_Source : ActiveRecordBase {
+        
+        private string _target_id;
+        
+        private OneToOne_Target _oneToOne_Target;
+        
+        [PrimaryKey(PrimaryKeyType.Foreign, ColumnType="String")]
+        public string target_id {
+            get {
+                return this._target_id;
+            }
+            set {
+                this._target_id = value;
+            }
+        }
+        
+        [OneToOne()]
+        public OneToOne_Target OneToOne_Target {
+            get {
+                return this._oneToOne_Target;
+            }
+            set {
+                this._oneToOne_Target = value;
+            }
+        }
+    }
+    
+    [ActiveRecord()]
+    public partial class LazyOneToOne_Target : ActiveRecordBase {
+        
+        private string _id;
+        
+        private LazyOneToOne_Source _lazyOneToOne_Source;
+        
+        [PrimaryKey(PrimaryKeyType.Native, ColumnType="String")]
+        public string id {
+            get {
+                return this._id;
+            }
+            set {
+                this._id = value;
+            }
+        }
+        
+        [BelongsTo()]
+        public LazyOneToOne_Source LazyOneToOne_Source {
+            get {
+                return this._lazyOneToOne_Source;
+            }
+            set {
+                this._lazyOneToOne_Source = value;
+            }
+        }
+    }
+    
+    [ActiveRecord()]
+    public partial class LazyOneToOne_Source : ActiveRecordBase {
+        
+        private string _target_id;
+        
+        private LazyOneToOne_Target _lazyOneToOne_Target;
+        
+        [PrimaryKey(PrimaryKeyType.Foreign, ColumnType="String")]
+        public string target_id {
+            get {
+                return this._target_id;
+            }
+            set {
+                this._target_id = value;
+            }
+        }
+        
+        [OneToOne()]
+        public LazyOneToOne_Target LazyOneToOne_Target {
+            get {
+                return this._lazyOneToOne_Target;
+            }
+            set {
+                this._lazyOneToOne_Target = value;
+            }
+        }
+    }
 }

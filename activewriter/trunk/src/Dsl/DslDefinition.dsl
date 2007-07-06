@@ -925,6 +925,11 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="94274ae2-d397-4398-b914-501e02f1c472" Description="Will generate BelongsTo on the target end instead of a OneToOne to support lazy." Name="Lazy" DisplayName="Lazy" DefaultValue="false" Category="Code Generation">
+          <Type>
+            <ExternalTypeMoniker Name="/System/Boolean" />
+          </Type>
+        </DomainProperty>
       </Properties>
       <Source>
         <DomainRole Id="7b304a5c-cb3e-4f10-be86-c52eeec945d5" Description="" Name="Source" DisplayName="Source" PropertyName="OneToOneTarget" Multiplicity="ZeroOne" IsPropertyBrowsable="false" PropertyDisplayName="One To One Target">
@@ -1814,6 +1819,9 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="targetDescription">
             <DomainPropertyMoniker Name="OneToOneRelation/TargetDescription" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="lazy">
+            <DomainPropertyMoniker Name="OneToOneRelation/Lazy" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

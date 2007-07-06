@@ -2137,6 +2137,18 @@
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;TargetDescription&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/Lazy.Description" xml:space="preserve">
+    <value>Will generate BelongsTo on the target end instead of a OneToOne to support lazy.</value>
+    <comment>Description for DomainProperty &apos;Lazy&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/Lazy.DisplayName" xml:space="preserve">
+    <value>Lazy</value>
+    <comment>DisplayName for DomainProperty &apos;Lazy&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.OneToOneRelation/Lazy.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;Lazy&apos; on DomainClass &apos;OneToOneRelation&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.OneToOneRelation/Source.Description" xml:space="preserve">
     <value></value>
     <comment>Description for DomainRole &apos;Source&apos; on DomainRelationship &apos;OneToOneRelation&apos;</comment>

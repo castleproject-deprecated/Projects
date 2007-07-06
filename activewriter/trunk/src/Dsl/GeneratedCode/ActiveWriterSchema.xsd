@@ -1023,6 +1023,12 @@
         <xsd:documentation>Description of the property. This will appear in a &lt;summary&gt; Xml comment.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
+    <!-- Property: Lazy -->
+    <xsd:attribute name="lazy" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>Will generate BelongsTo on the target end instead of a OneToOne to support lazy.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
   </xsd:complexType>
   
   <!-- OneToOneRelation Moniker -->

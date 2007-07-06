@@ -326,5 +326,30 @@ namespace Debugging.Tests
             Assert.IsTrue(attribute2.NotFoundBehaviour == NotFoundBehaviour.Exception);
             Assert.AreEqual(attribute2.MapType, type);
         }
+
+        [Test]
+        public void CanGenerateOneToOneRelation()
+        {
+            Type type = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.OneToOne_Target");
+            Type type2 = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.OneToOne_Source");
+            PropertyInfo property = type.GetProperty("OneToOne_Source");
+
+            object[] propertyAttributes = property.GetCustomAttributes(typeof(OneToOneAttribute), false);
+            Assert.IsTrue(propertyAttributes.Length == 1, "Did not generate OneToOneAttribute.");
+
+            PropertyInfo property2 = type2.GetProperty("OneToOne_Target");
+            object[] propertyAttributes2 = property2.GetCustomAttributes(typeof(OneToOneAttribute), false);
+            Assert.IsTrue(propertyAttributes2.Length == 1, "Did not generate OneToOneAttribute.");
+        }
+
+        [Test]
+        public void CanGenerateLazyOneToOneRelation()
+        {
+            Type type = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.LazyOneToOne_Target");
+            PropertyInfo property = type.GetProperty("LazyOneToOne_Source");
+            object[] propertyAttributes = property.GetCustomAttributes(typeof(BelongsToAttribute), false);
+
+            Assert.IsTrue(propertyAttributes.Length == 1, "Did not generate BelongsToAttribute for lazy one to one relation on the target.");
+        }
     }
 }

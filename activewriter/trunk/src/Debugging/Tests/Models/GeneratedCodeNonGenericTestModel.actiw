@@ -53,5 +53,35 @@
     </modelClass>
     <modelClass name="ExplicitGenericClassInNonGenericModel" useGenerics="True" />
     <modelClass name="ExplicitNonGenericClassInNonGenericModel" useGenerics="False" />
+    <modelClass name="OneToOne_Target">
+      <properties>
+        <modelProperty Id="f3a9b262-57f6-41ec-8d24-a5e63e6cf8f3" name="id" length="0" keyType="PrimaryKey" />
+      </properties>
+    </modelClass>
+    <modelClass name="OneToOne_Source">
+      <properties>
+        <modelProperty Id="dafb02cd-e507-4eec-ba98-9865fa18f392" name="target_id" length="0" generator="Foreign" keyType="PrimaryKey" />
+      </properties>
+      <oneToOneTarget>
+        <oneToOneRelation>
+          <modelClassMoniker name="/d31e3081-74cd-42fb-a26f-8ad359cf7aac/OneToOne_Target" />
+        </oneToOneRelation>
+      </oneToOneTarget>
+    </modelClass>
+    <modelClass name="LazyOneToOne_Target">
+      <properties>
+        <modelProperty Id="f0e296b3-9c53-478e-a144-bcb8246e28fe" name="id" length="0" keyType="PrimaryKey" />
+      </properties>
+    </modelClass>
+    <modelClass name="LazyOneToOne_Source">
+      <properties>
+        <modelProperty Id="f080cb86-dda4-4b82-b8b3-8df0f5e25bf3" name="target_id" length="0" generator="Foreign" keyType="PrimaryKey" />
+      </properties>
+      <oneToOneTarget>
+        <oneToOneRelation lazy="true">
+          <modelClassMoniker name="/d31e3081-74cd-42fb-a26f-8ad359cf7aac/LazyOneToOne_Target" />
+        </oneToOneRelation>
+      </oneToOneTarget>
+    </modelClass>
   </classes>
 </model>

@@ -39,15 +39,23 @@ namespace Altinoren.ActiveWriter
 
         public CodeAttributeDeclaration GetOneToOneAttributeForTarget()
         {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("OneToOne");
+            CodeAttributeDeclaration attribute = null;
 
-            if (TargetAccess != PropertyAccess.Property)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", TargetAccess));
-            if (TargetCascade != CascadeEnum.None)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade", "CascadeEnum", TargetCascade));
-            if (TargetConstrained)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Constrained", TargetConstrained));
-            if (!string.IsNullOrEmpty(TargetCustomAccess))
+			if (!this.Lazy)
+        	{
+				attribute = new CodeAttributeDeclaration("OneToOne");
+
+        		if (TargetAccess != PropertyAccess.Property)
+        			attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", TargetAccess));
+        		if (TargetConstrained)
+        			attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Constrained", TargetConstrained));
+        	}
+			else
+				attribute = new CodeAttributeDeclaration("BelongsTo");
+
+			if (TargetCascade != CascadeEnum.None)
+				attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade", "CascadeEnum", TargetCascade));
+			if (!string.IsNullOrEmpty(TargetCustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", TargetCustomAccess));
             if (TargetOuterJoin != OuterJoinEnum.Auto)
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("OuterJoin", "OuterJoinEnum", TargetOuterJoin));

@@ -242,6 +242,7 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(OneToOneRelation), "TargetOuterJoin", OneToOneRelation.TargetOuterJoinDomainPropertyId, typeof(OneToOneRelation.TargetOuterJoinPropertyHandler)),
 				new DomainMemberInfo(typeof(OneToOneRelation), "SourceDescription", OneToOneRelation.SourceDescriptionDomainPropertyId, typeof(OneToOneRelation.SourceDescriptionPropertyHandler)),
 				new DomainMemberInfo(typeof(OneToOneRelation), "TargetDescription", OneToOneRelation.TargetDescriptionDomainPropertyId, typeof(OneToOneRelation.TargetDescriptionPropertyHandler)),
+				new DomainMemberInfo(typeof(OneToOneRelation), "Lazy", OneToOneRelation.LazyDomainPropertyId, typeof(OneToOneRelation.LazyPropertyHandler)),
 				new DomainMemberInfo(typeof(NestedClassReferencesModelClasses), "MapType", NestedClassReferencesModelClasses.MapTypeDomainPropertyId, typeof(NestedClassReferencesModelClasses.MapTypePropertyHandler)),
 				new DomainMemberInfo(typeof(NestedClassReferencesModelClasses), "Insert", NestedClassReferencesModelClasses.InsertDomainPropertyId, typeof(NestedClassReferencesModelClasses.InsertPropertyHandler)),
 				new DomainMemberInfo(typeof(NestedClassReferencesModelClasses), "Update", NestedClassReferencesModelClasses.UpdateDomainPropertyId, typeof(NestedClassReferencesModelClasses.UpdatePropertyHandler)),

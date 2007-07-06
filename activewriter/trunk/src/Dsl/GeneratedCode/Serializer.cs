@@ -11470,6 +11470,23 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// Lazy
+			if (!serializationContext.Result.Failed)
+			{
+				string attribLazy = reader.GetAttribute("lazy");
+				if (attribLazy != null)
+				{
+					global::System.Boolean valueOfLazy;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribLazy), out valueOfLazy))
+					{
+						instanceOfOneToOneRelation.Lazy = valueOfLazy;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "lazy", typeof(global::System.Boolean), attribLazy);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -11996,6 +12013,19 @@ namespace Altinoren.ActiveWriter
 				{
 					if (!string.IsNullOrEmpty(propValue))
 						writer.WriteAttributeString("targetDescription", propValue);
+				}
+			}
+			// Lazy
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.Boolean propValue = instanceOfOneToOneRelation.Lazy;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Boolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("lazy", serializedPropValue);
+					}
 				}
 			}
 		}

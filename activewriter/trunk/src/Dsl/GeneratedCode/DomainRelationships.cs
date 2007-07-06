@@ -7972,6 +7972,94 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region Lazy domain property code
+		
+		/// <summary>
+		/// Lazy domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid LazyDomainPropertyId = new global::System.Guid(0x94274ae2, 0xd397, 0x4398, 0xb9, 0x14, 0x50, 0x1e, 0x02, 0xf1, 0xc4, 0x72);
+		
+		/// <summary>
+		/// Storage for Lazy
+		/// </summary>
+		private global::System.Boolean lazyPropertyStorage;
+		
+		/// <summary>
+		/// Gets or sets the value of Lazy domain property.
+		/// Will generate BelongsTo on the target end instead of a OneToOne to support lazy.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/Lazy.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/Lazy.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/Lazy.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainObjectId("94274ae2-d397-4398-b914-501e02f1c472")]
+		public global::System.Boolean Lazy
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return lazyPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				LazyPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the OneToOneRelation.Lazy domain property.
+		/// </summary>
+		internal sealed partial class LazyPropertyHandler : DslModeling::DomainPropertyValueHandler<OneToOneRelation, global::System.Boolean>
+		{
+			private LazyPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the OneToOneRelation.Lazy domain property value handler.
+			/// </summary>
+			public static readonly LazyPropertyHandler Instance = new LazyPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the OneToOneRelation.Lazy domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return LazyDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.Boolean GetValue(OneToOneRelation element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.lazyPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(OneToOneRelation element, global::System.Boolean newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.Boolean oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.lazyPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region Source link accessor
 		/// <summary>
 		/// Get the OneToOneRelation link to a ModelClass.
