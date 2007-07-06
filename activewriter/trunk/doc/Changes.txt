@@ -7,7 +7,8 @@ Fixed:
 - Server Explorer drag'n drop is now supported on international versions of VS. (Patch: Daniel Rothmaler)
 - Server Explorer support changed to VS Connection Service and its Connection Hierarchies, instead of the Server Explorer's UIHierarchies to
   prevent the flicker during the hierarchy traversing process.
-- Closing Contrib-25. ValidateNotSameAttribute Won't be supported ATM. 
+- Closing Contrib-25. ValidateNotSameAttribute Won't be supported ATM.
+- CONTRIB-33 When adding a table (SQL Server) to the designer which has a primary key of type uniqueidentifier ActiveWriter should use "Guid" instead of "Native" as generator (Thanks: Gabriel Schenker)
 
 Preview 3
 

@@ -73,7 +73,6 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
         {
             ModelProperty property = NewProperty(cls, column);
             property.KeyType = KeyType.PrimaryKey;
-            property.Generator = PrimaryKeyType.Native; // TODO: Decide
 
             return property;
         }

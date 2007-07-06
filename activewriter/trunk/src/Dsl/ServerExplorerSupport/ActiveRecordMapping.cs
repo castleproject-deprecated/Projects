@@ -234,15 +234,19 @@ namespace Altinoren.ActiveWriter
                         {
                             // Create primary and composite keys
                             if (primaryKeys.Count == 1)
-                                _manager.NewPrimaryKey(cls, primaryKeys[0]).ColumnType =
-                                    helper.GetNHibernateType(primaryKeys[0].DataType);
+                            {
+                            	ModelProperty keyProperty = _manager.NewPrimaryKey(cls, primaryKeys[0]);
+								keyProperty.ColumnType = helper.GetNHibernateType(primaryKeys[0].DataType);
+								SetGenerator(keyProperty);
+                            }
                             else
                             {
                                 string keyClassName = cls.Name + Common.CompositeClassNameSuffix;
                                 foreach (Column key in primaryKeys)
                                 {
-                                    _manager.NewCompositeKey(cls, key, keyClassName).ColumnType =
-                                        helper.GetNHibernateType(key.DataType);
+									ModelProperty keyProperty = _manager.NewCompositeKey(cls, key, keyClassName);
+									keyProperty.ColumnType = helper.GetNHibernateType(key.DataType);
+									SetGenerator(keyProperty);
                                 }
                             }
                         }
@@ -276,7 +280,15 @@ namespace Altinoren.ActiveWriter
             }
         }
 
-        private void HandleRelations()
+    	private void SetGenerator(ModelProperty modelProperty)
+    	{
+    		if (modelProperty.ColumnType == NHibernateType.Guid)
+    			modelProperty.Generator = PrimaryKeyType.Guid;
+    		else
+    			modelProperty.Generator = PrimaryKeyType.Native;
+    	}
+
+    	private void HandleRelations()
         {
             MatchRelations();
 
