@@ -1,0 +1,13 @@
+0.1.1 Preview 1 Update (2007-07-12)
+===================================
+- Fixed CONTRIB-36
+  "Pound Sign As A Literal Causes Trouble"
+
+- Fixed various bugs with directives and references in different states that relates to CONTRIB-36
+
+- Changed the error messages so that the scanner state name displayed is more friendly
+
+- Made directive left and right parentheses colourise the same as the hash and name (default blue)
+
+0.1.0 Preview 1 (2007-07-01)
+============================

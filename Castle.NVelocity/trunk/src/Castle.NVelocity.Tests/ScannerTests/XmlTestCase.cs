@@ -282,5 +282,110 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlTagName, "div");
             AssertMatchToken(TokenType.XmlTagEnd);
         }
+
+        [Test]
+        public void HashNotFollowedByTextIsXmlText()
+        {
+            scanner.SetSource(
+                "<td>#</td>");
+
+            AssertMatchToken(TokenType.XmlTagStart);
+            AssertMatchToken(TokenType.XmlTagName, "td");
+            AssertMatchToken(TokenType.XmlTagEnd);
+
+            AssertMatchToken(TokenType.XmlText, "#");
+
+            AssertMatchToken(TokenType.XmlTagStart);
+            AssertMatchToken(TokenType.XmlForwardSlash);
+            AssertMatchToken(TokenType.XmlTagName, "td");
+            AssertMatchToken(TokenType.XmlTagEnd);
+        }
+
+        [Test]
+        public void HashPrecededByTextNotFollowedByTextIsXmlText()
+        {
+            scanner.SetSource(
+                "<td>text#</td>");
+
+            AssertMatchToken(TokenType.XmlTagStart);
+            AssertMatchToken(TokenType.XmlTagName, "td");
+            AssertMatchToken(TokenType.XmlTagEnd);
+
+            AssertMatchToken(TokenType.XmlText, "text#");
+
+            AssertMatchToken(TokenType.XmlTagStart);
+            AssertMatchToken(TokenType.XmlForwardSlash);
+            AssertMatchToken(TokenType.XmlTagName, "td");
+            AssertMatchToken(TokenType.XmlTagEnd);
+        }
+
+        [Test]
+        public void HashAtBeginningOfXmlTagAttributeValue()
+        {
+            scanner.SetSource(
+                "<a title=\"#\"/>");
+
+            AssertMatchToken(TokenType.XmlTagStart);
+            AssertMatchToken(TokenType.XmlTagName, "a");
+            AssertMatchToken(TokenType.XmlAttributeName, "title");
+            AssertMatchToken(TokenType.XmlEquals);
+            AssertMatchToken(TokenType.XmlDoubleQuote);
+            AssertMatchToken(TokenType.XmlAttributeText, "#");
+            AssertMatchToken(TokenType.XmlDoubleQuote);
+            AssertMatchToken(TokenType.XmlForwardSlash);
+            AssertMatchToken(TokenType.XmlTagEnd);
+        }
+
+        [Test]
+        public void HashWithinXmlTagAttributeValue()
+        {
+            scanner.SetSource(
+                "<a title=\"You are #1.\"/>");
+
+            AssertMatchToken(TokenType.XmlTagStart);
+            AssertMatchToken(TokenType.XmlTagName, "a");
+            AssertMatchToken(TokenType.XmlAttributeName, "title");
+            AssertMatchToken(TokenType.XmlEquals);
+            AssertMatchToken(TokenType.XmlDoubleQuote);
+            AssertMatchToken(TokenType.XmlAttributeText, "You are #1.");
+            AssertMatchToken(TokenType.XmlDoubleQuote);
+            AssertMatchToken(TokenType.XmlForwardSlash);
+            AssertMatchToken(TokenType.XmlTagEnd);
+        }
+
+        [Test]
+        public void DollarSignThatIsNotNVReference()
+        {
+            scanner.SetSource(
+                "$");
+
+            AssertMatchToken(TokenType.XmlText, "$");
+        }
+
+        [Test]
+        public void DollarSignWithinXmlTextThatIsNotNVReference()
+        {
+            scanner.SetSource(
+                "I have $100.");
+
+            AssertMatchToken(TokenType.XmlText, "I have $100.");
+        }
+
+        [Test]
+        public void DollarSignWithinXmlTagAttributeValueThatIsNotNVReference()
+        {
+            scanner.SetSource(
+                "<a title=\"I have $100.\"/>");
+
+            AssertMatchToken(TokenType.XmlTagStart);
+            AssertMatchToken(TokenType.XmlTagName, "a");
+            AssertMatchToken(TokenType.XmlAttributeName, "title");
+            AssertMatchToken(TokenType.XmlEquals);
+            AssertMatchToken(TokenType.XmlDoubleQuote);
+            AssertMatchToken(TokenType.XmlAttributeText, "I have $100.");
+            AssertMatchToken(TokenType.XmlDoubleQuote);
+            AssertMatchToken(TokenType.XmlForwardSlash);
+            AssertMatchToken(TokenType.XmlTagEnd);
+        }
     }
 }

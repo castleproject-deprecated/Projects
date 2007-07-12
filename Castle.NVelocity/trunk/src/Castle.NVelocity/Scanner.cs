@@ -14,6 +14,7 @@
 
 namespace Castle.NVelocity
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
 
@@ -232,7 +233,7 @@ namespace Castle.NVelocity
             if (token.Type == TokenType.Error)
             {
                 throw new ScannerError(string.Format("Unknown symbol '{0}' in state {1}",
-                    ch, state.Peek()));
+                    ch, ScannerStateToString(state.Peek())));
             }
 
             return token;
@@ -244,101 +245,123 @@ namespace Castle.NVelocity
 
             token.SetStartPosition(lineNo, linePos);
 
-            switch (ch)
+            bool scanXmlText = true;
+
+            if (ch == '<')
             {
-                case '<':
-                    if (LookAhead(1) == '!')
+                if (LookAhead(1) == '!')
+                {
+                    if (LookAhead(2) == '-' && LookAhead(3) == '-')
                     {
-                        if (LookAhead(2) == '-' && LookAhead(3) == '-')
-                        {
-                            // It is an XML comment
-                            int startCommentPos = pos;
-                            GetCh(4);
-                            if (isLineScanner)
-                            {
-                                token.Type = TokenType.XmlCommentStart;
-                                state.Push(ScannerState.XmlComment);
-                            }
-                            else
-                            {
-                                token.Type = TokenType.XmlComment;
-                                ReadXmlComment();
-                                token.Image = _source.Substring(startCommentPos - 1, pos - startCommentPos);
-                            }
-                            token.SetEndPosition(lineNo, linePos);
-                            return token;
-                        }
-                        else if (LookAhead(2) == '[' && LookAhead(3) == 'C' && LookAhead(4) == 'D' &&
-                            LookAhead(5) == 'A' && LookAhead(6) == 'T' && LookAhead(7) == 'A' && LookAhead(8) == '[')
-                        {
-                            // It is an XML CData section
-                            GetCh(9);
-                            token.Type = TokenType.XmlCDataStart;
-                            state.Push(ScannerState.XmlCData);
-                            token.SetEndPosition(lineNo, linePos);
-                            return token;
-                        }
-                    }
-                    
-                    // It is an XML element
-                    token.Type = TokenType.XmlTagStart;
-                    state.Push(ScannerState.XmlTag);
-                    GetCh();
-                    break;
-                case '#':
-                    GetCh();
-                    if (ch == '#')
-                    {
-                        token.Type = TokenType.NVSingleLineComment;
-                        int prevCommentPos = pos - 2;
-                        GetCh();
-                        while (ch != CR && ch != LF && !eof)
-                            GetCh();
-                        if (ch == CR)
-                            GetCh();
-                        if (ch == LF)
-                            GetCh();
-                        token.Image = _source.Substring(prevCommentPos, pos - prevCommentPos - 1);
-                    }
-                    else if (ch == '*')
-                    {
+                        // It is an XML comment
+                        int startCommentPos = pos;
+                        GetCh(4);
                         if (isLineScanner)
                         {
-                            token.Type = TokenType.NVMultilineCommentStart;
-                            state.Push(ScannerState.NVMultilineComment);
-                            GetCh();
+                            token.Type = TokenType.XmlCommentStart;
+                            state.Push(ScannerState.XmlComment);
                         }
                         else
                         {
-                            token = ReadNVelocityMultiLineComment();
+                            token.Type = TokenType.XmlComment;
+                            ReadXmlComment();
+                            token.Image = _source.Substring(startCommentPos - 1, pos - startCommentPos);
                         }
+                        token.SetEndPosition(lineNo, linePos);
+                        return token;
                     }
-                    else
+                    else if (LookAhead(2) == '[' && LookAhead(3) == 'C' && LookAhead(4) == 'D' &&
+                             LookAhead(5) == 'A' && LookAhead(6) == 'T' && LookAhead(7) == 'A' && LookAhead(8) == '[')
                     {
-                        token.Type = TokenType.NVDirectiveHash;
-                        state.Push(ScannerState.NVPreDirective);
+                        // It is an XML CData section
+                        GetCh(9);
+                        token.Type = TokenType.XmlCDataStart;
+                        state.Push(ScannerState.XmlCData);
+                        token.SetEndPosition(lineNo, linePos);
+                        return token;
                     }
-                    break;
-                case '$':
-                    if (NVReferenceFollows())
-                    {
-                        token.Type = TokenType.NVDollar;
-                        state.Push(ScannerState.NVReference);
-                    }
-                    else
-                    {
-                        token.Type = TokenType.XmlText;
-                        token.Image = "$";
-                    }
+                }
+
+                // It is an XML element
+                token.Type = TokenType.XmlTagStart;
+                state.Push(ScannerState.XmlTag);
+                GetCh();
+                scanXmlText = false;
+            }
+            else if (ch == '#')
+            {
+                if (LookAhead(1) == '#')
+                {
                     GetCh();
-                    break;
-                default:
-                    int startPos = pos;
-                    while (ch != '<' && ch != '#' && ch != '$' && !eof)
+                    token.Type = TokenType.NVSingleLineComment;
+                    int prevCommentPos = pos - 2;
+                    GetCh();
+                    while (ch != CR && ch != LF && !eof)
                         GetCh();
-                    token.Type = TokenType.XmlText;
-                    token.Image = _source.Substring(startPos - 1, pos - startPos);
-                    break;
+                    if (ch == CR)
+                        GetCh();
+                    if (ch == LF)
+                        GetCh();
+                    token.Image = _source.Substring(prevCommentPos, pos - prevCommentPos - 1);
+                    scanXmlText = false;
+                }
+                else if (LookAhead(1) == '*')
+                {
+                    GetCh();
+                    if (isLineScanner)
+                    {
+                        token.Type = TokenType.NVMultilineCommentStart;
+                        state.Push(ScannerState.NVMultilineComment);
+                        GetCh();
+                    }
+                    else
+                    {
+                        token = ReadNVelocityMultiLineComment();
+                    }
+                    scanXmlText = false;
+                }
+                else if (NVDirectiveFollows())
+                {
+                    GetCh();
+                    token.Type = TokenType.NVDirectiveHash;
+                    state.Push(ScannerState.NVPreDirective);
+                    scanXmlText = false;
+                }
+            }
+            else if (ch == '$' && NVReferenceFollows())
+            {
+                token.Type = TokenType.NVDollar;
+                state.Push(ScannerState.NVReference);
+                GetCh();
+                scanXmlText = false;
+            }
+
+            // If it is not any other type of parseable syntax
+            if (scanXmlText)
+            {
+                int startPos = pos;
+                bool isText = true;
+                while (isText && !eof)
+                {
+                    if (ch == '#' && NVDirectiveFollows())
+                    {
+                        isText = false;
+                    }
+                    else if (ch == '$' && NVReferenceFollows())
+                    {
+                        isText = false;
+                    }
+                    else if (ch == '<')
+                    {
+                        isText = false;
+                    }
+                    else
+                    {
+                        GetCh();
+                    }
+                }
+                token.Type = TokenType.XmlText;
+                token.Image = _source.Substring(startPos - 1, pos - startPos); 
             }
 
             token.SetEndPosition(lineNo, linePos);
@@ -508,37 +531,54 @@ namespace Castle.NVelocity
 
             token.SetStartPosition(lineNo, linePos);
 
+            bool scanXmlText = true;
+
             if (ch == '"')
             {
                 token.Type = TokenType.XmlDoubleQuote;
                 GetCh();
                 state.Pop(); // Pop XmlTagAttributeValue
+                scanXmlText = false;
             }
-            else if (ch == '#')
+            else if (ch == '#' && NVDirectiveFollows())
             {
                 token.Type = TokenType.NVDirectiveHash;
                 state.Push(ScannerState.NVPreDirective);
                 GetCh();
+                scanXmlText = false;
             }
-            else if (ch == '$')
+            else if (ch == '$' && NVReferenceFollows())
             {
-                if (NVReferenceFollows())
-                {
-                    token.Type = TokenType.NVDollar;
-                    state.Push(ScannerState.NVReference);
-                }
-                else
-                {
-                    token.Type = TokenType.XmlAttributeText;
-                    token.Image = "$";
-                }
+                token.Type = TokenType.NVDollar;
+                state.Push(ScannerState.NVReference);
                 GetCh();
+                scanXmlText = false;
             }
-            else
+            
+            if (scanXmlText)
             {
                 int startPos = pos;
-                while (ch != '"' && ch != '#' && ch != '$' && !eof)
-                    GetCh();
+                bool isText = true;
+                while (isText && !eof)
+                {
+                    if (ch == '#' && NVDirectiveFollows())
+                    {
+                        isText = false;
+                    }
+                    else if (ch == '$' && NVReferenceFollows())
+                    {
+                        isText = false;
+                    }
+                    else if (ch == '"')
+                    {
+                        isText = false;
+                    }
+                    else
+                    {
+                        GetCh();
+                    }
+                }
+
                 if (eof && !isLineScanner)
                     throw new ScannerError("End-of-file found but quoted string literal was not closed");
                 token.Type = TokenType.XmlAttributeText;
@@ -671,7 +711,7 @@ namespace Castle.NVelocity
             if (NextCharAfterWhiteSpace() == '(')
             {
                 ConsumeSingleLineWhiteSpace();
-                token.Type = TokenType.NVLParen;
+                token.Type = TokenType.NVDirectiveLParen;
                 GetCh();
 
                 state.Push(ScannerState.NVDirectiveParams);
@@ -697,7 +737,7 @@ namespace Castle.NVelocity
 
             if (ch == ')')
             {
-                token.Type = TokenType.NVRParen;
+                token.Type = TokenType.NVDirectiveRParen;
                 GetCh();
                 state.Pop(); // Pop NVDirectiveParams
                 state.Pop(); // Pop NVDirective
@@ -1109,6 +1149,12 @@ namespace Castle.NVelocity
             return token;
         }
 
+        private bool NVDirectiveFollows()
+        {
+            char lookAhead = LookAhead(1);
+            return (char.IsLetter(lookAhead) || lookAhead == '{' || lookAhead == '#' || lookAhead == '*');
+        }
+
         private bool NVReferenceFollows()
         {
             char lookAhead = LookAhead(1);
@@ -1289,6 +1335,53 @@ namespace Castle.NVelocity
             nvKeywords.Add("and", TokenType.NVAnd);
             nvKeywords.Add("or", TokenType.NVOr);
             nvKeywords.Add("not", TokenType.NVNot);
-        }    
+        }
+
+        private static string ScannerStateToString(ScannerState state)
+        {
+            switch(state)
+            {
+                case ScannerState.Default:
+                    return "Default";
+                case ScannerState.XmlComment:
+                    return "XML Comment";
+                case ScannerState.XmlTag:
+                    return "XML Tag";
+                case ScannerState.XmlTagAttributes:
+                    return "XML Tag Attributes";
+                case ScannerState.XmlTagAttributeValue:
+                    return "XML Tag Attribute Value";
+                case ScannerState.XmlCData:
+                    return "XML CData";
+                case ScannerState.XmlScriptElementContent:
+                    return "XML Script Element Content";
+                case ScannerState.NVMultilineComment:
+                    return "NVelocity Multiline Comment";
+                case ScannerState.NVPreDirective:
+                    return "NVelocity Pre-Directive";
+                case ScannerState.NVDirective:
+                    return "NVelocity Directive";
+                case ScannerState.NVDirectiveParams:
+                    return "NVelocity Directive Parameters";
+                case ScannerState.NVReference:
+                    return "NVelocity Reference";
+                case ScannerState.NVReferenceSelectors:
+                    return "NVelocity Reference Selectors";
+                case ScannerState.NVStringLiteralSingle:
+                    return "NVelocity String Literal";
+                case ScannerState.NVStringLiteralDouble:
+                    return "NVelocity Parsed String Literal";
+                case ScannerState.NVDictionary:
+                    return "NVelocity Dictionary";
+                case ScannerState.NVDictionaryInner:
+                    return "NVelocity Dictionary Key/Value Pairs";
+                case ScannerState.NVParens:
+                    return "NVelocity Parentheses";
+                case ScannerState.NVBracks:
+                    return "NVelocity Brackets";
+                default:
+                    return "Unknown State";
+            }
+        }
     }
 }

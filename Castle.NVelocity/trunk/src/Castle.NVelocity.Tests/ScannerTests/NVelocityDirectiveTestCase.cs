@@ -88,8 +88,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlText, "text");
             AssertMatchToken(TokenType.NVDirectiveHash);
             AssertMatchToken(TokenType.NVDirectiveName, "if");
-            AssertMatchToken(TokenType.NVLParen);
-            AssertMatchToken(TokenType.NVRParen);
+            AssertMatchToken(TokenType.NVDirectiveLParen);
+            AssertMatchToken(TokenType.NVDirectiveRParen);
 
             AssertEOF();
         }
@@ -103,8 +103,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlText, "text");
             AssertMatchToken(TokenType.NVDirectiveHash);
             AssertMatchToken(TokenType.NVDirectiveName, "if");
-            AssertMatchToken(TokenType.NVLParen);
-            AssertMatchToken(TokenType.NVRParen);
+            AssertMatchToken(TokenType.NVDirectiveLParen);
+            AssertMatchToken(TokenType.NVDirectiveRParen);
 
             AssertEOF();
         }
@@ -118,8 +118,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlText, "text");
             AssertMatchToken(TokenType.NVDirectiveHash);
             AssertMatchToken(TokenType.NVDirectiveName, "if");
-            AssertMatchToken(TokenType.NVLParen);
-            AssertMatchToken(TokenType.NVRParen);
+            AssertMatchToken(TokenType.NVDirectiveLParen);
+            AssertMatchToken(TokenType.NVDirectiveRParen);
 
             AssertEOF();
         }
@@ -149,8 +149,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
             AssertMatchToken(TokenType.NVDirectiveHash);
             AssertMatchToken(TokenType.NVDirectiveName, "if");
-            AssertMatchToken(TokenType.NVLParen);
-            AssertMatchToken(TokenType.NVRParen);
+            AssertMatchToken(TokenType.NVDirectiveLParen);
+            AssertMatchToken(TokenType.NVDirectiveRParen);
 
             AssertMatchToken(TokenType.XmlForwardSlash);
             AssertMatchToken(TokenType.XmlTagEnd);
@@ -172,8 +172,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
             AssertMatchToken(TokenType.NVDirectiveHash);
             AssertMatchToken(TokenType.NVDirectiveName, "if");
-            AssertMatchToken(TokenType.NVLParen);
-            AssertMatchToken(TokenType.NVRParen);
+            AssertMatchToken(TokenType.NVDirectiveLParen);
+            AssertMatchToken(TokenType.NVDirectiveRParen);
 
             AssertMatchToken(TokenType.XmlAttributeText, " text ");
 

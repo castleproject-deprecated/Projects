@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.VisualStudio.NVeloci
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CVSISetup", "Setup\CVSISetup.vdproj", "{2B801DFF-D3A9-410E-BF24-3D49808F04E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.NVelocity.Demo", "..\..\..\Castle.NVelocity\trunk\src\Castle.NVelocity.Demo\Castle.NVelocity.Demo.csproj", "{DFDCE718-4087-4934-9858-B719D05F3D36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.NVelocity.Tests", "..\..\..\Castle.NVelocity\trunk\src\Castle.NVelocity.Tests\Castle.NVelocity.Tests.csproj", "{C4F1520A-B5A9-4095-889E-0C017A6770C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +29,14 @@ Global
 		{2B801DFF-D3A9-410E-BF24-3D49808F04E0}.Debug|Any CPU.Build.0 = Debug
 		{2B801DFF-D3A9-410E-BF24-3D49808F04E0}.Release|Any CPU.ActiveCfg = Release
 		{2B801DFF-D3A9-410E-BF24-3D49808F04E0}.Release|Any CPU.Build.0 = Release
+		{DFDCE718-4087-4934-9858-B719D05F3D36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFDCE718-4087-4934-9858-B719D05F3D36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFDCE718-4087-4934-9858-B719D05F3D36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFDCE718-4087-4934-9858-B719D05F3D36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4F1520A-B5A9-4095-889E-0C017A6770C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4F1520A-B5A9-4095-889E-0C017A6770C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4F1520A-B5A9-4095-889E-0C017A6770C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4F1520A-B5A9-4095-889E-0C017A6770C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

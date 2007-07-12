@@ -29,7 +29,7 @@ namespace Castle.NVelocity
         // NVelocity tokens
         NVSingleLineComment, NVMultilineCommentStart, NVMultilineCommentEnd, NVMultilineComment,
         NVText,
-        NVDirectiveHash, NVDirectiveName, NVEscapeDirective,
+        NVDirectiveHash, NVDirectiveName, NVDirectiveLParen, NVDirectiveRParen, NVEscapeDirective,
         NVDollar,
         NVIdentifier, NVIntegerLiteral, /*NVFloatingPointLiteral,*/
         NVStringLiteral, NVEscape,

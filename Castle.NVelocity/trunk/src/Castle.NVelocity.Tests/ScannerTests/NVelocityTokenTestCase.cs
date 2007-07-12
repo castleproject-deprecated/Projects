@@ -27,10 +27,10 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
             AssertMatchToken(TokenType.NVDirectiveHash);
             AssertMatchToken(TokenType.NVDirectiveName, "if");
-            AssertMatchToken(TokenType.NVLParen);
+            AssertMatchToken(TokenType.NVDirectiveLParen);
             AssertMatchToken(TokenType.NVDollar);
             AssertMatchToken(TokenType.NVIdentifier, "varName");
-            AssertMatchToken(TokenType.NVRParen);
+            AssertMatchToken(TokenType.NVDirectiveRParen);
 
             AssertEOF();
         }
@@ -43,12 +43,12 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
             AssertMatchToken(TokenType.NVDirectiveHash);
             AssertMatchToken(TokenType.NVDirectiveName, "if");
-            AssertMatchToken(TokenType.NVLParen);
+            AssertMatchToken(TokenType.NVDirectiveLParen);
             AssertMatchToken(TokenType.NVDollar);
             AssertMatchToken(TokenType.NVIdentifier, "varName1");
             AssertMatchToken(TokenType.NVDollar);
             AssertMatchToken(TokenType.NVIdentifier, "varName2");
-            AssertMatchToken(TokenType.NVRParen);
+            AssertMatchToken(TokenType.NVDirectiveRParen);
 
             AssertEOF();
         }
@@ -61,12 +61,12 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
             AssertMatchToken(TokenType.NVDirectiveHash);
             AssertMatchToken(TokenType.NVDirectiveName, "if");
-            AssertMatchToken(TokenType.NVLParen);
+            AssertMatchToken(TokenType.NVDirectiveLParen);
 
             AssertMatchToken(TokenType.NVLBrack);
             AssertMatchToken(TokenType.NVRBrack);
 
-            AssertMatchToken(TokenType.NVRParen);
+            AssertMatchToken(TokenType.NVDirectiveRParen);
 
             AssertEOF();
         }

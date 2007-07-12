@@ -56,15 +56,14 @@ namespace Castle.NVelocity.Tests.ScannerTests
         private void CheckTokenType(Token token, TokenType tokenType)
         {
             Assert.IsTrue(token.Type == tokenType,
-                string.Format("Expected token: '{0}' was '{1}'", tokenType.ToString(), token.Type.ToString()));
+                string.Format("Expected token: '{0}' was '{1}'", tokenType, token.Type));
         }
 
         private void CheckPosition(Token token, Position position)
         {
             Assert.IsNotNull(token.Position, "Position is null");
             Assert.IsTrue(token.Position.Equals(position),
-                string.Format("Expected position: [{0}] was [{1}]",
-                position.ToString(), token.Position.ToString()));
+                string.Format("Expected position: [{0}] was [{1}]", position, token.Position));
         }
 
         private void CheckImage(Token token, string image)

@@ -117,6 +117,8 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                     break;
                 case Castle.NVelocity.TokenType.NVDirectiveHash:
                 case Castle.NVelocity.TokenType.NVDirectiveName:
+                case Castle.NVelocity.TokenType.NVDirectiveLParen:
+                case Castle.NVelocity.TokenType.NVDirectiveRParen:
                     color = NVelocityTokenColor.NVDirective;
                     break;
                 case Castle.NVelocity.TokenType.NVEq:
