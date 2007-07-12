@@ -223,7 +223,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
                 "<![CDATA[ text ]]>");
 
             AssertMatchToken(TokenType.XmlCDataStart, "<![CDATA[");
-            AssertMatchToken(TokenType.XmlText, " text ");
+            AssertMatchToken(TokenType.XmlCDataSection, " text ");
             AssertMatchToken(TokenType.XmlCDataEnd, "]]>");
         }
 
@@ -234,8 +234,25 @@ namespace Castle.NVelocity.Tests.ScannerTests
                 "<![CDATA[ <tag> ]]>");
 
             AssertMatchToken(TokenType.XmlCDataStart, "<![CDATA[");
-            AssertMatchToken(TokenType.XmlText, " <tag> ");
+            AssertMatchToken(TokenType.XmlCDataSection, " <tag> ");
             AssertMatchToken(TokenType.XmlCDataEnd, "]]>");
+        }
+
+        [Test]
+        public void CDataSectionWithMissingEnd()
+        {
+            scanner.SetSource(
+                "<![CDATA[ text inside the section ");
+
+            AssertMatchToken(TokenType.XmlCDataStart, "<![CDATA[");
+            
+            // Throws a ScannerError because no end can be found when scanning for the content token
+            try
+            {
+                scanner.GetToken();
+                Assert.Fail(); // Should not get to this point
+            }
+            catch (ScannerError) { }
         }
 
         [Test]

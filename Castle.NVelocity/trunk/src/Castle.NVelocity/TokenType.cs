@@ -24,7 +24,7 @@ namespace Castle.NVelocity
         XmlComment, XmlCommentStart, XmlCommentEnd,
         XmlTagName, XmlAttributeName,
         XmlTagStart, XmlTagEnd, XmlForwardSlash, XmlQuestionMark,
-        XmlExclaimationMark, XmlEquals, XmlDoubleQuote, XmlCDataStart, XmlCDataEnd,
+        XmlExclaimationMark, XmlEquals, XmlDoubleQuote, XmlCDataStart, XmlCDataEnd, XmlCDataSection,
 
         // NVelocity tokens
         NVSingleLineComment, NVMultilineCommentStart, NVMultilineCommentEnd, NVMultilineComment,

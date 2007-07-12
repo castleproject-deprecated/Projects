@@ -514,10 +514,13 @@ namespace Castle.NVelocity
             }
 
             int startPos = pos;
-            while (!(ch == ']' && LookAhead(1) == ']' && LookAhead(2) == '>'))
+            while (!(ch == ']' && LookAhead(1) == ']' && LookAhead(2) == '>') && !eof)
                 GetCh();
 
-            token.Type = TokenType.XmlText;
+            if (eof && !isLineScanner)
+                throw new ScannerError("End-of-file found but CData section was not closed");
+
+            token.Type = TokenType.XmlCDataSection;
             token.Image = _source.Substring(startPos - 1, pos - startPos);
 
             token.SetEndPosition(lineNo, linePos);

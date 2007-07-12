@@ -18,3 +18,9 @@ I have $100.
 #if ($var.Method())
 
 $page.VisualEffect('Highlight', "historyItem_${historyItem.Id}", "%{ duration='3.0', testKey=$obj.Method() }")
+
+<style type="text/css">
+  <![CDATA[
+    div { color: red; }
+  ]]>
+</style>

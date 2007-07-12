@@ -103,7 +103,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                 // XmlEntity
                 new ColorableItem("NVelocity – XML Entity", "NVelocity – XML Entity", COLORINDEX.CI_RED, COLORINDEX.CI_USERTEXT_BK, Color.Empty, Color.Empty, FONTFLAGS.FF_DEFAULT),
                 // XmlCDataSection
-                new ColorableItem("NVelocity – XML Text", "NVelocity – XML Text", COLORINDEX.CI_BLUE, COLORINDEX.CI_USERTEXT_BK, Color.Empty, Color.Empty, FONTFLAGS.FF_DEFAULT)
+                new ColorableItem("NVelocity – XML CData Section", "NVelocity – XML CData Section", COLORINDEX.CI_DARKGRAY, COLORINDEX.CI_USERTEXT_BK, Color.Empty, Color.Empty, FONTFLAGS.FF_DEFAULT)
                 // XmlProcessingInstruction
                 // ===== not done
             };

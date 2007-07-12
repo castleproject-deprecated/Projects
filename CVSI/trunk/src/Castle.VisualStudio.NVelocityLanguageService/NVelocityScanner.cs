@@ -180,6 +180,8 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                     break;
                 case Castle.NVelocity.TokenType.XmlTagStart:
                 case Castle.NVelocity.TokenType.XmlTagEnd:
+                case Castle.NVelocity.TokenType.XmlCDataStart:
+                case Castle.NVelocity.TokenType.XmlCDataEnd:
                     color = NVelocityTokenColor.XmlTagDelimiter;
                     break;
                 case Castle.NVelocity.TokenType.XmlForwardSlash:
@@ -192,9 +194,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                 //case ???
                 //    color = NVelocityTokenColor.XmlEntity;
                 //    break;
-                case Castle.NVelocity.TokenType.XmlCDataStart:
-                case Castle.NVelocity.TokenType.XmlCDataEnd:
-                //case Castle.NVelocity.TokenType.XmlCData:
+                case Castle.NVelocity.TokenType.XmlCDataSection:
                     color = NVelocityTokenColor.XmlCDataSection;
                     break;
                 //case ???

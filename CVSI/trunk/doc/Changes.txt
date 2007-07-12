@@ -1,3 +1,8 @@
+0.1.2 Preview 1 Update (2007-07-13)
+===================================
+- Fixed CONTRIB-43
+  "Crash when inserting <![CDATA["
+
 0.1.1 Preview 1 Update (2007-07-12)
 ===================================
 - Fixed CONTRIB-36
