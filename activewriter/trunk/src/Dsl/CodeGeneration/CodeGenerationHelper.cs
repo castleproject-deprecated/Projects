@@ -27,7 +27,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
     using Microsoft.CSharp;
     using Microsoft.VisualBasic;
     using EnvDTE;
+	using EnvDTE80;
     using System.ComponentModel.Design;
+    using ServerExplorerSupport;
     using CodeNamespace = System.CodeDom.CodeNamespace;
 
     public class CodeGenerationHelper
@@ -47,7 +49,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private string _modelFileName = null;
         private string _modelFilePath = null;
-        ProjectItem _projectItem = null;
+        private ProjectItem _projectItem = null;
+    	private string _assemblyName = null;
+		
 
         #endregion
 
@@ -62,14 +66,14 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             else
                 _namespace = _model.Namespace;
 
-            _dte = ServerExplorerSupport.DTEHelper.GetDTE(_propertyBag["Generic.ProcessID"].ToString());
+            _dte = DTEHelper.GetDTE(_propertyBag["Generic.ProcessID"].ToString());
             _propertyBag.Add("Generic.DTE", _dte);
 
             _modelFileName = (string)_propertyBag["Generic.ModelFileFullName"];
             _modelFilePath = Path.GetDirectoryName(_modelFileName);
             _projectItem = _dte.Solution.FindProjectItem(_modelFileName);
 
-            switch (ServerExplorerSupport.DTEHelper.GetProjectLanguage(_projectItem.ContainingProject))
+            switch (DTEHelper.GetProjectLanguage(_projectItem.ContainingProject))
             {
                 case CodeLanguage.CSharp:
                     _provider = new CSharpCodeProvider();
@@ -1254,7 +1258,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         {
             CompilerParameters parameters = new CompilerParameters();
             parameters.GenerateInMemory = true;
-            parameters.OutputAssembly = Common.InMemoryCompiledAssemblyName + ".dll";
+        	_assemblyName = DTEHelper.GetAssemblyName(_projectItem.ContainingProject);
+			parameters.OutputAssembly = _assemblyName + ".dll";
             parameters.GenerateExecutable = false;
 
             Assembly activeRecord = Assembly.Load(_model.ActiveRecordAssemblyName);
@@ -1299,19 +1304,19 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                              generationVisitor, new object[] { enumerator.Current });
 
                         string xml = (string)visitor.GetProperty("Xml").GetValue(generationVisitor, null);
-                        xml = xml.Replace(", " + Common.InMemoryCompiledAssemblyName, string.Empty); // Strips the assembly name from class names
                         XmlDocument document = new XmlDocument();
                         document.LoadXml(xml);
                         XmlNodeList nodeList = document.GetElementsByTagName("class");
                         if (nodeList.Count > 0)
                         {
+                        	string assemblyNameTostrip = ", " + _assemblyName;
                             string name = null;
 
                             foreach (XmlAttribute attribute in nodeList[0].Attributes)
                             {
                                 if (attribute.Name == "name")
                                 {
-                                    name = attribute.Value;
+									name = attribute.Value.Replace(assemblyNameTostrip, string.Empty);
                                     break;
                                 }
                             }

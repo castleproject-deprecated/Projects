@@ -83,5 +83,15 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
                         "Unsupported project type. ActiveWriter currently supports C# and Visual Basic.NET projects.");
             }
         }
+
+		[CLSCompliant(false)]
+		public static string GetAssemblyName(Project project)
+		{
+			Property property = project.Properties.Item("AssemblyName");
+			if (property != null)
+				return property.Value.ToString();
+			else
+				return Common.InMemoryCompiledAssemblyName;
+		}
     }
 }
