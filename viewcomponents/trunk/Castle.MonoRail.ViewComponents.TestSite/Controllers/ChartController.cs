@@ -15,7 +15,7 @@ namespace Lunaverse.Tools.Monorail.Samples.Controllers
             chart = new ChartProperties(SalesPerRegion);
             chart.GridUnit = 100;
 		    chart.BarWidthPixels = 60;
-		    chart.BarSpacingPx = 15;
+		    chart.BarSpacingPixels = 15;
 		    chart.Title = "Sales Per Region";
             chart.YUnitLabel = "Sales";
             chart.XUnitLabel = "Region";
@@ -39,6 +39,7 @@ namespace Lunaverse.Tools.Monorail.Samples.Controllers
             chart.YUnitLabel = "Amount";
             chart.XUnitLabel = "Time";
 		    chart.LabelFormat = "M/d/yy";
+            chart.LabelInterval = 2;
             chart.DataFormat = "#,##0.00";
             PropertyBag["timescale1"] = chart;
 
@@ -65,7 +66,7 @@ namespace Lunaverse.Tools.Monorail.Samples.Controllers
             chart.GridUnit = 100;
 		    chart.PlotHeightPixels = 600;
 		    chart.BarWidthPixels = 250;
-		    chart.BarSpacingPx = 20;
+		    chart.BarSpacingPixels = 20;
 		    chart.Title = "Sales Per Region";
             chart.YUnitLabel = "Sales";
             chart.XUnitLabel = "Region";
@@ -102,14 +103,14 @@ namespace Lunaverse.Tools.Monorail.Samples.Controllers
             }
         }
 
-        private static IList<ChartDataItem> GetTimeScaleDataSource(int count, DateTime start, int min, int max)
+        private static IDictionary<object,decimal> GetTimeScaleDataSource(int count, DateTime start, int min, int max)
         {
-            IList<ChartDataItem> result = new List<ChartDataItem>();
+            IDictionary<object, decimal> result = new Dictionary<object,decimal>();
             Random rnd = new Random(5);
             for (int i = 0; i < count; i++ )
             {
                 DateTime date = start.AddDays(i);
-                result.Add(new ChartDataItem(date, rnd.Next(min, max)));
+                result.Add(date, rnd.Next(min, max));
             }
             return result;
         }

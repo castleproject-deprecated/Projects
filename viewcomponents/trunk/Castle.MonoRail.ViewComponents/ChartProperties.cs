@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections.Generic;
+using System.Collections;
 
 namespace Castle.MonoRail.ViewComponents
 {
-    using System.Collections.Generic;
-
     /// <summary>
     /// Contains the properties used be ColumnChart view component
     /// </summary>
@@ -32,6 +32,20 @@ namespace Castle.MonoRail.ViewComponents
             _count = data.Count;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="data">The data to display on the chart</param>
+        public ChartProperties(IDictionary<object, decimal> data)
+        {
+            _data = new List<ChartDataItem>();
+            foreach (KeyValuePair<object, decimal> entry in data)
+            {
+                _data.Add(new ChartDataItem(entry.Key, entry.Value));
+            }
+            _count = data.Count;
+        }
+
         private IList<ChartDataItem> _data;
         private string _title;
         private decimal? _plotHeightPixels;
@@ -43,10 +57,11 @@ namespace Castle.MonoRail.ViewComponents
         private int? _gridUnit;
         private string _xUnitLabel;
         private string _yUnitLabel;
-        private decimal? _barSpacingPx;
+        private decimal? _barSpacingPixels;
         private int _count;
         private string _cssClass;
         private bool? _showGridlines;
+        private int? _labelInterval;
 
         /// <summary>
         /// The data to display on the chart (read only)
@@ -160,10 +175,10 @@ namespace Castle.MonoRail.ViewComponents
         /// and also added the sides of the plot area.  To 'spread out' 
         /// the bars more, increase this value.  Default is 5
         /// </summary>
-        public decimal BarSpacingPx
+        public decimal BarSpacingPixels
         {
-            get { return _barSpacingPx ?? 5m; }
-            set { _barSpacingPx = value; }
+            get { return _barSpacingPixels ?? 5m; }
+            set { _barSpacingPixels = value; }
         }
 
         /// <summary>
@@ -193,6 +208,16 @@ namespace Castle.MonoRail.ViewComponents
         {
             get { return _showGridlines ?? true; }
             set { _showGridlines = value; }
+        }
+
+        /// <summary>
+        /// Interval at which to display 'X' axis labels. Default
+        /// is 1
+        /// </summary>
+        public int LabelInterval
+        {
+            get { return _labelInterval ?? 1; }
+            set { _labelInterval = value; }
         }
     }
 }

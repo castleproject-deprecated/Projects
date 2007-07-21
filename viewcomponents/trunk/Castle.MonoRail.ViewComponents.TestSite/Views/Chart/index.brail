@@ -48,12 +48,14 @@
     component ColumnChart, {@properties: salesBig}:
         section xUnitLabel:
         %>
-            <span class= "x-unit-label" style="font-family: 'Times New Roman', Serif; text-decoration: blink;">Region</span>
+            <span class= "x-unit-label" style="font-family: 'Times New Roman', 
+                    Serif; text-decoration: blink; font-size: 14px;">Region</span>
         <%
         end
         section yUnitLabel:
         %>
-            <span class= "y-unit-label" style="font-family: 'Times New Roman', Serif; text-decoration: blink;">Sales</span>
+            <span class= "y-unit-label" style="font-family: 'Times New Roman', 
+                    Serif; font-size: 14px;">Sales</span>
         <%
         end
     end

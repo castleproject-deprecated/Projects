@@ -48,8 +48,8 @@
     <Compile Include="CaptchaImage.cs" />
     <Compile Include="CaptchaImageHandler.cs" />
     <Compile Include="ChartDataItem.cs" />
-    <Compile Include="ColumnChart.cs" />
     <Compile Include="ChartProperties.cs" />
+    <Compile Include="ColumnChartComponent.cs" />
     <Compile Include="GridComponent .cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmartGridComponent.cs" />

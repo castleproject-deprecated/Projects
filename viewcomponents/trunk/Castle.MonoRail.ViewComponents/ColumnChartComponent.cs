@@ -12,13 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using Castle.MonoRail.Framework;
 
 namespace Castle.MonoRail.ViewComponents
 {
-
-    using System;
-    using Castle.MonoRail.Framework;
-    
     public class ColumnChartComponent : ViewComponent
     {
 
@@ -44,6 +42,7 @@ namespace Castle.MonoRail.ViewComponents
         private decimal _plotAreaWidth;
         private bool _hasYUnitLabel;
         private bool _isBrowserIE;
+        private decimal _columnCellWidth;
         
         #endregion private fields
 
@@ -106,9 +105,9 @@ namespace Castle.MonoRail.ViewComponents
 
             _columnCount = Props.ItemCount + (_hasYUnitLabel ? 5 : 4);
 
-            decimal barCellWidth = Props.BarWidthPixels + (Props.BarSpacingPx * 2);
+            decimal barCellWidth = Props.BarWidthPixels + (Props.BarSpacingPixels * 2);
 
-            decimal totalPlotMarginWidth = Props.BarSpacingPx * 2;
+            decimal totalPlotMarginWidth = Props.BarSpacingPixels * 2;
 
             _isBrowserIE = HttpContext.Request.Browser.Browser.ToLower() == "ie";
 
@@ -117,6 +116,8 @@ namespace Castle.MonoRail.ViewComponents
 
             _hasYUnitLabel = Context.HasSection("yUnitLabel") || 
                              !string.IsNullOrEmpty(Props.YUnitLabel);
+
+            _columnCellWidth = Props.BarWidthPixels + (Props.BarSpacingPixels * 2);
 
         }
 
@@ -204,15 +205,15 @@ namespace Castle.MonoRail.ViewComponents
 
                 if (i == 0)
                 {
-                    labelAlignmentAttribute = "top: 0;";
+                    labelAlignmentAttribute = "top: -2px;";
                 }
                 else if (i == _gridlineCount)
                 {
-                    labelAlignmentAttribute = "bottom: 0;";
+                    labelAlignmentAttribute = "bottom: -2px;";
                 }
                 else
                 {
-                    labelAlignmentAttribute = string.Format("top: {0}px;", top);
+                    labelAlignmentAttribute = string.Format("top: {0}px; margin-top: -1ex;", top);
 
                     if (Props.ShowGridlines)
                     {
@@ -225,7 +226,7 @@ namespace Castle.MonoRail.ViewComponents
                 }
 
                 RenderText(string.Format(@"
-                    <div class='y-label' style='position: absolute; {0} right: 4px; margin-top: -1ex;'>
+                    <div class='y-label' style='position: absolute; {0} right: 4px;'>
                        {1:" + Props.DataFormat + @"}
                     </div>",
                     labelAlignmentAttribute, unit));
@@ -236,84 +237,87 @@ namespace Castle.MonoRail.ViewComponents
 
         private void RenderColumns()
         {
-            RenderText(string.Format(@"
-                  <td class='plot-area-left-margin' style='padding:0; height: {0}px; width: {1}px;
-                        border-left-width: {2}px; border-left-style: solid; border-bottom-width: {2}px;
-                        border-bottom-style: solid;'>
-                    <div style='width: {1}px; height 1px;'></div>
-                  </td>",
-                Props.PlotHeightPixels, Props.BarSpacingPx, _defaultLineWidthPx));
-
+            RenderMarginColumn("plot-area-left-margin", "border-left-style: solid;");
             foreach (ChartDataItem item in Props.Data)
             {
-                decimal height;
-                if (_isBrowserIE)
-                {
-                    height = (item.Value * _pxPerUnit);
-                    height = height == 0m ? 1m : height;
-                }
-                else
-                {
-                    height = (item.Value*_pxPerUnit) - _defaultLineWidthPx;
-                    height = height < 0m ? 0m : height;
-                }
+                RenderBarColumn(item);
+            }
+            RenderMarginColumn("plot-area-right-margin", null);
+        }
 
-                decimal top = Props.PlotHeightPixels - height;
-                decimal barWidth = Props.BarWidthPixels;
+        private void RenderBarColumn(ChartDataItem item)
+        {
+            decimal height;
+            if (_isBrowserIE)
+            {
+                height = (item.Value * _pxPerUnit);
+                height = height == 0m ? 1m : height;
+            }
+            else
+            {
+                height = (item.Value*_pxPerUnit) - _defaultLineWidthPx;
+                height = height < 0m ? 0m : height;
+            }
+
+            decimal top = Props.PlotHeightPixels - height;
+            decimal barWidth = Props.BarWidthPixels;
                 
-                string html = (string.Format(@"
-                    <td title='{0}: {1:" + Props.DataFormat + @"}' class='plot-area-column' 
+            string html = (string.Format(@"
+                    <td title='{0:" + Props.LabelFormat + "}: {1:" + Props.DataFormat + @"}' class='plot-area-column' 
                             style='height: {2}px; border-bottom-width: {7}px; border-bottom-style: solid;
                             border-top-width: {7}px; vertical-align: bottom; padding: 0 {3}px; 
                             overflow:hidden;'>
                         <div class='bar' style='height: {4}px; width: {5}px; position: relative; 
                                 border-style: none;'>" +
-                          (Props.ShowDataLabels ?
-                          @"
+                                         (Props.ShowDataLabels ? @"
                             <div class='data-label' style='position: absolute; top: -{8}px; 
                                     width: 100%; text-align:center;'>
                               {1:" + Props.DataFormat + @"}
-                            </div>" : null) +
-                          @"<div style='width: {5}px; height: 1px; font-size: 1px;'></div>
+                            </div>" : null) + @"
+                            <div style='width: {5}px; height: 1px; font-size: 1px;'></div>
                         </div>
                      </td>",
-                    item.Label, item.Value, Props.PlotHeightPixels, Props.BarSpacingPx,
-                    height, barWidth, top, _defaultLineWidthPx, _dataLabelVerticalOffset
-                    ));
+                     item.Label, item.Value, Props.PlotHeightPixels, Props.BarSpacingPixels,
+                     height, barWidth, top, _defaultLineWidthPx, _dataLabelVerticalOffset
+                ));
 
-                RenderText(html);
-            }
+            RenderText(html);
+        }
 
+        private void RenderMarginColumn(string cssClass, string additionalAttributes)
+        {
             RenderText(string.Format(@"
-                  <td class='plot-area-right-margin' style='padding:0; width:{0}px; 
-                        height: {1}px; border-right-width: 1px; border-bottom-width: {2}px; 
-                        border-bottom-style: solid;'>
-                    <div style='width: {0}px; height 1px;'></div>
+                  <td class='{0}' style='padding:0; height: {1}px; width: {2}px;
+                        border-width: {3}px; border-bottom-style: solid; {4}'>
+                    <div style='width: {2}px; height 1px;'></div>
                   </td>",
-                Props.BarSpacingPx, Props.PlotHeightPixels, _defaultLineWidthPx));
+                  cssClass, Props.PlotHeightPixels, Props.BarSpacingPixels, _defaultLineWidthPx,
+                  additionalAttributes));
         }
 
         private void RenderXAxisLabels()
         {
             RenderText(string.Format(@"
                 <tr><td colspan='{0}'></td><td style='width:{1}px; padding:0;'></td>",
-                _hasYUnitLabel ? 2 : 1,  Props.BarSpacingPx));
+                _hasYUnitLabel ? 2 : 1,  Props.BarSpacingPixels));
 
+            int i = 0;
             foreach (ChartDataItem item in Props.Data)
             {
-                decimal columnCellWidth = Props.BarWidthPixels + (Props.BarSpacingPx * 2);
+                bool showLabel = Math.IEEERemainder(i, Props.LabelInterval) == 0;
                 RenderText(string.Format(@"
                       <td class='x-label' style='padding: 1px; overflow:hidden;'>
                         <div style='position:absolute; width: {1}px; margin-right: 0; text-align:center;'>
                           {0:" + Props.LabelFormat + @"}
                         </div>
-                      </td>", 
-                      item.Label, columnCellWidth));
+                      </td>",
+                      showLabel ? item.Label : null, _columnCellWidth));
+                i++;
             }
 
             RenderText(string.Format(@"
                     <td style='width:{0}px; padding:0;'></td></tr>",
-                Props.BarSpacingPx));
+                Props.BarSpacingPixels));
         }
 
         private void RenderYUnitLabel()
