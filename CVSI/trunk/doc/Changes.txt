@@ -1,18 +1,42 @@
++==================================================================+
+| Changes to Castle Visual Studio Integration and Castle NVelocity |
++==================================================================+
+
+0.1.3 Preview 1 Update (2007-07-27)
+===================================
+- Fixed CONTRIB-49: "Wrong colorization"
+  - Directive parameters are now only scanned for on the same line as the start of the directive.
+
+- Fixed CONTRIB-37: "double clicking to select a word selects more than it needs to, or sometimes nothing."
+  - All words and sets of spaces in all states are now returned to Visual Studio as seperate tokens
+    when the scanner 'SplitTextTokens' option is enabled.
+
+- Fixed CONTRIB-35: "Problem with colorizer with multiple files open"
+  - Each file now has a seperate NVelocity Line Scanner and Castle.NVelocity scanner.
+
+- Fixed CONTRIB-45: "Implement a different coloring for non-syntax-colored sections"
+  - CDATA sections were made gray in the previous release so script elements are now treated as a normal
+    XML element and requires a CDATA block otherwise the JavaScript will be scanned for XML tags as does
+    the Visual Studio XML editor.
+
+- Fixed various other unreported bugs.
+
+- Implemented functionality into the scanner to support a LL(k) parser.
+
 0.1.2 Preview 1 Update (2007-07-13)
 ===================================
-- Fixed CONTRIB-43
-  "Crash when inserting <![CDATA["
+- Fixed CONTRIB-43: "Crash when inserting <![CDATA["
 
 0.1.1 Preview 1 Update (2007-07-12)
 ===================================
-- Fixed CONTRIB-36
-  "Pound Sign As A Literal Causes Trouble"
+- Fixed CONTRIB-36: "Pound Sign As A Literal Causes Trouble"
 
-- Fixed various bugs with directives and references in different states that relates to CONTRIB-36
+- Fixed various bugs with directives and references in different states that relates to CONTRIB-36.
 
-- Changed the error messages so that the scanner state name displayed is more friendly
+- Changed the error messages so that the scanner state name displayed is more friendly.
 
-- Made directive left and right parentheses colourise the same as the hash and name (default blue)
+- Made directive left and right parentheses colourise the same as the hash and name (default blue).
 
 0.1.0 Preview 1 (2007-07-01)
 ============================
+- Initial Public Release as a MSI.

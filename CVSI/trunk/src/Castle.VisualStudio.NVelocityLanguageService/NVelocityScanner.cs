@@ -27,6 +27,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
         public NVelocityScanner()
         {
             scanner.IsLineScanner = true;
+            scanner.SplitTextTokens = true;
 
             // Insert the state for the initial line number
             Stack<ScannerState> initialState = new Stack<ScannerState>();

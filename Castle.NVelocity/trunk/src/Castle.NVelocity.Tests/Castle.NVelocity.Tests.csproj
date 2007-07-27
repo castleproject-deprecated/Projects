@@ -38,6 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ScannerTests\LineScannerTestCase.cs" />
+    <Compile Include="ScannerTests\SplitTokenTestCase.cs" />
+    <Compile Include="ScannerTests\TokenLookAhead.cs" />
     <Compile Include="ScannerTests\TokenPositionTestCase.cs" />
     <Compile Include="ScannerTests\NVelocityTokenTestCase.cs" />
     <Compile Include="ScannerTests\NVelocityCommentTestCase.cs" />

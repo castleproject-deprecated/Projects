@@ -186,5 +186,46 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
             AssertEOF();
         }
+
+        [Test]
+        public void DirectiveParamsAreOnlyScannedForOnTheSameLineAsTheDirective()
+        {
+            scanner.SetSource(
+                "#foreach ($item in $items)\n" +
+                "  #nodata\n" +
+                "    (none available)\n" +
+                "#end");
+
+            AssertMatchToken(TokenType.NVDirectiveHash);
+            AssertMatchToken(TokenType.NVDirectiveName, "foreach");
+            AssertMatchToken(TokenType.NVDirectiveLParen);
+            AssertMatchToken(TokenType.NVDollar);
+            AssertMatchToken(TokenType.NVIdentifier, "item");
+            AssertMatchToken(TokenType.NVIn);
+            AssertMatchToken(TokenType.NVDollar);
+            AssertMatchToken(TokenType.NVIdentifier, "items");
+            AssertMatchToken(TokenType.NVDirectiveRParen);
+
+            AssertMatchToken(TokenType.XmlText, "\n  ");
+            AssertMatchToken(TokenType.NVDirectiveHash);
+            AssertMatchToken(TokenType.NVDirectiveName, "nodata");
+
+            AssertMatchToken(TokenType.XmlText, "\n    (none available)\n");
+
+            AssertMatchToken(TokenType.NVDirectiveHash);
+            AssertMatchToken(TokenType.NVDirectiveName, "end");
+        }
+
+        [Test]
+        public void DirectivesWithoutParamsDoNotConsumeFollowingWhitespaceWhenFollowedByLParenOnNextLine()
+        {
+            scanner.SetSource(
+                "#stop   \n" +
+                "(text)");
+
+            AssertMatchToken(TokenType.NVDirectiveHash);
+            AssertMatchToken(TokenType.NVDirectiveName, "stop");
+            AssertMatchToken(TokenType.XmlText, "   \n(text)");
+        }
     }
 }

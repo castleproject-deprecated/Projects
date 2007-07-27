@@ -136,5 +136,49 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
             AssertEOF();
         }
+
+        [Test]
+        public void NVStringLiteralWithDollarAmountShouldBeASingleToken()
+        {
+            scanner.SetSource(
+                "$a.B(\"$100\")");
+
+            AssertMatchToken(TokenType.NVDollar);
+            AssertMatchToken(TokenType.NVIdentifier, "a");
+            AssertMatchToken(TokenType.NVDot);
+            AssertMatchToken(TokenType.NVIdentifier, "B");
+            AssertMatchToken(TokenType.NVLParen);
+            AssertMatchToken(TokenType.NVDoubleQuote);
+            AssertMatchToken(TokenType.NVStringLiteral, "$100");
+            AssertMatchToken(TokenType.NVDoubleQuote);
+            AssertMatchToken(TokenType.NVRParen);
+        }
+
+        [Test]
+        public void NVStringLiteralWithDirectiveShouldBeScanned()
+        {
+            scanner.SetSource(
+                "$a.B(\"#if(true)$a#end\")");
+
+            AssertMatchToken(TokenType.NVDollar);
+            AssertMatchToken(TokenType.NVIdentifier, "a");
+            AssertMatchToken(TokenType.NVDot);
+            AssertMatchToken(TokenType.NVIdentifier, "B");
+            AssertMatchToken(TokenType.NVLParen);
+            AssertMatchToken(TokenType.NVDoubleQuote);
+            
+            AssertMatchToken(TokenType.NVDirectiveHash);
+            AssertMatchToken(TokenType.NVDirectiveName, "if");
+            AssertMatchToken(TokenType.NVDirectiveLParen);
+            AssertMatchToken(TokenType.NVTrue);
+            AssertMatchToken(TokenType.NVDirectiveRParen);
+            AssertMatchToken(TokenType.NVDollar);
+            AssertMatchToken(TokenType.NVIdentifier, "a");
+            AssertMatchToken(TokenType.NVDirectiveHash);
+            AssertMatchToken(TokenType.NVDirectiveName, "end");
+
+            AssertMatchToken(TokenType.NVDoubleQuote);
+            AssertMatchToken(TokenType.NVRParen);
+        }
     }
 }

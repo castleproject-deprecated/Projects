@@ -43,6 +43,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="big file.vm" />
     <None Include="Example5.vm" />
     <None Include="Example3.vm" />
     <None Include="Example2.vm" />

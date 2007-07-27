@@ -256,16 +256,18 @@ namespace Castle.NVelocity.Tests.ScannerTests
         }
 
         [Test]
-        public void IgnoreElementsInScriptElement()
+        public void CDataSectionWithinScriptElementIsScanned()
         {
             scanner.SetSource(
-                "<script>text<strong>text</script>");
+                "<script><![CDATA[ JS Here ]]></script>");
 
             AssertMatchToken(TokenType.XmlTagStart);
             AssertMatchToken(TokenType.XmlTagName, "script");
             AssertMatchToken(TokenType.XmlTagEnd);
 
-            AssertMatchToken(TokenType.XmlText, "text<strong>text");
+            AssertMatchToken(TokenType.XmlCDataStart);
+            AssertMatchToken(TokenType.XmlCDataSection, " JS Here ");
+            AssertMatchToken(TokenType.XmlCDataEnd);
 
             AssertMatchToken(TokenType.XmlTagStart);
             AssertMatchToken(TokenType.XmlForwardSlash);
@@ -273,32 +275,52 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlTagEnd);
         }
 
-        [Test]
-        public void IgnoreElementsInScriptElementInAnotherElement()
-        {
-            scanner.SetSource(
-                "<div><script>text<strong>text</script></div>");
+        //[Test]
+        //[Ignore("Script elements are now treated as normal XML elements which require CDATA sections.")]
+        //public void IgnoreElementsInScriptElement()
+        //{
+        //    scanner.SetSource(
+        //        "<script>text<strong>text</script>");
 
-            AssertMatchToken(TokenType.XmlTagStart);
-            AssertMatchToken(TokenType.XmlTagName, "div");
-            AssertMatchToken(TokenType.XmlTagEnd);
+        //    AssertMatchToken(TokenType.XmlTagStart);
+        //    AssertMatchToken(TokenType.XmlTagName, "script");
+        //    AssertMatchToken(TokenType.XmlTagEnd);
 
-            AssertMatchToken(TokenType.XmlTagStart);
-            AssertMatchToken(TokenType.XmlTagName, "script");
-            AssertMatchToken(TokenType.XmlTagEnd);
+        //    AssertMatchToken(TokenType.XmlText, "text<strong>text");
 
-            AssertMatchToken(TokenType.XmlText, "text<strong>text");
+        //    AssertMatchToken(TokenType.XmlTagStart);
+        //    AssertMatchToken(TokenType.XmlForwardSlash);
+        //    AssertMatchToken(TokenType.XmlTagName, "script");
+        //    AssertMatchToken(TokenType.XmlTagEnd);
+        //}
 
-            AssertMatchToken(TokenType.XmlTagStart);
-            AssertMatchToken(TokenType.XmlForwardSlash);
-            AssertMatchToken(TokenType.XmlTagName, "script");
-            AssertMatchToken(TokenType.XmlTagEnd);
+        //[Test]
+        //[Ignore("Script elements are now treated as normal XML elements which require CDATA sections.")]
+        //public void IgnoreElementsInScriptElementInAnotherElement()
+        //{
+        //    scanner.SetSource(
+        //        "<div><script>text<strong>text</script></div>");
 
-            AssertMatchToken(TokenType.XmlTagStart);
-            AssertMatchToken(TokenType.XmlForwardSlash);
-            AssertMatchToken(TokenType.XmlTagName, "div");
-            AssertMatchToken(TokenType.XmlTagEnd);
-        }
+        //    AssertMatchToken(TokenType.XmlTagStart);
+        //    AssertMatchToken(TokenType.XmlTagName, "div");
+        //    AssertMatchToken(TokenType.XmlTagEnd);
+
+        //    AssertMatchToken(TokenType.XmlTagStart);
+        //    AssertMatchToken(TokenType.XmlTagName, "script");
+        //    AssertMatchToken(TokenType.XmlTagEnd);
+
+        //    AssertMatchToken(TokenType.XmlText, "text<strong>text");
+
+        //    AssertMatchToken(TokenType.XmlTagStart);
+        //    AssertMatchToken(TokenType.XmlForwardSlash);
+        //    AssertMatchToken(TokenType.XmlTagName, "script");
+        //    AssertMatchToken(TokenType.XmlTagEnd);
+
+        //    AssertMatchToken(TokenType.XmlTagStart);
+        //    AssertMatchToken(TokenType.XmlForwardSlash);
+        //    AssertMatchToken(TokenType.XmlTagName, "div");
+        //    AssertMatchToken(TokenType.XmlTagEnd);
+        //}
 
         [Test]
         public void HashNotFollowedByTextIsXmlText()

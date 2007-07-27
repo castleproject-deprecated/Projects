@@ -52,7 +52,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
     [Guid(NVelocityConstants.LanguageServiceGuidString)]
     public class NVelocityLanguage : LanguageService
     {
-        private NVelocityScanner lineScanner;
+        //private NVelocityScanner lineScanner;
         private LanguagePreferences preferences;
 
         private readonly ColorableItem[] _colorableItems;
@@ -122,7 +122,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                 }
 
                 // Dispose the scanner
-                lineScanner = null;
+                //lineScanner = null;
             }
             finally
             {
@@ -149,9 +149,13 @@ namespace Castle.VisualStudio.NVelocityLanguageService
 
         public override IScanner GetScanner(IVsTextLines buffer)
         {
-            if (lineScanner == null)
-                lineScanner = new NVelocityScanner();
-            return lineScanner;
+            // Return a new scanner for every file because Visual Studio calls this method
+            // for every file that is opened.
+            return new NVelocityScanner();
+
+            //if (lineScanner == null)
+            //    lineScanner = new NVelocityScanner();
+            //return lineScanner;
         }
 
         public override string Name

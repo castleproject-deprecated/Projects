@@ -14,16 +14,27 @@
 
 namespace Castle.NVelocity
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
 
     public class Scanner
     {
+        /// <summary>
+        /// Represents the method that defines a set of criteria and determines
+        /// whether the scanner should stop scanning when it meets those criteria.
+        /// </summary>
+        /// <returns>
+        /// Returns true if the scanner should stop scanning at the current character
+        /// because it meets the criteria defined within the method represented by this
+        /// delegate; otherwise, false.
+        /// </returns>
+        private delegate bool StopScanningDelegate();
+
         private static readonly char CR = '\r';
         private static readonly char LF = '\n';
 
         private Stack<ScannerState> state = new Stack<ScannerState>();
+        private Queue<Token> _prereadTokens = new Queue<Token>();
 
         private char ch;
         private string _source;
@@ -37,18 +48,21 @@ namespace Castle.NVelocity
         private readonly Dictionary<string, TokenType> nvKeywords = new Dictionary<string, TokenType>();
 
         private bool isLineScanner = false;
+        private bool splitTextTokens = false;
 
+        /// <summary>
+        /// Creates a new Scanner.
+        /// </summary>
         public Scanner()
         {
             SetUpReservedWords();
         }
 
-        public bool IsLineScanner
-        {
-            get { return isLineScanner; }
-            set { isLineScanner = value; }
-        }
-
+        /// <summary>
+        /// Sets the stack of state information to the scanner. The scanner copies the data from
+        /// the stack and does not use the passed instance of a stack.
+        /// </summary>
+        /// <param name="restoredState"></param>
         public void RestoreState(Stack<ScannerState> restoredState)
         {
             if (restoredState != null)
@@ -57,11 +71,20 @@ namespace Castle.NVelocity
             }
         }
 
+        /// <summary>
+        /// Returns the stack of state information from the scanner. The returned stack a new
+        /// stack created from the data in the state.
+        /// </summary>
+        /// <returns></returns>
         public Stack<ScannerState> RetrieveState()
         {
             return new Stack<ScannerState>(state.ToArray());
         }
 
+        /// <summary>
+        /// Initialises the scanner with an input ready for scanner.
+        /// </summary>
+        /// <param name="source">The input template source.</param>
         public void SetSource(string source)
         {
             if (!isLineScanner || state.Count == 0)
@@ -70,6 +93,7 @@ namespace Castle.NVelocity
                 state.Push(ScannerState.Default);
             }
 
+            _prereadTokens.Clear();
             ch = default(char);
             _source = source;
             pos = 1;
@@ -87,27 +111,62 @@ namespace Castle.NVelocity
             ch = source[0];
             linestarts.Add(0);
         }
-    
+
+        /// <summary>
+        /// Returns the current position of the scanner.
+        /// </summary>
         public Position CurrentPos
         {
             get { return currPos; }
         }
 
+        /// <summary>
+        /// Returns the previous position of the scanner.
+        /// </summary>
         public Position PreviousPos
         {
             get { return prevPos; }
         }
 
+        /// <summary>
+        /// Returns the current state of the scanner.
+        /// </summary>
         public ScannerState CurrentState
         {
             get { return state.Peek(); }
         }
 
+        /// <summary>
+        /// Returns whether the scanner is at the end of the input.
+        /// </summary>
         public bool EOF
         {
             get { return eof; }
         }
 
+        /// <summary>
+        /// Specifies whether the scanner should return error when reaching the end of the input
+        /// with unclosed syntax.
+        /// </summary>
+        public bool IsLineScanner
+        {
+            get { return isLineScanner; }
+            set { isLineScanner = value; }
+        }
+
+        /// <summary>
+        /// Specifies whether XML and NVelocity text tokens should be returned as multiple tokens
+        /// based on word boundaries.
+        /// </summary>
+        public bool SplitTextTokens
+        {
+            get { return splitTextTokens; }
+            set { splitTextTokens = value; }
+        }
+
+        /// <summary>
+        /// Moves the current position to the next character in the input.
+        /// </summary>
         private void GetCh()
         {
             if (pos >= _source.Length)
@@ -139,20 +198,73 @@ namespace Castle.NVelocity
             }
         }
 
+        /// <summary>
+        /// Moves the current position the specified number of characters ahead.
+        /// </summary>
+        /// <param name="count">The number of characters to move over.</param>
         private void GetCh(int count)
         {
             for (int i = 0; i < count; i++)
                 GetCh();
         }
 
+        /// <summary>
+        /// Returns the character at the specified number of characters ahead from the current position.
+        /// </summary>
+        /// <param name="lookAhead">The number of character to look ahead.</param>
+        /// <returns>The character at the specified number of characters ahead from the current position.</returns>
         private char LookAhead(int lookAhead)
         {
             if (pos+lookAhead > _source.Length)
+            {
                 return default(char);
+            }
+
             return _source[pos-1 + lookAhead];
         }
 
+        /// <summary>
+        /// Returns the next token from the current position.
+        /// </summary>
+        /// <returns>The next token from the current position.</returns>
         public Token GetToken()
+        {
+            if (_prereadTokens.Count > 0)
+            {
+                return _prereadTokens.Dequeue();
+            }
+
+            return GetNextToken();
+        }
+
+        /// <summary>
+        /// Returns the token at the specificed lookahead count.
+        /// </summary>
+        /// <param name="lookAhead">The number of tokens to lookahead.</param>
+        /// <returns>The token at the specified lookahead count.</returns>
+        public Token PeekToken(int lookAhead)
+        {
+            // Keep scanning and storing tokens until it has 'lookAhead' number of tokens
+            while (_prereadTokens.Count < lookAhead && !eof)
+            {
+                Token token = GetNextToken();
+                _prereadTokens.Enqueue(token);
+            }
+
+            // Return the token from the queue
+            if (_prereadTokens.Count >= lookAhead)
+            {
+                return _prereadTokens.ToArray()[lookAhead - 1];
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Returns the next token from the scanner beginning from the current internal position,
+        /// which ignores the preread tokens.
+        /// </summary>
+        /// <returns>The next token from the scanner.</returns>
+        private Token GetNextToken()
         {
             if (ch == default(char))
                 return null;
@@ -239,6 +351,10 @@ namespace Castle.NVelocity
             return token;
         }
 
+        /// <summary>
+        /// Scans the input and returns XML text tokens.
+        /// </summary>
+        /// <returns>XML text tokens.</returns>
         private Token ScanTokenDefault()
         {
             Token token = new Token();
@@ -271,7 +387,8 @@ namespace Castle.NVelocity
                         return token;
                     }
                     else if (LookAhead(2) == '[' && LookAhead(3) == 'C' && LookAhead(4) == 'D' &&
-                             LookAhead(5) == 'A' && LookAhead(6) == 'T' && LookAhead(7) == 'A' && LookAhead(8) == '[')
+                             LookAhead(5) == 'A' && LookAhead(6) == 'T' && LookAhead(7) == 'A' &&
+                             LookAhead(8) == '[')
                     {
                         // It is an XML CData section
                         GetCh(9);
@@ -339,32 +456,109 @@ namespace Castle.NVelocity
             // If it is not any other type of parseable syntax
             if (scanXmlText)
             {
-                int startPos = pos;
-                bool isText = true;
-                while (isText && !eof)
+                token = ReadText(TokenType.XmlText, delegate
                 {
-                    if (ch == '#' && NVDirectiveFollows())
+                    return ch == '<' ||
+                           (ch == '#' && NVDirectiveFollows()) ||
+                           (ch == '$' && NVReferenceFollows());
+                });
+            }
+
+            token.SetEndPosition(lineNo, linePos);
+
+            return token;
+        }
+
+        private Token ReadText(TokenType tokenType, StopScanningDelegate stopScanningDelegate)
+        {
+            Token token = new Token();
+            token.SetStartPosition(lineNo, linePos);
+
+            int startPos = pos;
+            bool isText = true;
+            bool inWord = false;
+            bool inSpace = false;
+            bool hasTokenToReturn = false;
+
+            while (isText && !hasTokenToReturn && !eof)
+            {
+                // The predicate is used to decide whether the current character is text
+                // or it belongs to something else (eg. directive or reference).
+                if (stopScanningDelegate.Invoke())
+                {
+                    isText = false;
+                }
+                else
+                {
+                    if (splitTextTokens)
                     {
-                        isText = false;
-                    }
-                    else if (ch == '$' && NVReferenceFollows())
-                    {
-                        isText = false;
-                    }
-                    else if (ch == '<')
-                    {
-                        isText = false;
+                        if (char.IsLetter(ch))
+                        {
+                            if (inSpace)
+                            {
+                                // End of space found
+                                inSpace = false;
+                                hasTokenToReturn = true;
+                            }
+                            else
+                            {
+                                if (!inWord)
+                                {
+                                    // Entering a new word
+                                    inWord = true;
+                                }
+                                GetCh();
+                            }
+                        }
+                        else if (char.IsWhiteSpace(ch))
+                        {
+                            if (inWord)
+                            {
+                                // End of word found
+                                inWord = false;
+                                hasTokenToReturn = true;
+                            }
+                            else
+                            {
+                                if (!inSpace)
+                                {
+                                    // Entering new space block
+                                    inSpace = true;
+                                }
+                                GetCh();
+                            }
+                        }
+                        else
+                        {
+                            if (inWord)
+                            {
+                                // End of word found
+                                inWord = false;
+                                hasTokenToReturn = true;
+                            }
+                            else if (inSpace)
+                            {
+                                // End of space block found
+                                inSpace = false;
+                                hasTokenToReturn = true;
+                            }
+                            else
+                            {
+                                hasTokenToReturn = true;
+                                GetCh();
+                            }
+                        }
                     }
                     else
                     {
                         GetCh();
                     }
                 }
-                token.Type = TokenType.XmlText;
-                token.Image = _source.Substring(startPos - 1, pos - startPos); 
             }
-
+            
             token.SetEndPosition(lineNo, linePos);
+            token.Type = tokenType;
+            token.Image = _source.Substring(startPos - 1, pos - startPos);
 
             return token;
         }
@@ -417,7 +611,9 @@ namespace Castle.NVelocity
                 int startPos = pos;
                 GetCh();
                 while (char.IsLetterOrDigit(ch) || ch == '.' || ch == '-' || ch == '_' || ch == ':')
+                {
                     GetCh();
+                }
 
                 token.Image = _source.Substring(startPos - 1, pos - startPos);
 
@@ -425,23 +621,30 @@ namespace Castle.NVelocity
                 {
                     token.Type = TokenType.XmlTagName;
 
-                    if (token.Image == "script")
-                    {
-                        // Pop off the current tag and push on a script element content section so
-                        // when this tag finishes the scanner will be in the script element content.
+                    // This is commented out to disable the script element content state, script
+                    // elements will be treated just like normal XML elements
 
-                        state.Pop(); // Pop XmlTag
+                    //if (token.Image == "script")
+                    //{
+                    //    // Pop off the current tag and push on a script element content section so
+                    //    // when this tag finishes the scanner will be in the script element content.
 
-                        // If the scanner is already in a script element content when it gets to this
-                        // tag then this must be the end tag, so we can pop off the script element
-                        // content and push back on the XmlTag
-                        if (state.Peek() == ScannerState.XmlScriptElementContent)
-                            state.Pop(); // XmlScriptElementContent
-                        else
-                            state.Push(ScannerState.XmlScriptElementContent);
+                    //    state.Pop(); // Pop XmlTag
 
-                        state.Push(ScannerState.XmlTag); // Put it back
-                    }
+                    //    // If the scanner is already in a script element content when it gets to this
+                    //    // tag then this must be the end tag, so we can pop off the script element
+                    //    // content and push back on the XmlTag
+                    //    if (state.Peek() == ScannerState.XmlScriptElementContent)
+                    //    {
+                    //        state.Pop(); // XmlScriptElementContent
+                    //    }
+                    //    else
+                    //    {
+                    //        state.Push(ScannerState.XmlScriptElementContent);
+                    //    }
+
+                    //    state.Push(ScannerState.XmlTag); // Put it back
+                    //}
 
                     state.Push(ScannerState.XmlTagAttributes); // It is now in the attributes section
                 }
@@ -513,17 +716,15 @@ namespace Castle.NVelocity
                 return token;
             }
 
-            int startPos = pos;
-            while (!(ch == ']' && LookAhead(1) == ']' && LookAhead(2) == '>') && !eof)
-                GetCh();
+            token = ReadText(TokenType.XmlCDataSection, delegate
+            {
+                return (ch == ']' && LookAhead(1) == ']' && LookAhead(2) == '>') || eof;
+            });
 
             if (eof && !isLineScanner)
+            {
                 throw new ScannerError("End-of-file found but CData section was not closed");
-
-            token.Type = TokenType.XmlCDataSection;
-            token.Image = _source.Substring(startPos - 1, pos - startPos);
-
-            token.SetEndPosition(lineNo, linePos);
+            }
 
             return token;
         }
@@ -557,35 +758,20 @@ namespace Castle.NVelocity
                 GetCh();
                 scanXmlText = false;
             }
-            
+
             if (scanXmlText)
             {
-                int startPos = pos;
-                bool isText = true;
-                while (isText && !eof)
+                token = ReadText(TokenType.XmlAttributeText, delegate
                 {
-                    if (ch == '#' && NVDirectiveFollows())
-                    {
-                        isText = false;
-                    }
-                    else if (ch == '$' && NVReferenceFollows())
-                    {
-                        isText = false;
-                    }
-                    else if (ch == '"')
-                    {
-                        isText = false;
-                    }
-                    else
-                    {
-                        GetCh();
-                    }
-                }
-
-                if (eof && !isLineScanner)
-                    throw new ScannerError("End-of-file found but quoted string literal was not closed");
-                token.Type = TokenType.XmlAttributeText;
-                token.Image = _source.Substring(startPos - 1, pos - startPos);
+                    return ch == '"' ||
+                           (ch == '#' && NVDirectiveFollows()) ||
+                           (ch == '$' && NVReferenceFollows());
+                });
+            }
+            
+            if (eof && !isLineScanner)
+            {
+                throw new ScannerError("End-of-file found but quoted string literal was not closed");
             }
 
             token.SetEndPosition(lineNo, linePos);
@@ -611,22 +797,18 @@ namespace Castle.NVelocity
                 return token;
             }
 
-            int startPos = pos;
-            while (!(ch == '<' && LookAhead(1) == '/' &&
-                LookAhead(2) == 's' && LookAhead(3) == 'c' && LookAhead(4) == 'r' &&
-                LookAhead(5) == 'i' && LookAhead(6) == 'p' && LookAhead(7) == 't' &&
-                LookAhead(8) == '>') && !eof)
+            // Scan for text
+            token = ReadText(TokenType.XmlText, delegate
             {
-                GetCh();
-            }
+                return ch == '<' && LookAhead(1) == '/' && LookAhead(2) == 's' &&
+                       LookAhead(3) == 'c' && LookAhead(4) == 'r' && LookAhead(5) == 'i' &&
+                       LookAhead(6) == 'p' && LookAhead(7) == 't' && LookAhead(8) == '>';
+            });
 
-            if (eof)
+            if (eof && !isLineScanner)
+            {
                 throw new ScannerError("Expected closing 'script' element");
-
-            token.Type = TokenType.XmlText;
-            token.Image = _source.Substring(startPos - 1, pos - startPos);
-
-            token.SetEndPosition(lineNo, linePos);
+            }
 
             return token;
         }
@@ -682,23 +864,31 @@ namespace Castle.NVelocity
             {
                 int startPos = pos;
                 while (char.IsLetter(ch))
+                {
                     GetCh();
+                }
                 token.Type = TokenType.NVDirectiveName;
                 token.Image = _source.Substring(startPos - 1, pos - startPos);
 
                 if (hasBraces)
                 {
                     if (ch == '}')
+                    {
                         GetCh();
+                    }
                     else
+                    {
                         throw new ScannerError("Expected '}' for closing directive name");
+                    }
                 }
 
                 state.Pop(); // Pop NVPreDirective
                 state.Push(ScannerState.NVDirective);
             }
             else
+            {
                 token.Type = TokenType.Error;
+            }
 
             token.SetEndPosition(lineNo, linePos);
 
@@ -709,11 +899,10 @@ namespace Castle.NVelocity
         {
             Token token = new Token();
 
-            token.SetStartPosition(lineNo, linePos);
-
-            if (NextCharAfterWhiteSpace() == '(')
+            if (NextCharAfterSingleLineWhiteSpace() == '(')
             {
                 ConsumeSingleLineWhiteSpace();
+                token.SetStartPosition(lineNo, linePos);
                 token.Type = TokenType.NVDirectiveLParen;
                 GetCh();
 
@@ -736,10 +925,9 @@ namespace Castle.NVelocity
 
             ConsumeSingleLineWhiteSpace();
 
-            token.SetStartPosition(lineNo, linePos);
-
             if (ch == ')')
             {
+                token.SetStartPosition(lineNo, linePos);
                 token.Type = TokenType.NVDirectiveRParen;
                 GetCh();
                 state.Pop(); // Pop NVDirectiveParams
@@ -855,19 +1043,15 @@ namespace Castle.NVelocity
                 return token;
             }
 
-            int startPos = pos;
-            while (ch != '\'' && !eof)
-                GetCh();
-
-            if (ch == '\'')
+            token = ReadText(TokenType.NVStringLiteral, delegate
             {
-                token.Type = TokenType.NVStringLiteral;
-                token.Image = _source.Substring(startPos - 1, pos - startPos);
-            }
-            else
-                throw new ScannerError("Expected end of string literal");
+                return ch == '\'';
+            });
 
-            token.SetEndPosition(lineNo, linePos);
+            if (eof && !isLineScanner)
+            {
+                throw new ScannerError("Expected end of string literal");
+            }
 
             return token;
         }
@@ -886,36 +1070,36 @@ namespace Castle.NVelocity
                 token.SetEndPosition(lineNo, linePos);
                 return token;
             }
-            else if (ch == '$')
+            else if (ch == '#' && NVDirectiveFollows())
             {
-                if (NVReferenceFollows())
-                {
-                    token.Type = TokenType.NVDollar;
-                    state.Push(ScannerState.NVReference);
-                }
-                else
-                {
-                    token.Type = TokenType.NVStringLiteral;
-                    token.Image = "$";
-                }
+                token.Type = TokenType.NVDirectiveHash;
+                state.Push(ScannerState.NVPreDirective);
+                
+                GetCh();
+                token.SetEndPosition(lineNo, linePos);
+                return token;
+            }
+            else if (ch == '$' && NVReferenceFollows())
+            {
+                token.Type = TokenType.NVDollar;
+                state.Push(ScannerState.NVReference);
+
                 GetCh();
                 token.SetEndPosition(lineNo, linePos);
                 return token;
             }
 
-            int startPos = pos;
-            while (ch != '"' && ch != '$' && !eof)
-                GetCh();
-
-            if (!eof)
+            token = ReadText(TokenType.NVStringLiteral, delegate
             {
-                token.Type = TokenType.NVStringLiteral;
-                token.Image = _source.Substring(startPos - 1, pos - startPos);
-            }
-            else
-                throw new ScannerError("Expected end of string literal");
+                return ch == '"' ||
+                       (ch == '#' && NVDirectiveFollows()) ||
+                       (ch == '$' && NVReferenceFollows());
+            });
 
-            token.SetEndPosition(lineNo, linePos);
+            if (eof && !isLineScanner)
+            {
+                throw new ScannerError("Expected end of string literal");
+            }
 
             return token;
         }
@@ -1076,14 +1260,23 @@ namespace Castle.NVelocity
         //    }
         //}
 
-        private char NextCharAfterWhiteSpace()
+        private char NextCharAfterSingleLineWhiteSpace()
         {
             int offset = 0;
-            while ((pos + offset < _source.Length) && char.IsWhiteSpace(_source[pos - 1 + offset]))
+            char currCh = _source[pos - 1 + offset];
+
+            while ((pos + offset < _source.Length)
+                && char.IsWhiteSpace(currCh)
+                && currCh != '\n')
             {
                 offset++;
+                currCh = _source[pos - 1 + offset];
             }
-            return _source[pos-1 + offset];
+
+            if (currCh == '\n')
+                return default(char);
+            else
+                return currCh;
         }
 
         private void ReadXmlComment()
@@ -1167,6 +1360,7 @@ namespace Castle.NVelocity
         private Token ReadNVelocityIdentifier()
         {
             Token token = new Token();
+            token.SetStartPosition(lineNo, linePos);
 
             int startPos = pos;
             GetCh();
@@ -1192,6 +1386,8 @@ namespace Castle.NVelocity
             Token token = new Token();
             
             ConsumeSingleLineWhiteSpace();
+
+            token.SetStartPosition(lineNo, linePos);
 
             if (char.IsLetter(ch) || ch == '_')
             {

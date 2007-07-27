@@ -22,7 +22,11 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
         protected void AssertMatchToken(TokenType tokenType)
         {
-            Token token = scanner.GetToken();
+            AssertMatchToken(tokenType, scanner.GetToken());
+        }
+
+        protected void AssertMatchToken(TokenType tokenType, Token token)
+        {
             CheckTokenType(token, tokenType);
         }
 
@@ -41,6 +45,12 @@ namespace Castle.NVelocity.Tests.ScannerTests
             CheckPosition(token, position);
         }
 
+        protected void AssertMatchToken(TokenType tokenType, string image, Token token)
+        {
+            CheckTokenType(token, tokenType);
+            CheckImage(token, image);
+        }
+
         protected void AssertMatchToken(TokenType tokenType, Position position)
         {
             Token token = scanner.GetToken();
@@ -56,20 +66,21 @@ namespace Castle.NVelocity.Tests.ScannerTests
         private void CheckTokenType(Token token, TokenType tokenType)
         {
             Assert.IsTrue(token.Type == tokenType,
-                string.Format("Expected token: '{0}' was '{1}'", tokenType, token.Type));
+                string.Format("Expected token: '{0}' was '{1}', actual image '{2}'.",
+                tokenType, token.Type, token.Image));
         }
 
         private void CheckPosition(Token token, Position position)
         {
-            Assert.IsNotNull(token.Position, "Position is null");
+            Assert.IsNotNull(token.Position, "Position is null.");
             Assert.IsTrue(token.Position.Equals(position),
-                string.Format("Expected position: [{0}] was [{1}]", position, token.Position));
+                string.Format("Expected position: [{0}] was [{1}].", position, token.Position));
         }
 
         private void CheckImage(Token token, string image)
         {
             Assert.IsTrue(token.Image == image,
-                string.Format("Expected image: '{0}' was '{1}'", image, token.Image));
+                string.Format("Expected image: '{0}' was '{1}'.", image, token.Image));
         }
     }
 }
