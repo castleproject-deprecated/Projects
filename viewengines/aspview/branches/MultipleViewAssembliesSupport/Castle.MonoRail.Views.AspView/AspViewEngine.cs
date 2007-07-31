@@ -78,7 +78,14 @@ namespace Castle.MonoRail.Views.AspView
 		#region ViewEngineBase implementation
 		public override bool HasTemplate(string templateName)
 		{
-			return ViewSourceLoader.HasTemplate(GetFileName(templateName));
+			string fileName = GetFileName(templateName);
+			string className = GetClassName(NormalizeFileName(fileName));
+			Type viewType = compilations[className] as Type;
+			
+			if (viewType != null)
+				return true;
+			else
+				return ViewSourceLoader.HasTemplate(fileName);
 		}
 		public override void Process(IRailsEngineContext context, Controller controller, string templateName)
 		{
