@@ -67,7 +67,7 @@ namespace Castle.MonoRail.ViewComponents
 
 					object val = property.GetValue(item, null) ?? "null";
 
-					RenderText(val.ToString());
+					RenderText(System.Web.HttpUtility.HtmlEncode(val.ToString()));
 					RenderEndCell();
 				}
 
@@ -127,7 +127,7 @@ namespace Castle.MonoRail.ViewComponents
 					continue;
 				}
 				RenderHeaderCellStart();
-				RenderText(SplitPascalCase(property.Name));
+				RenderText(System.Web.HttpUtility.HtmlEncode(SplitPascalCase(property.Name)));
 				RenderHeaderCellEnd();
 			}
 			if (Context.HasSection("moreHeader"))
