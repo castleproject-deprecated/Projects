@@ -1,4 +1,4 @@
-Preview 4
+Preview 3.1
 
 New:
 - CONTRIB-31: "Lazy" One-to-One relation. (Thanks: Gabriel Schenker)
@@ -10,6 +10,7 @@ Fixed:
 - Closing Contrib-25. ValidateNotSameAttribute Won't be supported ATM.
 - CONTRIB-33: When adding a table (SQL Server) to the designer which has a primary key of type uniqueidentifier ActiveWriter should use "Guid" instead of "Native" as generator (Thanks: Gabriel Schenker)
 - Assembly names in NHibernate configs are incorrectly stripped from the name. (Thanx: Fedde)
+- Removed dependency to MySQL.Data.dll to prevent runtime version conflicts. Moved to IDbConnection for all metadata retrieval jobs. (Thanks: Joao Paulo Marques and Shane)
 
 Preview 3
 
