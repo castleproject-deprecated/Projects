@@ -14,218 +14,233 @@
 
 namespace Altinoren.ActiveWriter.ServerExplorerSupport
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Data.Common;
-    using System.Data.SqlClient;
-    
-    internal class SqlHelper : IDbHelper
-    {
-        private SqlConnection _connection = null;
+	using System;
+	using System.Collections.Generic;
+	using System.Data;
 
-        public SqlHelper(SqlConnection connection)
-        {
-            Connection = connection;
-        }
+	internal class SqlHelper : IDbHelper
+	{
+		private IDbConnection _connection = null;
 
-        public IDbConnection Connection
-        {
-            get { return _connection; }
-            set { _connection = (SqlConnection) value; }
-        }
+		public SqlHelper(IDbConnection connection)
+		{
+			Connection = connection;
+		}
 
-        public List<Column> GetProperties(ModelClass cls)
-        {
-            List<Column> list = new List<Column>();
+		#region IDbHelper Members
 
-            SqlCommand command = GetColumnComand(cls.Table, cls.Schema);
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            DataSet data = new DataSet();
-            adapter.Fill(data);
+		public IDbConnection Connection
+		{
+			get { return _connection; }
+			set { _connection = value; }
+		}
 
-            if (data.Tables.Count > 0 && data.Tables[0].Rows.Count > 0)
-            {
-                foreach (DataRow row in data.Tables[0].Rows)
-                {
-                    Column column;
+		public List<Column> GetProperties(ModelClass cls)
+		{
+			List<Column> list = new List<Column>();
 
-                    column = list.Find(delegate(Column col)
-                                           {
-                                               return col.Name == row["COLUMN_NAME"].ToString();
-                                           }
-                        );
+			IDbCommand command = GetColumnCommand(cls.Table, cls.Schema);
+			using(IDataReader reader = command.ExecuteReader())
+			{
+				while(reader.Read())
+				{
+					Column column;
 
-                    if (column == null)
-                    {
-                        column = new Column();
-                        column.Name = row["COLUMN_NAME"].ToString();
-                        column.Schema = cls.Schema;
-                        column.Table = cls.Table;
-                        column.DataType = row["DATA_TYPE"].ToString();
-                        if (row["CONSTRAINT_TYPE"] != DBNull.Value)
-                        {
-                            switch (row["CONSTRAINT_TYPE"].ToString())
-                            {
-                                case "PRIMARY KEY":
-                                    column.Primary = true;
-                                    column.PrimaryConstraintName = row["CONSTRAINT_NAME"].ToString();
-                                    break;
-                                case "FOREIGN KEY":
-                                    column.ForeignConstraints.Add(row["CONSTRAINT_NAME"].ToString());
-                                    break;
-                                    // Check constraints not supported right now.
-                            }
-                        }
-                        column.Nullable = row["IS_NULLABLE"].ToString() == "NO" ? false : true;
-                        column.Identity = row["IS_IDENTITY"].ToString() == "1" ? true : false;
-                        column.Computed = row["IS_COMPUTED"].ToString() == "1" ? true : false;
+					column = list.Find(delegate(Column col) { return col.Name == reader["COLUMN_NAME"].ToString(); }
+						);
 
-                        list.Add(column);
-                    }
-                }
-            }
+					if (column == null)
+					{
+						column = new Column();
+						column.Name = reader["COLUMN_NAME"].ToString();
+						column.Schema = cls.Schema;
+						column.Table = cls.Table;
+						column.DataType = reader["DATA_TYPE"].ToString();
+						if (reader["CONSTRAINT_TYPE"] != DBNull.Value)
+						{
+							switch(reader["CONSTRAINT_TYPE"].ToString())
+							{
+								case "PRIMARY KEY":
+									column.Primary = true;
+									column.PrimaryConstraintName = reader["CONSTRAINT_NAME"].ToString();
+									break;
+								case "FOREIGN KEY":
+									column.ForeignConstraints.Add(reader["CONSTRAINT_NAME"].ToString());
+									break;
+									// Check constraints not supported right now.
+							}
+						}
+						column.Nullable = reader["IS_NULLABLE"].ToString() == "NO" ? false : true;
+						column.Identity = reader["IS_IDENTITY"].ToString() == "1" ? true : false;
+						column.Computed = reader["IS_COMPUTED"].ToString() == "1" ? true : false;
 
-            return list;
-        }
+						list.Add(column);
+					}
+				}
+			}
 
-        public NHibernateType GetNHibernateType(string type)
-        {
-            switch (type.ToUpperInvariant())
-            {
-                case "BIGINT":
-                    return NHibernateType.Int64;
-                case "INT":
-                    return NHibernateType.Int32;
-                case "SMALLINT":
-                    return NHibernateType.Int16;
-                case "TINYINT":
-                    return NHibernateType.Byte;
-                case "BIT":
-                    return NHibernateType.Boolean;
-                case "DECIMAL":
-                case "NUMERIC":
-                    return NHibernateType.Decimal;
-                case "MONEY":
-                    // TODO  DbType.Currency?
-                    break;
-                case "SMALLMONEY":
-                    // TODO:
-                    break;
-                case "FLOAT":
-                    return NHibernateType.Double; // TODO: synonym DOUBLE PRECISION ?
-                case "REAL":
-                    return NHibernateType.Single;
-                case "DATETIME":
-                    return NHibernateType.Timestamp; // TODO?
-                case "SMALLDATETIME":
-                    return NHibernateType.DateTime;
-                case "CHAR":
-                    return NHibernateType.AnsiChar; // TODO
-                case "VARCHAR":
-                    return NHibernateType.String; // TODO
-                case "TEXT":
-                    return NHibernateType.StringClob;
-                case "NCHAR":
-                    return NHibernateType.Char; // TODO
-                case "NVARCHAR":
-                    return NHibernateType.String; // TODO
-                case "NTEXT":
-                    return NHibernateType.StringClob; // TODO
-                case "BINARY":
-                    return NHibernateType.Binary;
-                case "IMAGE":
-                    return NHibernateType.Binary;
-                case "VARBINARY":
-                    return NHibernateType.Binary;
-                case "SQL_VARIANT":
-                    // TODO return NHibernateType.Serializable;
-                    break;
-                case "TIMESTAMP":
-                    return NHibernateType.Timestamp;
-                case "UNIQUEIDENTIFIER":
-                    return NHibernateType.Guid;
-                case "XML":
-                    return NHibernateType.String;
-            }
+			return list;
+		}
 
-            return NHibernateType.String; // TODO:
-        }
+		public NHibernateType GetNHibernateType(string type)
+		{
+			switch(type.ToUpperInvariant())
+			{
+				case "BIGINT":
+					return NHibernateType.Int64;
+				case "INT":
+					return NHibernateType.Int32;
+				case "SMALLINT":
+					return NHibernateType.Int16;
+				case "TINYINT":
+					return NHibernateType.Byte;
+				case "BIT":
+					return NHibernateType.Boolean;
+				case "DECIMAL":
+				case "NUMERIC":
+					return NHibernateType.Decimal;
+				case "MONEY":
+					// TODO  DbType.Currency?
+					break;
+				case "SMALLMONEY":
+					// TODO:
+					break;
+				case "FLOAT":
+					return NHibernateType.Double; // TODO: synonym DOUBLE PRECISION ?
+				case "REAL":
+					return NHibernateType.Single;
+				case "DATETIME":
+					return NHibernateType.Timestamp; // TODO?
+				case "SMALLDATETIME":
+					return NHibernateType.DateTime;
+				case "CHAR":
+					return NHibernateType.AnsiChar; // TODO
+				case "VARCHAR":
+					return NHibernateType.String; // TODO
+				case "TEXT":
+					return NHibernateType.StringClob;
+				case "NCHAR":
+					return NHibernateType.Char; // TODO
+				case "NVARCHAR":
+					return NHibernateType.String; // TODO
+				case "NTEXT":
+					return NHibernateType.StringClob; // TODO
+				case "BINARY":
+					return NHibernateType.Binary;
+				case "IMAGE":
+					return NHibernateType.Binary;
+				case "VARBINARY":
+					return NHibernateType.Binary;
+				case "SQL_VARIANT":
+					// TODO return NHibernateType.Serializable;
+					break;
+				case "TIMESTAMP":
+					return NHibernateType.Timestamp;
+				case "UNIQUEIDENTIFIER":
+					return NHibernateType.Guid;
+				case "XML":
+					return NHibernateType.String;
+			}
 
-        public List<Relation> GetFKRelations(ModelClass cls)
-        {
-            List<Relation> list = new List<Relation>();
+			return NHibernateType.String; // TODO:
+		}
 
-            SqlCommand command = GetForeginKeyCommand(null, null, cls.Table, cls.Schema);
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            DataSet data = new DataSet();
-            adapter.Fill(data);
+		public List<Relation> GetFKRelations(ModelClass cls)
+		{
+			List<Relation> list = new List<Relation>();
 
-            if (data.Tables.Count > 0 && data.Tables[0].Rows.Count > 0)
-                foreach (DataRow row in data.Tables[0].Rows)
-                {
-                    Relation relation = new Relation();
-                    relation.RelationType = RelationType.Unknown; // Caller will decide 
-                    relation.RelationName = row["FK_NAME"].ToString();
-                    relation.PrimaryOwner = row["PKTABLE_OWNER"].ToString();
-                    relation.PrimaryTable = row["PKTABLE_NAME"].ToString();
-                    relation.PrimaryColumn = row["PKCOLUMN_NAME"].ToString();
-                    relation.ForeignOwner = cls.Schema;
-                    relation.ForeignTable = cls.Table;
-                    relation.ForeignColumn = row["FKCOLUMN_NAME"].ToString();
+			IDbCommand command = GetForeginKeyCommand(null, null, cls.Table, cls.Schema);
+			using(IDataReader reader = command.ExecuteReader())
+			{
+				while(reader.Read())
+				{
+					Relation relation = new Relation();
+					relation.RelationType = RelationType.Unknown; // Caller will decide 
+					relation.RelationName = reader["FK_NAME"].ToString();
+					relation.PrimaryOwner = reader["PKTABLE_OWNER"].ToString();
+					relation.PrimaryTable = reader["PKTABLE_NAME"].ToString();
+					relation.PrimaryColumn = reader["PKCOLUMN_NAME"].ToString();
+					relation.ForeignOwner = cls.Schema;
+					relation.ForeignTable = cls.Table;
+					relation.ForeignColumn = reader["FKCOLUMN_NAME"].ToString();
 
-                    list.Add(relation);
-                }
+					list.Add(relation);
+				}
+			}
 
-            return list;
-        }
+			return list;
+		}
 
-        public List<Relation> GetPKRelations(ModelClass cls)
-        {
-            List<Relation> list = new List<Relation>();
+		public List<Relation> GetPKRelations(ModelClass cls)
+		{
+			List<Relation> list = new List<Relation>();
 
-            SqlCommand command = GetForeginKeyCommand(cls.Table, cls.Schema, null, null);
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            DataSet data = new DataSet();
-            adapter.Fill(data);
+			IDbCommand command = GetForeginKeyCommand(cls.Table, cls.Schema, null, null);
+			using(IDataReader reader = command.ExecuteReader())
+			{
+				while(reader.Read())
+				{
+					Relation relation = new Relation();
+					relation.RelationType = RelationType.Unknown; // Caller will decide
+					relation.RelationName = reader["FK_NAME"].ToString();
+					relation.PrimaryOwner = cls.Schema;
+					relation.PrimaryTable = cls.Table;
+					relation.PrimaryColumn = reader["PKCOLUMN_NAME"].ToString();
+					relation.ForeignOwner = reader["FKTABLE_OWNER"].ToString();
+					relation.ForeignTable = reader["FKTABLE_NAME"].ToString();
+					relation.ForeignColumn = reader["FKCOLUMN_NAME"].ToString();
 
-            if (data.Tables.Count > 0 && data.Tables[0].Rows.Count > 0)
-                foreach (DataRow row in data.Tables[0].Rows)
-                {
-                    Relation relation = new Relation();
-                    relation.RelationType = RelationType.Unknown; // Caller will decide
-                    relation.RelationName = row["FK_NAME"].ToString();
-                    relation.PrimaryOwner = cls.Schema;
-                    relation.PrimaryTable = cls.Table;
-                    relation.PrimaryColumn = row["PKCOLUMN_NAME"].ToString();
-                    relation.ForeignOwner = row["FKTABLE_OWNER"].ToString();
-                    relation.ForeignTable = row["FKTABLE_NAME"].ToString();
-                    relation.ForeignColumn = row["FKCOLUMN_NAME"].ToString();
+					list.Add(relation);
+				}
+			}
 
-                    list.Add(relation);
-                }
+			return list;
+		}
 
-            return list;
-        }
+		#endregion
 
-        private SqlCommand GetForeginKeyCommand(string pkTable, string pkOwner, string fkTable, string fkOwner)
-        {
-            SqlCommand command = GetCommand();
-            command.CommandText = "sp_fkeys";
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.Add("@pktable_name", SqlDbType.NVarChar, 128).Value = pkTable;
-            command.Parameters.Add("@pktable_owner ", SqlDbType.NVarChar, 128).Value = pkOwner;
-            command.Parameters.Add("@fktable_name", SqlDbType.NVarChar, 128).Value = fkTable;
-            command.Parameters.Add("@fktable_owner", SqlDbType.NVarChar, 128).Value = fkOwner;
+		private IDbCommand GetForeginKeyCommand(string pkTable, string pkOwner, string fkTable, string fkOwner)
+		{
+			IDbCommand command = _connection.CreateCommand();
+			command.CommandText = "sp_fkeys";
+			command.CommandType = CommandType.StoredProcedure;
 
-            return command;
-        }
+			IDbDataParameter param1 = command.CreateParameter();
+			param1.DbType = DbType.String;
+			param1.ParameterName = "@pktable_name";
+			param1.Size = 128;
+			param1.Value = pkTable;
+			command.Parameters.Add(param1);
 
-        private SqlCommand GetColumnComand(string table, string owner)
-        {
-            SqlCommand command = GetCommand();
-            command.CommandText =
-                @"SELECT c.TABLE_CATALOG, c.TABLE_SCHEMA, c.TABLE_NAME, c.COLUMN_NAME, c.DATA_TYPE, c.IS_NULLABLE, tc.CONSTRAINT_TYPE, tc.CONSTRAINT_NAME,
+			IDbDataParameter param2 = command.CreateParameter();
+			param2.DbType = DbType.String;
+			param2.ParameterName = "@pktable_owner";
+			param2.Size = 128;
+			param2.Value = pkOwner;
+			command.Parameters.Add(param2);
+
+			IDbDataParameter param3 = command.CreateParameter();
+			param3.DbType = DbType.String;
+			param3.ParameterName = "@fktable_name";
+			param3.Size = 128;
+			param3.Value = fkTable;
+			command.Parameters.Add(param3);
+
+			IDbDataParameter param4 = command.CreateParameter();
+			param4.DbType = DbType.String;
+			param4.ParameterName = "@fktable_owner";
+			param4.Size = 128;
+			param4.Value = fkOwner;
+			command.Parameters.Add(param4);
+
+			return command;
+		}
+
+		private IDbCommand GetColumnCommand(string table, string owner)
+		{
+			IDbCommand command = _connection.CreateCommand();
+			command.CommandText =
+				@"SELECT c.TABLE_CATALOG, c.TABLE_SCHEMA, c.TABLE_NAME, c.COLUMN_NAME, c.DATA_TYPE, c.IS_NULLABLE, tc.CONSTRAINT_TYPE, tc.CONSTRAINT_NAME,
                 COLUMNPROPERTY(OBJECT_ID('[' + c.TABLE_SCHEMA + '].[' + c.TABLE_NAME + ']'), c.COLUMN_NAME, 'IsIdentity') AS [IS_IDENTITY],
                 COLUMNPROPERTY(OBJECT_ID('[' + c.TABLE_SCHEMA + '].[' + c.TABLE_NAME + ']'), c.COLUMN_NAME, 'IsComputed') AS [IS_COMPUTED]
                 FROM INFORMATION_SCHEMA.COLUMNS c
@@ -233,18 +248,22 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
                 ON c.TABLE_CATALOG = kcu.TABLE_CATALOG AND c.TABLE_SCHEMA = kcu.TABLE_SCHEMA AND c.TABLE_NAME = kcu.TABLE_NAME AND c.COLUMN_NAME = kcu.COLUMN_NAME
                 LEFT OUTER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS tc ON kcu.CONSTRAINT_NAME=tc.CONSTRAINT_NAME AND kcu.CONSTRAINT_SCHEMA=tc.CONSTRAINT_SCHEMA
                 WHERE c.TABLE_SCHEMA = @schema AND c.TABLE_NAME = @table";
-            command.Parameters.Add("@schema", SqlDbType.NVarChar, 128).Value = owner;
-            command.Parameters.Add("@table", SqlDbType.NVarChar, 128).Value = table;
 
-            return command;
-        }
+			IDbDataParameter param1 = command.CreateParameter();
+			param1.DbType = DbType.String;
+			param1.ParameterName = "@schema";
+			param1.Size = 128;
+			param1.Value = owner;
+			command.Parameters.Add(param1);
 
-        private SqlCommand GetCommand()
-        {
-            SqlCommand command = new SqlCommand();
-            command.Connection = _connection;
+			IDbDataParameter param2 = command.CreateParameter();
+			param2.DbType = DbType.String;
+			param2.ParameterName = "@table";
+			param2.Size = 128;
+			param2.Value = table;
+			command.Parameters.Add(param2);
 
-            return command;
-        }
-    }
+			return command;
+		}
+	}
 }

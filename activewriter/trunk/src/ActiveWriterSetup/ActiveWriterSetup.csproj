@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomTool.wxs" />
-    <None Include="MySQL.wxs" />
     <None Include="Files.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Files.wxs</LastGenOutput>

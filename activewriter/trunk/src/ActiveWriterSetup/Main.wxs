@@ -10,7 +10,7 @@
 -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">
 	<Product UpgradeCode="c43851aa-77cf-44f2-9e72-7ab9cf85a0c1" Name="$(loc.ProductName)" Id="44cbbaaa-6860-4836-899b-e62282e165f9" Version="1.0.0" Manufacturer="$(loc.Manufacturer)" Language="1033" >
-		<Package Id="df040e80-77cc-4d11-8d42-204130fc85be" Manufacturer="$(loc.Manufacturer)" InstallerVersion="200" Platforms="Intel" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
+		<Package Id="fb5e4c03-b8e8-43fa-98d7-a145a6535270" Manufacturer="$(loc.Manufacturer)" InstallerVersion="200" Platforms="Intel" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
 
 		<!-- 
 			Launch conditions and corresponding properties.
@@ -67,7 +67,6 @@
 		</Feature>
 
 		<FragmentRef Id="CustomToolFragment" />	
-		<FragmentRef Id="MySQLFragment" />	
 		<FragmentRef Id="RegistryFragment" />
 		
 		<!-- 
