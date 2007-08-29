@@ -82,7 +82,7 @@ namespace Altinoren.ActiveWriter
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", SourceCustomAccess));
             if (!SourceInsert)
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Insert", SourceInsert));
-            if (!SourceNotNull)
+            if (SourceNotNull)
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("NotNull", SourceNotNull));
             if (SourceOuterJoin != OuterJoinEnum.Auto)
                 attribute.Arguments.Add(
