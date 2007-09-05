@@ -5,7 +5,7 @@
 	</head>
 	<body style="font-family: Verdana, Arial, Helvetica; font-size: 10pt;">
         <strong>
-        ActiveWriter Preview 3</strong><br />
+        ActiveWriter Preview 3.1</strong><br />
         <br />
         ActiveWriter is a visual designer, an addin for Visual Studio 2005, to design a domain
         model and to generate code decorated with <a href="http://www.castleproject.org/index.php/ActiveRecord"
@@ -44,11 +44,36 @@
         <br />
         Gokhan Altinoren<br />
         <br />
-        <strong>Preview 3 Release - 14/06/2007<br />
-        </strong>
+		<strong>Preview 3.1 Release - 18/08/2007<br />
+			<br />
+		</strong>What's New:<br />
+		<ul>
+			<li>CONTRIB-31: "Lazy" One-to-One relation. (Thanks: Gabriel Schenker)</li>
+		</ul>
+		<p>
+			Fixes:</p>
+		<ul>
+			<li>Server Explorer drag'n drop is now supported on international versions of VS. (Patch:
+				Daniel Rothmaler)</li>
+			<li>Server Explorer support changed to VS Connection Service and its Connection Hierarchies,
+				instead of the Server Explorer's UIHierarchies to prevent the flicker during the
+				hierarchy traversing process. (Patch: Daniel Rothmaler)</li>
+			<li>Closing Contrib-25. ValidateNotSameAttribute Won't be supported ATM.</li>
+			<li>CONTRIB-33: When adding a table (SQL Server) to the designer which has a primary
+				key of type uniqueidentifier ActiveWriter should use "Guid" instead of "Native"
+				as generator (Thanks: Gabriel Schenker)</li>
+			<li>Assembly names in NHibernate configs are incorrectly stripped from the name. (Thanx:
+				Fedde)</li>
+			<li>Removed dependency to MySQL.Data.dll to prevent runtime version conflicts. Moved
+				to IDbConnection for all metadata retrieval jobs. (Thanks: Joao Paulo Marques and
+				Shane)</li>
+		</ul>
+		<p>
+			<strong>Preview 3 Release - 14/06/2007<br />
+			</strong>
         <br />
-        What's new:<br />
-        <ul>
+        What's new:</p>
+		<ul>
             <li>Now optionally generates NHibernate hbm.xml files.</li>
             <li>Namespace in generated code is now customizable (Idea: Robert van Hoornaar)</li>
             <li>Imports in generated code is now customizable (Idea: Robert van Hoornaar)</li>
@@ -64,7 +89,7 @@
                 for usage. (Patch: Ricardo Stuven)</li>
             <li>Ability to define a nested class with a different property name than the nested
                 class (Idea: Craig Neuwirt)</li>
-        </ul>
+		</ul>
         Fixes:<br />
         <br />
         <ul>
@@ -120,7 +145,7 @@
         </ul>
         What's crippled:<br />
         <ul>
-            <li>- Using Output window less when doing drag-drop from Server Explorer to prevent
+            <li> Using Output window less when doing drag-drop from Server Explorer to prevent
                 a bug.</li>
         </ul>
         <strong>Preview Release -
