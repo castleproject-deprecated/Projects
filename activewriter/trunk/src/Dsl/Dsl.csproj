@@ -120,7 +120,10 @@
     <Compile Include="CodeGeneration\OneToOneRelation.cs" />
     <Compile Include="CodeGeneration\TypeHelper.cs" />
     <Compile Include="Common\Common.cs" />
-    <Compile Include="ServerExplorerSupport\MySqlHelper.cs" />
+    <Compile Include="ServerExplorerSupport\MySqlHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServerExplorerSupport\OracleHelper.cs" />
     <Compile Include="UIEditors\Model.cs" />
     <Compile Include="GeneratedCode\ConnectionBuilders.cs">
       <AutoGen>True</AutoGen>

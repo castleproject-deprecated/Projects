@@ -12,13 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Text;
 namespace Altinoren.ActiveWriter.ServerExplorerSupport
 {
     internal static class ModelHelper
     {
+
+        private static bool useCameCase = true;
+
         public static string GetSafeName(string name)
         {
-            return name.Replace(" ", string.Empty);
+            if (useCameCase)
+            {
+                return CamelCase(name).Replace(" ", string.Empty);
+            }
+            else
+            {
+                return name.Replace(" ", string.Empty);
+            }
+        }
+
+        public static string CamelCase(string original)
+        {
+            if (original == "" || original == null) return original;
+            StringBuilder sb = new StringBuilder();
+            string[] parts = original.Split('_');
+            foreach (string p in parts)
+            {
+                sb.Append(p.Substring(0, 1).ToUpper());
+                sb.Append(p.Substring(1).ToLower());
+            }
+            return sb.ToString();
         }
     }
 }

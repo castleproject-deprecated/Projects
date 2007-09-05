@@ -115,15 +115,19 @@ namespace Altinoren.ActiveWriter
 							case "System.Data.SqlClient.SqlConnection":
 								helper = new SqlHelper(connection);
 								break;
-							case "MySql.Data.MySqlClient.MySqlConnection":
+                            case "System.Data.OracleClient.OracleConnection":
+                            case "Oracle.DataAccess.Client.OracleConnection":
+                                Log("Selecting Oracle Helper for provider " + providerType);
+                                helper = new OracleHelper(connection);
+                                break;
+                            case "MySql.Data.MySqlClient.MySqlConnection":
 								helper = new MySqlHelper(connection);
 								break;
 							default:
-								// TODO: Support Oracle
 								// TODO: Support other databases with native providers.
 								Log(
 									string.Format(
-										@"Failed: ActiveWriter does not support model generation through {0}. Supported providers: System.Data.SqlClient.SqlConnection, MySql.Data.MySqlClient.MySqlConnection. You can help us improve this functionality, though. See http://www.castleproject.org/others/contrib/index.html to access ActiveWriter source code under the contrib repository, and check Dsl\ServerExplorerSupport\IDbHelper.cs for the start.",
+                                        @"Failed: ActiveWriter does not support model generation through {0}. Supported providers: System.Data.SqlClient.SqlConnection, System.Data.OracleClient.OracleConnection, Oracle.DataAccess.Client.OracleConnection, MySql.Data.MySqlClient.MySqlConnection. You can help us improve this functionality, though. See http://www.castleproject.org/others/contrib/index.html to access ActiveWriter source code under the contrib repository, and check Dsl\ServerExplorerSupport\IDbHelper.cs for the start.",
 										providerType));
 								return;
 						}

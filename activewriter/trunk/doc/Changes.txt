@@ -1,7 +1,10 @@
-Preview 3.1
+New:
+- Added partial Oracle drag and drop support. (Patch: Yavor Shahpasov)
 
 Fixed:
 - ManyToOne SourceNotNull is now working propertly
+
+Preview 3.1
 
 New:
 - CONTRIB-31: "Lazy" One-to-One relation. (Thanks: Gabriel Schenker)
