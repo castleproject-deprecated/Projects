@@ -503,6 +503,23 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// GenerateMetaData
+			if (!serializationContext.Result.Failed)
+			{
+				string attribGenerateMetaData = reader.GetAttribute("generateMetaData");
+				if (attribGenerateMetaData != null)
+				{
+					MetaDataGeneration valueOfGenerateMetaData;
+					if (DslModeling::SerializationUtilities.TryGetValue<MetaDataGeneration>(DslModeling::SerializationUtilities.UnescapeXmlString(attribGenerateMetaData), out valueOfGenerateMetaData))
+					{
+						instanceOfModel.GenerateMetaData = valueOfGenerateMetaData;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "generateMetaData", typeof(MetaDataGeneration), attribGenerateMetaData);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -1384,6 +1401,19 @@ namespace Altinoren.ActiveWriter
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("implementINotifyPropertyChanged", serializedPropValue);
+					}
+				}
+			}
+			// GenerateMetaData
+			if (!serializationContext.Result.Failed)
+			{
+				MetaDataGeneration propValue = instanceOfModel.GenerateMetaData;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<MetaDataGeneration>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "False") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("generateMetaData", serializedPropValue);
 					}
 				}
 			}

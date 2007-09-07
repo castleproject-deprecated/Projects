@@ -405,6 +405,18 @@
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;ImplementINotifyPropertyChanged&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.Model/GenerateMetaData.Description" xml:space="preserve">
+    <value>Instructs ActiveWriter to generate property metadata to allow typed access to property names.</value>
+    <comment>Description for DomainProperty &apos;GenerateMetaData&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/GenerateMetaData.DisplayName" xml:space="preserve">
+    <value>Generate Meta Data</value>
+    <comment>DisplayName for DomainProperty &apos;GenerateMetaData&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/GenerateMetaData.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;GenerateMetaData&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ModelClass.Description" xml:space="preserve">
     <value>A class of the domain</value>
     <comment>Description for DomainClass &apos;ModelClass&apos;</comment>
@@ -3180,6 +3192,30 @@
   <data name="Altinoren.ActiveWriter.InheritableBoolean/False.Description" xml:space="preserve">
     <value>Description for Altinoren.ActiveWriter.InheritableBoolean.False</value>
     <comment>Description for EnumerationLiteral &apos;False&apos; on DomainEnumeration &apos;InheritableBoolean&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.MetaDataGeneration/False.DisplayName" xml:space="preserve">
+    <value>False</value>
+    <comment>Display name for EnumerationLiteral &apos;False&apos; on DomainEnumeration &apos;MetaDataGeneration&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.MetaDataGeneration/False.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for EnumerationLiteral &apos;False&apos; on DomainEnumeration &apos;MetaDataGeneration&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.MetaDataGeneration/InClass.DisplayName" xml:space="preserve">
+    <value>InClass</value>
+    <comment>Display name for EnumerationLiteral &apos;InClass&apos; on DomainEnumeration &apos;MetaDataGeneration&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.MetaDataGeneration/InClass.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for EnumerationLiteral &apos;InClass&apos; on DomainEnumeration &apos;MetaDataGeneration&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.MetaDataGeneration/InSubClass.DisplayName" xml:space="preserve">
+    <value>InSubClass</value>
+    <comment>Display name for EnumerationLiteral &apos;InSubClass&apos; on DomainEnumeration &apos;MetaDataGeneration&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.MetaDataGeneration/InSubClass.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for EnumerationLiteral &apos;InSubClass&apos; on DomainEnumeration &apos;MetaDataGeneration&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ClassShape.Description" xml:space="preserve">
     <value></value>

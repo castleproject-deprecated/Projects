@@ -57,10 +57,20 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\Models\GeneratedCodeSubClassMetaDataGenerationTestModel.cs">
+      <DependentUpon>GeneratedCodeSubClassMetaDataGenerationTestModel.actiw</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Tests\Models\GeneratedCodeGenericTestModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeneratedCodeGenericTestModel.actiw</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Models\GeneratedCodeInClassMetaDataGenerationTestModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GeneratedCodeInClassMetaDataGenerationTestModel.actiw</DependentUpon>
     </Compile>
     <Compile Include="Tests\Models\GeneratedCodeINotifyPropertyChangedTestModel.cs">
       <AutoGen>True</AutoGen>
@@ -102,9 +112,18 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Run.bat" />
+    <None Include="Tests\Models\GeneratedCodeSubClassMetaDataGenerationTestModel.actiw">
+      <Generator>ActiveWriterCodeGenerator</Generator>
+      <LastGenOutput>GeneratedCodeSubClassMetaDataGenerationTestModel.cs</LastGenOutput>
+    </None>
     <None Include="Tests\Models\GeneratedCodeGenericTestModel.actiw.diagram">
       <DependentUpon>GeneratedCodeGenericTestModel.actiw</DependentUpon>
     </None>
+    <None Include="Tests\Models\GeneratedCodeInClassMetaDataGenerationTestModel.actiw">
+      <Generator>ActiveWriterCodeGenerator</Generator>
+      <LastGenOutput>GeneratedCodeInClassMetaDataGenerationTestModel.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Models\GeneratedCodeInClassMetaDataGenerationTestModel.actiw.diagram" />
     <None Include="Tests\Models\GeneratedCodeINotifyPropertyChangedTestModel.actiw">
       <Generator>ActiveWriterCodeGenerator</Generator>
       <LastGenOutput>GeneratedCodeINotifyPropertyChangedTestModel.cs</LastGenOutput>
@@ -138,6 +157,9 @@
       <LastGenOutput>GeneratedCodeRuntimeTestModel.cs</LastGenOutput>
     </None>
     <None Include="Tests\Models\GeneratedCodeRuntimeTestModel.actiw.diagram" />
+    <None Include="Tests\Models\GeneratedCodeSubClassMetaDataGenerationTestModel.actiw.diagram">
+      <DependentUpon>GeneratedCodeSubClassMetaDataGenerationTestModel.actiw</DependentUpon>
+    </None>
     <None Include="Tests\Models\GeneratedCodeVirtualPropertyTestModel.actiw">
       <Generator>ActiveWriterCodeGenerator</Generator>
       <LastGenOutput>GeneratedCodeVirtualPropertyTestModel.cs</LastGenOutput>

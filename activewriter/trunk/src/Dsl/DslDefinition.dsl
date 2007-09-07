@@ -118,6 +118,11 @@
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="8a850d5e-b19c-4327-b19f-09d99e976db5" Description="Instructs ActiveWriter to generate property metadata to allow typed access to property names." Name="GenerateMetaData" DisplayName="Generate Meta Data" DefaultValue="False" Category="Code Generation">
+          <Type>
+            <DomainEnumerationMoniker Name="MetaDataGeneration" />
+          </Type>
+        </DomainProperty>
       </Properties>
       <ElementMergeDirectives>
         <ElementMergeDirective>
@@ -1227,6 +1232,13 @@
       </Literals>
     </DomainEnumeration>
     <DomainEnumeration Name="DomainEnumeration1" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.DomainEnumeration1" />
+    <DomainEnumeration Name="MetaDataGeneration" Namespace="Altinoren.ActiveWriter" Description="">
+      <Literals>
+        <EnumerationLiteral Description="" Name="False" Value="" />
+        <EnumerationLiteral Description="" Name="InClass" Value="" />
+        <EnumerationLiteral Description="" Name="InSubClass" Value="" />
+      </Literals>
+    </DomainEnumeration>
   </Types>
   <Shapes>
     <CompartmentShape Id="ca45d586-12d1-4f5d-99c7-83c1eb0e61eb" Description="" Name="ClassShape" DisplayName="Class Shape" Namespace="Altinoren.ActiveWriter" GeneratesDoubleDerived="true" FixedTooltipText="Class Shape" FillColor="LightSteelBlue" InitialHeight="0.4" Geometry="RoundedRectangle">
@@ -1364,6 +1376,9 @@
           </XmlRelationshipData>
           <XmlPropertyData XmlName="implementINotifyPropertyChanged">
             <DomainPropertyMoniker Name="Model/ImplementINotifyPropertyChanged" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="generateMetaData">
+            <DomainPropertyMoniker Name="Model/GenerateMetaData" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

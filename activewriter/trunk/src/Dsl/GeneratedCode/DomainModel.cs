@@ -111,6 +111,7 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(Model), "Namespace", Model.NamespaceDomainPropertyId, typeof(Model.NamespacePropertyHandler)),
 				new DomainMemberInfo(typeof(Model), "AdditionalImports", Model.AdditionalImportsDomainPropertyId, typeof(Model.AdditionalImportsPropertyHandler)),
 				new DomainMemberInfo(typeof(Model), "ImplementINotifyPropertyChanged", Model.ImplementINotifyPropertyChangedDomainPropertyId, typeof(Model.ImplementINotifyPropertyChangedPropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "GenerateMetaData", Model.GenerateMetaDataDomainPropertyId, typeof(Model.GenerateMetaDataPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "Cache", ModelClass.CacheDomainPropertyId, typeof(ModelClass.CachePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "DiscriminatorColumn", ModelClass.DiscriminatorColumnDomainPropertyId, typeof(ModelClass.DiscriminatorColumnPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "DiscriminatorType", ModelClass.DiscriminatorTypeDomainPropertyId, typeof(ModelClass.DiscriminatorTypePropertyHandler)),
@@ -1516,6 +1517,31 @@ namespace Altinoren.ActiveWriter
 	[global::System.CLSCompliant(true)]
 	public enum DomainEnumeration1
 	{
+	}
+}
+namespace Altinoren.ActiveWriter
+{
+	/// <summary>
+	/// DomainEnumeration: MetaDataGeneration
+	/// </summary>
+	[global::System.CLSCompliant(true)]
+	public enum MetaDataGeneration
+	{
+		/// <summary>
+		/// False
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.MetaDataGeneration/False.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		False,
+		/// <summary>
+		/// InClass
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.MetaDataGeneration/InClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		InClass,
+		/// <summary>
+		/// InSubClass
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.MetaDataGeneration/InSubClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		InSubClass,
 	}
 }
 

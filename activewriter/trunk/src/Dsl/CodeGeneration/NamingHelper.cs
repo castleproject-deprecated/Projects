@@ -36,11 +36,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                         case FieldCase.CamelcaseMUnderscore:
                             return "m_" + MakeCamel(name);
                         case FieldCase.Pascalcase:
-                            return MakeCamel(name);
+                            return MakePascal(name);
                         case FieldCase.PascalcaseUnderscore:
-                            return "_" + MakeCamel(name);
+                            return "_" + MakePascal(name);
                         case FieldCase.PascalcaseMUnderscore:
-                            return "m_" + MakeCamel(name);
+                            return "m_" + MakePascal(name);
                     }
                     break;
                 case PropertyAccess.Field:
@@ -53,7 +53,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     return "_" + MakeCamel(name);
                 case PropertyAccess.FieldPascalcaseMUnderscore:
                 case PropertyAccess.NosetterPascalcaseMUnderscore:
-                    return "m_" + MakeCamel(name);
+                    return "m_" + MakePascal(name);
                 case PropertyAccess.FieldLowercaseUnderscore:
                 case PropertyAccess.NosetterLowercaseUnderscore:
                     return "_" + name.ToLowerInvariant();

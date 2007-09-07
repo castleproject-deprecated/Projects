@@ -23,6 +23,22 @@ namespace Altinoren.ActiveWriter
 
     public partial class ModelProperty
     {
+        #region Public Static Methods
+
+        public static bool IsMetaDataGeneratable(CodeTypeMember member)
+        {
+            foreach (CodeAttributeDeclaration attribute in member.CustomAttributes)
+            {
+                if (attribute.Name == "PrimaryKey" || attribute.Name == "KeyProperty" || attribute.Name == "Field" || attribute.Name == "Property" || attribute.Name == "Version" || attribute.Name == "Timestamp")
+                    return true;
+            }
+
+            return false;
+        }
+
+        #endregion
+
+
         #region Public Code Generation Methods
 
         public bool ImplementsINotifyPropertyChanged()
@@ -148,11 +164,11 @@ namespace Altinoren.ActiveWriter
         {
             if (!string.IsNullOrEmpty(Column))
                 attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(Column));
-			if (ColumnType == NHibernateType.Custom)
-				attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnType", CustomColumnType));
-			else
-				attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnType", ColumnType.ToString()));
-			if (Access != PropertyAccess.Property)
+            if (ColumnType == NHibernateType.Custom)
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnType", CustomColumnType));
+            else
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnType", ColumnType.ToString()));
+            if (Access != PropertyAccess.Property)
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", Access));
             if (!string.IsNullOrEmpty(CustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", CustomAccess));

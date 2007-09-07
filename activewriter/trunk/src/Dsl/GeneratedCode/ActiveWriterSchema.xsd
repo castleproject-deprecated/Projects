@@ -186,6 +186,12 @@
         <xsd:documentation>Instructs ActiveWriter to implement INotifyPropertyChanged interface in each class generated. This setting is overridable in class level.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
+    <!-- Property: GenerateMetaData -->
+    <xsd:attribute name="generateMetaData" type="MetaDataGeneration" >
+      <xsd:annotation>
+        <xsd:documentation>Instructs ActiveWriter to generate property metadata to allow typed access to property names.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
   </xsd:complexType>
   
   <!-- Model Moniker -->
@@ -1356,6 +1362,15 @@
   <!-- Enum DomainEnumeration1 -->
   <xsd:simpleType name="DomainEnumeration1">
     <xsd:restriction base="xsd:string">
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum MetaDataGeneration -->
+  <xsd:simpleType name="MetaDataGeneration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="False"/>
+      <xsd:enumeration value="InClass"/>
+      <xsd:enumeration value="InSubClass"/>
     </xsd:restriction>
   </xsd:simpleType>
   

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<model dslVersion="1.0.0.0" Id="904a41bf-4a82-4627-866b-bf9f1532269d" namespace="Debugging.Tests" generateMetaData="InSubClass" xmlns="http://schemas.microsoft.com/dsltools/ActiveWriter">
+  <additionalImports>AAEAAAD/////AQAAAAAAAAAMAgAAAF1BbHRpbm9yZW4uQWN0aXZlV3JpdGVyLkRzbCwgVmVyc2lvbj0xLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTkwNTE0MTM5NmRkYjA3OTkEAQAAAKEBU3lzdGVtLkNvbGxlY3Rpb25zLkdlbmVyaWMuTGlzdGAxW1tBbHRpbm9yZW4uQWN0aXZlV3JpdGVyLkltcG9ydCwgQWx0aW5vcmVuLkFjdGl2ZVdyaXRlci5Ec2wsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj05MDUxNDEzOTZkZGIwNzk5XV0DAAAABl9pdGVtcwVfc2l6ZQhfdmVyc2lvbgQAAB9BbHRpbm9yZW4uQWN0aXZlV3JpdGVyLkltcG9ydFtdAgAAAAgICQMAAAAAAAAAAAAAAAcDAAAAAAEAAAAAAAAABB1BbHRpbm9yZW4uQWN0aXZlV3JpdGVyLkltcG9ydAIAAAAL</additionalImports>
+  <classes>
+    <modelClass name="SubClassMetaDataType">
+      <properties>
+        <modelProperty Id="285ba73d-b417-4064-8834-1f5fdfab1153" name="MyPK" length="0" keyType="PrimaryKey" />
+        <modelProperty Id="31f1a659-339b-4688-bbc6-e0ad7bed3f09" name="MyField" access="Field" length="0" propertyType="Field" />
+        <modelProperty Id="510d1b61-dd26-4070-99a9-34d553a1a052" name="MyProperty" length="0" />
+        <modelProperty Id="4f4e807e-e23c-484e-806a-9f26af322a05" name="MyVersion" columnType="Int32" length="0" propertyType="Version" />
+        <modelProperty Id="7be8054e-e699-4939-b30e-58d0636afcd8" name="MyTimestamp" columnType="Int32" length="0" propertyType="Timestamp" />
+      </properties>
+    </modelClass>
+  </classes>
+</model>

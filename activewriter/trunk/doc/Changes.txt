@@ -1,8 +1,10 @@
 New:
 - Added partial Oracle drag and drop support. (Patch: Yavor Shahpasov)
+- Generates metadata about properties to be used in queries (as in ICriterion selectCriterium = Expression.Eq(User.Properties.Name, name); )(Thanks: Rudi van den Belt)
 
 Fixed:
 - ManyToOne SourceNotNull is now working propertly
+- Incorrectly generates Some pascal case fields as camel case.
 
 Preview 3.1
 

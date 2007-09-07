@@ -270,7 +270,7 @@ namespace Debugging.Tests
             BelongsToAttribute attribute2 = propertyAttributes2[0] as BelongsToAttribute;
             Assert.IsTrue(attribute2.Column == "post_blogid");
             Assert.IsTrue(attribute2.Cascade == CascadeEnum.All);
-            Assert.IsTrue(attribute2.NotNull == false);
+            Assert.IsTrue(attribute2.NotNull == true);
             Assert.IsTrue(attribute2.CustomAccess == "SourceCustomAccss");
             Assert.IsTrue(attribute2.OuterJoin == OuterJoinEnum.True);
             Assert.IsTrue(attribute2.NotFoundBehaviour == NotFoundBehaviour.Ignore);
@@ -350,6 +350,26 @@ namespace Debugging.Tests
             object[] propertyAttributes = property.GetCustomAttributes(typeof(BelongsToAttribute), false);
 
             Assert.IsTrue(propertyAttributes.Length == 1, "Did not generate BelongsToAttribute for lazy one to one relation on the target.");
+        }
+
+        [Test]
+        public void CanGenerateInClassMetaData()
+        {
+            Assert.IsTrue(InClassMetaDataType.MyPKProperty == "MyPK", "Generated metadata for primary key does not match property name.");
+            Assert.IsTrue(InClassMetaDataType.MyFieldProperty == "MyField", "Generated metadata for field does not match property name.");
+            Assert.IsTrue(InClassMetaDataType.MyPropertyProperty == "MyProperty", "Generated metadata for property does not match property name.");
+            Assert.IsTrue(InClassMetaDataType.MyVersionProperty == "MyVersion", "Generated metadata for version does not match property name.");
+            Assert.IsTrue(InClassMetaDataType.MyTimestampProperty == "MyTimestamp", "Generated metadata for timestamp does not match property name.");
+        }
+
+        [Test]
+        public void CanGenerateSubClassMetaData()
+        {
+            Assert.IsTrue(SubClassMetaDataType.Properties.MyPK == "MyPK", "Generated metadata for primary key does not match property name.");
+            Assert.IsTrue(SubClassMetaDataType.Properties.MyField == "MyField", "Generated metadata for field does not match property name.");
+            Assert.IsTrue(SubClassMetaDataType.Properties.MyProperty == "MyProperty", "Generated metadata for property does not match property name.");
+            Assert.IsTrue(SubClassMetaDataType.Properties.MyVersion == "MyVersion", "Generated metadata for version does not match property name.");
+            Assert.IsTrue(SubClassMetaDataType.Properties.MyTimestamp == "MyTimestamp", "Generated metadata for timestamp does not match property name.");
         }
     }
 }

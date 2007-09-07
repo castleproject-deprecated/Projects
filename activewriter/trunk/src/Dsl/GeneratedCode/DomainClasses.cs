@@ -2108,6 +2108,96 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region GenerateMetaData domain property code
+		
+		/// <summary>
+		/// GenerateMetaData domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid GenerateMetaDataDomainPropertyId = new global::System.Guid(0x8a850d5e, 0xb19c, 0x4327, 0xb1, 0x9f, 0x09, 0xd9, 0x9e, 0x97, 0x6d, 0xb5);
+		
+		/// <summary>
+		/// Storage for GenerateMetaData
+		/// </summary>
+		private MetaDataGeneration generateMetaDataPropertyStorage = Altinoren.ActiveWriter.MetaDataGeneration.False;
+		
+		/// <summary>
+		/// Gets or sets the value of GenerateMetaData domain property.
+		/// Instructs ActiveWriter to generate property metadata to allow typed access to
+		/// property names.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/GenerateMetaData.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/GenerateMetaData.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/GenerateMetaData.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.MetaDataGeneration.False)]
+		[DslModeling::DomainObjectId("8a850d5e-b19c-4327-b19f-09d99e976db5")]
+		public MetaDataGeneration GenerateMetaData
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return generateMetaDataPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				GenerateMetaDataPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.GenerateMetaData domain property.
+		/// </summary>
+		internal sealed partial class GenerateMetaDataPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, MetaDataGeneration>
+		{
+			private GenerateMetaDataPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.GenerateMetaData domain property value handler.
+			/// </summary>
+			public static readonly GenerateMetaDataPropertyHandler Instance = new GenerateMetaDataPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.GenerateMetaData domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return GenerateMetaDataDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed MetaDataGeneration GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.generateMetaDataPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, MetaDataGeneration newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				MetaDataGeneration oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.generateMetaDataPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region Classes opposite domain role accessor
 		/// <summary>
 		/// Gets a list of Classes.

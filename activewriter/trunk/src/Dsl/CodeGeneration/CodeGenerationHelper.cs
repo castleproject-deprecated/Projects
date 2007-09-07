@@ -115,6 +115,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 GenerateNestedClass(cls, nameSpace);
             }
 
+            if (_model.GenerateMetaData != MetaDataGeneration.False)
+            {
+                GenerateMetaData(nameSpace);
+            }
+
             if (_model.Target == CodeGenerationTarget.ActiveRecord)
             {
                 string primaryOutput = GenerateCode(compileUnit);
@@ -202,10 +207,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (String.IsNullOrEmpty(cls.Name))
                 throw new ArgumentException("Class name cannot be blank.", "cls");
 
-            CodeTypeDeclaration classDeclaration = new CodeTypeDeclaration(cls.Name);
-
-            classDeclaration.TypeAttributes = TypeAttributes.Public;
-            classDeclaration.IsPartial = true;
+            CodeTypeDeclaration classDeclaration = CreateClass(cls.Name);
 
             if (cls.Model.UseBaseClass)
             {
@@ -257,10 +259,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (String.IsNullOrEmpty(cls.Name))
                 throw new ArgumentException("Nested class name cannot be blank.", "cls");
 
-            CodeTypeDeclaration classDeclaration = new CodeTypeDeclaration(cls.Name);
-
-            classDeclaration.TypeAttributes = TypeAttributes.Public;
-            classDeclaration.IsPartial = true;
+            CodeTypeDeclaration classDeclaration = CreateClass(cls.Name);
             if (cls.DoesImplementINotifyPropertyChanged())
             {
                 classDeclaration.BaseTypes.Add(new CodeTypeReference(Common.INotifyPropertyChangedType));
@@ -298,10 +297,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (string.IsNullOrEmpty(className))
                 className = parentClass.Name + Common.CompositeClassNameSuffix;
 
-            CodeTypeDeclaration classDeclaration = new CodeTypeDeclaration(className);
-
-            classDeclaration.TypeAttributes = TypeAttributes.Public;
-            classDeclaration.IsPartial = true;
+            CodeTypeDeclaration classDeclaration = CreateClass(className);
 
             if (implementINotifyPropertyChanged)
             {
@@ -337,6 +333,15 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             classDeclaration.Members.AddRange(GetCompositeClassGetHashCodeMethods(fields));
 
             nameSpace.Types.Add(classDeclaration);
+            return classDeclaration;
+        }
+
+
+        private CodeTypeDeclaration CreateClass(string name)
+        {
+            CodeTypeDeclaration classDeclaration = new CodeTypeDeclaration(name);
+            classDeclaration.TypeAttributes = TypeAttributes.Public;
+            classDeclaration.IsPartial = true;
             return classDeclaration;
         }
 
@@ -774,6 +779,15 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private CodeMemberField GetMemberFieldWithoutType(string name, Accessor accessor, PropertyAccess access)
         {
+            CodeMemberField memberField = GetMemberFieldWithoutTypeAndName(accessor);
+
+            memberField.Name = NamingHelper.GetName(name, access, _model.CaseOfPrivateFields);
+
+            return memberField;
+        }
+
+        private CodeMemberField GetMemberFieldWithoutTypeAndName(Accessor accessor)
+        {
             CodeMemberField memberField = new CodeMemberField();
 
             switch (accessor)
@@ -788,9 +802,25 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     memberField.Attributes = MemberAttributes.Private;
                     break;
             }
+            return memberField;
+        }
 
-            memberField.Name = NamingHelper.GetName(name, access, _model.CaseOfPrivateFields);
+        private CodeMemberField GetStaticMemberFieldWithoutTypeAndName(Accessor accessor)
+        {
+            CodeMemberField memberField = new CodeMemberField();
 
+            switch (accessor)
+            {
+                case Accessor.Public:
+                    memberField.Attributes = MemberAttributes.Public | MemberAttributes.Static;
+                    break;
+                case Accessor.Protected:
+                    memberField.Attributes = MemberAttributes.Family | MemberAttributes.Static;
+                    break;
+                case Accessor.Private:
+                    memberField.Attributes = MemberAttributes.Private | MemberAttributes.Static;
+                    break;
+            }
             return memberField;
         }
 
@@ -1428,6 +1458,61 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                    new CodeFieldReferenceExpression(null, "information"))))
                 );
             propertyChangedMethod.Statements.Add(ifStatement);
+        }
+
+        private void GenerateMetaData(CodeNamespace nameSpace)
+        {
+            foreach (CodeTypeDeclaration type in nameSpace.Types)
+            {
+                List<CodeTypeMember> properties = new List<CodeTypeMember>();
+                foreach (CodeTypeMember member in type.Members)
+                {
+                    if ((member is CodeMemberProperty || member is CodeMemberField) && ModelProperty.IsMetaDataGeneratable(member))
+                    {
+                        properties.Add(member);
+                    }
+                }
+
+                if (properties.Count > 0)
+                {
+                    if (_model.GenerateMetaData == MetaDataGeneration.InClass)
+                    {
+                        GenerateInClassMetaData(type, properties);
+                    }
+                    else if (_model.GenerateMetaData == MetaDataGeneration.InSubClass)
+                    {
+                        GenerateSubClassMetaData(type, properties);
+                    }
+                }
+            }
+        }
+
+        private void GenerateInClassMetaData(CodeTypeDeclaration type, List<CodeTypeMember> members)
+        {
+            foreach (CodeTypeMember member in members)
+            {
+                type.Members.Add(GenerateMetaDataField(member, member.Name + "Property"));
+            }
+        }
+
+        private void GenerateSubClassMetaData(CodeTypeDeclaration type, List<CodeTypeMember> members)
+        {
+            CodeTypeDeclaration subClass = CreateClass("Properties");
+            foreach (CodeTypeMember member in members)
+            {
+                subClass.Members.Add(GenerateMetaDataField(member, member.Name));
+            }
+
+            type.Members.Add(subClass);
+        }
+
+        private CodeMemberField GenerateMetaDataField(CodeTypeMember member, string nm)
+        {
+            CodeMemberField field = GetStaticMemberFieldWithoutTypeAndName(Accessor.Public);
+            field.Name = NamingHelper.GetName(nm, PropertyAccess.Property, FieldCase.Pascalcase);
+            field.Type = new CodeTypeReference(typeof(string));
+            field.InitExpression = new CodePrimitiveExpression(member.Name);
+            return field;
         }
 
         #endregion
