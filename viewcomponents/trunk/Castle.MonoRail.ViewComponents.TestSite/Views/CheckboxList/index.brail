@@ -1,0 +1,46 @@
+<h1>Sample Checkbox Lists</h1>
+
+<div style="padding: 20px;">
+  Default Vertical Checkbox List<br />
+  <br />
+  <%
+    component CheckboxList, {@source:statuses, @target:"selectedStatuses"}
+  %>
+</div>
+
+<div style="padding: 20px;">
+  Default Horizontal Checkbox List<br />
+  <br />
+  <%
+    component CheckboxList, {@source:statuses, @target:"selectedStatuses", @horizontal:true}
+  %>
+</div>
+<div style="padding: 20px;">
+  Scrolling Vertical Checkbox List<br />
+  <br />
+  <%
+    component CheckboxList, {@source:statuses, @target:"selectedStatuses", @cssClass:"shortVerticalCheckboxList", @useInline:false}
+  %>
+</div>
+
+<div style="padding: 20px;">
+  Scrolling Horizontal Checkbox List<br />
+  <br />
+  <%
+    component CheckboxList, {@source:statuses, @target:"selectedStatuses", @horizontal:true, @cssClass:"narrowHorizontalCheckboxList"}
+    %>
+</div>
+<div style="padding: 20px;">
+  Crazy Styled Vertical Checkbox List<br />
+  <br />
+  <%
+    component CheckboxList, {@source:statuses, @target:"selectedStatuses", @cssClass:"crazyCheckboxList", @horizontal:true}
+  %>
+</div>
+<div style="padding: 20px;">
+  Crazy Styled Horizontal Checkbox List, Don't Split Pascal Case<br />
+  <br />
+  <%
+    component CheckboxList, {@source:statuses, @target: "selectedStatuses", @cssClass:"crazyCheckboxList", @splitPascalCase:false}
+  %>
+</div>

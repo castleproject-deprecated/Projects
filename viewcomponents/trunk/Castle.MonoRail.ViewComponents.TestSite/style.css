@@ -427,3 +427,57 @@ fieldset textarea
 	color: #cc6600;
 	font-size: 0.8em;
 }
+
+.horizontalCheckboxList label,
+.verticalCheckboxList label
+{
+	color:black;
+}
+
+.narrowHorizontalCheckboxList
+{
+	border:solid 1px gray;
+	padding:3px;
+	width:250px;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	white-space:nowrap;
+}
+
+.shortVerticalCheckboxList
+{
+	border:solid 1px gray;
+	padding:3px;
+	height:63px;
+	width:130px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	white-space:nowrap;
+}
+
+.crazyCheckboxList
+{
+	background-color:Black;
+	padding:20px;
+	overflow-x: hidden;
+}
+
+.crazyCheckboxList div,
+.crazyCheckboxList span
+{
+	padding:5px;
+	background-color:Fuchsia;
+	font-size:15px;
+	color: Yellow;
+}
+
+.crazyCheckboxList label
+{
+	background-color:Green;
+	padding-left: 20px;
+}
+
+.crazyCheckboxList input
+{
+	vertical-align:middle;
+}

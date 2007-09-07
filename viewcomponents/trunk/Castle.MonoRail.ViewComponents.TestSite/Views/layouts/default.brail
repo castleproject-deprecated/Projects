@@ -104,6 +104,12 @@
 						<li>
 							<a href="/chart/index.rails">Sample Charts</a>
 						</li>
+					</ul>
+					<h3>Checkbox list component</h3>
+					<ul>
+						<li>
+							<a href="/checkboxlist/index.rails">Sample Checkbox Lists</a>
+						</li>
 					</ul>				
 					
 				</div>

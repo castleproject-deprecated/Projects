@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.20404</ProductVersion>
+    <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{717C688D-81BC-4C81-9487-1D5151ADF573}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Castle.MonoRail.ViewComponents.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -54,6 +55,7 @@
     <Compile Include="CaptchaImageHandler.cs" />
     <Compile Include="ChartDataItem.cs" />
     <Compile Include="ChartProperties.cs" />
+    <Compile Include="CheckboxListComponent.cs" />
     <Compile Include="ColumnChartComponent.cs" />
     <Compile Include="FaqItemComponent.cs" />
     <Compile Include="GridComponent .cs" />
