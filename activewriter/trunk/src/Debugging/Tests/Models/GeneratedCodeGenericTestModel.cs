@@ -26,4 +26,36 @@ namespace Debugging.Tests {
     [ActiveRecord()]
     public partial class ExplicitNonGenericClassInGenericModel : ActiveRecordBase {
     }
+    
+    [ActiveRecord()]
+    public partial class ExplicitGenericRelationDecleration_HasMany : ActiveRecordBase<ExplicitGenericRelationDecleration_HasMany> {
+        
+        private IDictionary<string, ExplicitGenericRelationDecleration_BelongsTo> _explicitGenericRelationDecleration_BelongsToes;
+        
+        [HasMany(typeof(ExplicitGenericRelationDecleration_BelongsTo), RelationType=RelationType.Map, IndexType="string", Index="Handle")]
+        public IDictionary<string, ExplicitGenericRelationDecleration_BelongsTo> ExplicitGenericRelationDecleration_BelongsToes {
+            get {
+                return this._explicitGenericRelationDecleration_BelongsToes;
+            }
+            set {
+                this._explicitGenericRelationDecleration_BelongsToes = value;
+            }
+        }
+    }
+    
+    [ActiveRecord()]
+    public partial class ExplicitGenericRelationDecleration_BelongsTo : ActiveRecordBase<ExplicitGenericRelationDecleration_BelongsTo> {
+        
+        private ExplicitGenericRelationDecleration_HasMany _explicitGenericRelationDecleration_HasMany;
+        
+        [BelongsTo()]
+        public ExplicitGenericRelationDecleration_HasMany ExplicitGenericRelationDecleration_HasMany {
+            get {
+                return this._explicitGenericRelationDecleration_HasMany;
+            }
+            set {
+                this._explicitGenericRelationDecleration_HasMany = value;
+            }
+        }
+    }
 }

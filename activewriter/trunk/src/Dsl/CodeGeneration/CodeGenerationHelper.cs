@@ -51,7 +51,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private string _modelFilePath = null;
         private ProjectItem _projectItem = null;
     	private string _assemblyName = null;
-		
+		private CodeLanguage _language = CodeLanguage.CSharp;
 
         #endregion
 
@@ -73,7 +73,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             _modelFilePath = Path.GetDirectoryName(_modelFileName);
             _projectItem = _dte.Solution.FindProjectItem(_modelFileName);
 
-            switch (DTEHelper.GetProjectLanguage(_projectItem.ContainingProject))
+            _language = DTEHelper.GetProjectLanguage(_projectItem.ContainingProject);
+            switch (_language)
             {
                 case CodeLanguage.CSharp:
                     _provider = new CSharpCodeProvider();
@@ -771,7 +772,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CodeMemberField memberField = GetMemberFieldWithoutType(name, accessor, access);
 
             CodeTypeReference type = new CodeTypeReference(fieldType);
-            type.TypeArguments.Add(typeName);
+            if (!TypeHelper.ContainsGenericDecleration(fieldType, _language))
+            {
+                type.TypeArguments.Add(typeName);
+            }
             memberField.Type = type;
 
             return memberField;

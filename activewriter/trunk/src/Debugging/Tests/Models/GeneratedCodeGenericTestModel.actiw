@@ -5,5 +5,13 @@
     <modelClass name="SimpleGenericClass" />
     <modelClass name="ExplicitGenericClassInGenericModel" useGenerics="True" />
     <modelClass name="ExplicitNonGenericClassInGenericModel" useGenerics="False" />
+    <modelClass name="ExplicitGenericRelationDecleration_HasMany" />
+    <modelClass name="ExplicitGenericRelationDecleration_BelongsTo">
+      <targets>
+        <manyToOneRelation Id="21e07e47-47bd-4428-9d84-4eb8130f8bf6" targetRelationType="Map" targetPropertyType="IDictionary&lt;string, ExplicitGenericRelationDecleration_BelongsTo&gt;" targetIndexType="string" targetIndex="Handle">
+          <modelClassMoniker name="/d31e3081-74cd-42fb-a26f-8ad359cf7aac/ExplicitGenericRelationDecleration_HasMany" />
+        </manyToOneRelation>
+      </targets>
+    </modelClass>
   </classes>
 </model>

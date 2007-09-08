@@ -172,5 +172,21 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     throw new ArgumentException("Unknown NHibernate type", type.ToString());
             }
         }
+
+        public static bool ContainsGenericDecleration(string typeName, CodeLanguage language)
+        {
+            if (language == CodeLanguage.CSharp)
+            {
+                return (typeName.IndexOf('>') >= 0);
+            }
+            else if (language ==CodeLanguage.VB)
+            {
+                return (typeName.Replace(" ", string.Empty).ToUpperInvariant().IndexOf("(OF") >= 0);
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("language", "Languages other than C# or VB.NET are not supported.");
+            }
+        }
     }
 }

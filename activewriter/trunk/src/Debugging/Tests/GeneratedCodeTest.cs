@@ -371,5 +371,15 @@ namespace Debugging.Tests
             Assert.IsTrue(SubClassMetaDataType.Properties.MyVersion == "MyVersion", "Generated metadata for version does not match property name.");
             Assert.IsTrue(SubClassMetaDataType.Properties.MyTimestamp == "MyTimestamp", "Generated metadata for timestamp does not match property name.");
         }
+
+        [Test]
+        public void CanGenerateExplicitlyGenericDeclaredField()
+        {
+            Type type = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.ExplicitGenericRelationDecleration_HasMany");
+            PropertyInfo property = type.GetProperty("ExplicitGenericRelationDecleration_BelongsToes");
+            Assert.IsTrue(property.PropertyType.IsGenericType, "Generated type is not generic");
+            Assert.AreEqual(property.PropertyType.GetGenericArguments()[0].Name, "String", "First generic does not match.");
+            Assert.AreEqual(property.PropertyType.GetGenericArguments()[1].Name, "ExplicitGenericRelationDecleration_BelongsTo", "First generic does not match.");
+        }
     }
 }

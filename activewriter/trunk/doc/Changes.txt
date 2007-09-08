@@ -5,6 +5,7 @@ New:
 Fixed:
 - ManyToOne SourceNotNull is now working propertly
 - Incorrectly generates Some pascal case fields as camel case.
+- Contrib-52: (Revised description) Generic types are incorrectly generated if the given type name already includes generic parameters. (Thanks: Hugo Burm)
 
 Preview 3.1
 
