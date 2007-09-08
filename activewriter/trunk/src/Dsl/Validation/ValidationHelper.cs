@@ -41,5 +41,15 @@ namespace Altinoren.ActiveWriter.Validation
                 }
                 ).Count;
         }
+
+        internal static int GetDefaultMemberCount(LinkedElementCollection<ModelProperty> properties)
+        {
+            return properties.FindAll(
+                delegate(ModelProperty property)
+                {
+                    return (property.DefaultMember);
+                }
+                ).Count;
+        }
     }
 }

@@ -199,5 +199,15 @@ namespace Altinoren.ActiveWriter
                         "Class {0} has multiple debugger display attributes set. Only one is allowed per class.",
                         Name), "AW001ValidateMultipleDebuggerDisplaysError", this);
         }
+
+        [ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
+        private void ValidateMultipleDefaultMembers(ValidationContext context)
+        {
+            if (Properties.Count > 0 && ValidationHelper.GetDefaultMemberCount(Properties) > 1)
+                context.LogError(
+                    string.Format(
+                        "Class {0} has multiple default member attributes set. Only one is allowed per class.",
+                        Name), "AW001ValidateMultipleDefaultMembersError", this);
+        }
     }
 }
