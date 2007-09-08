@@ -434,27 +434,6 @@ fieldset textarea
 	color:black;
 }
 
-.narrowHorizontalCheckboxList
-{
-	border:solid 1px gray;
-	padding:3px;
-	width:250px;
-	overflow-x: scroll;
-	overflow-y: hidden;
-	white-space:nowrap;
-}
-
-.shortVerticalCheckboxList
-{
-	border:solid 1px gray;
-	padding:3px;
-	height:63px;
-	width:130px;
-	overflow-y: scroll;
-	overflow-x: hidden;
-	white-space:nowrap;
-}
-
 .crazyCheckboxList
 {
 	background-color:Black;

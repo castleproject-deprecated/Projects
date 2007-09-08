@@ -21,10 +21,6 @@ namespace Castle.MonoRail.ViewComponents
 {
     public class CheckboxListComponent : ViewComponent
     {
-        private bool useInline;
-        private bool splitPascalCase;
-        private bool isHorizontal;
-
         private static readonly string[] sections = new string[]
             {
                 "label", "containerStart", "containerEnd", "itemStart", "itemEnd"
@@ -42,6 +38,8 @@ namespace Castle.MonoRail.ViewComponents
             return false;
         }
 
+        private bool isHorizontal;
+        
         public override void Render()
         {
             IEnumerable source = ComponentParams["source"] as IEnumerable;
@@ -57,8 +55,6 @@ namespace Castle.MonoRail.ViewComponents
             }
             
             isHorizontal = GetBoolParamValue("horizontal", false);
-            useInline = GetBoolParamValue("useInline", true);
-            splitPascalCase = GetBoolParamValue("splitPascalCase", true);
 
             FormHelper helper = (FormHelper)Context.ContextVars["FormHelper"];
 
@@ -84,24 +80,22 @@ namespace Castle.MonoRail.ViewComponents
 
         private void RenderStart()
         {
-            if (Context.HasSection("containerEnd"))
+            if (Context.HasSection("containerStart"))
             {
-                RenderSection("containerEnd");
+                RenderSection("containerStart");
             }
             else
             {
-                string inlineStyle = useInline
-                    ? " style='white-space:nowrap;'"
-                    : string.Empty;
-                RenderText(string.Format("<div class='{0}'{1}>", CssClass, inlineStyle));
+                RenderText(string.Format("<div class='{0}' style='{1}'>", CssClass,
+                    ComponentParams["style"] ?? "white-space:nowrap;'"));
             }
         }
 
         private void RenderEnd()
         {
-            if (Context.HasSection("containerStart"))
+            if (Context.HasSection("containerEnd"))
             {
-                RenderSection("containerStart");
+                RenderSection("containerEnd");
             }
             else
             {
@@ -117,14 +111,13 @@ namespace Castle.MonoRail.ViewComponents
             }
             else
             {
-                string inlineStyle = useInline
-                    ? " style='padding-left:0.4em; padding-right:1em;'"
-                    : string.Empty;
-                string itemValue = splitPascalCase
+                string itemValue = GetBoolParamValue("splitPascalCase", true)
                     ? PascalCaseToPhrase(item.ToString())
                     : item.ToString();
-                RenderText(string.Format("<label for='{0}' {1}>{2}</label>",
-                    forId, inlineStyle, itemValue));
+                RenderText(string.Format("<label for='{0}' style='{1}'>{2}</label>",
+                    forId,
+                    ComponentParams["labelStyle"] ?? "padding-left:0.4em; padding-right:1em;", 
+                    itemValue));
             }
         }
 
