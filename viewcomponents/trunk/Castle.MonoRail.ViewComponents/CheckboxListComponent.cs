@@ -16,6 +16,7 @@ using System;
 using System.Collections;
 using Castle.MonoRail.Framework;
 using Castle.MonoRail.Framework.Helpers;
+using System.Text;
 
 namespace Castle.MonoRail.ViewComponents
 {
@@ -183,7 +184,7 @@ namespace Castle.MonoRail.ViewComponents
         /// <returns>string</returns>
         private static string PascalCaseToPhrase(string input)
         {
-            string result = null;
+            StringBuilder result = new StringBuilder();
             char[] letters = input.ToCharArray();
             for (int i = 0; i < letters.Length; i++)
             {
@@ -198,11 +199,11 @@ namespace Castle.MonoRail.ViewComponents
                     !isPrevCharIsSpace &&
                     (isPrevLetterLower || isNextLetterLower || isLastLetter))
                 {
-                    result += " ";
+                    result.Append(" ");
                 }
-                result += letters[i].ToString();
+                result.Append(letters[i].ToString());
             }
-            return result;
+            return result.ToString();
         }
     }
 }
