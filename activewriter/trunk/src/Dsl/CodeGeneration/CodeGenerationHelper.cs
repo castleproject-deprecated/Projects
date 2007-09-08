@@ -27,7 +27,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
     using Microsoft.CSharp;
     using Microsoft.VisualBasic;
     using EnvDTE;
-	using EnvDTE80;
     using System.ComponentModel.Design;
     using ServerExplorerSupport;
     using CodeNamespace = System.CodeDom.CodeNamespace;

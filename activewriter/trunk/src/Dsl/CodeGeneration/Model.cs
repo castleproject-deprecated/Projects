@@ -41,7 +41,16 @@ namespace Altinoren.ActiveWriter
                     foreach (Import item in AdditionalImports)
                     {
                         if (!string.IsNullOrEmpty(item.Name))
+                        {
+                            if (!string.IsNullOrEmpty(item.Replaces))
+                            {
+                                CodeNamespaceImport import = imports.Find(delegate(CodeNamespaceImport i)
+                                                                              { return i.Namespace == item. Replaces; });
+                                if (import != null)
+                                    imports.Remove(import);
+                            }
                             imports.Add(new CodeNamespaceImport(item.Name));
+                        }
                     }
                 }
 
