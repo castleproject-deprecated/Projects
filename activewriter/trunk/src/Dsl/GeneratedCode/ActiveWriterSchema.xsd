@@ -524,6 +524,12 @@
             <xsd:documentation>Create an SQL check constraint on either column or table.</xsd:documentation>
           </xsd:annotation>
         </xsd:attribute>
+        <!-- Property: DefaultMember -->
+        <xsd:attribute name="defaultMember" type="xsd:boolean" >
+          <xsd:annotation>
+            <xsd:documentation>Decorates the class this property belongs to with DefaultMember attribute, using this property as the member source. Example:  [DefaultMember(&quot;Id&quot;)]</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>

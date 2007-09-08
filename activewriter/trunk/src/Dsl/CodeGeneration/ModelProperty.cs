@@ -115,6 +115,13 @@ namespace Altinoren.ActiveWriter
             return attribute;
         }
 
+        public CodeAttributeDeclaration GetDefaultMemberAttribute()
+        {
+            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("System.Reflection.DefaultMember");
+            attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(Name));
+            return attribute;
+        }
+
         public CodeAttributeDeclaration[] GetValidationAttributes()
         {
             ArrayList list = GetValidatorsAsArrayList();

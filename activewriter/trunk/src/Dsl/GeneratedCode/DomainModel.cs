@@ -159,6 +159,7 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(ModelProperty), "Index", ModelProperty.IndexDomainPropertyId, typeof(ModelProperty.IndexPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelProperty), "SqlType", ModelProperty.SqlTypeDomainPropertyId, typeof(ModelProperty.SqlTypePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelProperty), "Check", ModelProperty.CheckDomainPropertyId, typeof(ModelProperty.CheckPropertyHandler)),
+				new DomainMemberInfo(typeof(ModelProperty), "DefaultMember", ModelProperty.DefaultMemberDomainPropertyId, typeof(ModelProperty.DefaultMemberPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelElementWithAccess), "CustomAccess", ModelElementWithAccess.CustomAccessDomainPropertyId, typeof(ModelElementWithAccess.CustomAccessPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelElementWithAccess), "Access", ModelElementWithAccess.AccessDomainPropertyId, typeof(ModelElementWithAccess.AccessPropertyHandler)),
 				new DomainMemberInfo(typeof(NamedElement), "Name", NamedElement.NameDomainPropertyId, typeof(NamedElement.NamePropertyHandler)),

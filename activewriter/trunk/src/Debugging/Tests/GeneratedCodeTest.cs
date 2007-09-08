@@ -381,5 +381,21 @@ namespace Debugging.Tests
             Assert.AreEqual(property.PropertyType.GetGenericArguments()[0].Name, "String", "First generic does not match.");
             Assert.AreEqual(property.PropertyType.GetGenericArguments()[1].Name, "ExplicitGenericRelationDecleration_BelongsTo", "First generic does not match.");
         }
+
+        [Test]
+        public void CanGenerateDebuggerDisplayAttribute()
+        {
+            Type type = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.DebuggerDisplayAndDefaultMemberTestClass");
+            object[] attributes = type.GetCustomAttributes(typeof(System.Diagnostics.DebuggerDisplayAttribute), false);
+            Assert.IsTrue(attributes.Length == 1, "Did not generate DebuggerDisplayAttribute.");
+        }
+
+        [Test]
+        public void CanGenerateDefaultMemberAttribute()
+        {
+            Type type = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.DebuggerDisplayAndDefaultMemberTestClass");
+            object[] attributes = type.GetCustomAttributes(typeof(DefaultMemberAttribute), false);
+            Assert.IsTrue(attributes.Length == 1, "Did not generate DefaultMemberAttribute.");
+        }
     }
 }

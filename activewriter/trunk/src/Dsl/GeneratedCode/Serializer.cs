@@ -3665,6 +3665,23 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// DefaultMember
+			if (!serializationContext.Result.Failed)
+			{
+				string attribDefaultMember = reader.GetAttribute("defaultMember");
+				if (attribDefaultMember != null)
+				{
+					global::System.Boolean valueOfDefaultMember;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribDefaultMember), out valueOfDefaultMember))
+					{
+						instanceOfModelProperty.DefaultMember = valueOfDefaultMember;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "defaultMember", typeof(global::System.Boolean), attribDefaultMember);
+					}
+				}
+			}
 		}
 	
 		#region TryCreateInstance
@@ -4314,6 +4331,19 @@ namespace Altinoren.ActiveWriter
 				{
 					if (!string.IsNullOrEmpty(propValue))
 						writer.WriteAttributeString("check", propValue);
+				}
+			}
+			// DefaultMember
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.Boolean propValue = instanceOfModelProperty.DefaultMember;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Boolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("defaultMember", serializedPropValue);
+					}
 				}
 			}
 		}

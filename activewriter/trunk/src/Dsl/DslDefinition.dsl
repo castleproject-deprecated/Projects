@@ -408,6 +408,11 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="4d4c71f2-b5fe-4acc-8fc0-3858b0e9b5f7" Description="Decorates the class this property belongs to with DefaultMember attribute, using this property as the member source. Example:  [DefaultMember(&quot;Id&quot;)]" Name="DefaultMember" DisplayName="Default Member" DefaultValue="false" Category="Code Generation">
+          <Type>
+            <ExternalTypeMoniker Name="/System/Boolean" />
+          </Type>
+        </DomainProperty>
       </Properties>
     </DomainClass>
     <DomainClass Id="cbea293a-1057-4c5b-b60d-78728f734ef2" Description="Description for Altinoren.ActiveWriter.ModelElementWithAccess" Name="ModelElementWithAccess" DisplayName="Model Element With Access" InheritanceModifier="Abstract" Namespace="Altinoren.ActiveWriter">
@@ -1658,6 +1663,9 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="check">
             <DomainPropertyMoniker Name="ModelProperty/Check" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="defaultMember">
+            <DomainPropertyMoniker Name="ModelProperty/DefaultMember" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

@@ -1123,6 +1123,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
                     if (property.DebuggerDisplay)
                         classDeclaration.CustomAttributes.Add(property.GetDebuggerDisplayAttribute());
+                    if (property.DefaultMember)
+                        classDeclaration.CustomAttributes.Add(property.GetDefaultMemberAttribute());
                 }
 
                 return classDeclaration;
@@ -1162,6 +1164,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
                         if (property.DebuggerDisplay)
                             classDeclaration.CustomAttributes.Add(property.GetDebuggerDisplayAttribute());
+                        if (property.DefaultMember)
+                            classDeclaration.CustomAttributes.Add(property.GetDefaultMemberAttribute());
                     }
                     else
                         compositeKeys.Add(property);

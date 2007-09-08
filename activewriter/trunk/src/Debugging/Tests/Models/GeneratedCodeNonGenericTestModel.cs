@@ -405,4 +405,34 @@ namespace Debugging.Tests {
             }
         }
     }
+    
+    [ActiveRecord()]
+    [System.Diagnostics.DebuggerDisplay("DebuggerDisplayProperty = {1}")]
+    [System.Reflection.DefaultMember("DefaultMemberProperty")]
+    public partial class DebuggerDisplayAndDefaultMemberTestClass : ActiveRecordBase {
+        
+        private string _debuggerDisplayProperty;
+        
+        private string _defaultMemberProperty;
+        
+        [Property(ColumnType="String")]
+        public string DebuggerDisplayProperty {
+            get {
+                return this._debuggerDisplayProperty;
+            }
+            set {
+                this._debuggerDisplayProperty = value;
+            }
+        }
+        
+        [Property(ColumnType="String")]
+        public string DefaultMemberProperty {
+            get {
+                return this._defaultMemberProperty;
+            }
+            set {
+                this._defaultMemberProperty = value;
+            }
+        }
+    }
 }

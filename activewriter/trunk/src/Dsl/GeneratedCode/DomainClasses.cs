@@ -6751,6 +6751,95 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region DefaultMember domain property code
+		
+		/// <summary>
+		/// DefaultMember domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid DefaultMemberDomainPropertyId = new global::System.Guid(0x4d4c71f2, 0xb5fe, 0x4acc, 0x8f, 0xc0, 0x38, 0x58, 0xb0, 0xe9, 0xb5, 0xf7);
+		
+		/// <summary>
+		/// Storage for DefaultMember
+		/// </summary>
+		private global::System.Boolean defaultMemberPropertyStorage;
+		
+		/// <summary>
+		/// Gets or sets the value of DefaultMember domain property.
+		/// Decorates the class this property belongs to with DefaultMember attribute, using
+		/// this property as the member source. Example:  [DefaultMember("Id")]
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelProperty/DefaultMember.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelProperty/DefaultMember.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelProperty/DefaultMember.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainObjectId("4d4c71f2-b5fe-4acc-8fc0-3858b0e9b5f7")]
+		public global::System.Boolean DefaultMember
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return defaultMemberPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				DefaultMemberPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the ModelProperty.DefaultMember domain property.
+		/// </summary>
+		internal sealed partial class DefaultMemberPropertyHandler : DslModeling::DomainPropertyValueHandler<ModelProperty, global::System.Boolean>
+		{
+			private DefaultMemberPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the ModelProperty.DefaultMember domain property value handler.
+			/// </summary>
+			public static readonly DefaultMemberPropertyHandler Instance = new DefaultMemberPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the ModelProperty.DefaultMember domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return DefaultMemberDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.Boolean GetValue(ModelProperty element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.defaultMemberPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(ModelProperty element, global::System.Boolean newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.Boolean oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.defaultMemberPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region ModelClass opposite domain role accessor
 		/// <summary>
 		/// Gets or sets ModelClass.

@@ -83,5 +83,11 @@
         </oneToOneRelation>
       </oneToOneTarget>
     </modelClass>
+    <modelClass name="DebuggerDisplayAndDefaultMemberTestClass">
+      <properties>
+        <modelProperty Id="14800e16-a54b-4e5e-93a9-4eca3dea0d67" name="DebuggerDisplayProperty" length="0" debuggerDisplay="true" />
+        <modelProperty Id="caaad9db-01e0-489b-a02f-7940c636dc76" name="DefaultMemberProperty" length="0" defaultMember="true" />
+      </properties>
+    </modelClass>
   </classes>
 </model>

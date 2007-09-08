@@ -989,6 +989,18 @@
     <value>ActiveRecord</value>
     <comment>Category for DomainProperty &apos;Check&apos; on DomainClass &apos;ModelProperty&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/DefaultMember.Description" xml:space="preserve">
+    <value>Decorates the class this property belongs to with DefaultMember attribute, using this property as the member source. Example:  [DefaultMember(&quot;Id&quot;)]</value>
+    <comment>Description for DomainProperty &apos;DefaultMember&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/DefaultMember.DisplayName" xml:space="preserve">
+    <value>Default Member</value>
+    <comment>DisplayName for DomainProperty &apos;DefaultMember&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/DefaultMember.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;DefaultMember&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ModelElementWithAccess.Description" xml:space="preserve">
     <value>Description for Altinoren.ActiveWriter.ModelElementWithAccess</value>
     <comment>Description for DomainClass &apos;ModelElementWithAccess&apos;</comment>
