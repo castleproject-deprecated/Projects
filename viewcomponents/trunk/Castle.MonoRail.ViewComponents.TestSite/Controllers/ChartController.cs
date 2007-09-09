@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Castle.MonoRail.Framework;
 using Castle.MonoRail.ViewComponents;
 
-namespace Lunaverse.Tools.Monorail.Samples.Controllers
+namespace Castle.MonoRail.ViewComponents.TestSite.Controllers
 {
 	[Layout("default"), Rescue("generalerror")]
     public class ChartController : SmartDispatcherController

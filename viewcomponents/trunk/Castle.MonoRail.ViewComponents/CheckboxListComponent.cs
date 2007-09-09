@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections;
+using System.Reflection;
 using Castle.MonoRail.Framework;
 using Castle.MonoRail.Framework.Helpers;
 using System.Text;
@@ -40,43 +41,41 @@ namespace Castle.MonoRail.ViewComponents
         }
 
         private bool isHorizontal;
+        private IEnumerable source;
+        private string target;
+        private string valueMemberName;
+        private string displayMemberName;
+        private string style;
+        private string labelStyle;
+        private string cssClass;
         
         public override void Render()
         {
-            IEnumerable source = ComponentParams["source"] as IEnumerable;
+            GetParameters();
+            RenderStart();
+            RenderItems();
+            RenderEnd();
+        }
+
+        private void GetParameters()
+        {
+            source = ComponentParams["source"] as IEnumerable;
             if (source == null)
             {
                 throw new ViewComponentException("The checkbox list component requires a parameter named 'source' that implements 'IEnumerable'");
             }
 
-            string target = ComponentParams["target"] as string;
+            target = ComponentParams["target"] as string;
             if (target == null)
             {
                 throw new ViewComponentException("The checkbox list component requires a view component parameter named 'target' that is a string");
             }
-            
+            valueMemberName = ComponentParams["valueMember"] as string;
             isHorizontal = GetBoolParamValue("horizontal", false);
-
-            FormHelper helper = (FormHelper)Context.ContextVars["FormHelper"];
-
-            FormHelper.CheckboxList list = helper.CreateCheckboxList(
-                target, source, null);
-
-            RenderStart();
-
-            int index = 0;
-            foreach (object item in list)
-            {
-                PropertyBag["item"] = item;
-                RenderItemStart();
-                RenderText(list.Item());
-                string checkboxId = string.Format("{0}_{1}_", target.Replace('.', '_'), index);
-                RenderLabel(item, checkboxId);
-                RenderItemEnd();
-                index++;
-            }
-
-            RenderEnd();
+            displayMemberName = ComponentParams["displayMember"] as string;
+            style = ComponentParams["style"] as string;
+            labelStyle = ComponentParams["labelStyle"] as string;
+            cssClass = GetCssClass();
         }
 
         private void RenderStart()
@@ -87,10 +86,34 @@ namespace Castle.MonoRail.ViewComponents
             }
             else
             {
-                RenderText(string.Format("<div class='{0}' style='{1}'>", CssClass,
-                    ComponentParams["style"] ?? "white-space:nowrap;'"));
+                RenderText(string.Format("<div class='{0}' style='{1}'>", cssClass,
+                    style ?? "white-space:nowrap;'"));
             }
         }
+
+        private void RenderItems()
+        {
+            IDictionary attributes = new Hashtable();
+            if (!string.IsNullOrEmpty(valueMemberName))
+            {
+                attributes.Add("value", valueMemberName);
+            }
+
+            FormHelper helper = (FormHelper)Context.ContextVars["FormHelper"];
+
+            FormHelper.CheckboxList list = helper.CreateCheckboxList(
+                target, source, attributes);
+
+            int index = 0;
+            foreach (object item in list)
+            {
+                RenderItemStart();
+                RenderItem(list, item, index);
+                RenderItemEnd();
+                index++;
+            }
+        }
+
 
         private void RenderEnd()
         {
@@ -101,24 +124,6 @@ namespace Castle.MonoRail.ViewComponents
             else
             {
                 RenderText("</div>");
-            }
-        }
-
-        private void RenderLabel(object item, string forId)
-        {
-            if (Context.HasSection("label"))
-            {
-                RenderSection("label");
-            }
-            else
-            {
-                string itemValue = GetBoolParamValue("splitPascalCase", true)
-                    ? PascalCaseToPhrase(item.ToString())
-                    : item.ToString();
-                RenderText(string.Format("<label for='{0}' style='{1}'>{2}</label>",
-                    forId,
-                    ComponentParams["labelStyle"] ?? "padding-left:0.4em; padding-right:1em;", 
-                    itemValue));
             }
         }
 
@@ -135,6 +140,48 @@ namespace Castle.MonoRail.ViewComponents
             }
         }
 
+        private void RenderItem(FormHelper.CheckboxList list, object item, int index)
+        {
+            PropertyBag["item"] = item;
+            RenderText(list.Item());
+            string checkboxId = string.Format("{0}_{1}_", target.Replace('.', '_'), index);
+            RenderLabel(item, checkboxId);
+        }
+
+        private void RenderLabel(object item, string forId)
+        {
+            if (Context.HasSection("label"))
+            {
+                RenderSection("label");
+            }
+            else
+            {
+                object itemValue;
+                if (string.IsNullOrEmpty(displayMemberName))
+                {
+                    itemValue = item;
+                }
+                else
+                {
+                    Type type = item.GetType();
+                    PropertyInfo pi = type.GetProperty(displayMemberName, 
+                        BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
+                    if (pi == null)
+                    {
+                        throw new ViewComponentException(string.Format("Invalid 'displayMember' specified for the checkbox list component.  The source class '{0}' does not contain a property '{1}'", type, displayMemberName));
+                    }
+                    itemValue = pi.GetValue(item, null); 
+                }
+                string labelText = GetBoolParamValue("splitPascalCase", true)
+                    ? PascalCaseToPhrase(itemValue.ToString())
+                    : itemValue.ToString();
+                RenderText(string.Format("<label for='{0}' style='{1}'>{2}</label>",
+                    forId,
+                    labelStyle ?? "padding-left:0.4em; padding-right:1em;", 
+                    labelText));
+            }
+        }
+
         private void RenderItemEnd()
         {
             if (Context.HasSection("itemEnd"))
@@ -145,20 +192,6 @@ namespace Castle.MonoRail.ViewComponents
             {
                 RenderText(string.Format("</{0}>",
                     isHorizontal ? "span" : "div"));
-            }
-        }
-
-        private string CssClass
-        {
-            get
-            {
-                string cssClass = ComponentParams["cssClass"] as string;
-                if (!string.IsNullOrEmpty(cssClass))
-                {
-                    return cssClass;
-                }
-                string cssPrefix = isHorizontal ? "horizontal" : "vertical";
-                return string.Format("{0}{1}", cssPrefix, "CheckboxList");
             }
         }
 
@@ -173,6 +206,17 @@ namespace Castle.MonoRail.ViewComponents
             {
                 return paramValue.HasValue && paramValue.Value;
             }
+        }
+
+        private string GetCssClass()
+        {
+            string parmValue = ComponentParams["cssClass"] as string;
+            if (!string.IsNullOrEmpty(parmValue))
+            {
+                return parmValue;
+            }
+            string cssPrefix = isHorizontal ? "horizontal" : "vertical";
+            return string.Format("{0}{1}", cssPrefix, "CheckboxList");
         }
 
         /// <summary>

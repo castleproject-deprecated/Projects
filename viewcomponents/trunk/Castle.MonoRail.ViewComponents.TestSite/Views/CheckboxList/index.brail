@@ -46,6 +46,13 @@
   Crazy Styled Horizontal Checkbox List (don't split pascal case)<br />
   <br />
   <%
-    component CheckboxList, {@source:statuses, @target: "selectedStatuses", @cssClass:"crazyCheckboxList", @splitPascalCase:false}
+    component CheckboxList, {@source:statuses, @target:"selectedStatuses", @cssClass:"crazyCheckboxList", @splitPascalCase:false}
+  %>
+</div>
+<div style="padding: 20px;">
+  Checkbox List Using Complex Type<br />
+  <br />
+  <%
+    component CheckboxList, {@source:colors, @target:"selectedColors", @displayMember:"Name", @valueMember:"Code"}
   %>
 </div>
