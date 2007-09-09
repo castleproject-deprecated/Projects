@@ -25,7 +25,7 @@ namespace Castle.MonoRail.ViewComponents
     {
         private static readonly string[] sections = new string[]
             {
-                "label", "containerStart", "containerEnd", "itemStart", "itemEnd"
+                "containerStart", "containerEnd", "itemStart", "itemEnd"
             };
 
         public override bool SupportsSection(string name)
@@ -48,6 +48,7 @@ namespace Castle.MonoRail.ViewComponents
         private string style;
         private string labelStyle;
         private string cssClass;
+        private bool splitPascalCase;
         
         public override void Render()
         {
@@ -76,6 +77,7 @@ namespace Castle.MonoRail.ViewComponents
             style = ComponentParams["style"] as string;
             labelStyle = ComponentParams["labelStyle"] as string;
             cssClass = GetCssClass();
+            splitPascalCase = GetBoolParamValue("splitPascalCase", true);
         }
 
         private void RenderStart()
@@ -150,36 +152,29 @@ namespace Castle.MonoRail.ViewComponents
 
         private void RenderLabel(object item, string forId)
         {
-            if (Context.HasSection("label"))
+            object itemValue;
+            if (string.IsNullOrEmpty(displayMemberName))
             {
-                RenderSection("label");
+                itemValue = item;
             }
             else
             {
-                object itemValue;
-                if (string.IsNullOrEmpty(displayMemberName))
+                Type type = item.GetType();
+                PropertyInfo pi = type.GetProperty(displayMemberName,
+                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
+                if (pi == null)
                 {
-                    itemValue = item;
+                    throw new ViewComponentException(string.Format("Invalid 'displayMember' specified for the checkbox list component.  The source class '{0}' does not contain a property '{1}'", type, displayMemberName));
                 }
-                else
-                {
-                    Type type = item.GetType();
-                    PropertyInfo pi = type.GetProperty(displayMemberName, 
-                        BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
-                    if (pi == null)
-                    {
-                        throw new ViewComponentException(string.Format("Invalid 'displayMember' specified for the checkbox list component.  The source class '{0}' does not contain a property '{1}'", type, displayMemberName));
-                    }
-                    itemValue = pi.GetValue(item, null); 
-                }
-                string labelText = GetBoolParamValue("splitPascalCase", true)
-                    ? PascalCaseToPhrase(itemValue.ToString())
-                    : itemValue.ToString();
-                RenderText(string.Format("<label for='{0}' style='{1}'>{2}</label>",
-                    forId,
-                    labelStyle ?? "padding-left:0.4em; padding-right:1em;", 
-                    labelText));
+                itemValue = pi.GetValue(item, null);
             }
+            string labelText = splitPascalCase
+                ? PascalCaseToPhrase(itemValue.ToString())
+                : itemValue.ToString();
+            RenderText(string.Format("<label for='{0}' style='{1}'>{2}</label>",
+                forId,
+                labelStyle ?? "padding-left:0.4em; padding-right:1em;",
+                labelText));
         }
 
         private void RenderItemEnd()

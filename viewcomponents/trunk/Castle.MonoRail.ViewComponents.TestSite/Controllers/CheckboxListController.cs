@@ -19,6 +19,7 @@ namespace Castle.MonoRail.ViewComponents.TestSite.Controllers
             PropertyBag["statuses"] = Enum.GetValues(typeof(Status));
             PropertyBag["selectedStatuses"] = selectedStatuses;
 
+            private IList<Color> colors = new List<Color>();
             colors.Add(new Color("Red", "ff0000"));
             colors.Add(new Color("Blue", "0000ff"));
             colors.Add(new Color("Green", "008000"));
