@@ -17,7 +17,8 @@ p,code,ul {
 	font-size: 1.2em;
 	padding-bottom: 1.2em;
 }
-li {
+ul li 
+{
 	list-style: none;
 }
 h1 {
@@ -459,4 +460,18 @@ fieldset textarea
 .crazyCheckboxList input
 {
 	vertical-align:middle;
+}
+
+.Question
+{
+	color:#666699;
+	cursor:pointer;
+	font-size:larger;
+	font-weight:bold;
+	font-family:Arial;
+}
+
+.Answer
+{
+	font-family:Arial;
 }

@@ -48,6 +48,11 @@
 				</div>
 
 				<div class="subnav">
+                    <ul>
+						<li>
+							<a href="/home/index.rails">Home</a>
+						</li>
+					</ul>
 
 					<h3>Grid</h3>
 					<ul>
@@ -110,7 +115,16 @@
 						<li>
 							<a href="/checkboxlist/index.rails">Sample Checkbox Lists</a>
 						</li>
-					</ul>				
+					</ul>		
+					<h3>FAQ component</h3>
+					<ul>
+						<li>
+							<a href="/Faq/index.rails">FAQ Item</a>
+						</li>
+						<li>
+							<a href="/Faq/list.rails">FAQ List</a>
+						</li>
+					</ul>		
 					
 				</div>
 

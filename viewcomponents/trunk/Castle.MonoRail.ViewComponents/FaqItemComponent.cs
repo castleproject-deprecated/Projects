@@ -283,6 +283,16 @@ namespace Castle.MonoRail.ViewComponents
     {
         public string Question;     //  { get; set; }
         public string Answer;       //  { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the QnA class.
+        /// </summary>
+        /// <param name="question"></param>
+        /// <param name="answer"></param>
+        public QnA(string question, string answer)
+        {
+            Question = question;
+            Answer = answer;
+        }
     }
 
     /// <summary>
