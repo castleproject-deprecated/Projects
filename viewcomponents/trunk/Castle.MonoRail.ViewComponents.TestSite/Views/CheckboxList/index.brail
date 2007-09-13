@@ -4,7 +4,7 @@
   Default Vertical Checkbox List<br />
   <br />
   <%
-    component CheckboxList, {@source:statuses, @target:"selectedStatuses"}
+    component CheckboxList, {@source:statuses, @target:"selectedStatuses", @toolTip:"Please select all of the statuses you would like to search on"}
   %>
 </div>
 <div style="padding: 20px;">

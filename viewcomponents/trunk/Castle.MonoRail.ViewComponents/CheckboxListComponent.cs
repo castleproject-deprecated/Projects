@@ -51,6 +51,7 @@ namespace Castle.MonoRail.ViewComponents
         private bool splitPascalCase;
         private int? columns;
         private string columnVerticalAlign;
+        private string toolTip;
         
         public override void Render()
         {
@@ -82,6 +83,7 @@ namespace Castle.MonoRail.ViewComponents
             splitPascalCase = GetBoolParamValue("splitPascalCase", true);
             columns = ComponentParams["columns"] as int?;
             columnVerticalAlign = ComponentParams["columnVerticalAlign"] as string;
+            toolTip = ComponentParams["toolTip"] as string;
         }
 
         private void RenderStart()
@@ -92,8 +94,11 @@ namespace Castle.MonoRail.ViewComponents
             }
             else
             {
-                RenderText(string.Format("<div class='{0}' style='{1}'>", cssClass,
-                    style ?? "white-space:nowrap;'"));
+                string titleAttribute = !string.IsNullOrEmpty(toolTip)
+                    ? string.Format(" title='{0}'", toolTip)
+                    : string.Empty;
+                RenderText(string.Format("<div class='{0}' style='{1}'{2}>", cssClass,
+                    style ?? "white-space:nowrap;'", titleAttribute));
             }
         }
 
