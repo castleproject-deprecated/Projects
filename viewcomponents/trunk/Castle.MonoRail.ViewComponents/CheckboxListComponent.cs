@@ -52,6 +52,7 @@ namespace Castle.MonoRail.ViewComponents
         private int? columns;
         private string columnVerticalAlign;
         private string toolTip;
+        private string labelFormat;
         
         public override void Render()
         {
@@ -84,6 +85,7 @@ namespace Castle.MonoRail.ViewComponents
             columns = ComponentParams["columns"] as int?;
             columnVerticalAlign = ComponentParams["columnVerticalAlign"] as string;
             toolTip = ComponentParams["toolTip"] as string;
+            labelFormat = ComponentParams["labelFormat"] as string;
         }
 
         private void RenderStart()
@@ -217,6 +219,9 @@ namespace Castle.MonoRail.ViewComponents
             string labelText = splitPascalCase
                 ? PascalCaseToPhrase(itemValue.ToString())
                 : itemValue.ToString();
+            labelText = string.IsNullOrEmpty(labelFormat)
+                ? labelText
+                : string.Format(labelFormat, labelText);
             RenderText(string.Format("<label for='{0}' style='{1}'>{2}</label>",
                 forId,
                 labelStyle ?? "padding-left:0.4em; padding-right:1em;",

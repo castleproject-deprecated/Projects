@@ -11,7 +11,7 @@
   Vertical Checkbox List With Columns<br />
   <br />
   <%
-    component CheckboxList, {@source:statuses, @target:"selectedStatuses", @columns:3}
+    component CheckboxList, {@source:statuses, @target:"selectedStatuses", @columns:3, @labelFormat:"[{0}]"}
   %>
 </div>
 <div style="padding: 20px;">
