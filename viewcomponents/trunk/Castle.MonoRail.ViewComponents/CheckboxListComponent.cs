@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.Collections;
-using System.Reflection;
-using Castle.MonoRail.Framework;
-using Castle.MonoRail.Framework.Helpers;
-using System.Text;
-
 namespace Castle.MonoRail.ViewComponents
 {
+    using System;
+    using System.Collections;
+    using System.Reflection;
+    using Castle.MonoRail.Framework;
+    using Castle.MonoRail.Framework.Helpers;
+    using System.Text;
+
     public class CheckboxListComponent : ViewComponent
     {
         private static readonly string[] sections = new string[]
@@ -49,6 +49,8 @@ namespace Castle.MonoRail.ViewComponents
         private string labelStyle;
         private string cssClass;
         private bool splitPascalCase;
+        private int? columns;
+        private string columnVerticalAlign;
         
         public override void Render()
         {
@@ -78,6 +80,8 @@ namespace Castle.MonoRail.ViewComponents
             labelStyle = ComponentParams["labelStyle"] as string;
             cssClass = GetCssClass();
             splitPascalCase = GetBoolParamValue("splitPascalCase", true);
+            columns = ComponentParams["columns"] as int?;
+            columnVerticalAlign = ComponentParams["columnVerticalAlign"] as string;
         }
 
         private void RenderStart()
@@ -106,16 +110,53 @@ namespace Castle.MonoRail.ViewComponents
             FormHelper.CheckboxList list = helper.CreateCheckboxList(
                 target, source, attributes);
 
+            if (columns.HasValue && columns > 0)
+            {
+                RenderItemsInColumns(list);
+            }
+            else
+            {
+                int index = 0;
+                foreach (object item in list)
+                {
+                    RenderItemStart();
+                    RenderItem(list, item, index);
+                    RenderItemEnd();
+                    index++;
+                }
+            }
+        }
+
+        private void RenderItemsInColumns(FormHelper.CheckboxList list)
+        {
+            int itemCount = GetCount(source);
+            decimal itemsPerColumn = Math.Ceiling((decimal)itemCount / columns.Value);
             int index = 0;
+            int positionInColumn = 1;
+            RenderText("<table><tr>");
             foreach (object item in list)
             {
+                if (positionInColumn == 1)
+                {
+                    RenderText(string.Format("<td style='vertical-align:{0};'>",
+                        string.IsNullOrEmpty(columnVerticalAlign) ? "top" : columnVerticalAlign));
+                }
                 RenderItemStart();
                 RenderItem(list, item, index);
                 RenderItemEnd();
                 index++;
+                if (positionInColumn == itemsPerColumn || index == itemCount)
+                {
+                    RenderText("</td>");
+                    positionInColumn = 1;
+                }
+                else
+                {
+                    positionInColumn++;
+                }
             }
+            RenderText("</tr></table>");
         }
-
 
         private void RenderEnd()
         {
@@ -243,6 +284,16 @@ namespace Castle.MonoRail.ViewComponents
                 result.Append(letters[i].ToString());
             }
             return result.ToString();
+        }
+
+        private int GetCount(IEnumerable collection)
+        {
+            int result = 0;
+            foreach (object item in collection)
+            {
+                result++;
+            }
+            return result;
         }
     }
 }
