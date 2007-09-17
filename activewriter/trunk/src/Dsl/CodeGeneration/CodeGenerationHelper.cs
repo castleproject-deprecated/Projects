@@ -20,6 +20,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
     using System.Collections;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Diagnostics;
     using System.IO;
     using System.Reflection;
     using System.Text;
@@ -29,7 +30,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
     using EnvDTE;
     using System.ComponentModel.Design;
     using ServerExplorerSupport;
+    using VSLangProj;
     using CodeNamespace = System.CodeDom.CodeNamespace;
+    using Process=EnvDTE.Process;
 
     public class CodeGenerationHelper
     {
@@ -120,14 +123,29 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 GenerateMetaData(nameSpace);
             }
 
+            _assemblyLoadPath = _model.AssemblyPath;
+
             if (_model.Target == CodeGenerationTarget.ActiveRecord)
             {
                 string primaryOutput = GenerateCode(compileUnit);
                 _propertyBag.Add("CodeGeneration.PrimaryOutput", primaryOutput);
+
+                if (_model.UseNHQG)
+                {
+                    try
+                    {
+                        AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
+                        Assembly assembly = GenerateARAssembly(compileUnit, false);
+                        UseNHQG(assembly);
+                    }
+                    finally
+                    {
+                        AppDomain.CurrentDomain.AssemblyResolve -= AssemblyResolve;
+                    }
+                }
             }
             else
             {
-                _assemblyLoadPath = _model.AssemblyPath;
                 Type starter = null;
                 Assembly assembly = null;
 
@@ -145,7 +163,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     Delegate del = Delegate.CreateDelegate(eventType, this, info);
                     eventInfo.AddEventHandler(this, del);
 
-                    assembly = GenerateARAssembly(compileUnit);
+                    assembly = GenerateARAssembly(compileUnit, !_model.UseNHQG);
                 }
                 finally
                 {
@@ -182,14 +200,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                         writer.Write(pair.Value);
                     }
 
-                    ProjectItem item = null;
+                    AddToProject(path, prjBuildAction.prjBuildActionEmbeddedResource);
+                }
 
-                    if (_model.RelateWithActiwFile)
-                        item = _projectItem.ProjectItems.AddFromFile(path);
-                    else
-                        item = _dte.ItemOperations.AddExistingItem(path);
-
-                    item.Properties.Item("BuildAction").Value = Common.EmbeddedResourceBuildActionIndex;
+                if (_model.UseNHQG)
+                {
+                   UseNHQG(assembly);
                 }
             }
         }
@@ -1291,12 +1307,86 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             return sb.ToString();
         }
 
-        private Assembly GenerateARAssembly(CodeCompileUnit compileUnit)
+        private void UseNHQG(Assembly assembly)
+        {
+            System.Diagnostics.Process nhqg = new System.Diagnostics.Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+
+            DirectoryInfo info = new DirectoryInfo(System.Environment.GetEnvironmentVariable("TEMP"));
+            string tempFileFolderName = Guid.NewGuid().ToString("N");
+            DirectoryInfo tempFileFolder = null;
+
+            try
+            {
+                tempFileFolder = info.CreateSubdirectory(tempFileFolderName);
+
+                startInfo.FileName = _model.NHQGExecutable;
+                startInfo.WorkingDirectory = Path.GetDirectoryName(_model.NHQGExecutable);
+                string[] args = new string[4];
+                args[0] = "/lang:" + (_language == CodeLanguage.CSharp ? "CS": "VB");
+                args[1] = "/files:" + assembly.Location;
+                args[2] = "/out:" + tempFileFolder.FullName;
+                args[3] = "/ns:" + _namespace;
+                startInfo.Arguments = string.Join(" ", args);
+                startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                startInfo.ErrorDialog = false;
+                startInfo.CreateNoWindow = true;
+                startInfo.RedirectStandardOutput = true;
+                startInfo.UseShellExecute = false;
+                nhqg.StartInfo = startInfo;
+
+                nhqg.Start();
+                StreamReader output = nhqg.StandardOutput;
+                nhqg.WaitForExit(); // Timeout?
+
+                if (nhqg.ExitCode != 0)
+                {
+                    throw new TargetException("NHQG exited with code " + nhqg.ExitCode.ToString());
+                }
+                else
+                {
+                    string consoleOut = output.ReadToEnd();
+                    if (!string.IsNullOrEmpty(consoleOut) && consoleOut.StartsWith("An error occured:"))
+                    {
+                        throw new TargetException("NHQG exited with the following error:\n\n" + consoleOut);
+                    }
+                    else
+                    {
+                        foreach (FileInfo file in tempFileFolder.GetFiles())
+                        {
+                            string filePath = Path.Combine(_modelFilePath, file.Name);
+                            file.CopyTo(filePath , true);
+                            AddToProject(filePath, prjBuildAction.prjBuildActionCompile);
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                if (tempFileFolder != null)
+                    tempFileFolder.Delete(true);
+            }
+        }
+
+        private void AddToProject(string path, prjBuildAction buildAction)
+        {
+            ProjectItem item = null;
+
+            if (_model.RelateWithActiwFile)
+                item = _projectItem.ProjectItems.AddFromFile(path);
+            else
+                item = _dte.ItemOperations.AddExistingItem(path);
+
+            item.Properties.Item("BuildAction").Value = (int)buildAction;
+        }
+
+        private Assembly GenerateARAssembly(CodeCompileUnit compileUnit, bool generateInMemory)
         {
             CompilerParameters parameters = new CompilerParameters();
-            parameters.GenerateInMemory = true;
-        	_assemblyName = DTEHelper.GetAssemblyName(_projectItem.ContainingProject);
-			parameters.OutputAssembly = _assemblyName + ".dll";
+            parameters.GenerateInMemory = generateInMemory;
+
+            _assemblyName = Guid.NewGuid().ToString("N");
+            parameters.OutputAssembly = _assemblyName + ".dll";
             parameters.GenerateExecutable = false;
 
             Assembly activeRecord = Assembly.Load(_model.ActiveRecordAssemblyName);
@@ -1332,6 +1422,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 Type modelCollection = _activeRecord.GetType("Castle.ActiveRecord.Framework.Internal.ActiveRecordModelCollection");
                 if ((int)modelCollection.GetProperty("Count").GetValue(models, null) > 0)
                 {
+                    string actualAssemblyName = ", " + DTEHelper.GetAssemblyName(_projectItem.ContainingProject);
                     IEnumerator enumerator = (IEnumerator)modelCollection.InvokeMember("GetEnumerator", BindingFlags.Public | BindingFlags.InvokeMethod | BindingFlags.Instance, null, models, null);
                     while (enumerator.MoveNext())
                     {
@@ -1359,7 +1450,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                             }
 
                             if (name != null)
-                                nHibernateConfigs.Add(name, xml);
+                                nHibernateConfigs.Add(name, xml.Replace(assemblyNameTostrip, actualAssemblyName));
                         }
                     }
                 }

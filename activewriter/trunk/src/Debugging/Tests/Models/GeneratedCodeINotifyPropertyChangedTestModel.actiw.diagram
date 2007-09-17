@@ -2,10 +2,10 @@
 <activeRecordMapping dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" isCompleteView="false" name="GeneratedCodeINotifyPropertyChangedTestModel">
   <modelMoniker Id="6afe9f7a-ca44-4e3e-a9bf-ba56316b97c8" />
   <nestedChildShapes>
-    <classShape Id="7244312d-d8e3-4093-bd32-3b5d91a11cba" absoluteBounds="0.5, 0.5, 1.5, 1.0461531575520833">
+    <classShape Id="43626682-c9fb-4996-86d2-a4b4e50f486f" absoluteBounds="0.5, 1.375, 1.5, 1.1439925130208333">
       <modelClassMoniker name="/6afe9f7a-ca44-4e3e-a9bf-ba56316b97c8/NotifyingClass" />
       <nestedChildShapes>
-        <elementListCompartment Id="972e362a-9ccf-41ee-997f-981389ae184d" absoluteBounds="0.515, 0.91000000000000014, 1.4700000000000002, 0.53615315755208326" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+        <elementListCompartment Id="23f2bfb1-f8ed-4318-8249-9baa268e4306" absoluteBounds="0.515, 1.7850000000000001, 1.4700000000000002, 0.63399251302083315" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

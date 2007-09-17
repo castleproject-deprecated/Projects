@@ -520,6 +520,40 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// UseNHQG
+			if (!serializationContext.Result.Failed)
+			{
+				string attribUseNHQG = reader.GetAttribute("useNHQG");
+				if (attribUseNHQG != null)
+				{
+					global::System.Boolean valueOfUseNHQG;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUseNHQG), out valueOfUseNHQG))
+					{
+						instanceOfModel.UseNHQG = valueOfUseNHQG;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "useNHQG", typeof(global::System.Boolean), attribUseNHQG);
+					}
+				}
+			}
+			// NHQGExecutable
+			if (!serializationContext.Result.Failed)
+			{
+				string attribNHQGExecutable = reader.GetAttribute("nHQGExecutable");
+				if (attribNHQGExecutable != null)
+				{
+					global::System.String valueOfNHQGExecutable;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribNHQGExecutable), out valueOfNHQGExecutable))
+					{
+						instanceOfModel.NHQGExecutable = valueOfNHQGExecutable;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "nHQGExecutable", typeof(global::System.String), attribNHQGExecutable);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -1414,6 +1448,31 @@ namespace Altinoren.ActiveWriter
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "False") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("generateMetaData", serializedPropValue);
+					}
+				}
+			}
+			// UseNHQG
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.Boolean propValue = instanceOfModel.UseNHQG;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Boolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("useNHQG", serializedPropValue);
+					}
+				}
+			}
+			// NHQGExecutable
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.NHQGExecutable;
+				if (!serializationContext.Result.Failed)
+				{
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "C:\\Program Files\\Rhino\\NHibernate Query Generator\\NHQG.exe") != 0))
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("nHQGExecutable", propValue);
 					}
 				}
 			}

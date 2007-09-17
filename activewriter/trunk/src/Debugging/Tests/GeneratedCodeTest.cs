@@ -397,5 +397,17 @@ namespace Debugging.Tests
             object[] attributes = type.GetCustomAttributes(typeof(DefaultMemberAttribute), false);
             Assert.IsTrue(attributes.Length == 1, "Did not generate DefaultMemberAttribute.");
         }
+
+        public void CanGenerateSupportingCodeWithNHQGForARTarget()
+        {
+            // Compiles if NHQG integration for AR target works properly. Fails otherwise.
+            Where.Root_Query_NHQGWithARMany q = Where.NHQGWithARMany;
+        }
+
+        public void CanGenerateSupportingCodeWithNHQGForNHTarget()
+        {
+            // Compiles if NHQG integration for NH target works properly. Fails otherwise.
+            Where.Root_Query_NHQGWithNHMany q = Where.NHQGWithNHMany;
+        }
     }
 }

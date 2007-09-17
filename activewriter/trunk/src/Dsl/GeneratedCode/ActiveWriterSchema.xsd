@@ -192,6 +192,18 @@
         <xsd:documentation>Instructs ActiveWriter to generate property metadata to allow typed access to property names.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
+    <!-- Property: UseNHQG -->
+    <xsd:attribute name="useNHQG" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>Instructs ActiveWriter to post process generated code with NHibernate Query Generator to generate helper Criteria API constructs. For more information on NHQG, visit http://www.ayende.com</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: NHQGExecutable -->
+    <xsd:attribute name="nHQGExecutable" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Executable path for NHQG.exe</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
   </xsd:complexType>
   
   <!-- Model Moniker -->

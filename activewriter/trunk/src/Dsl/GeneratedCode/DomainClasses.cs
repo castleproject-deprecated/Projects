@@ -2198,6 +2198,185 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region UseNHQG domain property code
+		
+		/// <summary>
+		/// UseNHQG domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid UseNHQGDomainPropertyId = new global::System.Guid(0x7d2151aa, 0x6ddb, 0x489c, 0x90, 0xdb, 0x4f, 0xcd, 0x35, 0x4c, 0x43, 0xb7);
+		
+		/// <summary>
+		/// Storage for UseNHQG
+		/// </summary>
+		private global::System.Boolean useNHQGPropertyStorage;
+		
+		/// <summary>
+		/// Gets or sets the value of UseNHQG domain property.
+		/// Instructs ActiveWriter to post process generated code with NHibernate Query
+		/// Generator to generate helper Criteria API constructs. For more information on
+		/// NHQG, visit http://www.ayende.com
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/UseNHQG.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/UseNHQG.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/UseNHQG.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainObjectId("7d2151aa-6ddb-489c-90db-4fcd354c43b7")]
+		public global::System.Boolean UseNHQG
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return useNHQGPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				UseNHQGPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.UseNHQG domain property.
+		/// </summary>
+		internal sealed partial class UseNHQGPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.Boolean>
+		{
+			private UseNHQGPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.UseNHQG domain property value handler.
+			/// </summary>
+			public static readonly UseNHQGPropertyHandler Instance = new UseNHQGPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.UseNHQG domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return UseNHQGDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.Boolean GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.useNHQGPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.Boolean newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.Boolean oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.useNHQGPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region NHQGExecutable domain property code
+		
+		/// <summary>
+		/// NHQGExecutable domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid NHQGExecutableDomainPropertyId = new global::System.Guid(0x428db86d, 0x0643, 0x4830, 0xa8, 0x41, 0x6b, 0x56, 0x83, 0x0c, 0x73, 0x5b);
+		
+		/// <summary>
+		/// Storage for NHQGExecutable
+		/// </summary>
+		private global::System.String nHQGExecutablePropertyStorage = "C:\\Program Files\\Rhino\\NHibernate Query Generator\\NHQG.exe";
+		
+		/// <summary>
+		/// Gets or sets the value of NHQGExecutable domain property.
+		/// Executable path for NHQG.exe
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/NHQGExecutable.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/NHQGExecutable.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/NHQGExecutable.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue("C:\\Program Files\\Rhino\\NHibernate Query Generator\\NHQG.exe")]
+		[DslModeling::DomainObjectId("428db86d-0643-4830-a841-6b56830c735b")]
+		public global::System.String NHQGExecutable
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return nHQGExecutablePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				NHQGExecutablePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.NHQGExecutable domain property.
+		/// </summary>
+		internal sealed partial class NHQGExecutablePropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private NHQGExecutablePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.NHQGExecutable domain property value handler.
+			/// </summary>
+			public static readonly NHQGExecutablePropertyHandler Instance = new NHQGExecutablePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.NHQGExecutable domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return NHQGExecutableDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.nHQGExecutablePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.nHQGExecutablePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region Classes opposite domain role accessor
 		/// <summary>
 		/// Gets a list of Classes.

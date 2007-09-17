@@ -38,7 +38,6 @@ namespace Altinoren.ActiveWriter
         public static string ViewsFolderName = "Views";
         public static string ControllersFolderName = "Controllers";
         public static string InMemoryCompiledAssemblyName = "AW";
-        public static int EmbeddedResourceBuildActionIndex = 3;
         public static string ActiveRecordVersion = "1.0.0.0";
 
         

@@ -417,6 +417,30 @@
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;GenerateMetaData&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.Model/UseNHQG.Description" xml:space="preserve">
+    <value>Instructs ActiveWriter to post process generated code with NHibernate Query Generator to generate helper Criteria API constructs. For more information on NHQG, visit http://www.ayende.com</value>
+    <comment>Description for DomainProperty &apos;UseNHQG&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseNHQG.DisplayName" xml:space="preserve">
+    <value>Use NHQG</value>
+    <comment>DisplayName for DomainProperty &apos;UseNHQG&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseNHQG.Category" xml:space="preserve">
+    <value>Code Generation (NHibernate)</value>
+    <comment>Category for DomainProperty &apos;UseNHQG&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/NHQGExecutable.Description" xml:space="preserve">
+    <value>Executable path for NHQG.exe</value>
+    <comment>Description for DomainProperty &apos;NHQGExecutable&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/NHQGExecutable.DisplayName" xml:space="preserve">
+    <value>NHQG Executable</value>
+    <comment>DisplayName for DomainProperty &apos;NHQGExecutable&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/NHQGExecutable.Category" xml:space="preserve">
+    <value>Code Generation (NHibernate)</value>
+    <comment>Category for DomainProperty &apos;NHQGExecutable&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ModelClass.Description" xml:space="preserve">
     <value>A class of the domain</value>
     <comment>Description for DomainClass &apos;ModelClass&apos;</comment>

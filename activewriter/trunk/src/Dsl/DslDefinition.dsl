@@ -123,6 +123,16 @@
             <DomainEnumerationMoniker Name="MetaDataGeneration" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="7d2151aa-6ddb-489c-90db-4fcd354c43b7" Description="Instructs ActiveWriter to post process generated code with NHibernate Query Generator to generate helper Criteria API constructs. For more information on NHQG, visit http://www.ayende.com" Name="UseNHQG" DisplayName="Use NHQG" DefaultValue="false" Category="Code Generation (NHibernate)">
+          <Type>
+            <ExternalTypeMoniker Name="/System/Boolean" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="428db86d-0643-4830-a841-6b56830c735b" Description="Executable path for NHQG.exe" Name="NHQGExecutable" DisplayName="NHQG Executable" DefaultValue="C:\\Program Files\\Rhino\\NHibernate Query Generator\\NHQG.exe" Category="Code Generation (NHibernate)">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
       </Properties>
       <ElementMergeDirectives>
         <ElementMergeDirective>
@@ -1384,6 +1394,12 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="generateMetaData">
             <DomainPropertyMoniker Name="Model/GenerateMetaData" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="useNHQG">
+            <DomainPropertyMoniker Name="Model/UseNHQG" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="nHQGExecutable">
+            <DomainPropertyMoniker Name="Model/NHQGExecutable" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>
