@@ -71,13 +71,31 @@ namespace Castle.MonoRail.Rest.Mime
             }
                                                                                                         
             List<MimeType> returnTypes = new List<MimeType>();
-            foreach (AcceptType type in acceptTypes.OrderByDescending(at => at.Q))
+            acceptTypes.Sort( new Comparison<AcceptType>( descendingAcceptTypes ) );
+            foreach (AcceptType type in acceptTypes)
             {
-                returnTypes.AddRange(mimes.Where(m => m.MimeString == type.Name || m.Synonyms.Contains(type.Name)));                
+//                returnTypes.AddRange(mimes.Where(m => m.MimeString == type.Name || m.Synonyms.Contains(type.Name)));                
+                returnTypes.AddRange( mimes.FindAll( delegate( MimeType m ) {
+                                                                                return
+                                                                                    m.MimeString == type.Name ||
+                                                                                    m.Synonyms.Contains( type.Name );}));
             }
 
-
             return returnTypes.Distinct().ToArray();
+        }
+
+        private static int descendingAcceptTypes( AcceptType x, AcceptType y )
+        {
+            
+            if( x == null )
+            {
+                return ( y == null ? 0 : -1 ); 
+            }
+            else
+            {
+                if (y == null) return 1;
+                return x.Q.CompareTo( y.Q );
+            }
         }
     }
 }
