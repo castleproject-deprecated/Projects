@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using Castle.MonoRail.Framework;
 using System.Collections;
-using System.Linq.Expressions;
 using System.Reflection;
 using Castle.Components.Binder;
-using System.Xml.Serialization;
 using Castle.MonoRail.Rest.Binding;
-using System.Xml.Linq;
 using System.Xml;
 using Castle.MonoRail.Rest.Mime;
 namespace Castle.MonoRail.Rest
@@ -20,7 +15,7 @@ namespace Castle.MonoRail.Rest
         private CompositeNode _paramsNode;
         private string _controllerAction;
 
-        protected override System.Reflection.MethodInfo SelectMethod(string action, System.Collections.IDictionary actions, IRequest request, System.Collections.IDictionary actionArgs)
+        protected override MethodInfo SelectMethod(string action, IDictionary actions, IRequest request, IDictionary actionArgs)
         {
             if (String.Equals("collection", action, StringComparison.InvariantCultureIgnoreCase) || String.IsNullOrEmpty(action))
             {
@@ -47,7 +42,7 @@ namespace Castle.MonoRail.Rest
 
                 if (!actions.Contains(action))
                 {
-                    MethodInfo selectedMethod = null;
+                    MethodInfo selectedMethod;
                     switch (request.HttpMethod.ToUpper())
                     {
                         case "GET":
@@ -88,7 +83,7 @@ namespace Castle.MonoRail.Rest
             get
             {
 
-                string ct = this.Context.UnderlyingContext.Request.ContentType;
+                string ct = Context.UnderlyingContext.Request.ContentType;
                 if (String.Equals("application/xml", ct, StringComparison.InvariantCultureIgnoreCase))
                 {
                     if (_formNode == null)
@@ -110,7 +105,7 @@ namespace Castle.MonoRail.Rest
         {
             get
             {
-                string ct = this.Context.UnderlyingContext.Request.ContentType;
+                string ct = Context.UnderlyingContext.Request.ContentType;
                 if (String.Equals("application/xml", ct, StringComparison.InvariantCultureIgnoreCase))
                 {
                     if (_paramsNode == null)
@@ -131,9 +126,9 @@ namespace Castle.MonoRail.Rest
 
         private XDocument GetDocFromRequest()
         {
-            var inputStream = Context.UnderlyingContext.Request.InputStream;
+            Stream inputStream = Context.UnderlyingContext.Request.InputStream;
             inputStream.Position = 0;
-            var reader = XmlReader.Create(inputStream);
+            XmlReader reader = XmlReader.Create(inputStream);
             return XDocument.Load(reader);
         }
 	
@@ -143,12 +138,10 @@ namespace Castle.MonoRail.Rest
             MimeTypes registeredMimes = new MimeTypes();
             registeredMimes.RegisterBuiltinTypes();
 
-            ResponseHandler handler = new ResponseHandler()
-            {
-                ControllerBridge = new ControllerBridge(this, _controllerAction),
-                AcceptedMimes = AcceptType.Parse((string)Request.Headers["Accept"], registeredMimes),
-                Format = new ResponseFormat()
-            };
+            ResponseHandler handler = new ResponseHandler();
+            handler.ControllerBridge = new ControllerBridge( this, _controllerAction );
+            handler.AcceptedMimes = AcceptType.Parse( Request.Headers[ "Accept" ], registeredMimes );
+            handler.Format = new ResponseFormat();
 
             collectFormats(handler.Format);
             handler.Respond();
@@ -162,12 +155,12 @@ namespace Castle.MonoRail.Rest
 
         protected string UrlFor(IDictionary parameters)
         {
-            return UrlBuilder.BuildUrl(this.Context.UrlInfo, parameters);
+            return UrlBuilder.BuildUrl(Context.UrlInfo, parameters);
         }
 
         protected string UrlFor(string action)
         {
-            return UrlBuilder.BuildUrl(Context.UrlInfo, this.Name, action);
+            return UrlBuilder.BuildUrl(Context.UrlInfo, Name, action);
         }
        
     }

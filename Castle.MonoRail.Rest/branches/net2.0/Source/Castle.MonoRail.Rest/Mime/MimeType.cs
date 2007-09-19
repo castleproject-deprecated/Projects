@@ -1,29 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Castle.MonoRail.Rest.Mime
 {
     public class MimeType
     {
-        
-        public string MimeString { get; set; }
-        public string Symbol {get; set;}
-        public List<String> Synonyms { get; set; }
-        public List<String> ExtensionSynonyms { get; set; }
+        private string _mimeString;
+        private string _symbol;
+        private List<string> _synonyms;
+        private List<string> _extensionSynonyms;
 
-        
+        public MimeType()
+        {
+        }
+
+        public MimeType( string mimeString, string symbol, List<string> synonyms, List<string> extensionSynonyms )
+        {
+            _mimeString = mimeString;
+            _symbol = symbol;
+            _synonyms = synonyms;
+            _extensionSynonyms = extensionSynonyms;
+        }
+
+        public string MimeString
+        {
+            get { return _mimeString; }
+            set { _mimeString = value; }
+        }
+
+        public string Symbol
+        {
+            get { return _symbol; }
+            set { _symbol = value; }
+        }
+
+        public List<string> Synonyms
+        {
+            get { return _synonyms; }
+            set { _synonyms = value; }
+        }
+
+        public List<string> ExtensionSynonyms
+        {
+            get { return _extensionSynonyms; }
+            set { _extensionSynonyms = value; }
+        }
     }
 
-    public class MimeTypes : System.Collections.Generic.List<MimeType>
+    public class MimeTypes : List<MimeType>
     {
-        
-
         public MimeTypes(): base(15)
         {
-        
-            
         }
 
         public void RegisterBuiltinTypes()
@@ -31,21 +57,21 @@ namespace Castle.MonoRail.Rest.Mime
             //copied from rails mime_types
 
             Register("*/*", "all");
-            Register("text/plain", "text", null, new[] { "txt" });
-            Register("text/html", "html", new[] { "application/xhtml+xml" }, new[] { "xhtml" });
-            Register("text/javascript", "js", new[] { "application/javascript", "application/x-javascript" });
+            Register("text/plain", "text", null, new string[] { "txt" });
+            Register("text/html", "html", new string[] { "application/xhtml+xml" }, new string[] { "xhtml" });
+            Register("text/javascript", "js", new string[] { "application/javascript", "application/x-javascript" });
             Register("text/css", "css");
             Register("text/calendar", "ics");
             Register("text/csv", "csv");
-            Register("application/xml", "xml", new[] { "text/xml application/x-xml" });
+            Register("application/xml", "xml", new string[] { "text/xml", "application/x-xml" });
             Register("application/rss+xml", "rss");
             Register("application/atom+xml", "atom");
-            Register("application/x-yaml", "yaml", new[] { "text/yaml" });
+            Register("application/x-yaml", "yaml", new string[] { "text/yaml" });
             Register("multipart/form-data", "multipart_form");
             Register("application/x-www-form-urlencoded", "url_encoded_form");
 
             //http://www.ietf.org/rfc/rfc4627.txt
-            Register("application/json", "json", new[] { "text/x-json" });         
+            Register("application/json", "json", new string[] { "text/x-json" });         
 
         }
 
@@ -65,14 +91,8 @@ namespace Castle.MonoRail.Rest.Mime
 
             if (synonyms != null) synList.AddRange(synonyms);
             if (extensionSynonyms != null) extentionList.AddRange(extensionSynonyms);
-
-            this.Add(
-                new MimeType() { 
-                    MimeString = mimeString, 
-                    Symbol = symbol, 
-                    Synonyms = synList, 
-                    ExtensionSynonyms = extentionList }
-                );                           
+            
+            Add( new MimeType( mimeString, symbol, synList, extentionList ) );                           
         }
     }
 }

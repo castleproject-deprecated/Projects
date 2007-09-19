@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections.Specialized;
 using Castle.MonoRail.Rest.Mime;
 namespace Castle.MonoRail.Rest
 {
@@ -14,8 +11,8 @@ namespace Castle.MonoRail.Rest
 
     public class ResponseFormat : ResponseFormatInternal
     {
-        private Dictionary<string, ResponderDelegate> _renderers;
-        private List<String> _order;
+        private readonly Dictionary<string, ResponderDelegate> _renderers;
+        private readonly List<String> _order;
 
         public ResponseFormat()
         {
@@ -60,7 +57,8 @@ namespace Castle.MonoRail.Rest
             MimeTypes types = new MimeTypes();
             types.RegisterBuiltinTypes();
 
-            MimeType usedType = types.Where(mime => mime.Symbol == format).First();
+//            MimeType usedType = types.Where(mime => mime.Symbol == format).First();
+            MimeType usedType = types.FindAll( delegate( MimeType mime ) { return mime.Symbol == format; } )[ 0 ];
             bridge.SetResponseType(usedType);
         }
        

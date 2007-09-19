@@ -1,31 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Castle.MonoRail.Rest.Mime
 {
     public class AcceptType
     {
-        public string Name { get; set; }
-        public int Order { get; set; }
-        public float Q { get; set; }
+        private string _name;
+        private int _order;
+        private float _q;
 
-        
-        public AcceptType()
+        public string Name
         {
+            get { return _name; }
+            set { _name = value; }
+        }
 
+        public int Order
+        {
+            get { return _order; }
+            set { _order = value; }
+        }
+
+        public float Q
+        {
+            get { return _q; }
+            set { _q = value; }
         }
 
         public static MimeType[] Parse(string acceptHeader, MimeTypes mimes)
         {
             
-            var splitHeaders = acceptHeader.Split(',');
-            var acceptTypes = new List<AcceptType>(splitHeaders.Length);
+            string[] splitHeaders = acceptHeader.Split(',');
+            List<AcceptType> acceptTypes = new List<AcceptType>(splitHeaders.Length);
 
             for (int i = 0; i < splitHeaders.Length; i++)
             {
-                var parms = splitHeaders[i].Split(';');
+                string[] parms = splitHeaders[i].Split(';');
                 AcceptType at = new AcceptType();
                 at.Name = parms[0];
                 at.Order = i;
@@ -34,17 +45,17 @@ namespace Castle.MonoRail.Rest.Mime
                 acceptTypes.Add(at);
             }
 
-            var appXml = acceptTypes.Find(at => at.Name == "application/xml");
+            AcceptType appXml = acceptTypes.Find( delegate( AcceptType at) { return at.Name == "application/xml"; } );
             if (appXml != null)
             {
-                var regEx = new System.Text.RegularExpressions.Regex(@"\+xml$");
+                Regex regEx = new Regex(@"\+xml$");
 
                 int appXmlIndex;
                 int idx = appXmlIndex = acceptTypes.IndexOf(appXml);
 
                 while (idx < acceptTypes.Count)
                 {
-                    var at = acceptTypes[idx];
+                    AcceptType at = acceptTypes[idx];
                     if (at.Q < appXml.Q)
                     {
                         break;
@@ -59,8 +70,8 @@ namespace Castle.MonoRail.Rest.Mime
                 }                
             }
                                                                                                         
-            var returnTypes = new List<MimeType>();
-            foreach (var type in acceptTypes.OrderByDescending(at => at.Q))
+            List<MimeType> returnTypes = new List<MimeType>();
+            foreach (AcceptType type in acceptTypes.OrderByDescending(at => at.Q))
             {
                 returnTypes.AddRange(mimes.Where(m => m.MimeString == type.Name || m.Synonyms.Contains(type.Name)));                
             }

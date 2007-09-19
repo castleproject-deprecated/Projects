@@ -1,20 +1,31 @@
 ﻿
 namespace Castle.MonoRail.Rest
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Castle.MonoRail.Rest.Mime;
 
     public class ResponseHandler
     {
+        private IControllerBridge _controllerBridge;
+        private MimeType[] _acceptedMimes;
+        private ResponseFormat _format;
 
-        public IControllerBridge ControllerBridge { get; set; }
-        public MimeType[] AcceptedMimes { get; set; }
-        public ResponseFormat Format { get; set; }
+        public IControllerBridge ControllerBridge
+        {
+            get { return _controllerBridge; }
+            set { _controllerBridge = value; }
+        }
 
+        public MimeType[] AcceptedMimes
+        {
+            get { return _acceptedMimes; }
+            set { _acceptedMimes = value; }
+        }
 
+        public ResponseFormat Format
+        {
+            get { return _format; }
+            set { _format = value; }
+        }
 
         public void Respond()
         {
@@ -26,7 +37,7 @@ namespace Castle.MonoRail.Rest
             else
             {
                 bool responded = false;
-                foreach (var mime in AcceptedMimes)
+                foreach (MimeType mime in AcceptedMimes)
                 {
                     if (format.RespondWith(mime.Symbol, ControllerBridge))
                     {

@@ -1,30 +1,75 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.Rest", "Castle.MonoRail.Rest\Castle.MonoRail.Rest.csproj", "{0277D4B3-481B-433C-AD89-25E2928F8B5D}"
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{18B4A7F7-D2AE-4182-B3C4-151F25747196}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		RubyTests\actiontests.rb = RubyTests\actiontests.rb
+		RubyTests\customer_client_tests.rb = RubyTests\customer_client_tests.rb
+		RubyTests\test_helper.rb = RubyTests\test_helper.rb
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSiteRest", "TestSiteRest\TestSiteRest.csproj", "{8AA95B5A-8532-40CB-A017-97056EF4E15A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.Rest", "Castle.MonoRail.Rest\Castle.MonoRail.Rest.csproj", "{905F17CA-7C7A-4D92-81D8-1ADBE6A79065}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.Rest.Tests", "Castle.MonoRail.Rest.Tests\Castle.MonoRail.Rest.Tests.csproj", "{A56397CD-B09F-4700-A2C1-AB7E4C4006B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.Rest.Tests", "Castle.MonoRail.Rest.Tests\Castle.MonoRail.Rest.Tests.csproj", "{B3B4AF6D-7B28-4DED-B0D5-EBDF7DC731B4}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSiteRest", "TestSiteRest\TestSiteRest.csproj", "{D2C3A1FE-9E4A-45CF-8E2A-D4825B6BD633}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|.NET = Debug|.NET
 		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Release|.NET = Release|.NET
 		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0277D4B3-481B-433C-AD89-25E2928F8B5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0277D4B3-481B-433C-AD89-25E2928F8B5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0277D4B3-481B-433C-AD89-25E2928F8B5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0277D4B3-481B-433C-AD89-25E2928F8B5D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8AA95B5A-8532-40CB-A017-97056EF4E15A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8AA95B5A-8532-40CB-A017-97056EF4E15A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8AA95B5A-8532-40CB-A017-97056EF4E15A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8AA95B5A-8532-40CB-A017-97056EF4E15A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A56397CD-B09F-4700-A2C1-AB7E4C4006B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A56397CD-B09F-4700-A2C1-AB7E4C4006B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A56397CD-B09F-4700-A2C1-AB7E4C4006B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A56397CD-B09F-4700-A2C1-AB7E4C4006B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{905F17CA-7C7A-4D92-81D8-1ADBE6A79065}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{905F17CA-7C7A-4D92-81D8-1ADBE6A79065}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{905F17CA-7C7A-4D92-81D8-1ADBE6A79065}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{905F17CA-7C7A-4D92-81D8-1ADBE6A79065}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{905F17CA-7C7A-4D92-81D8-1ADBE6A79065}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{905F17CA-7C7A-4D92-81D8-1ADBE6A79065}.Release|.NET.ActiveCfg = Release|Any CPU
+		{905F17CA-7C7A-4D92-81D8-1ADBE6A79065}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{905F17CA-7C7A-4D92-81D8-1ADBE6A79065}.Release|Any CPU.Build.0 = Release|Any CPU
+		{905F17CA-7C7A-4D92-81D8-1ADBE6A79065}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{905F17CA-7C7A-4D92-81D8-1ADBE6A79065}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B3B4AF6D-7B28-4DED-B0D5-EBDF7DC731B4}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{B3B4AF6D-7B28-4DED-B0D5-EBDF7DC731B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3B4AF6D-7B28-4DED-B0D5-EBDF7DC731B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3B4AF6D-7B28-4DED-B0D5-EBDF7DC731B4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B3B4AF6D-7B28-4DED-B0D5-EBDF7DC731B4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B3B4AF6D-7B28-4DED-B0D5-EBDF7DC731B4}.Release|.NET.ActiveCfg = Release|Any CPU
+		{B3B4AF6D-7B28-4DED-B0D5-EBDF7DC731B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3B4AF6D-7B28-4DED-B0D5-EBDF7DC731B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3B4AF6D-7B28-4DED-B0D5-EBDF7DC731B4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B3B4AF6D-7B28-4DED-B0D5-EBDF7DC731B4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D2C3A1FE-9E4A-45CF-8E2A-D4825B6BD633}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{D2C3A1FE-9E4A-45CF-8E2A-D4825B6BD633}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2C3A1FE-9E4A-45CF-8E2A-D4825B6BD633}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2C3A1FE-9E4A-45CF-8E2A-D4825B6BD633}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D2C3A1FE-9E4A-45CF-8E2A-D4825B6BD633}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D2C3A1FE-9E4A-45CF-8E2A-D4825B6BD633}.Release|.NET.ActiveCfg = Release|Any CPU
+		{D2C3A1FE-9E4A-45CF-8E2A-D4825B6BD633}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2C3A1FE-9E4A-45CF-8E2A-D4825B6BD633}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2C3A1FE-9E4A-45CF-8E2A-D4825B6BD633}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D2C3A1FE-9E4A-45CF-8E2A-D4825B6BD633}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

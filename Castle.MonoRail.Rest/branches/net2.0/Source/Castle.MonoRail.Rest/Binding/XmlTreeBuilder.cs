@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
 using Castle.Components.Binder;
-using System.Xml.Linq;
 using System.Xml;
 namespace Castle.MonoRail.Rest.Binding
 {
@@ -13,7 +8,7 @@ namespace Castle.MonoRail.Rest.Binding
        
         public CompositeNode BuildNode(XDocument doc)
         {
-            var rootNode = new CompositeNode("root");
+            CompositeNode rootNode = new CompositeNode("root");
             rootNode.AddChildNode(ProcessElement(doc.Root));
             return rootNode;
 
@@ -21,7 +16,7 @@ namespace Castle.MonoRail.Rest.Binding
 
         public void AddToRoot(CompositeNode rootNode, XDocument doc)
         {
-            var top = ProcessElement(doc.Root);
+            Node top = ProcessElement(doc.Root);
             rootNode.AddChildNode(top);
         }
 
@@ -32,12 +27,12 @@ namespace Castle.MonoRail.Rest.Binding
                 CompositeNode top = new CompositeNode(startEl.Name.LocalName);
                 foreach (var attr in startEl.Attributes())
                 {
-                    var leaf = new LeafNode(typeof(String), attr.Name.LocalName, attr.Value);
+                    LeafNode leaf = new LeafNode(typeof(String), attr.Name.LocalName, attr.Value);
                     top.AddChildNode(leaf);
                 }
                 foreach (var childEl in startEl.Elements())
                 {
-                    var childNode = ProcessElement(childEl);
+                    Node childNode = ProcessElement(childEl);
                     top.AddChildNode(childNode);
                 }
 

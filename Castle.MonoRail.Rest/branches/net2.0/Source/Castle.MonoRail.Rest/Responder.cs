@@ -2,20 +2,21 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Linq.Expressions;
-using Castle.MonoRail.Rest.Mime;
+using System.IO;
 using System.Xml.Serialization;
-using System.Collections.Specialized;
 namespace Castle.MonoRail.Rest
 {
     public class Responder
     {
-        private IControllerBridge _controllerBridge;
-        private string _controllerAction;
+        private readonly IControllerBridge _controllerBridge;
+        private readonly string _controllerAction;
+        private string _format;
 
-        public String Format { get; set; }
+        public string Format
+        {
+            get { return _format; }
+            set { _format = value; }
+        }
 
         public Responder(IControllerBridge controllerBridge, string controllerAction)
         {
@@ -35,7 +36,8 @@ namespace Castle.MonoRail.Rest
             _controllerBridge.SendCancelLayoutAndView();
 
             XmlSerializer serial = new XmlSerializer(obj.GetType());
-            _controllerBridge.UseResponseWriter(writer => serial.Serialize(writer, obj));
+            _controllerBridge.UseResponseWriter(delegate(TextWriter writer)
+                                                    { serial.Serialize( writer, obj ); } );
 
         }
 

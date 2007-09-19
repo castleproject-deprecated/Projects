@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
 using System.IO;
 using System.Xml.XPath;
 using Castle.MonoRail.Framework;
-using System.Xml.Linq;
 using System.Xml.Serialization;
+
 namespace Castle.MonoRail.Rest.Binding
 {
-    public class XmlBindAttribute : System.Attribute, IParameterBinder
+    public class XmlBindAttribute : Attribute, IParameterBinder
     {
         private Dictionary<Type,Func<Stream,Object>> _factories;
 
@@ -42,7 +40,7 @@ namespace Castle.MonoRail.Rest.Binding
 
         public object Bind(SmartDispatcherController controller, System.Reflection.ParameterInfo parameterInfo)
         {
-            var inputStream = controller.Context.UnderlyingContext.Request.InputStream;
+            Stream inputStream = controller.Context.UnderlyingContext.Request.InputStream;
             return CreateValueFromInputStream(parameterInfo.ParameterType, inputStream);
         }
 

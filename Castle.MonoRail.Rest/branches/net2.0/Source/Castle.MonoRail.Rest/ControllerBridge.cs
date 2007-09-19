@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Castle.MonoRail.Rest.Mime;
 using System.IO;
 namespace Castle.MonoRail.Rest
 {
     public class ControllerBridge : IControllerBridge
     {
-        private RestfulController _controller;
-        private string _controllerAction;
+        private readonly RestfulController _controller;
+        private readonly string _controllerAction;
 
         public ControllerBridge(RestfulController controller, string controllerAction)
         {

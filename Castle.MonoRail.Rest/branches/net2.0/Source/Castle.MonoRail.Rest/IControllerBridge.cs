@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Castle.MonoRail.Rest.Mime;
 using System.IO;
 namespace Castle.MonoRail.Rest
