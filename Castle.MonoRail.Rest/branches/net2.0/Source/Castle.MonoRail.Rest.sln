@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.Rest", "Castle.MonoRail.Rest\Castle.MonoRail.Rest.csproj", "{0277D4B3-481B-433C-AD89-25E2928F8B5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSiteRest", "TestSiteRest\TestSiteRest.csproj", "{8AA95B5A-8532-40CB-A017-97056EF4E15A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.Rest.Tests", "Castle.MonoRail.Rest.Tests\Castle.MonoRail.Rest.Tests.csproj", "{A56397CD-B09F-4700-A2C1-AB7E4C4006B1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0277D4B3-481B-433C-AD89-25E2928F8B5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0277D4B3-481B-433C-AD89-25E2928F8B5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0277D4B3-481B-433C-AD89-25E2928F8B5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0277D4B3-481B-433C-AD89-25E2928F8B5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AA95B5A-8532-40CB-A017-97056EF4E15A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AA95B5A-8532-40CB-A017-97056EF4E15A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AA95B5A-8532-40CB-A017-97056EF4E15A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AA95B5A-8532-40CB-A017-97056EF4E15A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A56397CD-B09F-4700-A2C1-AB7E4C4006B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A56397CD-B09F-4700-A2C1-AB7E4C4006B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A56397CD-B09F-4700-A2C1-AB7E4C4006B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A56397CD-B09F-4700-A2C1-AB7E4C4006B1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,9 @@
+﻿<%
+dsl Xml:
+    customer:
+        name:
+            text "Chris"
+        end
+    end
+end
+%>
