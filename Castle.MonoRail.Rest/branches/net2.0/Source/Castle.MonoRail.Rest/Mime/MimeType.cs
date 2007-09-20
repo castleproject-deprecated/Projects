@@ -21,7 +21,12 @@
             _extensionSynonyms = extensionSynonyms;
         }
 
-        public string MimeString
+		public MimeType(string mimeString, string symbol)
+			: this( mimeString, symbol, null, null)
+    	{
+    	}
+
+    	public string MimeString
         {
             get { return _mimeString; }
             set { _mimeString = value; }

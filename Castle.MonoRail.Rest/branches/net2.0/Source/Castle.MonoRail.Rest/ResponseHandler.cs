@@ -8,7 +8,24 @@
         private IControllerBridge _controllerBridge;
         private ResponseFormat _format;
 
-        public IControllerBridge ControllerBridge
+    	public ResponseHandler()
+    	{
+    	}
+
+    	public ResponseHandler(IControllerBridge bridge, ResponseFormat format)
+    	{
+    		_controllerBridge = bridge;
+    		_format = format;
+    	}
+
+    	public ResponseHandler(IControllerBridge bridge, ResponseFormat format, params MimeType[] acceptedMimes)
+    	{
+    		_controllerBridge = bridge;
+    		_acceptedMimes = acceptedMimes;
+    		_format = format;
+    	}
+
+    	public IControllerBridge ControllerBridge
         {
             get { return _controllerBridge; }
             set { _controllerBridge = value; }

@@ -1,15 +1,4 @@
-﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Xml.Linq;
-using Castle.MonoRail.Rest;
+﻿using Castle.MonoRail.Rest;
 using Castle.MonoRail.Framework;
 
 namespace TestSiteRest.Controllers
@@ -19,12 +8,16 @@ namespace TestSiteRest.Controllers
     {
         public void Index()
         {
-            RespondTo(format =>
-            {
-                format.Xml(xml => xml.DefaultResponse());
-                format.Html(html => html.DefaultResponse());
-            });
-
+        	RespondTo(delegate(ResponseFormat format) {
+        	          	format.Xml(delegate(Responder xml) {
+        	          	                   	xml.DefaultResponse();
+        	          	                   });
+        	          });
+        	RespondTo(delegate(ResponseFormat format) {
+        	          	format.Html(delegate(Responder html) {
+        	          	                    	html.DefaultResponse();
+        	          	                    });
+        	          });
         }
     }
 }

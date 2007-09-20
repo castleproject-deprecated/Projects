@@ -2,34 +2,34 @@
 {
     using System;
     using System.Xml;
-    using Castle.Components.Binder;
+    using Components.Binder;
 
     public class XmlTreeBuilder
     {
-        public CompositeNode BuildNode(XDocument doc)
+        public CompositeNode BuildNode(XmlDocument doc)
         {
             CompositeNode rootNode = new CompositeNode("root");
-            rootNode.AddChildNode(ProcessElement(doc.Root));
+			rootNode.AddChildNode(ProcessElement(doc.DocumentElement));
             return rootNode;
         }
 
-        public void AddToRoot(CompositeNode rootNode, XDocument doc)
+        public void AddToRoot(CompositeNode rootNode, XmlDocument doc)
         {
-            Node top = ProcessElement(doc.Root);
+            Node top = ProcessElement(doc.DocumentElement);
             rootNode.AddChildNode(top);
         }
 
-        public Node ProcessElement(XElement startEl)
+        public Node ProcessElement(XmlElement startEl)
         {
             if (IsComplex(startEl))
             {
-                CompositeNode top = new CompositeNode(startEl.Name.LocalName);
-                foreach(var attr in startEl.Attributes())
+                CompositeNode top = new CompositeNode(startEl.LocalName);
+                foreach(XmlAttribute attr in startEl.Attributes)
                 {
-                    LeafNode leaf = new LeafNode(typeof(String), attr.Name.LocalName, attr.Value);
+                    LeafNode leaf = new LeafNode(typeof(String), attr.LocalName, attr.Value);
                     top.AddChildNode(leaf);
                 }
-                foreach(var childEl in startEl.Elements())
+                foreach(XmlElement childEl in startEl.ChildNodes)
                 {
                     Node childNode = ProcessElement(childEl);
                     top.AddChildNode(childNode);
@@ -44,11 +44,11 @@
             }
         }
 
-        public bool IsComplex(XElement element)
+        public bool IsComplex(XmlElement element)
         {
-            if (element.HasElements || element.Attributes().Count() > 0)
+            if (element.HasChildNodes || element.Attributes.Count > 0)
             {
-                if (element.Elements().Count() == 1 && element.FirstNode.NodeType == XmlNodeType.Text)
+                if (element.ChildNodes.Count == 1 && element.ChildNodes[0].NodeType == XmlNodeType.Text)
                 {
                     return false;
                 }

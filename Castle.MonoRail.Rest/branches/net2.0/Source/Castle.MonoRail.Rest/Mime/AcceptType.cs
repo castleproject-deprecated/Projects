@@ -83,23 +83,26 @@
                                                    }));
             }
 
-            return returnTypes.Distinct().ToArray();
+            //return returnTypes.Distinct().ToArray();
+			return returnTypes.ToArray();
         }
 
         private static int descendingAcceptTypes(AcceptType x, AcceptType y)
         {
-            if (x == null)
-            {
-                return (y == null ? 0 : -1);
-            }
-            else
-            {
-                if (y == null)
-                {
-                    return 1;
-                }
-                return x.Q.CompareTo(y.Q);
-            }
+        	return Comparer<float>.Default.Compare(x.Q, y.Q);
+//
+//            if (x == null)
+//            {
+//                return (y == null ? 0 : -1);
+//            }
+//            else
+//            {
+//                if (y == null)
+//                {
+//                    return 1;
+//                }
+//                return x.Q.CompareTo(y.Q);
+//            }
         }
     }
 }

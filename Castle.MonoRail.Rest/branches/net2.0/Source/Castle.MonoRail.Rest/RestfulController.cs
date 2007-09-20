@@ -119,17 +119,20 @@
                 }
                 else
                 {
+                	_controllerAction = action;
                     return base.SelectMethod(action, actions, request, actionArgs);
                 }
             }
         }
 
-        private XDocument GetDocFromRequest()
+        private XmlDocument GetDocFromRequest()
         {
             Stream inputStream = Context.UnderlyingContext.Request.InputStream;
             inputStream.Position = 0;
             XmlReader reader = XmlReader.Create(inputStream);
-            return XDocument.Load(reader);
+			XmlDocument doc = new XmlDocument();
+			doc.Load(reader);
+            return doc;
         }
 
 

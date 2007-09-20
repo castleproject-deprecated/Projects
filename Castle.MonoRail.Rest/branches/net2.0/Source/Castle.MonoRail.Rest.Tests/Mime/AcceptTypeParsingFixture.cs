@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MbUnit.Framework;
+﻿using MbUnit.Framework;
 using Castle.MonoRail.Rest.Mime;
 
 namespace Castle.MonoRail.Rest.Tests.Mime
@@ -16,8 +12,8 @@ namespace Castle.MonoRail.Rest.Tests.Mime
         {
             TestMimes = new MimeTypes();
             TestMimes.Register("text/plain", "text");
-            TestMimes.Register("text/html", "html", new[] {"application/xhtml+xml"});
-            TestMimes.Register("application/xml", "xml",new[] {"text/xml"});
+            TestMimes.Register("text/html", "html", new string[] {"application/xhtml+xml"});
+			TestMimes.Register("application/xml", "xml", new string[] { "text/xml" });
             
         }
 
@@ -30,7 +26,7 @@ namespace Castle.MonoRail.Rest.Tests.Mime
         public void TextHtml_ShouldBeSingleElementArrayOfHtmlMimeType()
         {
             string header = "text/html";
-            var types = ParseHeader(header);
+            MimeType[] types = ParseHeader(header);
             Assert.IsNotNull(types);
             Assert.AreEqual(1, types.Length);
             Assert.AreEqual("html", types[0].Symbol);
@@ -41,7 +37,7 @@ namespace Castle.MonoRail.Rest.Tests.Mime
         public void ApplicationXml_ShouldBeSingleElementArrayOfXmlMimeType()
         {
             string header = "application/xml";
-            var types = ParseHeader(header);
+			MimeType[] types = ParseHeader(header);
             Assert.IsNotNull(types);
             Assert.AreEqual(1, types.Length);
             Assert.AreEqual("xml", types[0].Symbol);
@@ -51,7 +47,7 @@ namespace Castle.MonoRail.Rest.Tests.Mime
         public void HtmlAndXmlMimeTypesTogether_ShouldBeTwoElementArray()
         {
             string header = "application/xml,text/html";
-            var types = ParseHeader(header);
+			MimeType[] types = ParseHeader(header);
             Assert.AreEqual(2, types.Length);
         }
 
@@ -61,18 +57,18 @@ namespace Castle.MonoRail.Rest.Tests.Mime
             string header = "application/xml,text/html";
             string header2 = "text/html,application/xml";
 
-            var types = ParseHeader(header);
+			MimeType[] types = ParseHeader(header);
             Assert.AreEqual("xml", types[0].Symbol);
 
-            var types2 = ParseHeader(header2);
+			MimeType[] types2 = ParseHeader(header2);
             Assert.AreEqual("html", types2[0].Symbol);
         }
 
         [Test]
         public void CanHandleAcceptType_WithQValue()
         {
-            var header = "text/html;q=0.5";
-            var types = ParseHeader(header);
+            string header = "text/html;q=0.5";
+			MimeType[] types = ParseHeader(header);
             Assert.IsNotNull(types);
             Assert.AreEqual(1, types.Length);
             Assert.AreEqual("html", types[0].Symbol);
@@ -81,8 +77,8 @@ namespace Castle.MonoRail.Rest.Tests.Mime
         [Test]
         public void AcceptTypes_WithQValues_ShouldBeOrderedAccordingToThatValue()
         {
-            var header = "application/xml,text/plain;q=0.5,text/html";
-            var types = ParseHeader(header);
+            string header = "application/xml,text/plain;q=0.5,text/html";
+			MimeType[] types = ParseHeader(header);
 
             Assert.AreEqual("xml", types[0].Symbol);
             Assert.AreEqual("html", types[1].Symbol);
@@ -92,8 +88,8 @@ namespace Castle.MonoRail.Rest.Tests.Mime
         [Test]
         public void IfAcceptTypes_ContainMimestringAndSynonym_OnlyOneMimeTypeShouldBeReturned()
         {
-            var header = "application/xml,text/xml";
-            var types = ParseHeader(header);
+            string header = "application/xml,text/xml";
+			MimeType[] types = ParseHeader(header);
             Assert.IsNotNull(types);
             Assert.AreEqual(1, types.Length);
             Assert.AreEqual("xml", types[0].Symbol);
@@ -102,8 +98,8 @@ namespace Castle.MonoRail.Rest.Tests.Mime
         [Test]
         public void Synonyms_AreMappedTo_Symbol()
         {
-            var header = "application/xhtml+xml";
-            var types = ParseHeader(header);
+            string header = "application/xhtml+xml";
+			MimeType[] types = ParseHeader(header);
             Assert.IsNotNull(types);
             Assert.AreEqual(1, types.Length);
             Assert.AreEqual("html", types[0].Symbol);
@@ -112,8 +108,8 @@ namespace Castle.MonoRail.Rest.Tests.Mime
         [Test]
         public void MoreSpecificXmlTypes_AreSortedAheadOf_ApplicationXml()
         {
-            var header = "application/xml,application/xhtml+xml";
-            var types = ParseHeader(header);
+            string header = "application/xml,application/xhtml+xml";
+			MimeType[] types = ParseHeader(header);
             Assert.IsNotNull(types);
             Assert.AreEqual(2, types.Length);
             Assert.AreEqual("html", types[0].Symbol);

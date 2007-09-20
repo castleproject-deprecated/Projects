@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MbUnit.Framework;
+﻿using MbUnit.Framework;
 using Rhino.Mocks;
 namespace Castle.MonoRail.Rest.Tests
 {
@@ -24,10 +20,13 @@ namespace Castle.MonoRail.Rest.Tests
             {
                 SetupResult.For(bridge.ControllerAction).Return("Show");
             }
-            string handlerInvoked = "";
-            format = (ResponseFormatInternal)new ResponseFormat();
-            format.AddRenderer("html", response => handlerInvoked = "html");
-            format.AddRenderer("xml", response => handlerInvoked = "xml");
+            format = new ResponseFormat();
+        	format.AddRenderer("html", delegate(Responder responder) {
+        	                           	handlerInvoked = "html";
+        	                           });
+        	format.AddRenderer("xml", delegate(Responder responder) {
+        	                           	handlerInvoked = "xml";
+        	                           });
 
             format.RespondWith("all", bridge);
             Assert.AreEqual("html", handlerInvoked);

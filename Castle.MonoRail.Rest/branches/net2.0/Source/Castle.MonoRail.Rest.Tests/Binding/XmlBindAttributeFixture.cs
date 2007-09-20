@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using MbUnit.Framework;
 using System.IO;
-using System.Xml.Linq;
 using System.Xml;
 using Castle.MonoRail.Rest.Binding;
 using System.Xml.XPath;
@@ -20,11 +18,10 @@ namespace Castle.MonoRail.Rest.Tests.Binding
         public void Setup()
         {
             MemoryStream ms = new MemoryStream();
-            var doc = new XDocument(
-                        new XElement("Customer",
-                            new XElement("Name", "Chris")));
+        	XmlDocument doc = new XmlDocument();
+			doc.Load(new StringReader("<Customer><Name>Chris</Name></Customer>"));
 
-            var writer = XmlWriter.Create(ms);
+            XmlWriter writer = XmlWriter.Create(ms);
             doc.WriteTo(writer);
             writer.Flush();
             ms.Position = 0;
@@ -39,10 +36,10 @@ namespace Castle.MonoRail.Rest.Tests.Binding
         [Row(typeof(XmlReader))]
         [Row(typeof(XPathNavigator))]
         [Row(typeof(string))]
-        [Row(typeof(XDocument))]
+        [Row(typeof(XmlDocument))]
         public void CreateValuFromInputStream_CanConvertTo_PredefinedTypes(Type predefinedType)
         {
-            var converted = attr.CreateValueFromInputStream(predefinedType, inputStream);
+            object converted = attr.CreateValueFromInputStream(predefinedType, inputStream);
             Assert.IsNotNull(converted, "Converted value was null for type " + predefinedType.ToString());
             Assert.IsInstanceOfType(predefinedType, converted, "Converted type should have been " + predefinedType.ToString() + " but was " + converted.GetType().ToString());
         }
@@ -50,7 +47,7 @@ namespace Castle.MonoRail.Rest.Tests.Binding
         [Test]
         public void IfNoFactoryDefinedForParameterType_CreateValueFromInputStream_ShouldDeserializeInput()
         {
-            var converted = attr.CreateValueFromInputStream(typeof(Customer), inputStream) as Customer;
+            Customer converted = attr.CreateValueFromInputStream(typeof(Customer), inputStream) as Customer;
             Assert.IsNotNull(converted);
             Assert.IsInstanceOfType(typeof(Customer), converted);
             Assert.AreEqual("Chris", converted.Name);
@@ -60,6 +57,13 @@ namespace Castle.MonoRail.Rest.Tests.Binding
     [Serializable]
     public class Customer
     {
-        public string Name { get; set; }
+    	private string _name;
+
+
+    	public string Name
+    	{
+    		get { return _name; }
+    		set { _name = value; }
+    	}
     }
 }

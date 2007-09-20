@@ -1,23 +1,35 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Xml.Linq;
 using System.Collections.Generic;
 namespace TestSiteRest.Models
 {
     public class Customer
     {
-        public int ID { get; set; }
-        public String Name { get; set; }
+    	private int _id;
+    	private String _name;
 
-        private static List<Customer> __customers;
+    	public Customer()
+    	{
+    	}
+
+    	public Customer(int id, string name)
+    	{
+    		_id = id;
+    		_name = name;
+    	}
+
+    	public int ID
+    	{
+    		get { return _id; }
+    		set { _id = value; }
+    	}
+
+    	public string Name
+    	{
+    		get { return _name; }
+    		set { _name = value; }
+    	}
+
+    	private static List<Customer> __customers;
 
         static Customer()
         {
@@ -25,17 +37,17 @@ namespace TestSiteRest.Models
         }
 
         public static void Reset() {
-               __customers = new List<Customer>() {
-                new Customer() { ID = 1, Name = "Homer" },
-                new Customer() { ID = 2, Name = "Bart" },
-                new Customer() { ID = 3, Name = "Maggie"},
-                new Customer() { ID = 4, Name = "Lisa"},
-                new Customer() { ID = 5, Name = "Marge"}
-            };
+               __customers = new List<Customer>( new Customer[] {
+                new Customer(1, "Homer"),
+                new Customer(2, "Bart" ),
+                new Customer(3, "Maggie"),
+                new Customer(4, "Lisa"),
+                new Customer(5, "Marge")
+            });
         }
         public static Customer FindById(int id)
         {
-            return __customers.Where(c => c.ID == id).First();
+        	return __customers.Find(delegate(Customer c) { return c.ID == id; });
         }
 
         public static Customer[] FindAll()
@@ -50,14 +62,14 @@ namespace TestSiteRest.Models
                 throw new ApplicationException("Customer should not have id assigned yet");
             }
 
-            int maxID = __customers.Max(cust => cust.ID);
+            int maxID = __customers[__customers.Count-1].ID;
             c.ID = maxID + 1;
             __customers.Add(c);
         }
 
         public static void UpdateCustomer(Customer c)
         {
-            Customer current = __customers.Where(t => t.ID == c.ID).First();
+        	Customer current = __customers.Find(delegate(Customer t) { return t.ID == c.ID; });
             if (current != null)
             {
                 __customers.Remove(current);
@@ -72,7 +84,7 @@ namespace TestSiteRest.Models
 
         public static void Delete(int id)
         {
-            __customers.RemoveAll(t => t.ID == id);
+			__customers.RemoveAll(delegate(Customer t) { return t.ID == id; });
         }
     }
 }

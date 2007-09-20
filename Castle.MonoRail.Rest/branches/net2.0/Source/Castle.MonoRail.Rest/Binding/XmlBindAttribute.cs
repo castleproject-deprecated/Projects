@@ -28,8 +28,8 @@
                                                      XPathDocument doc = new XPathDocument(inputStream);
                                                      return doc.CreateNavigator();
                                                  };
-            _factories[typeof(XDocument)] =
-                delegate(Stream inputStream) { return XDocument.Load(XmlReader.Create(inputStream)); };
+            _factories[typeof(XmlDocument)] =
+				delegate(Stream inputStream) { XmlDocument doc = new XmlDocument(); doc.Load(XmlReader.Create(inputStream)); return doc; };
         }
 
         #region IParameterBinder Members

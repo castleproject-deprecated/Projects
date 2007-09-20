@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MbUnit.Framework;
+﻿using MbUnit.Framework;
 using Rhino.Mocks;
 using Castle.MonoRail.Rest.Mime;
 
@@ -25,23 +21,27 @@ namespace Castle.MonoRail.Rest.Tests
             format = new ResponseFormat();
             handlerInvoked = "";
 
-            ResponseFormatInternal iformat = (ResponseFormatInternal)format;
-            iformat.AddRenderer("xml", x => handlerInvoked = "xml");
-            iformat.AddRenderer("html", x => handlerInvoked = "html");
+            ResponseFormatInternal iformat = format;
+
+			iformat.AddRenderer("xml", delegate(Responder responder)
+			{
+				handlerInvoked = "xml";
+			});
+			iformat.AddRenderer("html", delegate(Responder responder)
+			{
+        	                           	handlerInvoked = "html";
+        	                           });
 
             mimes = new MimeType[] {
-                new MimeType() { Symbol="html",MimeString="text/html"},
-                new MimeType() { Symbol="xml",MimeString="application/xml"}
+                new MimeType("text/html", "html"),
+                new MimeType("application/xml", "xml")
             };
         }
 
         [Test]
         public void IfFormatIsExplicitlyDefined_RespondserWithThatFormatIsInvoked()
         {
-            ResponseHandler responder = new ResponseHandler() {
-                ControllerBridge = bridge,
-                Format = format
-            };
+            ResponseHandler responder = new ResponseHandler(bridge, format);
 
             using (mocks.Record())
             {
@@ -56,14 +56,7 @@ namespace Castle.MonoRail.Rest.Tests
         [Test]
         public void IfFormatIsNotExplicitlyDefined_ResponderIsDeterminedFromAcceptHeaders()
         {
-            ResponseHandler responder = new ResponseHandler()
-            {
-                ControllerBridge = bridge,
-                Format = format,
-                AcceptedMimes = new MimeType[] {
-                                    new MimeType() { Symbol="html",MimeString="text/html"}
-                }
-            };
+			ResponseHandler responder = new ResponseHandler(bridge, format, new MimeType("text/html", "html"));
 
             using (mocks.Record())
             {
@@ -77,16 +70,12 @@ namespace Castle.MonoRail.Rest.Tests
         [Test]
         public void IfFormat_IsDeterminedByMimeType_FirstAvailableMimeTypeIsRendered()
         {
-            ResponseHandler responder = new ResponseHandler()
-            {
-                ControllerBridge = bridge,
-                Format = format,
-                AcceptedMimes = new MimeType[] {
-                                    new MimeType() { Symbol="na",MimeString="notfound"},
-                                    new MimeType() { Symbol="html",MimeString="text/html"},
-                                    new MimeType() {Symbol="xml",MimeString="application/xml"}
-                }
-            };
+        	ResponseHandler responder = new ResponseHandler(bridge,
+        	                                                format,
+											               	new MimeType("notfound","na"),
+											               	new MimeType("text/html", "html"),
+											               	new MimeType("application/xml", "xml")
+															 );
 
             using (mocks.Record())
             {
