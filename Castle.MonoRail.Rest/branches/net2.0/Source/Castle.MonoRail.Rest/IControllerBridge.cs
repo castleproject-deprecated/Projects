@@ -1,10 +1,13 @@
-﻿using System;
-using Castle.MonoRail.Rest.Mime;
-using System.IO;
-namespace Castle.MonoRail.Rest
+﻿namespace Castle.MonoRail.Rest
 {
+    using System;
+    using System.IO;
+    using Mime;
+
     public interface IControllerBridge
     {
+        string ControllerAction { get; }
+        bool IsFormatDefined { get; }
         void SetResponseType(MimeType mime);
         void SendRenderView(string view);
         void SendCancelLayoutAndView();
@@ -12,8 +15,6 @@ namespace Castle.MonoRail.Rest
         void SetResponseCode(int code);
         void AppendResponseHeader(string headerName, string value);
         void SendRenderText(string text);
-        string ControllerAction { get; }
-        bool IsFormatDefined { get; }
         string GetFormat();
     }
 }

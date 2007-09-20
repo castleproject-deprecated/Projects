@@ -1,16 +1,21 @@
-﻿
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Xml.Serialization;
-namespace Castle.MonoRail.Rest
+﻿namespace Castle.MonoRail.Rest
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Xml.Serialization;
+
     public class Responder
     {
-        private readonly IControllerBridge _controllerBridge;
         private readonly string _controllerAction;
+        private readonly IControllerBridge _controllerBridge;
         private string _format;
+
+        public Responder(IControllerBridge controllerBridge, string controllerAction)
+        {
+            _controllerBridge = controllerBridge;
+            _controllerAction = controllerAction;
+        }
 
         public string Format
         {
@@ -18,12 +23,6 @@ namespace Castle.MonoRail.Rest
             set { _format = value; }
         }
 
-        public Responder(IControllerBridge controllerBridge, string controllerAction)
-        {
-            _controllerBridge = controllerBridge;
-            _controllerAction = controllerAction;
-        }
-    
 
         public void DefaultResponse()
         {
@@ -32,29 +31,25 @@ namespace Castle.MonoRail.Rest
 
         public void Serialize(Object obj)
         {
-
             _controllerBridge.SendCancelLayoutAndView();
 
             XmlSerializer serial = new XmlSerializer(obj.GetType());
-            _controllerBridge.UseResponseWriter(delegate(TextWriter writer)
-                                                    { serial.Serialize( writer, obj ); } );
-
+            _controllerBridge.UseResponseWriter(delegate(TextWriter writer) { serial.Serialize(writer, obj); });
         }
 
         public void Empty(int statusCode, Action<IDictionary<string, string>> addHeaders)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            
+
             if (addHeaders != null)
             {
                 addHeaders(headers);
             }
             _controllerBridge.SetResponseCode(statusCode);
 
-            foreach (KeyValuePair<string, string> pair in headers)
+            foreach(KeyValuePair<string, string> pair in headers)
             {
                 _controllerBridge.AppendResponseHeader(pair.Key, pair.Value);
-
             }
             _controllerBridge.SendCancelLayoutAndView();
         }

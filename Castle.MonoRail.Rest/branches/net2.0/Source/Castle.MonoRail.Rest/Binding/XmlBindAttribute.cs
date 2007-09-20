@@ -1,37 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Xml;
-using System.IO;
-using System.Xml.XPath;
-using Castle.MonoRail.Framework;
-using System.Xml.Serialization;
-
-namespace Castle.MonoRail.Rest.Binding
+﻿namespace Castle.MonoRail.Rest.Binding
 {
-    public delegate TR Func<T0, TR>( T0 arg0 );
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Reflection;
+    using System.Xml;
+    using System.Xml.Serialization;
+    using System.Xml.XPath;
+    using Framework;
+
+    public delegate TR Func<T0, TR>(T0 arg0);
 
     public class XmlBindAttribute : Attribute, IParameterBinder
     {
-        private readonly Dictionary<Type,Func<Stream,Object>> _factories;
+        private readonly Dictionary<Type, Func<Stream, object>> _factories;
 
-        public XmlBindAttribute() {
-
+        public XmlBindAttribute()
+        {
             _factories = new Dictionary<Type, Func<Stream, object>>();
 
-            _factories[ typeof( XmlReader ) ] =
-                delegate( Stream inputStream ) { return XmlReader.Create( inputStream ); };
-            _factories[ typeof( String ) ] = delegate( Stream inputStream )
+            _factories[typeof(XmlReader)] =
+                delegate(Stream inputStream) { return XmlReader.Create(inputStream); };
+            _factories[typeof(String)] =
+                delegate(Stream inputStream) { return new StreamReader(inputStream).ReadToEnd(); };
+            _factories[typeof(XPathNavigator)] = delegate(Stream inputStream)
                                                  {
-                                                     return new StreamReader( inputStream ).ReadToEnd();
+                                                     XPathDocument doc = new XPathDocument(inputStream);
+                                                     return doc.CreateNavigator();
                                                  };
-            _factories[typeof(XPathNavigator)] = delegate( Stream inputStream )
-                                                     {
-                                                         XPathDocument doc = new XPathDocument(inputStream);
-                                                         return doc.CreateNavigator();
-                                                     };
-            _factories[ typeof( XDocument ) ] =
-                delegate( Stream inputStream ) { return XDocument.Load( XmlReader.Create( inputStream ) ); }; 
+            _factories[typeof(XDocument)] =
+                delegate(Stream inputStream) { return XDocument.Load(XmlReader.Create(inputStream)); };
         }
+
+        #region IParameterBinder Members
+
+        public object Bind(SmartDispatcherController controller, ParameterInfo parameterInfo)
+        {
+            Stream inputStream = controller.Context.UnderlyingContext.Request.InputStream;
+            return CreateValueFromInputStream(parameterInfo.ParameterType, inputStream);
+        }
+
+        public int CalculateParamPoints(SmartDispatcherController controller, ParameterInfo parameterInfo)
+        {
+            return 10;
+        }
+
+        #endregion
 
         public Object CreateValueFromInputStream(Type valueType, Stream inputStream)
         {
@@ -44,22 +58,6 @@ namespace Castle.MonoRail.Rest.Binding
                 XmlSerializer serial = new XmlSerializer(valueType);
                 return serial.Deserialize(inputStream);
             }
-            
         }
-
-        #region IParameterBinder Members
-
-        public object Bind(SmartDispatcherController controller, System.Reflection.ParameterInfo parameterInfo)
-        {
-            Stream inputStream = controller.Context.UnderlyingContext.Request.InputStream;
-            return CreateValueFromInputStream(parameterInfo.ParameterType, inputStream);
-        }
-
-        public int CalculateParamPoints(SmartDispatcherController controller, System.Reflection.ParameterInfo parameterInfo)
-        {
-            return 10; 
-        }
-
-        #endregion
     }
 }

@@ -1,12 +1,11 @@
-﻿
-namespace Castle.MonoRail.Rest
+﻿namespace Castle.MonoRail.Rest
 {
-    using Castle.MonoRail.Rest.Mime;
+    using Mime;
 
     public class ResponseHandler
     {
-        private IControllerBridge _controllerBridge;
         private MimeType[] _acceptedMimes;
+        private IControllerBridge _controllerBridge;
         private ResponseFormat _format;
 
         public IControllerBridge ControllerBridge
@@ -29,7 +28,7 @@ namespace Castle.MonoRail.Rest
 
         public void Respond()
         {
-            ResponseFormatInternal format = (ResponseFormatInternal)Format;
+            ResponseFormatInternal format = Format;
             if (ControllerBridge.IsFormatDefined)
             {
                 format.RespondWith(ControllerBridge.GetFormat(), ControllerBridge);
@@ -37,7 +36,7 @@ namespace Castle.MonoRail.Rest
             else
             {
                 bool responded = false;
-                foreach (MimeType mime in AcceptedMimes)
+                foreach(MimeType mime in AcceptedMimes)
                 {
                     if (format.RespondWith(mime.Symbol, ControllerBridge))
                     {
@@ -45,9 +44,7 @@ namespace Castle.MonoRail.Rest
                         break;
                     }
                 }
-
             }
         }
     }
-   
 }

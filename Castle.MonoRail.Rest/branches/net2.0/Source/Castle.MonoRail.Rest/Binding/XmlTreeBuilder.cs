@@ -1,17 +1,16 @@
-﻿using System;
-using Castle.Components.Binder;
-using System.Xml;
-namespace Castle.MonoRail.Rest.Binding
+﻿namespace Castle.MonoRail.Rest.Binding
 {
+    using System;
+    using System.Xml;
+    using Castle.Components.Binder;
+
     public class XmlTreeBuilder
     {
-       
         public CompositeNode BuildNode(XDocument doc)
         {
             CompositeNode rootNode = new CompositeNode("root");
             rootNode.AddChildNode(ProcessElement(doc.Root));
             return rootNode;
-
         }
 
         public void AddToRoot(CompositeNode rootNode, XDocument doc)
@@ -25,12 +24,12 @@ namespace Castle.MonoRail.Rest.Binding
             if (IsComplex(startEl))
             {
                 CompositeNode top = new CompositeNode(startEl.Name.LocalName);
-                foreach (var attr in startEl.Attributes())
+                foreach(var attr in startEl.Attributes())
                 {
                     LeafNode leaf = new LeafNode(typeof(String), attr.Name.LocalName, attr.Value);
                     top.AddChildNode(leaf);
                 }
-                foreach (var childEl in startEl.Elements())
+                foreach(var childEl in startEl.Elements())
                 {
                     Node childNode = ProcessElement(childEl);
                     top.AddChildNode(childNode);
@@ -43,8 +42,6 @@ namespace Castle.MonoRail.Rest.Binding
                 LeafNode top = new LeafNode(typeof(String), "", "");
                 return top;
             }
-
-            
         }
 
         public bool IsComplex(XElement element)

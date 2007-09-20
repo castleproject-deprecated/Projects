@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Castle.MonoRail.Rest.Mime;
-namespace Castle.MonoRail.Rest
+﻿namespace Castle.MonoRail.Rest
 {
+    using System;
+    using System.Collections.Generic;
+    using Mime;
+
     public interface ResponseFormatInternal
     {
         void AddRenderer(string formatSymbol, ResponderDelegate renderer);
@@ -11,8 +12,8 @@ namespace Castle.MonoRail.Rest
 
     public class ResponseFormat : ResponseFormatInternal
     {
+        private readonly List<string> _order;
         private readonly Dictionary<string, ResponderDelegate> _renderers;
-        private readonly List<String> _order;
 
         public ResponseFormat()
         {
@@ -20,8 +21,10 @@ namespace Castle.MonoRail.Rest
             _order = new List<string>();
         }
 
+        #region ResponseFormatInternal Members
+
         void ResponseFormatInternal.AddRenderer(string formatSymbol, ResponderDelegate renderer)
-        {        
+        {
             _renderers[formatSymbol] = renderer;
             _order.Add(formatSymbol);
         }
@@ -30,7 +33,7 @@ namespace Castle.MonoRail.Rest
         {
             if (_renderers.ContainsKey(format))
             {
-                DoResponse(format, bridge);               
+                DoResponse(format, bridge);
                 return true;
             }
             else
@@ -45,7 +48,25 @@ namespace Castle.MonoRail.Rest
                     return false;
                 }
             }
+        }
 
+        #endregion
+
+        public void Xml(ResponderDelegate renderer)
+        {
+            AddRenderer("xml", renderer);
+        }
+
+        public void Html(ResponderDelegate renderer)
+        {
+            AddRenderer("html", renderer);
+        }
+
+        // couldn't get Xml and Html to talk to ResponseFormatInternal.AddRenderer directly
+        protected void AddRenderer(string formatSymbol, ResponderDelegate renderer)
+        {
+            _renderers[formatSymbol] = renderer;
+            _order.Add(formatSymbol);
         }
 
         private void DoResponse(string format, IControllerBridge bridge)
@@ -58,10 +79,8 @@ namespace Castle.MonoRail.Rest
             types.RegisterBuiltinTypes();
 
 //            MimeType usedType = types.Where(mime => mime.Symbol == format).First();
-            MimeType usedType = types.FindAll( delegate( MimeType mime ) { return mime.Symbol == format; } )[ 0 ];
+            MimeType usedType = types.FindAll(delegate(MimeType mime) { return mime.Symbol == format; })[0];
             bridge.SetResponseType(usedType);
         }
-       
-       
     }
 }

@@ -1,8 +1,9 @@
-﻿using System;
-using Castle.MonoRail.Rest.Mime;
-using System.IO;
-namespace Castle.MonoRail.Rest
+﻿namespace Castle.MonoRail.Rest
 {
+    using System;
+    using System.IO;
+    using Mime;
+
     public class ControllerBridge : IControllerBridge
     {
         private readonly RestfulController _controller;
@@ -13,6 +14,8 @@ namespace Castle.MonoRail.Rest
             _controller = controller;
             _controllerAction = controllerAction;
         }
+
+        #region IControllerBridge Members
 
         public void SetResponseType(MimeType mime)
         {
@@ -50,8 +53,6 @@ namespace Castle.MonoRail.Rest
             _controller.RenderText(text);
         }
 
-        #region IControllerBridge Members
-
 
         public string ControllerAction
         {
@@ -60,7 +61,8 @@ namespace Castle.MonoRail.Rest
 
         public bool IsFormatDefined
         {
-            get {
+            get
+            {
                 if (String.IsNullOrEmpty(_controller.Params["format"]))
                 {
                     return false;
