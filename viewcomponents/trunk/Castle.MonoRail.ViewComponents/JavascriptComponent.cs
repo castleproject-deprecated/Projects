@@ -268,7 +268,7 @@ namespace Castle.MonoRail.ViewComponents
     /// <item>
     /// <term>            <i>Browser Spec</i>  </term>
     /// <description>Rendered if the requesting browser matches the given 
-    /// browsers specification. Rendered at the site of JavascriptComponent.</description></item>
+    /// browsers specification. Rendered at the site of InsertJavascriptComponent.</description></item>
     /// </list>
     /// <para/>
     /// <i>Browser Spec</i> is in the following form:<para/>
