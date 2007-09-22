@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2007, James M. Curran
+﻿
+#region License
+// Copyright (c) 2007, James M. Curran
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,6 +13,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#endregion
 
 #region References
 using System;
@@ -104,7 +107,7 @@ namespace Castle.MonoRail.ViewComponents
     /// </item>
     /// </list>
     /// 
-    /// <b>NOTE:</b> This ViewComponent makes use of the prototype.js javascript library, and therefore
+    /// <b>NOTE:</b> This ViewComponent makes use of the prototype.js javascript librar by way of the JavascriptHelper object
     /// requires the following line appears in either the view which FaqItemComponent is used, or the layout 
     /// template used by that view:
     /// <code>
@@ -147,8 +150,8 @@ namespace Castle.MonoRail.ViewComponents
     /// ]]></code>
     /// 
     /// </example>
- 
-    public class FaqItemComponent : ViewComponent
+  [ViewComponentDetails("FaqItem", Sections="Question,Answer")]
+    public class FaqItemComponent : ViewComponentEx
     {
         #region Private Variables
         private int? faqNum;
@@ -157,6 +160,12 @@ namespace Castle.MonoRail.ViewComponents
         private bool wrapItems;
         #endregion
 
+        /// <summary>
+        /// Initializes a new instance of the FaqItemComponent class.
+        /// </summary>
+        public FaqItemComponent()
+        {
+        }
         /// <summary>
         /// Initializes this instance.
         /// </summary>
@@ -211,40 +220,23 @@ namespace Castle.MonoRail.ViewComponents
         /// </summary>
         public override void Render()
         {
-            if (!Context.HasSection("question"))
-                throw new ViewComponentException("FaqItemComponent: you must supply a 'question' section");
+            ConfirmSectionPresent("question");
+            ConfirmSectionPresent("answer");
 
-            if (!Context.HasSection("answer"))
-                throw new ViewComponentException("FaqItemComponent: you must supply a 'answer' section");
-
-            StringWriter sw = new StringWriter();
-            Context.RenderSection("question", sw);
-            string question = sw.ToString();
-            
-            sw = new StringWriter();
-            Context.RenderSection("answer", sw);
-            string answer = sw.ToString();
+            string question = GetSectionText("question");
+            string answer = GetSectionText("answer");
 
             FaqParameters param = new FaqParameters();
             param.AnswerCssClass = answerCssClass;
             param.QuestionCssClass = questionCssClass;
             param.Number = faqNum.Value;
             param.WrapItems = wrapItems;
+            param.helper = new JavascriptHelper(Context, HttpContext, Flash, "FaqItemComponent");
+            param.helper.IncludeStandardScripts("Ajax");
 
             RenderText(FaqItemHelper.BuildItem(question, answer, param));
 
             CancelView();
-        }
-
-        /// <summary>
-        /// Indicates if the section is supported by the FaqViewComponent.
-        /// </summary>
-        /// <param name="name">The name of the section.</param>
-        /// <returns>Returns true for "question" or "answer"; and false otherwise.</returns>
-        /// <remarks>Called by the framework.</remarks>
-        public override bool SupportsSection(string name)
-        {
-            return name == "question" || name == "answer";
         }
     }
 
@@ -281,17 +273,29 @@ namespace Castle.MonoRail.ViewComponents
     /// </remarks>
     public class QnA
     {
+        /// <summary>
+        /// Holds the text of the Question.
+        /// </summary>
         public string Question;     //  { get; set; }
+        /// <summary>
+        /// Holds the text of the Answer.
+        /// </summary>
         public string Answer;       //  { get; set; }
         /// <summary>
         /// Initializes a new instance of the QnA class.
         /// </summary>
-        /// <param name="question"></param>
-        /// <param name="answer"></param>
+        /// <param name="question">Text of the Question</param>
+        /// <param name="answer">Text of the Answer</param>
         public QnA(string question, string answer)
         {
             Question = question;
             Answer = answer;
+        }
+        /// <summary>
+        /// Initializes a new instance of the QnA class.
+        /// </summary>
+        public QnA()
+        {
         }
     }
 
@@ -418,6 +422,9 @@ namespace Castle.MonoRail.ViewComponents
             param = new FaqParameters();
             param.QuestionCssClass = Context.ComponentParameters["QuestionCssClass"] as string ?? "Question";
             param.AnswerCssClass = Context.ComponentParameters["AnswerCssClass"] as string ?? "Answer";
+            param.helper = new JavascriptHelper(Context, HttpContext,Flash, "FaqListComponent");
+            param.helper.IncludeStandardScripts("Ajax");
+
             string listType = Context.ComponentParameters["ListType"] as string ?? "none";
             switch (listType.ToLower())
             {
@@ -482,6 +489,7 @@ namespace Castle.MonoRail.ViewComponents
         public string QuestionCssClass;
         public string AnswerCssClass;
         public bool WrapItems;
+        public JavascriptHelper helper;
     }
 
     /// <summary>
@@ -489,32 +497,54 @@ namespace Castle.MonoRail.ViewComponents
     /// </summary>
     internal static class FaqItemHelper
     {
+        /// <summary>
+        /// Builds the item.
+        /// </summary>
+        /// <remarks> This attempts to always "do the right thins", hence, if javascript is enabled,
+        /// the answer is hidden, and clicking the question reveals it.  However, if Javascript is disabled,
+        /// that won't work, so the answer must always be display. But, at rendering time, we have no way of knowing
+        /// if Javascript is enabled or not, and, when displayed in the browser, we cannot define a "no scripting" 
+        /// contingency option in Javascript, since it won't be run.
+        /// To solve this, the answer is initially displayed,
+        /// and then immediately hidden (via Javascript). If JS is enabled, the text is hidden before it is displayed, 
+        /// so the user never sees it.
+        /// </remarks>
+        /// <param name="question">The question.</param>
+        /// <param name="answer">The answer.</param>
+        /// <param name="param">The param.</param>
+        /// <returns>The Html generated for this FAQ item.</returns>
         public static string BuildItem(string question, string answer, FaqParameters param)
         {
+            param.helper.IncludeStandardScripts("Ajax");
             StringBuilder sb = new StringBuilder(250);
 
             if (param.WrapItems)
                 sb.Append("<li>");
 
-            sb.AppendFormat(@"<div id=""Faq_Q{0}"" onclick=""Element.toggle('Faq_A{0}')"" class=""{1}"">" + Environment.NewLine, 
+            sb.AppendFormat(@"<div id=""Faq_Q{0}"" onclick=""Element.toggle('Faq_A{0}')"" class=""{1}"">", 
                 param.Number, param.QuestionCssClass);
+            sb.Append(Environment.NewLine);
             sb.Append(question);
             sb.Append("</div>");
+            sb.Append(Environment.NewLine);
 
-            sb.AppendFormat(@"<div id=""Faq_A{0}"" style=""display:none"" class=""{1}"">" + Environment.NewLine, 
+            sb.AppendFormat(@"<div id=""Faq_A{0}"" class=""{1}"">", 
                 param.Number, param.AnswerCssClass);
+            sb.Append(Environment.NewLine);
 
             sb.Append("<br/>");
             sb.Append(answer);
             sb.Append("<hr/>");
             sb.Append("</div>");
-
+            sb.Append(Environment.NewLine);
             if (param.WrapItems)
                 sb.Append("</li>");
+            sb.Append(Environment.NewLine);
+            sb.AppendFormat("<script>$(Faq_A{0}).style.display='none';</script>", param.Number);
+            sb.Append(Environment.NewLine);
 
             return sb.ToString();
         }
     }
-
 }
 

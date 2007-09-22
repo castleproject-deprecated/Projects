@@ -11,11 +11,17 @@ namespace Castle.MonoRail.ViewComponents.TestSite.Controllers
     [Layout("default")]
     public class FaqController : SmartDispatcherController
     {
+        /// <summary>
+        /// The /Faq/index.rails page -- FaqItemComponent demo
+        /// </summary>
         public void Index()
         {
             // Everything is in the view.
         }
 
+        /// <summary>
+        /// The /Faq/List.rails page -- FaqListComponent demo.
+        /// </summary>
         public void List()
         {
             // In real-life, this would probably be read from a database.

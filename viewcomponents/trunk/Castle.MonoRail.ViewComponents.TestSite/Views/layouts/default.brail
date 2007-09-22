@@ -11,8 +11,9 @@
 			  type="text/css"
 			  href="/style.css"
 			  media="screen, print" />
-		${Ajax.InstallScripts()}
-		${Scriptaculous.InstallScripts()}
+<%
+component InsertJavascript, {@Std: "Ajax, Scriptaculous"}
+%>			  
 	</head>
 	<body>
 
