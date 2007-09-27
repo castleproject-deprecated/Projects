@@ -1325,7 +1325,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 string[] args = new string[4];
                 args[0] = "/lang:" + (_language == CodeLanguage.CSharp ? "CS": "VB");
                 args[1] = "/files:" + assembly.Location;
-                args[2] = "/out:" + tempFileFolder.FullName;
+                args[2] = "/out:\"" + tempFileFolder.FullName + "\"";
                 args[3] = "/ns:" + _namespace;
                 startInfo.Arguments = string.Join(" ", args);
                 startInfo.WindowStyle = ProcessWindowStyle.Hidden;
