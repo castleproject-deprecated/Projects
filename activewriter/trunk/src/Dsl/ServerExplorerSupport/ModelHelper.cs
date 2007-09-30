@@ -18,13 +18,13 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
     internal static class ModelHelper
     {
 
-        private static bool useCameCase = true;
+        private static bool usePascalCase = true;
 
         public static string GetSafeName(string name)
         {
-            if (useCameCase)
+            if (usePascalCase)
             {
-                return CamelCase(name).Replace(" ", string.Empty);
+                return PascalCase(name).Replace(" ", string.Empty);
             }
             else
             {
@@ -32,17 +32,30 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
             }
         }
 
-        public static string CamelCase(string original)
+        public static string PascalCase(string original)
         {
-            if (original == "" || original == null) return original;
-            StringBuilder sb = new StringBuilder();
-            string[] parts = original.Split('_');
-            foreach (string p in parts)
+            if (string.IsNullOrEmpty(original))
+                return original;
+
+            if (original.Contains("_"))
             {
-                sb.Append(p.Substring(0, 1).ToUpper());
-                sb.Append(p.Substring(1).ToLower());
+                StringBuilder stringBuilder = new StringBuilder();
+                string[] parts = original.Split('_');
+                foreach (string part in parts)
+                {
+                    stringBuilder.Append(part.Substring(0, 1).ToUpperInvariant());
+                    stringBuilder.Append(part.Substring(1).ToLowerInvariant());
+                }
+                return stringBuilder.ToString();
             }
-            return sb.ToString();
+            else if (original.Length == 1)
+            {
+                return original.ToUpperInvariant();
+            }
+            else
+            {
+                return original.Substring(0, 1).ToUpperInvariant() + original.Substring(1);
+            }
         }
     }
 }
