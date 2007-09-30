@@ -1537,6 +1537,14 @@
     <value>Target (HasMany)</value>
     <comment>Category for DomainProperty &apos;TargetIndex&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetFetch.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ManyToOneRelation.Target Fetch</value>
+    <comment>Description for DomainProperty &apos;TargetFetch&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetFetch.DisplayName" xml:space="preserve">
+    <value>Target Fetch</value>
+    <comment>DisplayName for DomainProperty &apos;TargetFetch&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ManyToOneRelation/Source.Description" xml:space="preserve">
     <value></value>
     <comment>Description for DomainRole &apos;Source&apos; on DomainRelationship &apos;ManyToOneRelation&apos;</comment>
@@ -3228,6 +3236,38 @@
   <data name="Altinoren.ActiveWriter.InheritableBoolean/False.Description" xml:space="preserve">
     <value>Description for Altinoren.ActiveWriter.InheritableBoolean.False</value>
     <comment>Description for EnumerationLiteral &apos;False&apos; on DomainEnumeration &apos;InheritableBoolean&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FetchEnum/Select.DisplayName" xml:space="preserve">
+    <value>Select</value>
+    <comment>Display name for EnumerationLiteral &apos;Select&apos; on DomainEnumeration &apos;FetchEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FetchEnum/Select.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.FetchEnum.Select</value>
+    <comment>Description for EnumerationLiteral &apos;Select&apos; on DomainEnumeration &apos;FetchEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FetchEnum/Join.DisplayName" xml:space="preserve">
+    <value>Join</value>
+    <comment>Display name for EnumerationLiteral &apos;Join&apos; on DomainEnumeration &apos;FetchEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FetchEnum/Join.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.FetchEnum.Join</value>
+    <comment>Description for EnumerationLiteral &apos;Join&apos; on DomainEnumeration &apos;FetchEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FetchEnum/SubSelect.DisplayName" xml:space="preserve">
+    <value>SubSelect</value>
+    <comment>Display name for EnumerationLiteral &apos;SubSelect&apos; on DomainEnumeration &apos;FetchEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FetchEnum/SubSelect.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.FetchEnum.SubSelect</value>
+    <comment>Description for EnumerationLiteral &apos;SubSelect&apos; on DomainEnumeration &apos;FetchEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FetchEnum/Unspecified.DisplayName" xml:space="preserve">
+    <value>Unspecified</value>
+    <comment>Display name for EnumerationLiteral &apos;Unspecified&apos; on DomainEnumeration &apos;FetchEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.FetchEnum/Unspecified.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.FetchEnum.Unspecified</value>
+    <comment>Description for EnumerationLiteral &apos;Unspecified&apos; on DomainEnumeration &apos;FetchEnum&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.MetaDataGeneration/False.DisplayName" xml:space="preserve">
     <value>False</value>

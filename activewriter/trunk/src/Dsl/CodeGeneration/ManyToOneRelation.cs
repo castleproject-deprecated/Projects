@@ -42,7 +42,9 @@ namespace Altinoren.ActiveWriter
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Inverse", TargetInverse));
             if (TargetLazy)
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Lazy", TargetLazy));
-            if (!string.IsNullOrEmpty(TargetMapType))
+			if (TargetFetch != FetchEnum.Unspecified)
+				attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Fetch", "FetchEnum", TargetFetch));
+			if (!string.IsNullOrEmpty(TargetMapType))
                 attribute.Arguments.Add(AttributeHelper.GetNamedTypeAttributeArgument("MapType", TargetMapType));
             if (!string.IsNullOrEmpty(TargetOrderBy))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("OrderBy", TargetOrderBy));

@@ -3295,6 +3295,94 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region TargetFetch domain property code
+		
+		/// <summary>
+		/// TargetFetch domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid TargetFetchDomainPropertyId = new global::System.Guid(0x65a5cad5, 0xdaac, 0x4487, 0xbd, 0xd4, 0x24, 0xba, 0x76, 0x1f, 0x92, 0xb1);
+		
+		/// <summary>
+		/// Storage for TargetFetch
+		/// </summary>
+		private FetchEnum targetFetchPropertyStorage = Altinoren.ActiveWriter.FetchEnum.Unspecified;
+		
+		/// <summary>
+		/// Gets or sets the value of TargetFetch domain property.
+		/// Description for Altinoren.ActiveWriter.ManyToOneRelation.Target Fetch
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetFetch.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetFetch.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.FetchEnum.Unspecified)]
+		[DslModeling::DomainObjectId("65a5cad5-daac-4487-bdd4-24ba761f92b1")]
+		public FetchEnum TargetFetch
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return targetFetchPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				TargetFetchPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the ManyToOneRelation.TargetFetch domain property.
+		/// </summary>
+		internal sealed partial class TargetFetchPropertyHandler : DslModeling::DomainPropertyValueHandler<ManyToOneRelation, FetchEnum>
+		{
+			private TargetFetchPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the ManyToOneRelation.TargetFetch domain property value handler.
+			/// </summary>
+			public static readonly TargetFetchPropertyHandler Instance = new TargetFetchPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the ManyToOneRelation.TargetFetch domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return TargetFetchDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed FetchEnum GetValue(ManyToOneRelation element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.targetFetchPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(ManyToOneRelation element, FetchEnum newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				FetchEnum oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.targetFetchPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region Source link accessor
 		/// <summary>
 		/// Get the list of ManyToOneRelation links to a ModelClass.

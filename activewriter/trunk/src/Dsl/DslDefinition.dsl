@@ -663,6 +663,11 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="65a5cad5-daac-4487-bdd4-24ba761f92b1" Description="Description for Altinoren.ActiveWriter.ManyToOneRelation.Target Fetch" Name="TargetFetch" DisplayName="Target Fetch" DefaultValue="Unspecified">
+          <Type>
+            <DomainEnumerationMoniker Name="FetchEnum" />
+          </Type>
+        </DomainProperty>
       </Properties>
       <Source>
         <DomainRole Id="8fc70677-e363-4cda-b821-17505cab2c14" Description="" Name="Source" DisplayName="Source" PropertyName="Targets" PropertyDisplayName="Targets">
@@ -1246,7 +1251,14 @@
         <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritableBoolean.False" Name="False" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="DomainEnumeration1" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.DomainEnumeration1" />
+    <DomainEnumeration Name="FetchEnum" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.FetchEnum">
+      <Literals>
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.FetchEnum.Select" Name="Select" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.FetchEnum.Join" Name="Join" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.FetchEnum.SubSelect" Name="SubSelect" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.FetchEnum.Unspecified" Name="Unspecified" Value="" />
+      </Literals>
+    </DomainEnumeration>
     <DomainEnumeration Name="MetaDataGeneration" Namespace="Altinoren.ActiveWriter" Description="">
       <Literals>
         <EnumerationLiteral Description="" Name="False" Value="" />
@@ -1593,6 +1605,9 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="targetIndex">
             <DomainPropertyMoniker Name="ManyToOneRelation/TargetIndex" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="targetFetch">
+            <DomainPropertyMoniker Name="ManyToOneRelation/TargetFetch" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

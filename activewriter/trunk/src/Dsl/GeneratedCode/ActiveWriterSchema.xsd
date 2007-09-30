@@ -830,6 +830,8 @@
         <xsd:documentation>Only used with maps or list.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
+    <!-- Property: TargetFetch -->
+    <xsd:attribute name="targetFetch" type="FetchEnum" />
   </xsd:complexType>
   
   <!-- ManyToOneRelation Moniker -->
@@ -1377,9 +1379,13 @@
     </xsd:restriction>
   </xsd:simpleType>
   
-  <!-- Enum DomainEnumeration1 -->
-  <xsd:simpleType name="DomainEnumeration1">
+  <!-- Enum FetchEnum -->
+  <xsd:simpleType name="FetchEnum">
     <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Select"/>
+      <xsd:enumeration value="Join"/>
+      <xsd:enumeration value="SubSelect"/>
+      <xsd:enumeration value="Unspecified"/>
     </xsd:restriction>
   </xsd:simpleType>
   

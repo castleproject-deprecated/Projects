@@ -200,6 +200,7 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(ManyToOneRelation), "TargetElement", ManyToOneRelation.TargetElementDomainPropertyId, typeof(ManyToOneRelation.TargetElementPropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToOneRelation), "TargetIndexType", ManyToOneRelation.TargetIndexTypeDomainPropertyId, typeof(ManyToOneRelation.TargetIndexTypePropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToOneRelation), "TargetIndex", ManyToOneRelation.TargetIndexDomainPropertyId, typeof(ManyToOneRelation.TargetIndexPropertyHandler)),
+				new DomainMemberInfo(typeof(ManyToOneRelation), "TargetFetch", ManyToOneRelation.TargetFetchDomainPropertyId, typeof(ManyToOneRelation.TargetFetchPropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToManyRelation), "SourceCache", ManyToManyRelation.SourceCacheDomainPropertyId, typeof(ManyToManyRelation.SourceCachePropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToManyRelation), "SourceCascade", ManyToManyRelation.SourceCascadeDomainPropertyId, typeof(ManyToManyRelation.SourceCascadePropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToManyRelation), "SourceColumn", ManyToManyRelation.SourceColumnDomainPropertyId, typeof(ManyToManyRelation.SourceColumnPropertyHandler)),
@@ -1514,12 +1515,36 @@ namespace Altinoren.ActiveWriter
 namespace Altinoren.ActiveWriter
 {
 	/// <summary>
-	/// DomainEnumeration: DomainEnumeration1
-	/// Description for Altinoren.ActiveWriter.DomainEnumeration1
+	/// DomainEnumeration: FetchEnum
+	/// Description for Altinoren.ActiveWriter.FetchEnum
 	/// </summary>
 	[global::System.CLSCompliant(true)]
-	public enum DomainEnumeration1
+	public enum FetchEnum
 	{
+		/// <summary>
+		/// Select
+		/// Description for Altinoren.ActiveWriter.FetchEnum.Select
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.FetchEnum/Select.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		Select,
+		/// <summary>
+		/// Join
+		/// Description for Altinoren.ActiveWriter.FetchEnum.Join
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.FetchEnum/Join.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		Join,
+		/// <summary>
+		/// SubSelect
+		/// Description for Altinoren.ActiveWriter.FetchEnum.SubSelect
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.FetchEnum/SubSelect.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		SubSelect,
+		/// <summary>
+		/// Unspecified
+		/// Description for Altinoren.ActiveWriter.FetchEnum.Unspecified
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.FetchEnum/Unspecified.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		Unspecified,
 	}
 }
 namespace Altinoren.ActiveWriter

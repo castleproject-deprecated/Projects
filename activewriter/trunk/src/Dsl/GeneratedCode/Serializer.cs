@@ -7747,6 +7747,23 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// TargetFetch
+			if (!serializationContext.Result.Failed)
+			{
+				string attribTargetFetch = reader.GetAttribute("targetFetch");
+				if (attribTargetFetch != null)
+				{
+					FetchEnum valueOfTargetFetch;
+					if (DslModeling::SerializationUtilities.TryGetValue<FetchEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetFetch), out valueOfTargetFetch))
+					{
+						instanceOfManyToOneRelation.TargetFetch = valueOfTargetFetch;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetFetch", typeof(FetchEnum), attribTargetFetch);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -8588,6 +8605,19 @@ namespace Altinoren.ActiveWriter
 				{
 					if (!string.IsNullOrEmpty(propValue))
 						writer.WriteAttributeString("targetIndex", propValue);
+				}
+			}
+			// TargetFetch
+			if (!serializationContext.Result.Failed)
+			{
+				FetchEnum propValue = instanceOfManyToOneRelation.TargetFetch;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<FetchEnum>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Unspecified") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("targetFetch", serializedPropValue);
+					}
 				}
 			}
 		}
