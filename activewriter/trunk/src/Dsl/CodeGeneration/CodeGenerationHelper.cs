@@ -43,6 +43,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private string _assemblyLoadPath;
 
         private CodeDomProvider _provider;
+        private OutputWindowHelper _output;
         private Model _model;
         private string _namespace;
 
@@ -90,6 +91,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     throw new ArgumentException(
                         "Unsupported project type. ActiveWriter currently supports C# and Visual Basic.NET projects.");
             }
+
+            _output = new OutputWindowHelper(_dte);
         }
 
         #endregion
@@ -1324,7 +1327,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 startInfo.WorkingDirectory = Path.GetDirectoryName(_model.NHQGExecutable);
                 string[] args = new string[4];
                 args[0] = "/lang:" + (_language == CodeLanguage.CSharp ? "CS": "VB");
-                args[1] = "/files:" + assembly.Location;
+                args[1] = "/files:\"" + assembly.Location + "\"";
                 args[2] = "/out:\"" + tempFileFolder.FullName + "\"";
                 args[3] = "/ns:" + _namespace;
                 startInfo.Arguments = string.Join(" ", args);
@@ -1334,6 +1337,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 startInfo.RedirectStandardOutput = true;
                 startInfo.UseShellExecute = false;
                 nhqg.StartInfo = startInfo;
+
+                Log("Running NHQG with parameters: " + String.Join(" ", args));
 
                 nhqg.Start();
                 StreamReader output = nhqg.StandardOutput;
@@ -1611,6 +1616,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             field.Type = new CodeTypeReference(typeof(string));
             field.InitExpression = new CodePrimitiveExpression(member.Name);
             return field;
+        }
+
+        private void Log(string message)
+        {
+            _output.Write(string.Format("ActiveWriter: {0}", message));
         }
 
         #endregion
