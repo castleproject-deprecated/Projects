@@ -66,6 +66,7 @@
     <Compile Include="Controllers\SdController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewComponents\Bold.cs" />
+    <Compile Include="ViewComponents\RepeaterComponent.cs" />
     <Compile Include="ViewComponents\Simple.cs" />
     <Compile Include="ViewFilters\SingleLineViewFilter.cs" />
     <Compile Include="Views\SmartDispatcherTest\Save.aspx.cs">

@@ -5,7 +5,7 @@
 	string item;
 %>
 A simple viewcomponent, without a body and sections
-<component:GridComponent source="<%=items%>">
+<component:Repeater source="<%=items%>">
 	<section:header>
 	<table>
 		<thead>
@@ -22,5 +22,5 @@ A simple viewcomponent, without a body and sections
 	<section:footer>
 	</table>
 	</section:footer>
-</component:GridComponent>
+</component:Repeater>
 I was supposed to be rendered after the viewcomponent

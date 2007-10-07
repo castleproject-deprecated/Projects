@@ -48,7 +48,7 @@ Hello from SimpleViewComponentI was supposed to be rendered after the viewcompon
 		{
 			#region expected
 			string expected = @"A simple viewcomponent, without a body and sections
-<table id='grid'>	<table>
+	<table>
 		<thead>
 			<th>Id</th>
 			<th>Word</th>
@@ -74,9 +74,7 @@ Hello from SimpleViewComponentI was supposed to be rendered after the viewcompon
 			<td>ViewComponents</td>
 		</tr>
 		</table>
-	</table><div class='pagination'><table><tr><td>
-Showing 1 - 5 of 5
-</td><td align='right'>first | prev | next | last</td></tr></table></div>I was supposed to be rendered after the viewcomponent";
+	I was supposed to be rendered after the viewcomponent";
 			#endregion
 			DoGet("UsingViewComponents/WithSections.rails");
 			AssertReplyEqualTo(expected);
