@@ -1,4 +1,4 @@
-// Copyright 2004-2005 Castle Project - http://www.castleproject.org/
+// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,20 +15,20 @@
 namespace Castle.MonoRail.Views.AspView
 {
 	using System.Collections;
-	using Castle.MonoRail.Framework;
+	using Framework;
 	using System.IO;
 
 	public class ViewComponentContext : IViewComponentContext
 	{
-		string componentName;
+		readonly string componentName;
 
-		IDictionary componentParameters;
+		readonly IDictionary componentParameters;
 		IDictionary sections;
 		string viewToRender;
 
 		ViewComponentSectionRendereDelegate body;
-		private readonly TextWriter default_writer;
-		private AspViewBase parent;
+		readonly TextWriter default_writer;
+		readonly private AspViewBase parent;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ViewComponentContext"/> class.
@@ -36,7 +36,7 @@ namespace Castle.MonoRail.Views.AspView
 		/// <param name="parent">The parent.</param>
 		/// <param name="body">The body.</param>
 		/// <param name="name">The name.</param>
-		/// <param name="text">The text writer.</param>
+		/// <param name="writer">The text writer.</param>
 		/// <param name="parameters">The parameters.</param>
 		public ViewComponentContext(AspViewBase parent, ViewComponentSectionRendereDelegate body,
 										 string name, TextWriter writer, IDictionary parameters)
@@ -54,7 +54,7 @@ namespace Castle.MonoRail.Views.AspView
 		/// <param name="parent">The parent.</param>
 		/// <param name="body">The body.</param>
 		/// <param name="name">The name.</param>
-		/// <param name="text">The text writer.</param>
+		/// <param name="writer">The text writer.</param>
 		/// <param name="arguments">The arguments.</param>
 		public ViewComponentContext(AspViewBase parent, ViewComponentSectionRendereDelegate body,
 										 string name, TextWriter writer, params object[] arguments)

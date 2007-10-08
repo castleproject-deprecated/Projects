@@ -1,4 +1,4 @@
-// Copyright 2004-2005 Castle Project - http://www.castleproject.org/
+// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,13 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using NUnit.Framework;
-using System.Diagnostics;
 namespace Castle.MonoRail.Views.AspView.Tests
 {
-    using System;
-    using Castle.MonoRail.TestSupport;
-    using NUnit.Framework;
+	using NUnit.Framework;
+    using TestSupport;
 
     [TestFixture]
     public class WithLayoutTestCase : AbstractMRTestCase
@@ -66,18 +63,4 @@ namespace Castle.MonoRail.Views.AspView.Tests
         }
 
     }
-}
-[TestFixture]
-public class ATest
-{
-	[Test]
-	public void Test()
-	{
-		string fileName = "\\afas\\fasfas\\fasfas.rails.rails";
-		string className = fileName.Replace('\\', '_');
-		int i = className.LastIndexOf('.');
-		if (i > -1)
-			className = className.Substring(0, i);
-		Trace.WriteLine(className);
-	}
 }

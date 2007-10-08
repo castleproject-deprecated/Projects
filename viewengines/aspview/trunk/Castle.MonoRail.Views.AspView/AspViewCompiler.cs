@@ -1,4 +1,4 @@
-// Copyright 2004-2005 Castle Project - http://www.castleproject.org/
+// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,23 +18,18 @@ namespace Castle.MonoRail.Views.AspView
 	using System.Text;
 	using System.IO;
 	using System.Collections.Generic;
-	using System.Collections.Specialized;
 	using System.CodeDom.Compiler;
 	using Microsoft.CSharp;
 	using Microsoft.VisualBasic;
-	using Castle.MonoRail.Framework;
 
 	public class AspViewCompiler
 	{
 		#region members
 		private CompilerParameters parameters;
-		private AspViewCompilerOptions options;
-		private AspViewPreProcessor preProcessor;
+		readonly AspViewCompilerOptions options;
+		readonly AspViewPreProcessor preProcessor;
 		private static readonly ReferencedAssembly[] defaultAddedReferences = null;
 		private static readonly string defaultSiteRoot = AppDomain.CurrentDomain.BaseDirectory;
-		private static readonly string defaultBinDirectory = Path.Combine(defaultSiteRoot, "bin");
-		private string targetDirectory = null;
-		private string binDirectory = null;
 
 		public string PathToAssembly = null;
 
@@ -53,8 +48,6 @@ namespace Castle.MonoRail.Views.AspView
 		}
 		public void CompileSite(string siteRoot)
 		{
-			binDirectory = Path.Combine(siteRoot, "bin");
-			targetDirectory = binDirectory;
 			CompileSite(siteRoot, defaultAddedReferences);
 		}
 
@@ -70,6 +63,7 @@ namespace Castle.MonoRail.Views.AspView
 			List<AspViewFile> vbFiles = files.FindAll(delegate(AspViewFile file) { return (file.Language == ScriptingLanguage.VbNet); });
 			List<AspViewFile> csFiles = files.FindAll(delegate(AspViewFile file) { return (file.Language == ScriptingLanguage.CSharp); });
 
+			string targetDirectory = Path.Combine(siteRoot, "Bin");
 
 			if (options.KeepTemporarySourceFiles)
 			{
@@ -86,7 +80,7 @@ namespace Castle.MonoRail.Views.AspView
 
 		}
 
-		private string Compile(string targetDirectory, List<AspViewFile> csFiles, List<AspViewFile> vbFiles, ReferencedAssembly[] references)
+		private string Compile(string targetDirectory, ICollection<AspViewFile> csFiles, ICollection<AspViewFile> vbFiles, IEnumerable<ReferencedAssembly> references)
 		{
 			if (vbFiles.Count == 0)
 				return CompileCSharpModule(targetDirectory, csFiles, references, true, null);
@@ -97,7 +91,7 @@ namespace Castle.MonoRail.Views.AspView
 			return CompileCSharpModule(targetDirectory, csFiles, references, true, new string[1] { vbModulePath });
 		}
 
-		private List<AspViewFile> GetViewFiles(string siteRoot)
+		private static List<AspViewFile> GetViewFiles(string siteRoot)
 		{
 			List<AspViewFile> files = new List<AspViewFile>();
 			string viewsDirectory = Path.Combine(siteRoot, "Views");
@@ -115,12 +109,7 @@ namespace Castle.MonoRail.Views.AspView
 		}
 		private static string ReadFile(string fileName)
 		{
-			string source = string.Empty;
-			using (StreamReader sr = new StreamReader(fileName))
-			{
-				source = sr.ReadToEnd();
-			}
-			return source;
+			return File.ReadAllText(fileName);
 		}
 		private static void SaveFile(AspViewFile file, string targetDirectory)
 		{
@@ -140,8 +129,8 @@ namespace Castle.MonoRail.Views.AspView
 		}
 
 		private string CompileModule(
-			CodeDomProvider codeProvider, string targetDirectory, List<AspViewFile> files,
-			ReferencedAssembly[] references, bool createAssembly, string[] modulesToAdd)
+			CodeDomProvider codeProvider, string targetDirectory, ICollection<AspViewFile> files,
+			IEnumerable<ReferencedAssembly> references, bool createAssembly, string[] modulesToAdd)
 		{
 			if (!createAssembly)
 			{
@@ -171,7 +160,7 @@ namespace Castle.MonoRail.Views.AspView
 				sb.Append(" /addmodule: ");
 				foreach (string moduleToAdd in modulesToAdd)
 					sb.Append(Path.Combine(targetDirectory, moduleToAdd));
-				parameters.CompilerOptions += "\"" + sb.ToString() + "\"";
+				parameters.CompilerOptions += "\"" + sb + "\"";
 			}
 
 			CompilerResults results;
@@ -197,15 +186,15 @@ namespace Castle.MonoRail.Views.AspView
 					message.AppendLine(err.ToString());
 				throw new Exception(string.Format(
 					"Error while compiling'':\r\n{0}",
-					message.ToString()));
+					message));
 			}
 			return results.PathToAssembly;
 		}
-		private string CompileCSharpModule(string targetDirectory, List<AspViewFile> files, ReferencedAssembly[] references, bool createAssembly, string[] modulesToAdd)
+		private string CompileCSharpModule(string targetDirectory, ICollection<AspViewFile> files, IEnumerable<ReferencedAssembly> references, bool createAssembly, string[] modulesToAdd)
 		{
 			return CompileModule(new CSharpCodeProvider(), targetDirectory, files, references, createAssembly, modulesToAdd);
 		}
-		private string CompileVbModule(string targetDirectory, List<AspViewFile> files, ReferencedAssembly[] references, bool createAssembly, string[] modulesToAdd)
+		private string CompileVbModule(string targetDirectory, ICollection<AspViewFile> files, IEnumerable<ReferencedAssembly> references, bool createAssembly, string[] modulesToAdd)
 		{
 			return CompileModule(new VBCodeProvider(), targetDirectory, files, references, createAssembly, modulesToAdd);
 		}

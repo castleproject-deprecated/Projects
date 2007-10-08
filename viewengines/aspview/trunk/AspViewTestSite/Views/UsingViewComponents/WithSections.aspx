@@ -1,7 +1,7 @@
 <%@ Page Language="C#" %>
 <%@ Import Namespace="Castle.MonoRail.Framework.Helpers" %>
 <%
-	IPaginatedPage items;
+	string[] items;
 	string item;
 %>
 A simple viewcomponent, without a body and sections

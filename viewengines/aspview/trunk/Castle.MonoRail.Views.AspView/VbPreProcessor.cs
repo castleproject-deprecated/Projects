@@ -1,4 +1,4 @@
-// Copyright 2004-2005 Castle Project - http://www.castleproject.org/
+// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -58,7 +58,7 @@ namespace Castle.MonoRail.Views.AspView
             writer.WriteLine("Namespace {0}", assemblyNamespace);
         }
 
-        protected override void WriteImports(StringWriter writer, System.Collections.Generic.Dictionary<string, object> imports)
+        protected override void WriteImports(StringWriter writer, Dictionary<string, object> imports)
         {
             foreach (string import in imports.Keys)
                 writer.WriteLine("Imports {0}", import);

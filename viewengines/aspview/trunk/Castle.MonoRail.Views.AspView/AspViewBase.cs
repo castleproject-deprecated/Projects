@@ -1,4 +1,4 @@
-// Copyright 2004-2005 Castle Project - http://www.castleproject.org/
+// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ namespace Castle.MonoRail.Views.AspView
     using System.Collections.Generic;
     using System.Collections;
 
-    using Castle.MonoRail.Framework;
-    using Castle.MonoRail.Framework.Helpers;
+    using Framework;
+    using Framework.Helpers;
     using System.Reflection;
 
     public abstract class AspViewBase
@@ -188,10 +188,10 @@ namespace Castle.MonoRail.Views.AspView
             _outputWriter = output;
             _context = context;
             _controller = controller;
-            InitProperties(context, controller);
+            InitProperties();
         }
 
-        private void InitProperties(IRailsEngineContext context, Controller controller)
+        private void InitProperties()
         {
             _properties = new Dictionary<string, object>(CaseInsensitiveStringComparer.Default);
             _properties.Add("context", _context);
@@ -264,7 +264,7 @@ namespace Castle.MonoRail.Views.AspView
 		/// Renders another view in place
 		/// </summary>
 		/// <param name="subViewName">The sub view's name</param>
-		/// <param name="parameters">Parameters that can be sent to the sub view's Properties container</param>
+		/// <param name="arguments">Parameters that can be sent to the sub view's Properties container</param>
 		protected void OutputSubView(string subViewName, params object[] arguments)
 		{
 			OutputSubView(subViewName, _outputWriter, arguments);
@@ -274,8 +274,8 @@ namespace Castle.MonoRail.Views.AspView
         /// Renders another view in place
         /// </summary>
         /// <param name="subViewName">The sub view's name</param>
-        /// <param name="parameters">Parameters that can be sent to the sub view's ordered as name, value</param>
 		/// <param name="writer">The writer that will be used for the sub view's output</param>
+		/// <param name="arguments">Parameters that can be sent to the sub view's ordered as name, value</param>
 		internal void OutputSubView(string subViewName, TextWriter writer, params object[] arguments)
         {
 			IDictionary parameters =
@@ -286,17 +286,19 @@ namespace Castle.MonoRail.Views.AspView
         /// <summary>
         /// Stack of writers, used as buffers for viewfilters
         /// </summary>
-        Stack<TextWriter> outputWriters = new Stack<TextWriter>();
-        /// <summary>
+        readonly Stack<TextWriter> outputWriters = new Stack<TextWriter>();
+
+		/// <summary>
         /// Maintains the currently active view filters
         /// </summary>
-        Stack<IViewFilter> viewFilters = new Stack<IViewFilter>();
-        /// <summary>
+		readonly Stack<IViewFilter> viewFilters = new Stack<IViewFilter>();
+
+		/// <summary>
         /// Searching a view filter given it's type's name
         /// </summary>
         /// <param name="filterName">the filter's typeName</param>
         /// <returns>System.Type of the filter</returns>
-		private Type GetFilterType(string filterName)
+		private static Type GetFilterType(string filterName)
 		{
 			Type filterType = null;
 			foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
@@ -315,6 +317,7 @@ namespace Castle.MonoRail.Views.AspView
 				throw new RailsException("Cannot find a viewfilter [{0}]", filterName);
 			return filterType;
 		}
+
         /// <summary>
         /// Signaling the current view to start bufferring the following writes, filtering it later
         /// </summary>
@@ -325,6 +328,7 @@ namespace Castle.MonoRail.Views.AspView
             IViewFilter filter = (IViewFilter)Activator.CreateInstance(filterType);
             StartFiltering(filter);
         }
+
         /// <summary>
         /// Signaling the current view to start bufferring the following writes, filtering it later
         /// </summary>
@@ -335,6 +339,7 @@ namespace Castle.MonoRail.Views.AspView
             _outputWriter = new StringWriter();
             viewFilters.Push(filter);
         }
+
         /// <summary>
         /// Signals the current view to apply the last view filter that was started on the buffered output
         /// </summary>
@@ -347,6 +352,7 @@ namespace Castle.MonoRail.Views.AspView
             _outputWriter = outputWriters.Pop();
             _outputWriter.Write(filtered);
         }
+
         /// <summary>
         /// Output a string to the current output writer
         /// </summary>
@@ -355,6 +361,7 @@ namespace Castle.MonoRail.Views.AspView
         {
             OutputWriter.Write(message);
         }
+
         /// <summary>
         /// Output a string to the current output writer
         /// </summary>
@@ -364,6 +371,7 @@ namespace Castle.MonoRail.Views.AspView
         {
             Output(string.Format(message, arguments));
         }
+
         /// <summary>
         /// Output an object's 'ToString()' to the current output writer
         /// </summary>
@@ -372,6 +380,7 @@ namespace Castle.MonoRail.Views.AspView
         {
             Output(message.ToString());
         }
+
         /// <summary>
         /// Gets a quallified path and filename to a sub view given it's name
         /// </summary>
@@ -384,6 +393,7 @@ namespace Castle.MonoRail.Views.AspView
             else
                 return Path.Combine(ViewDirectory, subViewName + "." + _viewEngine.ViewFileExtension);
         }
+
         /// <summary>
         /// Gets a parameter's value from the view's propery containers.
         /// will throw exception if the parameter is not found
@@ -397,6 +407,7 @@ namespace Castle.MonoRail.Views.AspView
                 throw new RailsException("Parameter '" + parameterName + "' was not found!");
             return value;
         }
+
         /// <summary>
         /// Gets a parameter's value from the view's propery containers.
         /// will return a default value if the parameter is not found
@@ -410,12 +421,14 @@ namespace Castle.MonoRail.Views.AspView
 			TryGetParameter(parameterName, out value, defaultValue);
             return value;
         }
+
         /// <summary>
         /// Actually looking in the property containers for a parameter's value given it's name
         /// </summary>
         /// <param name="parameterName">The parameter's name</param>
-        /// <param name="parameter">The parameter's value</param>
-        /// <returns>True if the property is found, False elsewhere</returns>
+		/// <param name="parameter">The parameter's value</param>
+		/// <param name="defaultValue">The value to use if <paramref name="parameterName"/> wasn't found in the controller's properties</param>
+		/// <returns>True if the property is found, False elsewhere</returns>
         protected bool TryGetParameter(string parameterName, out object parameter, object defaultValue)
         {
             if (_properties.ContainsKey(parameterName))
@@ -435,6 +448,7 @@ namespace Castle.MonoRail.Views.AspView
             parameter = defaultValue;
             return false;
         }
+
         /// <summary>
         /// Adds a property container to the _extentedPropertiesList
         /// </summary>
@@ -454,6 +468,7 @@ namespace Castle.MonoRail.Views.AspView
         {
             _parentView = view;
         }
+
 		/// <summary>
 		/// This is required because we may want to replace the output stream and get the correct
 		/// behavior from components call RenderText() or RenderSection()
@@ -467,8 +482,8 @@ namespace Castle.MonoRail.Views.AspView
 
 		private class ReturnOutputStreamToInitialWriter : IDisposable
 		{
-			private TextWriter initialWriter;
-			private AspViewBase parent;
+			readonly TextWriter initialWriter;
+			readonly AspViewBase parent;
 
 			public ReturnOutputStreamToInitialWriter(TextWriter initialWriter, AspViewBase parent)
 			{

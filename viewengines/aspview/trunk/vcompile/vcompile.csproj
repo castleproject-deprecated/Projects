@@ -7,8 +7,8 @@
     <ProjectGuid>{36052ED8-861B-49E3-B2D8-9C7DCDAF7E14}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>vcompile</RootNamespace>
-    <AssemblyName>vcompile</AssemblyName>
+    <RootNamespace>Castle.MonoRail.AspView.VCompile</RootNamespace>
+    <AssemblyName>VCompile</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>KenEgoziOpenSource.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>

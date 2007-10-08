@@ -1,4 +1,4 @@
-// Copyright 2004-2005 Castle Project - http://www.castleproject.org/
+// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,19 +14,20 @@
 
 namespace Castle.MonoRail.Views.AspView
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Configuration;
-    using System.Xml;
-    using System.Reflection;
+	using System;
+	using System.Collections.Generic;
+	using System.Configuration;
+	using System.Xml;
 
-    public class AspViewConfigurationSection : IConfigurationSectionHandler
-    {
-        #region IConfigurationSectionHandler Members
+	public class AspViewConfigurationSection : IConfigurationSectionHandler
+	{
+		#region IConfigurationSectionHandler Members
 
-        public object Create(object parent, object configContext, XmlNode section)
-        {
+		public object Create(object parent, object configContext, XmlNode section)
+		{
+			if (section == null)
+				throw new ApplicationException("AspView config section is missing or not found");
+
 			bool? debug = null;
 			bool? inMemory = null;
 			bool? autoRecompilation = null;
@@ -67,9 +68,9 @@ namespace Castle.MonoRail.Views.AspView
 
 			AspViewEngineOptions options = new AspViewEngineOptions(actionExtension, compilerOptions);
 
-            return options;
-        }
+			return options;
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

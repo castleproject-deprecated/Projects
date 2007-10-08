@@ -1,4 +1,4 @@
-// Copyright 2004-2005 Castle Project - http://www.castleproject.org/
+// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,23 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MonoRail.AspView.Compiler
+namespace Castle.MonoRail.AspView.VCompile
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Text;
 	using System.IO;
-	using System.Text.RegularExpressions;
-	using System.CodeDom.Compiler;
-	using System.Collections.Specialized;
-	using Microsoft.CSharp;
-	using Castle.MonoRail.Views.AspView;
-	using System.Configuration;
-	using System.Diagnostics;
-	using System.Reflection;
-	using System.Web.Configuration;
+	using Views.AspView;
 	using System.Xml;
-	using System.Xml.XPath;
 
 	class vcompile
 	{
@@ -36,6 +25,11 @@ namespace Castle.MonoRail.AspView.Compiler
 		static string siteRoot;
 		static int Main(string[] args)
 		{
+			if (args != null && args.Length == 1)
+				if (args[0].Equals("-w", StringComparison.InvariantCultureIgnoreCase) ||
+					args[0].Equals("-wait", StringComparison.InvariantCultureIgnoreCase))
+					Console.ReadLine();
+
 			string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 			siteRoot = baseDirectory.Substring(0, baseDirectory.LastIndexOf("\\bin"));
 			Console.WriteLine("Compiling [" + siteRoot + "] ...");
@@ -46,16 +40,20 @@ namespace Castle.MonoRail.AspView.Compiler
 			{
 				PrintHelpMessage(string.Format("The path '{0}' does not exist", siteRoot));
 				Console.ReadLine();
-				return 1;
+				return -1;
 			}
 
-			AspViewCompiler compiler = new AspViewCompiler(options.CompilerOptions);
-
-			if (compiler == null)
+			AspViewCompiler compiler;
+			try
+			{
+				compiler = new AspViewCompiler(options.CompilerOptions);
+			}
+			catch
 			{
 				PrintHelpMessage("Could not start the compiler.");
-				return 2;
+				return -2;
 			}
+
 			try
 			{
 				compiler.CompileSite(siteRoot);
@@ -64,8 +62,8 @@ namespace Castle.MonoRail.AspView.Compiler
 			}
 			catch (Exception ex)
 			{
-				PrintHelpMessage("Could not compile." + Environment.NewLine + ex.ToString());
-				return 3;
+				PrintHelpMessage("Could not compile." + Environment.NewLine + ex);
+				return -3;
 			}
 
 		}
@@ -89,10 +87,6 @@ namespace Castle.MonoRail.AspView.Compiler
 			Console.WriteLine();
 		}
 
-		private static void PrintHelpMessage()
-		{
-			PrintHelpMessage(null);
-		}
 		private static void InitializeConfig()
 		{
 			InitializeConfig("aspView");
@@ -100,7 +94,10 @@ namespace Castle.MonoRail.AspView.Compiler
 				InitializeConfig("aspview");
 			if (options == null)
 				options = new AspViewEngineOptions();
+
+			Console.WriteLine(options.CompilerOptions.Debug ? "Compiling in DEBUG mode" : "");
 		}
+
 		private static void InitializeConfig(string configName)
 		{
 			string path = Path.Combine(siteRoot, "web.config");
@@ -110,18 +107,20 @@ namespace Castle.MonoRail.AspView.Compiler
 					"VCompile should run from the bin directory of the website");
 				Environment.Exit(1);
 			}
-			XmlNode aspViewNode = null;
+			XmlNode aspViewNode;
 			using (XmlTextReader reader = new XmlTextReader(path))
 			{
 				reader.Namespaces = false;
 				XmlDocument xml = new XmlDocument();
 				xml.Load(reader);
-				aspViewNode = xml.SelectSingleNode("/configuration/aspview");
+				aspViewNode = xml.SelectSingleNode("/configuration/" + configName);
 			}
-			AspViewConfigurationSection section = new AspViewConfigurationSection();
-			options = (AspViewEngineOptions)section.Create(null, null, aspViewNode);
-			if (options != null)
-				Console.WriteLine(options.CompilerOptions.Debug ? "Compiling in DEBUG mode" : "");
+
+			if (aspViewNode != null)
+			{
+				AspViewConfigurationSection section = new AspViewConfigurationSection();
+				options = (AspViewEngineOptions) section.Create(null, null, aspViewNode);
+			}
 		}
 
 	}

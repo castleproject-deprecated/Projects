@@ -1,4 +1,4 @@
-// Copyright 2004-2005 Castle Project - http://www.castleproject.org/
+// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,15 +18,12 @@ namespace Castle.MonoRail.Views.AspView
 	using System.Collections;
 	using System.IO;
 	using System.Collections.Specialized;
-	using System.Text;
-	using System.CodeDom.Compiler;
 	using System.Configuration;
 	using System.Reflection;
 
-	using Castle.MonoRail.Framework;
-	using Castle.Core;
+	using Framework;
+	using Core;
 	using System.Runtime.Serialization;
-	using System.Diagnostics;
 
 	public class AspViewEngine : ViewEngineBase, IInitializable
 	{
@@ -39,8 +36,8 @@ namespace Castle.MonoRail.Views.AspView
 				typeof(IRailsEngineContext),
 				typeof(Controller)
 			};
-		Hashtable compilations = Hashtable.Synchronized(new Hashtable(CaseInsensitiveStringComparer.Default));
-		Hashtable constructors = Hashtable.Synchronized(new Hashtable());
+		readonly Hashtable compilations = Hashtable.Synchronized(new Hashtable(CaseInsensitiveStringComparer.Default));
+		readonly Hashtable constructors = Hashtable.Synchronized(new Hashtable());
 
 		#region IInitializable Members
 
@@ -87,7 +84,7 @@ namespace Castle.MonoRail.Views.AspView
 		public override void Process(TextWriter output, IRailsEngineContext context, Controller controller, string templateName)
 		{
 			string fileName = GetFileName(templateName);
-			AspViewBase view = null;
+			AspViewBase view;
 			TextWriter viewOutput = output;
 			AspViewBase layout = null;
 			if (controller.LayoutName != null)
@@ -170,7 +167,7 @@ namespace Castle.MonoRail.Views.AspView
 				throw new RailsException("Cannot find view type for {0}.",
 					fileName);
 			// create a view instance
-			AspViewBase theView = null;
+			AspViewBase theView;
 			try
 			{
 				theView = CreateView(viewType, output, context, controller);
@@ -188,7 +185,7 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			string layoutTemplate = "layouts\\" + controller.LayoutName;
 			string layoutFileName = GetFileName(layoutTemplate);
-			AspViewBase layout = null;
+			AspViewBase layout;
 			layout = GetView(layoutFileName, output, context, controller);
 			layout.ViewOutput = new StringWriter();
 			return layout;
@@ -221,12 +218,15 @@ namespace Castle.MonoRail.Views.AspView
 			compilations.Clear();
 			constructors.Clear();
 
-			Assembly precompiledViews = null;
+			Assembly precompiledViews;
 			try
 			{
 				precompiledViews = Assembly.Load("CompiledViews");
 			}
-			finally { }
+			catch (Exception ex)
+			{
+				throw new AspViewException(ex, "Couldn't load CompiledViews assembly");
+			}
 			if (precompiledViews != null)
 				foreach (Type type in precompiledViews.GetTypes())
 					CacheViewType(type);
@@ -258,12 +258,5 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			options = (AspViewEngineOptions)ConfigurationManager.GetSection(configName);
 		}
-		private static NameValueCollection CreateSourcesList(string className, string source)
-		{
-			NameValueCollection sourcesList = new NameValueCollection();
-			sourcesList.Add(className, source);
-			return sourcesList;
-		}
-
 	}
 }

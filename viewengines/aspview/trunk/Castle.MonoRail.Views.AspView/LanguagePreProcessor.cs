@@ -1,4 +1,4 @@
-// Copyright 2004-2005 Castle Project - http://www.castleproject.org/
+// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,12 +18,7 @@ namespace Castle.MonoRail.Views.AspView
     using System.Collections.Generic;
     using System.Text;
     using System.Text.RegularExpressions;
-    using Castle.MonoRail.Framework.Views;
-    using System.Collections.Specialized;
     using System.IO;
-    using Castle.MonoRail.Framework;
-    using System.Reflection;
-
 
     public abstract class LanguagePreProcessor
     {
@@ -35,7 +30,6 @@ namespace Castle.MonoRail.Views.AspView
 		private static readonly Regex findViewComponentTags = new Regex("<component:(?<componentName>\\w+)(?<attributes>(\\s*\\w+=\"[<][%]=\\s*[\\w\\.\\(\\)]+\\s*[%][>]\"|\\s*\\w+=\"\\w*\"|\\s*)*)>(?<content>.*?)</component:\\k<componentName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.IgnorePatternWhitespace);
 		private static readonly Regex findSectionTags = new Regex("<section:(?<sectionName>\\w+)(?<attributes>[\\w\"\\s=]*)>(?<content>.*)</section:\\k<sectionName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 		private static readonly string assemblyNamespace = "CompiledViews";
-        private static readonly string assemblyFileName = assemblyNamespace + ".dll";
         #endregion
 
 		public void a()
@@ -44,10 +38,6 @@ namespace Castle.MonoRail.Views.AspView
 
 		protected int viewComponentsCounter = 0;
 		protected Dictionary<string, string> sectionHandlers;
-
-		public LanguagePreProcessor()
-        {
-        }
 
         #region Process
         /// <summary>
@@ -199,7 +189,7 @@ namespace Castle.MonoRail.Views.AspView
 				componentCode.Append(Environment.NewLine);
 			}
 			componentCode.Append(GetViewComponentStatements(componentName, contextName));
-			return "<% " + componentCode.ToString() + "%>" + Environment.NewLine;
+			return "<% " + componentCode + "%>" + Environment.NewLine;
 		}
 
 		private void RegisterSectionHandler(string handlerName, string sectionContent)
@@ -214,7 +204,7 @@ namespace Castle.MonoRail.Views.AspView
 			sectionHandlers[handlerName] = processedSection;
 		}
 
-		private string GetSectionRegistrationStatement(string sectionTypeName, string contextName, string handlerName)
+		private static string GetSectionRegistrationStatement(string sectionTypeName, string contextName, string handlerName)
 		{
 			return string.Format(@"
 				{0}.RegisterSection(""{1}"", new ViewComponentSectionRendereDelegate({2}));
@@ -222,7 +212,7 @@ namespace Castle.MonoRail.Views.AspView
 				, contextName, sectionTypeName, handlerName);
 		}
 
-		protected string GetViewComponentInitializationStatements(string contextName, string componentTypeName, string componentName, string arguments, string bodyHandlerName)
+		protected virtual string GetViewComponentInitializationStatements(string contextName, string componentTypeName, string componentName, string arguments, string bodyHandlerName)
 		{
 			string bodyHandler = "null";
 			if (bodyHandlerName != null)
@@ -233,7 +223,7 @@ namespace Castle.MonoRail.Views.AspView
 				ViewComponent {3} = ((IViewComponentFactory)_context.GetService(typeof(IViewComponentFactory))).Create(""{1}"");"
 				, contextName, componentTypeName, arguments, componentName, bodyHandler);
 		}
-		protected string GetViewComponentStatements(string contextName, string componentName)
+		protected virtual string GetViewComponentStatements(string contextName, string componentName)
 		{
 			return string.Format(@"
 				{0}.Init(_context, {1});
@@ -249,7 +239,7 @@ namespace Castle.MonoRail.Views.AspView
 
         protected abstract string GetEarlyBoundViewFilterOpenStatement(string filterName);
 
-        protected string GetAssemblyQualifiedViewFilterName(string filterName)
+        protected virtual string GetAssemblyQualifiedViewFilterName(string filterName)
         {
             return "Castle.MonoRail.Views.AspView.ViewFilters." + filterName;
         }
@@ -262,7 +252,7 @@ namespace Castle.MonoRail.Views.AspView
 
         protected abstract string GetSubViewStatement(string viewName, string parameters);
 
-        private string GetDirectory(string viewName)
+        private static string GetDirectory(string viewName)
         {
             int lastSlash = viewName.LastIndexOf('\\');
             if (lastSlash == -1)
@@ -293,18 +283,6 @@ namespace Castle.MonoRail.Views.AspView
         }
 
         /// <summary>
-        /// Saves a source file to the output folder
-        /// </summary>
-        /// <param name="path">The path to the output folder</param>
-        /// <param name="className">The name of the class that will be saved</param>
-        /// <param name="processedFile">The class</param>
-        private void SaveFile(string path, string className, string processedFile)
-        {
-            string fileName = Path.Combine(path, processedFile + ClassFileExtension);
-            File.WriteAllText(fileName, processedFile);
-        }
-
-        /// <summary>
         /// Gets the generated classes file extension
         /// </summary>
         protected abstract string ClassFileExtension { get;}
@@ -317,7 +295,7 @@ namespace Castle.MonoRail.Views.AspView
         /// <param name="viewSource">Source</param>
         /// <param name="index">The index to start searching. Will be updated to the end of the found section</param>
         /// <returns>The directive section</returns>
-        protected string GetDirectivesSection(string viewSource, ref int index)
+        protected virtual string GetDirectivesSection(string viewSource, ref int index)
         {
             int start = viewSource.LastIndexOf("<%@");
             if (start == -1)
@@ -338,7 +316,7 @@ namespace Castle.MonoRail.Views.AspView
         /// <param name="viewSource">Source</param>
         /// <param name="index">The index to start searching. Will be updated to the end of the found section</param>
         /// <returns>The properties section</returns>
-        protected string GetPropertiesSection(string viewSource, ref int index)
+        protected virtual string GetPropertiesSection(string viewSource, ref int index)
         {
             int start = viewSource.IndexOf("<%", index);
             if (start == -1)
@@ -359,7 +337,7 @@ namespace Castle.MonoRail.Views.AspView
         /// <param name="viewSource">Source</param>
         /// <param name="index">The index to start searching. Will be updated to the end of the found section</param>
         /// <returns>The view body</returns>
-        protected string GetViewBody(string viewSource, ref int index)
+        protected virtual string GetViewBody(string viewSource, ref int index)
         {
             return viewSource.Substring(index);
         }
@@ -372,7 +350,7 @@ namespace Castle.MonoRail.Views.AspView
         /// <param name="directivesSection">Source</param>
         /// <param name="imports">Imports container</param>
         /// <param name="references">References container</param>
-        protected void ProcessDirectives(string directivesSection, Dictionary<string, object> imports, Dictionary<string, object> references)
+        protected virtual void ProcessDirectives(string directivesSection, Dictionary<string, object> imports, Dictionary<string, object> references)
         {
             MatchCollection matches = findImportsDirectives.Matches(directivesSection);
             imports["System"] = null;
@@ -401,9 +379,9 @@ namespace Castle.MonoRail.Views.AspView
         /// <param name="viewBody">The view's source</param>
         /// <param name="index">The index to start looking from, will be updated to the end of the found section</param>
         /// <returns>Markup string</returns>
-        protected string GetMarkup(string viewBody, ref int index)
+        protected virtual string GetMarkup(string viewBody, ref int index)
         {
-            string markup = string.Empty;
+            string markup;
             int end = viewBody.IndexOf("<%", index);
             if (end == -1)
             {
@@ -428,7 +406,7 @@ namespace Castle.MonoRail.Views.AspView
         /// <param name="viewBody">The view's source</param>
         /// <param name="index">The index to start looking from, will be updated to the end of the found section</param>
         /// <returns>Code string</returns>
-        protected string GetCode(string viewBody, ref int index)
+        protected virtual string GetCode(string viewBody, ref int index)
         {
             int end = viewBody.IndexOf("%>", index);
             if (index == -1)
@@ -454,20 +432,21 @@ namespace Castle.MonoRail.Views.AspView
         /// Writes namespace decleration to the buffer
         /// </summary>
 		/// <param name="writer">A StringWriter that writes the generated class</param>
-		/// <param name="properties">The namespace</param>
+		/// <param name="assemblyNamespace">The namespace</param>
 		protected abstract void WriteNamespace(StringWriter writer, string assemblyNamespace);
 
         /// <summary>
         /// Writes imports decleration to the buffer
         /// </summary>
 		/// <param name="writer">A StringWriter that writes the generated class</param>
-		/// <param name="properties">Imports container</param>
+		/// <param name="imports">Imports container</param>
 		protected abstract void WriteImports(StringWriter writer, Dictionary<string, object> imports);
 
         /// <summary>
         /// Writes current language's class decleration to the buffer
         /// </summary>
 		/// <param name="writer">A StringWriter that writes the generated class</param>
+		/// <param name="className">The class's name</param>
 		protected abstract void WriteClassDecleration(StringWriter writer, string className);
 
         /// <summary>

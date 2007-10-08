@@ -1,4 +1,4 @@
-// Copyright 2004-2005 Castle Project - http://www.castleproject.org/
+// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,5 @@
 
 namespace Castle.MonoRail.Views.AspView
 {
-	using System.IO;
-
 	public delegate void ViewComponentSectionRendereDelegate();
 }
