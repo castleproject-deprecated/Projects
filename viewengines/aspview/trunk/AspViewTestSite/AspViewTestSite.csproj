@@ -89,6 +89,7 @@
     <Content Include="Views\Layouts\Default.aspx" />
     <Content Include="Views\NoLayout\WithProperties.aspx" />
     <Content Include="Views\NoLayout\WithoutProperties.aspx" />
+    <Content Include="Views\Rescues\404.aspx" />
     <Content Include="Views\SmartDispatcherTest\Save.aspx" />
     <Content Include="Views\UsingReferences\Show.aspx" />
     <Content Include="Views\UsingViewComponents\UsingMultipleViewComponents.aspx" />
@@ -141,8 +142,7 @@
   <PropertyGroup>
     <PreBuildEvent>copy "$(SolutionDir)vcompile\bin\$(ConfigurationName)\vcompile.*" $(TargetDir)
 copy "$(SolutionDir)Solution Items\lib\castle\Castle.Components.Common.EmailSender.*" $(TargetDir)
-copy "$(SolutionDir)Solution Items\lib\castle\Castle.Components.Validator.*" $(TargetDir)
-copy "$(SolutionDir)Solution Items\lib\castle\Rhino.Components.*" $(TargetDir)</PreBuildEvent>
+copy "$(SolutionDir)Solution Items\lib\castle\Castle.Components.Validator.*" $(TargetDir)</PreBuildEvent>
     <PostBuildEvent>$(TargetDir)vcompile.exe
 </PostBuildEvent>
   </PropertyGroup>

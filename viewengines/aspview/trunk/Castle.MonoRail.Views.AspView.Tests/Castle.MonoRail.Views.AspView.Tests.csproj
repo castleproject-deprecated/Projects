@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmptyControllerTestCase.cs" />
     <Compile Include="CSharpPreProcessorTestCases.cs" />
     <Compile Include="HelpersTestCase.cs" />
     <Compile Include="NoLayoutTestCase.cs" />

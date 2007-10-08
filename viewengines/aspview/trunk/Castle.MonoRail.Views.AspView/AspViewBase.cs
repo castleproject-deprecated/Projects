@@ -203,17 +203,21 @@ namespace Castle.MonoRail.Views.AspView
                 foreach (string key in _controller.Resources.Keys)
                     if (key != null)
                         _properties[key] = _controller.Resources[key];
-            foreach (string key in _controller.Helpers.Keys)
-                if (key != null)
-                    _properties[key] = _controller.Helpers[key];
-            foreach (string key in _context.Params.Keys)
-                if (key != null)
-                    _properties[key] = _context.Params[key];
-            foreach (DictionaryEntry entry in _context.Flash)
-                _properties[entry.Key.ToString()] = entry.Value;
-            foreach (DictionaryEntry entry in _controller.PropertyBag)
-                _properties[entry.Key.ToString()] = entry.Value;
-            _properties["siteRoot"] = _context.ApplicationPath;
+			if (_controller.Helpers != null)
+				foreach (string key in _controller.Helpers.Keys)
+					if (key != null)
+						_properties[key] = _controller.Helpers[key];
+			if (_controller.Params != null)
+				foreach (string key in _context.Params.Keys)
+					if (key != null)
+						_properties[key] = _context.Params[key];
+			if (_context.Flash != null)
+				foreach (DictionaryEntry entry in _context.Flash)
+					_properties[entry.Key.ToString()] = entry.Value;
+			if (_controller.PropertyBag != null)
+				foreach (DictionaryEntry entry in _controller.PropertyBag)
+					_properties[entry.Key.ToString()] = entry.Value;
+            _properties["siteRoot"] = _context.ApplicationPath ?? string.Empty;
             _properties["fullSiteRoot"] = _context.Request.Uri.GetLeftPart(UriPartial.Authority) + _context.ApplicationPath;
             _extentedPropertiesList = new List<IDictionary>();
         }
