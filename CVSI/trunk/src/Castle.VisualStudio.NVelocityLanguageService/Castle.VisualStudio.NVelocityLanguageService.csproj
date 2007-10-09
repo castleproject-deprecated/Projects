@@ -45,11 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IntelliSenseIcons.cs" />
     <Compile Include="NVelocityAuthoringScope.cs" />
     <Compile Include="NVelocityConstants.cs" />
+    <Compile Include="NVelocityDeclaration.cs" />
+    <Compile Include="NVelocityDeclarations.cs" />
     <Compile Include="NVelocityLanguage.cs" />
+    <Compile Include="NVelocityMethods.cs" />
     <Compile Include="NVelocityScanner.cs" />
     <Compile Include="NVelocityPackage.cs" />
+    <Compile Include="NVelocityTokenColor.cs" />
     <Compile Include="PackageResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -72,6 +77,10 @@
     <ProjectReference Include="..\..\..\..\Castle.NVelocity\trunk\src\Castle.NVelocity\Castle.NVelocity.csproj">
       <Project>{A8A2811D-025F-45ED-AE00-DE130FF8F4F3}</Project>
       <Name>Castle.NVelocity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Castle.VisualStudio.MonoRailIntelliSenseProvider\Castle.VisualStudio.MonoRailIntelliSenseProvider.csproj">
+      <Project>{B768BA10-19BD-4F1E-8941-8D5711325EB9}</Project>
+      <Name>Castle.VisualStudio.MonoRailIntelliSenseProvider</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

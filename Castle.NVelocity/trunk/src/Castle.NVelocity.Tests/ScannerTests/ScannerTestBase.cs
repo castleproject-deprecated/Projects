@@ -60,7 +60,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
         protected void AssertEOF()
         {
-            Assert.IsTrue(scanner.GetToken() == null);
+            scanner.GetToken();
+            Assert.IsTrue(scanner.EOF);
         }
 
         private void CheckTokenType(Token token, TokenType tokenType)

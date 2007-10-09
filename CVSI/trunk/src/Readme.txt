@@ -1,6 +1,6 @@
-+=================+
-| How to use CVSI |
-+=================+
++===================+
+| How to build CVSI |
++===================+
 Step 1 - Install VS SDK
 -----------------------
 - As I have not yet registered the Visual Studio integration package with Microsoft. To use it you will need to

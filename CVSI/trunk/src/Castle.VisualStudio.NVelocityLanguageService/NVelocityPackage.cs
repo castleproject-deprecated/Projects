@@ -38,7 +38,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
     [PackageRegistration(UseManagedResourcesOnly = true)]
 
     [ProvideService(typeof(NVelocityLanguage), ServiceName = "NVelocity")]
-
+    
     [ProvideLanguageService(typeof(NVelocityLanguage), "NVelocity", 100,
         //AutoOutlining = true,
         //CodeSense = true,
@@ -46,7 +46,8 @@ namespace Castle.VisualStudio.NVelocityLanguageService
         DefaultToInsertSpaces = true,
         //EnableAsyncCompletion = true,
         //EnableCommenting = true,
-        //MatchBraces = true,
+        MatchBraces = true,
+        MatchBracesAtCaret = true,
         RequestStockColors = false
         //ShowCompletion = true,
         //ShowMatchingBrace = true

@@ -14,7 +14,7 @@
 
 namespace Castle.VisualStudio.NVelocityLanguageService
 {
-    static class NVelocityConstants
+    internal static class NVelocityConstants
     {
         public const string NVelocityFileExtension = ".vm";
         public const string NVelocityJSFileExtension = ".njs";

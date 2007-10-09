@@ -14,6 +14,7 @@
 
 namespace Castle.NVelocity
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
 
@@ -36,6 +37,8 @@ namespace Castle.NVelocity
         private Stack<ScannerState> state = new Stack<ScannerState>();
         private Queue<Token> _prereadTokens = new Queue<Token>();
 
+        private Token _currentToken;
+
         private char ch;
         private string _source;
         private int pos = 1;
@@ -49,6 +52,7 @@ namespace Castle.NVelocity
 
         private bool isLineScanner = false;
         private bool splitTextTokens = false;
+        private ScannerOptions _options = new ScannerOptions();
 
         /// <summary>
         /// Creates a new Scanner.
@@ -94,13 +98,14 @@ namespace Castle.NVelocity
             }
 
             _prereadTokens.Clear();
-            ch = default(char);
             _source = source;
             pos = 1;
             eof = false;
             lineNo = 1;
             linePos = 1;
             linestarts = new ArrayList();
+            prevPos = new Position(1, 1, 1, 1);
+            currPos = new Position(1, 1, 1, 1);
 
             if (source.Length == 0)
             {
@@ -141,7 +146,14 @@ namespace Castle.NVelocity
         /// </summary>
         public bool EOF
         {
-            get { return eof; }
+            get
+            {
+                if (_currentToken == null)
+                {
+                    eof = true;
+                }
+                return eof;
+            }
         }
 
         /// <summary>
@@ -174,7 +186,7 @@ namespace Castle.NVelocity
                 eof = true;
                 ch = default(char);
                 
-                // Increment linePos and pos so Positions are correct
+                // Increment linePos and _pos so Positions are correct
                 if (pos == _source.Length)
                 {
                     linePos++;
@@ -231,10 +243,33 @@ namespace Castle.NVelocity
         {
             if (_prereadTokens.Count > 0)
             {
-                return _prereadTokens.Dequeue();
+                _currentToken = _prereadTokens.Dequeue();
+            }
+            else
+            {
+                _currentToken = GetNextToken();
             }
 
-            return GetNextToken();
+            if (_currentToken != null)
+            {
+                eof = false;
+            }
+
+            return _currentToken;
+        }
+
+        /// <summary>
+        /// Returns the current token from the scanner, it does not scan ahead for the token.
+        /// </summary>
+        public Token CurrentToken
+        {
+            get { return _currentToken; }
+        }
+
+        public ScannerOptions Options
+        {
+            get { return _options; }
+            set { _options = value; }
         }
 
         /// <summary>
@@ -342,10 +377,10 @@ namespace Castle.NVelocity
             currPos.EndLine = lineNo;
             currPos.EndPos = linePos;
 
-            if (token.Type == TokenType.Error)
+            if (token != null && token.Type == TokenType.Error)
             {
                 throw new ScannerError(string.Format("Unknown symbol '{0}' in state {1}",
-                    ch, ScannerStateToString(state.Peek())));
+                                                     ch, ScannerStateToString(state.Peek())));
             }
 
             return token;
@@ -995,7 +1030,7 @@ namespace Castle.NVelocity
                 token.Type = TokenType.NVIdentifier;
                 token.Image = _source.Substring(startPos - 1, pos - startPos);
             }
-            else if (ch == '.')
+            else if (ch == '.' && LookAhead(1) != '.') // Do not scan a double dot as a dot
             {
                 token.Type = TokenType.NVDot;
                 GetCh();
@@ -1262,21 +1297,28 @@ namespace Castle.NVelocity
 
         private char NextCharAfterSingleLineWhiteSpace()
         {
+            if (_source.Length == 0)
+            {
+                return default(char);
+            }
+
             int offset = 0;
             char currCh = _source[pos - 1 + offset];
 
-            while ((pos + offset < _source.Length)
-                && char.IsWhiteSpace(currCh)
-                && currCh != '\n')
+            while ((pos + offset < _source.Length) && char.IsWhiteSpace(currCh) && currCh != '\n')
             {
                 offset++;
                 currCh = _source[pos - 1 + offset];
             }
 
             if (currCh == '\n')
+            {
                 return default(char);
+            }
             else
+            {
                 return currCh;
+            }
         }
 
         private void ReadXmlComment()
@@ -1347,12 +1389,18 @@ namespace Castle.NVelocity
 
         private bool NVDirectiveFollows()
         {
+            if (_options.EnableIntelliSenseTriggerTokens)
+                return true;
+
             char lookAhead = LookAhead(1);
             return (char.IsLetter(lookAhead) || lookAhead == '{' || lookAhead == '#' || lookAhead == '*');
         }
 
         private bool NVReferenceFollows()
         {
+            if (_options.EnableIntelliSenseTriggerTokens)
+                return true;
+
             char lookAhead = LookAhead(1);
             return (char.IsLetter(lookAhead) || lookAhead == '_' || lookAhead == '!' || lookAhead == '{');
         }

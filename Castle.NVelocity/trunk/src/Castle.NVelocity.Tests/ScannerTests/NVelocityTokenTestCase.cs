@@ -152,6 +152,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.NVStringLiteral, "$100");
             AssertMatchToken(TokenType.NVDoubleQuote);
             AssertMatchToken(TokenType.NVRParen);
+
+            AssertEOF();
         }
 
         [Test]
@@ -179,6 +181,61 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
             AssertMatchToken(TokenType.NVDoubleQuote);
             AssertMatchToken(TokenType.NVRParen);
+
+            AssertEOF();
+        }
+
+        [Test]
+        public void TwoDotsFollowingAnIdentifierAreScannedAsADoubleDot()
+        {
+            scanner.SetSource(
+                "$a.B([$i..$n])");
+
+            AssertMatchToken(TokenType.NVDollar);
+            AssertMatchToken(TokenType.NVIdentifier, "a");
+            AssertMatchToken(TokenType.NVDot);
+            AssertMatchToken(TokenType.NVIdentifier, "B");
+            AssertMatchToken(TokenType.NVLParen);
+
+            AssertMatchToken(TokenType.NVLBrack);
+            AssertMatchToken(TokenType.NVDollar);
+            AssertMatchToken(TokenType.NVIdentifier, "i");
+            AssertMatchToken(TokenType.NVDoubleDot);
+            AssertMatchToken(TokenType.NVDollar);
+            AssertMatchToken(TokenType.NVIdentifier, "n");
+            AssertMatchToken(TokenType.NVRBrack);
+
+            AssertMatchToken(TokenType.NVRParen);
+
+            AssertEOF();
+        }
+
+        [Test]
+        [Ignore]
+        public void NVDictionaryDoesNotConsumeRCurlyOnIdentifierWithoutInitialLCurly()
+        {
+            scanner.SetSource(
+                "$obj.Method(\"%{key=$value}\")");
+
+            AssertMatchToken(TokenType.NVDollar);
+            AssertMatchToken(TokenType.NVIdentifier, "obj");
+            AssertMatchToken(TokenType.NVDot);
+            AssertMatchToken(TokenType.NVIdentifier, "Method");
+            AssertMatchToken(TokenType.NVLParen);
+            
+            AssertMatchToken(TokenType.NVDoubleQuote);
+            AssertMatchToken(TokenType.NVDictionaryPercent);
+            AssertMatchToken(TokenType.NVDictionaryLCurly);
+            AssertMatchToken(TokenType.NVDictionaryKey, "key");
+            AssertMatchToken(TokenType.NVDictionaryEquals);
+            AssertMatchToken(TokenType.NVDollar);
+            AssertMatchToken(TokenType.NVIdentifier, "value");
+            AssertMatchToken(TokenType.NVDictionaryRCurly);
+            AssertMatchToken(TokenType.NVDoubleQuote);
+
+            AssertMatchToken(TokenType.NVRParen);
+
+            AssertEOF();
         }
     }
 }

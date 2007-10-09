@@ -37,7 +37,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ParserTests\XmlPositionTestCase.cs" />
+    <Compile Include="ParserTests\GetNodeAtPositionTestCase.cs" />
+    <Compile Include="ParserTests\NVelocityCommentsTestCase.cs" />
+    <Compile Include="ParserTests\NVelocityDirectiveTestCase.cs" />
+    <Compile Include="ParserTests\NVelocityExpressionPositionTestCase.cs" />
+    <Compile Include="ParserTests\NVelocityInXmlParserTestCase.cs" />
+    <Compile Include="ParserTests\XmlParserTestCase.cs" />
+    <Compile Include="ParserTests\NVelocityExpressionParserTestCase.cs" />
+    <Compile Include="ParserTests\NVelocityReferenceParserTestCase.cs" />
+    <Compile Include="ParserTests\ParserTestBase.cs" />
     <Compile Include="ScannerTests\LineScannerTestCase.cs" />
+    <Compile Include="ScannerTests\ScannerOptionsTestCase.cs" />
     <Compile Include="ScannerTests\SplitTokenTestCase.cs" />
     <Compile Include="ScannerTests\TokenLookAhead.cs" />
     <Compile Include="ScannerTests\TokenPositionTestCase.cs" />

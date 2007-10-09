@@ -30,9 +30,17 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ParserGUIForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ParserGUIForm.Designer.cs">
+      <DependentUpon>ParserGUIForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -43,12 +51,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="big file.vm" />
     <None Include="Example5.vm" />
     <None Include="Example3.vm" />
     <None Include="Example2.vm" />
     <None Include="Example1.vm" />
     <None Include="Example4.vm" />
+    <None Include="Example6.vm" />
+    <None Include="GUITemplate.vm" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ParserGUIForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ParserGUIForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

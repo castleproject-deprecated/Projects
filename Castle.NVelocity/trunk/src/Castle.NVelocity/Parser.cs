@@ -1,0 +1,961 @@
+// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+namespace Castle.NVelocity
+{
+    using System;
+    using Castle.NVelocity.Ast;
+    using System.Collections.Generic;
+
+    public class Parser
+    {
+        private readonly Scanner _scanner;
+        private readonly ErrorHandler _errors = new ErrorHandler();
+        //private Position _lastError;
+
+        public Parser(Scanner scanner)
+        {
+            _scanner = scanner;
+            _scanner.GetToken();
+        }
+
+        private TokenType CurrentTokenType
+        {
+            get
+            {
+                if (_scanner.CurrentToken == null)
+                {
+                    return default(TokenType);
+                }
+                return _scanner.CurrentToken.Type;
+            }
+        }
+
+        private bool CurrentTokenIn(params TokenType[] tokenTypes)
+        {
+            if ( _scanner.CurrentToken == null)
+            {
+                return false;
+            }
+
+            TokenType currentTokenType = _scanner.CurrentToken.Type;
+            foreach (TokenType tokenType in tokenTypes)
+            {
+                if (currentTokenType == tokenType)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void MatchToken(TokenType expectedToken)
+        {
+            if (CurrentTokenIn(expectedToken))
+            {
+                _scanner.GetToken();
+            }
+            else
+            {
+                AddError(string.Format("Expected '{0}' but was '{1}'", expectedToken, CurrentTokenType));
+            }
+        }
+
+        /// <summary>
+        /// Returns a new instance of the current scanner token position.
+        /// </summary>
+        /// <returns>The current scanner token position.</returns>
+        private Position GetCurrentTokenPosition()
+        {
+            Position pos = _scanner.CurrentToken.Position;
+            return new Position(pos.StartLine, pos.StartPos, pos.EndLine, pos.EndPos);
+        }
+
+        public ErrorHandler Errors
+        {
+            get { return _errors; }
+        }
+
+        private void AddError(string description)
+        {
+            _errors.AddError(description,
+                new Position(_scanner.CurrentPos.End, _scanner.CurrentPos.End),
+                ErrorSeverity.Error);
+        }
+
+        public TemplateNode ParseTemplate()
+        {
+            // Template -> XmlProlog Content EOF.
+
+            TemplateNode templateNode = new TemplateNode();
+
+            ParseXmlProlog();
+
+            while (!_scanner.EOF)
+            {
+                templateNode.AddRange(ParseContent());
+            }
+
+            return templateNode;
+        }
+
+        private List<AstNode> ParseContent()
+        {
+            // Content -> XmlContent
+            //         -> NVStatement.
+
+            List<AstNode> content = new List<AstNode>();
+
+            // Skip over NVSingleLineComment
+            while (CurrentTokenType == TokenType.NVSingleLineComment)
+            {
+                _scanner.GetToken();
+            }
+
+            // Parse NVStatement and XmlContent
+            if (CurrentTokenIn(TokenType.NVDirectiveHash, TokenType.NVDollar))
+            {
+                AstNode statement = ParseNVStatement();
+                if (statement != null)
+                {
+                    content.Add(statement);
+                }
+            }
+            else
+            {
+                content.AddRange(ParseXmlContent());
+            }
+
+            return content;
+        }
+
+        private void ParseXmlProlog()
+        {
+            // XmlProlog -> [ XmlDecl ] { XmlProcessingInstruction } [ XmlDoctTypeDecl ] { XmlProcessingInstruction }.
+
+            //TODO Parse XML Prolog
+        }
+
+        //TODO: XmlDecl
+        //TODO: XmlDeclVersionInfo
+        //TODO: XmlDeclEncodingDecl
+        //TODO: XmlDeclSDDecl
+        //TODO: XmlProcessingInstruction
+        //TODO: XmlDocTypeDecl
+
+        private List<AstNode> ParseXmlContent()
+        {
+            // XmlContent -> { XmlElement | xmlText }.
+
+            List<AstNode> content = new List<AstNode>();
+
+            while (CurrentTokenIn(TokenType.XmlTagStart, TokenType.XmlText))
+            {
+                if (CurrentTokenType == TokenType.XmlTagStart)
+                {
+                    if (_scanner.PeekToken(1).Type == TokenType.XmlForwardSlash)
+                    {
+                        // The '<' starts a end tag so exit the loop of the parent element body
+                        // Return nodes created and do not process the closing tag
+                        return content;
+                    }
+                    else
+                    {
+                        // Parse this element
+                        content.Add(ParseXmlElement());
+                    }
+                }
+                else if (CurrentTokenType == TokenType.XmlText)
+                {
+                    XmlTextNode xmlTextNode = new XmlTextNode(_scanner.CurrentToken.Image);
+                    xmlTextNode.Position = GetCurrentTokenPosition();
+                    content.Add(xmlTextNode);
+                    
+                    _scanner.GetToken();
+                }
+            }
+
+            return content;
+        }
+
+        private XmlElement ParseXmlElement()
+        {
+            // XmlElement -> "<" XmlName { XmlAttribute | NVStatement } XmlRestElement.
+
+            Position startPos = GetCurrentTokenPosition();
+
+            MatchToken(TokenType.XmlTagStart);
+
+            string elementName = "";
+            if (CurrentTokenType == TokenType.XmlTagName)
+            {
+                elementName = _scanner.CurrentToken.Image;
+                _scanner.GetToken();
+            }
+            else
+            {
+                AddError("Expected XML tag name");
+            }
+
+            XmlElement xmlElement = new XmlElement(elementName);
+            startPos.End = GetCurrentTokenPosition();
+            xmlElement.Position = startPos;
+
+            if (CurrentTokenIn(TokenType.NVDirectiveHash, TokenType.NVDollar))
+            {
+                AstNode statement = ParseNVStatement();
+                if (statement != null)
+                {
+                    xmlElement.Attributes.Add(statement);
+                }
+            }
+
+            //TODO: ??? if (!CurrentTokenIn(TokenType.XmlForwardSlash, TokenType.XmlTagEnd))
+            if (CurrentTokenType == TokenType.XmlAttributeName)
+            {
+                XmlAttribute xmlAttribute = ParseXmlAttribute();
+                if (xmlAttribute != null)
+                {
+                    //TODO xmlAttribute.Position = GetCurrentTokenPosition();
+                    xmlElement.Attributes.Add(xmlAttribute);
+                }
+            }
+
+            //TODO XmlAttribute and NVStatement
+
+            ParseXmlRestElement(xmlElement);
+
+            return xmlElement;
+        }
+
+        private void ParseXmlRestElement(XmlElement xmlElement)
+        {
+            // XmlRestElement -> "/" ">"
+            //                -> ">" { Content } XmlEndTag.
+
+            if (CurrentTokenType == TokenType.XmlForwardSlash)
+            {
+                xmlElement.IsSelfClosing = true;
+
+                MatchToken(TokenType.XmlForwardSlash);
+                if (CurrentTokenType == TokenType.XmlTagEnd)
+                {
+                    xmlElement.Position.End = GetCurrentTokenPosition();
+
+                    _scanner.GetToken();
+                }
+            }
+            else if (CurrentTokenType == TokenType.XmlTagEnd)
+            {
+                MatchToken(TokenType.XmlTagEnd);
+                
+                while (!(CurrentTokenType == TokenType.XmlTagStart &&
+                    _scanner.PeekToken(1).Type == TokenType.XmlForwardSlash))
+                {
+                    xmlElement.Content.AddRange(ParseContent());
+                }
+
+                ParseXmlEndTag(xmlElement);
+            }
+            else
+            {
+                AddError("Expected end of XML element");
+            }
+        }
+
+        private void ParseXmlEndTag(XmlElement xmlElement)
+        {
+            // XmlEndTag -> "<" "/" XmlName ">".
+
+            MatchToken(TokenType.XmlTagStart);
+            MatchToken(TokenType.XmlForwardSlash);
+            
+            //TODO use ParseXmlName instead of just getting the image
+            if (CurrentTokenType == TokenType.XmlTagName)
+            {
+                if (xmlElement.Name != _scanner.CurrentToken.Image)
+                {
+                    AddError("Mismatched element start and end tags");
+                }
+                _scanner.GetToken();
+            }
+
+            if (CurrentTokenType == TokenType.XmlTagEnd)
+            {
+                xmlElement.Position.End = GetCurrentTokenPosition();
+                xmlElement.EndTagPosition = GetCurrentTokenPosition();
+                _scanner.GetToken();
+            }
+            else
+            {
+                AddError("Expected '>'");
+            }
+        }
+
+        private XmlAttribute ParseXmlAttribute()
+        {
+            // XmlAttribute -> XmlName "=" ( "\"" { xmlAttributeValue | NVStatement } "\""
+            //                             | "'" { xmlAttributeValue | NVStatement } "'" ).
+
+            XmlAttribute xmlAttribute;
+
+            //TODO: ParseXmlName instead of matching an XmlAttributeName
+            if (CurrentTokenType == TokenType.XmlAttributeName)
+            {
+                xmlAttribute = new XmlAttribute(_scanner.CurrentToken.Image);
+                _scanner.GetToken();
+            }
+            else
+            {
+                AddError("Expected attribute name");
+                return null;
+            }
+
+            MatchToken(TokenType.XmlEquals);
+
+            if (CurrentTokenType == TokenType.XmlDoubleQuote)
+            {
+                _scanner.GetToken();
+                //TODO: NVStatement?
+                if (CurrentTokenType == TokenType.XmlAttributeText)
+                {
+                    xmlAttribute.Content.Add(new XmlTextNode(_scanner.CurrentToken.Image));
+                    _scanner.GetToken();
+                }
+
+                MatchToken(TokenType.XmlDoubleQuote);
+            }
+            //TODO: else if(CurrentTokenType == TokenType.XmlSingleQuote)
+
+            return xmlAttribute;
+        }
+
+        //TODO: ParseXmlName
+
+        private AstNode ParseNVStatement()
+        {
+            // NVStatement -> NVDirective
+            //             -> NVReference.
+
+            if (CurrentTokenType == TokenType.NVDirectiveHash)
+            {
+                return ParseNVDirective();
+            }
+            else if (CurrentTokenType == TokenType.NVDollar)
+            {
+                return ParseNVReference();
+            }
+            else
+            {
+                //TODO add error
+                throw new Exception("Expected directive or reference");
+            }
+        }
+
+        private NVDirective ParseNVDirective()
+        {
+            // NVDirective -> "#" NVRestDirective.
+
+            Position startPos = new Position(_scanner.CurrentPos.Start);
+
+            MatchToken(TokenType.NVDirectiveHash);
+
+            NVDirective nvDirective = ParseNVRestDirective(startPos);
+
+            return nvDirective;
+        }
+
+        private NVDirective ParseNVRestDirective(Position startPos)
+        {
+            // NVRestDirective -> "if" "(" NVExpression ")" Content { NVElseIfStatement } [ NVElseStatement ] NVEnd
+            //                 -> "set" "(" NVReference "=" NVExpression ")"
+            //                 -> "stop"
+            //                 -> "foreach" "(" "$" nvIdentifier "in" NVExpression ")" Content NVEnd.
+            //                 -> nvDirectiveName [ "(" { nvIdentifier | NVExpression } ")" [ Content NVEnd ] ].
+
+            NVDirective nvDirective;
+
+            // If the directive has no name return a blank NVDirective
+            if (_scanner.CurrentToken == null)
+            {
+                nvDirective = new NVDirective("");
+                nvDirective.Position = new Position(_scanner.CurrentPos);
+                return nvDirective;
+            }
+
+            if (_scanner.CurrentToken.Type == TokenType.NVDirectiveName)
+            {
+                nvDirective = new NVDirective(_scanner.CurrentToken.Image);
+                _scanner.GetToken();
+            }
+            else
+            {
+                AddError("Expected directive name");
+                nvDirective = new NVDirective("");
+                nvDirective.Position = new Position(_scanner.CurrentPos);
+                return nvDirective;
+            }
+
+            // Match directive parameters
+            if (CurrentTokenType == TokenType.NVDirectiveLParen)
+            {
+                if (_scanner.CurrentToken != null && _scanner.CurrentToken.Type == TokenType.NVIdentifier)
+                {
+                    _scanner.GetToken();
+                }
+                else
+                {
+                    //AddError("Expected component directive type");
+                }
+
+                //TODO: just skip past everything for now
+                while (!_scanner.EOF && CurrentTokenType != TokenType.NVDirectiveRParen)
+                {
+                    _scanner.GetToken();
+                }
+                
+                MatchToken(TokenType.NVDirectiveRParen);
+            }
+
+            if (_scanner.CurrentToken != null)
+            {
+                nvDirective.Position = new Position(startPos, _scanner.CurrentToken.Position);
+            }
+            else
+            {
+                nvDirective.Position = new Position(startPos, _scanner.CurrentPos);
+            }
+
+            return nvDirective;
+        }
+
+        //TODO: NVElseIfStatement
+        //TODO: NVElseStatement
+        //TODO: NVEnd
+
+        private NVReference ParseNVReference()
+        {
+            // NVReference -> "$" [ "!" ] ( NVDesignator | "{" NVDesignator "}" ).
+
+            Position startPosition = new Position(_scanner.CurrentPos.Start);
+
+            MatchToken(TokenType.NVDollar);
+            
+            //TODO match !
+
+            NVReference nvReference = ParseNVDesignator();
+            nvReference.Position = new Position(startPosition, _scanner.CurrentPos.End);
+            nvReference.Designator.Position = new Position(startPosition, _scanner.CurrentPos.End);
+
+            //TODO match { designator }
+
+            return nvReference;
+        }
+
+        private NVReference ParseNVDesignator()
+        {
+            // NVDesignator -> nvIdentifer { "." nvIdentifier [ NVActualParams ] }.
+
+            NVReference nvReference;
+            if (CurrentTokenType == TokenType.NVIdentifier)
+            {
+                nvReference = new NVReference(new NVDesignator(_scanner.CurrentToken.Image));
+                _scanner.GetToken();
+            }
+            else
+            {
+                AddError("Expected reference identifier");
+                return new NVReference(new NVDesignator(""));
+            }
+
+            while (CurrentTokenType == TokenType.NVDot)
+            {
+                Position startSelectorPosition = new Position(_scanner.CurrentPos.Start);
+                _scanner.GetToken();
+
+                if (CurrentTokenType == TokenType.NVIdentifier)
+                {
+                    Position endSelectorPosition = new Position(_scanner.CurrentPos.End);
+
+                    NVSelector selector = new NVSelector(new NVMethodNode(
+                        _scanner.CurrentToken.Image), nvReference);
+                    _scanner.GetToken();
+
+                    if (CurrentTokenType == TokenType.NVLParen)
+                    {
+                        selector.Actuals = ParseNVActualParams();
+                    }
+
+                    selector.Position = new Position(startSelectorPosition, endSelectorPosition);
+
+                    nvReference.Designator.Selectors.Add(selector);
+                }
+                else
+                {
+                    AddError("Expected identifier");
+                    
+                    NVSelector selector = new NVSelector(new NVMethodNode("", null), nvReference);
+                    selector.Position = new Position(_scanner.CurrentPos);
+                    nvReference.Designator.Selectors.Add(selector);
+                    
+                    return nvReference;
+                }
+            }
+
+            return nvReference;
+        }
+
+        private List<NVExpression> ParseNVActualParams()
+        {
+            // NVActualParams -> "(" [ NVExpression { "," NVExpression } ] ")".
+
+            List<NVExpression> actuals = new List<NVExpression>();
+
+            MatchToken(TokenType.NVLParen);
+            if (CurrentTokenType != TokenType.NVRParen)
+            {
+                NVExpression expr = ParseNVExpression();
+                if (expr != null)
+                {
+                    actuals.Add(expr);
+                }
+
+                while (CurrentTokenType == TokenType.NVComma)
+                {
+                    _scanner.GetToken();
+                    expr = ParseNVExpression();
+                    if (expr != null)
+                    {
+                        actuals.Add(expr);
+                    }
+                }
+            }
+            MatchToken(TokenType.NVRParen);
+
+            return actuals;
+        }
+
+        private NVExpression ParseNVExpression()
+        {
+            // NVExpression -> NVAndExpression { ( "||" | "or" ) NVAndExpression }.
+
+            NVExpression expr = ParseNVAndExpression();
+
+            while (CurrentTokenType == TokenType.NVOr)
+            {
+                _scanner.GetToken();
+                expr = new NVBinaryExpression(Operator.Or, expr, ParseNVAndExpression());
+                expr.Position = new Position((NVBinaryExpression)expr);
+            }
+            
+            return expr;
+        }
+
+        private NVExpression ParseNVAndExpression()
+        {
+            // NVAndExpression -> NVRelExpression { ( "&&" | "and" ) NVRelExpression }.
+
+            NVExpression expr = ParseNVRelExpression();
+
+            while (CurrentTokenType == TokenType.NVAnd)
+            {
+                _scanner.GetToken();
+                expr = new NVBinaryExpression(Operator.And, expr, ParseNVRelExpression());
+                expr.Position = new Position((NVBinaryExpression)expr);
+            }
+
+            return expr;
+        }
+
+        private NVExpression ParseNVRelExpression()
+        {
+            // NVRelExpression -> NVSimpleExpression [ NVRelOp NVSimpleExpression ].
+
+            NVExpression expr = ParseNVSimpleExpression();
+
+            if (CurrentTokenIn(TokenType.NVLte, TokenType.NVLt, TokenType.NVGt, TokenType.NVGte,
+                TokenType.NVEqEq, TokenType.NVNeq))
+            {
+                expr = new NVBinaryExpression(ParseNVRelOp(), expr, ParseNVSimpleExpression());
+                expr.Position = new Position((NVBinaryExpression)expr);
+            }
+
+            return expr;
+        }
+
+        private NVExpression ParseNVSimpleExpression()
+        {
+            // NVSimpleExpression -> NVTerm { NVAddOp NVTerm }.
+
+            NVExpression expr = ParseNVTerm();
+
+            while (CurrentTokenIn(TokenType.NVPlus, TokenType.NVMinus))
+            {
+                expr = new NVBinaryExpression(ParseNVAddOp(), expr, ParseNVTerm());
+                expr.Position = new Position((NVBinaryExpression)expr);
+            }
+
+            return expr;
+        }
+
+        private NVExpression ParseNVTerm()
+        {
+            // NVTerm -> NVFactor { NVMulOp NVFactor }.
+
+            NVExpression expr = ParseNVFactor();
+
+            while (CurrentTokenIn(TokenType.NVMul, TokenType.NVDiv, TokenType.NVMod))
+            {
+                expr = new NVBinaryExpression(ParseNVMulOp(), expr, ParseNVFactor());
+                expr.Position = new Position((NVBinaryExpression)expr);
+            }
+
+            return expr;
+        }
+
+        private NVExpression ParseNVFactor()
+        {
+            // NVFactor -> NVPrimary
+            //          -> ( "+" | "-" | "!" | "not" ) NVFactor.
+
+            NVExpression expr;
+
+            if (CurrentTokenIn(TokenType.NVPlus, TokenType.NVMinus, TokenType.NVNot))
+            {
+                //TODO: op = Operator...
+                _scanner.GetToken();
+
+                //TODO: expr = new UnaryExpression(op, ParseNVFactor);
+                expr = ParseNVFactor();
+            }
+            else
+            {
+                expr = ParseNVPrimary();
+            }
+
+            return expr;
+        }
+
+        private NVExpression ParseNVPrimary()
+        {
+            // NVPrimary -> NVReference
+            //           -> "(" NVExpression ")"
+            //           -> "true"
+            //           -> "false"
+            //           -> nvIntegerLiteral
+            //           -> "'" nvStringLiteral "'"
+            //           -> "\"" NVStringLiteralOrDictionary "\""
+            //           -> "[" [ NVExpression NVRangeOrArray ] "]".
+
+            NVExpression expr = null;
+
+            if (CurrentTokenType == TokenType.NVDollar)
+            {
+                //TODO: Change to ParseNVDesignatorExpression
+                ParseNVReference();
+
+                expr = new NVBoolExpression(false);
+                expr.Position = new Position(_scanner.CurrentToken.Position);
+            }
+            else if (CurrentTokenType == TokenType.NVLParen)
+            {
+                _scanner.GetToken();
+                
+                expr = ParseNVExpression();
+
+                MatchToken(TokenType.NVRParen);
+            }
+            else if (CurrentTokenType == TokenType.NVTrue)
+            {
+                expr = new NVBoolExpression(true);
+                expr.Position = new Position(_scanner.CurrentToken.Position);
+                _scanner.GetToken();
+            }
+            else if (CurrentTokenType == TokenType.NVFalse)
+            {
+                expr = new NVBoolExpression(false);
+                expr.Position = new Position(_scanner.CurrentToken.Position);
+                _scanner.GetToken();
+            }
+            else if (CurrentTokenType == TokenType.NVIntegerLiteral)
+            {
+                expr = new NVNumExpression(int.Parse(_scanner.CurrentToken.Image));
+                expr.Position = new Position(_scanner.CurrentToken.Position);
+                _scanner.GetToken();
+            }
+            else if (CurrentTokenType == TokenType.NVSingleQuote)
+            {
+                _scanner.GetToken();
+
+                if (CurrentTokenType == TokenType.NVStringLiteral)
+                {
+                    expr = new NVStringExpression(_scanner.CurrentToken.Image);
+                    expr.Position = new Position(_scanner.CurrentToken.Position);
+                    _scanner.GetToken();
+                }
+
+                if (CurrentTokenType == TokenType.NVSingleQuote)
+                {
+                    _scanner.GetToken();
+                }
+                else
+                {
+                    AddError("Expected single quote for closing string literal");
+                }
+            }
+            else if (CurrentTokenType == TokenType.NVDoubleQuote)
+            {
+                _scanner.GetToken();
+
+                expr = ParseNVStringLiteralOrDictionary();
+
+                MatchToken(TokenType.NVDoubleQuote);
+            }
+            else if (CurrentTokenType == TokenType.NVLBrack)
+            {
+                _scanner.GetToken();
+
+                if (CurrentTokenType != TokenType.NVRBrack)
+                {
+                    ParseNVExpression();
+                    expr = ParseNVRangeOrArray();
+                }
+                else
+                {
+                    //TODO: replace with an empty NVArrayExpression
+                    expr = new NVBoolExpression(false);
+                    expr.Position = new Position(_scanner.CurrentToken.Position);
+                }
+
+                MatchToken(TokenType.NVRBrack);
+            }
+            else
+            {
+                AddError(string.Format("Expected expression, was '{0}'", CurrentTokenType));
+            }
+
+            return expr;
+        }
+
+        private NVExpression ParseNVStringLiteralOrDictionary()
+        {
+            // NVStringLiteralOrDictionary -> { nvText | NVReference }
+            //                             -> "%" "{" [ NVDictionaryItem { "," NVDictionaryItem } ] "}".
+
+            NVExpression expr = null;
+
+            if (CurrentTokenType == TokenType.NVDictionaryPercent)
+            {
+                _scanner.GetToken();
+
+                MatchToken(TokenType.NVDictionaryLCurly);
+
+                if (CurrentTokenType == TokenType.NVDictionaryKey)
+                {
+                    ParseNVDictionaryItem();
+
+                    while (CurrentTokenType == TokenType.NVComma)
+                    {
+                        _scanner.GetToken();
+
+                        ParseNVDictionaryItem();
+                    }
+                }
+
+                MatchToken(TokenType.NVDictionaryRCurly);
+
+                //TODO: Change to DictionaryExpression, this is just a 
+                expr = new NVBoolExpression(false);
+                expr.Position = new Position(_scanner.CurrentToken.Position);
+            }
+            else
+            {
+                //TODO: { nvText | NVReference }
+                while (CurrentTokenType != TokenType.NVDoubleQuote)
+                {
+                    if (CurrentTokenType == TokenType.NVStringLiteral)
+                    {
+                        expr = new NVStringExpression(_scanner.CurrentToken.Image);
+                        expr.Position = new Position(_scanner.CurrentToken.Position);
+                    }
+                    //TODO make only work in intellisense mode
+                    else if (CurrentTokenType == TokenType.Error)
+                    {
+                        return new NVStringExpression("");
+                    }
+                    else
+                    {
+                        AddError(string.Format("Unexpected token type '{0}'", CurrentTokenType));
+                    }
+                    _scanner.GetToken();
+                }
+            }
+
+            return expr;
+        }
+
+        private void ParseNVDictionaryItem()
+        {
+            // NVDictionaryItem	-> ( nvIdentifier | NVExpression ) "=" ( NVExpression | NVDictionary ).
+
+            if (CurrentTokenType == TokenType.NVDictionaryKey)
+            {
+                _scanner.GetToken();
+            }
+            else
+            {
+                ParseNVExpression();
+            }
+
+            MatchToken(TokenType.NVDictionaryEquals);
+
+            //TODO
+            ParseNVExpression();
+        }
+        
+        private NVExpression ParseNVRangeOrArray()
+        {
+            // NVRangeOrArray -> ".." NVExpression
+	        //                -> { "," NVExpression }.
+
+            NVExpression expr = null;
+
+            if (CurrentTokenType == TokenType.NVDoubleDot)
+            {
+                _scanner.GetToken();
+
+                ParseNVExpression();
+
+                //TODO: replace with NVRangeExpression
+                expr = new NVBoolExpression(false);
+                expr.Position = new Position(_scanner.CurrentToken.Position);
+            }
+            else
+            {
+                while (CurrentTokenType != TokenType.NVRBrack)
+                {
+                    if (CurrentTokenType == TokenType.NVComma)
+                    {
+                        _scanner.GetToken();
+                    }
+                    else
+                    {
+                        AddError("Expected ','");
+                    }
+
+                    ParseNVExpression();
+                }
+
+                //TODO: replace with NVArrayExpression
+                expr = new NVBoolExpression(false);
+                expr.Position = new Position(_scanner.CurrentToken.Position);
+            }
+
+            return expr;
+        }
+
+        private Operator ParseNVRelOp()
+        {
+            // NVRelOp -> "<=" | "le" | "<" | "lt" | ">" | "gt" | ">=" | "ge" | "==" | "eq" | "!=" | "ne".
+
+            Operator op = default(Operator);
+
+            switch (CurrentTokenType)
+            {
+                case TokenType.NVLte:
+                    op = Operator.Lte;
+                    _scanner.GetToken();
+                    break;
+                case TokenType.NVLt:
+                    op = Operator.Lt;
+                    _scanner.GetToken();
+                    break;
+                case TokenType.NVGt:
+                    op = Operator.Gt;
+                    _scanner.GetToken();
+                    break;
+                case TokenType.NVGte:
+                    op = Operator.Gte;
+                    _scanner.GetToken();
+                    break;
+                case TokenType.NVEqEq:
+                    op = Operator.EqEq;
+                    _scanner.GetToken();
+                    break;
+                case TokenType.NVNeq:
+                    op = Operator.Neq;
+                    _scanner.GetToken();
+                    break;
+                default:
+                    AddError("Expected relational operator");
+                    break;
+            }
+
+            return op;
+        }
+
+        private Operator ParseNVAddOp()
+        {
+            // NVAddOp -> "+" | "-".
+
+            Operator op = default(Operator);
+
+            switch (CurrentTokenType)
+            {
+                case TokenType.NVPlus:
+                    op = Operator.Plus;
+                    _scanner.GetToken();
+                    break;
+                case TokenType.NVMinus:
+                    op = Operator.Minus;
+                    _scanner.GetToken();
+                    break;
+                default:
+                    AddError("Expected addition operator");
+                    break;
+            }
+
+            return op;
+        }
+
+        private Operator ParseNVMulOp()
+        {
+            // NVMulOp -> "*" | "/" | "%".
+
+            Operator op = default(Operator);
+
+            switch (CurrentTokenType)
+            {
+                case TokenType.NVMul:
+                    op = Operator.Mul;
+                    _scanner.GetToken();
+                    break;
+                case TokenType.NVDiv:
+                    op = Operator.Div;
+                    _scanner.GetToken();
+                    break;
+                case TokenType.NVMod:
+                    op = Operator.Mod;
+                    _scanner.GetToken();
+                    break;
+                default:
+                    AddError("Expected multiplication operator");
+                    break;
+            }
+
+            return op;
+        }
+    }
+}

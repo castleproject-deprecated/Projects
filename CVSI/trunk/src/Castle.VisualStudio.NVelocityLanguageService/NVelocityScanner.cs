@@ -17,6 +17,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
     using System.Collections.Generic;
     using Castle.NVelocity;
     using Microsoft.VisualStudio.Package;
+    using TokenType = Castle.NVelocity.TokenType;
 
     public class NVelocityScanner : IScanner
     {
@@ -28,6 +29,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
         {
             scanner.IsLineScanner = true;
             scanner.SplitTextTokens = true;
+            scanner.Options.EnableIntelliSenseTriggerTokens = true;
 
             // Insert the state for the initial line number
             Stack<ScannerState> initialState = new Stack<ScannerState>();
@@ -51,7 +53,9 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             Token token;
             try
             {
-                if (scanner.EOF)
+                token = scanner.GetToken();
+
+                if (token == null && scanner.EOF)
                 {
                     prevLineNumber = prevLineNumber + 1;
                     if (lineState.Count == prevLineNumber)
@@ -62,8 +66,6 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                     isScanningLine = false;
                     return false;
                 }
-
-                token = scanner.GetToken();
             }
             catch (ScannerError)
             {
@@ -71,7 +73,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                 return false;
             }
 
-            if (token == null || token.Type == Castle.NVelocity.TokenType.Error)
+            if (token == null || token.Type == TokenType.Error)
                 return false;
 
             NVelocityTokenColor color = NVelocityTokenColor.XmlText;
@@ -81,121 +83,121 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                 // +==========================+
                 // |     NVelocity Tokens     |
                 // +==========================+
-                case Castle.NVelocity.TokenType.NVText:
-                case Castle.NVelocity.TokenType.NVEscapeDirective:
-                case Castle.NVelocity.TokenType.NVComma:
-                case Castle.NVelocity.TokenType.NVDoubleDot:
+                case TokenType.NVText:
+                case TokenType.NVEscapeDirective:
+                case TokenType.NVComma:
+                case TokenType.NVDoubleDot:
                     color = NVelocityTokenColor.NVText;
                     break;
-                case Castle.NVelocity.TokenType.NVTrue:
-                case Castle.NVelocity.TokenType.NVFalse:
-                case Castle.NVelocity.TokenType.NVIn:
-                case Castle.NVelocity.TokenType.NVWith:
+                case TokenType.NVTrue:
+                case TokenType.NVFalse:
+                case TokenType.NVIn:
+                case TokenType.NVWith:
                     color = NVelocityTokenColor.NVKeyword;
                     break;
-                case Castle.NVelocity.TokenType.NVSingleLineComment:
-                case Castle.NVelocity.TokenType.NVMultilineCommentStart:
-                case Castle.NVelocity.TokenType.NVMultilineCommentEnd:
-                case Castle.NVelocity.TokenType.NVMultilineComment:
+                case TokenType.NVSingleLineComment:
+                case TokenType.NVMultilineCommentStart:
+                case TokenType.NVMultilineCommentEnd:
+                case TokenType.NVMultilineComment:
                     color = NVelocityTokenColor.NVComment;
                     break;
-                case Castle.NVelocity.TokenType.NVDollar:
-                case Castle.NVelocity.TokenType.NVIdentifier:
-                case Castle.NVelocity.TokenType.NVReferenceLCurly:
-                case Castle.NVelocity.TokenType.NVReferenceRCurly:
-                case Castle.NVelocity.TokenType.NVReferenceSilent:
-                case Castle.NVelocity.TokenType.NVDot:
+                case TokenType.NVDollar:
+                case TokenType.NVIdentifier:
+                case TokenType.NVReferenceLCurly:
+                case TokenType.NVReferenceRCurly:
+                case TokenType.NVReferenceSilent:
+                case TokenType.NVDot:
                     color = NVelocityTokenColor.NVIdentifier;
                     break;
-                case Castle.NVelocity.TokenType.NVStringLiteral:
-                case Castle.NVelocity.TokenType.NVDoubleQuote:
-                case Castle.NVelocity.TokenType.NVSingleQuote:
+                case TokenType.NVStringLiteral:
+                case TokenType.NVDoubleQuote:
+                case TokenType.NVSingleQuote:
                     color = NVelocityTokenColor.NVString;
                     break;
-                case Castle.NVelocity.TokenType.NVIntegerLiteral:
-                //case Castle.NVelocity.TokenType.NVFloatingPoint:
+                case TokenType.NVIntegerLiteral:
+                //case TokenType.NVFloatingPoint:
                     color = NVelocityTokenColor.NVNumber;
                     break;
-                case Castle.NVelocity.TokenType.NVDirectiveHash:
-                case Castle.NVelocity.TokenType.NVDirectiveName:
-                case Castle.NVelocity.TokenType.NVDirectiveLParen:
-                case Castle.NVelocity.TokenType.NVDirectiveRParen:
+                case TokenType.NVDirectiveHash:
+                case TokenType.NVDirectiveName:
+                case TokenType.NVDirectiveLParen:
+                case TokenType.NVDirectiveRParen:
                     color = NVelocityTokenColor.NVDirective;
                     break;
-                case Castle.NVelocity.TokenType.NVEq:
-                case Castle.NVelocity.TokenType.NVLte:
-                case Castle.NVelocity.TokenType.NVLt:
-                case Castle.NVelocity.TokenType.NVGt:
-                case Castle.NVelocity.TokenType.NVGte:
-                case Castle.NVelocity.TokenType.NVEqEq:
-                case Castle.NVelocity.TokenType.NVNeq:
-                case Castle.NVelocity.TokenType.NVPlus:
-                case Castle.NVelocity.TokenType.NVMinus:
-                case Castle.NVelocity.TokenType.NVMul:
-                case Castle.NVelocity.TokenType.NVDiv:
-                case Castle.NVelocity.TokenType.NVMod:
-                case Castle.NVelocity.TokenType.NVAnd:
-                case Castle.NVelocity.TokenType.NVOr:
-                case Castle.NVelocity.TokenType.NVNot:
+                case TokenType.NVEq:
+                case TokenType.NVLte:
+                case TokenType.NVLt:
+                case TokenType.NVGt:
+                case TokenType.NVGte:
+                case TokenType.NVEqEq:
+                case TokenType.NVNeq:
+                case TokenType.NVPlus:
+                case TokenType.NVMinus:
+                case TokenType.NVMul:
+                case TokenType.NVDiv:
+                case TokenType.NVMod:
+                case TokenType.NVAnd:
+                case TokenType.NVOr:
+                case TokenType.NVNot:
                     color = NVelocityTokenColor.NVOperator;
                     break;
-                case Castle.NVelocity.TokenType.NVLParen:
-                case Castle.NVelocity.TokenType.NVRParen:
-                case Castle.NVelocity.TokenType.NVLBrack:
-                case Castle.NVelocity.TokenType.NVRBrack:
-                case Castle.NVelocity.TokenType.NVLCurly:
-                case Castle.NVelocity.TokenType.NVRCurly:
+                case TokenType.NVLParen:
+                case TokenType.NVRParen:
+                case TokenType.NVLBrack:
+                case TokenType.NVRBrack:
+                case TokenType.NVLCurly:
+                case TokenType.NVRCurly:
                     color = NVelocityTokenColor.NVBracket;
                     break;
-                case Castle.NVelocity.TokenType.NVDictionaryPercent:
-                case Castle.NVelocity.TokenType.NVDictionaryLCurly:
-                case Castle.NVelocity.TokenType.NVDictionaryRCurly:
+                case TokenType.NVDictionaryPercent:
+                case TokenType.NVDictionaryLCurly:
+                case TokenType.NVDictionaryRCurly:
                     color = NVelocityTokenColor.NVDictionaryDelimiter;
                     break;
-                case Castle.NVelocity.TokenType.NVDictionaryKey:
+                case TokenType.NVDictionaryKey:
                     color = NVelocityTokenColor.NVDictionaryKey;
                     break;
-                case Castle.NVelocity.TokenType.NVDictionaryEquals:
+                case TokenType.NVDictionaryEquals:
                     color = NVelocityTokenColor.NVDictionaryEquals;
                     break;
 
                 // +====================+
                 // |     XML Tokens     |
                 // +====================+
-                case Castle.NVelocity.TokenType.XmlText:
+                case TokenType.XmlText:
                     color = NVelocityTokenColor.XmlText;
                     break;
-                case Castle.NVelocity.TokenType.XmlComment:
-                case Castle.NVelocity.TokenType.XmlCommentStart:
-                case Castle.NVelocity.TokenType.XmlCommentEnd:
+                case TokenType.XmlComment:
+                case TokenType.XmlCommentStart:
+                case TokenType.XmlCommentEnd:
                     color = NVelocityTokenColor.XmlComment;
                     break;
-                case Castle.NVelocity.TokenType.XmlTagName:
+                case TokenType.XmlTagName:
                     color = NVelocityTokenColor.XmlTagName;
                     break;
-                case Castle.NVelocity.TokenType.XmlAttributeName:
+                case TokenType.XmlAttributeName:
                     color = NVelocityTokenColor.XmlAttributeName;
                     break;
-                case Castle.NVelocity.TokenType.XmlAttributeText:
+                case TokenType.XmlAttributeText:
                     color = NVelocityTokenColor.XmlAttributeValue;
                     break;
-                case Castle.NVelocity.TokenType.XmlTagStart:
-                case Castle.NVelocity.TokenType.XmlTagEnd:
-                case Castle.NVelocity.TokenType.XmlCDataStart:
-                case Castle.NVelocity.TokenType.XmlCDataEnd:
+                case TokenType.XmlTagStart:
+                case TokenType.XmlTagEnd:
+                case TokenType.XmlCDataStart:
+                case TokenType.XmlCDataEnd:
                     color = NVelocityTokenColor.XmlTagDelimiter;
                     break;
-                case Castle.NVelocity.TokenType.XmlForwardSlash:
-                case Castle.NVelocity.TokenType.XmlQuestionMark:
-                case Castle.NVelocity.TokenType.XmlExclaimationMark:
-                case Castle.NVelocity.TokenType.XmlEquals:
-                case Castle.NVelocity.TokenType.XmlDoubleQuote:
+                case TokenType.XmlForwardSlash:
+                case TokenType.XmlQuestionMark:
+                case TokenType.XmlExclaimationMark:
+                case TokenType.XmlEquals:
+                case TokenType.XmlDoubleQuote:
                     color = NVelocityTokenColor.XmlOperator;
                     break;
                 //case ???
                 //    color = NVelocityTokenColor.XmlEntity;
                 //    break;
-                case Castle.NVelocity.TokenType.XmlCDataSection:
+                case TokenType.XmlCDataSection:
                     color = NVelocityTokenColor.XmlCDataSection;
                     break;
                 //case ???
@@ -207,6 +209,29 @@ namespace Castle.VisualStudio.NVelocityLanguageService
 
             tokenInfo.StartIndex = token.Position.StartPos - 1;
             tokenInfo.EndIndex = token.Position.EndPos - 2;
+
+            // Set the MemberSelect trigger on IntelliSense Member Completion characters
+            switch (token.Type)
+            {
+                case TokenType.NVDollar:
+                case TokenType.NVDot:
+                    tokenInfo.Trigger = TokenTriggers.MemberSelect;
+                    break;
+                case TokenType.NVDirectiveHash:
+                case TokenType.NVDirectiveLParen:
+                    tokenInfo.Trigger = TokenTriggers.MemberSelect;
+                    break;
+
+                case TokenType.NVLParen:
+                    tokenInfo.Trigger = TokenTriggers.ParameterStart | TokenTriggers.MatchBraces;
+                    break;
+                case TokenType.NVRParen:
+                    tokenInfo.Trigger = TokenTriggers.ParameterEnd | TokenTriggers.MatchBraces;
+                    break;
+                case TokenType.NVComma:
+                    tokenInfo.Trigger = TokenTriggers.ParameterNext;
+                    break;
+            }
 
             return true;
         }

@@ -16,19 +16,29 @@ namespace Castle.NVelocity.Demo
 {
     using System;
     using System.IO;
+    using System.Windows.Forms;
     using Castle.NVelocity;
 
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
+            Scanner scanner = new Scanner();
+            string source;
+            string fileName;
+
+            if (args.Length == 1 && args[0] == "/parser-gui")
+            {
+                Console.WriteLine("Loading Parser GUI");
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new ParserGUIForm());
+                return;
+            }
+
             Console.WindowHeight = 50;
             Console.WriteLine("Castle.NVelocity Demo");
             Console.WriteLine("=====================");
-
-            Scanner scanner = new Scanner();
-            string source = "";
-            string fileName = "";
 
             if (args.Length > 0)
             {

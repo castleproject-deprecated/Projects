@@ -20,25 +20,19 @@ namespace Castle.NVelocity.Tests.ScannerTests
     public class TokenLookAhead : ScannerTestBase
     {
         [Test]
-        public void CanPeekAheadOneToken()
-        {
-            scanner.SetSource(
-                "<tag/>");
-
-            AssertMatchToken(TokenType.XmlTagStart);
-            AssertMatchToken(TokenType.XmlTagName, scanner.PeekToken(1));
-        }
-
-        [Test]
         public void CanPeekAheadOneTokenThenCallGetToken()
         {
             scanner.SetSource(
-                "<tag/>");
+                "text<tag/>");
 
+            AssertMatchToken(TokenType.XmlText, "text");
             AssertMatchToken(TokenType.XmlTagStart);
             
             AssertMatchToken(TokenType.XmlTagName, scanner.PeekToken(1));
             AssertMatchToken(TokenType.XmlTagName, "tag");
+
+            AssertMatchToken(TokenType.XmlForwardSlash);
+            AssertMatchToken(TokenType.XmlTagEnd);
         }
 
         [Test]

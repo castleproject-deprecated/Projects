@@ -15,44 +15,21 @@
 namespace Castle.VisualStudio.NVelocityLanguageService
 {
     using System;
+    using System.Diagnostics;
     using System.Drawing;
     using System.Runtime.InteropServices;
+    using System.Threading;
+    using System.Windows.Forms;
     using Castle.NVelocity;
+    using Castle.NVelocity.Ast;
+    using Castle.VisualStudio.MonoRailIntelliSenseProvider;
     using Microsoft.VisualStudio;
     using Microsoft.VisualStudio.Package;
     using Microsoft.VisualStudio.TextManager.Interop;
 
-    public enum NVelocityTokenColor
-    {
-        NVText = 1,
-        NVKeyword,
-        NVComment,
-        NVIdentifier,
-        NVString,
-        NVNumber,
-        NVDirective,
-        NVOperator,
-        NVBracket,
-        NVDictionaryDelimiter,
-        NVDictionaryKey,
-        NVDictionaryEquals,
-
-        XmlText,
-        XmlComment,
-        XmlTagName,
-        XmlAttributeName,
-        XmlAttributeValue,
-        XmlTagDelimiter,
-        XmlOperator,
-        XmlEntity,
-        XmlCDataSection//,
-        //XmlProcessingInstruction
-    }
-
     [Guid(NVelocityConstants.LanguageServiceGuidString)]
     public class NVelocityLanguage : LanguageService
     {
-        //private NVelocityScanner lineScanner;
         private LanguagePreferences preferences;
 
         private readonly ColorableItem[] _colorableItems;
@@ -120,9 +97,6 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                     preferences.Dispose();
                     preferences = null;
                 }
-
-                // Dispose the scanner
-                //lineScanner = null;
             }
             finally
             {
@@ -134,7 +108,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
         {
             if (preferences == null)
             {
-                preferences = new LanguagePreferences(Site, typeof(NVelocityLanguage).GUID, "NVelocity");
+                preferences = new LanguagePreferences(Site, typeof(NVelocityLanguage).GUID, Name);
                 preferences.Init();
                 preferences.LineNumbers = true;
                 preferences.Apply();
@@ -152,10 +126,6 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             // Return a new scanner for every file because Visual Studio calls this method
             // for every file that is opened.
             return new NVelocityScanner();
-
-            //if (lineScanner == null)
-            //    lineScanner = new NVelocityScanner();
-            //return lineScanner;
         }
 
         public override string Name
@@ -173,37 +143,183 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             base.OnIdle(periodic);
         }
 
+        private TemplateNode _templateNode;
+
         public override AuthoringScope ParseSource(ParseRequest req)
         {
             if (req == null)
-                throw new ArgumentNullException("req");
-
-            NVelocityAuthoringScope scope = new NVelocityAuthoringScope();
-            //Source source = GetSource(req.FileName);
-            
-            if (req.Reason == ParseReason.Check)
             {
-                Scanner scanner = new Scanner();
-                scanner.SetSource(req.Text);
+                throw new ArgumentNullException("req");
+            }
 
-                try
+            Trace.WriteLine(string.Format("NVelocityLanguage.ParseSource(). Reason:{0}", req.Reason));
+
+            if (req.Reason == ParseReason.Check ||
+                req.Reason == ParseReason.DisplayMemberList ||
+                req.Reason == ParseReason.MemberSelect ||
+                req.Reason == ParseReason.MethodTip)
+            {
+                Position finalPosition = null;
+
+                Thread thread = new Thread(new ThreadStart(delegate
                 {
-                    while (!scanner.EOF)
-                        scanner.GetToken();
+                    ScannerOptions scannerOptions = new ScannerOptions();
+                    scannerOptions.EnableIntelliSenseTriggerTokens = true;
+
+                    Scanner scanner = new Scanner();
+
+                    try
+                    {
+                        scanner.Options = scannerOptions;
+                        scanner.SetSource(req.Text);
+
+                        Parser parser = new Parser(scanner);
+
+                        _templateNode = parser.ParseTemplate();
+
+                        // Prepare the template node so that all the helpers are available
+                        PrepareTemplateNode(req.FileName);
+
+                        _templateNode.DoSemanticChecks(parser.Errors);
+
+                        for (int i = 0; i < parser.Errors.Count; i++)
+                        {
+                            Error error = parser.Errors[i];
+
+                            TextSpan textSpan = new TextSpan();
+                            textSpan.iStartLine = error.Position.StartLine - 1;
+                            textSpan.iStartIndex = error.Position.StartPos;
+                            textSpan.iEndLine = error.Position.EndLine - 1;
+                            textSpan.iEndIndex = error.Position.EndPos;
+
+                            Severity severity = Severity.Fatal;
+                            if (error.Severity == ErrorSeverity.Error)
+                                severity = Severity.Error;
+                            else if (error.Severity == ErrorSeverity.Warning)
+                                severity = Severity.Warning;
+                            else if (error.Severity == ErrorSeverity.Message)
+                                severity = Severity.Hint;
+
+                            req.Sink.AddError(req.FileName, error.Description, textSpan, severity);
+                        }
+                    }
+                    catch (ScannerError se)
+                    {
+                        req.Sink.AddError(req.FileName, se.Message, new TextSpan(), Severity.Error);
+                    }
+                    catch (ThreadAbortException)
+                    {
+                        // Do nothing
+                    }
+                    catch (Exception ex)
+                    {
+                        req.Sink.AddError(req.FileName, "FATAL: " + ex, new TextSpan(), Severity.Error);
+                    }
+                    finally
+                    {
+                        finalPosition = scanner.CurrentPos;
+                    }
+                }));
+                thread.Start();
+
+                int timeout = 0;
+                while (timeout < 1000 && thread.IsAlive)
+                {
+                    Thread.Sleep(50);
+                    timeout += 50;
                 }
-                catch (ScannerError se)
-                {
-                    TextSpan textSpan = new TextSpan();
-                    textSpan.iStartLine = scanner.CurrentPos.StartLine - 1;
-                    textSpan.iStartIndex = scanner.CurrentPos.StartPos;
-                    textSpan.iEndLine = scanner.CurrentPos.EndLine - 1;
-                    textSpan.iEndIndex = scanner.CurrentPos.EndPos;
 
-                    req.Sink.AddError(req.FileName, se.Message, textSpan, Severity.Error);
+                if (thread.IsAlive)
+                {
+                    thread.Abort();
+
+                    thread.Join(100);
+
+                    TextSpan textSpan = new TextSpan();
+                    if (finalPosition != null)
+                    {
+                        textSpan.iStartLine = finalPosition.StartLine - 1;
+                        textSpan.iStartIndex = finalPosition.StartPos;
+                        textSpan.iEndLine = finalPosition.EndLine - 1;
+                        textSpan.iEndIndex = finalPosition.EndPos;
+                    }
+
+                    req.Sink.AddError(req.FileName,
+                        "Castle Visual Studio Integration has detected that the Castle NVelocity " +
+                        "parser running in the background has stopped responding. The parser's current action " +
+                        "has been terminated.", textSpan, Severity.Fatal);
                 }
             }
+            else
+            {
+                //MessageBox.Show("Unparsed ParseReason: " + req.Reason);
+            }
             
+            if (req.Reason == ParseReason.MethodTip)
+            {
+                TextSpan textSpan = new TextSpan();
+                textSpan.iStartLine = req.Line;
+                textSpan.iStartIndex = req.Col - 1;
+                textSpan.iEndLine = req.Line;
+                textSpan.iEndIndex = req.Col;
+
+                req.Sink.StartName(textSpan, "");
+                req.Sink.StartParameters(textSpan);
+
+                Trace.WriteLine("MethodTip at line " + req.Line + " col " + req.Col);
+            }
+
+            NVelocityAuthoringScope scope = new NVelocityAuthoringScope(_templateNode, req.FileName);
+
+            //if (req.Sink.BraceMatching && req.Col > 30)
+            //{
+            //    TextSpan startBrace = new TextSpan();
+            //    startBrace.iStartLine = req.Line;
+            //    startBrace.iStartIndex = 20;
+            //    startBrace.iEndLine = req.Line;
+            //    startBrace.iEndIndex = 21;
+
+            //    TextSpan endBrace = new TextSpan();
+            //    endBrace.iStartLine = req.Line;
+            //    endBrace.iStartIndex = req.Col - 1;
+            //    endBrace.iEndLine = req.Line;
+            //    endBrace.iEndIndex = req.Col;
+
+            //    req.Sink.MatchPair(startBrace, endBrace, 0);
+            //}
+
             return scope;
+        }
+
+        private void PrepareTemplateNode(string fileName)
+        {
+            string binDirectory = IntelliSenseProvider.FindBinaryDirectory(fileName);
+            if (string.IsNullOrEmpty(binDirectory))
+            {
+                return;
+            }
+            
+            IntelliSenseProvider intelliSenseProvider = new IntelliSenseProvider(binDirectory);
+
+            // Get all available helpers and add them to the template node
+            foreach (NVClassNode classNode in intelliSenseProvider.GetHelpers())
+            {
+                _templateNode.AddClass(classNode);
+
+                // Add a localnode/variable to the scope for each helper
+                string varName = classNode.Name;
+                if (classNode.Name.EndsWith("Helper"))
+                {
+                    varName = varName.Substring(0, varName.Length - 6);
+                }
+                _templateNode.AddVariable(new NVLocalNode(varName, classNode));
+            }
+
+            // Get all available view components and add them to the template node
+            foreach (NVClassNode viewComponentClassNode in intelliSenseProvider.GetViewComponents())
+            {
+                _templateNode.AddClass(viewComponentClassNode);
+            }
         }
 
         public override int GetItemCount(out int count)

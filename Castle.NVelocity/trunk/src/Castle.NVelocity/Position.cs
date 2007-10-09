@@ -15,6 +15,7 @@
 namespace Castle.NVelocity
 {
     using System;
+    using Ast;
 
     public class Position : IComparable<Position>
     {
@@ -41,16 +42,46 @@ namespace Castle.NVelocity
             this.endPos = endPos;
         }
 
+        public Position(Position startAndEndPosition)
+        {
+            Start = startAndEndPosition;
+            End = startAndEndPosition;
+        }
+
+        public Position(Position startPosition, Position endPosition)
+        {
+            Start = startPosition;
+            End = endPosition;
+        }
+
+        public Position(NVBinaryExpression binExpr)
+        {
+            Start = binExpr.Lhs.Position;
+            End = binExpr.Rhs.Position;
+        }
+
         public int StartLine
         {
             get { return startLine; }
             set { startLine = value; }
         }
 
+        //TODO consider renameing *Pos to *Index since it is the index on that line
+
         public int StartPos
         {
             get { return startPos; }
             set { startPos = value; }
+        }
+
+        public Position Start
+        {
+            get { return new Position(startLine, startPos, startLine, startPos); }
+            set
+            {
+                startLine = value.StartLine;
+                startPos = value.StartPos;
+            }
         }
 
         public int EndLine
@@ -65,21 +96,49 @@ namespace Castle.NVelocity
             set { endPos = value; }
         }
 
+        public Position End
+        {
+            get { return new Position(endLine, endPos, endLine, endPos); }
+            set
+            {
+                endLine = value.EndLine;
+                endPos = value.EndPos;
+            }
+        }
+
         public bool Equals(Position anotherPos)
         {
             return (anotherPos.StartLine == startLine) &&
-                (anotherPos.StartPos == startPos) &&
-                (anotherPos.EndLine == endLine) &&
-                (anotherPos.EndPos == endPos);
+                   (anotherPos.StartPos == startPos) &&
+                   (anotherPos.EndLine == endLine) &&
+                   (anotherPos.EndPos == endPos);
         }
 
         public int CompareTo(Position other)
         {
-            int lineDif = startLine - other.StartLine;
-            if (lineDif == 0)
+            int lineDiff = startLine - other.StartLine;
+            if (lineDiff == 0)
+            {
                 return startPos - other.StartPos;
+            }
             else
-                return lineDif;
+            {
+                return lineDiff;
+            }
+        }
+
+        public bool Contains(int line, int pos)
+        {
+            if (line > startLine && line < endLine)
+                return true;
+
+            if (line == startLine && pos >= startPos)
+                return true;
+
+            if (line == endLine && pos <= endPos)
+                return true;
+
+            return false;
         }
 
         public override string ToString()
