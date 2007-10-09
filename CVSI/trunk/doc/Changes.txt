@@ -2,6 +2,10 @@
 | Changes to Castle Visual Studio Integration and Castle NVelocity |
 +==================================================================+
 
+0.2.0 Alpha (2007-10-09)
+========================
+- Completed most of the basic IntelliSense and the NVelocity parser.
+
 0.1.3 Preview 1 Update (2007-07-27)
 ===================================
 - Fixed CONTRIB-49: "Wrong colorization"
