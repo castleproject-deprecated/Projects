@@ -45,5 +45,10 @@ namespace Castle.MonoRail.ViewComponents.TestSite.Controllers
 		{
 			PropertyBag["users"] = User.FindAll();
 		}
+
+		public void StartEndRow()
+		{
+			PropertyBag["users"] = User.FindAll();
+		}
 	}
 }

@@ -97,6 +97,9 @@ component InsertJavascript, {@Std: "Ajax, Scriptaculous"}
 						<li>
 							<a href="/smartgrid/StartEndCell.rails">Start & End Cell behaviors</a>
 						</li>
+						<li>
+							<a href="/smartgrid/StartEndRow.rails">Start & End Row behaviors</a>
+						</li>
 					</ul>
 					
 					<h3>CaptchaComponent</h3>

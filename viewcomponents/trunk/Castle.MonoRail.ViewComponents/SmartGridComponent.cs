@@ -45,11 +45,11 @@ namespace Castle.MonoRail.ViewComponents
 
 				if (isAlternate)
 				{
-					RenderText("<tr class='grid_alternateItem'>");
+					RenderStartAlternateRow();
 				}
 				else
 				{
-					RenderText("<tr class='grid_item'>");
+					RenderStartRow();
 				}
 
 				foreach(PropertyInfo property in properties)
@@ -75,12 +75,60 @@ namespace Castle.MonoRail.ViewComponents
 				{
 					Context.RenderSection("more");
 				}
+				
+				if (isAlternate)
+				{
+					RenderEndAlternateRow();
+				}
+				else
+				{
+					RenderEndRow();
+				}
 
 				isAlternate = !isAlternate;
-				RenderText("</tr>");
 			}
 
 			return true;
+		}
+
+		private void RenderStartRow()
+		{
+			if (Context.HasSection("startRow"))
+			{
+				Context.RenderSection("startRow");
+				return;
+			}
+			RenderText("<tr class='grid_item'>");
+		}
+
+		private void RenderEndRow()
+		{
+			if (Context.HasSection("endRow"))
+			{
+				Context.RenderSection("endRow");
+				return;
+			}
+			RenderText("</tr>");
+		}
+
+		private void RenderStartAlternateRow()
+		{
+			if (Context.HasSection("startAlternateRow"))
+			{
+				Context.RenderSection("startAlternateRow");
+				return;
+			}
+			RenderText("<tr class='grid_alternateItem'>");
+		}
+
+		private void RenderEndAlternateRow()
+		{
+			if (Context.HasSection("endAlternateRow"))
+			{
+				Context.RenderSection("endAlternateRow");
+				return;
+			}
+			RenderText("</tr>");
 		}
 
 		private void RenderEndCell()

@@ -1,5 +1,4 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
+﻿Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio Codename Orcas
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.ViewComponents", "Castle.MonoRail.ViewComponents\Castle.MonoRail.ViewComponents.csproj", "{717C688D-81BC-4C81-9487-1D5151ADF573}"
 EndProject
