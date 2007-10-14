@@ -776,8 +776,8 @@ namespace Altinoren.ActiveWriter
 		
 		/// <summary>
 		/// Gets or sets the value of UseGenerics domain property.
-		/// Instructs ActiveWriter to generate code using generic collections where
-		/// possible. This setting is overridable in class level.
+		/// Instructs ActiveWriter to generate code using generic bases where possible. This
+		/// setting is overridable in class level.
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/UseGenerics.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/UseGenerics.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
@@ -2371,6 +2371,96 @@ namespace Altinoren.ActiveWriter
 				{
 					ValueChanging(element, oldValue, newValue);
 					element.nHQGExecutablePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region UseGenericRelations domain property code
+		
+		/// <summary>
+		/// UseGenericRelations domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid UseGenericRelationsDomainPropertyId = new global::System.Guid(0x2023d3af, 0xc8cd, 0x4ae7, 0x80, 0x68, 0x93, 0xd6, 0x99, 0x43, 0xa6, 0xdf);
+		
+		/// <summary>
+		/// Storage for UseGenericRelations
+		/// </summary>
+		private global::System.Boolean useGenericRelationsPropertyStorage = true;
+		
+		/// <summary>
+		/// Gets or sets the value of UseGenericRelations domain property.
+		/// Instructs ActiveWriter to generate code using generic collections for class
+		/// relations where possible. This setting is overridable in class level.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/UseGenericRelations.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/UseGenericRelations.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/UseGenericRelations.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(true)]
+		[DslModeling::DomainObjectId("2023d3af-c8cd-4ae7-8068-93d69943a6df")]
+		public global::System.Boolean UseGenericRelations
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return useGenericRelationsPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				UseGenericRelationsPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.UseGenericRelations domain property.
+		/// </summary>
+		internal sealed partial class UseGenericRelationsPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.Boolean>
+		{
+			private UseGenericRelationsPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.UseGenericRelations domain property value handler.
+			/// </summary>
+			public static readonly UseGenericRelationsPropertyHandler Instance = new UseGenericRelationsPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.UseGenericRelations domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return UseGenericRelationsDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.Boolean GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.useGenericRelationsPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.Boolean newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.Boolean oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.useGenericRelationsPropertyStorage = newValue;
 					ValueChanged(element, oldValue, newValue);
 				}
 			}
@@ -4553,6 +4643,96 @@ namespace Altinoren.ActiveWriter
 				{
 					ValueChanging(element, oldValue, newValue);
 					element.implementINotifyPropertyChangedPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region UseGenericRelations domain property code
+		
+		/// <summary>
+		/// UseGenericRelations domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid UseGenericRelationsDomainPropertyId = new global::System.Guid(0xa176d278, 0xb7da, 0x4dc8, 0x8e, 0xbb, 0x9d, 0xb2, 0x2b, 0x96, 0xf0, 0x7f);
+		
+		/// <summary>
+		/// Storage for UseGenericRelations
+		/// </summary>
+		private InheritableBoolean useGenericRelationsPropertyStorage = Altinoren.ActiveWriter.InheritableBoolean.Inherit;
+		
+		/// <summary>
+		/// Gets or sets the value of UseGenericRelations domain property.
+		/// If set (other than Inherit), overrides model level generic relation generation
+		/// for this class.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelClass/UseGenericRelations.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelClass/UseGenericRelations.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelClass/UseGenericRelations.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.InheritableBoolean.Inherit)]
+		[DslModeling::DomainObjectId("a176d278-b7da-4dc8-8ebb-9db22b96f07f")]
+		public InheritableBoolean UseGenericRelations
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return useGenericRelationsPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				UseGenericRelationsPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the ModelClass.UseGenericRelations domain property.
+		/// </summary>
+		internal sealed partial class UseGenericRelationsPropertyHandler : DslModeling::DomainPropertyValueHandler<ModelClass, InheritableBoolean>
+		{
+			private UseGenericRelationsPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the ModelClass.UseGenericRelations domain property value handler.
+			/// </summary>
+			public static readonly UseGenericRelationsPropertyHandler Instance = new UseGenericRelationsPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the ModelClass.UseGenericRelations domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return UseGenericRelationsDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed InheritableBoolean GetValue(ModelClass element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.useGenericRelationsPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(ModelClass element, InheritableBoolean newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				InheritableBoolean oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.useGenericRelationsPropertyStorage = newValue;
 					ValueChanged(element, oldValue, newValue);
 				}
 			}

@@ -43,7 +43,7 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="fb8adf70-25ad-408c-8c6b-297e2e719364" Description="Instructs ActiveWriter to generate code using generic collections where possible. This setting is overridable in class level." Name="UseGenerics" DisplayName="Use Generics" DefaultValue="true" Category="Code Generation">
+        <DomainProperty Id="fb8adf70-25ad-408c-8c6b-297e2e719364" Description="Instructs ActiveWriter to generate code using generic bases where possible. This setting is overridable in class level." Name="UseGenerics" DisplayName="Use Generics" DefaultValue="true" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
@@ -131,6 +131,11 @@
         <DomainProperty Id="428db86d-0643-4830-a841-6b56830c735b" Description="Executable path for NHQG.exe" Name="NHQGExecutable" DisplayName="NHQG Executable" DefaultValue="C:\\Program Files\\Rhino\\NHibernate Query Generator\\NHQG.exe" Category="Code Generation (NHibernate)">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="2023d3af-c8cd-4ae7-8068-93d69943a6df" Description="Instructs ActiveWriter to generate code using generic collections for class relations where possible. This setting is overridable in class level." Name="UseGenericRelations" DisplayName="Use Generic Relations" DefaultValue="true" Category="Code Generation">
+          <Type>
+            <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
       </Properties>
@@ -270,6 +275,11 @@
           </Type>
         </DomainProperty>
         <DomainProperty Id="097f2266-f8b4-4079-bafd-9b16b9e8c4a3" Description="Instructs ActiveWriter to implement INotifyPropertyChanged interface in this class." Name="ImplementINotifyPropertyChanged" DisplayName="Implement  INotifyPropertyChanged" DefaultValue="Inherit" Category="Code Generation">
+          <Type>
+            <DomainEnumerationMoniker Name="InheritableBoolean" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="a176d278-b7da-4dc8-8ebb-9db22b96f07f" Description="If set (other than Inherit), overrides model level generic relation generation for this class." Name="UseGenericRelations" DisplayName="Use Generic Relations" DefaultValue="Inherit" Category="Code Generation">
           <Type>
             <DomainEnumerationMoniker Name="InheritableBoolean" />
           </Type>
@@ -1413,6 +1423,9 @@
           <XmlPropertyData XmlName="nHQGExecutable">
             <DomainPropertyMoniker Name="Model/NHQGExecutable" />
           </XmlPropertyData>
+          <XmlPropertyData XmlName="useGenericRelations">
+            <DomainPropertyMoniker Name="Model/UseGenericRelations" />
+          </XmlPropertyData>
         </ElementData>
       </XmlClassData>
       <XmlClassData TypeName="ModelClass" MonikerAttributeName="" MonikerElementName="modelClassMoniker" ElementName="modelClass" MonikerTypeName="ModelClassMoniker">
@@ -1498,6 +1511,9 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="implementINotifyPropertyChanged">
             <DomainPropertyMoniker Name="ModelClass/ImplementINotifyPropertyChanged" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="useGenericRelations">
+            <DomainPropertyMoniker Name="ModelClass/UseGenericRelations" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

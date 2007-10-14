@@ -554,6 +554,23 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// UseGenericRelations
+			if (!serializationContext.Result.Failed)
+			{
+				string attribUseGenericRelations = reader.GetAttribute("useGenericRelations");
+				if (attribUseGenericRelations != null)
+				{
+					global::System.Boolean valueOfUseGenericRelations;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUseGenericRelations), out valueOfUseGenericRelations))
+					{
+						instanceOfModel.UseGenericRelations = valueOfUseGenericRelations;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "useGenericRelations", typeof(global::System.Boolean), attribUseGenericRelations);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -1476,6 +1493,19 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// UseGenericRelations
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.Boolean propValue = instanceOfModel.UseGenericRelations;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Boolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("useGenericRelations", serializedPropValue);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -2113,6 +2143,23 @@ namespace Altinoren.ActiveWriter
 					else
 					{	// Invalid property value, ignored.
 						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "implementINotifyPropertyChanged", typeof(InheritableBoolean), attribImplementINotifyPropertyChanged);
+					}
+				}
+			}
+			// UseGenericRelations
+			if (!serializationContext.Result.Failed)
+			{
+				string attribUseGenericRelations = reader.GetAttribute("useGenericRelations");
+				if (attribUseGenericRelations != null)
+				{
+					InheritableBoolean valueOfUseGenericRelations;
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritableBoolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUseGenericRelations), out valueOfUseGenericRelations))
+					{
+						instanceOfModelClass.UseGenericRelations = valueOfUseGenericRelations;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "useGenericRelations", typeof(InheritableBoolean), attribUseGenericRelations);
 					}
 				}
 			}
@@ -3003,6 +3050,19 @@ namespace Altinoren.ActiveWriter
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("implementINotifyPropertyChanged", serializedPropValue);
+					}
+				}
+			}
+			// UseGenericRelations
+			if (!serializationContext.Result.Failed)
+			{
+				InheritableBoolean propValue = instanceOfModelClass.UseGenericRelations;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<InheritableBoolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("useGenericRelations", serializedPropValue);
 					}
 				}
 			}

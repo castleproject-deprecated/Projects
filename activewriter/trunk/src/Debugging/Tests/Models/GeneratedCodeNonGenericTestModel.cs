@@ -207,7 +207,7 @@ namespace Debugging.Tests {
         
         private string _blog_id;
         
-        private IList _targetProperties;
+        private IList<ManyToOne_Many> _targetProperties;
         
         [PrimaryKey(PrimaryKeyType.Native, ColumnType="String")]
         public string blog_id {
@@ -220,7 +220,7 @@ namespace Debugging.Tests {
         }
         
         [HasMany(typeof(ManyToOne_Many), Cache=CacheEnum.ReadOnly, Cascade=ManyRelationCascadeEnum.All, ColumnKey="post_blogid", CustomAccess="TargetCustomAccess", Inverse=true, Lazy=true, OrderBy="TargetOrderBy", RelationType=RelationType.Bag, Schema="TargetSchema", Table="Posts", Where="TargetWhere", NotFoundBehaviour=NotFoundBehaviour.Exception, Element="TargetElement")]
-        public IList TargetProperties {
+        public IList<ManyToOne_Many> TargetProperties {
             get {
                 return this._targetProperties;
             }
@@ -235,7 +235,7 @@ namespace Debugging.Tests {
         
         private string _post_id;
         
-        private IList _targetProperties;
+        private IList<ManyToMany_Second> _targetProperties;
         
         [PrimaryKey(PrimaryKeyType.Native, ColumnType="String")]
         public string post_id {
@@ -248,7 +248,7 @@ namespace Debugging.Tests {
         }
         
         [HasAndBelongsToMany(typeof(ManyToMany_Second), Cache=CacheEnum.ReadOnly, Cascade=ManyRelationCascadeEnum.All, CustomAccess="TargetCustomAccess", ColumnRef="tag_id", ColumnKey="post_id", Inverse=true, Lazy=true, MapType=typeof(ManyToMany_Second), OrderBy="TargetOrderBy", RelationType=RelationType.Bag, Where="TargetWhere", NotFoundBehaviour=NotFoundBehaviour.Exception, Schema="dbo", Table="FirstSecond")]
-        public IList TargetProperties {
+        public IList<ManyToMany_Second> TargetProperties {
             get {
                 return this._targetProperties;
             }
@@ -263,7 +263,7 @@ namespace Debugging.Tests {
         
         private string _tag_id;
         
-        private IList _sourceProperties;
+        private IList<ManyToMany_First> _sourceProperties;
         
         [PrimaryKey(PrimaryKeyType.Native, ColumnType="String")]
         public string tag_id {
@@ -276,7 +276,7 @@ namespace Debugging.Tests {
         }
         
         [HasAndBelongsToMany(typeof(ManyToMany_First), Cache=CacheEnum.ReadOnly, Cascade=ManyRelationCascadeEnum.All, CustomAccess="SourceCustomAccess", ColumnRef="post_id", ColumnKey="tag_id", Inverse=true, Lazy=true, MapType=typeof(ManyToMany_First), OrderBy="SourceOrderBy", RelationType=RelationType.Bag, Where="SourceWhere", NotFoundBehaviour=NotFoundBehaviour.Exception, Schema="dbo", Table="FirstSecond")]
-        public IList SourceProperties {
+        public IList<ManyToMany_First> SourceProperties {
             get {
                 return this._sourceProperties;
             }

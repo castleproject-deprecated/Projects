@@ -230,7 +230,7 @@
     <comment>Category for DomainProperty &apos;MonoRailViewFileExtension&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.Model/UseGenerics.Description" xml:space="preserve">
-    <value>Instructs ActiveWriter to generate code using generic collections where possible. This setting is overridable in class level.</value>
+    <value>Instructs ActiveWriter to generate code using generic bases where possible. This setting is overridable in class level.</value>
     <comment>Description for DomainProperty &apos;UseGenerics&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.Model/UseGenerics.DisplayName" xml:space="preserve">
@@ -440,6 +440,18 @@
   <data name="Altinoren.ActiveWriter.Model/NHQGExecutable.Category" xml:space="preserve">
     <value>Code Generation (NHibernate)</value>
     <comment>Category for DomainProperty &apos;NHQGExecutable&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseGenericRelations.Description" xml:space="preserve">
+    <value>Instructs ActiveWriter to generate code using generic collections for class relations where possible. This setting is overridable in class level.</value>
+    <comment>Description for DomainProperty &apos;UseGenericRelations&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseGenericRelations.DisplayName" xml:space="preserve">
+    <value>Use Generic Relations</value>
+    <comment>DisplayName for DomainProperty &apos;UseGenericRelations&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/UseGenericRelations.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;UseGenericRelations&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ModelClass.Description" xml:space="preserve">
     <value>A class of the domain</value>
@@ -716,6 +728,18 @@
   <data name="Altinoren.ActiveWriter.ModelClass/ImplementINotifyPropertyChanged.Category" xml:space="preserve">
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;ImplementINotifyPropertyChanged&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/UseGenericRelations.Description" xml:space="preserve">
+    <value>If set (other than Inherit), overrides model level generic relation generation for this class.</value>
+    <comment>Description for DomainProperty &apos;UseGenericRelations&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/UseGenericRelations.DisplayName" xml:space="preserve">
+    <value>Use Generic Relations</value>
+    <comment>DisplayName for DomainProperty &apos;UseGenericRelations&apos; on DomainClass &apos;ModelClass&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelClass/UseGenericRelations.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;UseGenericRelations&apos; on DomainClass &apos;ModelClass&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ModelProperty.Description" xml:space="preserve">
     <value>A property or field of a class</value>

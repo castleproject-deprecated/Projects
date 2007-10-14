@@ -29,6 +29,13 @@ namespace Altinoren.ActiveWriter
                 UseGenerics == InheritableBoolean.True;
         }
 
+        public bool AreRelationsGeneric()
+        {
+            return
+                (Model.UseGenericRelations && UseGenericRelations == InheritableBoolean.Inherit) ||
+                UseGenericRelations == InheritableBoolean.True;
+        }
+
         public bool DoesImplementINotifyPropertyChanged()
         {
             return (Model.ImplementINotifyPropertyChanged && ImplementINotifyPropertyChanged == InheritableBoolean.Inherit) ||

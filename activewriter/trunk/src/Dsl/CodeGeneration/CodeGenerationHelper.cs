@@ -865,7 +865,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                       : relationship.TargetPropertyType;
 
             CodeMemberField memberField;
-            if (!relationship.Source.IsGeneric())
+            if (!relationship.Source.AreRelationsGeneric())
                 memberField = GetMemberField(propertyName, propertyType, Accessor.Private, relationship.TargetAccess);
             else
                 memberField = GetGenericMemberField(sourceClass.Name, propertyName, propertyType, Accessor.Private, relationship.TargetAccess);
@@ -950,7 +950,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                       : relationship.TargetPropertyType;
 
             CodeMemberField memberField;
-            if (!relationship.Source.IsGeneric())
+            if (!relationship.Source.AreRelationsGeneric())
                 memberField = GetMemberField(propertyName, propertyType, Accessor.Private, relationship.TargetAccess);
             else
                 memberField = GetGenericMemberField(targetClass.Name, propertyName, propertyType, Accessor.Private, relationship.TargetAccess);
@@ -996,7 +996,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                       : relationship.SourcePropertyType;
 
             CodeMemberField memberField;
-            if (!relationship.Source.IsGeneric())
+            if (!relationship.Source.AreRelationsGeneric())
                 memberField = GetMemberField(propertyName, propertyType, Accessor.Private, relationship.SourceAccess);
             else
                 memberField = GetGenericMemberField(sourceClass.Name, propertyName, propertyType, Accessor.Private, relationship.SourceAccess);

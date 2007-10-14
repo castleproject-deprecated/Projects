@@ -12,6 +12,7 @@ Fixed:
 - Incorrectly generates Some pascal case fields as camel case.
 - Contrib-52: (Revised description) Generic types are incorrectly generated if the given type name already includes generic parameters. (Thanks: Hugo Burm)
 - CONTRIB-59: (Revised description) Problems with NHQG integration when the temporary path, used for out argument, contains spaces. (Patch: Steve Degosserie)
+- Contrib-56: When creating a many-one relation, the generation of the Ilist should always be generic, independent of the generic settings for the objects. (Thanks: Robert van Hoornaar)
 
 Preview 3.1
 

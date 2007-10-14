@@ -114,7 +114,7 @@
     </Compile>
     <Compile Include="Tests\INotifyPropertyChangedTest.cs" />
     <Compile Include="Tests\Models\QueryBuilder.cs">
-      <DependentUpon>GeneratedCodeNHQGIntegrationWithARTestModel.actiw</DependentUpon>
+      <DependentUpon>GeneratedCodeNHQGIntegrationWithNHTestModel.actiw</DependentUpon>
     </Compile>
     <Compile Include="Tests\Models\Where.NHQGWithARMany.cs">
       <DependentUpon>GeneratedCodeNHQGIntegrationWithARTestModel.actiw</DependentUpon>

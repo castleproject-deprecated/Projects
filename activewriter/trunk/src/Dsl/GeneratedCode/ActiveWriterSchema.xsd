@@ -105,7 +105,7 @@
     <!-- Property: UseGenerics -->
     <xsd:attribute name="useGenerics" type="xsd:boolean" >
       <xsd:annotation>
-        <xsd:documentation>Instructs ActiveWriter to generate code using generic collections where possible. This setting is overridable in class level.</xsd:documentation>
+        <xsd:documentation>Instructs ActiveWriter to generate code using generic bases where possible. This setting is overridable in class level.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
     <!-- Property: UseBaseClass -->
@@ -202,6 +202,12 @@
     <xsd:attribute name="nHQGExecutable" type="xsd:string" >
       <xsd:annotation>
         <xsd:documentation>Executable path for NHQG.exe</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: UseGenericRelations -->
+    <xsd:attribute name="useGenericRelations" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>Instructs ActiveWriter to generate code using generic collections for class relations where possible. This setting is overridable in class level.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
   </xsd:complexType>
@@ -412,6 +418,12 @@
         <xsd:attribute name="implementINotifyPropertyChanged" type="InheritableBoolean" >
           <xsd:annotation>
             <xsd:documentation>Instructs ActiveWriter to implement INotifyPropertyChanged interface in this class.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: UseGenericRelations -->
+        <xsd:attribute name="useGenericRelations" type="InheritableBoolean" >
+          <xsd:annotation>
+            <xsd:documentation>If set (other than Inherit), overrides model level generic relation generation for this class.</xsd:documentation>
           </xsd:annotation>
         </xsd:attribute>
       </xsd:extension>
