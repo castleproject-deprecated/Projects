@@ -1528,7 +1528,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private string RemoveNamespaceFromStart(string name)
         {
-            if (name.StartsWith(_namespace))
+            if (!string.IsNullOrEmpty(_namespace) && name.StartsWith(_namespace))
                 return name.Remove(0, _namespace.Length + 1);
 
             return name;

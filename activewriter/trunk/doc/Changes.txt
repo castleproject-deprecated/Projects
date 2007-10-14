@@ -1,6 +1,5 @@
 New:
 - Added support for Flush for ManyToOneRelation
-
 - Added partial Oracle drag and drop support. (Patch: Yavor Shahpasov)
 - Generates metadata about properties to be used in queries (as in ICriterion selectCriterium = Expression.Eq(User.Properties.Name, name); )(Thanks: Rudi van den Belt)
 - Contrib-30: Add flag to property to mark it with the DefaultMemberAttribute (or do it by default for primary key fields) (Thanks: Michael Hawksworth)
@@ -13,6 +12,7 @@ Fixed:
 - Contrib-52: (Revised description) Generic types are incorrectly generated if the given type name already includes generic parameters. (Thanks: Hugo Burm)
 - CONTRIB-59: (Revised description) Problems with NHQG integration when the temporary path, used for out argument, contains spaces. (Patch: Steve Degosserie)
 - Contrib-56: When creating a many-one relation, the generation of the Ilist should always be generic, independent of the generic settings for the objects. (Thanks: Robert van Hoornaar)
+- Contrib-61: (If the namespace cannot be retrieved from the VS project system) When a class is added to a model, the .hbm.xml file that is added as a nested file is missing the first character of the class name in the filename. (Thanks: David Gardiner)
 
 Preview 3.1
 
