@@ -140,5 +140,30 @@ The next text should be bolded:
 			DoGet("UsingViewComponents/UsingMultipleViewComponents.rails");
 			AssertReplyEqualTo(expected);
 		}
+
+		[Test]
+		public void ViewComponentWithDotInItsNameWorks() {
+			#region expected
+			string expected = @"some text before viewcomponent
+<p>
+<strong>With.Dot.In.Name ViewComponent</strong>
+</p>some text after viewcomponent";
+			#endregion
+			DoGet("UsingViewComponents/UsingComponentWithDotInItsName.rails");
+			AssertReplyEqualTo(expected);
+		}
+
+		[Test]
+		public void ViewComponentWithASingleLetterNameWorks()
+		{
+			#region expected
+			string expected = @"some text before viewcomponent
+<p>
+<strong>A ViewComponent</strong>
+</p>some text after viewcomponent";
+			#endregion
+			DoGet("UsingViewComponents/UsingComponentWithASingleLetterName.rails");
+			AssertReplyEqualTo(expected);
+		}
 	}
 }

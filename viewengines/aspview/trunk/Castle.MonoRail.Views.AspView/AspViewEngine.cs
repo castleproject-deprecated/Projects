@@ -17,7 +17,6 @@ namespace Castle.MonoRail.Views.AspView
 	using System;
 	using System.Collections;
 	using System.IO;
-	using System.Collections.Specialized;
 	using System.Configuration;
 	using System.Reflection;
 
@@ -240,7 +239,7 @@ namespace Castle.MonoRail.Views.AspView
 				className = className.Substring(0, i);
 			while (className[0] == '_' && className.Length > 1)
 				className = className.Substring(1);
-			return className;
+			return className.Replace('.', '_');
 		}
 		public static string NormalizeFileName(string fileName)
 		{

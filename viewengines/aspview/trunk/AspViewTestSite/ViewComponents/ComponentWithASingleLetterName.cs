@@ -1,4 +1,4 @@
-﻿// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
+// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,14 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Reflection;
-using System.Runtime.InteropServices;
+namespace AspViewTestSite.ViewComponents
+{
+	using Castle.MonoRail.Framework;
 
-[assembly: AssemblyTitle("Castle.MonoRail.Views.AspView")]
-[assembly: AssemblyDescription("AspView core assembly")]
-[assembly: AssemblyCompany("Ken Egozi")]
-[assembly: AssemblyProduct("AspView MonoRail ViewEngine")]
-[assembly: AssemblyCopyright("Copyright 2006, 2007")]
-[assembly: ComVisible(false)]
-[assembly: AssemblyVersion("1.0.3.323")]
-[assembly: AssemblyFileVersion("1.0.3.323")]
+	[ViewComponentDetails("A")]
+	public class ComponentWithASingleLetterName : ViewComponent
+	{
+		public override void Render()
+		{
+			RenderView("default");
+		}
+	}
+}

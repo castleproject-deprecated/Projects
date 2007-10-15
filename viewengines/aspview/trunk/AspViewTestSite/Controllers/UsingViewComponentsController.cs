@@ -33,5 +33,14 @@ namespace AspViewTestSite.Controllers
 			LayoutName = "UsingMultipleViewComponents";
 		}
 
+		public void UsingComponentWithDotInItsName()
+		{ 
+			
+		}
+
+		public void UsingComponentWithASingleLetterName()
+		{
+
+		}
 	}
 }
