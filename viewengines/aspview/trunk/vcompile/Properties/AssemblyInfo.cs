@@ -21,5 +21,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("AspView MonoRail ViewEngine")]
 [assembly: AssemblyCopyright("Copyright ©  2006-2007")]
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("1.0.3.323")]
-[assembly: AssemblyFileVersion("1.0.3.323")]
+[assembly: AssemblyVersion("1.0.3.324")]
+[assembly: AssemblyFileVersion("1.0.3.324")]

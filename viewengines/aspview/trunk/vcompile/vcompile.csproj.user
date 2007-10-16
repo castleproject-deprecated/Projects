@@ -2,6 +2,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <StartArguments>
     </StartArguments>
+    <StartWorkingDirectory>D:\Dev\OSS\AspView\trunk\AspViewTestSite\bin</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup>
     <PublishUrlHistory>http://localhost/vcompile/</PublishUrlHistory>

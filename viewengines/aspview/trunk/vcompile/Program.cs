@@ -26,12 +26,18 @@ namespace Castle.MonoRail.AspView.VCompile
 		static int Main(string[] args)
 		{
 			if (args != null && args.Length == 1)
+			{
 				if (args[0].Equals("-w", StringComparison.InvariantCultureIgnoreCase) ||
-					args[0].Equals("-wait", StringComparison.InvariantCultureIgnoreCase))
+				    args[0].Equals("-wait", StringComparison.InvariantCultureIgnoreCase))
 					Console.ReadLine();
-
-			string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-			siteRoot = baseDirectory.Substring(0, baseDirectory.LastIndexOf("\\bin"));
+				else
+					siteRoot = args[0];
+			}
+			if (siteRoot == null)
+			{
+				string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+				siteRoot = baseDirectory.Substring(0, baseDirectory.LastIndexOf("\\bin"));
+			}
 			Console.WriteLine("Compiling [" + siteRoot + "] ...");
 
 			InitializeConfig();

@@ -66,7 +66,7 @@ namespace Castle.MonoRail.Views.AspView
 			WriteImports(writer, imports);
 			WriteNamespace(writer, assemblyNamespace);
 			WriteOpenTag(writer);
-			WriteClassDecleration(writer, file.ClassName);
+			WriteClassDecleration(writer, file.ClassName, file.TypedViewName);
 			WriteOpenTag(writer);
 			WriteConstructorDefinition(writer, file.ClassName);
 			WriteProperties(writer, properties);
@@ -447,7 +447,8 @@ namespace Castle.MonoRail.Views.AspView
         /// </summary>
 		/// <param name="writer">A StringWriter that writes the generated class</param>
 		/// <param name="className">The class's name</param>
-		protected abstract void WriteClassDecleration(StringWriter writer, string className);
+		/// <param name="typedViewName">A view interface that would act as a typed wrapper around the view's Properties via the generic base class. If null then the regular (non generic) base class would be use</param>
+		protected abstract void WriteClassDecleration(StringWriter writer, string className, string typedViewName);
 
         /// <summary>
         /// Writes a constructor definition to the current string

@@ -64,8 +64,8 @@ namespace Castle.MonoRail.Views.AspView
                 writer.WriteLine("Imports {0}", import);
         }
 
-        protected override void WriteClassDecleration(StringWriter writer, string className)
-        {
+		protected override void WriteClassDecleration(StringWriter writer, string className, string typedViewName)
+		{
             writer.WriteLine("Public Class {0}",className);
             writer.WriteLine("Inherits AspViewBase");
         }

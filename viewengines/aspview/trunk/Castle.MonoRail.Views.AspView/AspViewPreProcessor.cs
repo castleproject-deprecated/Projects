@@ -19,7 +19,7 @@ namespace Castle.MonoRail.Views.AspView
 
     public class AspViewPreProcessor
     {
-		private static readonly Regex findPageDirective = new Regex("<%@\\s*Page\\s+Language\\s*=\\s*\"(?<language>[\\w#+]+)\".*%>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+		private static readonly Regex findPageDirective = new Regex("<%@\\s*Page\\s+Language\\s*=\\s*\"(?<language>[\\w#+]+)\"(?:\\s+Inherits\\s*=\\s*\"[\\w.]+<(?<view>[\\w.]+)>\\s*\")?.*%>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 		readonly Dictionary<ScriptingLanguage, LanguagePreProcessor> languagePreProcessors;
 
@@ -45,14 +45,21 @@ namespace Castle.MonoRail.Views.AspView
 
 		public void Process(AspViewFile file)
 		{
-			DetermineScriptingLanguage(file);
+			Match pageDirective = findPageDirective.Match(file.ViewSource);
+			DetermineScriptingLanguage(file, pageDirective.Groups["language"]);
+			DetermineTypedViewName(file, pageDirective.Groups["view"]);
 			GetPreProcessor(file.Language).Process(file);
 		}
 
-		private static void DetermineScriptingLanguage(AspViewFile file)
+		private static void DetermineTypedViewName(AspViewFile file, Group view)
 		{
-			string languageName = findPageDirective.Match(file.ViewSource).Groups["language"].Value.ToLower();
-			switch (languageName)
+			if (view != null)
+				file.TypedViewName = view.Value;
+		}
+
+    	private static void DetermineScriptingLanguage(AspViewFile file, Group languageName)
+		{
+			switch (languageName.Value.ToLower())
 			{
 				case "c#":
 					file.Language = ScriptingLanguage.CSharp;
@@ -74,4 +81,40 @@ namespace Castle.MonoRail.Views.AspView
 			throw new AspViewException("Unsupported language '{0}'", language);
 		}
     }
+}
+namespace a
+{
+	using System.Text.RegularExpressions;
+	public class test
+	{
+		public void b()
+		{
+			string reg = "<%@\\s*Page\\s+Language\\s*=\\s*\"(?<language>[\\w#+]+)\"(?:\\s+Inherits\\s*=\\s*\"[\\w.]+<(?<view>[\\w.]+)>\\s*\")?.*%>";
+			Regex findPageDirective = new Regex(reg, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+			string header1 = @"<%@ Page Language=""C#"" Inherits=""Castle.MonoRail.Views.AspView.ViewAtDesignTime<AspViewTestSite.Interfaces.UsingDictionaryAdapter.IWithTypedPropertiesView>"" %>
+<%@ Import Namespace=""TestModel"" %>";
+
+			string header2 = @"<%@ Page Language=""C#"" Inherits=""Castle.MonoRail.Views.AspView.ViewAtDesignTime"" %>
+<%
+			%>";
+
+			string header3 = @"<%@ Page Language=""C#"" %>
+<%
+			%>";
+
+			Match match = findPageDirective.Match(header1);
+			System.Console.WriteLine("lang:[{0}]\tview:[{1}]",
+				match.Groups["language"].Value,
+				match.Groups["view"] == null ? "NULL" : match.Groups["view"].Value);
+			match = findPageDirective.Match(header2);
+			System.Console.WriteLine("lang:[{0}]\tview:[{1}]",
+				match.Groups["language"].Value,
+				match.Groups["view"] == null ? "NULL" : match.Groups["view"].Value);
+			match = findPageDirective.Match(header3);
+			System.Console.WriteLine("lang:[{0}]\tview:[{1}]",
+				match.Groups["language"].Value,
+				match.Groups["view"] == null ? "NULL" : match.Groups["view"].Value);
+		}
+	}
 }

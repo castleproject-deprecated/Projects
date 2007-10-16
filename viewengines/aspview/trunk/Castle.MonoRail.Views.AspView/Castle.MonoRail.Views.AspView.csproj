@@ -40,6 +40,10 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Components.DictionaryAdapter, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\Lib\Castle\Castle.Components.DictionaryAdapter.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Solution Items\Lib\Castle\Castle.Core.dll</HintPath>
@@ -59,6 +63,10 @@
     <Compile Include="AspViewCompiler.cs" />
     <Compile Include="AspViewCompilerOptions.cs" />
     <Compile Include="AspViewConfigurationSection.cs" />
+    <Compile Include="AspViewBaseWithGenericTypedInterface.cs" />
+    <Compile Include="ViewAtDesignTimeWithGenericTypedInterface.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="CSharpPreProcessor.cs" />
     <Compile Include="AspViewEngine.cs" />
     <Compile Include="AspViewEngineOptions.cs" />

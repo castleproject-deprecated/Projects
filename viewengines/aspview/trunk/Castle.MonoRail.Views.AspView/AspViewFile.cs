@@ -20,6 +20,7 @@ namespace Castle.MonoRail.Views.AspView
 		private string _viewSource;
 		private string _className;
 		private ScriptingLanguage _language;
+		private string _typedViewName;
 		private string _concreteClass;
 
 		public string ViewName
@@ -38,6 +39,12 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			get { return _className; }
 			set { _className = value; }
+		}
+
+		public string TypedViewName
+		{
+			get { return _typedViewName; }
+			set { _typedViewName = value; }
 		}
 
 		public ScriptingLanguage Language
