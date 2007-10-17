@@ -32,5 +32,18 @@ namespace Castle.MonoRail.Views.AspView.Tests
 			DoGet("UsingDictionaryAdapter/WithTypedProperties.rails");
             AssertReplyEqualTo(expected);
         }
-    }
+		[Test]
+		public void WithInterfaceHierarchyWorks()
+		{
+			string expected = @"<p id=""No_32"">
+<strong>Hello McHale, Kevin</strong></p>
+<form action=""Save.rails"">
+    <input type=""text"" name=""post.PublishDate"" value='16/10/2007 00:00:00' />
+    <input type=""text"" name=""post.Content"" value='Some content' />
+    <input type=""submit"" value=""Save"" />
+</form>";
+			DoGet("UsingDictionaryAdapter/Nested/AlsoWithTypedProperties.rails");
+			AssertReplyEqualTo(expected);
+		}
+	}
 }
