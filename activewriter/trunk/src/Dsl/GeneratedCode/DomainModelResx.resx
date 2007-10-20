@@ -453,6 +453,26 @@
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;UseGenericRelations&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.Model/PropertyNameFilterExpression.Description" xml:space="preserve">
+    <value>A regular expression to apply to all property names. MAtches will bereplaced with empty strings.</value>
+    <comment>Description for DomainProperty &apos;PropertyNameFilterExpression&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/PropertyNameFilterExpression.DisplayName" xml:space="preserve">
+    <value>Property Name Filter Expression</value>
+    <comment>DisplayName for DomainProperty &apos;PropertyNameFilterExpression&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/PropertyNameFilterExpression.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;PropertyNameFilterExpression&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/InitializeIListFields.Description" xml:space="preserve">
+    <value>Initializas private IList fields with List concrete type.</value>
+    <comment>Description for DomainProperty &apos;InitializeIListFields&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/InitializeIListFields.DisplayName" xml:space="preserve">
+    <value>Initialize IList Fields</value>
+    <comment>DisplayName for DomainProperty &apos;InitializeIListFields&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ModelClass.Description" xml:space="preserve">
     <value>A class of the domain</value>
     <comment>Description for DomainClass &apos;ModelClass&apos;</comment>

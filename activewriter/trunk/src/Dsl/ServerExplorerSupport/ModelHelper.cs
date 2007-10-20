@@ -13,6 +13,8 @@
 // limitations under the License.
 
 using System.Text;
+using System.Text.RegularExpressions;
+
 namespace Altinoren.ActiveWriter.ServerExplorerSupport
 {
     internal static class ModelHelper
@@ -20,16 +22,32 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
 
         private static bool usePascalCase = true;
 
-        public static string GetSafeName(string name)
+        public static string GetSafeName(string name, string propertyNameFilterExpression)
         {
-            if (usePascalCase)
+            string s;
+
+            // optionally remove prefix from property name
+            if (string.IsNullOrEmpty(propertyNameFilterExpression))
             {
-                return PascalCase(name).Replace(" ", string.Empty);
+                s = name;
             }
             else
             {
-                return name.Replace(" ", string.Empty);
+                s = Regex.Replace(name, propertyNameFilterExpression, string.Empty);
             }
+
+            // Then format name
+            if (usePascalCase)
+            {
+                s = PascalCase(s).Replace(" ", string.Empty);
+            }
+            else
+            {
+                s = s.Replace(" ", string.Empty);
+            }
+
+
+            return s;
         }
 
         public static string PascalCase(string original)
@@ -54,6 +72,8 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
             }
             else
             {
+                // Pascal casing of simple strings (without "_"s) should make no assumptions
+                // on the rest of the string other than the first character. 
                 return original.Substring(0, 1).ToUpperInvariant() + original.Substring(1);
             }
         }

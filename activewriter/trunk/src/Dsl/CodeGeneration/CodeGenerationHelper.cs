@@ -36,6 +36,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
     public class CodeGenerationHelper
     {
+        private const string GenericListInterface = "IList";
+        private const string GenericListClass = "List";
+
         #region Private Variables
 
         private Assembly _activeRecord;
@@ -46,6 +49,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private OutputWindowHelper _output;
         private Model _model;
         private string _namespace;
+        private string _defaultNamespace;
 
         private Hashtable _propertyBag = null;
         private DTE _dte = null;
@@ -69,6 +73,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             else
                 _namespace = _model.Namespace;
 
+
             _dte = DTEHelper.GetDTE(_propertyBag["Generic.ProcessID"].ToString());
             _propertyBag.Add("Generic.DTE", _dte);
 
@@ -86,6 +91,13 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 case CodeLanguage.VB:
                     _provider = new VBCodeProvider();
                     _propertyBag.Add("Generic.Language", CodeLanguage.VB);
+
+                    // use VB default namespace if it was set
+                    VSProject project = (VSProject)_projectItem.ContainingProject.Object;
+                    Property DefaultNamespaceProperty = project.Project.Properties.Item("DefaultNamespace");
+
+                    _defaultNamespace = (string)DefaultNamespaceProperty.Value;
+
                     break;
                 default:
                     throw new ArgumentException(
@@ -104,6 +116,20 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CodeGenerationContext.Initialize();
 
             CodeCompileUnit compileUnit = new CodeCompileUnit();
+
+            if (_language == CodeLanguage.VB)
+            {
+                // turn option strict on for VB if in project settings
+
+                VSProject project = (VSProject) _projectItem.ContainingProject.Object;
+                Property prop = project.Project.Properties.Item("OptionExplicit");
+
+                if ((prjOptionStrict) prop.Value == prjOptionStrict.prjOptionStrictOn)
+                {
+                    compileUnit.UserData.Add("AllowLateBound", false);
+                }
+            }
+            
             _propertyBag.Add("CodeGeneration.CodeCompileUnit", compileUnit);
 
             CodeNamespace nameSpace = new CodeNamespace(_namespace);
@@ -861,7 +887,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                       ? NamingHelper.GetPlural(sourceClass.Name)
                                       : NamingHelper.GetPlural(relationship.TargetPropertyName);
             string propertyType = String.IsNullOrEmpty(relationship.TargetPropertyType)
-                                      ? "IList"
+                                      ? GenericListInterface
                                       : relationship.TargetPropertyType;
 
             CodeMemberField memberField;
@@ -870,6 +896,19 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             else
                 memberField = GetGenericMemberField(sourceClass.Name, propertyName, propertyType, Accessor.Private, relationship.TargetAccess);
             classDeclaration.Members.Add(memberField);
+
+            // initalise field
+            if (_model.InitializeIListFields && propertyType == GenericListInterface)
+            {
+                CodeObjectCreateExpression fieldCreator = new CodeObjectCreateExpression();
+
+                CodeTypeReference fieldCreatorType = new CodeTypeReference(GenericListClass);
+
+                fieldCreatorType.TypeArguments.Add(sourceClass.Name);
+                fieldCreator.CreateType = fieldCreatorType;
+
+                memberField.InitExpression = fieldCreator;
+            }
 
             CodeMemberProperty memberProperty;
             if (String.IsNullOrEmpty(relationship.TargetDescription))
@@ -946,7 +985,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                       : NamingHelper.GetPlural(relationship.SourcePropertyName);
 
             string propertyType = String.IsNullOrEmpty(relationship.TargetPropertyType)
-                                      ? "IList"
+                                      ? GenericListInterface
                                       : relationship.TargetPropertyType;
 
             CodeMemberField memberField;
@@ -992,7 +1031,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                           : NamingHelper.GetPlural(relationship.TargetPropertyName);
 
             string propertyType = String.IsNullOrEmpty(relationship.SourcePropertyType)
-                                      ? "IList"
+                                      ? GenericListInterface
                                       : relationship.SourcePropertyType;
 
             CodeMemberField memberField;
@@ -1401,6 +1440,13 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             parameters.ReferencedAssemblies.Add("System.dll");
             parameters.ReferencedAssemblies.Add("mscorlib.dll");
 
+            // also add references to assemblies referenced by this project
+            VSProject proj = (VSProject)_projectItem.ContainingProject.Object;
+            foreach (Reference reference in proj.References)
+            {
+                parameters.ReferencedAssemblies.Add(reference.Path);
+            }
+
             CompilerResults results = _provider.CompileAssemblyFromDom(parameters, compileUnit);
             if (results.Errors.Count == 0)
             {
@@ -1438,27 +1484,69 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
                         string xml = (string)visitor.GetProperty("Xml").GetValue(generationVisitor, null);
                         XmlDocument document = new XmlDocument();
+                        document.PreserveWhitespace = true;
                         document.LoadXml(xml);
                         XmlNodeList nodeList = document.GetElementsByTagName("class");
                         if (nodeList.Count > 0)
                         {
-                        	string assemblyNameTostrip = ", " + _assemblyName;
-                            string name = null;
+                            XmlAttribute attribute = (XmlAttribute) nodeList[0].Attributes.GetNamedItem("name");
 
-                            foreach (XmlAttribute attribute in nodeList[0].Attributes)
+
+
+                            if (attribute != null)
                             {
-                                if (attribute.Name == "name")
+                                string tempAssemblyName = attribute.Value.Substring(attribute.Value.LastIndexOf(','));
+
+                                string name = attribute.Value;
+
+                                name = name.Substring(0, name.LastIndexOf(','));
+
+                                string newValue = name;
+                                // if name isn't a fully-qualified namespace, then prepend project default
+                                if ((name.IndexOf('.') < 0) && !string.IsNullOrEmpty(_defaultNamespace))
+                                    newValue = _defaultNamespace + "." + name;
+
+                                // append assembly name
+                                attribute.Value = newValue + actualAssemblyName;
+
+                                // also fix any class attributes
+                                XmlNodeList ClassAttributes = document.SelectNodes("//@class");
+
+                                foreach (XmlAttribute ClassAttribute in ClassAttributes)
                                 {
-									name = attribute.Value.Replace(assemblyNameTostrip, string.Empty);
-                                    break;
+                                    UpdateClassName(actualAssemblyName, tempAssemblyName, ClassAttribute);
                                 }
+
+                                xml = document.OuterXml;
+                                nHibernateConfigs.Add(name, xml);
                             }
 
-                            if (name != null)
-                                nHibernateConfigs.Add(name, xml.Replace(assemblyNameTostrip, actualAssemblyName));
                         }
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Fix class attributes that were referencing a temporary assembly name by prefixing with class namespace and using
+        /// correct assembly name
+        /// </summary>
+        /// <param name="actualAssemblyName"></param>
+        /// <param name="tempAssemblyName"></param>
+        /// <param name="attribute"></param>
+        private void UpdateClassName(string actualAssemblyName, string tempAssemblyName, XmlAttribute attribute)
+        {
+            //remove temporary assembly name
+            string name = attribute.Value.Replace(tempAssemblyName, String.Empty);
+
+            if (attribute.Value.Length != name.Length) {
+
+                // if name isn't a fully-qualified namespace, then prepend project default
+                if ((name.IndexOf('.') < 0) && !string.IsNullOrEmpty(_defaultNamespace))
+                    name = _defaultNamespace + "." + name;
+
+                // append assembly name
+                attribute.Value = name + actualAssemblyName;
             }
         }
 
@@ -1469,6 +1557,21 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             {
                 // If this line is reached, these assemblies are not in GAC. Load from designated place.
                 string assemblyPath = Path.Combine(_assemblyLoadPath, name.Name + ".dll");
+
+                // try project references
+                if (!File.Exists(assemblyPath))
+                {
+                    VSProject proj = (VSProject)_projectItem.ContainingProject.Object;
+                    foreach (Reference reference in proj.References)
+                    {
+                        if (reference.Name == name.Name)
+                        {
+                            assemblyPath = reference.Path;
+                            break;
+                        }
+                    }
+
+                }
 
                 return Assembly.LoadFrom(assemblyPath);
             }

@@ -571,6 +571,40 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// PropertyNameFilterExpression
+			if (!serializationContext.Result.Failed)
+			{
+				string attribPropertyNameFilterExpression = reader.GetAttribute("propertyNameFilterExpression");
+				if (attribPropertyNameFilterExpression != null)
+				{
+					global::System.String valueOfPropertyNameFilterExpression;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribPropertyNameFilterExpression), out valueOfPropertyNameFilterExpression))
+					{
+						instanceOfModel.PropertyNameFilterExpression = valueOfPropertyNameFilterExpression;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "propertyNameFilterExpression", typeof(global::System.String), attribPropertyNameFilterExpression);
+					}
+				}
+			}
+			// InitializeIListFields
+			if (!serializationContext.Result.Failed)
+			{
+				string attribInitializeIListFields = reader.GetAttribute("initializeIListFields");
+				if (attribInitializeIListFields != null)
+				{
+					global::System.Boolean valueOfInitializeIListFields;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribInitializeIListFields), out valueOfInitializeIListFields))
+					{
+						instanceOfModel.InitializeIListFields = valueOfInitializeIListFields;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "initializeIListFields", typeof(global::System.Boolean), attribInitializeIListFields);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -1503,6 +1537,29 @@ namespace Altinoren.ActiveWriter
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("useGenericRelations", serializedPropValue);
+					}
+				}
+			}
+			// PropertyNameFilterExpression
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.PropertyNameFilterExpression;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("propertyNameFilterExpression", propValue);
+				}
+			}
+			// InitializeIListFields
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.Boolean propValue = instanceOfModel.InitializeIListFields;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Boolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("initializeIListFields", serializedPropValue);
 					}
 				}
 			}

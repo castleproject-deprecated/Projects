@@ -49,7 +49,7 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
             ModelClass cls = new ModelClass(_store);
             // TODO: Disabled to test server explorer drag drop bug of DeviceBuffer
             //Log(String.Format("Class: Name={0}, Schema={1}", name, owner));
-            cls.Name = ModelHelper.GetSafeName(name);
+            cls.Name = ModelHelper.GetSafeName(name, string.Empty);
             cls.Schema = owner;
             cls.Table = name;
 
@@ -60,7 +60,7 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
         public ModelProperty NewProperty(ModelClass cls, Column column)
         {
             ModelProperty property = new ModelProperty(_store);
-            property.Name = ModelHelper.GetSafeName(column.Name);
+            property.Name = ModelHelper.GetSafeName(column.Name, _model.PropertyNameFilterExpression);
             property.Column = column.Name;
             property.NotNull = !column.Nullable;
             property.Accessor = Accessor.Public;

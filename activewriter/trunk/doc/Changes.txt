@@ -13,6 +13,12 @@ Fixed:
 - CONTRIB-59: (Revised description) Problems with NHQG integration when the temporary path, used for out argument, contains spaces. (Patch: Steve Degosserie)
 - Contrib-56: When creating a many-one relation, the generation of the Ilist should always be generic, independent of the generic settings for the objects. (Thanks: Robert van Hoornaar)
 - Contrib-61: (If the namespace cannot be retrieved from the VS project system) When a class is added to a model, the .hbm.xml file that is added as a nested file is missing the first character of the class name in the filename. (Thanks: David Gardiner)
+- Contrib-63: VB projects can have a default root Namespace. ActiveWriter should take this into account when generating the mapping files. It currently appears to only use the model's Namespace property. (Patch: David Gardiner)
+- Contrib-66: The private field used by the relation properties should be initialised with a constructor (Patch: David Gardiner) (Added as a model level option, defaults to false)
+- Contrib-69: Generated VB code should respect project's Option Strict setting (Patch: David Gardiner)
+- Contrib-70: Using a custom type that is defined in a user project fails (Partial patch: David Gardiner)
+- Contrib-72: Option to remove prefix from generated property names.(Patch: David Gardiner) (Implemented as model level RegEx)
+- Contrib-73: Look for Castle.ActiveWriter and NHibernate in project references. (Patch: David Gardiner)
 
 Preview 3.1
 

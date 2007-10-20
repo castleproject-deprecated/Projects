@@ -138,6 +138,16 @@
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="04d53b21-4bae-48c7-89a7-82c4c5e7215b" Description="A regular expression to apply to all property names. MAtches will bereplaced with empty strings." Name="PropertyNameFilterExpression" DisplayName="Property Name Filter Expression" Category="Code Generation">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="951613a5-1988-44fb-a3a1-b0fcd0388b9e" Description="Initializas private IList fields with List concrete type." Name="InitializeIListFields" DisplayName="Initialize IList Fields" DefaultValue="false">
+          <Type>
+            <ExternalTypeMoniker Name="/System/Boolean" />
+          </Type>
+        </DomainProperty>
       </Properties>
       <ElementMergeDirectives>
         <ElementMergeDirective>
@@ -1425,6 +1435,12 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="useGenericRelations">
             <DomainPropertyMoniker Name="Model/UseGenericRelations" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="propertyNameFilterExpression">
+            <DomainPropertyMoniker Name="Model/PropertyNameFilterExpression" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="initializeIListFields">
+            <DomainPropertyMoniker Name="Model/InitializeIListFields" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

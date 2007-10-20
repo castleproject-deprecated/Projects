@@ -210,6 +210,18 @@
         <xsd:documentation>Instructs ActiveWriter to generate code using generic collections for class relations where possible. This setting is overridable in class level.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
+    <!-- Property: PropertyNameFilterExpression -->
+    <xsd:attribute name="propertyNameFilterExpression" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>A regular expression to apply to all property names. MAtches will bereplaced with empty strings.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: InitializeIListFields -->
+    <xsd:attribute name="initializeIListFields" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>Initializas private IList fields with List concrete type.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
   </xsd:complexType>
   
   <!-- Model Moniker -->

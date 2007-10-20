@@ -2467,6 +2467,182 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region PropertyNameFilterExpression domain property code
+		
+		/// <summary>
+		/// PropertyNameFilterExpression domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid PropertyNameFilterExpressionDomainPropertyId = new global::System.Guid(0x04d53b21, 0x4bae, 0x48c7, 0x89, 0xa7, 0x82, 0xc4, 0xc5, 0xe7, 0x21, 0x5b);
+		
+		/// <summary>
+		/// Storage for PropertyNameFilterExpression
+		/// </summary>
+		private global::System.String propertyNameFilterExpressionPropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of PropertyNameFilterExpression domain property.
+		/// A regular expression to apply to all property names. MAtches will bereplaced
+		/// with empty strings.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/PropertyNameFilterExpression.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/PropertyNameFilterExpression.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/PropertyNameFilterExpression.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainObjectId("04d53b21-4bae-48c7-89a7-82c4c5e7215b")]
+		public global::System.String PropertyNameFilterExpression
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return propertyNameFilterExpressionPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				PropertyNameFilterExpressionPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.PropertyNameFilterExpression domain property.
+		/// </summary>
+		internal sealed partial class PropertyNameFilterExpressionPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private PropertyNameFilterExpressionPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.PropertyNameFilterExpression domain property value handler.
+			/// </summary>
+			public static readonly PropertyNameFilterExpressionPropertyHandler Instance = new PropertyNameFilterExpressionPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.PropertyNameFilterExpression domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return PropertyNameFilterExpressionDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.propertyNameFilterExpressionPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.propertyNameFilterExpressionPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region InitializeIListFields domain property code
+		
+		/// <summary>
+		/// InitializeIListFields domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid InitializeIListFieldsDomainPropertyId = new global::System.Guid(0x951613a5, 0x1988, 0x44fb, 0xa3, 0xa1, 0xb0, 0xfc, 0xd0, 0x38, 0x8b, 0x9e);
+		
+		/// <summary>
+		/// Storage for InitializeIListFields
+		/// </summary>
+		private global::System.Boolean initializeIListFieldsPropertyStorage;
+		
+		/// <summary>
+		/// Gets or sets the value of InitializeIListFields domain property.
+		/// Initializas private IList fields with List concrete type.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/InitializeIListFields.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/InitializeIListFields.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainObjectId("951613a5-1988-44fb-a3a1-b0fcd0388b9e")]
+		public global::System.Boolean InitializeIListFields
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return initializeIListFieldsPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				InitializeIListFieldsPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.InitializeIListFields domain property.
+		/// </summary>
+		internal sealed partial class InitializeIListFieldsPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.Boolean>
+		{
+			private InitializeIListFieldsPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.InitializeIListFields domain property value handler.
+			/// </summary>
+			public static readonly InitializeIListFieldsPropertyHandler Instance = new InitializeIListFieldsPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.InitializeIListFields domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return InitializeIListFieldsDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.Boolean GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.initializeIListFieldsPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.Boolean newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.Boolean oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.initializeIListFieldsPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region Classes opposite domain role accessor
 		/// <summary>
 		/// Gets a list of Classes.

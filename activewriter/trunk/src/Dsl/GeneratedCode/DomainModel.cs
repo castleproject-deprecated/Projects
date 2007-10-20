@@ -115,6 +115,8 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(Model), "UseNHQG", Model.UseNHQGDomainPropertyId, typeof(Model.UseNHQGPropertyHandler)),
 				new DomainMemberInfo(typeof(Model), "NHQGExecutable", Model.NHQGExecutableDomainPropertyId, typeof(Model.NHQGExecutablePropertyHandler)),
 				new DomainMemberInfo(typeof(Model), "UseGenericRelations", Model.UseGenericRelationsDomainPropertyId, typeof(Model.UseGenericRelationsPropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "PropertyNameFilterExpression", Model.PropertyNameFilterExpressionDomainPropertyId, typeof(Model.PropertyNameFilterExpressionPropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "InitializeIListFields", Model.InitializeIListFieldsDomainPropertyId, typeof(Model.InitializeIListFieldsPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "Cache", ModelClass.CacheDomainPropertyId, typeof(ModelClass.CachePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "DiscriminatorColumn", ModelClass.DiscriminatorColumnDomainPropertyId, typeof(ModelClass.DiscriminatorColumnPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "DiscriminatorType", ModelClass.DiscriminatorTypeDomainPropertyId, typeof(ModelClass.DiscriminatorTypePropertyHandler)),
