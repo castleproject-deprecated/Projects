@@ -165,5 +165,28 @@ The next text should be bolded:
 			DoGet("UsingViewComponents/UsingComponentWithASingleLetterName.rails");
 			AssertReplyEqualTo(expected);
 		}
+
+		[Test]
+		public void UsingComponentWithDotInAParameterValueWorks()
+		{
+			#region expected
+			string expected = @"some text before viewcomponent
+with.dotsome text after viewcomponent";
+			#endregion
+			DoGet("UsingViewComponents/UsingComponentWithDotInAParameterValue.rails");
+			AssertReplyEqualTo(expected);
+		}
+
+		[Test]
+		public void UsingComponentWithDotInALiteralParameterValueWorks()
+		{
+			#region expected
+			string expected = @"some text before viewcomponent
+with.dotsome text after viewcomponent";
+			#endregion
+			DoGet("UsingViewComponents/UsingComponentWithDotInALiteralParameterValue.rails");
+			AssertReplyEqualTo(expected);
+		}
+		
 	}
 }

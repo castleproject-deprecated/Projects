@@ -35,12 +35,19 @@ namespace AspViewTestSite.Controllers
 
 		public void UsingComponentWithDotInItsName()
 		{ 
-			
 		}
 
 		public void UsingComponentWithASingleLetterName()
 		{
-
 		}
+
+		public void UsingComponentWithDotInAParameterValue()
+		{
+		}
+
+		public void UsingComponentWithDotInALiteralParameterValue()
+		{
+		}
+		
 	}
 }

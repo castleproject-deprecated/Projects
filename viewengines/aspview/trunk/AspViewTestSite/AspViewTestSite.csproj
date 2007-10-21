@@ -78,6 +78,7 @@
     <Compile Include="Interfaces\UsingDictionaryAdapter\Nested\IAlsoWithTypedPropertiesView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewComponents\Bold.cs" />
+    <Compile Include="ViewComponents\Echo.cs" />
     <Compile Include="ViewComponents\ComponentWithASingleLetterName.cs" />
     <Compile Include="ViewComponents\ComponentWithDotInItsName.cs" />
     <Compile Include="ViewComponents\RepeaterComponent.cs" />
@@ -105,6 +106,8 @@
     <Content Include="Views\UsingDictionaryAdapter\Nested\AlsoWithTypedProperties.aspx" />
     <Content Include="Views\UsingDictionaryAdapter\WithTypedProperties.aspx" />
     <Content Include="Views\UsingReferences\Show.aspx" />
+    <Content Include="Views\UsingViewComponents\UsingComponentWithDotInALiteralParameterValue.aspx" />
+    <Content Include="Views\UsingViewComponents\UsingComponentWithDotInAParameterValue.aspx" />
     <Content Include="Views\UsingViewComponents\UsingComponentWithASingleLetterName.aspx" />
     <Content Include="Views\UsingViewComponents\UsingComponentWithDotInItsName.aspx" />
     <Content Include="Views\UsingViewComponents\UsingMultipleViewComponents.aspx" />
