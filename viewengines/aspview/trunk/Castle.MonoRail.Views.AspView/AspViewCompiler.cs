@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+using System.Diagnostics;
 
 namespace Castle.MonoRail.Views.AspView
 {
@@ -57,7 +58,6 @@ namespace Castle.MonoRail.Views.AspView
 			if (files.Count == 0)
 				return;
 
-
 			preProcessor.Process(files);
 
 			List<AspViewFile> vbFiles = files.FindAll(delegate(AspViewFile file) { return (file.Language == ScriptingLanguage.VbNet); });
@@ -67,11 +67,7 @@ namespace Castle.MonoRail.Views.AspView
 
 			if (options.KeepTemporarySourceFiles)
 			{
-				string targetTemporarySourceFilesDirectory = options.TemporarySourceFilesDirectory;
-				if (!Path.IsPathRooted(targetTemporarySourceFilesDirectory))
-					targetTemporarySourceFilesDirectory = Path.Combine(targetDirectory, targetTemporarySourceFilesDirectory);
-				if (!Directory.Exists(targetTemporarySourceFilesDirectory))
-					Directory.CreateDirectory(targetTemporarySourceFilesDirectory);
+				string targetTemporarySourceFilesDirectory = GetTargetTemporarySourceFilesDirectory(targetDirectory);
 				foreach (AspViewFile file in files)
 					SaveFile(file, targetTemporarySourceFilesDirectory);
 			}
@@ -80,15 +76,57 @@ namespace Castle.MonoRail.Views.AspView
 
 		}
 
+		private string GetTargetTemporarySourceFilesDirectory(string targetDirectory)
+		{
+			string targetTemporarySourceFilesDirectory = options.TemporarySourceFilesDirectory;
+			if (!Path.IsPathRooted(targetTemporarySourceFilesDirectory))
+				targetTemporarySourceFilesDirectory = Path.Combine(targetDirectory, targetTemporarySourceFilesDirectory);
+			if (!Directory.Exists(targetTemporarySourceFilesDirectory))
+				Directory.CreateDirectory(targetTemporarySourceFilesDirectory);
+			return targetTemporarySourceFilesDirectory;
+		}
+
 		private string Compile(string targetDirectory, ICollection<AspViewFile> csFiles, ICollection<AspViewFile> vbFiles, IEnumerable<ReferencedAssembly> references)
 		{
+			string[] assemblyInfoModule = null;
+			if (options.AllowPartiallyTrustedCallers)
+			{
+				assemblyInfoModule = GetAssemblyInfoModule(targetDirectory);
+			}
 			if (vbFiles.Count == 0)
-				return CompileCSharpModule(targetDirectory, csFiles, references, true, null);
+				return CompileCSharpModule(targetDirectory, csFiles, references, true, assemblyInfoModule);
 			if (csFiles.Count == 0)
-				return CompileVbModule(targetDirectory, vbFiles, references, true, null);
+				return CompileVbModule(targetDirectory, vbFiles, references, true, assemblyInfoModule);
 
-			string vbModulePath = CompileVbModule(targetDirectory, vbFiles, references, false, null);
+			string vbModulePath = CompileVbModule(targetDirectory, vbFiles, references, false, assemblyInfoModule);
 			return CompileCSharpModule(targetDirectory, csFiles, references, true, new string[1] { vbModulePath });
+		}
+
+		private string[] GetAssemblyInfoModule(string targetDirectory)
+		{
+			CSharpCodeProvider codeProvider = new CSharpCodeProvider();
+			CompilerResults results;
+			CompilerParameters parameters = new CompilerParameters();
+			parameters.CompilerOptions = "/t:module";
+			parameters.OutputAssembly = Path.Combine(targetDirectory,
+				string.Format("CompiledViews.{0}.aptcmodule", codeProvider.FileExtension));
+
+			const string STR_AssemblySystemSecurityAllowPartiallyTrustedCallers = "[assembly: System.Security.AllowPartiallyTrustedCallers]public class AssemblyInfoClass { }";
+
+			if (options.KeepTemporarySourceFiles)
+			{
+				string allowPartiallyTrustedCallersAttributeFile = Path.Combine(GetTargetTemporarySourceFilesDirectory(targetDirectory), "AssemblyInfo.cs");
+				using (StreamWriter sr = new StreamWriter(allowPartiallyTrustedCallersAttributeFile))
+				{
+					sr.WriteLine(STR_AssemblySystemSecurityAllowPartiallyTrustedCallers);
+				}
+				results = codeProvider.CompileAssemblyFromFile(parameters, allowPartiallyTrustedCallersAttributeFile);
+			}
+			else
+			{
+				results = codeProvider.CompileAssemblyFromSource(parameters, STR_AssemblySystemSecurityAllowPartiallyTrustedCallers);
+			}
+			return new string[] { results.PathToAssembly }; 
 		}
 
 		private static List<AspViewFile> GetViewFiles(string siteRoot)
@@ -153,14 +191,13 @@ namespace Castle.MonoRail.Views.AspView
 					assemblyName = Path.Combine(targetDirectory, assemblyName);
 				parameters.CompilerOptions += " /r:\"" + assemblyName + "\"";
 			}
-
 			if (modulesToAdd != null && modulesToAdd.Length > 0)
 			{
 				StringBuilder sb = new StringBuilder();
-				sb.Append(" /addmodule: ");
-				foreach (string moduleToAdd in modulesToAdd)
-					sb.Append(Path.Combine(targetDirectory, moduleToAdd));
-				parameters.CompilerOptions += "\"" + sb + "\"";
+				sb.Append(" /addmodule:\"");
+				sb.Append(string.Join("\";\"", modulesToAdd));
+				sb.Append("\"");
+				parameters.CompilerOptions += sb;
 			}
 
 			CompilerResults results;

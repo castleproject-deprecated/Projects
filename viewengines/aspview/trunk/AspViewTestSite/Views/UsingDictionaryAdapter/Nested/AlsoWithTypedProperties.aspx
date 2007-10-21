@@ -9,7 +9,6 @@ Hello <%=view.Name%>
 <%if (view.IsImportant.GetValueOrDefault(false))
 	  Output("</strong>"); %>
 </p>
-<%=view.Name %>
 <form action="Save.rails">
     <input type="text" name="post.PublishDate" value='<%=view.Post.PublishDate %>' />
     <input type="text" name="post.Content" value='<%=view.Post.Content %>' />

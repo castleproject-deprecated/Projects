@@ -31,6 +31,7 @@ namespace Castle.MonoRail.Views.AspView
 			bool? debug = null;
 			bool? inMemory = null;
 			bool? autoRecompilation = null;
+			bool? allowPartiallyTrustedCallers = null;
 			string temporarySourceFilesDirectory = null;
 			bool? saveFiles = null;
 			List<ReferencedAssembly> references = new List<ReferencedAssembly>();
@@ -42,6 +43,8 @@ namespace Castle.MonoRail.Views.AspView
 				inMemory = bool.Parse(section.Attributes["inMemory"].Value);
 			if (section.Attributes["autoRecompilation"] != null)
 				autoRecompilation = bool.Parse(section.Attributes["autoRecompilation"].Value);
+			if (section.Attributes["allowPartiallyTrustedCallers"] != null)
+				allowPartiallyTrustedCallers = bool.Parse(section.Attributes["allowPartiallyTrustedCallers"].Value);
 			if (section.Attributes["temporarySourceFilesDirectory"] != null)
 				temporarySourceFilesDirectory = section.Attributes["temporarySourceFilesDirectory"].Value;
 			if (section.Attributes["saveFiles"] != null)
@@ -57,7 +60,7 @@ namespace Castle.MonoRail.Views.AspView
 			}
 
 			AspViewCompilerOptions compilerOptions = new AspViewCompilerOptions(
-				debug, inMemory, autoRecompilation, temporarySourceFilesDirectory, saveFiles, references);
+				debug, inMemory, autoRecompilation, allowPartiallyTrustedCallers, temporarySourceFilesDirectory, saveFiles, references);
 
 			if (section.Attributes["actionExtension"] != null)
 			{

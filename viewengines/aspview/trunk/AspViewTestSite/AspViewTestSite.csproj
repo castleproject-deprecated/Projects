@@ -83,13 +83,6 @@
     <Compile Include="ViewComponents\RepeaterComponent.cs" />
     <Compile Include="ViewComponents\Simple.cs" />
     <Compile Include="ViewFilters\SingleLineViewFilter.cs" />
-    <Compile Include="Views\SmartDispatcherTest\Save.aspx.cs">
-      <SubType>ASPXCodeBehind</SubType>
-      <DependentUpon>Save.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SmartDispatcherTest\Save.aspx.designer.cs">
-      <DependentUpon>Save.aspx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Components\A\Default.aspx" />

@@ -2,4 +2,4 @@
 <%
     string s;
 %>
-<%=FormHelper.TextField("object.field")%>
+<%=this.Helpers.Form.TextField("object.field")%>

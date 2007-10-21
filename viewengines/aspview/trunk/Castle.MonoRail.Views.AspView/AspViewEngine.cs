@@ -28,24 +28,17 @@ namespace Castle.MonoRail.Views.AspView
 	{
 		private bool needsRecompiling = false;
 		static AspViewEngineOptions options;
-		static readonly Type[] viewConstructorArgumentTypes = new Type[4]
-			{
-				typeof(AspViewEngine),
-				typeof(TextWriter),
-				typeof(IRailsEngineContext),
-				typeof(Controller)
-			};
+
 		readonly Hashtable compilations = Hashtable.Synchronized(new Hashtable(CaseInsensitiveStringComparer.Default));
-		readonly Hashtable constructors = Hashtable.Synchronized(new Hashtable());
 
 		#region IInitializable Members
 
 		public AspViewBase CreateView(Type type, TextWriter output, IRailsEngineContext context, Controller controller)
 		{
-			ConstructorInfo constructor = (ConstructorInfo)constructors[type];
-			AspViewBase self = (AspViewBase)FormatterServices.GetUninitializedObject(type);
-			constructor.Invoke(self, new object[] { this, output, context, controller });
-			return self;
+			AspViewBase view = (AspViewBase)//Activator.CreateInstance(type);
+			FormatterServices.GetUninitializedObject(type);
+			view.Initialize(this, output, context, controller);
+			return view;
 		}
 
 		public void Initialize()
@@ -209,13 +202,11 @@ namespace Castle.MonoRail.Views.AspView
 		private void CacheViewType(Type viewType)
 		{
 			compilations[viewType.Name] = viewType;
-			constructors[viewType] = viewType.GetConstructor(viewConstructorArgumentTypes);
 		}
 
 		private void LoadPrecompiledViews()
 		{
 			compilations.Clear();
-			constructors.Clear();
 
 			Assembly precompiledViews;
 			try

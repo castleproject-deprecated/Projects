@@ -32,28 +32,40 @@ namespace Castle.MonoRail.Views.AspView
         public void Output(string message) { }
         public void Output(string message, params object[] arguments) { }
 
+		public IHelpersAccesor Helpers
+		{ get { throw new ShouldNotBeImplemented(); } }
+		#region obsolete helper accessors
+		[Obsolete("Use Helpers.Ajax instead")]
         public AjaxHelper AjaxHelper
         { get { throw new ShouldNotBeImplemented(); } }
-        protected DictHelper DictHelper
+		[Obsolete("Use Helpers.Dict instead")]
+		protected DictHelper DictHelper
         { get { throw new ShouldNotBeImplemented(); } }
-        protected ScriptaculousHelper ScriptaculousHelper
+		[Obsolete("Use Helpers.Scriptaculous instead")]
+		protected ScriptaculousHelper ScriptaculousHelper
         { get { throw new ShouldNotBeImplemented(); } }
-        protected EffectsFatHelper EffectsFatHelper
+		[Obsolete("Use Helpers.Effects instead")]
+		protected EffectsFatHelper EffectsFatHelper
         { get { throw new ShouldNotBeImplemented(); } }
-        protected FormHelper FormHelper
+		[Obsolete("Use Helpers.Form instead")]
+		protected FormHelper FormHelper
         { get { throw new ShouldNotBeImplemented(); } }
-        protected HtmlHelper HtmlHelper
+		[Obsolete("Use Helpers.Html instead")]
+		protected HtmlHelper HtmlHelper
         { get { throw new ShouldNotBeImplemented(); } }
-        protected PaginationHelper PaginationHelper
+		[Obsolete("Use Helpers.Pagination instead")]
+		protected PaginationHelper PaginationHelper
         { get { throw new ShouldNotBeImplemented(); } }
-        protected ValidationHelper ValidationHelper
+		[Obsolete("Use Helpers.Validation instead")]
+		protected ValidationHelper ValidationHelper
         { get { throw new ShouldNotBeImplemented(); } }
-        protected WizardHelper WizardHelper
+		[Obsolete("Use Helpers.Wizard instead")]
+		protected WizardHelper WizardHelper
         { get { throw new ShouldNotBeImplemented(); } }
+		#endregion
+		#endregion
 
-        #endregion
-
-        public class ShouldNotBeImplemented : NotImplementedException
+		public class ShouldNotBeImplemented : NotImplementedException
         {
             public ShouldNotBeImplemented() :
                 base("This method is a mock for intellisense purposes only. It should not be called in runtime through this class or any of it's successors")

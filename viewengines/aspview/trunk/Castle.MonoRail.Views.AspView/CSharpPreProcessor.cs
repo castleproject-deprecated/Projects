@@ -95,9 +95,11 @@ namespace Castle.MonoRail.Views.AspView
 
 		protected override void WriteConstructorDefinition(StringWriter writer, string className)
 		{
+			/*
 			writer.WriteLine(
 				"public {0}(AspViewEngine viewEngine, TextWriter output, IRailsEngineContext context, Controller controller) : base(viewEngine,output,context,controller) {{ }}",
 				className);
+			 * */
 		}
 
 		protected override void WriteProperties(StringWriter writer, Dictionary<string, ViewProperty> properties)

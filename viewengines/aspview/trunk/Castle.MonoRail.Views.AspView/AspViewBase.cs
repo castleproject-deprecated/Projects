@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Components.DictionaryAdapter;
+
 namespace Castle.MonoRail.Views.AspView
 {
     using System;
@@ -26,6 +28,7 @@ namespace Castle.MonoRail.Views.AspView
     public abstract class AspViewBase
     {
         #region members
+		private bool initialized = false; 
         protected TextWriter _outputWriter;
         protected TextWriter _viewOutput;
         protected Dictionary<string, object> _properties;
@@ -34,15 +37,30 @@ namespace Castle.MonoRail.Views.AspView
         protected Controller _controller;
         protected AspViewEngine _viewEngine;
         protected AspViewBase _parentView;
+		protected IDictionaryAdapterFactory dictionaryAdapterFactory;
+		private IHelpersAccesor helpers;
+		/// <summary>
+		/// Stack of writers, used as buffers for viewfilters
+		/// </summary>
+		private Stack<TextWriter> outputWriters;
+		/// <summary>
+		/// Maintains the currently active view filters
+		/// </summary>
+		private Stack<IViewFilter> viewFilters;
+
         #endregion
         #region props
-		/// <summary>
-		/// Gets the AjaxHelper instance
-		/// </summary>
-		protected AjaxHelper AjaxHelper
+
+		protected IHelpersAccesor Helpers
 		{
-			get { return (AjaxHelper)Properties["AjaxHelper"]; }
+			get
+			{
+				if (helpers == null)
+					helpers = dictionaryAdapterFactory.GetAdapter<IHelpersAccesor>(Properties);
+				return helpers;
+			}
 		}
+
 		/// <summary>
 		/// Gets the Application's virtual root
 		/// </summary>
@@ -57,63 +75,90 @@ namespace Castle.MonoRail.Views.AspView
 		{
             get { return (string)Properties["fullSiteRoot"]; }
 		}
-        /// <summary>
+
+		#region obsolete helper accessors
+		/// <summary>
+		/// Gets the AjaxHelper instance
+		/// </summary>
+		[Obsolete("Use Helpers.Ajax instead")]
+		protected AjaxHelper AjaxHelper
+		{
+			get { return (AjaxHelper)Properties["AjaxHelper"]; }
+		}
+		
+		/// <summary>
         /// Gets the DictHelper instance
         /// </summary>
-        protected DictHelper DictHelper 
+		[Obsolete("Use Helpers.Dict instead")]
+		protected DictHelper DictHelper 
         {
             get { return (DictHelper)Properties["DictHelper"]; }
         }
-        /// <summary>
-        /// Gets the Effects2Helper instance
+
+		/// <summary>
+		/// Gets the ScriptaculousHelper instance
         /// </summary>
-        protected ScriptaculousHelper ScriptaculousHelper
+		[Obsolete("Use Helpers.Scriptaculous instead")]
+		protected ScriptaculousHelper ScriptaculousHelper
         {
             get { return (ScriptaculousHelper)Properties["ScriptaculousHelper"]; }
         }
-        /// <summary>
+
+		/// <summary>
         /// Gets the EffectsFatHelper instance
         /// </summary>
-        protected EffectsFatHelper EffectsFatHelper 
+		[Obsolete("Use Helpers.Effects instead")]
+		protected EffectsFatHelper EffectsFatHelper 
         {
             get { return (EffectsFatHelper)Properties["EffectsFatHelper"]; }
         }
-        /// <summary>
+
+		/// <summary>
         /// Gets the FormHelper instance
         /// </summary>
-        protected FormHelper FormHelper 
+		[Obsolete("Use Helpers.Form instead")]
+		protected FormHelper FormHelper 
         {
             get { return (FormHelper)Properties["FormHelper"]; }
         }
-        /// <summary>
+
+		/// <summary>
         /// Gets the HtmlHelper instance
         /// </summary>
-        protected HtmlHelper HtmlHelper 
+		[Obsolete("Use Helpers.Html instead")]
+		protected HtmlHelper HtmlHelper 
         {
             get { return (HtmlHelper)Properties["HtmlHelper"]; }
         }
-        /// <summary>
+
+		/// <summary>
         /// Gets the PaginationHelper instance
         /// </summary>
-        protected PaginationHelper PaginationHelper 
+		[Obsolete("Use Helpers.Pagination instead")]
+		protected PaginationHelper PaginationHelper 
         {
             get { return (PaginationHelper)Properties["PaginationHelper"]; }
         }
-        /// <summary>
+
+		/// <summary>
         /// Gets the ValidationHelper instance
         /// </summary>
-        protected ValidationHelper ValidationHelper 
+		[Obsolete("Use Helpers.Validation instead")]
+		protected ValidationHelper ValidationHelper 
         {
             get { return (ValidationHelper)Properties["ValidationHelper"]; }
         }
-        /// <summary>
+
+		/// <summary>
         /// Gets the WizardHelper instance
         /// </summary>
-        protected WizardHelper WizardHelper 
+		[Obsolete("Use Helpers.Wizard instead")]
+		protected WizardHelper WizardHelper 
         {
             get { return (WizardHelper)Properties["WizardHelper"]; }
         }
-        
+		#endregion
+
         /// <summary>
         /// Gets the output writer for the current view rendering
         /// </summary>
@@ -182,14 +227,21 @@ namespace Castle.MonoRail.Views.AspView
             get { return _parentView; }
         }
         #endregion
-        public AspViewBase(AspViewEngine viewEngine, TextWriter output, IRailsEngineContext context, Controller controller)
-        {
-            _viewEngine = viewEngine;
-            _outputWriter = output;
-            _context = context;
-            _controller = controller;
-            InitProperties();
-        }
+
+		public virtual void Initialize(AspViewEngine viewEngine, TextWriter output, IRailsEngineContext context, Controller controller)
+		{
+			if (initialized)
+				throw new ApplicationException("Sorry, but a view instance cannot be initialized twice");
+			initialized = true;
+			_viewEngine = viewEngine;
+			_outputWriter = output;
+			_context = context;
+			_controller = controller;
+			InitProperties();
+			dictionaryAdapterFactory = new DictionaryAdapterFactory();
+			outputWriters = new Stack<TextWriter>();
+			viewFilters = new Stack<IViewFilter>();
+		}
 
         private void InitProperties()
         {
@@ -221,7 +273,8 @@ namespace Castle.MonoRail.Views.AspView
             _properties["fullSiteRoot"] = _context.Request.Uri.GetLeftPart(UriPartial.Authority) + _context.ApplicationPath;
             _extentedPropertiesList = new List<IDictionary>();
         }
-        /// <summary>
+        
+		/// <summary>
         /// When overriden in a concrete view class, renders the view content to the output writer
         /// </summary>
         public abstract void Render();
@@ -234,7 +287,8 @@ namespace Castle.MonoRail.Views.AspView
         {
             OutputSubView(subViewName, new Dictionary<string,object>());
         }
-        /// <summary>
+
+		/// <summary>
         /// Renders another view in place
         /// </summary>
         /// <param name="subViewName">The sub view's name</param>
@@ -243,6 +297,7 @@ namespace Castle.MonoRail.Views.AspView
         {
 			OutputSubView(subViewName, _outputWriter, parameters);
         }
+
 		/// <summary>
 		/// Renders another view in place
 		/// </summary>
@@ -282,16 +337,6 @@ namespace Castle.MonoRail.Views.AspView
 				Utilities.ConvertArgumentsToParameters(arguments) as IDictionary;
             OutputSubView(subViewName, writer, parameters);
         }
-
-        /// <summary>
-        /// Stack of writers, used as buffers for viewfilters
-        /// </summary>
-        readonly Stack<TextWriter> outputWriters = new Stack<TextWriter>();
-
-		/// <summary>
-        /// Maintains the currently active view filters
-        /// </summary>
-		readonly Stack<IViewFilter> viewFilters = new Stack<IViewFilter>();
 
 		/// <summary>
         /// Searching a view filter given it's type's name
@@ -460,7 +505,8 @@ namespace Castle.MonoRail.Views.AspView
 
         protected abstract string ViewDirectory { get; }
         protected abstract string ViewName { get; }
-        /// <summary>
+
+		/// <summary>
         /// Sets a view's parent view. Used in layouts
         /// </summary>
         /// <param name="view">The view's parent</param>

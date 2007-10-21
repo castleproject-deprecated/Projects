@@ -64,6 +64,7 @@
     <Compile Include="AspViewCompilerOptions.cs" />
     <Compile Include="AspViewConfigurationSection.cs" />
     <Compile Include="AspViewBaseWithGenericTypedInterface.cs" />
+    <Compile Include="IHelpersAccesor.cs" />
     <Compile Include="ViewAtDesignTimeWithGenericTypedInterface.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

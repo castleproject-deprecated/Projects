@@ -16,15 +16,14 @@ namespace Castle.MonoRail.Views.AspView
 {
     using System.IO;
     using Framework;
-	using Components.DictionaryAdapter;
 
-    public abstract class AspViewBase<IView> : AspViewBase
+	public abstract class AspViewBase<IView> : AspViewBase
     {
 		protected IView view;
-        public AspViewBase(AspViewEngine viewEngine, TextWriter output, IRailsEngineContext context, Controller controller)
-			:base(viewEngine, output, context, controller)
-        {
-			view = new DictionaryAdapterFactory().GetAdapter<IView>(Properties);
+		public override void Initialize(AspViewEngine viewEngine, TextWriter output, IRailsEngineContext context, Controller controller)
+		{
+			base.Initialize(viewEngine, output, context, controller);
+			view = dictionaryAdapterFactory.GetAdapter<IView>(Properties);
         }
 	}
 }

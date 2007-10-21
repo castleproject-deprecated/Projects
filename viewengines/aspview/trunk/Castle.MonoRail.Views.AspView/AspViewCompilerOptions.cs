@@ -22,6 +22,7 @@ namespace Castle.MonoRail.Views.AspView
 		private bool _debug = false;
 		private bool _inMemory = false;
 		private bool _autoRecompilation = false;
+		private bool _allowPartiallyTrustedCallers = false;
 		private bool _keepTemporarySourceFiles = false;
 		private string _temporarySourceFilesDirectory = "temporarySourceFiles";
 		readonly List<ReferencedAssembly> _assembliesToReference = new List<ReferencedAssembly>();
@@ -45,6 +46,7 @@ namespace Castle.MonoRail.Views.AspView
 			bool? debug,
 			bool? inMemory,
 			bool? autoRecompilation,
+			bool? allowPartiallyTrustedCallers,
 			string temporarySourceFilesDirectory,
 			bool? keepTemporarySourceFiles,
 			IEnumerable<ReferencedAssembly> references)
@@ -53,6 +55,7 @@ namespace Castle.MonoRail.Views.AspView
 			if (debug.HasValue) _debug = debug.Value;
 			if (inMemory.HasValue) _inMemory = inMemory.Value;
 			if (autoRecompilation.HasValue) _autoRecompilation = autoRecompilation.Value;
+			if (allowPartiallyTrustedCallers.HasValue) _allowPartiallyTrustedCallers = allowPartiallyTrustedCallers.Value;
 			if (keepTemporarySourceFiles.HasValue) _keepTemporarySourceFiles = keepTemporarySourceFiles.Value;
 			if (temporarySourceFilesDirectory != null) _temporarySourceFilesDirectory = temporarySourceFilesDirectory;
 			AddReferences(references);
@@ -91,6 +94,14 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			get { return _autoRecompilation; }
 			set { _autoRecompilation = value; }
+		}		
+		/// <summary>
+		/// if true, the engine will compile the views with AllowPartiallyTrustedCallers
+		/// </summary>
+		public bool AllowPartiallyTrustedCallers
+		{
+			get { return _allowPartiallyTrustedCallers; }
+			set { _allowPartiallyTrustedCallers = value; }
 		}
 		/// <summary>
 		/// Location of the generated concrete classes, if saved.
