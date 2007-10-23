@@ -100,6 +100,12 @@ component InsertJavascript, {@Std: "Ajax, Scriptaculous"}
 						<li>
 							<a href="/smartgrid/StartEndRow.rails">Start & End Row behaviors</a>
 						</li>
+						<li>
+							<a href="/smartgrid/SortBehavior.rails">Sorting Behavior</a>
+						</li>
+						<li>
+							<a href="/smartgrid/SortJSBehavior.rails">Sorting Behavior via Ajax</a>
+						</li>
 					</ul>
 					
 					<h3>CaptchaComponent</h3>
@@ -129,6 +135,13 @@ component InsertJavascript, {@Std: "Ajax, Scriptaculous"}
 							<a href="/Faq/list.rails">FAQ List</a>
 						</li>
 					</ul>		
+					<h3>Whitespace Filter</h3>
+					<ul>
+						<li>
+							<a href="/whitespace/index.rails">Sample Charts Whitespaced</a>
+						</li>
+					</ul>		
+					
 					
 				</div>
 
