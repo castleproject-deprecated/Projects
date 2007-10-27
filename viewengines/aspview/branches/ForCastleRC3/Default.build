@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+    <SolutionDir>$(MSBuildProjectDirectory)</SolutionDir>
+	</PropertyGroup>
+	
+	<Import Project="Common.Build.xml" />
+
+  <Target Name="GenerateAssemblyInfo">
+		<MSBuild	Projects="GenerateAssemblyInfo.build" />
+  </Target>
+
+	<Target Name="Build" DependsOnTargets="GenerateAssemblyInfo">
+		<MSBuild	Projects="AspView.sln"
+							Properties="Configuration=Debug" />
+	</Target>
+
+  <Target Name="Test" DependsOnTargets="Build">
+
+    <NUnit Assemblies="$(SolutionDir)\Castle.MonoRail.Views.AspView.Tests\bin\Debug\Castle.MonoRail.Views.AspView.Tests.dll" 
+          ToolPath="$(ToolsDir)\NUnit"
+    />
+
+  </Target>
+
+</Project>

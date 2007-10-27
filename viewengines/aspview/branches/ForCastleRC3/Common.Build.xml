@@ -2,11 +2,12 @@
 <Project DefaultTargets="Version" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<PropertyGroup>
-    <SolutionDir>$(MSBuildProjectDirectory)\..</SolutionDir>
+    <SolutionDir Condition="$(SolutionDir) == ''">$(MSBuildProjectDirectory)\..</SolutionDir>
     <SolutionItemsDir>$(SolutionDir)\Solution Items</SolutionItemsDir>
     <LibDir>$(SolutionItemsDir)\Lib</LibDir>
     <CastleLibDir>$(LibDir)\Castle</CastleLibDir>
     <MSBUildLibDir>$(LibDir)\MSBuild</MSBUildLibDir>
+    <ToolsDir>$(SolutionItemsDir)\Tools</ToolsDir>
 	</PropertyGroup>
 
 	<Import Project="$(MSBUildLibDir)\MSBuild.Community.Tasks.Targets"/>
@@ -21,7 +22,6 @@
 		<Major>1</Major>
 		<Minor>0</Minor>
 		<Build>3</Build>
-		<Version>$(Major).$(Minor).$(Build).$(Revision)</Version>
 		<AssemblyCompany>http://www.aspview.com</AssemblyCompany>
 		<AssemblyProduct>Castle.MonoRail.Views.AspView</AssemblyProduct>
 		<AssemblyCopyright>Copyright © Ken Egozi 2006-2007</AssemblyCopyright>

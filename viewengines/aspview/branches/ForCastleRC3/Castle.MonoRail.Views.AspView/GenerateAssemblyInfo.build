@@ -9,7 +9,7 @@
   </PropertyGroup>
 
 	<Target Name="GenerateAssemblyInfo" DependsOnTargets="Version" >
-    <Message Text="Generating assembly info for $(AssemblyTitle) Version $(Version)" />
+    <Message Text="Generating assembly info for $(AssemblyTitle) Version $(Major).$(Minor).$(Build).$(Revision)" />
     <MakeDir Directories="$(PropertiesDirectory)" />
 		<AssemblyInfo CodeLanguage="CS"
 				OutputFile="$(PropertiesDirectory)\AssemblyInfo.cs"
@@ -20,8 +20,8 @@
 				AssemblyCopyright="$(AssemblyCopyright)"
 				ComVisible="$(ComVisible)"
 				CLSCompliant="$(CLSCompliant)"
-				AssemblyVersion="$(Version)"
-				AssemblyFileVersion="$(Version)"
+				AssemblyVersion="$(Major).$(Minor).$(Build).$(Revision)"
+				AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)"
 				Condition="$(Revision) != '0' "/>
 	</Target>
 
