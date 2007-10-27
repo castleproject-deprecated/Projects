@@ -1,51 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
 	<Import Project="$(MSBuildProjectDirectory)\Solution Items\Lib\MSBuild\MSBuild.Community.Tasks.Targets"/>
 
-	<Target Name="GetRevision">
-		<SvnVersion LocalPath="$(MSBuildProjectDirectory)">
-			<Output TaskParameter="Revision" PropertyName="Revision" />
-		</SvnVersion>
+  <Target Name="GenerateAssemblyInfo">
+    <MSBuild Projects="$(MSBuildProjectDirectory)\Castle.MonoRail.Views.AspView\GenerateAssemblyInfo.build" />
+    <MSBuild Projects="$(MSBuildProjectDirectory)\VCompile\GenerateAssemblyInfo.build" />
 	</Target>
-	
-	<PropertyGroup>
-		<Major>1</Major>
-		<Minor>0</Minor>
-		<Build>3</Build>
-		<AssemblyCompany>http://www.aspview.com</AssemblyCompany>
-		<AssemblyProduct>Castle.MonoRail.Views.AspView</AssemblyProduct>
-		<AssemblyCopyright>Copyright © Ken Egozi 2006-2007</AssemblyCopyright>
-		<ComVisible>false</ComVisible>
-		<CLSCompliant>true</CLSCompliant>
-	</PropertyGroup>
-
-	<Target Name="Version" DependsOnTargets="GetRevision">
-    <Message Text="Version: $(Major).$(Minor).$(Build).$(Revision)"/>
-  </Target>
-	
-	<ItemGroup>
-		<DefaultExclude Include="**\.svn\**" />
-		<DefaultExclude Include="**\bin\**" />
-		<DefaultExclude Include="**\obj\**" />
-		<DefaultExclude Include="**\Release\**" />
-		<DefaultExclude Include="**\Debug\**" />
-		<DefaultExclude Include="**\Test\**" />
-		<DefaultExclude Include="**\TestResults\**" />
-		<DefaultExclude Include="**\doc\**" />
-		<DefaultExclude Include="**\www\**" />
-		<DefaultExclude Include="**\*.user" />
-		<DefaultExclude Include="**\*.suo" />
-		<DefaultExclude Include="**\*.zip" />
-		<DefaultExclude Include="**\*.txt" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ZipFiles Include="**\*.*" Exclude="@(DefaultExclude)" />
-	</ItemGroup>
-
-	<Import Project="$(MSBuildProjectDirectory)\Castle.MonoRail.Views.AspView\GenerateAssemblyInfo.build" />
-	<Import Project="$(MSBuildProjectDirectory)\VCompile\GenerateAssemblyInfo.build" />
-
 
 <!--	
 	<Target Name="Compile" DependsOnTargets="Version">
