@@ -1,0 +1,3 @@
+After you checkout this solution (or after an update) you should run GenerateAssemblyInfo.bat in order to get the needed AssemblyInfo.cs files generated in the main projects (Castle.MonoRail.Views.AspView and VCompile)
+
+After that you can use Visual Studio (or any other IDE) to work on the source code.
