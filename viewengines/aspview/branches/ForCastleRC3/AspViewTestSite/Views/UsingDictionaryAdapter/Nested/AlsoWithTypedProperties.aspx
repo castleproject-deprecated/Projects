@@ -1,7 +1,9 @@
 <%@ Page Language="C#" Inherits="Castle.MonoRail.Views.AspView.ViewAtDesignTime<AspViewTestSite.Interfaces.UsingDictionaryAdapter.Nested.IAlsoWithTypedPropertiesView>" %>
 <%@ Import Namespace="TestModel" %>
+<aspView:properties>
 <%
 %>
+</aspView:properties>
 <p id="No_<%=view.Id%>">
 <%if (view.IsImportant.GetValueOrDefault(false))
 	  Output("<strong>"); %>

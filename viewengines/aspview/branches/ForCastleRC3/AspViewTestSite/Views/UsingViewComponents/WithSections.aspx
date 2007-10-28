@@ -1,9 +1,11 @@
 <%@ Page Language="C#" %>
 <%@ Import Namespace="Castle.MonoRail.Framework.Helpers" %>
+<aspView:properties>
 <%
 	string[] items;
 	string item;
 %>
+</aspView:properties>
 A simple viewcomponent, without a body and sections
 <component:Repeater source="<%=items%>">
 	<section:header>
