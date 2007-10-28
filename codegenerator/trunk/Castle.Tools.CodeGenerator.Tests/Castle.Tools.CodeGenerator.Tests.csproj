@@ -28,11 +28,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+    <Reference Include="Castle.Components.Validator, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Castle.Components.Validator.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.MonoRail.Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+    <Reference Include="Castle.MonoRail.Framework, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\Castle.MonoRail.Framework.dll</HintPath>
     </Reference>
@@ -76,6 +80,7 @@
     <Compile Include="Services\NRefactoryParserFactoryTests.cs" />
     <Compile Include="Services\NullLoggerTests.cs" />
     <Compile Include="Services\ControllerMapGeneratorTests.cs" />
+    <Compile Include="Services\RouteMapGeneratorTests.cs" />
     <Compile Include="Services\SiteTreeGeneratorServiceTests.cs" />
     <Compile Include="Services\DefaultTreeCreationServiceTests.cs" />
     <Compile Include="Services\TypeInspectionVisitorTests.cs" />

@@ -3,7 +3,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-
+using Castle.Tools.CodeGenerator.Model;
 using ICSharpCode.NRefactory.Parser;
 
 using Microsoft.Build.BuildEngine;
@@ -150,6 +150,7 @@ namespace Castle.Tools.CodeGenerator.MsBuild
             this.Log.LogMessage(MessageImportance.High, "Loading References...");
 
 			if (Debug) System.Diagnostics.Debugger.Launch();
+			
             foreach (ITaskItem reference in _assemblyReferences)
             {
                 try
@@ -192,7 +193,7 @@ namespace Castle.Tools.CodeGenerator.MsBuild
             {
                 _typeResolver.Clear();
 
-                ControllerVisitor visitor = new ControllerVisitor(_logger, _typeResolver, _treeService);
+				ControllerVisitor visitor = new ControllerVisitor(_logger, _typeResolver, _treeService);
             	string filePath = item.GetMetadata("FullPath");
             	visitor.VisitCompilationUnit(_sourceStorage.GetParsedSource(filePath).CompilationUnit, null);
             }
@@ -209,7 +210,7 @@ namespace Castle.Tools.CodeGenerator.MsBuild
 
             foreach (IGenerator generator in _generators)
             {
-                generator.Generate(_treeService.Root);
+				generator.Generate(_treeService.Root);
             }
 
             CreateGeneratedItems();
@@ -224,6 +225,7 @@ namespace Castle.Tools.CodeGenerator.MsBuild
             if (_generators.Count > 0) return;
             string serviceType = this.ServiceTypeName;
             _generators.Add(new ActionMapGenerator(_logger, _source, _naming, this.Namespace, serviceType));
+			_generators.Add(new RouteMapGenerator(_logger, _source, _naming, this.Namespace, serviceType));
             _generators.Add(new ViewMapGenerator(_logger, _source, _naming, this.Namespace, serviceType));
             _generators.Add(new ControllerPartialsGenerator(_logger, _source, _naming, this.Namespace, serviceType));
             _generators.Add(new ControllerMapGenerator(_logger, _source, _naming, this.Namespace, serviceType));

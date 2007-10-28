@@ -3,218 +3,316 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-
+using System.Text;
 using Castle.MonoRail.Framework;
+using Castle.MonoRail.Framework.Routing;
 using Castle.MonoRail.Framework.Services;
 using Castle.Tools.CodeGenerator.Services;
 
 namespace Castle.Tools.CodeGenerator.Model
 {
-  public class ActionArgument
-  {
-    #region Member Data
-    private int _index;
-    private Type _type;
-    private string _name;
-    private object _value;
-    #endregion
+	public class ActionArgument
+	{
+		#region Member Data
 
-    #region Properties
-    public Type Type
-    {
-      get { return _type; }
-    }
+		private int _index;
+		private Type _type;
+		private string _name;
+		private object _value;
 
-    public int Index
-    {
-      get { return _index; }
-    }
-    
-    public string Name
-    {
-      get { return _name; }
-    }
+		#endregion
 
-    public object Value
-    {
-      get { return _value; }
-    }
-    #endregion
+		#region Properties
 
-    #region ActionArgument()
-    public ActionArgument(int index, string name, object value)
-      : this(index, name, value.GetType(), value)
-    {
-    }
+		public Type Type
+		{
+			get { return _type; }
+		}
 
-    public ActionArgument(int index, string name, Type type, object value)
-    {
-      _index = index;
-      _name = name;
-      _type = type;
-      _value = value;
-    }
-    #endregion
-  }
+		public int Index
+		{
+			get { return _index; }
+		}
 
-  public class ControllerViewReference : IControllerViewReference
-  {
-    #region Member Data
-    private ICodeGeneratorServices _services;
-    private Type _controllerType;
-    private string _controllerName;
-    private string _areaName;
-    private string _actionName;
-    #endregion
+		public string Name
+		{
+			get { return _name; }
+		}
 
-    #region Properties
-    public ICodeGeneratorServices Services
-    {
-      get { return _services; }
-    }
+		public object Value
+		{
+			get { return _value; }
+		}
 
-    public Type ControllerType
-    {
-      get { return _controllerType; }
-    }
+		#endregion
 
-    public string ControllerName
-    {
-      get { return _controllerName; }
-    }
+		#region ActionArgument()
 
-    public string AreaName
-    {
-      get { return _areaName; }
-    }
+		public ActionArgument(int index, string name, object value)
+			: this(index, name, value.GetType(), value)
+		{
+		}
 
-    public string ActionName
-    {
-      get { return _actionName; }
-    }
-    #endregion
+		public ActionArgument(int index, string name, Type type, object value)
+		{
+			_index = index;
+			_name = name;
+			_type = type;
+			_value = value;
+		}
 
-    #region ControllerViewReference()
-    public ControllerViewReference(ICodeGeneratorServices services, Type controllerType, string areaName, string controllerName, string actionName)
-    {
-      if (services == null) throw new ArgumentNullException("services");
-      if (controllerType == null) throw new ArgumentNullException("controllerType");
-      if (String.IsNullOrEmpty(controllerName)) throw new ArgumentNullException("controllerName");
-      if (String.IsNullOrEmpty(actionName)) throw new ArgumentNullException("actionName");
-      _services = services;
-      _controllerType = controllerType;
-      _controllerName = controllerName;
-      _areaName = areaName;
-      _actionName = actionName;
-    }
-    #endregion
+		#endregion
+	}
 
-    #region Methods
-    public virtual void Render(bool skiplayout)
-    {
-      string controller = _controllerName;
-      if (!String.IsNullOrEmpty(_areaName))
-        controller = Path.Combine(_areaName, _controllerName);
-      _services.Controller.RenderView(controller, _actionName, skiplayout);
-    }
+	public class ControllerViewReference : IControllerViewReference
+	{
+		#region Member Data
 
-    public virtual void Render()
-    {
-      Render(false);
-    }
-    #endregion
-  }
+		private ICodeGeneratorServices _services;
+		private Type _controllerType;
+		private string _controllerName;
+		private string _areaName;
+		private string _actionName;
 
-  public class ControllerActionReference : ControllerViewReference, IControllerActionReference
-  {
-    #region Member Data
-    private ActionArgument[] _arguments;
-    private MethodSignature _signature;
-    #endregion
+		#endregion
 
-    #region Properties
-    public ActionArgument[] Arguments
-    {
-      get { return _arguments; }
-    }
+		#region Properties
 
-    public MethodSignature ActionMethodSignature
-    {
-      get { return _signature; }
-    }
-    #endregion
+		public ICodeGeneratorServices Services
+		{
+			get { return _services; }
+		}
 
-    #region ControllerActionReference()
-    public ControllerActionReference(ICodeGeneratorServices services, Type controllerType, string areaName, string controllerName, string actionName, MethodSignature signature, params ActionArgument[] arguments)
-      : base(services, controllerType, areaName, controllerName, actionName)
-    {
-      _arguments = arguments;
-      _signature = signature;
-    }
-    #endregion
+		public Type ControllerType
+		{
+			get { return _controllerType; }
+		}
 
-    #region Methods
-    public virtual void Transfer()
-    {
-      this.Services.Controller.CancelView();
-      this.Render();
+		public string ControllerName
+		{
+			get { return _controllerName; }
+		}
 
-      List<Type> types = new List<Type>();
-      List<object> arguments = new List<object>();
+		public string AreaName
+		{
+			get { return _areaName; }
+		}
 
-      foreach (ActionArgument argument in _arguments)
-      {
-        arguments.Add(argument.Value);
-        types.Add(argument.Type);
-      }
+		public string ActionName
+		{
+			get { return _actionName; }
+		}
 
-      MethodInfo method = this.ControllerType.GetMethod(this.ActionName, types.ToArray());
-      if (method == null)
-      {
-        throw new ArgumentException("Transfer failed, no method named: " + this.ActionName);
-      }
-      method.Invoke(this.Services.Controller, arguments.ToArray());
-    }
+		#endregion
 
-    public virtual string Url
-    {
-      get
-      {
-        DefaultUrlBuilder urlBuilder = new DefaultUrlBuilder();
-        urlBuilder.ServerUtil = this.Services.RailsContext.Server;
-        urlBuilder.UseExtensions = true;
-        IDictionary parameters = new Hashtable();
-        IArgumentConversionService conversionService = this.Services.ArgumentConversionService;
-        int index = 0;
-        foreach (ActionArgument argument in this.Arguments)
-        {
-          parameters.Add(conversionService.ConvertKey(this.ActionMethodSignature, argument), conversionService.ConvertArgument(this.ActionMethodSignature, argument));
-          index++;
-        }
-        UrlInfo urlInfo = this.Services.RailsContext.UrlInfo;
-        return urlBuilder.BuildUrl(urlInfo, this.AreaName, this.ControllerName, this.ActionName, parameters);
-      }
-    }
+		#region ControllerViewReference()
 
-    public virtual void Redirect(bool useJavascript)
-    {
-      if (useJavascript)
-      {
-        string type = "text/javascript";
-        string javascript = String.Format("<script type=\"{0}\">window.location = \"{1}\";</script>", type, this.Url);
-        this.Services.Controller.CancelView();
-        this.Services.Controller.RenderText(javascript);
-      }
-      else
-      {
-        this.Services.RedirectService.Redirect(this.Url);
-      }
-    }
+		public ControllerViewReference(ICodeGeneratorServices services, Type controllerType, string areaName,
+		                               string controllerName, string actionName)
+		{
+			if (services == null) throw new ArgumentNullException("services");
+			if (controllerType == null) throw new ArgumentNullException("controllerType");
+			if (String.IsNullOrEmpty(controllerName)) throw new ArgumentNullException("controllerName");
+			if (String.IsNullOrEmpty(actionName)) throw new ArgumentNullException("actionName");
+			_services = services;
+			_controllerType = controllerType;
+			_controllerName = controllerName;
+			_areaName = areaName;
+			_actionName = actionName;
+		}
 
-    public virtual void Redirect()
-    {
-      Redirect(false);
-    }
-    #endregion
-  }
+		#endregion
+
+		#region Methods
+
+		public virtual void Render(bool skiplayout)
+		{
+			string controller = _controllerName;
+			if (!String.IsNullOrEmpty(_areaName))
+				controller = Path.Combine(_areaName, _controllerName);
+			_services.Controller.RenderView(controller, _actionName, skiplayout);
+		}
+
+		public virtual void Render()
+		{
+			Render(false);
+		}
+
+		#endregion
+	}
+
+	public class ControllerActionReference : ControllerViewReference, IControllerActionReference
+	{
+		#region Member Data
+
+		protected ActionArgument[] _arguments;
+		protected MethodSignature _signature;
+
+		#endregion
+
+		#region Properties
+
+		public ActionArgument[] Arguments
+		{
+			get { return _arguments; }
+		}
+
+		public MethodSignature ActionMethodSignature
+		{
+			get { return _signature; }
+		}
+
+		#endregion
+
+		#region ControllerActionReference()
+
+		public ControllerActionReference(ICodeGeneratorServices services, Type controllerType, string areaName,
+		                                 string controllerName, string actionName, MethodSignature signature,
+		                                 params ActionArgument[] arguments)
+			: base(services, controllerType, areaName, controllerName, actionName)
+		{
+			_arguments = arguments;
+			_signature = signature;
+		}
+
+		#endregion
+
+		#region Methods
+
+		public virtual void Transfer()
+		{
+			this.Services.Controller.CancelView();
+			this.Render();
+
+			List<Type> types = new List<Type>();
+			List<object> arguments = new List<object>();
+
+			foreach (ActionArgument argument in _arguments)
+			{
+				arguments.Add(argument.Value);
+				types.Add(argument.Type);
+			}
+
+			MethodInfo method = this.ControllerType.GetMethod(this.ActionName, types.ToArray());
+			if (method == null)
+			{
+				throw new ArgumentException("Transfer failed, no method named: " + this.ActionName);
+			}
+			method.Invoke(this.Services.Controller, arguments.ToArray());
+		}
+
+		public virtual string Url
+		{
+			get
+			{
+				DefaultUrlBuilder urlBuilder = new DefaultUrlBuilder();
+				urlBuilder.ServerUtil = this.Services.RailsContext.Server;
+				urlBuilder.UseExtensions = true;
+				IDictionary parameters = new Hashtable();
+				IArgumentConversionService conversionService = this.Services.ArgumentConversionService;
+				int index = 0;
+				foreach (ActionArgument argument in this.Arguments)
+				{
+					parameters.Add(conversionService.ConvertKey(this.ActionMethodSignature, argument),
+					               conversionService.ConvertArgument(this.ActionMethodSignature, argument));
+					index++;
+				}
+				UrlInfo urlInfo = this.Services.RailsContext.UrlInfo;
+				return urlBuilder.BuildUrl(urlInfo, this.AreaName, this.ControllerName, this.ActionName, parameters);
+			}
+		}
+
+		public virtual void Redirect(bool useJavascript)
+		{
+			if (useJavascript)
+			{
+				string type = "text/javascript";
+				string javascript = String.Format("<script type=\"{0}\">window.location = \"{1}\";</script>", type, this.Url);
+				this.Services.Controller.CancelView();
+				this.Services.Controller.RenderText(javascript);
+			}
+			else
+			{
+				this.Services.RedirectService.Redirect(this.Url);
+			}
+		}
+
+		public virtual void Redirect()
+		{
+			Redirect(false);
+		}
+
+		#endregion
+	}
+
+	public class ControllerRouteReference : IControllerActionReference
+	{
+		private readonly ActionArgument[] arguments;
+		private readonly ICodeGeneratorServices services;
+		private readonly string routeName;
+		
+		public ControllerRouteReference(ICodeGeneratorServices services, string routeName, params ActionArgument[] arguments)
+		{
+			this.services = services;
+			this.routeName = routeName;
+			this.arguments = arguments;
+		}
+
+		public void Redirect()
+		{
+			Redirect(false);
+		}
+
+		public void Redirect(bool useJavascript)
+		{
+			if (useJavascript)
+			{
+				string type = "text/javascript";
+				string javascript = String.Format("<script type=\"{0}\">window.location = \"{1}\";</script>", type, Url);
+				Services.Controller.CancelView();
+				Services.Controller.RenderText(javascript);
+			}
+			else
+			{
+				Services.RedirectService.Redirect(Url);
+			}
+		}
+
+		public void Transfer()
+		{
+			Services.RedirectService.Transfer(Url);
+		}
+
+		public ActionArgument[] Arguments
+		{
+			get { return arguments; }
+		}
+
+		public string RouteName
+		{
+			get { return routeName; }
+		}
+		
+		public ICodeGeneratorServices Services
+		{
+			get { return services; }
+		}
+
+		public string Url
+		{
+			get
+			{
+				DefaultUrlBuilder urlBuilder = new DefaultUrlBuilder();
+				urlBuilder.RoutingEngine = RoutingModuleEx.Engine;
+				urlBuilder.ServerUtil = Services.RailsContext.Server;
+				IDictionary parameters = new Hashtable();
+				
+				foreach (ActionArgument argument in Arguments)
+					parameters.Add(argument.Name, argument.Value);
+				
+				UrlInfo urlInfo = Services.RailsContext.UrlInfo;
+				return urlBuilder.BuildRouteUrl(urlInfo, RouteName, parameters);
+			}
+		}
+	}
 }

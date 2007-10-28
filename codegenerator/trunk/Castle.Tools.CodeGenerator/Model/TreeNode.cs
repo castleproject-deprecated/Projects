@@ -297,7 +297,42 @@ namespace Castle.Tools.CodeGenerator.Model
     #endregion
   }
 
-  public class ViewTreeNode : TreeNode
+	public class RouteTreeNode : TreeNode
+	{
+		#region RouteTreeNode()
+		private readonly int order;
+		private readonly string pattern;
+		#endregion
+
+		#region RouteTreeNode()
+		public RouteTreeNode(int order, string name, string pattern) : base(name)
+		{
+			this.order = order;
+			this.pattern = pattern;
+		}
+		#endregion
+
+		#region Properties
+		public int Order
+		{
+			get { return order; }
+		}
+
+		public string Pattern
+		{
+			get { return pattern; }
+		}
+		#endregion
+
+		#region Methods
+		public override string ToString()
+		{
+			return String.Format("Route<{0}, {1}, {2}>", Order, Name, pattern);
+		}
+		#endregion
+	}
+
+	public class ViewTreeNode : TreeNode
   {
     #region Properties
     public ControllerTreeNode Controller

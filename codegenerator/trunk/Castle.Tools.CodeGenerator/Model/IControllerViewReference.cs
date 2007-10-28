@@ -1,10 +1,8 @@
-using System;
-
 namespace Castle.Tools.CodeGenerator.Model
 {
-  public interface IControllerViewReference
-  {
-    void Render(bool skiplayout);
-    void Render();
-  }
+	public interface IControllerViewReference
+	{
+		void Render(bool skiplayout);
+		void Render();
+	}
 }

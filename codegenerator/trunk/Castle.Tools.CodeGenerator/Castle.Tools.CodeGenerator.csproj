@@ -56,6 +56,7 @@
     <Compile Include="Model\IControllerActionReference.cs" />
     <Compile Include="Model\IControllerViewReference.cs" />
     <Compile Include="Model\MethodSignature.cs" />
+    <Compile Include="Attributes\RouteAttribute.cs" />
     <Compile Include="Model\RuntimeInformation.cs" />
     <Compile Include="Model\TreeNode.cs">
       <SubType>Code</SubType>
@@ -93,6 +94,7 @@
     <Compile Include="Services\NullLogger.cs" />
     <Compile Include="Services\DefaultSourceStorageService.cs" />
     <Compile Include="Services\ControllerMapGenerator.cs" />
+    <Compile Include="Services\RouteMapGenerator.cs" />
     <Compile Include="Services\SiteTreeGeneratorService.cs" />
     <Compile Include="Services\DefaultTreeCreationService.cs" />
     <Compile Include="Services\TreeWalker.cs" />

@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-
+using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-
-using Castle.Tools.CodeGenerator.Services;
+using ILogger=Castle.Tools.CodeGenerator.Services.ILogger;
 
 namespace Castle.Tools.CodeGenerator.MsBuild
 {
@@ -23,7 +22,7 @@ namespace Castle.Tools.CodeGenerator.MsBuild
     #region ILogger Members
     public void LogInfo(string message, params object[] args)
     {
-      _helper.LogMessage(message, args);
+      _helper.LogMessage(MessageImportance.High, message, args);
     }
     #endregion
   }
