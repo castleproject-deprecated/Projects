@@ -22,7 +22,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void DollarAndIdentifierInDirectiveParams()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "#if($varName)");
 
             AssertMatchToken(TokenType.NVDirectiveHash);
@@ -38,7 +38,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void TwoReferencesInDirectiveParams()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "#if($varName1 $varName2)");
 
             AssertMatchToken(TokenType.NVDirectiveHash);
@@ -56,7 +56,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void OpeningAndClosingBrackets()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "#if( [ ] )");
 
             AssertMatchToken(TokenType.NVDirectiveHash);
@@ -74,7 +74,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReferenceInsideXmlTag()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<div $var.Call() />");
 
             AssertMatchToken(TokenType.XmlTagStart);
@@ -96,7 +96,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReferenceInsideXmlAttributeValue()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<div class=\"$var.Call()\" />");
 
             AssertMatchToken(TokenType.XmlTagStart);
@@ -122,7 +122,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReferenceWithSelectorFollowedByText()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "$var.Method()text");
 
             AssertMatchToken(TokenType.NVDollar);
@@ -140,7 +140,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void NVStringLiteralWithDollarAmountShouldBeASingleToken()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "$a.B(\"$100\")");
 
             AssertMatchToken(TokenType.NVDollar);
@@ -159,7 +159,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void NVStringLiteralWithDirectiveShouldBeScanned()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "$a.B(\"#if(true)$a#end\")");
 
             AssertMatchToken(TokenType.NVDollar);
@@ -188,7 +188,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void TwoDotsFollowingAnIdentifierAreScannedAsADoubleDot()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "$a.B([$i..$n])");
 
             AssertMatchToken(TokenType.NVDollar);
@@ -214,7 +214,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Ignore]
         public void NVDictionaryDoesNotConsumeRCurlyOnIdentifierWithoutInitialLCurly()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "$obj.Method(\"%{key=$value}\")");
 
             AssertMatchToken(TokenType.NVDollar);

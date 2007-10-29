@@ -55,19 +55,27 @@ namespace Castle.NVelocity.Ast
             _scope.Add(localNode);
         }
 
-        public List<NVLocalNode> GetLocalNodesFromScope()
+        public List<NVLocalNode> GetLocalNodesFromScope(int line, int pos)
         {
             List<NVLocalNode> localNodes = new List<NVLocalNode>();
-            foreach (KeyValuePair<string, NVIdNode> pair in _scope.GetIdentifiers())
+
+            Scope scope = GetScopeAt(line, pos);
+
+            while (scope != null)
             {
-                if (pair.Value is NVLocalNode)
+                foreach (KeyValuePair<string, NVIdNode> pair in scope.GetIdentifiers())
                 {
-                    localNodes.Add((NVLocalNode)pair.Value);
+                    if (pair.Value is NVLocalNode)
+                    {
+                        localNodes.Add((NVLocalNode)pair.Value);
+                    }
                 }
+
+                scope = scope.OuterScope;
             }
             return localNodes;
         }
-        
+
         public List<NVClassNode> GetViewComponentsFromScope()
         {
             List<NVClassNode> viewComponents = new List<NVClassNode>();
@@ -80,6 +88,19 @@ namespace Castle.NVelocity.Ast
                 }
             }
             return viewComponents;
+        }
+
+        public override Scope GetScopeAt(int line, int pos)
+        {
+            foreach (AstNode astNode in _content)
+            {
+                Scope foundScope = astNode.GetScopeAt(line, pos);
+                if (foundScope != null)
+                {
+                    return foundScope;
+                }
+            }
+            return _scope;
         }
 
         public override AstNode GetNodeAt(int line, int pos)

@@ -21,7 +21,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
 
     public class NVelocityScanner : IScanner
     {
-        private readonly Scanner scanner = new Scanner();
+        private readonly Scanner scanner = new Scanner(new ErrorHandler());
         private readonly List<Stack<ScannerState>> lineState = new List<Stack<ScannerState>>();
         private bool isScanningLine = false;
 

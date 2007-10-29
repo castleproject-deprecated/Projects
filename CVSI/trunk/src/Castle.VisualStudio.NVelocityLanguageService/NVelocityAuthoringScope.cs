@@ -35,6 +35,12 @@ namespace Castle.VisualStudio.NVelocityLanguageService
         public override Declarations GetDeclarations(IVsTextView view, int line, int col,
             TokenInfo info, ParseReason reason)
         {
+            // If the intellisense parse reason was called before the template could be parsed
+            if (_templateNode == null)
+            {
+                return null;
+            }
+
             AstNode astNode = _templateNode.GetNodeAt(line + 1, col + 1);
             if (astNode == null)
             {
@@ -45,7 +51,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
 
             if (astNode is NVDesignator)
             {
-                List<NVLocalNode> localNodes = _templateNode.GetLocalNodesFromScope();
+                List<NVLocalNode> localNodes = _templateNode.GetLocalNodesFromScope(line, col);
                 localNodes.Sort(new Comparison<NVLocalNode>(
                     delegate(NVLocalNode x, NVLocalNode y)
                     {

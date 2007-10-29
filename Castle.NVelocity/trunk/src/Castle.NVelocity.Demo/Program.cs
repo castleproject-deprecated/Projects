@@ -23,7 +23,7 @@ namespace Castle.NVelocity.Demo
     {
         public static void Main(string[] args)
         {
-            Scanner scanner = new Scanner();
+            Scanner scanner = new Scanner(new ErrorHandler());
             string source;
             string fileName;
 

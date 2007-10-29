@@ -22,7 +22,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void IfDirectiveInsideXmlText()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "text #if text");
 
             AssertMatchToken(TokenType.XmlText, "text ");
@@ -36,7 +36,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void IfDirectiveWithBracesInsideXmlText()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "text #{if} text");
 
             AssertMatchToken(TokenType.XmlText, "text ");
@@ -50,7 +50,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void IfDirectiveWithBracesWithXmlTextTouchingDirective()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "text#{if}text");
 
             AssertMatchToken(TokenType.XmlText, "text");
@@ -64,7 +64,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void IfDirectiveWithOnlyLCurly()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "text#{if");
 
             AssertMatchToken(TokenType.XmlText, "text");
@@ -72,7 +72,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
             try
             {
-                scanner.GetToken();
+                _scanner.GetToken();
                 Assert.Fail();
             }
             catch (ScannerError) {}
@@ -82,7 +82,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void IfDirectiveFollowedByParens()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "text#if()");
 
             AssertMatchToken(TokenType.XmlText, "text");
@@ -97,7 +97,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void IfDirectiveWithBracesFollowedByParens()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "text#{if}()");
 
             AssertMatchToken(TokenType.XmlText, "text");
@@ -112,7 +112,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void IfDirectiveFollowedBySpaceAndParens()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "text#if ()");
 
             AssertMatchToken(TokenType.XmlText, "text");
@@ -127,7 +127,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void EndDirectiveFollowedByXmlText()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "text#end text");
 
             AssertMatchToken(TokenType.XmlText, "text");
@@ -141,7 +141,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void IfDirectiveInsideXmlTag()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<div #if() />");
 
             AssertMatchToken(TokenType.XmlTagStart);
@@ -161,7 +161,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void IfDirectiveInsideXmlAttributeValue()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<div class=\"#if() text #end\" />");
 
             AssertMatchToken(TokenType.XmlTagStart);
@@ -190,7 +190,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void DirectiveParamsAreOnlyScannedForOnTheSameLineAsTheDirective()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "#foreach ($item in $items)\n" +
                 "  #nodata\n" +
                 "    (none available)\n" +
@@ -219,7 +219,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void DirectivesWithoutParamsDoNotConsumeFollowingWhitespaceWhenFollowedByLParenOnNextLine()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "#stop   \n" +
                 "(text)");
 

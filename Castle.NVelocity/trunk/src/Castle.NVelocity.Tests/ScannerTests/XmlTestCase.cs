@@ -22,7 +22,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void EmptySource()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "");
 
             AssertEOF();
@@ -31,7 +31,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void SingleWellFormedTag()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<name>");
 
             AssertMatchToken(TokenType.XmlTagStart);
@@ -44,7 +44,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void SingleWellFormedSelfClosingTag()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<name/>");
 
             AssertMatchToken(TokenType.XmlTagStart);
@@ -58,7 +58,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void WellFormedStartAndEndTags()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<name></name>");
 
             AssertMatchToken(TokenType.XmlTagStart);
@@ -76,7 +76,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void WellFormedStartAndEndTagsWithSimpleContent()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<name>text with spaces</name>");
 
             AssertMatchToken(TokenType.XmlTagStart);
@@ -96,7 +96,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void WellFormedTagContainingNewLine()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<name\n" +
                 ">");
 
@@ -110,7 +110,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void XmlDeclaration()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<?xml version=\"1.0\" ?>");
 
             AssertMatchToken(TokenType.XmlTagStart);
@@ -129,7 +129,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void DocTypeDeclaration()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" " +
                 "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">");
 
@@ -152,7 +152,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ProcessingInstruction()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<?xml-stylesheet href=\"style.css\" type=\"text/css\"?>");
 
             AssertMatchToken(TokenType.XmlTagStart);
@@ -177,7 +177,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void WellFormedOpenAndCloseComment()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "before<!-- inside -->after");
 
             AssertMatchToken(TokenType.XmlText, "before");
@@ -190,25 +190,22 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void FirstThreeCharactersOfCommentIsAnElement()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<!- notAComment");
 
             AssertMatchToken(TokenType.XmlTagStart);
             AssertMatchToken(TokenType.XmlExclaimationMark);
-            
-            // Throws a ScannerError because a '-' is not allowed in a tag
-            try
-            {
-                scanner.GetToken();
-                Assert.Fail(); // Should not get to this point
-            }
-            catch (ScannerError) { }
+
+            _scanner.GetToken();
+
+            // Add an error because a '-' is not allowed in a tag
+            Assert.AreEqual(1, _scanner.Errors.Count);
         }
 
         [Test]
         public void TagTokenCharsScannedAsXmlTextInDefaultState()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "> / \" ? !");
 
             AssertMatchToken(TokenType.XmlText, "> / \" ? !");
@@ -219,7 +216,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void CDataSection()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<![CDATA[ text ]]>");
 
             AssertMatchToken(TokenType.XmlCDataStart, "<![CDATA[");
@@ -230,7 +227,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void CDataSectionContainingTag()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<![CDATA[ <tag> ]]>");
 
             AssertMatchToken(TokenType.XmlCDataStart, "<![CDATA[");
@@ -241,7 +238,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void CDataSectionWithMissingEnd()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<![CDATA[ text inside the section ");
 
             AssertMatchToken(TokenType.XmlCDataStart, "<![CDATA[");
@@ -249,7 +246,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
             // Throws a ScannerError because no end can be found when scanning for the content token
             try
             {
-                scanner.GetToken();
+                _scanner.GetToken();
                 Assert.Fail(); // Should not get to this point
             }
             catch (ScannerError) { }
@@ -258,7 +255,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void CDataSectionWithinScriptElementIsScanned()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<script><![CDATA[ JS Here ]]></script>");
 
             AssertMatchToken(TokenType.XmlTagStart);
@@ -279,7 +276,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         //[Ignore("Script elements are now treated as normal XML elements which require CDATA sections.")]
         //public void IgnoreElementsInScriptElement()
         //{
-        //    scanner.SetSource(
+        //    _scanner.SetSource(
         //        "<script>text<strong>text</script>");
 
         //    AssertMatchToken(TokenType.XmlTagStart);
@@ -298,7 +295,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         //[Ignore("Script elements are now treated as normal XML elements which require CDATA sections.")]
         //public void IgnoreElementsInScriptElementInAnotherElement()
         //{
-        //    scanner.SetSource(
+        //    _scanner.SetSource(
         //        "<div><script>text<strong>text</script></div>");
 
         //    AssertMatchToken(TokenType.XmlTagStart);
@@ -325,7 +322,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void HashNotFollowedByTextIsXmlText()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<td>#</td>");
 
             AssertMatchToken(TokenType.XmlTagStart);
@@ -343,7 +340,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void HashPrecededByTextNotFollowedByTextIsXmlText()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<td>text#</td>");
 
             AssertMatchToken(TokenType.XmlTagStart);
@@ -361,7 +358,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void HashAtBeginningOfXmlTagAttributeValue()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<a title=\"#\"/>");
 
             AssertMatchToken(TokenType.XmlTagStart);
@@ -378,7 +375,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void HashWithinXmlTagAttributeValue()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<a title=\"You are #1.\"/>");
 
             AssertMatchToken(TokenType.XmlTagStart);
@@ -395,7 +392,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void DollarSignThatIsNotNVReference()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "$");
 
             AssertMatchToken(TokenType.XmlText, "$");
@@ -404,7 +401,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void DollarSignWithinXmlTextThatIsNotNVReference()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "I have $100.");
 
             AssertMatchToken(TokenType.XmlText, "I have $100.");
@@ -413,7 +410,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void DollarSignWithinXmlTagAttributeValueThatIsNotNVReference()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<a title=\"I have $100.\"/>");
 
             AssertMatchToken(TokenType.XmlTagStart);

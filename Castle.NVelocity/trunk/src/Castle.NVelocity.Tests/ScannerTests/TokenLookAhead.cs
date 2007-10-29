@@ -22,13 +22,13 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void CanPeekAheadOneTokenThenCallGetToken()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "text<tag/>");
 
             AssertMatchToken(TokenType.XmlText, "text");
             AssertMatchToken(TokenType.XmlTagStart);
             
-            AssertMatchToken(TokenType.XmlTagName, scanner.PeekToken(1));
+            AssertMatchToken(TokenType.XmlTagName, _scanner.PeekToken(1));
             AssertMatchToken(TokenType.XmlTagName, "tag");
 
             AssertMatchToken(TokenType.XmlForwardSlash);
@@ -38,13 +38,13 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void CanPeekAheadFourTokensThenCallGetToken()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<tag/>");
 
-            AssertMatchToken(TokenType.XmlTagStart, scanner.PeekToken(1));
-            AssertMatchToken(TokenType.XmlTagName, scanner.PeekToken(2));
-            AssertMatchToken(TokenType.XmlForwardSlash, scanner.PeekToken(3));
-            AssertMatchToken(TokenType.XmlTagEnd, scanner.PeekToken(4));
+            AssertMatchToken(TokenType.XmlTagStart, _scanner.PeekToken(1));
+            AssertMatchToken(TokenType.XmlTagName, _scanner.PeekToken(2));
+            AssertMatchToken(TokenType.XmlForwardSlash, _scanner.PeekToken(3));
+            AssertMatchToken(TokenType.XmlTagEnd, _scanner.PeekToken(4));
 
             AssertMatchToken(TokenType.XmlTagStart);
             AssertMatchToken(TokenType.XmlTagName, "tag");
@@ -55,7 +55,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void CanPeekAheadToDetermineIfTheDirectiveIsAnElseIfOrAnEnd()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "#if ()   #elseif ()   #end");
 
             // #if
@@ -67,8 +67,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlText, "   ");
 
             // #elseif
-            AssertMatchToken(TokenType.NVDirectiveHash, scanner.PeekToken(1));
-            AssertMatchToken(TokenType.NVDirectiveName, "elseif", scanner.PeekToken(2));
+            AssertMatchToken(TokenType.NVDirectiveHash, _scanner.PeekToken(1));
+            AssertMatchToken(TokenType.NVDirectiveName, "elseif", _scanner.PeekToken(2));
 
             AssertMatchToken(TokenType.NVDirectiveHash);
             AssertMatchToken(TokenType.NVDirectiveName, "elseif");
@@ -85,14 +85,14 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void CanPeekAheadOneThenPeekAheadOneAgain()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<tag/>");
 
-            AssertMatchToken(TokenType.XmlTagStart, scanner.PeekToken(1));
-            AssertMatchToken(TokenType.XmlTagStart, scanner.PeekToken(1));
-            AssertMatchToken(TokenType.XmlTagName, "tag", scanner.PeekToken(2));
-            AssertMatchToken(TokenType.XmlForwardSlash, scanner.PeekToken(3));
-            AssertMatchToken(TokenType.XmlTagEnd, scanner.PeekToken(4));
+            AssertMatchToken(TokenType.XmlTagStart, _scanner.PeekToken(1));
+            AssertMatchToken(TokenType.XmlTagStart, _scanner.PeekToken(1));
+            AssertMatchToken(TokenType.XmlTagName, "tag", _scanner.PeekToken(2));
+            AssertMatchToken(TokenType.XmlForwardSlash, _scanner.PeekToken(3));
+            AssertMatchToken(TokenType.XmlTagEnd, _scanner.PeekToken(4));
 
             AssertMatchToken(TokenType.XmlTagStart);
         }

@@ -16,36 +16,28 @@ namespace Castle.NVelocity.Ast
 {
     using System.Collections.Generic;
 
-    public class XmlElement : AstNode
+    public class NVForeachDirective : NVDirective
     {
-        private string _name;
-        private bool _isSelfClosing = false;
-        private readonly List<AstNode> _attributes = new List<AstNode>();
+        private string _iterator;
+        private NVExpression _collection;
         private readonly List<AstNode> _content = new List<AstNode>();
+        private Scope _scope = new Scope(null, null);
 
-        private Position _startTagPosition;
-        private Position _endTagPosition; // null if self closing
-
-        public XmlElement(string name)
+        public NVForeachDirective()
+            : base("foreach")
         {
-            _name = name;
         }
 
-        public string Name
+        public string Iterator
         {
-            get { return _name; }
-            set { _name = value; }
+            get { return _iterator; }
+            set { _iterator = value; }
         }
 
-        public bool IsSelfClosing
+        public NVExpression Collection
         {
-            get { return _isSelfClosing; }
-            set { _isSelfClosing = value; }
-        }
-
-        public List<AstNode> Attributes
-        {
-            get { return _attributes; }
+            get { return _collection; }
+            set { _collection = value; }
         }
 
         public List<AstNode> Content
@@ -53,27 +45,28 @@ namespace Castle.NVelocity.Ast
             get { return _content; }
         }
 
-        public Position StartTagPosition
+        public Scope Scope
         {
-            get { return _startTagPosition; }
-            set { _startTagPosition = value; }
+            get { return _scope; }
         }
 
-        public Position EndTagPosition
+        public override void DoSemanticChecks(ErrorHandler errs, Scope currentScope)
         {
-            get { return _endTagPosition; }
-            set { _endTagPosition = value; }
+            _scope = new Scope(currentScope, this);
+
+            // Add foreach loop iterator variable to the scope
+            if (!string.IsNullOrEmpty(_iterator))
+            {
+                _scope.Add(new NVLocalNode(_iterator, null));
+            }
         }
 
         public override Scope GetScopeAt(int line, int pos)
         {
-            foreach (AstNode astNode in _content)
+            // If this directive contains the line+pos return the scope
+            if (_pos.Contains(line, pos))
             {
-                Scope foundScope = astNode.GetScopeAt(line, pos);
-                if (foundScope != null)
-                {
-                    return foundScope;
-                }
+                return _scope;
             }
             return null;
         }

@@ -22,9 +22,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void XmlTagThatIsOnMultipleLines()
         {
-            scanner.IsLineScanner = true;
+            _scanner.IsLineScanner = true;
             
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<div");
             
             AssertMatchToken(TokenType.XmlTagStart);
@@ -32,9 +32,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
             AssertEOF();
 
-            scanner.RestoreState(scanner.RetrieveState());
+            _scanner.RestoreState(_scanner.RetrieveState());
 
-            scanner.SetSource(
+            _scanner.SetSource(
                 "class=\"someClass\"/>");
 
             AssertMatchToken(TokenType.XmlAttributeName, "class");
@@ -51,9 +51,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void XmlAttributeValueThatIsOnMultipleLines()
         {
-            scanner.IsLineScanner = true;
+            _scanner.IsLineScanner = true;
 
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<div class=\"start");
 
             AssertMatchToken(TokenType.XmlTagStart);
@@ -65,9 +65,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
             AssertEOF();
 
-            scanner.RestoreState(scanner.RetrieveState());
+            _scanner.RestoreState(_scanner.RetrieveState());
 
-            scanner.SetSource(
+            _scanner.SetSource(
                 "end\"/>");
 
             AssertMatchToken(TokenType.XmlAttributeText, "end");
@@ -81,9 +81,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void NVMultilineCommentThatIsOnMultipleLines()
         {
-            scanner.IsLineScanner = true;
+            _scanner.IsLineScanner = true;
 
-            scanner.SetSource(
+            _scanner.SetSource(
                 "text#*comment");
 
             AssertMatchToken(TokenType.XmlText, "text");
@@ -92,9 +92,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
             
             AssertEOF();
 
-            scanner.RestoreState(scanner.RetrieveState());
+            _scanner.RestoreState(_scanner.RetrieveState());
 
-            scanner.SetSource(
+            _scanner.SetSource(
                 "morecomment*#moretext");
 
             AssertMatchToken(TokenType.NVMultilineComment, "morecomment");
@@ -107,9 +107,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void XmlCommentThatIsOnMultipleLines()
         {
-            scanner.IsLineScanner = true;
+            _scanner.IsLineScanner = true;
 
-            scanner.SetSource(
+            _scanner.SetSource(
                 "text<!--comment");
 
             AssertMatchToken(TokenType.XmlText, "text");
@@ -118,9 +118,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
             AssertEOF();
 
-            scanner.RestoreState(scanner.RetrieveState());
+            _scanner.RestoreState(_scanner.RetrieveState());
 
-            scanner.SetSource(
+            _scanner.SetSource(
                 "morecomment-->moretext");
 
             AssertMatchToken(TokenType.XmlComment, "morecomment");
@@ -133,9 +133,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void XmlCommentThatIsOnMultipleLinesWithNoPrecedingXmlText()
         {
-            scanner.IsLineScanner = true;
+            _scanner.IsLineScanner = true;
 
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<!--comment");
 
             AssertMatchToken(TokenType.XmlCommentStart, new Position(1, 1, 1, 5));
@@ -143,9 +143,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
             AssertEOF();
 
-            scanner.RestoreState(scanner.RetrieveState());
+            _scanner.RestoreState(_scanner.RetrieveState());
 
-            scanner.SetSource(
+            _scanner.SetSource(
                 "morecomment-->");
 
             AssertMatchToken(TokenType.XmlComment, "morecomment", new Position(1, 1, 1, 12));

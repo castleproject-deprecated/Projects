@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.VisualStudio.MonoRai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.VisualStudio.MonoRailIntelliSenseProvider.Demo", "Castle.VisualStudio.MonoRailIntelliSenseProvider.Demo\Castle.VisualStudio.MonoRailIntelliSenseProvider.Demo.csproj", "{AC893634-DDA0-49B1-A30B-4F4BBB4F5E86}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.VisualStudio.NVelocityLanguageService.DebugWindow", "Castle.VisualStudio.NVelocityLanguageService.DebugWindow\Castle.VisualStudio.NVelocityLanguageService.DebugWindow.csproj", "{A5FA0F59-3E39-4E2F-BE2E-9721349A33AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{AC893634-DDA0-49B1-A30B-4F4BBB4F5E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC893634-DDA0-49B1-A30B-4F4BBB4F5E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC893634-DDA0-49B1-A30B-4F4BBB4F5E86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5FA0F59-3E39-4E2F-BE2E-9721349A33AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5FA0F59-3E39-4E2F-BE2E-9721349A33AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5FA0F59-3E39-4E2F-BE2E-9721349A33AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5FA0F59-3E39-4E2F-BE2E-9721349A33AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

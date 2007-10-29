@@ -17,6 +17,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
     using System.Collections.Generic;
     using Castle.NVelocity.Ast;
     using Microsoft.VisualStudio.Package;
+    using MonoRailIntelliSenseProvider;
 
     public class NVelocityMethods : Methods
     {
@@ -87,10 +88,24 @@ namespace Castle.VisualStudio.NVelocityLanguageService
         public override void GetParameterInfo(int index, int parameter, out string name, out string display,
                                               out string description)
         {
-            NVParameterNode parameterNode = _methodNodes[index].Parameters[parameter];
+            NVMethodNode methodNode = _methodNodes[index];
+            NVParameterNode parameterNode = methodNode.Parameters[parameter];
+            NVClassNode classNode = (NVClassNode)methodNode.Parent;
+            
             name = parameterNode.Name;
-            display = parameterNode.Type.Name + " " + parameterNode.Name;
-            description = string.Format("[NotImplemented] Could not retrieve documentation for parameter '{0}'.", parameterNode.Name);
+            display = string.Format("{0} {1}", parameterNode.Type.Name, parameterNode.Name);
+
+            // Retrieve XML documentation
+            XmlDocumentationProvider documentationProvider =
+                new XmlDocumentationProvider(classNode.AssemblyFileName);
+            description = documentationProvider.GetParameterDocumentation(
+                classNode.FullName, methodNode.Name, parameterNode.Name);
+
+            if (string.IsNullOrEmpty(description))
+            {
+                description = string.Format("Could not retrieve documentation for parameter '{0}'.",
+                    parameterNode.Name);
+            }
         }
     }
 }

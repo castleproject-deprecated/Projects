@@ -49,8 +49,8 @@ namespace Castle.NVelocity.Ast
             _id = currentScope.Find(_name);
             if (_id == null)
             {
-                AddSemanticError(errs, string.Format("The name '{0}' does not exist in the current context", _name),
-                    _pos, ErrorSeverity.Error);
+                //AddSemanticError(errs, string.Format("The name '{0}' does not exist in the current context", _name),
+                //    _pos, ErrorSeverity.Error);
                 return;
             }
 
@@ -66,13 +66,14 @@ namespace Castle.NVelocity.Ast
             //TODO add support for line detection
             foreach (NVSelector selector in _selectors)
             {
-                if (pos >= selector.Position.StartPos && pos <= selector.Position.EndPos)
+                NVSelector foundSelector = (NVSelector)selector.GetNodeAt(line, pos);
+                if (foundSelector != null)
                 {
-                    return selector;
+                    return foundSelector;
                 }
             }
 
-            return this;
+            return base.GetNodeAt(line, pos);
         }
     }
 }

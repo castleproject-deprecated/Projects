@@ -22,8 +22,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void EnableIntelliSenseTriggerTokens_ScansDollarAsNVDollar()
         {
-            scanner.Options.EnableIntelliSenseTriggerTokens = true;
-            scanner.SetSource(
+            _scanner.Options.EnableIntelliSenseTriggerTokens = true;
+            _scanner.SetSource(
                 "$");
 
             AssertMatchToken(TokenType.NVDollar);
@@ -34,8 +34,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void EnableIntelliSenseTriggerTokens_ScansDotAsNVDot()
         {
-            scanner.Options.EnableIntelliSenseTriggerTokens = true;
-            scanner.SetSource(
+            _scanner.Options.EnableIntelliSenseTriggerTokens = true;
+            _scanner.SetSource(
                 "$Ajax.");
 
             AssertMatchToken(TokenType.NVDollar);

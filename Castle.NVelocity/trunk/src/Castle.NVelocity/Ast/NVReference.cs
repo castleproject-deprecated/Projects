@@ -16,7 +16,7 @@ namespace Castle.NVelocity.Ast
 {
     public class NVReference : AstNode
     {
-        private NVDesignator _designator;
+        private readonly NVDesignator _designator;
 
         public NVReference(NVDesignator designator)
         {
@@ -26,6 +26,12 @@ namespace Castle.NVelocity.Ast
         public NVDesignator Designator
         {
             get { return _designator; }
+        }
+
+        public override Position Position
+        {
+            get { return _designator.Position; }
+            set { _designator.Position = value; }
         }
 
         public override void DoSemanticChecks(ErrorHandler errs, Scope currentScope)

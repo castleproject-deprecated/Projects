@@ -56,8 +56,10 @@ namespace Castle.NVelocity
 
         public Position(NVBinaryExpression binExpr)
         {
-            Start = binExpr.Lhs.Position;
-            End = binExpr.Rhs.Position;
+            if (binExpr.Lhs != null)
+                Start = binExpr.Lhs.Position;
+            if (binExpr.Rhs != null)
+                End = binExpr.Rhs.Position;
         }
 
         public int StartLine
@@ -101,8 +103,10 @@ namespace Castle.NVelocity
             get { return new Position(endLine, endPos, endLine, endPos); }
             set
             {
-                endLine = value.EndLine;
-                endPos = value.EndPos;
+                if (value != null)
+                    endLine = value.EndLine;
+                if (value != null)
+                    endPos = value.EndPos;
             }
         }
 

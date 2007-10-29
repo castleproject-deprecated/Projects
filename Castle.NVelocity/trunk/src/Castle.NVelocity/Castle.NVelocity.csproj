@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Ast\AstNode.cs" />
     <Compile Include="Ast\NVClassNode.cs" />
+    <Compile Include="Ast\NVForeachDirective.cs" />
     <Compile Include="Ast\NVIdNode.cs" />
     <Compile Include="Ast\NVLocalNode.cs" />
     <Compile Include="Ast\NVMethodNode.cs" />

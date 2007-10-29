@@ -29,6 +29,25 @@ namespace Castle.VisualStudio.MonoRailIntelliSenseProvider
 
         private readonly string _binaryDirectory;
 
+        private static readonly List<string> _ignoreAssemblies = new List<string>();
+
+        static IntelliSenseProvider()
+        {
+            _ignoreAssemblies.AddRange(new string[] {
+                "Castle.ActiveRecord.dll",
+                "Castle.Components.Binder.dll",
+                "Castle.Components.Common.EmailSender.dll",
+                "Castle.Components.Validator.dll",
+                "Castle.Core.dll",
+                "Castle.DynamicProxy.dll",
+                "Castle.MonoRail.Framework.Views.NVelocity.dll",
+                "Iesi.Collections.dll",
+                "log4net.dll",
+                "NHibernate.dll",
+                "NVelocity.dll"
+            });
+        }
+
         public IntelliSenseProvider(string binaryDirectory)
         {
             _binaryDirectory = binaryDirectory;
@@ -69,40 +88,44 @@ namespace Castle.VisualStudio.MonoRailIntelliSenseProvider
             List<NVClassNode> types = new List<NVClassNode>();
             foreach (string assemblyFileName in assemblies)
             {
-                AssemblyDefinition assemblyDefinition = AssemblyFactory.GetAssembly(assemblyFileName);
-                foreach (TypeDefinition type in assemblyDefinition.MainModule.Types)
+                if (!IsIgnored(assemblyFileName))
                 {
-                    if (type.Name != "<Module>" && type.BaseType != null &&
-                        type.BaseType.FullName == AbstractHelperTypeName)
+                    AssemblyDefinition assemblyDefinition = AssemblyFactory.GetAssembly(assemblyFileName);
+                    foreach (TypeDefinition type in assemblyDefinition.MainModule.Types)
                     {
-                        NVClassNode classNode = new NVClassNode(type.Name, type.FullName);
-                        classNode.ClassPurpose = NVClassNodePurpose.Helper;
-                        classNode.AssemblyFileName = assemblyFileName;
-
-                        foreach (MethodDefinition method in type.Methods)
+                        if (type.Name != "<Module>" && type.BaseType != null &&
+                            type.BaseType.FullName == AbstractHelperTypeName)
                         {
-                            // Properties have the special name IL flag so ignore get_ and set_ methods
-                            if ((method.Attributes & MethodAttributes.Public) == MethodAttributes.Public &&
-                                method.SemanticsAttributes != MethodSemanticsAttributes.Getter &&
-                                method.SemanticsAttributes != MethodSemanticsAttributes.Setter)
+                            NVClassNode classNode = new NVClassNode(type.Name, type.FullName);
+                            classNode.ClassPurpose = NVClassNodePurpose.Helper;
+                            classNode.AssemblyFileName = assemblyFileName;
+
+                            foreach (MethodDefinition method in type.Methods)
                             {
-                                NVMethodNode methodNode = new NVMethodNode(method.Name, new NVClassNode(
-                                    method.ReturnType.ReturnType.Name, method.ReturnType.ReturnType.FullName));
-
-                                List<NVParameterNode> parameters = new List<NVParameterNode>();
-                                foreach (ParameterDefinition parameter in method.Parameters)
+                                // Properties have the special name IL flag so ignore get_ and set_ methods
+                                if ((method.Attributes & MethodAttributes.Public) == MethodAttributes.Public &&
+                                    method.SemanticsAttributes != MethodSemanticsAttributes.Getter &&
+                                        method.SemanticsAttributes != MethodSemanticsAttributes.Setter)
                                 {
-                                    parameters.Add(new NVParameterNode(
-                                        parameter.Name,
-                                        new NVClassNode(parameter.ParameterType.Name, parameter.ParameterType.FullName),
-                                        parameter.Sequence));
-                                }
-                                methodNode.Parameters = parameters;
+                                    NVMethodNode methodNode = new NVMethodNode(method.Name, new NVClassNode(
+                                        method.ReturnType.ReturnType.Name, method.ReturnType.ReturnType.FullName));
 
-                                classNode.AddMethod(methodNode);
+                                    List<NVParameterNode> parameters = new List<NVParameterNode>();
+                                    foreach (ParameterDefinition parameter in method.Parameters)
+                                    {
+                                        parameters.Add(new NVParameterNode(
+                                            parameter.Name,
+                                            new NVClassNode(parameter.ParameterType.Name,
+                                                parameter.ParameterType.FullName),
+                                            parameter.Sequence));
+                                    }
+                                    methodNode.Parameters = parameters;
+
+                                    classNode.AddMethod(methodNode);
+                                }
                             }
+                            types.Add(classNode);
                         }
-                        types.Add(classNode);
                     }
                 }
             }
@@ -116,21 +139,29 @@ namespace Castle.VisualStudio.MonoRailIntelliSenseProvider
             List<NVClassNode> types = new List<NVClassNode>();
             foreach (string assemblyFileName in assemblies)
             {
-                AssemblyDefinition assemblyDefinition = AssemblyFactory.GetAssembly(assemblyFileName);
-                foreach (TypeDefinition type in assemblyDefinition.MainModule.Types)
+                if (!IsIgnored(assemblyFileName))
                 {
-                    if (type.Name != "<Module>" && type.BaseType != null &&
-                        type.BaseType.FullName == ViewComponentTypeName)
+                    AssemblyDefinition assemblyDefinition = AssemblyFactory.GetAssembly(assemblyFileName);
+                    foreach (TypeDefinition type in assemblyDefinition.MainModule.Types)
                     {
-                        NVClassNode classNode = new NVClassNode(type.Name, type.FullName);
-                        classNode.ClassPurpose = NVClassNodePurpose.ViewComponent;
-                        classNode.AssemblyFileName = assemblyFileName;
-                        types.Add(classNode);
+                        if (type.Name != "<Module>" && type.BaseType != null &&
+                            type.BaseType.FullName == ViewComponentTypeName)
+                        {
+                            NVClassNode classNode = new NVClassNode(type.Name, type.FullName);
+                            classNode.ClassPurpose = NVClassNodePurpose.ViewComponent;
+                            classNode.AssemblyFileName = assemblyFileName;
+                            types.Add(classNode);
+                        }
                     }
                 }
             }
 
             return types;
+        }
+
+        private static bool IsIgnored(string fileName)
+        {
+            return _ignoreAssemblies.Contains(Path.GetFileName(fileName));
         }
 
         private List<string> GetAssembliesInBinaryDirectory()

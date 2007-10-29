@@ -18,21 +18,28 @@ namespace Castle.VisualStudio.NVelocityLanguageService
     using System.Diagnostics;
     using System.Drawing;
     using System.Runtime.InteropServices;
-    using System.Threading;
-    using System.Windows.Forms;
     using Castle.NVelocity;
     using Castle.NVelocity.Ast;
     using Castle.VisualStudio.MonoRailIntelliSenseProvider;
+#if DEBUG
+    using Castle.VisualStudio.NVelocityLanguageService.DebugWindow;
+#endif
     using Microsoft.VisualStudio;
     using Microsoft.VisualStudio.Package;
     using Microsoft.VisualStudio.TextManager.Interop;
+    using ErrorHandler = Castle.NVelocity.ErrorHandler;
 
     [Guid(NVelocityConstants.LanguageServiceGuidString)]
     public class NVelocityLanguage : LanguageService
     {
         private LanguagePreferences preferences;
-
         private readonly ColorableItem[] _colorableItems;
+
+#if DEBUG
+        private readonly DebugForm _debugForm;
+#endif
+
+        private TemplateNode _templateNode;
 
         public NVelocityLanguage()
         {
@@ -85,6 +92,11 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                 // ===== not done
             };
             #endregion
+
+#if DEBUG
+            _debugForm = new DebugForm();
+            _debugForm.Show();
+#endif
         }
 
         public override void Dispose()
@@ -143,8 +155,6 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             base.OnIdle(periodic);
         }
 
-        private TemplateNode _templateNode;
-
         public override AuthoringScope ParseSource(ParseRequest req)
         {
             if (req == null)
@@ -159,96 +169,65 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                 req.Reason == ParseReason.MemberSelect ||
                 req.Reason == ParseReason.MethodTip)
             {
-                Position finalPosition = null;
+                ErrorHandler errors = new ErrorHandler();
 
-                Thread thread = new Thread(new ThreadStart(delegate
+                try
                 {
                     ScannerOptions scannerOptions = new ScannerOptions();
                     scannerOptions.EnableIntelliSenseTriggerTokens = true;
 
-                    Scanner scanner = new Scanner();
+                    Scanner scanner = new Scanner(errors);
+                    scanner.Options = scannerOptions;
+                    scanner.SetSource(req.Text);
 
-                    try
-                    {
-                        scanner.Options = scannerOptions;
-                        scanner.SetSource(req.Text);
+                    Parser parser = new Parser(scanner, errors);
 
-                        Parser parser = new Parser(scanner);
+                    _templateNode = parser.ParseTemplate();
 
-                        _templateNode = parser.ParseTemplate();
+                    // Prepare the template node so that all the helpers are available
+                    PrepareTemplateNode(req.FileName);
 
-                        // Prepare the template node so that all the helpers are available
-                        PrepareTemplateNode(req.FileName);
-
-                        _templateNode.DoSemanticChecks(parser.Errors);
-
-                        for (int i = 0; i < parser.Errors.Count; i++)
-                        {
-                            Error error = parser.Errors[i];
-
-                            TextSpan textSpan = new TextSpan();
-                            textSpan.iStartLine = error.Position.StartLine - 1;
-                            textSpan.iStartIndex = error.Position.StartPos;
-                            textSpan.iEndLine = error.Position.EndLine - 1;
-                            textSpan.iEndIndex = error.Position.EndPos;
-
-                            Severity severity = Severity.Fatal;
-                            if (error.Severity == ErrorSeverity.Error)
-                                severity = Severity.Error;
-                            else if (error.Severity == ErrorSeverity.Warning)
-                                severity = Severity.Warning;
-                            else if (error.Severity == ErrorSeverity.Message)
-                                severity = Severity.Hint;
-
-                            req.Sink.AddError(req.FileName, error.Description, textSpan, severity);
-                        }
-                    }
-                    catch (ScannerError se)
-                    {
-                        req.Sink.AddError(req.FileName, se.Message, new TextSpan(), Severity.Error);
-                    }
-                    catch (ThreadAbortException)
-                    {
-                        // Do nothing
-                    }
-                    catch (Exception ex)
-                    {
-                        req.Sink.AddError(req.FileName, "FATAL: " + ex, new TextSpan(), Severity.Error);
-                    }
-                    finally
-                    {
-                        finalPosition = scanner.CurrentPos;
-                    }
-                }));
-                thread.Start();
-
-                int timeout = 0;
-                while (timeout < 1000 && thread.IsAlive)
+                    _templateNode.DoSemanticChecks(errors);
+                }
+                catch (ScannerError se)
                 {
-                    Thread.Sleep(50);
-                    timeout += 50;
+                    req.Sink.AddError(req.FileName, "Scanner Error: " + se.Message, new TextSpan(),
+                        Severity.Error);
+                }
+                catch (Exception ex)
+                {
+                    req.Sink.AddError(req.FileName, "FATAL: " + ex, new TextSpan(), Severity.Error);
+                }
+                finally
+                {
+                    for (int i = 0; i < errors.Count; i++)
+                    {
+                        Error error = errors[i];
+
+                        TextSpan textSpan = new TextSpan();
+                        textSpan.iStartLine = error.Position.StartLine - 1;
+                        textSpan.iStartIndex = error.Position.StartPos - 1;
+                        textSpan.iEndLine = error.Position.EndLine - 1;
+                        textSpan.iEndIndex = error.Position.EndPos - 1;
+
+                        Severity severity = Severity.Fatal;
+                        if (error.Severity == ErrorSeverity.Error)
+                            severity = Severity.Error;
+                        else if (error.Severity == ErrorSeverity.Warning)
+                            severity = Severity.Warning;
+                        else if (error.Severity == ErrorSeverity.Message)
+                            severity = Severity.Hint;
+
+                        req.Sink.AddError(req.FileName, error.Description, textSpan, severity);
+                    }
                 }
 
-                if (thread.IsAlive)
-                {
-                    thread.Abort();
-
-                    thread.Join(100);
-
-                    TextSpan textSpan = new TextSpan();
-                    if (finalPosition != null)
-                    {
-                        textSpan.iStartLine = finalPosition.StartLine - 1;
-                        textSpan.iStartIndex = finalPosition.StartPos;
-                        textSpan.iEndLine = finalPosition.EndLine - 1;
-                        textSpan.iEndIndex = finalPosition.EndPos;
-                    }
-
-                    req.Sink.AddError(req.FileName,
-                        "Castle Visual Studio Integration has detected that the Castle NVelocity " +
-                        "parser running in the background has stopped responding. The parser's current action " +
-                        "has been terminated.", textSpan, Severity.Fatal);
-                }
+#if DEBUG
+                int line;
+                int column;
+                req.View.GetCaretPos(out line, out column);
+                _debugForm.UpdateUI(line + 1, column + 1, _templateNode);
+#endif
             }
             else
             {

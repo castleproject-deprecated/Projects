@@ -50,7 +50,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
 
         public override string GetDescription(int index)
         {
-            string description;
+            string description = "";
 
             NVIdNode idNode = _declarations[index].IdNode;
             if (idNode is NVClassNode)
@@ -72,9 +72,12 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             else if (idNode is NVLocalNode)
             {
                 NVClassNode classNode = (NVClassNode)idNode.Type;
-                XmlDocumentationProvider documentationProvider =
-                    new XmlDocumentationProvider(classNode.AssemblyFileName);
-                description = documentationProvider.GetTypeDocumentation(classNode.FullName);
+                if (classNode != null)
+                {
+                    XmlDocumentationProvider documentationProvider =
+                        new XmlDocumentationProvider(classNode.AssemblyFileName);
+                    description = documentationProvider.GetTypeDocumentation(classNode.FullName);
+                }
             }
             else if (idNode is NVMethodNode)
             {
@@ -82,10 +85,6 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                 XmlDocumentationProvider documentationProvider =
                     new XmlDocumentationProvider(classNode.AssemblyFileName);
                 description = documentationProvider.GetMethodDocumentation(classNode.FullName, idNode.Name);
-            }
-            else
-            {
-                description = string.Format("[NotImplemented] for AST node '{0}'.", idNode.GetType().Name);
             }
 
             // Return the documentation or an error message
@@ -95,7 +94,9 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             }
             else
             {
-                return string.Format("Could not retrieve documentation for AST node '{0}'.", idNode.GetType().Name);
+                return string.Format("Could not retrieve documentation for AST node '{0}' " +
+                    "(because it is not supported).",
+                    idNode != null ? idNode.GetType().Name : "");
             }
         }
 

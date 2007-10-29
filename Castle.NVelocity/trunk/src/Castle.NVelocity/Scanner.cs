@@ -14,7 +14,6 @@
 
 namespace Castle.NVelocity
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
 
@@ -39,6 +38,8 @@ namespace Castle.NVelocity
 
         private Token _currentToken;
 
+        private readonly ErrorHandler _errors;
+
         private char ch;
         private string _source;
         private int pos = 1;
@@ -50,6 +51,7 @@ namespace Castle.NVelocity
 
         private readonly Dictionary<string, TokenType> nvKeywords = new Dictionary<string, TokenType>();
 
+        //TODO Scanner options, the fields need to be refactored into the object
         private bool isLineScanner = false;
         private bool splitTextTokens = false;
         private ScannerOptions _options = new ScannerOptions();
@@ -57,8 +59,10 @@ namespace Castle.NVelocity
         /// <summary>
         /// Creates a new Scanner.
         /// </summary>
-        public Scanner()
+        public Scanner(ErrorHandler errors)
         {
+            _errors = errors;
+
             SetUpReservedWords();
         }
 
@@ -139,6 +143,14 @@ namespace Castle.NVelocity
         public ScannerState CurrentState
         {
             get { return state.Peek(); }
+        }
+
+        /// <summary>
+        /// Returns the error handler used by the scanner.
+        /// </summary>
+        public ErrorHandler Errors
+        {
+            get { return _errors; }
         }
 
         /// <summary>
@@ -304,7 +316,7 @@ namespace Castle.NVelocity
             if (ch == default(char))
                 return null;
 
-            Token token;
+            Token token = null;
 
             // Save the current position to the previous position
             prevPos = currPos;
@@ -368,7 +380,9 @@ namespace Castle.NVelocity
                     token = ScanTokenNVBrack();
                     break;
                 default:
-                    throw new ScannerError("Unknown state '" + currentState + "'");
+                    //TODO: throw new ScannerError("Unknown state '" + currentState + "'");
+                    AddError(string.Format("Unknown state '{0}'", currentState));
+                    break;
             }
 
             // Store the current position
@@ -379,8 +393,11 @@ namespace Castle.NVelocity
 
             if (token != null && token.Type == TokenType.Error)
             {
-                throw new ScannerError(string.Format("Unknown symbol '{0}' in state {1}",
-                                                     ch, ScannerStateToString(state.Peek())));
+                //TODO
+//                throw new ScannerError(string.Format("Unknown symbol '{0}' in state {1}",
+//                                                     ch, ScannerStateToString(state.Peek())));
+                AddError(string.Format("Unknown symbol '{0}' in state {1}",
+                                       ch, ScannerStateToString(state.Peek())));
             }
 
             return token;
@@ -806,7 +823,8 @@ namespace Castle.NVelocity
             
             if (eof && !isLineScanner)
             {
-                throw new ScannerError("End-of-file found but quoted string literal was not closed");
+                //TODO throw new ScannerError("End-of-file found but quoted string literal was not closed");
+                AddError("End-of-file found but quoted string literal was not closed");
             }
 
             token.SetEndPosition(lineNo, linePos);
@@ -1007,7 +1025,16 @@ namespace Castle.NVelocity
             }
             else
             {
-                throw new ScannerError("Expected reference identifier");
+                if (_options.EnableIntelliSenseTriggerTokens)
+                {
+                    AddError("Expected reference identifier");
+                    state.Pop(); // Pop NVReference
+                    return null;
+                }
+                else
+                {
+                    throw new ScannerError("Expected reference identifier");
+                }
             }
 
             token.SetEndPosition(lineNo, linePos);
@@ -1085,7 +1112,7 @@ namespace Castle.NVelocity
 
             if (eof && !isLineScanner)
             {
-                throw new ScannerError("Expected end of string literal");
+                AddError("Expected end of string literal");
             }
 
             return token;
@@ -1133,7 +1160,8 @@ namespace Castle.NVelocity
 
             if (eof && !isLineScanner)
             {
-                throw new ScannerError("Expected end of string literal");
+                AddError("Expected end of string literal");
+                state.Pop();
             }
 
             return token;
@@ -1164,7 +1192,7 @@ namespace Castle.NVelocity
             }
             else
             {
-                throw new ScannerError("Expected opening dictionary declaration");
+                AddError("Expected opening dictionary declaration");
             }
 
             token.SetEndPosition(lineNo, linePos);
@@ -1368,7 +1396,10 @@ namespace Castle.NVelocity
                     GetCh();
             }
             if (!endFound && eof)
-                throw new ScannerError("Expected end of NVelocity comment");
+            {
+                AddError("Expected end of NVelocity comment");
+                return token;
+            }
 
             token.Type = TokenType.NVSingleLineComment;
             token.Image = _source.Substring(startPos - 1, pos - startPos + 1);
@@ -1564,6 +1595,11 @@ namespace Castle.NVelocity
                     GetCh();
             }
             return token;
+        }
+
+        private void AddError(string description)
+        {
+            _errors.AddError("Scanner: " + description, CurrentPos, ErrorSeverity.Error);
         }
 
         private void SetUpReservedWords()

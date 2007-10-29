@@ -2,6 +2,28 @@
 | Changes to Castle Visual Studio Integration and Castle NVelocity |
 +==================================================================+
 
+0.2.1 Alpha (2007-10-29)
+========================
+- Disabled semantic checking on designators because most variables are dynamic and cannot be checked
+  if they exist in the scope.
+
+- Removed code to run the parser in another thread.
+
+- Fixed the parser so that it cannot get into an endless loop.
+
+- Implemented various syntax for XML and NVelocity.
+
+- Fixed various parser bugs.
+
+- Added a hardcoded ignored assemblies list to MonoRail IntelliSense Provider to speed up the IntelliSense.
+
+- Created a Language Service Debug Window for a tradeshow demostration, this can be used to debug the
+  parsing+AST and scopes.
+
+- Fixed parsing of foreach directive and created a scope in the ForeachDirective which the iterator of
+  the loop is added to. Also fixed up intellisense to find the scope for the current position instead
+  of using the template's scope.
+
 0.2.0 Alpha (2007-10-09)
 ========================
 - Completed most of the basic IntelliSense and the NVelocity parser.

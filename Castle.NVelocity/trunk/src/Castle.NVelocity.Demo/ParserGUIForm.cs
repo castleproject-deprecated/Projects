@@ -50,11 +50,12 @@ namespace Castle.NVelocity.Demo
         {
             errorsListView.Items.Clear();
             templateTextBox.ForeColor = SystemColors.WindowText;
+            ErrorHandler errors = new ErrorHandler();
             try
             {
-                _scanner = new Scanner();
+                _scanner = new Scanner(errors);
                 _scanner.SetSource(templateTextBox.Text);
-                _parser = new Parser(_scanner);
+                _parser = new Parser(_scanner, errors);
                 TemplateNode templateNode = _parser.ParseTemplate();
 
                 BuildParseTree(templateNode);

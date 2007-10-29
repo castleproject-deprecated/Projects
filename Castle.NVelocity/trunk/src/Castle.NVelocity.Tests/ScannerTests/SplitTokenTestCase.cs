@@ -22,10 +22,10 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReturnsWordsAsSeperateTokens()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "First Second Third");
 
-            scanner.SplitTextTokens = true;
+            _scanner.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlText, "First");
             AssertMatchToken(TokenType.XmlText, " ");
@@ -37,10 +37,10 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReturnsMultipleSpacesAsASingleToken()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "First   Second");
 
-            scanner.SplitTextTokens = true;
+            _scanner.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlText, "First");
             AssertMatchToken(TokenType.XmlText, "   ");
@@ -50,10 +50,10 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReturnsPunctionationCharsSeperately()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "First! Second ? !@#");
 
-            scanner.SplitTextTokens = true;
+            _scanner.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlText, "First");
             AssertMatchToken(TokenType.XmlText, "!");
@@ -70,10 +70,10 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReferencesAndDirectivesAreScanned()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "text $var #directive text #$%");
 
-            scanner.SplitTextTokens = true;
+            _scanner.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlText, "text");
             AssertMatchToken(TokenType.XmlText, " ");
@@ -93,10 +93,10 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReturnsWordsAsSeperateTokensWithinXmlAttributeValue()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<div class=\"someClass anotherClass\"/>");
 
-            scanner.SplitTextTokens = true;
+            _scanner.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlTagStart);
             AssertMatchToken(TokenType.XmlTagName, "div");
@@ -114,10 +114,10 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReturnsWordsAsSeperateTokensWithinCDataSection()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<![CDATA[First Second Third]]>");
 
-            scanner.SplitTextTokens = true;
+            _scanner.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlCDataStart, new Position(1, 1, 1, 10));
             AssertMatchToken(TokenType.XmlCDataSection, "First", new Position(1, 10, 1, 15));
@@ -131,10 +131,10 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReturnsWordsAsSeperateTokensWithinScriptElement()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<script>This is JavaScript</script>");
 
-            scanner.SplitTextTokens = true;
+            _scanner.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlTagStart, new Position(1, 1, 1, 2));
             AssertMatchToken(TokenType.XmlTagName, "script", new Position(1, 2, 1, 8));
@@ -155,10 +155,10 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReturnsWordsAsSeperateTokensWithinNVDoubleQuote()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "$a.B(\"First $second Third\")");
 
-            scanner.SplitTextTokens = true;
+            _scanner.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.NVDollar, new Position(1, 1, 1, 2));
             AssertMatchToken(TokenType.NVIdentifier, "a", new Position(1, 2, 1, 3));
@@ -179,7 +179,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReturnsWordsAsSeperateTokensWithinNVSingleQuote()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "$a.B('First Second Third')");
 
             AssertMatchToken(TokenType.NVDollar, new Position(1, 1, 1, 2));

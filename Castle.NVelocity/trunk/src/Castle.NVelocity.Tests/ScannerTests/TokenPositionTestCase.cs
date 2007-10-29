@@ -22,7 +22,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void SingleLineTokenPositions()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<name/>");
 
             AssertMatchToken(TokenType.XmlTagStart, new Position(1, 1, 1, 2));
@@ -36,7 +36,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void MultilineTokenPositions()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "<name\n" +
                 ">");
 
@@ -50,10 +50,10 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void SplitTextTokenPositions()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "First Second !@#");
 
-            scanner.SplitTextTokens = true;
+            _scanner.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlText, "First", new Position(1, 1, 1, 6));
             AssertMatchToken(TokenType.XmlText, " ", new Position(1, 6, 1, 7));
@@ -67,7 +67,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReferenceIdentifiers()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "text$first.Second.Third()");
 
             AssertMatchToken(TokenType.XmlText, "text", new Position(1, 1, 1, 5));
@@ -84,7 +84,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReferenceIdentifierInsideDirective()
         {
-            scanner.SetSource(
+            _scanner.SetSource(
                 "#if ($a)");
 
             AssertMatchToken(TokenType.NVDirectiveHash, new Position(1, 1, 1, 2));

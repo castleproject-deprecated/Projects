@@ -19,16 +19,16 @@ namespace Castle.NVelocity
 
     public class Scope
     {
-        private Dictionary<string, NVIdNode> _scope = new Dictionary<string, NVIdNode>();
-        private Scope _outerScope;
-        private NVIdNode _owner;
+        private readonly Dictionary<string, NVIdNode> _scope = new Dictionary<string, NVIdNode>();
+        private readonly Scope _outerScope;
+        private readonly AstNode _owner;
 
         /// <summary>
         /// Creates a new scope linked to the existing scope.
         /// </summary>
         /// <param name="outerScope">The scope that encloses this scope.</param>
         /// <param name="owner">The owner identifier node.</param>
-        public Scope(Scope outerScope, NVIdNode owner)
+        public Scope(Scope outerScope, AstNode owner)
         {
             _outerScope = outerScope;
             _owner = owner;
@@ -68,12 +68,14 @@ namespace Castle.NVelocity
             _scope.Add(id.Name, id);
         }
 
-//        /// <summary>
-//        /// Get the enclosing scope for this scope.
-//        /// </summary>
-//        /// <returns></returns>
-//        public Scope GetOuterScope() { return outerScope; }
-//
+        /// <summary>
+        /// Gets the enclosing scope for this scope.
+        /// </summary>
+        public Scope OuterScope
+        {
+            get { return _outerScope; }
+        }
+
 //        public MethodNode GetMethodOwner()
 //        {
 //            if (owner is MethodNode) return (MethodNode)owner;

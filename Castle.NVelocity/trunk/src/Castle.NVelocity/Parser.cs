@@ -21,13 +21,14 @@ namespace Castle.NVelocity
     public class Parser
     {
         private readonly Scanner _scanner;
-        private readonly ErrorHandler _errors = new ErrorHandler();
-        //private Position _lastError;
+        private readonly ErrorHandler _errors;
 
-        public Parser(Scanner scanner)
+        public Parser(Scanner scanner, ErrorHandler errors)
         {
             _scanner = scanner;
             _scanner.GetToken();
+
+            _errors = errors;
         }
 
         private TokenType CurrentTokenType
@@ -36,7 +37,7 @@ namespace Castle.NVelocity
             {
                 if (_scanner.CurrentToken == null)
                 {
-                    return default(TokenType);
+                    return TokenType.Error;
                 }
                 return _scanner.CurrentToken.Type;
             }
@@ -79,8 +80,15 @@ namespace Castle.NVelocity
         /// <returns>The current scanner token position.</returns>
         private Position GetCurrentTokenPosition()
         {
-            Position pos = _scanner.CurrentToken.Position;
-            return new Position(pos.StartLine, pos.StartPos, pos.EndLine, pos.EndPos);
+            if (_scanner.CurrentToken != null)
+            {
+                Position pos = _scanner.CurrentToken.Position;
+                return new Position(pos.StartLine, pos.StartPos, pos.EndLine, pos.EndPos);
+            }
+            else
+            {
+                return new Position();
+            }
         }
 
         public ErrorHandler Errors
@@ -97,7 +105,7 @@ namespace Castle.NVelocity
 
         public TemplateNode ParseTemplate()
         {
-            // Template -> XmlProlog Content EOF.
+            // Template -> XmlProlog { Content } EOF.
 
             TemplateNode templateNode = new TemplateNode();
 
@@ -105,7 +113,16 @@ namespace Castle.NVelocity
 
             while (!_scanner.EOF)
             {
-                templateNode.AddRange(ParseContent());
+                List<AstNode> content = ParseContent();
+                templateNode.AddRange(content);
+
+                //TODO write some comments
+                if (content.Count == 0 || (content.Count == 0 && _scanner.EOF))
+                {
+                    AddError("The parser has been pre-emptively terminated because it appears " +
+                        "as if the parser is stuck. [In ParseXmlRestElement()]");
+                    break;
+                }
             }
 
             return templateNode;
@@ -119,7 +136,7 @@ namespace Castle.NVelocity
             List<AstNode> content = new List<AstNode>();
 
             // Skip over NVSingleLineComment
-            while (CurrentTokenType == TokenType.NVSingleLineComment)
+            while (!_scanner.EOF && CurrentTokenType == TokenType.NVSingleLineComment)
             {
                 _scanner.GetToken();
             }
@@ -165,7 +182,15 @@ namespace Castle.NVelocity
             {
                 if (CurrentTokenType == TokenType.XmlTagStart)
                 {
-                    if (_scanner.PeekToken(1).Type == TokenType.XmlForwardSlash)
+                    Token token = _scanner.PeekToken(1);
+
+                    // If no token follows then return the content list
+                    if (token == null)
+                    {
+                        return content;
+                    }
+
+                    if (token.Type == TokenType.XmlForwardSlash)
                     {
                         // The '<' starts a end tag so exit the loop of the parent element body
                         // Return nodes created and do not process the closing tag
@@ -184,6 +209,14 @@ namespace Castle.NVelocity
                     content.Add(xmlTextNode);
                     
                     _scanner.GetToken();
+                }
+
+                //TODO write some comments
+                if (content.Count == 0 || (content.Count == 0 && _scanner.EOF))
+                {
+                    AddError("The parser has been pre-emptively terminated because it appears " +
+                        "as if the parser is stuck. [In ParseXmlContent()]");
+                    break;
                 }
             }
 
@@ -206,7 +239,7 @@ namespace Castle.NVelocity
             }
             else
             {
-                AddError("Expected XML tag name");
+                AddError("Expected XML tag name.");
             }
 
             XmlElement xmlElement = new XmlElement(elementName);
@@ -222,8 +255,7 @@ namespace Castle.NVelocity
                 }
             }
 
-            //TODO: ??? if (!CurrentTokenIn(TokenType.XmlForwardSlash, TokenType.XmlTagEnd))
-            if (CurrentTokenType == TokenType.XmlAttributeName)
+            while (CurrentTokenType == TokenType.XmlAttributeName)
             {
                 XmlAttribute xmlAttribute = ParseXmlAttribute();
                 if (xmlAttribute != null)
@@ -231,9 +263,14 @@ namespace Castle.NVelocity
                     //TODO xmlAttribute.Position = GetCurrentTokenPosition();
                     xmlElement.Attributes.Add(xmlAttribute);
                 }
+                else if (!_scanner.EOF)
+                {
+                    //TODO write some comments
+                    AddError("The parser has been pre-emptively terminated because it appears " +
+                        "as if the parser is stuck. [In ParseXmlElement()]");
+                    break;
+                }
             }
-
-            //TODO XmlAttribute and NVStatement
 
             ParseXmlRestElement(xmlElement);
 
@@ -260,11 +297,25 @@ namespace Castle.NVelocity
             else if (CurrentTokenType == TokenType.XmlTagEnd)
             {
                 MatchToken(TokenType.XmlTagEnd);
-                
+
                 while (!(CurrentTokenType == TokenType.XmlTagStart &&
-                    _scanner.PeekToken(1).Type == TokenType.XmlForwardSlash))
+                    _scanner.PeekToken(1) != null && _scanner.PeekToken(1).Type == TokenType.XmlForwardSlash))
                 {
-                    xmlElement.Content.AddRange(ParseContent());
+                    List<AstNode> content = ParseContent();
+                    xmlElement.Content.AddRange(content);
+
+                    //TODO write some comments
+                    if (content.Count == 0)
+                    {
+                        AddError("The parser has been pre-emptively terminated because it appears " +
+                            "as if the parser is stuck. [In ParseXmlRestElement()]");
+                        break;
+                    }
+                    else if (_scanner.EOF)
+                    {
+                        AddError("Expected closing tag.");
+                        break;
+                    }
                 }
 
                 ParseXmlEndTag(xmlElement);
@@ -278,6 +329,11 @@ namespace Castle.NVelocity
         private void ParseXmlEndTag(XmlElement xmlElement)
         {
             // XmlEndTag -> "<" "/" XmlName ">".
+
+            if (_scanner.EOF)
+            {
+                return;
+            }
 
             MatchToken(TokenType.XmlTagStart);
             MatchToken(TokenType.XmlForwardSlash);
@@ -306,8 +362,8 @@ namespace Castle.NVelocity
 
         private XmlAttribute ParseXmlAttribute()
         {
-            // XmlAttribute -> XmlName "=" ( "\"" { xmlAttributeValue | NVStatement } "\""
-            //                             | "'" { xmlAttributeValue | NVStatement } "'" ).
+            // XmlAttribute -> XmlName "=" ( "\"" { xmlAttributeText | NVStatement } "\""
+            //                             | "'"  { xmlAttributeText | NVStatement } "'" ).
 
             XmlAttribute xmlAttribute;
 
@@ -325,19 +381,32 @@ namespace Castle.NVelocity
 
             MatchToken(TokenType.XmlEquals);
 
-            if (CurrentTokenType == TokenType.XmlDoubleQuote)
+            MatchToken(TokenType.XmlDoubleQuote);
+
+            while (CurrentTokenType != TokenType.XmlDoubleQuote)
             {
-                _scanner.GetToken();
-                //TODO: NVStatement?
+                AstNode astNode;
+
                 if (CurrentTokenType == TokenType.XmlAttributeText)
                 {
-                    xmlAttribute.Content.Add(new XmlTextNode(_scanner.CurrentToken.Image));
+                    astNode = new XmlTextNode(_scanner.CurrentToken.Image);
                     _scanner.GetToken();
                 }
+                else if (CurrentTokenIn(TokenType.NVDirectiveHash, TokenType.NVDollar))
+                {
+                    astNode = ParseNVStatement();
+                }
+                else
+                {
+                    AddError("Expected XML attribute value or NVelocity statement.");
+                    break;
+                }
 
-                MatchToken(TokenType.XmlDoubleQuote);
+                xmlAttribute.Content.Add(astNode);
             }
             //TODO: else if(CurrentTokenType == TokenType.XmlSingleQuote)
+
+            MatchToken(TokenType.XmlDoubleQuote);
 
             return xmlAttribute;
         }
@@ -359,8 +428,8 @@ namespace Castle.NVelocity
             }
             else
             {
-                //TODO add error
-                throw new Exception("Expected directive or reference");
+                AddError("Expected directive or reference");
+                return null;
             }
         }
 
@@ -397,7 +466,14 @@ namespace Castle.NVelocity
 
             if (_scanner.CurrentToken.Type == TokenType.NVDirectiveName)
             {
-                nvDirective = new NVDirective(_scanner.CurrentToken.Image);
+                if (_scanner.CurrentToken.Image == "foreach")
+                {
+                    nvDirective = new NVForeachDirective();
+                }
+                else
+                {
+                    nvDirective = new NVDirective(_scanner.CurrentToken.Image);
+                }
                 _scanner.GetToken();
             }
             else
@@ -411,31 +487,85 @@ namespace Castle.NVelocity
             // Match directive parameters
             if (CurrentTokenType == TokenType.NVDirectiveLParen)
             {
-                if (_scanner.CurrentToken != null && _scanner.CurrentToken.Type == TokenType.NVIdentifier)
+                _scanner.GetToken();
+                if (nvDirective is NVForeachDirective)
                 {
+                    MatchToken(TokenType.NVDollar);
+                    if (_scanner.CurrentToken != null && _scanner.CurrentToken.Type == TokenType.NVIdentifier)
+                    {
+                        ((NVForeachDirective)nvDirective).Iterator = _scanner.CurrentToken.Image;
+                        _scanner.GetToken();
+                    }
+                    else
+                    {
+                        AddError("Foreach variable declaration expected");
+                    }
+
+                    MatchToken(TokenType.NVIn);
+
+                    ((NVForeachDirective)nvDirective).Collection = ParseNVExpression();
+                }
+                else
+                {
+                    //TODO: just skip past everything for now but needs to be fixed
+                    while (!_scanner.EOF && CurrentTokenType != TokenType.NVDirectiveRParen)
+                    {
+                        _scanner.GetToken();
+                    }
+                }
+                MatchToken(TokenType.NVDirectiveRParen);
+            }
+
+            // Match Directive Content and End if required
+            if (nvDirective is NVForeachDirective)
+            {
+                while (!(CurrentTokenType == TokenType.NVDirectiveHash &&
+                    _scanner.PeekToken(1) != null && _scanner.PeekToken(1).Type == TokenType.NVDirectiveName &&
+                    _scanner.PeekToken(1).Image == "end"))
+                {
+                    List<AstNode> content = ParseContent();
+                    ((NVForeachDirective)nvDirective).Content.AddRange(content);
+
+                    //TODO write some comments
+                    if (content.Count == 0)
+                    {
+                        AddError("The parser has been pre-emptively terminated because it appears " +
+                            "as if the parser is stuck. [In ParseNVForeachDirective()]");
+                        break;
+                    }
+                    else if (_scanner.EOF)
+                    {
+                        AddError("Expected #end directive.");
+                        break;
+                    }
+                }
+
+                // Match #end
+                MatchToken(TokenType.NVDirectiveHash);
+                if (CurrentTokenType == TokenType.NVDirectiveName)
+                {
+                    if (_scanner.CurrentToken.Image != "end")
+                        AddError("Expected #end directive.");
+
+                    nvDirective.Position = new Position(startPos, _scanner.CurrentPos);
                     _scanner.GetToken();
                 }
                 else
                 {
-                    //AddError("Expected component directive type");
-                }
-
-                //TODO: just skip past everything for now
-                while (!_scanner.EOF && CurrentTokenType != TokenType.NVDirectiveRParen)
-                {
                     _scanner.GetToken();
+                    nvDirective.Position = new Position(startPos, _scanner.CurrentPos);
                 }
-                
-                MatchToken(TokenType.NVDirectiveRParen);
-            }
-
-            if (_scanner.CurrentToken != null)
-            {
-                nvDirective.Position = new Position(startPos, _scanner.CurrentToken.Position);
             }
             else
             {
-                nvDirective.Position = new Position(startPos, _scanner.CurrentPos);
+                if (_scanner.CurrentToken != null)
+                {
+                    nvDirective.Position = new Position(startPos, _scanner.CurrentToken.Position);
+                }
+                else
+                {
+                    nvDirective.Position = new Position(startPos, _scanner.CurrentPos);
+                }
             }
 
             return nvDirective;
@@ -453,18 +583,29 @@ namespace Castle.NVelocity
 
             MatchToken(TokenType.NVDollar);
             
-            //TODO match !
+            if (CurrentTokenType == TokenType.NVReferenceSilent)
+            {
+                _scanner.GetToken();
+            }
 
-            NVReference nvReference = ParseNVDesignator();
-            nvReference.Position = new Position(startPosition, _scanner.CurrentPos.End);
-            nvReference.Designator.Position = new Position(startPosition, _scanner.CurrentPos.End);
+            //TODO: Match '{' properly
+            if (CurrentTokenType == TokenType.NVReferenceLCurly)
+            {
+                _scanner.GetToken();
+            }
 
-            //TODO match { designator }
+            NVReference nvReference = ParseNVDesignator(startPosition);
+
+            //TODO: Match '}' properly
+            if (CurrentTokenType == TokenType.NVReferenceRCurly)
+            {
+                _scanner.GetToken();
+            }
 
             return nvReference;
         }
 
-        private NVReference ParseNVDesignator()
+        private NVReference ParseNVDesignator(Position startPosition)
         {
             // NVDesignator -> nvIdentifer { "." nvIdentifier [ NVActualParams ] }.
 
@@ -472,12 +613,15 @@ namespace Castle.NVelocity
             if (CurrentTokenType == TokenType.NVIdentifier)
             {
                 nvReference = new NVReference(new NVDesignator(_scanner.CurrentToken.Image));
+                nvReference.Position = new Position(startPosition, _scanner.CurrentPos);
                 _scanner.GetToken();
             }
             else
             {
                 AddError("Expected reference identifier");
-                return new NVReference(new NVDesignator(""));
+                nvReference = new NVReference(new NVDesignator(""));
+                nvReference.Position = new Position(startPosition, _scanner.CurrentPos);
+                return nvReference;
             }
 
             while (CurrentTokenType == TokenType.NVDot)
@@ -496,11 +640,14 @@ namespace Castle.NVelocity
                     if (CurrentTokenType == TokenType.NVLParen)
                     {
                         selector.Actuals = ParseNVActualParams();
+                        endSelectorPosition = new Position(_scanner.PreviousPos.Start);
                     }
 
                     selector.Position = new Position(startSelectorPosition, endSelectorPosition);
 
                     nvReference.Designator.Selectors.Add(selector);
+
+                    nvReference.Position.End = new Position(endSelectorPosition);
                 }
                 else
                 {
@@ -509,7 +656,9 @@ namespace Castle.NVelocity
                     NVSelector selector = new NVSelector(new NVMethodNode("", null), nvReference);
                     selector.Position = new Position(_scanner.CurrentPos);
                     nvReference.Designator.Selectors.Add(selector);
-                    
+
+                    nvReference.Position.End = new Position(_scanner.CurrentPos);
+
                     return nvReference;
                 }
             }
@@ -667,7 +816,8 @@ namespace Castle.NVelocity
                 ParseNVReference();
 
                 expr = new NVBoolExpression(false);
-                expr.Position = new Position(_scanner.CurrentToken.Position);
+                if (_scanner.CurrentToken != null)
+                    expr.Position = new Position(_scanner.CurrentToken.Position);
             }
             else if (CurrentTokenType == TokenType.NVLParen)
             {
@@ -778,7 +928,8 @@ namespace Castle.NVelocity
 
                 //TODO: Change to DictionaryExpression, this is just a 
                 expr = new NVBoolExpression(false);
-                expr.Position = new Position(_scanner.CurrentToken.Position);
+                if (_scanner.CurrentToken != null)
+                    expr.Position = new Position(_scanner.CurrentToken.Position);
             }
             else
             {
@@ -798,6 +949,7 @@ namespace Castle.NVelocity
                     else
                     {
                         AddError(string.Format("Unexpected token type '{0}'", CurrentTokenType));
+                        break;
                     }
                     _scanner.GetToken();
                 }
@@ -830,7 +982,7 @@ namespace Castle.NVelocity
             // NVRangeOrArray -> ".." NVExpression
 	        //                -> { "," NVExpression }.
 
-            NVExpression expr = null;
+            NVExpression expr;
 
             if (CurrentTokenType == TokenType.NVDoubleDot)
             {
@@ -853,6 +1005,7 @@ namespace Castle.NVelocity
                     else
                     {
                         AddError("Expected ','");
+                        break;
                     }
 
                     ParseNVExpression();

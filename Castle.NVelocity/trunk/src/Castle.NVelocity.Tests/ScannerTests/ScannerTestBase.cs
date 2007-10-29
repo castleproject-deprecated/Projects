@@ -18,11 +18,11 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
     public abstract class ScannerTestBase
     {
-        protected Scanner scanner = new Scanner();
+        protected Scanner _scanner = new Scanner(new ErrorHandler());
 
         protected void AssertMatchToken(TokenType tokenType)
         {
-            AssertMatchToken(tokenType, scanner.GetToken());
+            AssertMatchToken(tokenType, _scanner.GetToken());
         }
 
         protected void AssertMatchToken(TokenType tokenType, Token token)
@@ -32,14 +32,14 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
         protected void AssertMatchToken(TokenType tokenType, string image)
         {
-            Token token = scanner.GetToken();
+            Token token = _scanner.GetToken();
             CheckTokenType(token, tokenType);
             CheckImage(token, image);
         }
 
         protected void AssertMatchToken(TokenType tokenType, string image, Position position)
         {
-            Token token = scanner.GetToken();
+            Token token = _scanner.GetToken();
             CheckTokenType(token, tokenType);
             CheckImage(token, image);
             CheckPosition(token, position);
@@ -53,15 +53,15 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
         protected void AssertMatchToken(TokenType tokenType, Position position)
         {
-            Token token = scanner.GetToken();
+            Token token = _scanner.GetToken();
             CheckTokenType(token, tokenType);
             CheckPosition(token, position);
         }
 
         protected void AssertEOF()
         {
-            scanner.GetToken();
-            Assert.IsTrue(scanner.EOF);
+            _scanner.GetToken();
+            Assert.IsTrue(_scanner.EOF);
         }
 
         private void CheckTokenType(Token token, TokenType tokenType)

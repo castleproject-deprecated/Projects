@@ -54,13 +54,13 @@ namespace Castle.NVelocity.Ast
         {
             currentType = ResolveNamedTypeNodes(errs, currentScope, currentType);
 
-            if (!(currentType is NVClassNode))
-            {
-                AddSemanticError(errs, string.Format(
-                    "Cannot apply identifier selector to type '{0}', the type must be a class type",
-                    currentType.Name), _pos, ErrorSeverity.Warning);
-                return currentType;
-            }
+            //if (!(currentType is NVClassNode))
+            //{
+            //    AddSemanticError(errs, string.Format(
+            //        "Cannot apply identifier selector to type '{0}', the type must be a class type",
+            //        currentType.Name), _pos, ErrorSeverity.Warning);
+            //    return currentType;
+            //}
 
             // Check to see if the current node is an empty placeholder selector
             if (_id.Name == "")

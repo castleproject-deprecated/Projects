@@ -82,6 +82,10 @@
       <Project>{B768BA10-19BD-4F1E-8941-8D5711325EB9}</Project>
       <Name>Castle.VisualStudio.MonoRailIntelliSenseProvider</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Castle.VisualStudio.NVelocityLanguageService.DebugWindow\Castle.VisualStudio.NVelocityLanguageService.DebugWindow.csproj">
+      <Project>{A5FA0F59-3E39-4E2F-BE2E-9721349A33AA}</Project>
+      <Name>Castle.VisualStudio.NVelocityLanguageService.DebugWindow</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Castle.VisualStudio.NVelocityLanguageService.snk" />

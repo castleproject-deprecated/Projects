@@ -21,7 +21,7 @@ namespace Castle.NVelocity.Ast
         /// <summary>
         /// Get and Set the source file position for this node.
         /// </summary>
-        public Position Position
+        public virtual Position Position
         {
             get { return _pos; }
             set { _pos = value; }
@@ -30,13 +30,19 @@ namespace Castle.NVelocity.Ast
         //TODO: remove this method because only statements should have it, maybe?
         public virtual void DoSemanticChecks(ErrorHandler errs, Scope currentScope)
         {
-
 //            throw new NotSupportedException("DoSemanticChecks() is not supported on node type " + GetType().Name);
+        }
+
+        public virtual Scope GetScopeAt(int line, int pos)
+        {
+            return null;
         }
 
         public virtual AstNode GetNodeAt(int line, int pos)
         {
-//            throw new NotSupportedException("GetNodeAt() is not supported on node type " + GetType().Name);
+            //throw new NotSupportedException("GetNodeAt() is not supported on node type " + GetType().Name);
+            if (_pos == null)
+                return null;
 
             bool inRange = false;
 
@@ -65,15 +71,6 @@ namespace Castle.NVelocity.Ast
 
             // The node must be in the range
             return this;
-
-
-            //TODO add support for line detection
-//            if (pos >= _pos.StartPos && pos <= _pos.EndPos)
-//            {
-//                return this;
-//            }
-
-            return null;
         }
 
         protected void AddSemanticError(ErrorHandler errs, string message, Position pos, ErrorSeverity severity)

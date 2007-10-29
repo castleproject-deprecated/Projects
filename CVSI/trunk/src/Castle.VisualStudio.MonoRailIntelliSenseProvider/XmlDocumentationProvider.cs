@@ -54,11 +54,27 @@ namespace Castle.VisualStudio.MonoRailIntelliSenseProvider
             if (_document == null)
                 return null;
 
-            XmlNode xmlNode = _document.SelectSingleNode(
+            XmlNodeList xmlNodes = _document.SelectNodes(
                 string.Format("//member[contains(@name,'M:{0}.{1}')]/summary", typeFullName, methodName));
-            if (xmlNode != null)
+            if (xmlNodes.Count > 0)
             {
-                return RemoveWhitespaceFromSummary(xmlNode.InnerText);
+                return RemoveWhitespaceFromSummary(xmlNodes[0].InnerText);
+            }
+            return null;
+        }
+
+        public string GetParameterDocumentation(string typeFullName, string methodName, string paramName,
+            params string[] parameterTypes)
+        {
+            if (_document == null)
+                return null;
+
+            XmlNodeList xmlNodes = _document.SelectNodes(
+                string.Format("//member[contains(@name,'M:{0}.{1}')]/param[@name='{2}']",
+                typeFullName, methodName, paramName));
+            if (xmlNodes.Count > 0)
+            {
+                return RemoveWhitespaceFromSummary(xmlNodes[0].InnerText);
             }
             return null;
         }
