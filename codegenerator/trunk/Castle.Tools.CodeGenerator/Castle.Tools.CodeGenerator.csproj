@@ -61,6 +61,7 @@
     <Compile Include="Model\TreeNode.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MsBuild\Engine.cs" />
     <Compile Include="MsBuild\GenerateMonoRailSiteTreeTask.cs" />
     <Compile Include="MsBuild\MsBuildLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

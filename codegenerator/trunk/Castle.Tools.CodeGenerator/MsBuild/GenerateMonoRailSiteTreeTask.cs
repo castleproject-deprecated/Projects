@@ -206,67 +206,13 @@ namespace Castle.Tools.CodeGenerator.MsBuild
 
             this.Log.LogMessage(MessageImportance.High, "Generating {0}", this.OutputFile);
 
-            CreateDefaultGenerators();
+			Generator generator = new Generator(Namespace, OutputFile, ServiceTypeName, _logger, _naming, _source, _treeService);
+			generator.Execute();
 
-            foreach (IGenerator generator in _generators)
-            {
-				generator.Generate(_treeService.Root);
-            }
-
-            CreateGeneratedItems();
+			_generatedItems.Add(new TaskItem(this.OutputFile));
 
             return true;
         }
-        #endregion
-
-        #region Methods
-        protected virtual void CreateDefaultGenerators()
-        {
-            if (_generators.Count > 0) return;
-            string serviceType = this.ServiceTypeName;
-            _generators.Add(new ActionMapGenerator(_logger, _source, _naming, this.Namespace, serviceType));
-			_generators.Add(new RouteMapGenerator(_logger, _source, _naming, this.Namespace, serviceType));
-            _generators.Add(new ViewMapGenerator(_logger, _source, _naming, this.Namespace, serviceType));
-            _generators.Add(new ControllerPartialsGenerator(_logger, _source, _naming, this.Namespace, serviceType));
-            _generators.Add(new ControllerMapGenerator(_logger, _source, _naming, this.Namespace, serviceType));
-			_generators.Add(new WizardStepMapGenerator(_logger, _source, _naming, this.Namespace, serviceType));
-        }
-
-        protected virtual void CreateGeneratedItems()
-        {
-            using (StreamWriter writer = File.CreateText(this.OutputFile))
-            {
-                System.CodeDom.Compiler.CodeGenerator.ValidateIdentifiers(_source.Ccu);
-                CodeDomProvider provider = CodeDomProvider.CreateProvider("C#");
-                CodeGeneratorOptions options = new CodeGeneratorOptions();
-                provider.GenerateCodeFromCompileUnit(_source.Ccu, writer, options);
-            }
-            _generatedItems.Add(new TaskItem(this.OutputFile));
-        }
-
-        /*
-        private Project GetCurrentProject()
-        {
-          Type engineType = this.BuildEngine.GetType();
-          FieldInfo field = engineType.GetField("project", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy | BindingFlags.InvokeMethod);
-          if (field == null)
-            throw new ArgumentException("Unable to resolve Project!");
-          Project project = field.GetValue(this.BuildEngine) as Project;
-          if (project == null)
-            throw new ArgumentNullException("Project is Null!");
-          return project;
-        }
-        */
-        /*
-        private void ShowTree(TreeNode node, int depth)
-        {
-          this.Log.LogMessage("{0}{1}", new String(' ', depth * 2), node);
-          foreach (TreeNode child in node.Children)
-          {
-            ShowTree(child, depth + 1);
-          }
-        }
-        */
         #endregion
     }
 }
