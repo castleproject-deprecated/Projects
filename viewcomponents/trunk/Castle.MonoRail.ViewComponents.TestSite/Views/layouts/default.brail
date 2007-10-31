@@ -142,6 +142,13 @@ component InsertJavascript, {@Std: "Ajax, Scriptaculous"}
 						</li>
 					</ul>		
 					
+					<h3>Masked Textbox</h3>
+					<ul>
+						<li>
+							<a href="/maskedtextbox/index.rails">Masked Textbox Examples</a>
+						</li>
+					</ul>	
+					
 					
 				</div>
 

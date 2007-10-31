@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.20706</ProductVersion>
+    <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{6C229F56-62A2-47EE-973C-1F892960CA87}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -72,6 +72,7 @@
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\FaqController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MaskedTextBoxController.cs" />
     <Compile Include="Controllers\SmartGridController.cs" />
     <Compile Include="Controllers\GridController.cs" />
     <Compile Include="Controllers\WhitespaceController.cs" />
@@ -97,6 +98,8 @@
     <None Include="Views\Home\index.brail" />
     <None Include="Views\layouts\default.vm" />
     <None Include="Views\layouts\default.brail" />
+    <None Include="Views\MaskedTextBox\index.brail" />
+    <None Include="Views\MaskedTextBox\TestValues.brail" />
     <None Include="Views\SmartGrid\More.brail" />
     <None Include="Views\SmartGrid\SortBehavior.brail" />
     <None Include="Views\SmartGrid\SortJSBehavior.brail" />
@@ -127,11 +130,10 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>63269</DevelopmentServerPort>
+          <DevelopmentServerPort>64327</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/Castle.MonoRail.ViewComponents.TestSite</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <AlwaysStartWebServerOnDebug>True</AlwaysStartWebServerOnDebug>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

@@ -1,0 +1,5 @@
+﻿SSN: ${SSN} <br/>
+Phone: ${Phone} <br/>
+TaxId: ${TaxId} <br/>
+Date: ${Date} <br/>
+Productkey: ${Productkey} <br/>
