@@ -12,17 +12,20 @@ namespace Castle.Tools.CodeGenerator.Services
 		public RouteMapGenerator(ILogger logger, ISourceGenerator source, INamingService naming, string targetNamespace,
 		                         string serviceType) : base(logger, source, naming, targetNamespace, serviceType)
 		{
-			_logger.LogInfo("RouteMapGenerator.ctor");
 		}
 
 		public override void Visit(ControllerTreeNode node)
 		{
-			CodeTypeDeclaration type =
-				GenerateTypeDeclaration(_namespace, node.PathNoSlashes + _naming.ToRouteWrapperName(node.Name));
+			CodeTypeDeclaration type = GenerateTypeDeclaration(_namespace, node.PathNoSlashes + _naming.ToRouteWrapperName(node.Name));
 
 			_typeStack.Push(type);
 			base.Visit(node);
 			_typeStack.Pop();
+		}
+
+		public override void Visit(WizardControllerTreeNode node)
+		{
+			Visit((ControllerTreeNode) node);
 		}
 
 		public override void Visit(RouteTreeNode node)
@@ -107,8 +110,6 @@ namespace Castle.Tools.CodeGenerator.Services
 		{
 			if (routingInitialize == null)
 			{
-				_logger.LogInfo("GetRoutingInitializeMethod: creating Initialize");
-
 				CodeMemberMethod method = new CodeMemberMethod();
 				method.Name = "Initialize";
 				method.Attributes = MemberAttributes.Public | MemberAttributes.Static;
@@ -130,17 +131,11 @@ namespace Castle.Tools.CodeGenerator.Services
 			{				
 				codeTypeDeclaration = ns.Types[i];
 
-				_logger.LogInfo("GetRoutingInitializerType: found type " + codeTypeDeclaration.Name);
-
 				if (codeTypeDeclaration.Name == "RoutingInitializer")
 				{
-					_logger.LogInfo("GetRoutingInitializerType: found RoutingInitializer");
-
 					return codeTypeDeclaration;
 				}
 			}
-
-			_logger.LogInfo("GetRoutingInitializerType: creating RoutingInitializer");
 
 			codeTypeDeclaration = _source.GenerateTypeDeclaration(_namespace, "RoutingInitializer");
 
