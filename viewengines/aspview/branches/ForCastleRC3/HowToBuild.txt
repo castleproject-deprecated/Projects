@@ -1,9 +1,24 @@
-After you checkout this solution (or after an update) you should run GenerateAssemblyInfo.bat in order to get the needed AssemblyInfo.cs files generated in the main projects (Castle.MonoRail.Views.AspView and VCompile)
+===Build===
 
+In order to build, use "Build-Debug.bat" or "Build-Release.bat".
+It would build the projects, run tests, and output to Build folder
+
+
+
+
+
+===Assembly Info===
+
+In order to open in Visual Studio or any other IDE, you should run the above build process, or alternatively run GenerateAssemblyInfo.bat in order to get the needed AssemblyInfo.cs files generated in the main projects (Castle.MonoRail.Views.AspView and VCompile)
 After that you can use Visual Studio (or any other IDE) to work on the source code.
 
-IMPORTANT:
+
+
+
+
+===IMPORTANT===
+
 The GenerateAssemblyInfo target generates AssemblyInfo file, with a revision number acquired from the subversion revision number of the wc.
 For that target to run, you must have svnversion.exe in c:\Program Files\Subversion\bin directory.
-If you do not have the subversion client tool, you can get them from:
+If you do not have the subversion client tools, you can get them from:
 http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=91
