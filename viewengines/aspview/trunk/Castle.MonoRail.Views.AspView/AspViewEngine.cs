@@ -35,8 +35,7 @@ namespace Castle.MonoRail.Views.AspView
 
 		public AspViewBase CreateView(Type type, TextWriter output, IRailsEngineContext context, Controller controller)
 		{
-			AspViewBase view = (AspViewBase)//Activator.CreateInstance(type);
-			FormatterServices.GetUninitializedObject(type);
+			AspViewBase view = (AspViewBase)FormatterServices.GetUninitializedObject(type);
 			view.Initialize(this, output, context, controller);
 			return view;
 		}

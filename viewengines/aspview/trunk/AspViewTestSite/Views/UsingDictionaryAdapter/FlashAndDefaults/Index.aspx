@@ -1,6 +1,8 @@
 <%@ Page Language="C#" Inherits="Castle.MonoRail.Views.AspView.ViewAtDesignTime<AspViewTestSite.Interfaces.UsingDictionaryAdapter.IStupidView>" %>
+<aspView:properties>
 <%
 %>
+</aspView:properties>
 <p><%=view.Message %></p>
 <form action="DoStuff.rails">
 	Name: <input type="text" name="name" value="<%= view.Name %>" /> <br />

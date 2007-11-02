@@ -1,6 +1,8 @@
 <%@ Page Language="C#" Inherits="Castle.MonoRail.Views.AspView.ViewAtDesignTime" %>
+<aspView:properties>
 <%
 %>
+</aspView:properties>
 outside the filter
 <filter:SingleLine>
 first line

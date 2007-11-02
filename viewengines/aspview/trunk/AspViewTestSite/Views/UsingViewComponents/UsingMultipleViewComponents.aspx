@@ -1,9 +1,11 @@
 <%@ Page Language="C#" %>
 <%@ Assembly Name="Castle.MonoRail.Framework" %>
 <%@ Assembly Name="Castle.MonoRail.Views.AspView" %>
+<aspView:properties>
 <%
 	string text = "some variable text";
 %>
+</aspView:properties>
 Some view text
 <component:CaptureFor id="capturedContent1">
 This content should be rendered in the captured-for place holder no. 1
