@@ -34,7 +34,7 @@ namespace Castle.MonoRail.Views.AspView
         protected Dictionary<string, object> _properties;
         protected IList<IDictionary> _extentedPropertiesList;
         protected IRailsEngineContext _context;
-        protected Controller _controller;
+        protected IController _controller;
         protected AspViewEngine _viewEngine;
         protected AspViewBase _parentView;
 		protected IDictionaryAdapterFactory dictionaryAdapterFactory;
@@ -208,7 +208,7 @@ namespace Castle.MonoRail.Views.AspView
         /// <summary>
         /// Gets the calling controller
         /// </summary>
-        public Controller Controller
+        public IController Controller
         {
             get { return _controller; }
         }
@@ -228,7 +228,7 @@ namespace Castle.MonoRail.Views.AspView
         }
         #endregion
 
-		public virtual void Initialize(AspViewEngine viewEngine, TextWriter output, IRailsEngineContext context, Controller controller)
+		public virtual void Initialize(AspViewEngine viewEngine, TextWriter output, IRailsEngineContext context, IController controller)
 		{
 			if (initialized)
 				throw new ApplicationException("Sorry, but a view instance cannot be initialized twice");

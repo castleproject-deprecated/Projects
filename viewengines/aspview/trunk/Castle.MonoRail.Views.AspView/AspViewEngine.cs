@@ -24,20 +24,35 @@ namespace Castle.MonoRail.Views.AspView
 	using Core;
 	using System.Runtime.Serialization;
 
-	public class AspViewEngine : ViewEngineBase, IInitializable
+	public interface IAspViewEngineTestAccess
+	{
+		Hashtable Compilations { get; }
+	}
+
+	public class AspViewEngine : ViewEngineBase, IInitializable, IAspViewEngineTestAccess
 	{
 		private bool needsRecompiling = false;
 		static AspViewEngineOptions options;
 
 		readonly Hashtable compilations = Hashtable.Synchronized(new Hashtable(CaseInsensitiveStringComparer.Default));
+		Hashtable IAspViewEngineTestAccess.Compilations
+		{
+			get { return compilations; }
+		}
 
 		#region IInitializable Members
 
-		public AspViewBase CreateView(Type type, TextWriter output, IRailsEngineContext context, Controller controller)
+		public AspViewBase CreateView(Type type, TextWriter output, IRailsEngineContext context, IController controller)
 		{
 			AspViewBase view = (AspViewBase)FormatterServices.GetUninitializedObject(type);
 			view.Initialize(this, output, context, controller);
 			return view;
+		}
+
+		public void Initialize(AspViewEngineOptions newOptions)
+		{
+			options = newOptions;
+			Initialize();
 		}
 
 		public void Initialize()
@@ -66,13 +81,14 @@ namespace Castle.MonoRail.Views.AspView
 		#region ViewEngineBase implementation
 		public override bool HasTemplate(string templateName)
 		{
-			return ViewSourceLoader.HasTemplate(GetFileName(templateName));
+			string className = GetClassName(templateName);
+			return compilations.ContainsKey(className);
 		}
-		public override void Process(IRailsEngineContext context, Controller controller, string templateName)
+		public override void Process(IRailsEngineContext context, IController controller, string templateName)
 		{
 			Process(context.Response.Output, context, controller, templateName);
 		}
-		public override void Process(TextWriter output, IRailsEngineContext context, Controller controller, string templateName)
+		public override void Process(TextWriter output, IRailsEngineContext context, IController controller, string templateName)
 		{
 			string fileName = GetFileName(templateName);
 			AspViewBase view;
@@ -96,7 +112,7 @@ namespace Castle.MonoRail.Views.AspView
 			}
 			controller.PostSendView(view);
 		}
-		public override void ProcessContents(IRailsEngineContext context, Controller controller, string contents)
+		public override void ProcessContents(IRailsEngineContext context, IController controller, string contents)
 		{
 			TextWriter viewOutput = controller.Response.Output;
 			AspViewBase layout = null;
@@ -124,7 +140,7 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			get { throw new RailsException("This version of AspView does not implements NJS."); }
 		}
-		public override void ProcessPartial(TextWriter output, IRailsEngineContext context, Controller controller, string partialName)
+		public override void ProcessPartial(TextWriter output, IRailsEngineContext context, IController controller, string partialName)
 		{
 			throw new RailsException("This version of AspView does not implements NJS.");
 		}
@@ -132,7 +148,7 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			get { return false; }
 		}
-		public override void GenerateJS(TextWriter output, IRailsEngineContext context, Controller controller, string templateName)
+		public override void GenerateJS(TextWriter output, IRailsEngineContext context, IController controller, string templateName)
 		{
 			throw new RailsException("This version of AspView does not implements NJS.");
 		}
@@ -140,7 +156,7 @@ namespace Castle.MonoRail.Views.AspView
 		#endregion
 		#endregion
 
-		public virtual AspViewBase GetView(string fileName, TextWriter output, IRailsEngineContext context, Controller controller)
+		public virtual AspViewBase GetView(string fileName, TextWriter output, IRailsEngineContext context, IController controller)
 		{
 			fileName = NormalizeFileName(fileName);
 			string className = GetClassName(fileName);
@@ -172,7 +188,7 @@ namespace Castle.MonoRail.Views.AspView
 			return theView;
 		}
 
-		protected virtual AspViewBase GetLayout(TextWriter output, IRailsEngineContext context, Controller controller)
+		protected virtual AspViewBase GetLayout(TextWriter output, IRailsEngineContext context, IController controller)
 		{
 			string layoutTemplate = "layouts\\" + controller.LayoutName;
 			string layoutFileName = GetFileName(layoutTemplate);
@@ -196,7 +212,6 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			return templateName + "." + ViewFileExtension;
 		}
-
 
 		private void CacheViewType(Type viewType)
 		{
@@ -223,13 +238,17 @@ namespace Castle.MonoRail.Views.AspView
 
 		public static string GetClassName(string fileName)
 		{
-			string className = fileName.ToLower().Replace('\\', '_');
-			int i = className.LastIndexOf('.');
-			if (i > -1)
-				className = className.Substring(0, i);
-			while (className[0] == '_' && className.Length > 1)
-				className = className.Substring(1);
-			return className.Replace('.', '_');
+			fileName = fileName.ToLower();
+			if (fileName.EndsWith(".aspx"))
+				fileName = fileName.Substring(0, fileName.Length - 5);
+
+			string className = fileName
+				.Replace('\\', '_')
+				.Replace('/', '_')
+				.TrimStart('_')
+				.Replace('.', '_');
+
+			return className;
 		}
 		public static string NormalizeFileName(string fileName)
 		{

@@ -42,6 +42,19 @@
             Assigns a prefix to the keyed properties of an interface.
             </summary>
         </member>
+        <member name="T:Castle.Components.DictionaryAdapter.IDictionaryKeyBuilder">
+            <summary>
+            Defines the contract for building typed dictionary keys.
+            </summary>
+        </member>
+        <member name="M:Castle.Components.DictionaryAdapter.IDictionaryKeyBuilder.Apply(System.String,System.Reflection.PropertyInfo)">
+            <summary>
+            Builds the specified key.
+            </summary>
+            <param name="key">The current key.</param>
+            <param name="property">The property.</param>
+            <returns>The updated key</returns>
+        </member>
         <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterKeyPrefixAttribute.#ctor">
             <summary>
             Initializes a default instance of the <see cref="T:Castle.Components.DictionaryAdapter.DictionaryAdapterKeyPrefixAttribute"/> class.
@@ -53,10 +66,38 @@
             </summary>
             <param name="keyPrefix">The prefix for the keyed properties of the interface.</param>
         </member>
+        <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterKeyPrefixAttribute.Castle#Components#DictionaryAdapter#IDictionaryKeyBuilder#Apply(System.String,System.Reflection.PropertyInfo)">
+            <summary>
+            Apply the prefix to the key.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="property">The source property.</param>
+            <returns>The prefixed key.</returns>
+        </member>
         <member name="P:Castle.Components.DictionaryAdapter.DictionaryAdapterKeyPrefixAttribute.KeyPrefix">
             <summary>
             Gets the prefix key added to the properties of the interface.
             </summary>
+        </member>
+        <member name="T:Castle.Components.DictionaryAdapter.DictionaryAdapterKeySubstitutionAttribute">
+            <summary>
+            Substitutes part of key with another string.
+            </summary>
+        </member>
+        <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterKeySubstitutionAttribute.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Components.DictionaryAdapter.DictionaryAdapterKeySubstitutionAttribute"/> class.
+            </summary>
+            <param name="oldValue">The old value.</param>
+            <param name="newValue">The new value.</param>
+        </member>
+        <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterKeySubstitutionAttribute.Castle#Components#DictionaryAdapter#IDictionaryKeyBuilder#Apply(System.String,System.Reflection.PropertyInfo)">
+            <summary>
+            Apply the replacement to the key.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="property">The source property.</param>
+            <returns>The updated key.</returns>
         </member>
     </members>
 </doc>
