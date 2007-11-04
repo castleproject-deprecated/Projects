@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-using System.Diagnostics;
 
 namespace Castle.MonoRail.Views.AspView
 {
@@ -21,10 +20,12 @@ namespace Castle.MonoRail.Views.AspView
 	using System.Collections.Generic;
 	using System.CodeDom.Compiler;
 	using Microsoft.CSharp;
-	using Microsoft.VisualBasic;
+	using System.Reflection;
 
 	public class AspViewCompiler
 	{
+		const string AssemblyAttributeAllowPartiallyTrustedCallers = "[assembly: System.Security.AllowPartiallyTrustedCallers]";
+
 		#region members
 		private CompilerParameters parameters;
 		readonly AspViewCompilerOptions options;
@@ -33,6 +34,7 @@ namespace Castle.MonoRail.Views.AspView
 		private static readonly string defaultSiteRoot = AppDomain.CurrentDomain.BaseDirectory;
 
 		public string PathToAssembly = null;
+		public Assembly Assembly = null;
 
 		#endregion
 
@@ -47,6 +49,7 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			CompileSite(defaultSiteRoot);
 		}
+
 		public void CompileSite(string siteRoot)
 		{
 			CompileSite(siteRoot, defaultAddedReferences);
@@ -60,9 +63,6 @@ namespace Castle.MonoRail.Views.AspView
 
 			preProcessor.Process(files);
 
-			List<AspViewFile> vbFiles = files.FindAll(delegate(AspViewFile file) { return (file.Language == ScriptingLanguage.VbNet); });
-			List<AspViewFile> csFiles = files.FindAll(delegate(AspViewFile file) { return (file.Language == ScriptingLanguage.CSharp); });
-
 			string targetDirectory = Path.Combine(siteRoot, "Bin");
 
 			if (options.KeepTemporarySourceFiles)
@@ -72,7 +72,12 @@ namespace Castle.MonoRail.Views.AspView
 					SaveFile(file, targetTemporarySourceFilesDirectory);
 			}
 
-			PathToAssembly = Compile(targetDirectory, csFiles, vbFiles, references);
+			CompilerResults results = Compile(files, references, targetDirectory);
+
+			if (options.InMemory)
+				Assembly = results.CompiledAssembly;
+			else 
+				PathToAssembly = results.PathToAssembly;
 
 		}
 
@@ -86,47 +91,44 @@ namespace Castle.MonoRail.Views.AspView
 			return targetTemporarySourceFilesDirectory;
 		}
 
-		private string Compile(string targetDirectory, ICollection<AspViewFile> csFiles, ICollection<AspViewFile> vbFiles, IEnumerable<ReferencedAssembly> references)
+		private CompilerResults Compile(ICollection<AspViewFile> files, IEnumerable<ReferencedAssembly> references, string targetDirectory)
 		{
-			string[] assemblyInfoModule = null;
+			parameters.OutputAssembly = Path.Combine(targetDirectory, "CompiledViews.dll");
+			List<ReferencedAssembly> actualReferences = new List<ReferencedAssembly>();
+			if (options.References != null)
+				actualReferences.AddRange(options.References);
+			if (references != null)
+				actualReferences.AddRange(references);
+
+			foreach (ReferencedAssembly reference in actualReferences)
+			{
+				string assemblyName = reference.Name;
+				if (reference.Source == ReferencedAssembly.AssemblySource.BinDirectory)
+					assemblyName = Path.Combine(targetDirectory, assemblyName);
+				parameters.CompilerOptions += " /r:\"" + assemblyName + "\"";
+			}
+
+			List<string> sources = new List<string>(files.Count);
+			foreach (AspViewFile file in files)
+				sources.Add(file.ConcreteClass);
+
 			if (options.AllowPartiallyTrustedCallers)
 			{
-				assemblyInfoModule = GetAssemblyInfoModule(targetDirectory);
+				sources.Add(AssemblyAttributeAllowPartiallyTrustedCallers);
 			}
-			if (vbFiles.Count == 0)
-				return CompileCSharpModule(targetDirectory, csFiles, references, true, assemblyInfoModule);
-			if (csFiles.Count == 0)
-				return CompileVbModule(targetDirectory, vbFiles, references, true, assemblyInfoModule);
 
-			string vbModulePath = CompileVbModule(targetDirectory, vbFiles, references, false, assemblyInfoModule);
-			return CompileCSharpModule(targetDirectory, csFiles, references, true, new string[1] { vbModulePath });
-		}
+			CompilerResults results = new CSharpCodeProvider().CompileAssemblyFromSource(parameters, sources.ToArray());
 
-		private string[] GetAssemblyInfoModule(string targetDirectory)
-		{
-			CSharpCodeProvider codeProvider = new CSharpCodeProvider();
-			CompilerResults results;
-			CompilerParameters parameters = new CompilerParameters();
-			parameters.CompilerOptions = "/t:module";
-			parameters.OutputAssembly = Path.Combine(targetDirectory,
-				string.Format("CompiledViews.{0}.aptcmodule", codeProvider.FileExtension));
-
-			const string STR_AssemblySystemSecurityAllowPartiallyTrustedCallers = "[assembly: System.Security.AllowPartiallyTrustedCallers]public class AssemblyInfoClass { }";
-
-			if (options.KeepTemporarySourceFiles)
+			if (results.Errors.Count > 0)
 			{
-				string allowPartiallyTrustedCallersAttributeFile = Path.Combine(GetTargetTemporarySourceFilesDirectory(targetDirectory), "AssemblyInfo.cs");
-				using (StreamWriter sr = new StreamWriter(allowPartiallyTrustedCallersAttributeFile))
-				{
-					sr.WriteLine(STR_AssemblySystemSecurityAllowPartiallyTrustedCallers);
-				}
-				results = codeProvider.CompileAssemblyFromFile(parameters, allowPartiallyTrustedCallersAttributeFile);
+				StringBuilder message = new StringBuilder();
+				foreach (CompilerError err in results.Errors)
+					message.AppendLine(err.ToString());
+				throw new Exception(string.Format(
+				                    	"Error while compiling'':\r\n{0}",
+				                    	message));
 			}
-			else
-			{
-				results = codeProvider.CompileAssemblyFromSource(parameters, STR_AssemblySystemSecurityAllowPartiallyTrustedCallers);
-			}
-			return new string[] { results.PathToAssembly }; 
+			return results;
 		}
 
 		private static List<AspViewFile> GetViewFiles(string siteRoot)
@@ -145,10 +147,12 @@ namespace Castle.MonoRail.Views.AspView
 			}
 			return files;
 		}
+
 		private static string ReadFile(string fileName)
 		{
 			return File.ReadAllText(fileName);
 		}
+
 		private static void SaveFile(AspViewFile file, string targetDirectory)
 		{
 			string fileName = Path.Combine(targetDirectory, file.FileName);
@@ -158,6 +162,7 @@ namespace Castle.MonoRail.Views.AspView
 				sw.Flush();
 			}
 		}
+
 		private void InitializeCompilerParameters()
 		{
 			parameters = new CompilerParameters();
@@ -166,74 +171,5 @@ namespace Castle.MonoRail.Views.AspView
 			parameters.IncludeDebugInformation = options.Debug;
 		}
 
-		private string CompileModule(
-			CodeDomProvider codeProvider, string targetDirectory, ICollection<AspViewFile> files,
-			IEnumerable<ReferencedAssembly> references, bool createAssembly, string[] modulesToAdd)
-		{
-			if (!createAssembly)
-			{
-				parameters.CompilerOptions = "/t:module";
-				parameters.OutputAssembly = Path.Combine(targetDirectory,
-					string.Format("CompiledViews.{0}.netmodule", codeProvider.FileExtension));
-			}
-			else
-				parameters.OutputAssembly = Path.Combine(targetDirectory, "CompiledViews.dll");
-			List<ReferencedAssembly> actualReferences = new List<ReferencedAssembly>();
-			if (options.References != null)
-				actualReferences.AddRange(options.References);
-			if (references != null)
-				actualReferences.AddRange(references);
-
-			foreach (ReferencedAssembly reference in actualReferences)
-			{
-				string assemblyName = reference.Name;
-				if (reference.Source == ReferencedAssembly.AssemblySource.BinDirectory)
-					assemblyName = Path.Combine(targetDirectory, assemblyName);
-				parameters.CompilerOptions += " /r:\"" + assemblyName + "\"";
-			}
-			if (modulesToAdd != null && modulesToAdd.Length > 0)
-			{
-				StringBuilder sb = new StringBuilder();
-				sb.Append(" /addmodule:\"");
-				sb.Append(string.Join("\";\"", modulesToAdd));
-				sb.Append("\"");
-				parameters.CompilerOptions += sb;
-			}
-
-			CompilerResults results;
-			if (options.KeepTemporarySourceFiles)
-			{
-				string targetTemporarySourceFilesDirectory = Path.Combine(targetDirectory, options.TemporarySourceFilesDirectory);
-				List<string> fileNames = new List<string>(files.Count);
-				foreach (AspViewFile file in files)
-					fileNames.Add(Path.Combine(targetTemporarySourceFilesDirectory, file.FileName));
-				results = codeProvider.CompileAssemblyFromFile(parameters, fileNames.ToArray());
-			}
-			else
-			{
-				List<string> sources = new List<string>(files.Count);
-				foreach (AspViewFile file in files)
-					sources.Add(file.ConcreteClass);
-				results = codeProvider.CompileAssemblyFromSource(parameters, sources.ToArray());
-			}
-			if (results.Errors.Count > 0)
-			{
-				StringBuilder message = new StringBuilder();
-				foreach (CompilerError err in results.Errors)
-					message.AppendLine(err.ToString());
-				throw new Exception(string.Format(
-					"Error while compiling'':\r\n{0}",
-					message));
-			}
-			return results.PathToAssembly;
-		}
-		private string CompileCSharpModule(string targetDirectory, ICollection<AspViewFile> files, IEnumerable<ReferencedAssembly> references, bool createAssembly, string[] modulesToAdd)
-		{
-			return CompileModule(new CSharpCodeProvider(), targetDirectory, files, references, createAssembly, modulesToAdd);
-		}
-		private string CompileVbModule(string targetDirectory, ICollection<AspViewFile> files, IEnumerable<ReferencedAssembly> references, bool createAssembly, string[] modulesToAdd)
-		{
-			return CompileModule(new VBCodeProvider(), targetDirectory, files, references, createAssembly, modulesToAdd);
-		}
 	}
 }

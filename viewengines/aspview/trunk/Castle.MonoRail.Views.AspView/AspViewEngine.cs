@@ -31,7 +31,7 @@ namespace Castle.MonoRail.Views.AspView
 
 	public class AspViewEngine : ViewEngineBase, IInitializable, IAspViewEngineTestAccess
 	{
-		private bool needsRecompiling = false;
+		static bool needsRecompiling = false;
 		static AspViewEngineOptions options;
 
 		readonly Hashtable compilations = Hashtable.Synchronized(new Hashtable(CaseInsensitiveStringComparer.Default));
@@ -57,19 +57,19 @@ namespace Castle.MonoRail.Views.AspView
 
 		public void Initialize()
 		{
-			LoadPrecompiledViews();
 			if (options == null)
 				InitializeConfig();
 			#region TODO
 			//TODO: think about CommonScripts implementation in c#/VB.NET 
 			#endregion
 
+			LoadCompiledViews();
 			if (options.CompilerOptions.AutoRecompilation)
 			{
 				// invalidate compiled views cache on any change to the view sources
 				ViewSourceLoader.ViewChanged += delegate(object sender, FileSystemEventArgs e)
 				{
-					if (e.Name.EndsWith("." + ViewFileExtension, StringComparison.InvariantCultureIgnoreCase))
+					if (e.Name.EndsWith(".aspx" ,StringComparison.InvariantCultureIgnoreCase))
 					{
 						needsRecompiling = true;
 					}
@@ -162,8 +162,8 @@ namespace Castle.MonoRail.Views.AspView
 			string className = GetClassName(fileName);
 			if (needsRecompiling)
 			{
+				CompileViewsInMemory();
 				needsRecompiling = false;
-				RecompileViews();
 			}
 
 			Type viewType = compilations[className] as Type;
@@ -198,14 +198,13 @@ namespace Castle.MonoRail.Views.AspView
 			return layout;
 		}
 
-		private AspViewCompiler compiler = null;
-
-		protected virtual void RecompileViews()
+		protected virtual void CompileViewsInMemory()
 		{
-			if (compiler == null)
-				compiler = new AspViewCompiler(options.CompilerOptions);
+			options.CompilerOptions.InMemory = true;
+			AspViewCompiler compiler = new AspViewCompiler(options.CompilerOptions);
 			compiler.CompileSite();
-			LoadPrecompiledViews();
+			compilations.Clear();
+			LoadCompiledViewsFrom(compiler.Assembly);
 		}
 
 		private string GetFileName(string templateName)
@@ -218,8 +217,13 @@ namespace Castle.MonoRail.Views.AspView
 			compilations[viewType.Name] = viewType;
 		}
 
-		private void LoadPrecompiledViews()
+		private void LoadCompiledViews()
 		{
+			if (options.CompilerOptions.AutoRecompilation)
+			{
+				CompileViewsInMemory();
+				return;
+			}
 			compilations.Clear();
 
 			Assembly precompiledViews;
@@ -231,8 +235,12 @@ namespace Castle.MonoRail.Views.AspView
 			{
 				throw new AspViewException(ex, "Couldn't load CompiledViews assembly");
 			}
-			if (precompiledViews != null)
-				foreach (Type type in precompiledViews.GetTypes())
+			LoadCompiledViewsFrom(precompiledViews);
+		}
+		private void LoadCompiledViewsFrom(Assembly viewsAssembly)
+		{
+			if (viewsAssembly != null)
+				foreach (Type type in viewsAssembly.GetTypes())
 					CacheViewType(type);
 		}
 
