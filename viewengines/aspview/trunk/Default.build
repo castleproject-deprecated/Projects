@@ -52,7 +52,7 @@
 		<MakeDir Directories="$(BuildDllDir)"></MakeDir>		
 		
 		<Message Text="Copying Dll files to build directory ..." />
-		<CreateItem Include="$(OutputDllDir)\Castle.MonoRail.Views.AspView.*;$(OutputDllDir)\VCompile.*;" Exclude="$(OutputDllDir)\*.config">
+		<CreateItem Include="$(OutputDllDir)\Castle.MonoRail.Views.AspView.dll;$(OutputDllDir)\Castle.MonoRail.Views.AspView.pdb;$(OutputDllDir)\VCompile.exe;$(OutputDllDir)\VCompile.pdb;" Exclude="$(OutputDllDir)\*.config">
 			<Output ItemName="DllFiles" TaskParameter="Include"/>
 		</CreateItem>
 		<Copy	SourceFiles="@(DllFiles)"
