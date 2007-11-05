@@ -233,7 +233,7 @@ namespace Castle.MonoRail.Views.AspView
 			}
 			catch (Exception ex)
 			{
-				throw new AspViewException(ex, "Couldn't load CompiledViews assembly");
+				throw new AspViewException(ex, "Couldn't load CompiledViews assembly. Did you intend to use the 'auto recompilation' mode? if so, make sure you add the attribute 'autoRecompilation=\"true\"' to aspview config section in web.config. This attribute is case sensitive.");
 			}
 			LoadCompiledViewsFrom(precompiledViews);
 		}
