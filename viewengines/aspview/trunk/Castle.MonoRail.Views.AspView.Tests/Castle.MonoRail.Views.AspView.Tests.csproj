@@ -10,7 +10,8 @@
     <RootNamespace>Castle.MonoRail.Views.AspView.Tests</RootNamespace>
     <AssemblyName>Castle.MonoRail.Views.AspView.Tests</AssemblyName>
     <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>KenEgoziOpenSource.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -81,7 +82,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="KenEgoziOpenSource.snk" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AspViewTestSite\AspViewTestSite.csproj">
