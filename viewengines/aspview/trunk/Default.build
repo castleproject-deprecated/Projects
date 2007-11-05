@@ -74,7 +74,7 @@
 	
   <Target Name="Test" DependsOnTargets="CreateBuildDir;">
 		<Message Text="Running tests ..." />
-    <NUnit Assemblies="$(SolutionDir)\Castle.MonoRail.Views.AspView.Tests\bin\Debug\Castle.MonoRail.Views.AspView.Tests.dll" 
+    <NUnit Assemblies="$(SolutionDir)\Castle.MonoRail.Views.AspView.Tests\bin\$(Configuration)\Castle.MonoRail.Views.AspView.Tests.dll" 
           ToolPath="$(ToolsDir)\NUnit"
           OutputXmlFile="$(BuildDir)\TestResults.xml"
     />

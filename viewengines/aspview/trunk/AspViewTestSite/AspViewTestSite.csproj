@@ -46,14 +46,8 @@
       <HintPath>..\Solution Items\Lib\Castle\Castle.MonoRail.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.Services" />
-    <Reference Include="System.EnterpriseServices" />
-    <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
@@ -158,10 +152,9 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>copy "$(SolutionDir)vcompile\bin\$(ConfigurationName)\vcompile.*" $(TargetDir)
-copy "$(SolutionDir)Solution Items\lib\castle\Castle.Components.Common.EmailSender.*" $(TargetDir)
+    <PreBuildEvent>copy "$(SolutionDir)Solution Items\lib\castle\Castle.Components.Common.EmailSender.*" $(TargetDir)
 copy "$(SolutionDir)Solution Items\lib\castle\Castle.Components.Validator.*" $(TargetDir)</PreBuildEvent>
-    <PostBuildEvent>$(TargetDir)vcompile.exe
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
