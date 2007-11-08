@@ -103,7 +103,8 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>copy $(ProjectDir)App.config $(TargetPath).config</PostBuildEvent>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>copy "$(SolutionDir)VCompile\bin\$(ConfigurationName)\vcompile.exe" $(SolutionDir)\AspViewTestSite\bin\
+$(SolutionDir)\AspViewTestSite\bin\vcompile.exe
+move $(SolutionDir)\AspViewTestSite\bin\CompiledViews.dll $(TargetDir)</PreBuildEvent>
   </PropertyGroup>
 </Project>
