@@ -52,7 +52,7 @@ namespace Castle.MonoRail.Views.AspView
 
 		#region IInitializable Members
 
-		public AspViewBase CreateView(Type type, TextWriter output, IRailsEngineContext context, IController controller)
+		public AspViewBase CreateView(Type type, TextWriter output, IRailsEngineContext context, Controller controller)
 		{
 			AspViewBase view = (AspViewBase)FormatterServices.GetUninitializedObject(type);
 			view.Initialize(this, output, context, controller);
@@ -94,11 +94,11 @@ namespace Castle.MonoRail.Views.AspView
 			string className = GetClassName(templateName);
 			return compilations.ContainsKey(className);
 		}
-		public override void Process(IRailsEngineContext context, IController controller, string templateName)
+		public override void Process(IRailsEngineContext context, Controller controller, string templateName)
 		{
 			Process(context.Response.Output, context, controller, templateName);
 		}
-		public override void Process(TextWriter output, IRailsEngineContext context, IController controller, string templateName)
+		public override void Process(TextWriter output, IRailsEngineContext context, Controller controller, string templateName)
 		{
 			string fileName = GetFileName(templateName);
 			AspViewBase view;
@@ -122,7 +122,7 @@ namespace Castle.MonoRail.Views.AspView
 			}
 			controller.PostSendView(view);
 		}
-		public override void ProcessContents(IRailsEngineContext context, IController controller, string contents)
+		public override void ProcessContents(IRailsEngineContext context, Controller controller, string contents)
 		{
 			TextWriter viewOutput = controller.Response.Output;
 			AspViewBase layout = null;
@@ -150,7 +150,7 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			get { throw new RailsException("This version of AspView does not implements NJS."); }
 		}
-		public override void ProcessPartial(TextWriter output, IRailsEngineContext context, IController controller, string partialName)
+		public override void ProcessPartial(TextWriter output, IRailsEngineContext context, Controller controller, string partialName)
 		{
 			throw new RailsException("This version of AspView does not implements NJS.");
 		}
@@ -158,7 +158,7 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			get { return false; }
 		}
-		public override void GenerateJS(TextWriter output, IRailsEngineContext context, IController controller, string templateName)
+		public override void GenerateJS(TextWriter output, IRailsEngineContext context, Controller controller, string templateName)
 		{
 			throw new RailsException("This version of AspView does not implements NJS.");
 		}
@@ -166,7 +166,7 @@ namespace Castle.MonoRail.Views.AspView
 		#endregion
 		#endregion
 
-		public virtual AspViewBase GetView(string fileName, TextWriter output, IRailsEngineContext context, IController controller)
+		public virtual AspViewBase GetView(string fileName, TextWriter output, IRailsEngineContext context, Controller controller)
 		{
 			fileName = NormalizeFileName(fileName);
 			string className = GetClassName(fileName);
@@ -198,7 +198,7 @@ namespace Castle.MonoRail.Views.AspView
 			return theView;
 		}
 
-		protected virtual AspViewBase GetLayout(TextWriter output, IRailsEngineContext context, IController controller)
+		protected virtual AspViewBase GetLayout(TextWriter output, IRailsEngineContext context, Controller controller)
 		{
 			string layoutTemplate = "layouts\\" + controller.LayoutName;
 			string layoutFileName = GetFileName(layoutTemplate);
