@@ -24,37 +24,62 @@ namespace Castle.MonoRail.Views.AspView
 	using Core;
 	using System.Runtime.Serialization;
 
-	public class AspViewEngine : ViewEngineBase, IInitializable
+	public interface IAspViewEngineTestAccess
 	{
-		private bool needsRecompiling = false;
+		Hashtable Compilations { get; }
+		string SiteRoot { get; set; }
+	}
+
+	public class AspViewEngine : ViewEngineBase, IInitializable, IAspViewEngineTestAccess
+	{
+		static bool needsRecompiling = false;
 		static AspViewEngineOptions options;
+		string siteRoot;
 
 		readonly Hashtable compilations = Hashtable.Synchronized(new Hashtable(CaseInsensitiveStringComparer.Default));
 
+		#region IAspViewEngineTestAccess
+		Hashtable IAspViewEngineTestAccess.Compilations
+		{
+			get { return compilations; }
+		}
+		string IAspViewEngineTestAccess.SiteRoot
+		{
+			get { return siteRoot; }
+			set { siteRoot = value; }
+		}
+		#endregion
+
 		#region IInitializable Members
 
-		public AspViewBase CreateView(Type type, TextWriter output, IRailsEngineContext context, Controller controller)
+		public AspViewBase CreateView(Type type, TextWriter output, IRailsEngineContext context, IController controller)
 		{
 			AspViewBase view = (AspViewBase)FormatterServices.GetUninitializedObject(type);
 			view.Initialize(this, output, context, controller);
 			return view;
 		}
 
+		public void Initialize(AspViewEngineOptions newOptions)
+		{
+			options = newOptions;
+			Initialize();
+		}
+
 		public void Initialize()
 		{
-			LoadPrecompiledViews();
 			if (options == null)
 				InitializeConfig();
 			#region TODO
 			//TODO: think about CommonScripts implementation in c#/VB.NET 
 			#endregion
 
+			LoadCompiledViews();
 			if (options.CompilerOptions.AutoRecompilation)
 			{
 				// invalidate compiled views cache on any change to the view sources
 				ViewSourceLoader.ViewChanged += delegate(object sender, FileSystemEventArgs e)
 				{
-					if (e.Name.EndsWith("." + ViewFileExtension, StringComparison.InvariantCultureIgnoreCase))
+					if (e.Name.EndsWith(".aspx" ,StringComparison.InvariantCultureIgnoreCase))
 					{
 						needsRecompiling = true;
 					}
@@ -66,13 +91,14 @@ namespace Castle.MonoRail.Views.AspView
 		#region ViewEngineBase implementation
 		public override bool HasTemplate(string templateName)
 		{
-			return ViewSourceLoader.HasTemplate(GetFileName(templateName));
+			string className = GetClassName(templateName);
+			return compilations.ContainsKey(className);
 		}
-		public override void Process(IRailsEngineContext context, Controller controller, string templateName)
+		public override void Process(IRailsEngineContext context, IController controller, string templateName)
 		{
 			Process(context.Response.Output, context, controller, templateName);
 		}
-		public override void Process(TextWriter output, IRailsEngineContext context, Controller controller, string templateName)
+		public override void Process(TextWriter output, IRailsEngineContext context, IController controller, string templateName)
 		{
 			string fileName = GetFileName(templateName);
 			AspViewBase view;
@@ -96,7 +122,7 @@ namespace Castle.MonoRail.Views.AspView
 			}
 			controller.PostSendView(view);
 		}
-		public override void ProcessContents(IRailsEngineContext context, Controller controller, string contents)
+		public override void ProcessContents(IRailsEngineContext context, IController controller, string contents)
 		{
 			TextWriter viewOutput = controller.Response.Output;
 			AspViewBase layout = null;
@@ -124,7 +150,7 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			get { throw new RailsException("This version of AspView does not implements NJS."); }
 		}
-		public override void ProcessPartial(TextWriter output, IRailsEngineContext context, Controller controller, string partialName)
+		public override void ProcessPartial(TextWriter output, IRailsEngineContext context, IController controller, string partialName)
 		{
 			throw new RailsException("This version of AspView does not implements NJS.");
 		}
@@ -132,7 +158,7 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			get { return false; }
 		}
-		public override void GenerateJS(TextWriter output, IRailsEngineContext context, Controller controller, string templateName)
+		public override void GenerateJS(TextWriter output, IRailsEngineContext context, IController controller, string templateName)
 		{
 			throw new RailsException("This version of AspView does not implements NJS.");
 		}
@@ -140,14 +166,14 @@ namespace Castle.MonoRail.Views.AspView
 		#endregion
 		#endregion
 
-		public virtual AspViewBase GetView(string fileName, TextWriter output, IRailsEngineContext context, Controller controller)
+		public virtual AspViewBase GetView(string fileName, TextWriter output, IRailsEngineContext context, IController controller)
 		{
 			fileName = NormalizeFileName(fileName);
 			string className = GetClassName(fileName);
 			if (needsRecompiling)
 			{
+				CompileViewsInMemory();
 				needsRecompiling = false;
-				RecompileViews();
 			}
 
 			Type viewType = compilations[className] as Type;
@@ -172,7 +198,7 @@ namespace Castle.MonoRail.Views.AspView
 			return theView;
 		}
 
-		protected virtual AspViewBase GetLayout(TextWriter output, IRailsEngineContext context, Controller controller)
+		protected virtual AspViewBase GetLayout(TextWriter output, IRailsEngineContext context, IController controller)
 		{
 			string layoutTemplate = "layouts\\" + controller.LayoutName;
 			string layoutFileName = GetFileName(layoutTemplate);
@@ -182,14 +208,14 @@ namespace Castle.MonoRail.Views.AspView
 			return layout;
 		}
 
-		private AspViewCompiler compiler = null;
 
-		protected virtual void RecompileViews()
+		protected virtual void CompileViewsInMemory()
 		{
-			if (compiler == null)
-				compiler = new AspViewCompiler(options.CompilerOptions);
+			options.CompilerOptions.InMemory = true;
+			AspViewCompiler compiler = new AspViewCompiler(options.CompilerOptions);
 			compiler.CompileSite();
-			LoadPrecompiledViews();
+			compilations.Clear();
+			LoadCompiledViewsFrom(compiler.Assembly);
 		}
 
 		private string GetFileName(string templateName)
@@ -197,14 +223,18 @@ namespace Castle.MonoRail.Views.AspView
 			return templateName + "." + ViewFileExtension;
 		}
 
-
 		private void CacheViewType(Type viewType)
 		{
 			compilations[viewType.Name] = viewType;
 		}
 
-		private void LoadPrecompiledViews()
+		private void LoadCompiledViews()
 		{
+			if (options.CompilerOptions.AutoRecompilation)
+			{
+				CompileViewsInMemory();
+				return;
+			}
 			compilations.Clear();
 
 			Assembly precompiledViews;
@@ -214,22 +244,30 @@ namespace Castle.MonoRail.Views.AspView
 			}
 			catch (Exception ex)
 			{
-				throw new AspViewException(ex, "Couldn't load CompiledViews assembly");
+				throw new AspViewException(ex, "Couldn't load CompiledViews assembly. Did you intend to use the 'auto recompilation' mode? if so, make sure you add the attribute 'autoRecompilation=\"true\"' to aspview config section in web.config. This attribute is case sensitive.");
 			}
-			if (precompiledViews != null)
-				foreach (Type type in precompiledViews.GetTypes())
+			LoadCompiledViewsFrom(precompiledViews);
+		}
+		private void LoadCompiledViewsFrom(Assembly viewsAssembly)
+		{
+			if (viewsAssembly != null)
+				foreach (Type type in viewsAssembly.GetTypes())
 					CacheViewType(type);
 		}
 
 		public static string GetClassName(string fileName)
 		{
-			string className = fileName.ToLower().Replace('\\', '_');
-			int i = className.LastIndexOf('.');
-			if (i > -1)
-				className = className.Substring(0, i);
-			while (className[0] == '_' && className.Length > 1)
-				className = className.Substring(1);
-			return className.Replace('.', '_');
+			fileName = fileName.ToLower();
+			if (fileName.EndsWith(".aspx"))
+				fileName = fileName.Substring(0, fileName.Length - 5);
+
+			string className = fileName
+				.Replace('\\', '_')
+				.Replace('/', '_')
+				.TrimStart('_')
+				.Replace('.', '_');
+
+			return className;
 		}
 		public static string NormalizeFileName(string fileName)
 		{

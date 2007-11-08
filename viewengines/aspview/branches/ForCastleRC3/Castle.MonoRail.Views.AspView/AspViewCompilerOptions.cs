@@ -19,13 +19,13 @@ namespace Castle.MonoRail.Views.AspView
 	public class AspViewCompilerOptions
 	{
 		#region members
-		private bool _debug = false;
-		private bool _inMemory = false;
-		private bool _autoRecompilation = false;
-		private bool _allowPartiallyTrustedCallers = false;
-		private bool _keepTemporarySourceFiles = false;
-		private string _temporarySourceFilesDirectory = "temporarySourceFiles";
-		readonly List<ReferencedAssembly> _assembliesToReference = new List<ReferencedAssembly>();
+		private bool debug = false;
+		private bool inMemory = false;
+		private bool autoRecompilation = false;
+		private bool allowPartiallyTrustedCallers = false;
+		private bool keepTemporarySourceFiles = false;
+		private string temporarySourceFilesDirectory = "temporarySourceFiles";
+		readonly List<ReferencedAssembly> assembliesToReference = new List<ReferencedAssembly>();
 
 		static readonly ReferencedAssembly[] defaultAssemblies = new ReferencedAssembly[4]
 			{
@@ -52,12 +52,12 @@ namespace Castle.MonoRail.Views.AspView
 			IEnumerable<ReferencedAssembly> references)
 			: this()
 		{
-			if (debug.HasValue) _debug = debug.Value;
-			if (inMemory.HasValue) _inMemory = inMemory.Value;
-			if (autoRecompilation.HasValue) _autoRecompilation = autoRecompilation.Value;
-			if (allowPartiallyTrustedCallers.HasValue) _allowPartiallyTrustedCallers = allowPartiallyTrustedCallers.Value;
-			if (keepTemporarySourceFiles.HasValue) _keepTemporarySourceFiles = keepTemporarySourceFiles.Value;
-			if (temporarySourceFilesDirectory != null) _temporarySourceFilesDirectory = temporarySourceFilesDirectory;
+			if (debug.HasValue) this.debug = debug.Value;
+			if (inMemory.HasValue) this.inMemory = inMemory.Value;
+			if (autoRecompilation.HasValue) this.autoRecompilation = autoRecompilation.Value;
+			if (allowPartiallyTrustedCallers.HasValue) this.allowPartiallyTrustedCallers = allowPartiallyTrustedCallers.Value;
+			if (keepTemporarySourceFiles.HasValue) this.keepTemporarySourceFiles = keepTemporarySourceFiles.Value;
+			if (temporarySourceFilesDirectory != null) this.temporarySourceFilesDirectory = temporarySourceFilesDirectory;
 			AddReferences(references);
 		}
 		#endregion
@@ -68,40 +68,40 @@ namespace Castle.MonoRail.Views.AspView
 		/// </summary>
 		public bool Debug
 		{
-			get { return _debug; }
-			set { _debug = value; }
+			get { return debug; }
+			set { debug = value; }
 		}
 		/// <summary>
 		/// True if the compiled assembly should only be kept in-memory
 		/// </summary>
 		public bool InMemory
 		{
-			get { return _inMemory; }
-			set { _inMemory = value; }
+			get { return inMemory; }
+			set { inMemory = value; }
 		}
 		/// <summary>
 		/// True if the generated concrete classes should be kept on disk
 		/// </summary>
 		public bool KeepTemporarySourceFiles
 		{
-			get { return _keepTemporarySourceFiles; }
-			set { _keepTemporarySourceFiles = value; }
+			get { return keepTemporarySourceFiles; }
+			set { keepTemporarySourceFiles = value; }
 		}
 		/// <summary>
 		/// if true, the engine will recompile the view if the view sources are changed
 		/// </summary>
 		public bool AutoRecompilation
 		{
-			get { return _autoRecompilation; }
-			set { _autoRecompilation = value; }
+			get { return autoRecompilation; }
+			set { autoRecompilation = value; }
 		}		
 		/// <summary>
 		/// if true, the engine will compile the views with AllowPartiallyTrustedCallers
 		/// </summary>
 		public bool AllowPartiallyTrustedCallers
 		{
-			get { return _allowPartiallyTrustedCallers; }
-			set { _allowPartiallyTrustedCallers = value; }
+			get { return allowPartiallyTrustedCallers; }
+			set { allowPartiallyTrustedCallers = value; }
 		}
 		/// <summary>
 		/// Location of the generated concrete classes, if saved.
@@ -109,21 +109,21 @@ namespace Castle.MonoRail.Views.AspView
 		/// </summary>
 		public string TemporarySourceFilesDirectory
 		{
-			get { return _temporarySourceFilesDirectory; }
-			set { _temporarySourceFilesDirectory = value; }
+			get { return temporarySourceFilesDirectory; }
+			set { temporarySourceFilesDirectory = value; }
 		}
 		/// <summary>
 		/// Gets list of assemblies that'll be referenced during the compile process by CompiledViews.dll
 		/// </summary>
 		public ReferencedAssembly[] References
 		{
-			get { return _assembliesToReference.ToArray(); }
+			get { return assembliesToReference.ToArray(); }
 		}
 		#endregion
 
 		public void AddReferences(IEnumerable<ReferencedAssembly> referencesToAdd)
 		{
-			_assembliesToReference.AddRange(referencesToAdd);
+			assembliesToReference.AddRange(referencesToAdd);
 		}
 
 	}

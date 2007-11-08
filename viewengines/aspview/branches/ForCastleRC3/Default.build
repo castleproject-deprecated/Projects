@@ -4,7 +4,8 @@
 	<PropertyGroup>
     <SolutionDir>$(MSBuildProjectDirectory)</SolutionDir>
     <Configuration Condition="!Exists('$(Configuration)')">Debug</Configuration>
-    <OutputDllDir>$(SolutionDir)\AspViewTestSite\Bin</OutputDllDir>
+    <AspViewBinDir>$(SolutionDir)\Castle.MonoRail.Views.AspView\Bin\$(Configuration)</AspViewBinDir>
+    <VCompileBinDir>$(SolutionDir)\VCompile\Bin\$(Configuration)</VCompileBinDir>
     <BuildDir>$(SolutionDir)\Build</BuildDir>
     <BuildDllDir>$(BuildDir)\$(Configuration)</BuildDllDir>
 	</PropertyGroup>
@@ -52,7 +53,7 @@
 		<MakeDir Directories="$(BuildDllDir)"></MakeDir>		
 		
 		<Message Text="Copying Dll files to build directory ..." />
-		<CreateItem Include="$(OutputDllDir)\Castle.MonoRail.Views.AspView.*;$(OutputDllDir)\VCompile.*;" Exclude="$(OutputDllDir)\*.config">
+		<CreateItem Include="$(AspViewBinDir)\Castle.MonoRail.Views.AspView.dll;$(AspViewBinDir)\Castle.MonoRail.Views.AspView.pdb;$(VCompileBinDir)\VCompile.exe;$(VCompileBinDir)\VCompile.pdb;">
 			<Output ItemName="DllFiles" TaskParameter="Include"/>
 		</CreateItem>
 		<Copy	SourceFiles="@(DllFiles)"
@@ -74,7 +75,7 @@
 	
   <Target Name="Test" DependsOnTargets="CreateBuildDir;">
 		<Message Text="Running tests ..." />
-    <NUnit Assemblies="$(SolutionDir)\Castle.MonoRail.Views.AspView.Tests\bin\Debug\Castle.MonoRail.Views.AspView.Tests.dll" 
+    <NUnit Assemblies="$(SolutionDir)\Castle.MonoRail.Views.AspView.Tests\bin\$(Configuration)\Castle.MonoRail.Views.AspView.Tests.dll" 
           ToolPath="$(ToolsDir)\NUnit"
           OutputXmlFile="$(BuildDir)\TestResults.xml"
     />

@@ -9,6 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Castle.MonoRail.Views.AspView.Tests</RootNamespace>
     <AssemblyName>Castle.MonoRail.Views.AspView.Tests</AssemblyName>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,6 +40,10 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\Lib\Castle\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.MonoRail.Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Solution Items\Lib\Castle\Castle.MonoRail.Framework.dll</HintPath>
@@ -44,6 +51,10 @@
     <Reference Include="Castle.MonoRail.TestSupport, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Solution Items\Lib\Castle\Castle.MonoRail.TestSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="CompiledViews, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\AspViewTestSite\bin\CompiledViews.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.4.0.2, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -65,6 +76,7 @@
     <Compile Include="SmartDispatcherTestCase.cs" />
     <Compile Include="UsingReferencesTestCase.cs" />
     <Compile Include="ViewComponentsTestFixture.cs" />
+    <Compile Include="ViewEngineTestCase.cs" />
     <Compile Include="ViewFiltersTestCases.cs" />
     <Compile Include="WithLayoutTestCase.cs" />
   </ItemGroup>
@@ -72,6 +84,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AspViewTestSite\AspViewTestSite.csproj">
+      <Project>{65929B65-C749-43C8-9EA8-5EFFFAE16A5C}</Project>
+      <Name>AspViewTestSite</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Castle.MonoRail.Views.AspView\Castle.MonoRail.Views.AspView.csproj">
       <Project>{41B2C873-254B-4BC5-8514-AD33ED3B5934}</Project>
       <Name>Castle.MonoRail.Views.AspView</Name>
@@ -87,7 +103,8 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>copy $(ProjectDir)App.config $(TargetPath).config</PostBuildEvent>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>copy "$(SolutionDir)VCompile\bin\$(ConfigurationName)\vcompile.exe" $(SolutionDir)\AspViewTestSite\bin\
+$(SolutionDir)\AspViewTestSite\bin\vcompile.exe
+move $(SolutionDir)\AspViewTestSite\bin\CompiledViews.dll $(TargetDir)</PreBuildEvent>
   </PropertyGroup>
 </Project>
