@@ -93,7 +93,8 @@ namespace Castle.MonoRail.Views.AspView
 
 		private CompilerResults Compile(ICollection<AspViewFile> files, IEnumerable<ReferencedAssembly> references, string targetDirectory)
 		{
-			parameters.OutputAssembly = Path.Combine(targetDirectory, "CompiledViews.dll");
+			if (!parameters.GenerateInMemory)
+				parameters.OutputAssembly = Path.Combine(targetDirectory, "CompiledViews.dll");
 			List<ReferencedAssembly> actualReferences = new List<ReferencedAssembly>();
 			if (options.References != null)
 				actualReferences.AddRange(options.References);

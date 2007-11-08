@@ -224,13 +224,13 @@ namespace Castle.MonoRail.Views.AspView
 			return string.Format(@"
 				ViewComponentContext {0} = new ViewComponentContext(this, {4}, ""{1}"", this.OutputWriter {2});
 				this.AddProperties({0}.ContextVars);
-				ViewComponent {3} = ((IViewComponentFactory)_context.GetService(typeof(IViewComponentFactory))).Create(""{1}"");"
+				ViewComponent {3} = ((IViewComponentFactory)Context.GetService(typeof(IViewComponentFactory))).Create(""{1}"");"
 				, contextName, componentTypeName, arguments, componentName, bodyHandler);
 		}
 		protected virtual string GetViewComponentStatements(string contextName, string componentName)
 		{
 			return string.Format(@"
-				{0}.Init(_context, {1});
+				{0}.Init(Context, {1});
 				{0}.Render();
 				if ({1}.ViewToRender != null)
 					OutputSubView(""\\"" + {1}.ViewToRender, {1}.ContextVars);"
