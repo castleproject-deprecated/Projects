@@ -27,18 +27,28 @@ namespace Castle.MonoRail.Views.AspView
 	public interface IAspViewEngineTestAccess
 	{
 		Hashtable Compilations { get; }
+		string SiteRoot { get; set; }
 	}
 
 	public class AspViewEngine : ViewEngineBase, IInitializable, IAspViewEngineTestAccess
 	{
 		static bool needsRecompiling = false;
 		static AspViewEngineOptions options;
+		string siteRoot;
 
 		readonly Hashtable compilations = Hashtable.Synchronized(new Hashtable(CaseInsensitiveStringComparer.Default));
+
+		#region IAspViewEngineTestAccess
 		Hashtable IAspViewEngineTestAccess.Compilations
 		{
 			get { return compilations; }
 		}
+		string IAspViewEngineTestAccess.SiteRoot
+		{
+			get { return siteRoot; }
+			set { siteRoot = value; }
+		}
+		#endregion
 
 		#region IInitializable Members
 
@@ -197,6 +207,7 @@ namespace Castle.MonoRail.Views.AspView
 			layout.ViewOutput = new StringWriter();
 			return layout;
 		}
+
 
 		protected virtual void CompileViewsInMemory()
 		{

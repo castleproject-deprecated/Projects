@@ -57,7 +57,7 @@ namespace Castle.MonoRail.Views.AspView
 
 		public void CompileSite(string siteRoot, ReferencedAssembly[] references)
 		{
-			List<AspViewFile> files = GetViewFiles(siteRoot);
+			List<AspViewFile> files = GetViewFiles(siteRoot ?? defaultSiteRoot);
 			if (files.Count == 0)
 				return;
 
