@@ -29,13 +29,26 @@ namespace Castle.MonoRail.Views.AspView
 		private static readonly Regex findViewFiltersTags = new Regex("<filter:(?<filterName>\\w+)>(?<content>.*)</filter:\\k<filterName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 		private static readonly Regex findAttributes = new Regex("\\s*(?<name>\\w+)\\s*=\\s*\"(?<value>[\\w.]*|\\s*<%=\\s*[\\w\\.\\(\\)\"]+\\s*%>\\s*)\"\\s*");
 		private const string attributesBlock = "(?<attributes>(\\s*\\w+=\"[<][%]=\\s*[\\w\\.\\(\\)\"]+\\s*[%][>]\"|\\s*\\w+=\"[\\w.]*\"|\\s*)*)";
-		private static readonly Regex findViewComponentTags = new Regex("<component:(?<componentName>\\w|\\w[\\w.]+)" + attributesBlock + ">(?<content>.*?)</component:\\k<componentName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.IgnorePatternWhitespace);
+		private static readonly Regex findViewComponentTags = new Regex(@"
+<component:(?<componentName>\w[\w.]*)" + attributesBlock + @">					# Match first opeing delimiter
+  (?<content>
+    (?:
+        <component:\k<componentName> (?<LEVEL>)								# On opening delimiter push level
+      | 
+        </component:\k<componentName>> (?<-LEVEL>)								# On closing delimiter pop level
+      |
+        (?! <component:\k<componentName> | </component:\k<componentName>> ) .  # Match any char unless the opening   
+    )*																			# or closing delimiters are in the lookahead string
+    (?(LEVEL)(?!))																# If level exists then fail
+.*?  )
+</component:\k<componentName>>													# Match first closing delimiter
+", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.IgnorePatternWhitespace);
 		private static readonly Regex findSubViewTags = new Regex("<subView:(?<viewName>[\\w\\.]+)"+attributesBlock + ">\\s*</subView:\\k<viewName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		private static readonly Regex findSectionTags = new Regex("<section:(?<sectionName>\\w+)>(?<content>.*)</section:\\k<sectionName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 		private const string assemblyNamespace = "CompiledViews";
         #endregion
 
-		protected int viewComponentsCounter = 0;
+		protected int lastViewComponentsCounter = 0;
 		protected Dictionary<string, string> sectionHandlers;
 
         #region Process
@@ -95,7 +108,6 @@ namespace Castle.MonoRail.Views.AspView
 
 		private string ProcessViewComponentTags(string processedBody)
 		{
-			viewComponentsCounter = 0;
 			return findViewComponentTags.Replace(processedBody, ViewComponentTagHandler);
 		}
 
@@ -158,7 +170,7 @@ namespace Castle.MonoRail.Views.AspView
 
     	private string ViewComponentTagHandler(Match match)
 		{
-			++viewComponentsCounter;
+			int viewComponentsCounter = lastViewComponentsCounter++;
 			int sectionsCounter = 0;
 			string componentTypeName = match.Groups["componentName"].Value;
 
@@ -198,13 +210,14 @@ namespace Castle.MonoRail.Views.AspView
 
 		private void RegisterSectionHandler(string handlerName, string sectionContent)
 		{
-			string processedSection;
-			using (StringWriter sectionWriter = new StringWriter())
-			{
-				WriteRenderBody(sectionWriter, sectionContent);
-				processedSection = sectionWriter.GetStringBuilder().ToString();
-			}
-
+			string processedSection = sectionContent;
+			if (findViewComponentTags.IsMatch(sectionContent))
+				processedSection = ProcessViewComponentTags(sectionContent);
+				using (StringWriter sectionWriter = new StringWriter())
+				{
+					WriteRenderBody(sectionWriter, processedSection);
+					processedSection = sectionWriter.GetStringBuilder().ToString();
+				}
 			sectionHandlers[handlerName] = processedSection;
 		}
 

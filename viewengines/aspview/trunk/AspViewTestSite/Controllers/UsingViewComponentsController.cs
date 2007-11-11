@@ -28,6 +28,14 @@ namespace AspViewTestSite.Controllers
 		{
 			LayoutName = "UsingCaptureFor";
 		}
+		public void Nested()
+		{
+		}
+		public void NestedInCaptureFor()
+		{
+			LayoutName = "UsingCaptureFor";
+		}
+		
 		public void UsingMultipleViewComponents()
 		{
 			LayoutName = "UsingMultipleViewComponents";

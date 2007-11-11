@@ -30,6 +30,7 @@ Hello from SimpleViewComponentI was supposed to be rendered after the viewcompon
             DoGet("UsingViewComponents/Simple.rails");
             AssertReplyEqualTo(expected);
         }
+
 		[Test]
 		public void ViewComponentWithBodyWorks()
 		{
@@ -40,6 +41,7 @@ Hello from SimpleViewComponentI was supposed to be rendered after the viewcompon
 			DoGet("UsingViewComponents/WithBody.rails");
 			AssertReplyEqualTo(expected);
 		}
+
 		[Test]
 		public void ViewComponentWithSectionsWorks()
 		{
@@ -76,6 +78,7 @@ Hello from SimpleViewComponentI was supposed to be rendered after the viewcompon
 			DoGet("UsingViewComponents/WithSections.rails");
 			AssertReplyEqualTo(expected);
 		}
+
 		[Test]
 		public void CaptureForWorks()
 		{
@@ -94,7 +97,7 @@ Hello from SimpleViewComponentI was supposed to be rendered after the viewcompon
 		<h1>Under me should appear the regular content of the view</h1>
         a. Some text, located before the capturedContent component
 b. Some text, located after the capturedContent component
-This text should be rendered right after text a.
+This text should be rendered right after text b.
     </div>
     <div>
 		<h1>Under me should appear the contents of a CaptureFor component, with id=""capturedContent""</h1>
@@ -106,6 +109,53 @@ This text should be rendered right after text a.
 			DoGet("UsingViewComponents/UsingCaptureFor.rails");
 			AssertReplyEqualTo(expected);
 		}
+
+		[Test]
+		public void NestedWorks()
+		{
+			#region expected
+			string expected = @"before the components
+<b>	in inner bolded
+	<b>		in secondary bolded
+	</b>	back in outer bolded
+</b>after all components";
+			#endregion
+			DoGet("UsingViewComponents/Nested.rails");
+			AssertReplyEqualTo(expected);
+		}
+
+		[Test]
+		public void NestedInCaptureForWorks()
+		{
+			#region expected
+			string expected = @"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
+
+<html xmlns=""http://www.w3.org/1999/xhtml"" >
+<head>
+    <title>AspView layout test</title>
+</head>
+<body>
+    <div>
+        hello from UsingCaptureFor layout
+    </div>
+    <div>
+		<h1>Under me should appear the regular content of the view</h1>
+        a. Some text, located before the capturedContent component
+b. Some text, located after the capturedContent component
+This text should be rendered right after text b.
+    </div>
+    <div>
+		<h1>Under me should appear the contents of a CaptureFor component, with id=""capturedContent""</h1>
+		This content should be rendered in the captured-for place holder
+<b>Bolded, yet still in the captured-for place holder</b>Not bolded anymore, yet still in the captured-for place holder
+    </div>
+</body>
+</html>";
+			#endregion
+			DoGet("UsingViewComponents/NestedInCaptureFor.rails");
+			AssertReplyEqualTo(expected);
+		}
+
 		[Test]
 		public void MultipleViewComponentsWorksTogether()
 		{

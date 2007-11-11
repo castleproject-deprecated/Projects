@@ -100,6 +100,8 @@
     <Content Include="Views\UsingDictionaryAdapter\Nested\AlsoWithTypedProperties.aspx" />
     <Content Include="Views\UsingDictionaryAdapter\WithTypedProperties.aspx" />
     <Content Include="Views\UsingReferences\Show.aspx" />
+    <Content Include="Views\UsingViewComponents\NestedInCaptureFor.aspx" />
+    <Content Include="Views\UsingViewComponents\Nested.aspx" />
     <Content Include="Views\UsingViewComponents\UsingComponentWithDotInALiteralParameterValue.aspx" />
     <Content Include="Views\UsingViewComponents\UsingComponentWithDotInAParameterValue.aspx" />
     <Content Include="Views\UsingViewComponents\UsingComponentWithASingleLetterName.aspx" />
