@@ -213,11 +213,11 @@ namespace Castle.MonoRail.Views.AspView
 			string processedSection = sectionContent;
 			if (findViewComponentTags.IsMatch(sectionContent))
 				processedSection = ProcessViewComponentTags(sectionContent);
-				using (StringWriter sectionWriter = new StringWriter())
-				{
-					WriteRenderBody(sectionWriter, processedSection);
-					processedSection = sectionWriter.GetStringBuilder().ToString();
-				}
+			using (StringWriter sectionWriter = new StringWriter())
+			{
+				WriteRenderBody(sectionWriter, processedSection);
+				processedSection = sectionWriter.GetStringBuilder().ToString();
+			}
 			sectionHandlers[handlerName] = processedSection;
 		}
 
