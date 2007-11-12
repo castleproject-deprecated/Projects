@@ -152,7 +152,7 @@ namespace Castle.Tools.CodeGenerator.Model
       Expect.Call(_railsContext.UrlInfo).Return(
         new UrlInfo("eleutian.com", "www", _virtualDirectory, "http", 80,
                     Path.Combine(Path.Combine("Area", "Controller"), "Action"), "Area", "Controller",
-                    "Action", "rails")).Repeat.Any();
+                    "Action", "rails", "")).Repeat.Any();
     }
     #endregion
   }

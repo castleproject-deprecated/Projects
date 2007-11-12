@@ -124,6 +124,20 @@ namespace Castle.Tools.CodeGenerator.CmdLine
 				loaded++;
 			}
 
+			nodeIterator = GetCsprojNodeIterator(@"pr:Project/pr:PropertyGroup/pr:OutputPath");
+			nodeIterator.MoveNext();
+
+			string outputPath = Path.Combine(arguments.ProjectPath, nodeIterator.Current.Value);
+
+			nodeIterator = GetCsprojNodeIterator(@"pr:Project/pr:ItemGroup/pr:ProjectReference/pr:Name");
+			
+			while (nodeIterator.MoveNext())
+			{
+				string assemblyPath = Path.Combine(outputPath, nodeIterator.Current.Value + ".dll");
+				Assembly.LoadFrom(assemblyPath);
+				loaded++;
+			}
+
 			Console.Out.WriteLine(string.Format("Castle.Tools.CodeGenerator: Loaded {0} references... ", loaded));
 		}
 
