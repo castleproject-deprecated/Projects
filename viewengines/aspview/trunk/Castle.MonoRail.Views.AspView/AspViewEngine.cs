@@ -237,16 +237,19 @@ namespace Castle.MonoRail.Views.AspView
 			}
 			compilations.Clear();
 
-			Assembly precompiledViews;
-			try
+			string[] viewAssemblies = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*CompiledViews.dll", SearchOption.AllDirectories);
+
+			foreach (string assembly in viewAssemblies)
 			{
-				precompiledViews = Assembly.Load("CompiledViews");
+				Assembly precompiledViews = null;
+
+				try { precompiledViews = Assembly.LoadFile(assembly); }
+				finally { }
+
+				if (precompiledViews != null)
+					LoadCompiledViewsFrom(precompiledViews);
 			}
-			catch (Exception ex)
-			{
-				throw new AspViewException(ex, "Couldn't load CompiledViews assembly. Did you intend to use the 'auto recompilation' mode? if so, make sure you add the attribute 'autoRecompilation=\"true\"' to aspview config section in web.config. This attribute is case sensitive.");
-			}
-			LoadCompiledViewsFrom(precompiledViews);
+
 		}
 		private void LoadCompiledViewsFrom(Assembly viewsAssembly)
 		{

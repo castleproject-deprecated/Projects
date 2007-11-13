@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdditionalViewAssemblyTestCase.cs" />
     <Compile Include="LanguagePreProcessorTestCases.cs" />
     <Compile Include="UsingDictionaryAdapterTestCases.cs" />
     <Compile Include="EmptyControllerTestCase.cs" />
@@ -84,6 +85,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AdditionalViewsTestSite\AdditionalViewsTestSite.csproj">
+      <Project>{B475BE89-37F9-41CE-A1E2-5D1E69440A8E}</Project>
+      <Name>AdditionalViewsTestSite</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AspViewTestSite\AspViewTestSite.csproj">
       <Project>{65929B65-C749-43C8-9EA8-5EFFFAE16A5C}</Project>
       <Name>AspViewTestSite</Name>
@@ -105,6 +110,10 @@
     <PostBuildEvent>copy $(ProjectDir)App.config $(TargetPath).config</PostBuildEvent>
     <PreBuildEvent>copy "$(SolutionDir)VCompile\bin\$(ConfigurationName)\vcompile.exe" $(SolutionDir)\AspViewTestSite\bin\
 $(SolutionDir)\AspViewTestSite\bin\vcompile.exe
-move $(SolutionDir)\AspViewTestSite\bin\CompiledViews.dll $(TargetDir)</PreBuildEvent>
+copy $(SolutionDir)\AspViewTestSite\bin\CompiledViews.dll $(TargetDir)
+copy "$(SolutionDir)VCompile\bin\$(ConfigurationName)\vcompile.exe" $(SolutionDir)\AdditionalViewsTestSite\bin\
+$(SolutionDir)\AdditionalViewsTestSite\bin\vcompile.exe
+copy $(SolutionDir)\AdditionalViewsTestSite\bin\CompiledViews.dll $(SolutionDir)\AspViewTestSite\bin\AdditionalViewsTestSite.CompiledViews.dll
+copy $(SolutionDir)\AspViewTestSite\bin\AdditionalViewsTestSite.CompiledViews.dll $(TargetDir)</PreBuildEvent>
   </PropertyGroup>
 </Project>

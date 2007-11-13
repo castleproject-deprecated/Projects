@@ -120,6 +120,10 @@
     <Content Include="Views\WithLayout\WithProperties.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AdditionalViewsTestSite\AdditionalViewsTestSite.csproj">
+      <Project>{B475BE89-37F9-41CE-A1E2-5D1E69440A8E}</Project>
+      <Name>AdditionalViewsTestSite</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Castle.MonoRail.Views.AspView\Castle.MonoRail.Views.AspView.csproj">
       <Project>{41B2C873-254B-4BC5-8514-AD33ED3B5934}</Project>
       <Name>Castle.MonoRail.Views.AspView</Name>
