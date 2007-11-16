@@ -148,8 +148,12 @@ namespace Castle.Tools.CodeGenerator.Services
 						// Another field already exists with the name we are about to create the new field with.
 						// This occurs during the use of wizardsteps.
 
-						if (fieldMember.Type.BaseType.EndsWith("AreaNode"))
+						if (fieldMember.Type.BaseType.EndsWith("AreaNode") || fieldMember.Type.BaseType.EndsWith("ControllerNode"))
 						{
+							string areaNodeSuffix = "Area";
+							string controllerNodeSuffix = "Controller";
+							bool fieldMemberIsAreaNode = fieldMember.Type.BaseType.EndsWith("AreaNode");
+
 							foreach (CodeStatement codeStatement in constructor.Statements)
 							{
 								if (codeStatement is CodeAssignStatement)
@@ -164,25 +168,25 @@ namespace Castle.Tools.CodeGenerator.Services
 										if (codeFieldReferenceExpression.TargetObject is CodeThisReferenceExpression)
 										{
 											if (codeFieldReferenceExpression.FieldName == fieldMember.Name)
-												codeFieldReferenceExpression.FieldName += "Area";
+												codeFieldReferenceExpression.FieldName += fieldMemberIsAreaNode ? areaNodeSuffix : controllerNodeSuffix;
 										}
 									}
 								}
 							}
 
-							fieldMember.Name += "Area";
+							fieldMember.Name += fieldMemberIsAreaNode ? areaNodeSuffix : controllerNodeSuffix;
 
 							CodeMemberProperty fieldMemberProperty = (CodeMemberProperty) type.Members[i - 1];
-							fieldMemberProperty.Name += "Area";
+							fieldMemberProperty.Name += fieldMemberIsAreaNode ? areaNodeSuffix : controllerNodeSuffix;
 							fieldMemberProperty.GetStatements.RemoveAt(0);
 							fieldMemberProperty.GetStatements.Insert(0,
 							                                         new CodeMethodReturnStatement(
 							                                         	new CodeFieldReferenceExpression(new CodeThisReferenceExpression(),
 							                                         	                                 fieldMember.Name)));
 
-							field.Name += "Controller";
+							field.Name += fieldMemberIsAreaNode ? controllerNodeSuffix : areaNodeSuffix;
 
-							property.Name += "Controller";
+							property.Name += fieldMemberIsAreaNode ? controllerNodeSuffix : areaNodeSuffix;
 							property.GetStatements.RemoveAt(0);
 							property.GetStatements.Insert(0,
 							                              new CodeMethodReturnStatement(

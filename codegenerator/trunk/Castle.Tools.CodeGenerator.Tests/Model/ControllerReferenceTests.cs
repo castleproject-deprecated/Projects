@@ -225,7 +225,7 @@ namespace Castle.Tools.CodeGenerator.Model
       _mocks.ReplayAll();
       string actual = _reference.Url;
       _mocks.VerifyAll();
-      Assert.AreEqual("/Area/Controller/Action.rails?name=Jacob&", actual);
+      Assert.AreEqual("/Area/Controller/Action.rails?name=Jacob", actual);
     }
 
     [Test]
@@ -246,7 +246,7 @@ namespace Castle.Tools.CodeGenerator.Model
       _mocks.ReplayAll();
       string actual = _reference.Url;
       _mocks.VerifyAll();
-      Assert.AreEqual("/Area/Controller/Action.rails?Ename=EJacob&", actual);
+      Assert.AreEqual("/Area/Controller/Action.rails?Ename=EJacob", actual);
     }
 
     [Test]
@@ -317,7 +317,7 @@ namespace Castle.Tools.CodeGenerator.Model
         Expect.Call(_argumentConversionService.ConvertKey(null, argument)).Return("name");
         Expect.Call(_serverUtility.UrlEncode("name")).Return("Ename");
         Expect.Call(_serverUtility.UrlEncode("Jacob")).Return("EJacob");
-        _redirectService.Redirect("/Area/Controller/Action.rails?Ename=EJacob&");
+        _redirectService.Redirect("/Area/Controller/Action.rails?Ename=EJacob");
       }
 
       _mocks.ReplayAll();
@@ -402,7 +402,7 @@ namespace Castle.Tools.CodeGenerator.Model
       _mocks.ReplayAll();
       string actual = _reference.Url;
       _mocks.VerifyAll();
-      Assert.AreEqual("/Directory/Area/Controller/Action.rails?name=Jacob&", actual);
+      Assert.AreEqual("/Directory/Area/Controller/Action.rails?name=Jacob", actual);
     }
 
     [Test]
