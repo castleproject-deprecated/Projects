@@ -136,6 +136,9 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			List<AspViewFile> files = new List<AspViewFile>();
 			string viewsDirectory = Path.Combine(siteRoot, "Views");
+			
+			if (!Directory.Exists(viewsDirectory))
+				throw new Exception(string.Format("Could not find views folder [{0}]", viewsDirectory));
 
 			string[] fileNames = Directory.GetFiles(viewsDirectory, "*.aspx", SearchOption.AllDirectories);
 			foreach (string fileName in fileNames)
