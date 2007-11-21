@@ -1156,6 +1156,7 @@
         <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.RelationType.Set" Name="Set" Value="" />
         <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.RelationType.IdBag" Name="IdBag" Value="" />
         <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.RelationType.Map" Name="Map" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.RelationType.List" Name="List" Value="" />
       </Literals>
     </DomainEnumeration>
     <DomainEnumeration Name="NHibernateType" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.NHibernateType">

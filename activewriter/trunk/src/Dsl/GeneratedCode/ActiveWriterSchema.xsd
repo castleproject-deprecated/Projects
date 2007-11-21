@@ -1265,6 +1265,7 @@
       <xsd:enumeration value="Set"/>
       <xsd:enumeration value="IdBag"/>
       <xsd:enumeration value="Map"/>
+      <xsd:enumeration value="List"/>
     </xsd:restriction>
   </xsd:simpleType>
   

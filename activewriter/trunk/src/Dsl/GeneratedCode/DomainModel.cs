@@ -1009,6 +1009,12 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.RelationType/Map.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Map,
+		/// <summary>
+		/// List
+		/// Description for Altinoren.ActiveWriter.RelationType.List
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.RelationType/List.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		List,
 	}
 }
 namespace Altinoren.ActiveWriter

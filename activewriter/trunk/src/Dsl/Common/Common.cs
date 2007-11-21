@@ -17,7 +17,7 @@ namespace Altinoren.ActiveWriter
     public static class Common
     {
         // TODO: Tidy this class.
-        public static string[] ARAttributes = new string[] {"ActiveRecord", "Property", "Field", "PrimaryKey", "CompositeKey", "HasMany", "BelongsTo", "HasAndBelongsToMany"};
+      public static string[] ARAttributes = new string[] { "ActiveRecord", "Property", "Field", "PrimaryKey", "CompositeKey", "HasMany", "BelongsTo", "HasAndBelongsToMany", "OneToOne", "KeyProperty" };
         public static string CompositeClassNameSuffix = "CompositeKey";
         public static string ActiveRecordNamespace = "Castle.ActiveRecord";
         public static string ValidatorNamespace = "Castle.Components.Validator";

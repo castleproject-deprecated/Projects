@@ -2777,6 +2777,14 @@
     <value>Description for Altinoren.ActiveWriter.RelationType.Map</value>
     <comment>Description for EnumerationLiteral &apos;Map&apos; on DomainEnumeration &apos;RelationType&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.RelationType/List.DisplayName" xml:space="preserve">
+    <value>List</value>
+    <comment>Display name for EnumerationLiteral &apos;List&apos; on DomainEnumeration &apos;RelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.RelationType/List.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.RelationType.List</value>
+    <comment>Description for EnumerationLiteral &apos;List&apos; on DomainEnumeration &apos;RelationType&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.NHibernateType/AnsiChar.DisplayName" xml:space="preserve">
     <value>AnsiChar</value>
     <comment>Display name for EnumerationLiteral &apos;AnsiChar&apos; on DomainEnumeration &apos;NHibernateType&apos;</comment>
