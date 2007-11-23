@@ -123,11 +123,27 @@ namespace Castle.MonoRail.Views.AspView
 			if (results.Errors.Count > 0)
 			{
 				StringBuilder message = new StringBuilder();
-				foreach (CompilerError err in results.Errors)
-					message.AppendLine(err.ToString());
-				throw new Exception(string.Format(
-				                    	"Error while compiling'':\r\n{0}",
-				                    	message));
+				using (CSharpCodeProvider cSharpCodeProvider = new CSharpCodeProvider())
+				{
+					foreach (AspViewFile file in files)
+					{
+						CompilerResults result = cSharpCodeProvider.CompileAssemblyFromSource(parameters, file.ConcreteClass);
+						if (result.Errors.Count > 0)
+							foreach (CompilerError err in result.Errors)
+								message.AppendLine(string.Format(@"
+On '{0}' (class name: {1}) Line {2}, Column {3}, {4} {5}:
+{6}
+========================================",
+								file.ViewName, 
+								file.ClassName, 
+								err.Line, 
+								err.Column,
+								err.IsWarning ? "Warning" : "Error",
+								err.ErrorNumber, 
+								err.ErrorText));
+					}
+				}
+				throw new Exception("Error while compiling views: " + message);
 			}
 			return results;
 		}
