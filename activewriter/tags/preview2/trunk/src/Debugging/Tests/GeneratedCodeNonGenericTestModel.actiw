@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<model dslVersion="1.0.0.0" Id="d31e3081-74cd-42fb-a26f-8ad359cf7aac" useNullables="Native" xmlns="http://schemas.microsoft.com/dsltools/ActiveWriter">
-  <classes>
-    <modelClass name="SimpleGenericClass" />
-  </classes>
-</model>
