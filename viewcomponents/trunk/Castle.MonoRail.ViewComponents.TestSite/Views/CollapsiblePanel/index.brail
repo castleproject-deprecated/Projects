@@ -1,8 +1,9 @@
 <h1>Sample Collapsible Panels</h1>
 
+  <br/>
   <p>
-  These examples have simple lorem ipsum text for the body, but you
-  include anything in the body, including controls, buttons, etc.
+  NOTE: These examples use simple lorem ipsum text for the body, but you
+  can include anything in the body, including controls, buttons, etc.
 </p>
 
 <div style="padding: 20px;">
