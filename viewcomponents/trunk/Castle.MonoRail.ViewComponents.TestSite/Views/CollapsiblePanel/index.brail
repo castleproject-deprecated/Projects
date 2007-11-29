@@ -1,0 +1,74 @@
+<h1>Sample Collapsible Panels</h1>
+
+  <p>
+  These examples have simple lorem ipsum text for the body, but you
+  include anything in the body, including controls, buttons, etc.
+</p>
+
+<div style="padding: 20px;">
+  <%
+  component CollapsiblePanel, {@id:"panelWithLink", @caption:"Collapsible Panel With Toggle Link"}:
+    section body:
+      %>
+        ${loremIpsumText}
+      <%
+      end
+    end
+    %>
+</div>
+
+<div style="padding: 20px;">
+  <%
+    component MyCollapsiblePanel, {@id:"panelWithImage", @caption:"Collapsible Panel With Toggle Image"}:
+      section body:
+      %>
+        ${loremIpsumText}
+      <%
+      end
+    end
+    %>
+</div>
+
+<div style="padding: 20px;">
+  Collapsible Panel With: No Caption, Custom Toggle Link Text, Custom Effect, Custom Effect Duration<br />
+  <br />
+  <%
+    component CollapsiblePanel, {@id:"panelCollapsedWithCutomLink", @expandLinkText:"- show text -", @collapseLinkText:"- hide text -", @cssClass:"showHideTextPanel", @collapsed:true, @effect:"appear", @effectDuration:2}:
+      section body:
+      %>
+        ${loremIpsumText}
+      <%
+      end
+    end
+    %>
+</div>
+
+<div style="padding: 20px;">
+  <%
+    component CollapsiblePanel, {@id:"panelWithToggleOnClickHeader", @caption:"Collapsible Panel With Toggle On Click Header", @toggleOnClickHeader:true}:
+      section body:
+      %>
+        ${loremIpsumText}
+      <%
+      end
+    end
+    %>
+</div>
+
+<div style="padding: 20px;">
+  <%
+    component MyCollapsiblePanel, {@id:"panelWithImageAndCaptionSection", @caption:"Collapsible Panel With Toggle Image And Caption Section"}:
+      section caption:
+      %>
+        Custom<br/><i>Caption</i><br/>
+        Custom<br/><i>Caption</i>
+      <%
+      end
+    section body:
+      %>
+        ${loremIpsumText}
+      <%
+      end
+    end
+    %>
+</div>

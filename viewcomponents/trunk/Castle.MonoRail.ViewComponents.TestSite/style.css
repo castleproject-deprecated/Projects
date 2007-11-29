@@ -475,3 +475,46 @@ fieldset textarea
 {
 	font-family:Arial;
 }
+
+.collapsiblePanel
+{
+	border: dashed 1px gray;
+	padding: 5px;
+}
+
+.collapsiblePanel .header
+{
+	height:auto;
+	margin:auto;
+	border-style: none;
+	vertical-align: middle;
+}
+
+.collapsiblePanel .caption
+{
+	font-weight:bold;
+}
+
+.collapsiblePanel .toggleLink
+{
+	font-size: 1em;
+	margin-left: 10px;
+}
+
+.collapsiblePanel .toggleImage
+{
+	margin-right: 10px;
+}
+
+.showHideTextPanel .header
+{
+	height:auto;
+	margin:auto;
+	border-style: none;
+	vertical-align: middle;
+}
+
+.showHideTextPanel .toggleLink
+{
+	font-size: 1em;
+}
