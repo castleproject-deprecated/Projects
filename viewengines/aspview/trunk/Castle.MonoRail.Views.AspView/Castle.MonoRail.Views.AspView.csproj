@@ -60,28 +60,44 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspViewBase.cs" />
-    <Compile Include="AspViewCompiler.cs" />
-    <Compile Include="AspViewCompilerOptions.cs" />
+    <Compile Include="Compiler\AspViewCompiler.cs" />
+    <Compile Include="Compiler\AspViewCompilerOptions.cs" />
+    <Compile Include="Compiler\MarkupTransformers\DefaultMarkupTransformersProvider.cs" />
+    <Compile Include="Compiler\MarkupTransformers\FullSiteRootMarkupTransformer.cs" />
+    <Compile Include="Compiler\MarkupTransformers\IMarkupTransformer.cs" />
+    <Compile Include="Compiler\MarkupTransformers\IMarkupTransformersProvider.cs" />
+    <Compile Include="Compiler\MarkupTransformers\SiteRootMarkupTransformer.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\ChainingStep.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\ProcessViewBodyStep.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\MarkupTransformationsStep.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\RenderConcreteClassStep.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\ScriptToCodeTransformer.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\ViewFilterTagsStep.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\ViewComponentTagsStep.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\SubViewTagsStep.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\DefaultPreCompilationStepsProvider.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\IPreCompilationStepsProvider.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\ProcessPropertiesStep.cs" />
+    <Compile Include="Compiler\Utilities.cs" />
     <Compile Include="AspViewConfigurationSection.cs" />
     <Compile Include="AspViewBaseWithGenericTypedInterface.cs" />
     <Compile Include="IHelpersAccesor.cs" />
+    <Compile Include="Internal\RegularExpressions.cs" />
+    <Compile Include="Internal\Set.cs" />
+    <Compile Include="IViewBase.cs" />
+    <Compile Include="IViewBaseInternal.cs" />
     <Compile Include="ViewAtDesignTimeWithGenericTypedInterface.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CSharpPreProcessor.cs" />
     <Compile Include="AspViewEngine.cs" />
     <Compile Include="AspViewEngineOptions.cs" />
     <Compile Include="AspViewException.cs" />
-    <Compile Include="AspViewFile.cs" />
-    <Compile Include="AspViewPreProcessor.cs" />
+    <Compile Include="Compiler\SourceFile.cs" />
     <Compile Include="IViewFilter.cs" />
     <Compile Include="ReferencedAssembly.cs" />
     <Compile Include="Utilities.cs" />
-    <Compile Include="VbPreProcessor.cs" />
     <Compile Include="CaseInsensitiveStringComparer.cs" />
-    <Compile Include="LanguagePreProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScriptingLanguage.cs" />
     <Compile Include="ViewAtDesignTime.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -91,10 +107,20 @@
     <Compile Include="ViewFilters\HtmlEncodeViewFilter.cs" />
     <Compile Include="ViewFilters\LowerCaseViewFilter.cs" />
     <Compile Include="ViewFilters\UpperCaseViewFilter.cs" />
-    <Compile Include="ViewProperty.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\DefaultImportStatementsStep.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\DetermineBaseClassStep.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\ExtractImportStatementsStep.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\ImportStatementsStep.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\IPreCompilationStep.cs" />
+    <Compile Include="Compiler\ViewProperty.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="KenEgoziOpenSource.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Config\" />
+    <Folder Include="Model\" />
+    <Folder Include="ViewProcessingSteps\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

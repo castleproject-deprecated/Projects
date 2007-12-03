@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.MonoRail.Views.AspView.Compiler;
+
 namespace Castle.MonoRail.Views.AspView
 {
 	using System;
@@ -79,7 +81,7 @@ namespace Castle.MonoRail.Views.AspView
 				// invalidate compiled views cache on any change to the view sources
 				ViewSourceLoader.ViewChanged += delegate(object sender, FileSystemEventArgs e)
 				{
-					if (e.Name.EndsWith(".aspx" ,StringComparison.InvariantCultureIgnoreCase))
+					if (e.Name.EndsWith(".aspx", StringComparison.InvariantCultureIgnoreCase))
 					{
 						needsRecompiling = true;
 					}
@@ -101,41 +103,30 @@ namespace Castle.MonoRail.Views.AspView
 		public override void Process(TextWriter output, IRailsEngineContext context, IController controller, string templateName)
 		{
 			string fileName = GetFileName(templateName);
-			AspViewBase view;
+			IViewBaseInternal view;
 			TextWriter viewOutput = output;
-			AspViewBase layout = null;
+			view = GetView(fileName, viewOutput, context, controller);
 			if (controller.LayoutName != null)
 			{
-				layout = GetLayout(output, context, controller);
-				viewOutput = layout.ViewOutput;
+				IViewBaseInternal layout = GetLayout(output, context, controller);
+				layout.ContentView = view;
+				view = layout;
 			}
-			view = GetView(fileName, viewOutput, context, controller);
-			if (view == null)
-				throw new RailsException(string.Format(
-					"Cannot find view '{0}'", fileName));
 			controller.PreSendView(view);
 			view.Render();
-			if (layout != null)
-			{
-				layout.SetParent(view);
-				layout.Render();
-			}
 			controller.PostSendView(view);
 		}
 		public override void ProcessContents(IRailsEngineContext context, IController controller, string contents)
 		{
 			TextWriter viewOutput = controller.Response.Output;
-			AspViewBase layout = null;
 			if (controller.LayoutName != null)
 			{
-				layout = GetLayout(viewOutput, context, controller);
-				viewOutput = layout.ViewOutput;
+				IViewBaseInternal layout = GetLayout(viewOutput, context, controller);
+				layout.SetContent(contents);
+				layout.Process();
 			}
-			viewOutput.Write(contents);
-			if (layout != null)
-			{
-				layout.Render();
-			}
+			else 
+				viewOutput.Write(contents);
 		}
 		public override string ViewFileExtension
 		{
@@ -178,8 +169,6 @@ namespace Castle.MonoRail.Views.AspView
 
 			Type viewType = compilations[className] as Type;
 
-
-
 			if (viewType == null)
 				throw new RailsException("Cannot find view type for {0}.",
 					fileName);
@@ -195,6 +184,9 @@ namespace Castle.MonoRail.Views.AspView
 						"Cannot create view instance from '{0}'.",
 						fileName), ex);
 			}
+			if (theView == null)
+				throw new RailsException(string.Format(
+					"Cannot find view '{0}'", fileName));
 			return theView;
 		}
 
@@ -204,7 +196,6 @@ namespace Castle.MonoRail.Views.AspView
 			string layoutFileName = GetFileName(layoutTemplate);
 			AspViewBase layout;
 			layout = GetView(layoutFileName, output, context, controller);
-			layout.ViewOutput = new StringWriter();
 			return layout;
 		}
 
@@ -241,10 +232,17 @@ namespace Castle.MonoRail.Views.AspView
 
 			foreach (string assembly in viewAssemblies)
 			{
-				Assembly precompiledViews = null;
+				Assembly precompiledViews;
 
-				try { precompiledViews = Assembly.LoadFile(assembly); }
-				finally { }
+				try
+				{
+					precompiledViews = Assembly.LoadFile(assembly);
+				}
+				catch (Exception ex)
+				{
+					throw new RailsException(string.Format("Could not load views assembly [{0}]", assembly),
+						ex);
+				}
 
 				if (precompiledViews != null)
 					LoadCompiledViewsFrom(precompiledViews);

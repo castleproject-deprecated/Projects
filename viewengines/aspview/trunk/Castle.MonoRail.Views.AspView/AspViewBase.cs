@@ -1,3 +1,4 @@
+#region license
 // Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,8 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-using Castle.Components.DictionaryAdapter;
+#endregion
 
 namespace Castle.MonoRail.Views.AspView
 {
@@ -23,14 +23,15 @@ namespace Castle.MonoRail.Views.AspView
 
     using Framework;
     using Framework.Helpers;
-    using System.Reflection;
+	using Components.DictionaryAdapter;
+	using System.Reflection;
 
-    public abstract class AspViewBase
+    public abstract class AspViewBase : IViewBaseInternal
     {
         #region members
+		string viewContents;
 		private bool initialized = false;
 		private TextWriter outputWriter;
-		private TextWriter viewOutput;
 		private Dictionary<string, object> properties;
 		private IList<IDictionary> extentedPropertiesList;
 		private IRailsEngineContext context;
@@ -49,6 +50,7 @@ namespace Castle.MonoRail.Views.AspView
 		private Stack<IViewFilter> viewFilters;
 
         #endregion
+
         #region props
 
 		/// <summary>
@@ -71,6 +73,7 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			get { return (string)Properties["siteRoot"]; }
 		}
+
 		/// <summary>
 		/// Gets the Application's full virtual root, including protocol, host and port
 		/// </summary>
@@ -169,23 +172,13 @@ namespace Castle.MonoRail.Views.AspView
         {
             get { return outputWriter; }
         }
-        /// <summary>
-        /// Used only in layouts. Gets or sets the output writer for the view
-        /// </summary>
-        public TextWriter ViewOutput
-        {
-            get { return viewOutput; }
-            set { viewOutput = value; }
-        }
+
         /// <summary>
         /// Used only in layouts. Gets the view contents
         /// </summary>
         public string ViewContents
         {
-            get
-            {
-                return ((StringWriter)ViewOutput).GetStringBuilder().ToString();
-            }
+			get { return viewContents; }
         }
         /// <summary>
         /// Gets the properties container. Based on current property containers that was sent from the controller, such us PropertyBag, Flash, etc.
@@ -218,7 +211,7 @@ namespace Castle.MonoRail.Views.AspView
         /// <summary>
         /// Gets the view engine instance
         /// </summary>
-        public AspViewEngine ViewEngine
+        public IViewEngine ViewEngine
         {
             get { return viewEngine; }
         }
@@ -246,7 +239,33 @@ namespace Castle.MonoRail.Views.AspView
 			viewFilters = new Stack<IViewFilter>();
 		}
 
-        private void InitProperties()
+
+		private bool HasContentView
+		{
+			get { return contentView != null; }
+		}
+
+		private string GetContentViewContent()
+		{
+			StringWriter contentWriter = new StringWriter();
+			string rendered;
+			using (contentView.SetDisposeableOutputWriter(contentWriter))
+			{
+				contentView.Process();
+				rendered = contentWriter.GetStringBuilder().ToString();
+			}
+			return rendered;
+		}
+
+    	public void Process()
+		{
+			if (HasContentView && viewContents == null)
+				viewContents = GetContentViewContent();
+
+			Render();
+		}
+
+    	private void InitProperties()
         {
             properties = new Dictionary<string, object>(CaseInsensitiveStringComparer.Default);
             properties.Add("context", context);
@@ -273,7 +292,9 @@ namespace Castle.MonoRail.Views.AspView
 				foreach (DictionaryEntry entry in controller.PropertyBag)
 					properties[entry.Key.ToString()] = entry.Value;
             properties["siteRoot"] = context.ApplicationPath ?? string.Empty;
-            properties["fullSiteRoot"] = context.Request.Uri.GetLeftPart(UriPartial.Authority) + context.ApplicationPath;
+            properties["fullSiteRoot"] = context.Request.Uri != null?
+				context.Request.Uri.GetLeftPart(UriPartial.Authority) + context.ApplicationPath :
+				string.Empty;
             extentedPropertiesList = new List<IDictionary>();
         }
         
@@ -282,14 +303,30 @@ namespace Castle.MonoRail.Views.AspView
         /// </summary>
         public abstract void Render();
 
-        /// <summary>
-        /// Renders another view in place
-        /// </summary>
-        /// <param name="subViewName">The sub view's name</param>
-        protected void OutputSubView(string subViewName)
-        {
-            OutputSubView(subViewName, new Dictionary<string,object>());
-        }
+		/// <summary>
+		/// Invokes a view component, and registeres section handlers
+		/// </summary>
+		/// <param name="componentName">The view component name</param>
+		/// <param name="bodyHandler">Delegate to render the component's body. null if the component does not have a body</param>
+		/// <param name="sectionHandlers">Delegates to render the component's sections, by the delegate names</param>
+		/// <param name="parameters">The parameters to be passed to the component</param>
+		protected void InvokeViewComponent(string componentName, ViewComponentSectionRendereDelegate bodyHandler, IEnumerable<KeyValuePair<string,object>> sectionHandlers, params object[] parameters)
+		{
+			ViewComponentContext viewComponentContext = new ViewComponentContext(
+				this, bodyHandler, 
+				componentName, OutputWriter , parameters);
+			AddProperties(viewComponentContext.ContextVars);
+			foreach (KeyValuePair<string, object> pair in sectionHandlers)
+			{
+				viewComponentContext.RegisterSection(pair.Key, pair.Value);
+			}
+			ViewComponent viewComponent = ((IViewComponentFactory)Context.GetService(typeof(IViewComponentFactory))).Create(componentName);
+			viewComponent.Init(Context, viewComponentContext);
+			if (viewComponentContext.ViewToRender != null)
+				OutputSubView("\\" + viewComponentContext.ViewToRender, viewComponentContext.ContextVars);
+		}
+		
+
 
 		/// <summary>
         /// Renders another view in place
@@ -518,32 +555,64 @@ namespace Castle.MonoRail.Views.AspView
             parentView = view;
         }
 
-		/// <summary>
-		/// This is required because we may want to replace the output stream and get the correct
-		/// behavior from components call RenderText() or RenderSection()
-		/// </summary>
-		public IDisposable SetOutputWriter(TextWriter newOutputWriter)
-		{
-			ReturnOutputStreamToInitialWriter disposable = new ReturnOutputStreamToInitialWriter(OutputWriter, this);
-			outputWriter = newOutputWriter;
-			return disposable;
-		}
 
 		private class ReturnOutputStreamToInitialWriter : IDisposable
 		{
 			readonly TextWriter initialWriter;
-			readonly AspViewBase parent;
+			readonly IViewBaseInternal view;
 
-			public ReturnOutputStreamToInitialWriter(TextWriter initialWriter, AspViewBase parent)
+			public ReturnOutputStreamToInitialWriter(TextWriter initialWriter, IViewBaseInternal view)
 			{
 				this.initialWriter = initialWriter;
-				this.parent = parent;
+				this.view = view;
 			}
 
 			public void Dispose()
 			{
-				parent.outputWriter = initialWriter;
+				view.SetOutputWriter(initialWriter);
 			}
 		}
+
+		#region IViewBaseInternal Members
+
+		private IViewBaseInternal contentView;
+
+		/// <summary>
+		/// This is required because we may want to replace the output stream and get the correct
+		/// behavior from components call RenderText() or RenderSection()
+		/// </summary>	
+		IDisposable IViewBaseInternal.SetDisposeableOutputWriter(TextWriter newWriter)
+		{
+			ReturnOutputStreamToInitialWriter disposable = new ReturnOutputStreamToInitialWriter(OutputWriter, this);
+			outputWriter = newWriter;
+			return disposable;
+		}
+
+		void IViewBaseInternal.SetOutputWriter(TextWriter newWriter)
+		{
+			outputWriter = newWriter;
+		}
+		
+		void IViewBaseInternal.SetContent(string content)
+		{
+			viewContents = content;
+		}
+
+    	IViewBaseInternal IViewBaseInternal.ContentView
+		{
+			get { return contentView; } 
+			set { contentView = value; } 
+		}
+
+		/// <summary>
+		/// Renders another view in place
+		/// </summary>
+		/// <param name="subViewName">The sub view's name</param>
+		void IViewBaseInternal.OutputSubView(string subViewName)
+		{
+			OutputSubView(subViewName, new Dictionary<string, object>());
+		}
+
+		#endregion
 	}
 }

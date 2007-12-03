@@ -27,38 +27,34 @@ namespace Castle.MonoRail.Views.AspView
 		string viewToRender;
 
 		ViewComponentSectionRendereDelegate body;
-		readonly TextWriter default_writer;
-		readonly private AspViewBase parent;
+		readonly private IViewBaseInternal callingView;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ViewComponentContext"/> class.
 		/// </summary>
-		/// <param name="parent">The parent.</param>
+		/// <param name="callingView">The calling view.</param>
 		/// <param name="body">The body.</param>
 		/// <param name="name">The name.</param>
-		/// <param name="writer">The text writer.</param>
 		/// <param name="parameters">The parameters.</param>
-		public ViewComponentContext(AspViewBase parent, ViewComponentSectionRendereDelegate body,
-										 string name, TextWriter writer, IDictionary parameters)
+		public ViewComponentContext(IViewBaseInternal callingView, ViewComponentSectionRendereDelegate body,
+										 string name, IDictionary parameters)
 		{
-			this.parent = parent;
+			this.callingView = callingView;
 			this.body = body;
 			componentName = name;
-			default_writer = writer;
 			componentParameters = parameters;
 		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ViewComponentContext"/> class.
 		/// </summary>
-		/// <param name="parent">The parent.</param>
+		/// <param name="callingView">The parent.</param>
 		/// <param name="body">The body.</param>
 		/// <param name="name">The name.</param>
-		/// <param name="writer">The text writer.</param>
 		/// <param name="arguments">The arguments.</param>
-		public ViewComponentContext(AspViewBase parent, ViewComponentSectionRendereDelegate body,
-										 string name, TextWriter writer, params object[] arguments)
-			: this(parent, body, name, writer, (IDictionary)Utilities.ConvertArgumentsToParameters(arguments)) { }
+		public ViewComponentContext(IViewBaseInternal callingView, ViewComponentSectionRendereDelegate body,
+										 string name, params object[] arguments)
+			: this(callingView, body, name, (IDictionary)Utilities.ConvertArgumentsToParameters(arguments)) { }
 
 		public ViewComponentSectionRendereDelegate Body
 		{
@@ -87,7 +83,7 @@ namespace Castle.MonoRail.Views.AspView
 
 		public IDictionary ContextVars
 		{
-			get { return parent.Properties; }
+			get { return callingView.Properties; }
 		}
 
 		public bool HasSection(string sectionName)
@@ -97,32 +93,28 @@ namespace Castle.MonoRail.Views.AspView
 
 		public void RenderBody()
 		{
-			RenderBody(default_writer);
+			AssertHasBody();
+
+			body.Invoke();
 		}
 
 		public void RenderBody(TextWriter writer)
 		{
-			if (body == null)
+			using (callingView.SetDisposeableOutputWriter(writer))
 			{
-				throw new RailsException("This component does not have a body content to be rendered");
+				RenderBody();
 			}
-			using (parent.SetOutputWriter(writer))
+		}
+
+		public void RenderSection(string sectionName, TextWriter writer)
+		{
+			using (callingView.SetDisposeableOutputWriter(writer))
 			{
-				body.Invoke();
+				RenderSection(sectionName);
 			}
 		}
 
 		public void RenderSection(string sectionName)
-		{
-			RenderSection(sectionName, default_writer);
-		}
-
-		/// <summary>
-		/// Renders the the specified section
-		/// </summary>
-		/// <param name="sectionName">Name of the section.</param>
-		/// <param name="writer">The writer.</param>
-		public void RenderSection(string sectionName, TextWriter writer)
 		{
 			if (!HasSection(sectionName))
 				return;//matching the Brail and NVelocity behavior, but maybe should throw?
@@ -132,12 +124,15 @@ namespace Castle.MonoRail.Views.AspView
 
 		public void RenderView(string name, TextWriter writer)
 		{
-			parent.OutputSubView(name, writer, new Hashtable());
+			using (callingView.SetDisposeableOutputWriter(writer))
+			{
+				callingView.OutputSubView(name);
+			}
 		}
 
 		public IViewEngine ViewEngine
 		{
-			get { return parent.ViewEngine; }
+			get { return callingView.ViewEngine; }
 		}
 
 		public string ViewToRender
@@ -148,9 +143,17 @@ namespace Castle.MonoRail.Views.AspView
 
 		public TextWriter Writer
 		{
-			get { return default_writer; }
+			get { return callingView.OutputWriter; }
 		}
 
 		#endregion
+
+		private void AssertHasBody()
+		{
+			if (body == null)
+			{
+				throw new RailsException("This component does not have a body content to be rendered");
+			}
+		}
 	}
 }

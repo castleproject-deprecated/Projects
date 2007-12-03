@@ -1,0 +1,136 @@
+#region license
+// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+#endregion
+
+namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
+{
+	using AspView.Compiler;
+	using AspView.Compiler.PreCompilationSteps;
+	using NUnit.Framework;
+
+	[TestFixture]
+	public class DetermineBaseClassStepTestFixture
+	{
+		readonly IPreCompilationStep step = new DetermineBaseClassStep();
+
+		private static void AssertPageDirectiveHasBeenRemoved(string viewSource)
+		{
+			if (Internal.RegularExpressions.PageDirective.IsMatch(viewSource))
+				Assert.Fail("Page directive was not removed from view source");
+		}
+
+		[Test]
+		public void Process_WhenInheritsIsMissing_SetsDefault()
+		{
+			SourceFile file = new SourceFile();
+			file.ViewSource = @"
+<%@ Page Language=""C#"" %>
+view content";
+			step.Process(file);
+
+			Assert.AreEqual(DetermineBaseClassStep.DefaultBaseClassName, file.BaseClassName);
+
+			AssertPageDirectiveHasBeenRemoved(file.ViewSource);
+		}
+
+		[Test]
+		public void Process_WhenUsingDefault_SetsDefault()
+		{
+			SourceFile file = new SourceFile();
+			file.ViewSource = @"
+<%@ Page Language=""C#"" Inherits=""Castle.MonoRail.Views.AspView.ViewAtDesignTime"" %>
+view content";
+			step.Process(file);
+
+			Assert.AreEqual(DetermineBaseClassStep.DefaultBaseClassName, file.BaseClassName);
+
+			AssertPageDirectiveHasBeenRemoved(file.ViewSource);
+		}
+
+		[Test]
+		public void Process_WhenUsingDefaultAndTypedView_SetsDefaultAndView()
+		{
+			SourceFile file = new SourceFile();
+			file.ViewSource = @"
+<%@ Page Language=""C#"" Inherits=""Castle.MonoRail.Views.AspView.ViewAtDesignTime<IView>"" %>
+view content";
+			step.Process(file);
+
+			Assert.AreEqual(DetermineBaseClassStep.DefaultBaseClassName + "<IView>", file.BaseClassName);
+			Assert.AreEqual("IView", file.TypedViewName);
+
+			AssertPageDirectiveHasBeenRemoved(file.ViewSource);
+		}
+
+		[Test]
+		public void Process_WhenUsingClassName_SetsClassName()
+		{
+			SourceFile file = new SourceFile();
+			file.ViewSource = @"
+<%@ Page Language=""C#"" Inherits=""SomeClass"" %>
+view content";
+			step.Process(file);
+
+			Assert.AreEqual("SomeClass", file.BaseClassName);
+
+			AssertPageDirectiveHasBeenRemoved(file.ViewSource);
+		}
+
+		[Test]
+		public void Process_WhenUsingClassNameAndTypedView_SetsClassNameAndView()
+		{
+			SourceFile file = new SourceFile();
+			file.ViewSource = @"
+<%@ Page Language=""C#"" Inherits=""SomeClass<IView>"" %>
+view content";
+			step.Process(file);
+
+			Assert.AreEqual("SomeClass<IView>", file.BaseClassName);
+			Assert.AreEqual("IView", file.TypedViewName);
+
+			AssertPageDirectiveHasBeenRemoved(file.ViewSource);
+		}
+
+		[Test]
+		public void Process_WhenUsingClassNameAtDesignTime_SetsClassName()
+		{
+			SourceFile file = new SourceFile();
+			file.ViewSource = @"
+<%@ Page Language=""C#"" Inherits=""SomeClassAtDesignTime"" %>
+view content";
+			step.Process(file);
+
+			Assert.AreEqual("SomeClass", file.BaseClassName);
+
+			AssertPageDirectiveHasBeenRemoved(file.ViewSource);
+		}
+
+		[Test]
+		public void Process_WhenUsingClassNameAtDesignTimeAndTypedView_SetsClassNameAndView()
+		{
+			SourceFile file = new SourceFile();
+			file.ViewSource = @"
+<%@ Page Language=""C#"" Inherits=""SomeClassAtDesignTime<IView>"" %>
+view content";
+			step.Process(file);
+
+			Assert.AreEqual("SomeClass<IView>", file.BaseClassName);
+			Assert.AreEqual("IView", file.TypedViewName);
+
+			AssertPageDirectiveHasBeenRemoved(file.ViewSource);
+		}		
+
+	}
+}
