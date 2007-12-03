@@ -15,25 +15,8 @@ public override void Render()
 {
 Output(@"A simple viewcomponent, without a body and sections
 ");
-ViewComponentContext viewComponentContext14 = new ViewComponentContext(this, new ViewComponentSectionRendereDelegate(Repeater14_body), "Repeater", this.OutputWriter , "source", items);
-				this.AddProperties(viewComponentContext14.ContextVars);
-				ViewComponent Repeater14 = ((IViewComponentFactory)Context.GetService(typeof(IViewComponentFactory))).Create("Repeater");
-
-				viewComponentContext14.RegisterSection("header", new ViewComponentSectionRendereDelegate(Repeater14_header1));
-
-
-				viewComponentContext14.RegisterSection("item", new ViewComponentSectionRendereDelegate(Repeater14_item2));
-
-
-				viewComponentContext14.RegisterSection("footer", new ViewComponentSectionRendereDelegate(Repeater14_footer3));
-
-
-				Repeater14.Init(Context, viewComponentContext14);
-				Repeater14.Render();
-				if (viewComponentContext14.ViewToRender != null)
-					OutputSubView("\\" + viewComponentContext14.ViewToRender, viewComponentContext14.ContextVars);
+InvokeViewComponent("Repeater", new ViewComponentSectionRendereDelegate(Repeater14_body), new KeyValuePair<string, object>[] { new KeyValuePair<string, object>("header", new ViewComponentSectionRendereDelegate(Repeater14_header1)) , new KeyValuePair<string, object>("item", new ViewComponentSectionRendereDelegate(Repeater14_item2)) , new KeyValuePair<string, object>("footer", new ViewComponentSectionRendereDelegate(Repeater14_footer3))  } , "source", items);
 Output(@"
-
 I was supposed to be rendered after the viewcomponent");
 
 }

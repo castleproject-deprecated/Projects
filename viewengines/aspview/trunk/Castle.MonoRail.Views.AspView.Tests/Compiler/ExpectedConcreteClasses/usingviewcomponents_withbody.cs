@@ -12,16 +12,8 @@ public override void Render()
 {
 Output(@"A simple viewcomponent, without a body and sections
 ");
-ViewComponentContext viewComponentContext13 = new ViewComponentContext(this, new ViewComponentSectionRendereDelegate(Bold13_body), "Bold", this.OutputWriter );
-				this.AddProperties(viewComponentContext13.ContextVars);
-				ViewComponent Bold13 = ((IViewComponentFactory)Context.GetService(typeof(IViewComponentFactory))).Create("Bold");
-
-				Bold13.Init(Context, viewComponentContext13);
-				Bold13.Render();
-				if (viewComponentContext13.ViewToRender != null)
-					OutputSubView("\\" + viewComponentContext13.ViewToRender, viewComponentContext13.ContextVars);
+InvokeViewComponent("Bold", new ViewComponentSectionRendereDelegate(Bold13_body), new KeyValuePair<string, object>[] {  } );
 Output(@"
-
 I was supposed to be rendered after the viewcomponent");
 
 }

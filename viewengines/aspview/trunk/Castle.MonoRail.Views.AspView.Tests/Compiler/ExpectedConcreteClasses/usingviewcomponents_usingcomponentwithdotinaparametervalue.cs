@@ -12,16 +12,8 @@ public override void Render()
 {
 Output(@"some text before viewcomponent
 ");
-ViewComponentContext viewComponentContext8 = new ViewComponentContext(this, null, "Echo", this.OutputWriter , "out", "with.dot");
-				this.AddProperties(viewComponentContext8.ContextVars);
-				ViewComponent Echo8 = ((IViewComponentFactory)Context.GetService(typeof(IViewComponentFactory))).Create("Echo");
-
-				Echo8.Init(Context, viewComponentContext8);
-				Echo8.Render();
-				if (viewComponentContext8.ViewToRender != null)
-					OutputSubView("\\" + viewComponentContext8.ViewToRender, viewComponentContext8.ContextVars);
+InvokeViewComponent("Echo", null, new KeyValuePair<string, object>[] {  } , "out", "with.dot");
 Output(@"
-
 some text after viewcomponent");
 
 }

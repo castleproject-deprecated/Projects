@@ -12,16 +12,8 @@ public override void Render()
 {
 Output(@"a. Some text, located before the capturedContent component
 ");
-ViewComponentContext viewComponentContext5 = new ViewComponentContext(this, new ViewComponentSectionRendereDelegate(CaptureFor5_body), "CaptureFor", this.OutputWriter , "id", "capturedContent");
-				this.AddProperties(viewComponentContext5.ContextVars);
-				ViewComponent CaptureFor5 = ((IViewComponentFactory)Context.GetService(typeof(IViewComponentFactory))).Create("CaptureFor");
-
-				CaptureFor5.Init(Context, viewComponentContext5);
-				CaptureFor5.Render();
-				if (viewComponentContext5.ViewToRender != null)
-					OutputSubView("\\" + viewComponentContext5.ViewToRender, viewComponentContext5.ContextVars);
+InvokeViewComponent("CaptureFor", new ViewComponentSectionRendereDelegate(CaptureFor5_body), new KeyValuePair<string, object>[] {  } , "id", "capturedContent");
 Output(@"
-
 b. Some text, located after the capturedContent component
 This text should be rendered right after text b.
 ");

@@ -12,16 +12,8 @@ public override void Render()
 {
 Output(@"A simple viewcomponent, without a body and sections
 ");
-ViewComponentContext viewComponentContext4 = new ViewComponentContext(this, null, "Simple", this.OutputWriter );
-				this.AddProperties(viewComponentContext4.ContextVars);
-				ViewComponent Simple4 = ((IViewComponentFactory)Context.GetService(typeof(IViewComponentFactory))).Create("Simple");
-
-				Simple4.Init(Context, viewComponentContext4);
-				Simple4.Render();
-				if (viewComponentContext4.ViewToRender != null)
-					OutputSubView("\\" + viewComponentContext4.ViewToRender, viewComponentContext4.ContextVars);
+InvokeViewComponent("Simple", null, new KeyValuePair<string, object>[] {  } );
 Output(@"
-
 I was supposed to be rendered after the viewcomponent");
 
 }
