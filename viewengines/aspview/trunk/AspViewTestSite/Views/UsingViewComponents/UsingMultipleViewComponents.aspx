@@ -1,6 +1,4 @@
 <%@ Page Language="C#" %>
-<%@ Assembly Name="Castle.MonoRail.Framework" %>
-<%@ Assembly Name="Castle.MonoRail.Views.AspView" %>
 <aspView:properties>
 <%
 	string text = "some variable text";
