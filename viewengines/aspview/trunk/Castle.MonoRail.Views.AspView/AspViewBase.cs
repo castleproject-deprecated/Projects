@@ -310,18 +310,18 @@ namespace Castle.MonoRail.Views.AspView
 		/// <param name="bodyHandler">Delegate to render the component's body. null if the component does not have a body</param>
 		/// <param name="sectionHandlers">Delegates to render the component's sections, by the delegate names</param>
 		/// <param name="parameters">The parameters to be passed to the component</param>
-		protected void InvokeViewComponent(string componentName, ViewComponentSectionRendereDelegate bodyHandler, IEnumerable<KeyValuePair<string,object>> sectionHandlers, params object[] parameters)
+		protected void InvokeViewComponent(string componentName, ViewComponentSectionRendereDelegate bodyHandler, IEnumerable<KeyValuePair<string, ViewComponentSectionRendereDelegate>> sectionHandlers, params object[] parameters)
 		{
 			ViewComponentContext viewComponentContext = new ViewComponentContext(
 				this, bodyHandler, 
-				componentName, OutputWriter , parameters);
+				componentName, parameters);
 			AddProperties(viewComponentContext.ContextVars);
-			foreach (KeyValuePair<string, object> pair in sectionHandlers)
-			{
-				viewComponentContext.RegisterSection(pair.Key, pair.Value);
-			}
+			if (sectionHandlers != null)
+				foreach (KeyValuePair<string, ViewComponentSectionRendereDelegate> pair in sectionHandlers)
+					viewComponentContext.RegisterSection(pair.Key, pair.Value);
 			ViewComponent viewComponent = ((IViewComponentFactory)Context.GetService(typeof(IViewComponentFactory))).Create(componentName);
 			viewComponent.Init(Context, viewComponentContext);
+			viewComponent.Render();
 			if (viewComponentContext.ViewToRender != null)
 				OutputSubView("\\" + viewComponentContext.ViewToRender, viewComponentContext.ContextVars);
 		}

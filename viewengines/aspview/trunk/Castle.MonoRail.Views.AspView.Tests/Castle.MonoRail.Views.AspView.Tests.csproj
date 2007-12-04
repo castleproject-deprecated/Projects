@@ -128,6 +128,14 @@
     <Compile Include="ViewTests\SubViewsTestFixture.cs" />
     <Compile Include="ViewTests\LayoutsTestFixture.cs" />
     <Compile Include="ViewTests\SimpleViewTestFixture.cs" />
+    <Compile Include="ViewTests\ViewComponents\BodyRendererViewComponent.cs" />
+    <Compile Include="ViewTests\ViewComponents\SectionsRendererViewComponent.cs" />
+    <Compile Include="ViewTests\ViewComponents\TextAndViewRendererViewComponent.cs" />
+    <Compile Include="ViewTests\ViewComponents\ViewRendererViewComponent.cs" />
+    <Compile Include="ViewTests\ViewComponents\TextRendererViewComponent.cs" />
+    <Compile Include="ViewTests\Views\WithComponentAndSections.cs" />
+    <Compile Include="ViewTests\Views\WithComponentAndBody.cs" />
+    <Compile Include="ViewTests\Views\WithComponent.cs" />
     <Compile Include="ViewTests\Views\LayoutWithSubView.cs" />
     <Compile Include="ViewTests\Views\WithSubViewWithParameters.cs" />
     <Compile Include="ViewTests\Views\WithPropertyAndWithSubViewWithParameters.cs" />

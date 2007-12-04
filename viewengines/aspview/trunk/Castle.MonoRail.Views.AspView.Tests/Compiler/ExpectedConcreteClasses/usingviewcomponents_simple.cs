@@ -16,7 +16,7 @@ namespace CompiledViews
 		{
 Output(@"A simple viewcomponent, without a body and sections
 ");
-InvokeViewComponent("Simple", null, new KeyValuePair<string, object>[] {  } );
+InvokeViewComponent("Simple", null, null);
 Output(@"
 I was supposed to be rendered after the viewcomponent");
 

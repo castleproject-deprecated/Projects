@@ -16,9 +16,11 @@
 
 namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 {
-	using System.Reflection;
+	using Stubs;
+	using System;
+	using System.Collections.Generic;
+	using ViewComponents;
 	using Framework;
-	using Framework.Internal;
 	using Framework.Services;
 	using Views;
 	using NUnit.Framework;
@@ -26,17 +28,146 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 	[TestFixture]
 	public class ViewComponentsTestFixture : AbstractViewTestFixture
 	{
+
+		MyViewComponentFactory componentFactory = new MyViewComponentFactory();
+
+		[Test]
+		public void WithRenderText_Works()
+		{
+			RegisterComponent("MyComponent", typeof(TextRendererViewComponent));
+
+			InitializeView(typeof(WithComponent));
+
+			view.Process();
+
+			expected =
+@"Parent
+Default text from component's RenderText()
+Parent";
+
+			AssertViewOutputEqualsToExpected();
+		}
+
+		[Test]
+		public void WithRenderView_Works()
+		{
+			RegisterComponent("MyComponent", typeof(ViewRendererViewComponent));
+
+			InitializeView(typeof(WithComponent));
+
+			AddCompilation("\\components\\MyComponent\\SimpleView", typeof(SimpleView));
+
+			view.Process();
+
+			expected =
+@"Parent
+Simple
+Parent";
+
+			AssertViewOutputEqualsToExpected();
+		}
+
+		[Test]
+		public void WithRenderTextAndView_ViewIsAlwaysAfterTheText()
+		{
+			RegisterComponent("MyComponent", typeof(TextAndViewRendererViewComponent));
+
+			InitializeView(typeof(WithComponent));
+
+			AddCompilation("\\components\\MyComponent\\SimpleView", typeof(SimpleView));
+
+			view.Process();
+
+			expected =
+@"Parent
+Default text from component's RenderText()Simple
+Parent";
+
+			AssertViewOutputEqualsToExpected();
+		}
+
+		[Test]
+		public void WithBody_RendersTheBody()
+		{
+			RegisterComponent("MyComponent", typeof(BodyRendererViewComponent));
+
+			InitializeView(typeof(WithComponentAndBody));
+
+			view.Process();
+
+			expected =
+@"Parent
+Component's Body
+Parent";
+
+			AssertViewOutputEqualsToExpected();
+		}
+
+		[Test]
+		[ExpectedException(typeof(RailsException), ExpectedMessage = "This component does not have a body content to be rendered")]
+		public void WithBody_ButNoBody_Throws()
+		{
+			RegisterComponent("MyComponent", typeof(BodyRendererViewComponent));
+
+			InitializeView(typeof(WithComponent));
+
+			view.Process();
+		}
+
+		[Test]
+		public void WithSections_RendersTheSections()
+		{
+			RegisterComponent("MyComponent", typeof(SectionsRendererViewComponent));
+
+			InitializeView(typeof(WithComponentAndSections));
+
+			view.Process();
+
+			expected =
+@"Parent
+section1Textsection2
+Parent";
+
+			AssertViewOutputEqualsToExpected();
+		}
+
 		/*
-simple component
-component with body
-component with sections
-component with view
-component with body and view
-component with body, section and view
 component with subview in view
 component with subview in section
 component with subview in body
 nested components
 		 * */
+		protected override void Clear()
+		{
+			base.Clear();
+			componentFactory = null;
+		}
+
+		protected override void CreateStubsAndMocks()
+		{
+			base.CreateStubsAndMocks();
+			componentFactory = new MyViewComponentFactory();
+		}
+
+		protected override void CreateDefaultStubsAndMocks()
+		{
+			base.CreateDefaultStubsAndMocks();
+			context.AddService(typeof(IViewComponentFactory), componentFactory);
+		}
+
+		private void RegisterComponent(string name, Type type)
+		{
+			componentFactory.RegisteredComponents.Add(name, type);
+		}
+		class MyViewComponentFactory : DefaultViewComponentFactory
+		{
+			public readonly Dictionary<string, Type> RegisteredComponents =
+				new Dictionary<string, Type>();
+
+			public override ViewComponent Create(string name)
+			{
+				return Activator.CreateInstance(RegisteredComponents[name]) as ViewComponent;
+			}
+		}
 	}
 }

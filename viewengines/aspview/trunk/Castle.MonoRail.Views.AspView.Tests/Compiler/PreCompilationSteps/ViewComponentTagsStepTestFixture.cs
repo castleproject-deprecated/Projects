@@ -52,7 +52,7 @@ after
 ";
 			expected = @"
 before
-<% InvokeViewComponent(""Simple"", null, new KeyValuePair<string, object>[] {  } , ""name"", ""Ken""); %>
+<% InvokeViewComponent(""Simple"", null, null, ""name"", ""Ken""); %>
 after
 ";
 
@@ -74,7 +74,7 @@ after
 ";
 			expected = @"
 before
-<% InvokeViewComponent(""Simple"", null, new KeyValuePair<string, object>[] {  } , ""age"", myAge); %>
+<% InvokeViewComponent(""Simple"", null, null, ""age"", myAge); %>
 after
 ";
 
@@ -94,7 +94,7 @@ after
 ";
 			expected = @"
 before
-<% InvokeViewComponent(""Simple"", null, new KeyValuePair<string, object>[] {  } , ""age"", me.Age); %>
+<% InvokeViewComponent(""Simple"", null, null, ""age"", me.Age); %>
 after
 ";
 
@@ -114,7 +114,7 @@ after
 ";
 			 expected = @"
 before
-<% InvokeViewComponent(""Simple"", null, new KeyValuePair<string, object>[] {  } , ""age"", people[index].GetAge(In.Years)); %>
+<% InvokeViewComponent(""Simple"", null, null, ""age"", people[index].GetAge(In.Years)); %>
 after
 ";
 
@@ -122,6 +122,97 @@ after
 			step.Process(file);
 
 			AssertStepOutput();
+		}
+
+		[Test]
+		public void Process_ViewComponentsWithBody_CreatesAndRegistersBodyHandler()
+		{
+			string source = @"
+before
+<component:Simple>
+body
+</component:Simple>
+after
+";
+
+			file.RenderBody = source;
+			step.Process(file);
+
+			Assert.IsTrue(file.ViewComponentSectionHandlers.ContainsKey("Simple0_body"));
+			string actualBody = file.ViewComponentSectionHandlers["Simple0_body"];
+			string expectedBody = @"Output(@""
+body
+"");
+";
+			Assert.AreEqual(expectedBody, actualBody);
+		}
+
+		[Test]
+		public void Process_ViewComponentsWithBody_PassesBodyHandlerToTheComponent()
+		{
+			string source = @"
+before
+<component:Simple>
+body
+</component:Simple>
+after
+";
+			expected = @"
+before
+<% InvokeViewComponent(""Simple"", Simple0_body, null); %>
+after
+";
+
+			file.RenderBody = source;
+			step.Process(file);
+
+			AssertStepOutput();
+		}
+
+		[Test]
+		public void Process_ViewComponentsWithSections_CreatesAndRegistersSectionHandlers()
+		{
+			string source = @"
+before
+<component:Simple>
+<section:section1>
+section1
+</section:section1>
+<section:section2>
+section2
+</section:section2>
+body
+</component:Simple>
+after
+";
+
+			file.RenderBody = source;
+			step.Process(file);
+
+			Assert.IsTrue(file.ViewComponentSectionHandlers.ContainsKey("Simple0_body"));
+			Assert.IsTrue(file.ViewComponentSectionHandlers.ContainsKey("Simple0_section1"));
+			Assert.IsTrue(file.ViewComponentSectionHandlers.ContainsKey("Simple0_section2"));
+
+			string actualBody = file.ViewComponentSectionHandlers["Simple0_body"];
+			string actualSection1Body = file.ViewComponentSectionHandlers["Simple0_section1"];
+			string actualSection2Body = file.ViewComponentSectionHandlers["Simple0_section2"];
+			string expectedBody = @"Output(@""
+
+
+body
+"");
+";
+			string expectedSection1Body = @"Output(@""
+section1
+"");
+";
+			string expectedSection2Body = @"Output(@""
+section2
+"");
+";
+			Assert.AreEqual(expectedBody, actualBody);
+			Assert.AreEqual(actualSection1Body, expectedSection1Body);
+			Assert.AreEqual(actualSection2Body, expectedSection2Body);
 		}
 	}
 }

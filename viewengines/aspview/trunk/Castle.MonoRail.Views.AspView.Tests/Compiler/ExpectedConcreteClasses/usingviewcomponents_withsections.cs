@@ -19,38 +19,13 @@ namespace CompiledViews
 		{
 Output(@"A simple viewcomponent, without a body and sections
 ");
-InvokeViewComponent("Repeater", new ViewComponentSectionRendereDelegate(Repeater14_body), new KeyValuePair<string, object>[] { new KeyValuePair<string, object>("header", new ViewComponentSectionRendereDelegate(Repeater14_header1)) , new KeyValuePair<string, object>("item", new ViewComponentSectionRendereDelegate(Repeater14_item2)) , new KeyValuePair<string, object>("footer", new ViewComponentSectionRendereDelegate(Repeater14_footer3))  } , "source", items);
+InvokeViewComponent("Repeater", null, new KeyValuePair<string, ViewComponentSectionRendereDelegate>[] { new KeyValuePair<string, ViewComponentSectionRendereDelegate>("header", Repeater0_header) , new KeyValuePair<string, ViewComponentSectionRendereDelegate>("item", Repeater0_item) , new KeyValuePair<string, ViewComponentSectionRendereDelegate>("footer", Repeater0_footer)  }, "source", items);
 Output(@"
 I was supposed to be rendered after the viewcomponent");
 
 		}
 
-		internal void Repeater14_body ()
-		{
-			Output(@"
-				<section:header>
-				<table>
-					<thead>
-						<th>Id</th>
-						<th>Word</th>
-					</thead>
-				</section:header>
-				<section:item>
-					<tr>
-						<td>1</td>
-						<td>");
-			Output(item);
-			Output(@"</td>
-					</tr>
-				</section:item>
-				<section:footer>
-				</table>
-				</section:footer>
-			");
-
-		}
-
-		internal void Repeater14_header1 ()
+		internal void Repeater0_header ()
 		{
 			Output(@"
 				<table>
@@ -62,7 +37,7 @@ I was supposed to be rendered after the viewcomponent");
 
 		}
 
-		internal void Repeater14_item2 ()
+		internal void Repeater0_item ()
 		{
 			Output(@"
 					<tr>
@@ -75,7 +50,7 @@ I was supposed to be rendered after the viewcomponent");
 
 		}
 
-		internal void Repeater14_footer3 ()
+		internal void Repeater0_footer ()
 		{
 			Output(@"
 				</table>

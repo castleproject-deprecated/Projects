@@ -62,7 +62,7 @@ namespace Castle.MonoRail.Views.AspView
 			set { body = value; }
 		}
 
-		public void RegisterSection(string name, object section)
+		public void RegisterSection(string name, ViewComponentSectionRendereDelegate section)
 		{
 			if (sections == null)
 				sections = new Hashtable();

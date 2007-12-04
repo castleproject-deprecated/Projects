@@ -16,7 +16,7 @@ namespace CompiledViews
 		{
 Output(@"some text before viewcomponent
 ");
-InvokeViewComponent("With.Dot.In.Name", null, new KeyValuePair<string, object>[] {  } );
+InvokeViewComponent("With.Dot.In.Name", null, null);
 Output(@"
 some text after viewcomponent");
 

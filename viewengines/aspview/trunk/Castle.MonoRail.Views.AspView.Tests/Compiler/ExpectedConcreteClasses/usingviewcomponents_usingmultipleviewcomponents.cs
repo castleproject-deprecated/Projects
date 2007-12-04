@@ -17,21 +17,21 @@ namespace CompiledViews
 		{
 Output(@"Some view text
 ");
-InvokeViewComponent("CaptureFor", new ViewComponentSectionRendereDelegate(CaptureFor10_body), new KeyValuePair<string, object>[] {  } , "id", "capturedContent1");
+InvokeViewComponent("CaptureFor", CaptureFor0_body, null, "id", "capturedContent1");
 Output(@"
 ");
-InvokeViewComponent("CaptureFor", new ViewComponentSectionRendereDelegate(CaptureFor11_body), new KeyValuePair<string, object>[] {  } , "id", "capturedContent2");
+InvokeViewComponent("CaptureFor", CaptureFor1_body, null, "id", "capturedContent2");
 Output(@"
 Some view text
 The next text should be bolded:
 ");
-InvokeViewComponent("Bold", new ViewComponentSectionRendereDelegate(Bold12_body), new KeyValuePair<string, object>[] {  } );
+InvokeViewComponent("Bold", Bold2_body, null);
 Output(@"
 Some view text - not bolded");
 
 		}
 
-		internal void CaptureFor10_body ()
+		internal void CaptureFor0_body ()
 		{
 			Output(@"
 			This content should be rendered in the captured-for place holder no. 1
@@ -39,7 +39,7 @@ Some view text - not bolded");
 
 		}
 
-		internal void CaptureFor11_body ()
+		internal void CaptureFor1_body ()
 		{
 			Output(@"
 			This content should be rendered in the captured-for place holder no. 2
@@ -47,7 +47,7 @@ Some view text - not bolded");
 
 		}
 
-		internal void Bold12_body ()
+		internal void Bold2_body ()
 		{
 			Output(@"I should be bold, ");
 			Output(text);

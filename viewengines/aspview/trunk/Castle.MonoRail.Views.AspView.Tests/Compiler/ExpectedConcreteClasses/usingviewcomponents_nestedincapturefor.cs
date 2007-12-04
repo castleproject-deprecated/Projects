@@ -16,7 +16,7 @@ namespace CompiledViews
 		{
 Output(@"a. Some text, located before the capturedContent component
 ");
-InvokeViewComponent("CaptureFor", new ViewComponentSectionRendereDelegate(CaptureFor2_body), new KeyValuePair<string, object>[] {  } , "id", "capturedContent");
+InvokeViewComponent("CaptureFor", CaptureFor0_body, null, "id", "capturedContent");
 Output(@"
 b. Some text, located after the capturedContent component
 This text should be rendered right after text b.
@@ -24,18 +24,18 @@ This text should be rendered right after text b.
 
 		}
 
-		internal void Bold3_body ()
+		internal void Bold1_body ()
 		{
 			Output(@"Bolded, yet still in the captured-for place holder");
 
 		}
 
-		internal void CaptureFor2_body ()
+		internal void CaptureFor0_body ()
 		{
 			Output(@"
 			This content should be rendered in the captured-for place holder
 			");
-			InvokeViewComponent("Bold", new ViewComponentSectionRendereDelegate(Bold3_body), new KeyValuePair<string, object>[] {  } );
+			InvokeViewComponent("Bold", Bold1_body, null);
 			Output(@"
 			Not bolded anymore, yet still in the captured-for place holder
 			");

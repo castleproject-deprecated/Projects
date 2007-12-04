@@ -16,7 +16,7 @@ namespace CompiledViews
 		{
 Output(@"before the components
 ");
-InvokeViewComponent("Bold", new ViewComponentSectionRendereDelegate(Bold0_body), new KeyValuePair<string, object>[] {  } );
+InvokeViewComponent("Bold", Bold0_body, null);
 Output(@"
 after all components");
 
@@ -35,7 +35,7 @@ after all components");
 			Output(@"
 				in inner bolded
 				");
-			InvokeViewComponent("Bold", new ViewComponentSectionRendereDelegate(Bold1_body), new KeyValuePair<string, object>[] {  } );
+			InvokeViewComponent("Bold", Bold1_body, null);
 			Output(@"
 				back in outer bolded
 			");

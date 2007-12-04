@@ -16,13 +16,13 @@ namespace CompiledViews
 		{
 Output(@"A simple viewcomponent, without a body and sections
 ");
-InvokeViewComponent("Bold", new ViewComponentSectionRendereDelegate(Bold13_body), new KeyValuePair<string, object>[] {  } );
+InvokeViewComponent("Bold", Bold0_body, null);
 Output(@"
 I was supposed to be rendered after the viewcomponent");
 
 		}
 
-		internal void Bold13_body ()
+		internal void Bold0_body ()
 		{
 			Output(@"I was supposed to be rendered in the viewcomponent");
 

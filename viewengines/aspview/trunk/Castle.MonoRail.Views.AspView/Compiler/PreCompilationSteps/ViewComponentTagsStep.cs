@@ -21,12 +21,13 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 
 	public class ViewComponentTagsStep : IPreCompilationStep
 	{
-		static int lastViewComponentsCounter;
+		int lastViewComponentsCounter;
 
 		readonly ScriptToCodeTransformer scriptTransformer = new ScriptToCodeTransformer();
 
 		public void Process(SourceFile file)
 		{
+			lastViewComponentsCounter = 0;
 			file.RenderBody = Process(file.RenderBody, file);
 		}
 
@@ -39,49 +40,40 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 				string content = match.Groups["content"].Value;
 
 				int viewComponentsCounter = lastViewComponentsCounter++;
-				int sectionsCounter = 0;
 				string parametersString = Utilities.GetAttributesStringFrom(attributes);
 
 				string componentName = (componentTypeName + viewComponentsCounter).Replace('.', '_');
 
 				string bodyHandlerName = null;
-				string bodyHandlerParameterString = "null";
-				if (content.Trim().Length > 0)
-					bodyHandlerName = componentName + "_body";
-				if (bodyHandlerName != null)
-				{
-					RegisterSectionHandler(bodyHandlerName, content, file);
-					bodyHandlerParameterString = GetDelegateString(bodyHandlerName);
-				}
+				string sectionHandlersArray = "null";
 
 				List<string> pairs = new List<string>();
 
-				foreach (Match sectionTag in Internal.RegularExpressions.ViewComponentSectionTags.Matches(content))
+				content = Internal.RegularExpressions.ViewComponentSectionTags.Replace(content, delegate(Match sectionTag)
 				{
-					++sectionsCounter;
-					string sectionTypeName = sectionTag.Groups["sectionName"].Value;
+					string sectionName = sectionTag.Groups["sectionName"].Value;
 					string sectionContent = sectionTag.Groups["content"].Value;
-					string sectionName = sectionTypeName + sectionsCounter;
 					string handlerName = componentName + "_" + sectionName;
 					RegisterSectionHandler(handlerName, sectionContent, file);
-					pairs.Add(string.Format(@"new KeyValuePair<string, object>(""{0}"", {1}) ",
-						sectionTypeName, GetDelegateString(handlerName)));
-				}
+					pairs.Add(string.Format(@"new KeyValuePair<string, ViewComponentSectionRendereDelegate>(""{0}"", {1}) ",
+						sectionName, handlerName));
+					return string.Empty;
+				});
 
-				string sectionHandlersArray = string.Format(
-					@"new KeyValuePair<string, object>[] {{ {0} }}",
-					string.Join(", ", pairs.ToArray()));
+				if (content.Trim().Length > 0)
+					bodyHandlerName = componentName + "_body";
+				if (bodyHandlerName != null)
+					RegisterSectionHandler(bodyHandlerName, content, file);
+
+				if (pairs.Count > 0)
+					sectionHandlersArray = string.Format(
+						@"new KeyValuePair<string, ViewComponentSectionRendereDelegate>[] {{ {0} }}",
+						string.Join(", ", pairs.ToArray()));
 
 				return string.Format(
-					@"<% InvokeViewComponent(""{0}"", {1}, {2} {3}); %>",
-					componentTypeName, bodyHandlerParameterString, sectionHandlersArray, parametersString);
+					@"<% InvokeViewComponent(""{0}"", {1}, {2}{3}); %>",
+					componentTypeName, bodyHandlerName ?? "null", sectionHandlersArray, parametersString);
 			});
-		}
-
-		private static string GetDelegateString(string handlerName)
-		{
-			return string.Format(
-				@"new ViewComponentSectionRendereDelegate({0})", handlerName); 
 		}
 
 		private void RegisterSectionHandler(string handlerName, string sectionContent, SourceFile file)

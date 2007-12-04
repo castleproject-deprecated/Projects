@@ -43,7 +43,8 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 
 		protected void AddCompilation(string key, Type viewType)
 		{
-			((IAspViewEngineTestAccess)engine).Compilations.Add(key, viewType);
+			string className = AspViewEngine.GetClassName(key);
+			((IAspViewEngineTestAccess)engine).Compilations.Add(className, viewType);
 		}
 
 		/// <summary>

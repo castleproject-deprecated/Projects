@@ -16,7 +16,7 @@ namespace CompiledViews
 		{
 Output(@"a. Some text, located before the capturedContent component
 ");
-InvokeViewComponent("CaptureFor", new ViewComponentSectionRendereDelegate(CaptureFor5_body), new KeyValuePair<string, object>[] {  } , "id", "capturedContent");
+InvokeViewComponent("CaptureFor", CaptureFor0_body, null, "id", "capturedContent");
 Output(@"
 b. Some text, located after the capturedContent component
 This text should be rendered right after text b.
@@ -24,7 +24,7 @@ This text should be rendered right after text b.
 
 		}
 
-		internal void CaptureFor5_body ()
+		internal void CaptureFor0_body ()
 		{
 			Output(@"
 			This content should be rendered in the captured-for place holder

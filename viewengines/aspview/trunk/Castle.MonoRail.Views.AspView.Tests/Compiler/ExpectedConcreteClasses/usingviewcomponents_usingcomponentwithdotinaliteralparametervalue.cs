@@ -16,7 +16,7 @@ namespace CompiledViews
 		{
 Output(@"some text before viewcomponent
 ");
-InvokeViewComponent("Echo", null, new KeyValuePair<string, object>[] {  } , "out", "with.dot");
+InvokeViewComponent("Echo", null, null, "out", "with.dot");
 Output(@"
 some text after viewcomponent");
 
