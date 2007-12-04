@@ -6,10 +6,14 @@ using Castle.MonoRail.Framework;
 using Castle.MonoRail.Views.AspView;
 namespace CompiledViews
 {
-public class viewfilters_loweranduppercaseviewfilters : AspViewBase
-{
-public override void Render()
-{
+	public class viewfilters_loweranduppercaseviewfilters : AspViewBase
+	{
+		protected override string ViewName { get { return "\\ViewFilters\\LowerAndUpperCaseViewFilters.aspx"; } }
+		protected override string ViewDirectory { get { return "\\ViewFilters"; } }
+
+
+		public override void Render()
+		{
 Output(@"Outside the filter
 ");
 StartFiltering(new Castle.MonoRail.Views.AspView.ViewFilters.LowerCaseViewFilter());
@@ -28,8 +32,7 @@ EndFiltering();
 Output(@"
 Finally - outside the filter");
 
-}
-protected override string ViewName { get { return "\\ViewFilters\\LowerAndUpperCaseViewFilters.aspx"; } }
-protected override string ViewDirectory { get { return "\\ViewFilters"; } }
-}
+		}
+
+	}
 }

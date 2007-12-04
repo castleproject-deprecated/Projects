@@ -84,6 +84,7 @@
     <Compile Include="IHelpersAccesor.cs" />
     <Compile Include="Internal\RegularExpressions.cs" />
     <Compile Include="Internal\Set.cs" />
+    <Compile Include="Internal\TabbedStringWriter.cs" />
     <Compile Include="IViewBase.cs" />
     <Compile Include="IViewBaseInternal.cs" />
     <Compile Include="ViewAtDesignTimeWithGenericTypedInterface.cs">
@@ -116,11 +117,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="KenEgoziOpenSource.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Config\" />
-    <Folder Include="Model\" />
-    <Folder Include="ViewProcessingSteps\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

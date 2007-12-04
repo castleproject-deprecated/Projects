@@ -16,14 +16,16 @@
 
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
-	using AspView.Compiler;
 	using AspView.Compiler.PreCompilationSteps;
 	using NUnit.Framework;
 
 	[TestFixture]
-	public class DetermineBaseClassStepTestFixture
+	public class DetermineBaseClassStepTestFixture : AbstractPreCompilationStepTestFixture
 	{
-		readonly IPreCompilationStep step = new DetermineBaseClassStep();
+		protected override void CreateStep()
+		{
+			step = new DetermineBaseClassStep();
+		}
 
 		private static void AssertPageDirectiveHasBeenRemoved(string viewSource)
 		{
@@ -34,36 +36,33 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 		[Test]
 		public void Process_WhenInheritsIsMissing_SetsDefault()
 		{
-			SourceFile file = new SourceFile();
-			file.ViewSource = @"
+			file.RenderBody = @"
 <%@ Page Language=""C#"" %>
 view content";
 			step.Process(file);
 
 			Assert.AreEqual(DetermineBaseClassStep.DefaultBaseClassName, file.BaseClassName);
 
-			AssertPageDirectiveHasBeenRemoved(file.ViewSource);
+			AssertPageDirectiveHasBeenRemoved(file.RenderBody);
 		}
 
 		[Test]
 		public void Process_WhenUsingDefault_SetsDefault()
 		{
-			SourceFile file = new SourceFile();
-			file.ViewSource = @"
+			file.RenderBody = @"
 <%@ Page Language=""C#"" Inherits=""Castle.MonoRail.Views.AspView.ViewAtDesignTime"" %>
 view content";
 			step.Process(file);
 
 			Assert.AreEqual(DetermineBaseClassStep.DefaultBaseClassName, file.BaseClassName);
 
-			AssertPageDirectiveHasBeenRemoved(file.ViewSource);
+			AssertPageDirectiveHasBeenRemoved(file.RenderBody);
 		}
 
 		[Test]
 		public void Process_WhenUsingDefaultAndTypedView_SetsDefaultAndView()
 		{
-			SourceFile file = new SourceFile();
-			file.ViewSource = @"
+			file.RenderBody = @"
 <%@ Page Language=""C#"" Inherits=""Castle.MonoRail.Views.AspView.ViewAtDesignTime<IView>"" %>
 view content";
 			step.Process(file);
@@ -71,28 +70,26 @@ view content";
 			Assert.AreEqual(DetermineBaseClassStep.DefaultBaseClassName + "<IView>", file.BaseClassName);
 			Assert.AreEqual("IView", file.TypedViewName);
 
-			AssertPageDirectiveHasBeenRemoved(file.ViewSource);
+			AssertPageDirectiveHasBeenRemoved(file.RenderBody);
 		}
 
 		[Test]
 		public void Process_WhenUsingClassName_SetsClassName()
 		{
-			SourceFile file = new SourceFile();
-			file.ViewSource = @"
+			file.RenderBody = @"
 <%@ Page Language=""C#"" Inherits=""SomeClass"" %>
 view content";
 			step.Process(file);
 
 			Assert.AreEqual("SomeClass", file.BaseClassName);
 
-			AssertPageDirectiveHasBeenRemoved(file.ViewSource);
+			AssertPageDirectiveHasBeenRemoved(file.RenderBody);
 		}
 
 		[Test]
 		public void Process_WhenUsingClassNameAndTypedView_SetsClassNameAndView()
 		{
-			SourceFile file = new SourceFile();
-			file.ViewSource = @"
+			file.RenderBody = @"
 <%@ Page Language=""C#"" Inherits=""SomeClass<IView>"" %>
 view content";
 			step.Process(file);
@@ -100,28 +97,26 @@ view content";
 			Assert.AreEqual("SomeClass<IView>", file.BaseClassName);
 			Assert.AreEqual("IView", file.TypedViewName);
 
-			AssertPageDirectiveHasBeenRemoved(file.ViewSource);
+			AssertPageDirectiveHasBeenRemoved(file.RenderBody);
 		}
 
 		[Test]
 		public void Process_WhenUsingClassNameAtDesignTime_SetsClassName()
 		{
-			SourceFile file = new SourceFile();
-			file.ViewSource = @"
+			file.RenderBody = @"
 <%@ Page Language=""C#"" Inherits=""SomeClassAtDesignTime"" %>
 view content";
 			step.Process(file);
 
 			Assert.AreEqual("SomeClass", file.BaseClassName);
 
-			AssertPageDirectiveHasBeenRemoved(file.ViewSource);
+			AssertPageDirectiveHasBeenRemoved(file.RenderBody);
 		}
 
 		[Test]
 		public void Process_WhenUsingClassNameAtDesignTimeAndTypedView_SetsClassNameAndView()
 		{
-			SourceFile file = new SourceFile();
-			file.ViewSource = @"
+			file.RenderBody = @"
 <%@ Page Language=""C#"" Inherits=""SomeClassAtDesignTime<IView>"" %>
 view content";
 			step.Process(file);
@@ -129,7 +124,7 @@ view content";
 			Assert.AreEqual("SomeClass<IView>", file.BaseClassName);
 			Assert.AreEqual("IView", file.TypedViewName);
 
-			AssertPageDirectiveHasBeenRemoved(file.ViewSource);
+			AssertPageDirectiveHasBeenRemoved(file.RenderBody);
 		}		
 
 	}

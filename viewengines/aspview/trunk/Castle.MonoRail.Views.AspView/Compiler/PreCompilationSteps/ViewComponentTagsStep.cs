@@ -27,7 +27,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 
 		public void Process(SourceFile file)
 		{
-			file.ViewSource = Process(file.ViewSource, file);
+			file.RenderBody = Process(file.RenderBody, file);
 		}
 
 		private string Process(string currentContent, SourceFile file)

@@ -178,6 +178,7 @@ On '{0}' (class name: {1}) Line {2}, Column {3}, {4} {5}:
 				file.ViewName = fileName.Replace(viewsDirectory, "");
 				file.ClassName = AspViewEngine.GetClassName(file.ViewName);
 				file.ViewSource = ReadFile(fileName);
+				file.RenderBody = file.ViewSource;
 				files.Add(file);
 			}
 			return files;

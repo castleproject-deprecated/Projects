@@ -23,7 +23,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 	{
 		public void Process(SourceFile file)
 		{
-			file.ViewSource = Internal.RegularExpressions.PropertiesSection.Replace(file.ViewSource, delegate(Match match)
+			file.RenderBody = Internal.RegularExpressions.PropertiesSection.Replace(file.RenderBody, delegate(Match match)
 			{
 				string propertiesSection = match.Groups["properties"].Value.Trim();
 				if (propertiesSection.EndsWith("%>"))

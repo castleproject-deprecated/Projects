@@ -21,28 +21,23 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 	using NUnit.Framework;
 
 	[TestFixture]
-	public class ProcessPropertiesStepTestFixture
+	public class ProcessPropertiesStepTestFixture : AbstractPreCompilationStepTestFixture
 	{
-		readonly IPreCompilationStep step = new ProcessPropertiesStep();
-
 		private static void AssertPropertiesSectionHasBeenRemoved(string viewSource)
 		{
 			if (Internal.RegularExpressions.PropertiesSection.IsMatch(viewSource))
 				Assert.Fail("Properties section has not been removed from view source");
 		}
 
-		SourceFile file;
-
-		[SetUp]
-		public void Setup()
+		protected override void CreateStep()
 		{
-			file = new SourceFile();
+			step = new ProcessPropertiesStep();
 		}
 
 		[Test]
 		public void Process_WhenEmpty_DoesNotRegisterAnyProperties()
 		{
-			file.ViewSource = @"
+			file.RenderBody = @"
 <aspview:properties>
 </aspview:properties>
 view content";
@@ -50,13 +45,13 @@ view content";
 
 			Assert.AreEqual(0, file.Properties.Count);
 
-			AssertPropertiesSectionHasBeenRemoved(file.ViewSource);
+			AssertPropertiesSectionHasBeenRemoved(file.RenderBody);
 		}
 
 		[Test]
 		public void Process_WhenHasOnlyScriptMarkers_DoesNotRegisterAnyProperties()
 		{
-			file.ViewSource = @"
+			file.RenderBody = @"
 <aspview:properties>
 <%
 %>
@@ -66,13 +61,13 @@ view content";
 
 			Assert.AreEqual(0, file.Properties.Count);
 
-			AssertPropertiesSectionHasBeenRemoved(file.ViewSource);
+			AssertPropertiesSectionHasBeenRemoved(file.RenderBody);
 		}
 
 		[Test]
 		public void Process_WhenHasRegularProperty_RegistersThatProperty()
 		{
-			file.ViewSource = @"
+			file.RenderBody = @"
 <aspview:properties>
 <%
 string myString;
@@ -83,13 +78,13 @@ view content";
 
 			AssertViewPropertyEqual(new ViewProperty("myString", "string", null), "myString");
 
-			AssertPropertiesSectionHasBeenRemoved(file.ViewSource);
+			AssertPropertiesSectionHasBeenRemoved(file.RenderBody);
 		}
 
 		[Test]
 		public void Process_WhenHasTwoProperties_RegistersBoth()
 		{
-			file.ViewSource = @"
+			file.RenderBody = @"
 <aspview:properties>
 <%
 string myString;
@@ -102,13 +97,13 @@ view content";
 			AssertViewPropertyEqual(new ViewProperty("myString", "string", null), "myString");
 			AssertViewPropertyEqual(new ViewProperty("myInt", "int", null), "myInt");
 
-			AssertPropertiesSectionHasBeenRemoved(file.ViewSource);
+			AssertPropertiesSectionHasBeenRemoved(file.RenderBody);
 		}
 
 		[Test]
 		public void Process_WhenHasDefaultValue_RegistersPropertyWithTheValue()
 		{
-			file.ViewSource = @"
+			file.RenderBody = @"
 <aspview:properties>
 <%
 string myString = ""Sample"";
@@ -120,24 +115,23 @@ view content";
 
 			AssertViewPropertyEqual(new ViewProperty("myString", "string", "\"Sample\""), "myString");
 
-			AssertPropertiesSectionHasBeenRemoved(file.ViewSource);
+			AssertPropertiesSectionHasBeenRemoved(file.RenderBody);
 		}
 
 
 		#region helpers
-		private void AssertViewPropertyEqual(ViewProperty expected, string propertyName)
+		private void AssertViewPropertyEqual(ViewProperty expectedProperty, string propertyName)
 		{
 			Assert.IsTrue(file.Properties.ContainsKey(propertyName), "Property [{0}] is missing.", propertyName);
 			ViewProperty actual = file.Properties[propertyName];
-			Assert.AreEqual(expected.Type, actual.Type, "Property [{0}] should be of type [{1}], but was of type [{2}] instead.", propertyName, expected.Type, actual.Type);
-			if (expected.DefaultValue == null)
+			Assert.AreEqual(expectedProperty.Type, actual.Type, "Property [{0}] should be of type [{1}], but was of type [{2}] instead.", propertyName, expectedProperty.Type, actual.Type);
+			if (expectedProperty.DefaultValue == null)
 				Assert.IsNull(actual.DefaultValue, "Property [{0}] should have had no default value, however a default value of [{1}] was found.", propertyName, actual.DefaultValue);
 			else
 			{
 				Assert.IsNotNull(actual.DefaultValue, "Property [{0}] should have had a default value, however none was found.", propertyName);
-				Assert.AreEqual(expected.DefaultValue, actual.DefaultValue, "Property [{0}] should have had a default value of [{1}], however [{2}] was found.", propertyName, expected.DefaultValue, actual.DefaultValue);
+				Assert.AreEqual(expectedProperty.DefaultValue, actual.DefaultValue, "Property [{0}] should have had a default value of [{1}], however [{2}] was found.", propertyName, expectedProperty.DefaultValue, actual.DefaultValue);
 			}
-			//Assert.AreEqual(expected.DefaultValue, actual.DefaultValue, "Property '{0}' should have be of type '{1}', but was of type '{2}' instead."););
 		}
 		#endregion
 	}

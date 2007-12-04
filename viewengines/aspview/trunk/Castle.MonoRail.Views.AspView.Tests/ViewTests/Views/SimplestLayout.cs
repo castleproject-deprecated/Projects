@@ -4,17 +4,13 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests.Views
 {
 	public class SimplestLayout : AspViewBase
 	{
-		private void OutputLine(string text)
-		{
-			Output(text);
-			Output(Environment.NewLine);
-		}
-
 		public override void Render()
 		{
-			OutputLine("Layout - before");
-			OutputLine(ViewContents);
-			OutputLine("Layout - after");
+			Output(@"Layout - before
+");
+			Output(ViewContents);
+			Output(@"
+Layout - after");
 		}
 		protected override string ViewDirectory
 		{

@@ -32,12 +32,12 @@ namespace Castle.MonoRail.Views.AspView
 		string viewContents;
 		private bool initialized = false;
 		private TextWriter outputWriter;
-		private Dictionary<string, object> properties;
+		private IDictionary properties;
 		private IList<IDictionary> extentedPropertiesList;
 		private IRailsEngineContext context;
 		private IController controller;
 		private AspViewEngine viewEngine;
-		private AspViewBase parentView;
+		private IViewBase parentView;
 		protected IDictionaryAdapterFactory dictionaryAdapterFactory;
 		private IHelpersAccesor helpers;
 		/// <summary>
@@ -183,7 +183,7 @@ namespace Castle.MonoRail.Views.AspView
         /// <summary>
         /// Gets the properties container. Based on current property containers that was sent from the controller, such us PropertyBag, Flash, etc.
         /// </summary>
-        public Dictionary<string, object> Properties
+        public IDictionary Properties
         {
             get { return properties; }
         }
@@ -218,7 +218,7 @@ namespace Castle.MonoRail.Views.AspView
         /// <summary>
         /// Gets a reference to the view's parent view
         /// </summary>
-        public AspViewBase ParentView
+        public IViewBase ParentView
         {
             get { return parentView; }
         }
@@ -516,7 +516,7 @@ namespace Castle.MonoRail.Views.AspView
 		/// <returns>True if the property is found, False elsewhere</returns>
         protected bool TryGetParameter(string parameterName, out object parameter, object defaultValue)
         {
-            if (properties.ContainsKey(parameterName))
+            if (properties.Contains(parameterName))
             {
                 parameter = properties[parameterName];
                 return true;
@@ -528,8 +528,6 @@ namespace Castle.MonoRail.Views.AspView
                     parameter = dic[parameterName];
                     return true;
                 }
-			if (ParentView != null)
-				return ParentView.TryGetParameter(parameterName, out parameter, defaultValue);
             parameter = defaultValue;
             return false;
         }

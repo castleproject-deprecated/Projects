@@ -26,12 +26,6 @@ namespace Castle.MonoRail.Views.AspView
 	using Core;
 	using System.Runtime.Serialization;
 
-	public interface IAspViewEngineTestAccess
-	{
-		Hashtable Compilations { get; }
-		string SiteRoot { get; set; }
-	}
-
 	public class AspViewEngine : ViewEngineBase, IInitializable, IAspViewEngineTestAccess
 	{
 		static bool needsRecompiling = false;
@@ -104,8 +98,7 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			string fileName = GetFileName(templateName);
 			IViewBaseInternal view;
-			TextWriter viewOutput = output;
-			view = GetView(fileName, viewOutput, context, controller);
+			view = GetView(fileName, output, context, controller);
 			if (controller.LayoutName != null)
 			{
 				IViewBaseInternal layout = GetLayout(output, context, controller);
@@ -113,7 +106,7 @@ namespace Castle.MonoRail.Views.AspView
 				view = layout;
 			}
 			controller.PreSendView(view);
-			view.Render();
+			view.Process();
 			controller.PostSendView(view);
 		}
 		public override void ProcessContents(IRailsEngineContext context, IController controller, string contents)
@@ -286,5 +279,11 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			options = (AspViewEngineOptions)ConfigurationManager.GetSection(configName);
 		}
+	}
+
+	public interface IAspViewEngineTestAccess
+	{
+		Hashtable Compilations { get; }
+		string SiteRoot { get; set; }
 	}
 }

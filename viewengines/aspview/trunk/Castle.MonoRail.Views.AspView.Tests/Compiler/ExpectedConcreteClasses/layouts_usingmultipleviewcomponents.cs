@@ -6,12 +6,16 @@ using Castle.MonoRail.Framework;
 using Castle.MonoRail.Views.AspView;
 namespace CompiledViews
 {
-public class layouts_usingmultipleviewcomponents : AspViewBase
-{
-private object capturedContent1 { get { return (object)GetParameter("capturedContent1"); } }
-private object capturedContent2 { get { return (object)GetParameter("capturedContent2"); } }
-public override void Render()
-{
+	public class layouts_usingmultipleviewcomponents : AspViewBase
+	{
+		protected override string ViewName { get { return "\\Layouts\\UsingMultipleViewComponents.aspx"; } }
+		protected override string ViewDirectory { get { return "\\Layouts"; } }
+
+		private object capturedContent1 { get { return (object)GetParameter("capturedContent1"); } }
+		private object capturedContent2 { get { return (object)GetParameter("capturedContent2"); } }
+
+		public override void Render()
+		{
 Output(@"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
 
 <html xmlns=""http://www.w3.org/1999/xhtml"" >
@@ -43,8 +47,7 @@ Output(@"
 </body>
 </html>");
 
-}
-protected override string ViewName { get { return "\\Layouts\\UsingMultipleViewComponents.aspx"; } }
-protected override string ViewDirectory { get { return "\\Layouts"; } }
-}
+		}
+
+	}
 }

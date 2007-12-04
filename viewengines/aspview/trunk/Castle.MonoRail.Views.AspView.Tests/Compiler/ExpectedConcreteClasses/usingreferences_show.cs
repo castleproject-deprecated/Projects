@@ -7,11 +7,15 @@ using Castle.MonoRail.Views.AspView;
 using TestModel;
 namespace CompiledViews
 {
-public class usingreferences_show : AspViewBase
-{
-private Post post { get { return (Post)GetParameter("post"); } }
-public override void Render()
-{
+	public class usingreferences_show : AspViewBase
+	{
+		protected override string ViewName { get { return "\\UsingReferences\\Show.aspx"; } }
+		protected override string ViewDirectory { get { return "\\UsingReferences"; } }
+
+		private Post post { get { return (Post)GetParameter("post"); } }
+
+		public override void Render()
+		{
 Output(@"<form action=""Save.rails"">
     <input type=""text"" name=""post.PublishDate"" value='");
 Output(post.PublishDate);
@@ -23,8 +27,7 @@ Output(@"' />
 </form>
 ");
 
-}
-protected override string ViewName { get { return "\\UsingReferences\\Show.aspx"; } }
-protected override string ViewDirectory { get { return "\\UsingReferences"; } }
-}
+		}
+
+	}
 }

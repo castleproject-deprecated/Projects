@@ -7,12 +7,18 @@ using Castle.MonoRail.Framework.Internal;
 
 namespace Castle.MonoRail.Views.AspView.Tests.Stubs
 {
+	[Resource("Samples", "Castle.MonoRail.Views.AspView.Tests.Resources.Samples")]
 	public class StubController : IController
 	{
 		IDictionary propertyBag;
 		readonly Flash flash;
 		readonly IRequest request;
 		readonly IResponse response;
+		readonly NameValueCollection form = new NameValueCollection();
+		readonly NameValueCollection theParams = new NameValueCollection();
+		readonly NameValueCollection query = new NameValueCollection();
+		readonly IDictionary helpers = new Hashtable();
+		readonly ResourceDictionary resources = new ResourceDictionary();
 
 		public StubController(IDictionary propertyBag, Flash flash, IRequest request, IResponse response)
 		{
@@ -36,12 +42,12 @@ namespace Castle.MonoRail.Views.AspView.Tests.Stubs
 
 		public NameValueCollection Form
 		{
-			get { return new NameValueCollection(); }
+			get { return form; }
 		}
 
 		public IDictionary Helpers
 		{
-			get { return new Hashtable(); }
+			get { return helpers; }
 		}
 
 		public void InPlaceRenderSharedView(TextWriter output, string name)
@@ -62,7 +68,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Stubs
 
 		public NameValueCollection Params
 		{
-			get { return new NameValueCollection(); }
+			get { return theParams; }
 		}
 
 		public void PostSendView(object view)
@@ -81,7 +87,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Stubs
 
 		public NameValueCollection Query
 		{
-			get { return new NameValueCollection(); }
+			get { return query; }
 		}
 
 		public IRequest Request
@@ -91,7 +97,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Stubs
 
 		public ResourceDictionary Resources
 		{
-			get { return new ResourceDictionary(); }
+			get { return resources; }
 		}
 
 		public IResponse Response

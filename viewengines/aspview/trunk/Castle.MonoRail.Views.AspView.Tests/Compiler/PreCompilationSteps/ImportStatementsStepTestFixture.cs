@@ -16,15 +16,16 @@
 
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
-	using AspView.Compiler;
 	using AspView.Compiler.PreCompilationSteps;
 	using NUnit.Framework;
 
 	[TestFixture]
-	public class ImportStatementsStepTestFixture
+	public class ImportStatementsStepTestFixture : AbstractPreCompilationStepTestFixture
 	{
-		readonly IPreCompilationStep step = new ImportStatementsStep();
-
+		protected override void CreateStep()
+		{
+			step = new ImportStatementsStep();
+		}
 		private static void AssertImportDirectivesHasBeenRemoved(string viewSource)
 		{
 			if (Internal.RegularExpressions.ImportDirective.IsMatch(viewSource))
@@ -34,22 +35,20 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 		[Test]
 		public void Process_WhenImportingCustomNamespace_SetsImport()
 		{
-			SourceFile file = new SourceFile();
-			file.ViewSource = @"
+			file.RenderBody = @"
 <%@ Import Namespace = ""My.Name.Space"" %>
 view content";
 			step.Process(file);
 
 			Assert.IsTrue(file.Imports.Contains("My.Name.Space"));
 
-			AssertImportDirectivesHasBeenRemoved(file.ViewSource);
+			AssertImportDirectivesHasBeenRemoved(file.RenderBody);
 		}
 
 		[Test]
 		public void Process_WhenImportingSameNamespace_WouldStillSetImport()
 		{
-			SourceFile file = new SourceFile();
-			file.ViewSource = @"
+			file.RenderBody = @"
 <%@ Import Namespace = ""My.Name.Space"" %>
 <%@ Import Namespace = ""My.Name.Space"" %>
 view content";
@@ -57,14 +56,13 @@ view content";
 
 			Assert.IsTrue(file.Imports.Contains("My.Name.Space"));
 
-			AssertImportDirectivesHasBeenRemoved(file.ViewSource);
+			AssertImportDirectivesHasBeenRemoved(file.RenderBody);
 		}
 
 		[Test]
 		public void Process_WhenImportingDefaultNamespace_WouldStillSetImport()
 		{
-			SourceFile file = new SourceFile();
-			file.ViewSource = @"
+			file.RenderBody = @"
 <%@ Import Namespace = ""System"" %>
 <%@ Import Namespace = ""My.Name.Space"" %>
 view content";
@@ -73,7 +71,7 @@ view content";
 			Assert.IsTrue(file.Imports.Contains("My.Name.Space"));
 			Assert.IsTrue(file.Imports.Contains("System"));
 
-			AssertImportDirectivesHasBeenRemoved(file.ViewSource);
+			AssertImportDirectivesHasBeenRemoved(file.RenderBody);
 		}
 	}
 }

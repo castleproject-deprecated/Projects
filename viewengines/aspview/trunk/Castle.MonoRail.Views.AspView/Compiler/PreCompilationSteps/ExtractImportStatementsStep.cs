@@ -22,7 +22,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 	{
 		public void Process(SourceFile file)
 		{
-			file.ViewSource = Internal.RegularExpressions.ImportDirective.Replace(file.ViewSource, delegate(Match match)
+			file.RenderBody = Internal.RegularExpressions.ImportDirective.Replace(file.RenderBody, delegate(Match match)
 			{
 				file.Imports.Add(match.Groups["namespace"].Value);
 				return string.Empty;

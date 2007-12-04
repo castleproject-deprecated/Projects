@@ -67,10 +67,16 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NoLayoutController.cs" />
     <Compile Include="Controllers\SdController.cs" />
+    <Compile Include="Controllers\WithResourceController.cs" />
     <Compile Include="Interfaces\UsingDictionaryAdapter\IStupidView.cs" />
     <Compile Include="Interfaces\UsingDictionaryAdapter\IWithTypedPropertiesView.cs" />
     <Compile Include="Interfaces\UsingDictionaryAdapter\Nested\IAlsoWithTypedPropertiesView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\MyResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewComponents\Bold.cs" />
     <Compile Include="ViewComponents\Echo.cs" />
     <Compile Include="ViewComponents\ComponentWithASingleLetterName.cs" />
@@ -118,6 +124,7 @@
     <Content Include="Views\ViewFilters\SingleLineCustomViewFilter.aspx" />
     <Content Include="Views\WithLayout\WithoutProperties.aspx" />
     <Content Include="Views\WithLayout\WithProperties.aspx" />
+    <Content Include="Views\WithResource\Index.aspx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AdditionalViewsTestSite\AdditionalViewsTestSite.csproj">
@@ -132,6 +139,13 @@
       <Project>{5BCEC661-5B7B-4E00-AA19-95B367BF996F}</Project>
       <Name>TestModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\MyResource.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MyResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v8.0\WebApplications\Microsoft.WebApplication.targets" />

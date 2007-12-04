@@ -16,21 +16,15 @@
 
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
-	using AspView.Compiler;
 	using AspView.Compiler.PreCompilationSteps;
 	using NUnit.Framework;
 
 	[TestFixture]
-	public class SubViewTagsStepTestFixture
+	public class SubViewTagsStepTestFixture : AbstractPreCompilationStepTestFixture
 	{
-		readonly IPreCompilationStep step = new SubViewTagsStep();
-
-		SourceFile file;
-
-		[SetUp]
-		public void Setup()
+		protected override void CreateStep()
 		{
-			file = new SourceFile();
+			step = new SubViewTagsStep();
 		}
 
 		[Test]
@@ -41,11 +35,11 @@ dkllgk
 fgkdlfk
 dfg
 fdslk";
-
-			file.ViewSource = source;
+			expected = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(source, file.ViewSource);
+			AssertStepOutput();
 		}
 
 		[Test]
@@ -56,16 +50,16 @@ before
 <subView:Simple></subView:Simple>
 after
 ";
-			string expected = @"
+			expected = @"
 before
 <% OutputSubView(""Simple""); %>
 after
 ";
 
-			file.ViewSource = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(expected, file.ViewSource);
+			AssertStepOutput();
 		}
 
 		[Test]
@@ -77,17 +71,17 @@ before
 <subView:Simple2></subView:Simple2>
 after
 ";
-			string expected = @"
+			expected = @"
 before
 <% OutputSubView(""Simple""); %>
 <% OutputSubView(""Simple2""); %>
 after
 ";
 
-			file.ViewSource = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(expected, file.ViewSource);
+			AssertStepOutput();
 		}
 
 		[Test]
@@ -98,16 +92,16 @@ before
 <subView:Simple name=""Ken""></subView:Simple>
 after
 ";
-			string expected = @"
+			expected = @"
 before
 <% OutputSubView(""Simple"", ""name"", ""Ken""); %>
 after
 ";
 
-			file.ViewSource = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(expected, file.ViewSource);
+			AssertStepOutput();
 		}
 
 		[Test]
@@ -118,16 +112,16 @@ before
 <subView:Simple age=""<%= 29 %>""></subView:Simple>
 after
 ";
-			string expected = @"
+			expected = @"
 before
 <% OutputSubView(""Simple"", ""age"", 29); %>
 after
 ";
 
-			file.ViewSource = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(expected, file.ViewSource);
+			AssertStepOutput();
 		}
 
 		[Test]
@@ -138,16 +132,16 @@ before
 <subView:Simple name=""<%= ""Ken"" %>""></subView:Simple>
 after
 ";
-			string expected = @"
+			expected = @"
 before
 <% OutputSubView(""Simple"", ""name"", ""Ken""); %>
 after
 ";
 
-			file.ViewSource = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(expected, file.ViewSource);
+			AssertStepOutput();
 		}
 
 		[Test]
@@ -158,16 +152,16 @@ before
 <subView:Simple age=""<%= myAge %>""></subView:Simple>
 after
 ";
-			string expected = @"
+			expected = @"
 before
 <% OutputSubView(""Simple"", ""age"", myAge); %>
 after
 ";
 
-			file.ViewSource = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(expected, file.ViewSource);
+			AssertStepOutput();
 		}
 
 		[Test]
@@ -178,16 +172,16 @@ before
 <subView:Simple age=""<%= me.Age %>""></subView:Simple>
 after
 ";
-			string expected = @"
+			expected = @"
 before
 <% OutputSubView(""Simple"", ""age"", me.Age); %>
 after
 ";
 
-			file.ViewSource = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(expected, file.ViewSource);
+			AssertStepOutput();
 		}
 
 		[Test]
@@ -198,16 +192,16 @@ before
 <subView:Simple age=""<%= people[index].GetAge(In.Years) %>""></subView:Simple>
 after
 ";
-			string expected = @"
+			expected = @"
 before
 <% OutputSubView(""Simple"", ""age"", people[index].GetAge(In.Years)); %>
 after
 ";
 
-			file.ViewSource = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(expected, file.ViewSource);
+			AssertStepOutput();
 		}
 	}
 }

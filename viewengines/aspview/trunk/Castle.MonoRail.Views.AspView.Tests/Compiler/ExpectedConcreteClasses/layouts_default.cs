@@ -6,10 +6,14 @@ using Castle.MonoRail.Framework;
 using Castle.MonoRail.Views.AspView;
 namespace CompiledViews
 {
-public class layouts_default : AspViewBase
-{
-public override void Render()
-{
+	public class layouts_default : AspViewBase
+	{
+		protected override string ViewName { get { return "\\Layouts\\Default.aspx"; } }
+		protected override string ViewDirectory { get { return "\\Layouts"; } }
+
+
+		public override void Render()
+		{
 Output(@"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
 
 <html xmlns=""http://www.w3.org/1999/xhtml"" >
@@ -29,8 +33,7 @@ Output(@"
 </html>
 ");
 
-}
-protected override string ViewName { get { return "\\Layouts\\Default.aspx"; } }
-protected override string ViewDirectory { get { return "\\Layouts"; } }
-}
+		}
+
+	}
 }

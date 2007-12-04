@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.IO;
 using Castle.MonoRail.Framework;
@@ -21,22 +22,16 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 		protected ITrace trace;
 		protected IController controller;
 		protected IRailsEngineContext context;
+		protected string expected;
 
 		[SetUp]
 		public void SetUp()
 		{
-			CreateView();
+			Clear();
 
 			CreateStubsAndMocks();
 
 			CreateDefaultStubsAndMocks();
-
-			ViewInitialize();
-		}
-
-		protected virtual void CreateView()
-		{
-			view = new StubView();
 		}
 
 		/// <summary>
@@ -44,6 +39,11 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 		/// </summary>
 		protected virtual void CreateStubsAndMocks()
 		{
+		}
+
+		protected void AddCompilation(string key, Type viewType)
+		{
+			((IAspViewEngineTestAccess)engine).Compilations.Add(key, viewType);
 		}
 
 		/// <summary>
@@ -59,17 +59,55 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 			url = url ?? new UrlInfo("", "Stub", "Stub");
 			trace = trace ?? new MockTrace();
 			propertyBag = propertyBag ?? new Hashtable();
-			flash = flash ?? new Flash();
-			controller = controller ?? new StubController(propertyBag, flash, request, response);
 			context = context ?? new MockRailsEngineContext(request, response, trace, url);
+			flash = flash ?? context.Flash;
+			controller = controller ?? new StubController(propertyBag, flash, request, response);
 		}
 
-		protected virtual void ViewInitialize()
+		/// <summary>
+		/// Creating default stub and mocks
+		/// </summary>
+		protected virtual void Clear()
 		{
-			view.Initialize(engine, writer, context, controller);
+			expected = null;
+			writer = null;
+			engine = null;
+			cookies = null;
+			request = null;
+			response = null;
+			url = null;
+			trace = null;
+			propertyBag = null;
+			flash = null;
+			controller = null;
+			context = null;
 		}
 
-		protected void AssertViewOutputEqualsTo(string expected)
+		protected void InitializeView(Type viewType)
+		{
+			view = (IViewBaseInternal)Activator.CreateInstance(viewType);
+			InitializeView();
+		}
+
+		protected void InitializeView(IViewBaseInternal viewInstance)
+		{
+			viewInstance.Initialize(engine, writer, context, controller);
+		}
+		
+		protected void InitializeView()
+		{
+			InitializeView(view);
+		}
+
+		protected void SetLayout(Type layoutType)
+		{
+			IViewBaseInternal layout = (IViewBaseInternal)Activator.CreateInstance(layoutType);
+			InitializeView(layout);
+			layout.ContentView = view;
+			view = layout;
+		}
+
+		protected void AssertViewOutputEqualsToExpected()
 		{
 			Assert.AreEqual(expected, ViewOutput, "View output differ. Output was:\r\n" + ViewOutput);
 		}

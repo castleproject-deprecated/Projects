@@ -23,6 +23,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 	{
 		private string viewName;
 		private string viewSource;
+		private string renderBody;
 		private string className;
 		private string baseClassName;
 		private string typedViewName;
@@ -43,6 +44,12 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 			set { viewSource = value; }
 		}
 
+		public string RenderBody
+		{
+			get { return renderBody; }
+			set { renderBody = value; }
+		}
+		
 		public string ClassName
 		{
 			get { return className; }

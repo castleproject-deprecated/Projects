@@ -6,10 +6,14 @@ using Castle.MonoRail.Framework;
 using Castle.MonoRail.Views.AspView;
 namespace CompiledViews
 {
-public class home_siteroot : AspViewBase
-{
-public override void Render()
-{
+	public class home_siteroot : AspViewBase
+	{
+		protected override string ViewName { get { return "\\Home\\SiteRoot.aspx"; } }
+		protected override string ViewDirectory { get { return "\\Home"; } }
+
+
+		public override void Render()
+		{
 Output(@"<a href=""");
 Output(siteRoot);
 Output(@"/home"">Home</a>
@@ -17,8 +21,7 @@ Output(@"/home"">Home</a>
 Output(fullSiteRoot);
 Output(@"/away"">Away</a>");
 
-}
-protected override string ViewName { get { return "\\Home\\SiteRoot.aspx"; } }
-protected override string ViewDirectory { get { return "\\Home"; } }
-}
+		}
+
+	}
 }

@@ -6,11 +6,15 @@ using Castle.MonoRail.Framework;
 using Castle.MonoRail.Views.AspView;
 namespace CompiledViews
 {
-public class home_index : AspViewBase
-{
-private string[] strings { get { return (string[])GetParameter("strings"); } }
-public override void Render()
-{
+	public class home_index : AspViewBase
+	{
+		protected override string ViewName { get { return "\\Home\\Index.aspx"; } }
+		protected override string ViewDirectory { get { return "\\Home"; } }
+
+		private string[] strings { get { return (string[])GetParameter("strings"); } }
+
+		public override void Render()
+		{
 Output(@"hello from index<br />
 This are the strings:<br />
 ");
@@ -37,8 +41,7 @@ Output(@"
 <input type=""submit"" value=""send"" />
 </form>");
 
-}
-protected override string ViewName { get { return "\\Home\\Index.aspx"; } }
-protected override string ViewDirectory { get { return "\\Home"; } }
-}
+		}
+
+	}
 }

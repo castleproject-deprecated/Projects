@@ -14,25 +14,34 @@
 // limitations under the License.
 #endregion
 
-using System.IO;
-
 namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 {
+	using Internal;
+
 	public class RenderConcreteClassStep : IPreCompilationStep
 	{
 		private const string assemblyNamespace = "CompiledViews";
 
 		public void Process(SourceFile file)
 		{
-			StringWriter writer = new StringWriter();
+			TabbedStringWriter writer = new TabbedStringWriter();
 
 			foreach (string import in file.Imports)
 				writer.WriteLine("using {0};", import);
 
 			writer.WriteLine("namespace {0}", assemblyNamespace);
 			writer.WriteLine("{");
+			writer.Indent();
 			writer.WriteLine("public class {0} : {1}", file.ClassName, file.BaseClassName);
 			writer.WriteLine("{");
+			writer.Indent();
+			writer.WriteLine(@"protected override string ViewName {{ get {{ return ""{0}""; }} }}",
+				file.ViewName.Replace("\\", "\\\\"));
+
+			writer.WriteLine(@"protected override string ViewDirectory {{ get {{ return ""{0}""; }} }}",
+				GetDirectory(file.ViewName).Replace("\\", "\\\\"));
+			writer.WriteLine();
+
 			foreach (string name in file.Properties.Keys)
 			{
 				ViewProperty prop = file.Properties[name];
@@ -42,31 +51,32 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 					@"private {0} {1} {{ get {{ return ({0})GetParameter(""{1}""{2}); }} }}",
 					prop.Type, prop.Name, defaultValueString);
 			}
+			writer.WriteLine();
 
 			writer.WriteLine("public override void Render()");
 			writer.WriteLine("{");
-			writer.WriteLine(file.ViewSource);
+			writer.Indent();
+			writer.WriteLineWithNoIndentation(file.RenderBody);
+			writer.UnIndent();
 			writer.WriteLine("}");
-
-			writer.WriteLine(@"protected override string ViewName {{ get {{ return ""{0}""; }} }}", 
-				file.ViewName.Replace("\\", "\\\\"));
-
-			writer.WriteLine(@"protected override string ViewDirectory {{ get {{ return ""{0}""; }} }}", 
-				GetDirectory(file.ViewName).Replace("\\", "\\\\"));
-
+			writer.WriteLine();
 			foreach (string handlerName in file.ViewComponentSectionHandlers.Keys)
 			{
 				string content = file.ViewComponentSectionHandlers[handlerName];
-				writer.WriteLine(@"
-				internal void {0} ()
-				{{
-					{1}
-				}}",
-				  handlerName, content);
+				writer.WriteLine("internal void {0} ()", handlerName);
+				writer.WriteLine("{");
+				writer.Indent();
+				writer.WriteLine(content);
+				writer.UnIndent();
+				writer.WriteLine("}");
+				writer.WriteLine();
 			}
-			writer.WriteLine("}");
+
+			writer.UnIndent();
 			writer.WriteLine("}");
 
+			writer.UnIndent();
+			writer.WriteLine("}");
 			file.ConcreteClass = writer.GetStringBuilder().ToString();
 		}
 

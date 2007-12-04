@@ -16,21 +16,15 @@
 
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
-	using AspView.Compiler;
 	using AspView.Compiler.PreCompilationSteps;
 	using NUnit.Framework;
 
 	[TestFixture]
-	public class ViewComponentTagsStepTestFixture
+	public class ViewComponentTagsStepTestFixture : AbstractPreCompilationStepTestFixture
 	{
-		readonly IPreCompilationStep step = new ViewComponentTagsStep();
-
-		SourceFile file;
-
-		[SetUp]
-		public void Setup()
+		protected override void CreateStep()
 		{
-			file = new SourceFile();
+			step = new ViewComponentTagsStep();
 		}
 
 		[Test]
@@ -42,10 +36,10 @@ fgkdlfk
 dfg
 fdslk";
 
-			file.ViewSource = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(source, file.ViewSource);
+			Assert.AreEqual(source, file.RenderBody);
 		}
 
 		[Test]
@@ -56,18 +50,18 @@ before
 <component:Simple name=""<%= ""Ken"" %>""></component:Simple>
 after
 ";
-			string expected = @"
+			expected = @"
 before
-<% OutputViewComponent(""Simple"", ""name"", ""Ken""); %>
+<% InvokeViewComponent(""Simple"", null, new KeyValuePair<string, object>[] {  } , ""name"", ""Ken""); %>
 after
 ";
 
-			file.ViewSource = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			System.Console.WriteLine(file.ViewSource);
+			System.Console.WriteLine(file.RenderBody);
 
-			Assert.AreEqual(expected, file.ViewSource);
+			AssertStepOutput();
 		}
 
 		[Test]
@@ -78,16 +72,16 @@ before
 <component:Simple age=""<%= myAge %>""></component:Simple>
 after
 ";
-			string expected = @"
+			expected = @"
 before
-<% OutputViewComponent(""Simple"", ""age"", myAge); %>
+<% InvokeViewComponent(""Simple"", null, new KeyValuePair<string, object>[] {  } , ""age"", myAge); %>
 after
 ";
 
-			file.ViewSource = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(expected, file.ViewSource);
+			AssertStepOutput();
 		}
 
 		[Test]
@@ -98,16 +92,16 @@ before
 <component:Simple age=""<%= me.Age %>""></component:Simple>
 after
 ";
-			string expected = @"
+			expected = @"
 before
-<% OutputViewComponent(""Simple"", ""age"", me.Age); %>
+<% InvokeViewComponent(""Simple"", null, new KeyValuePair<string, object>[] {  } , ""age"", me.Age); %>
 after
 ";
 
-			file.ViewSource = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(expected, file.ViewSource);
+			AssertStepOutput();
 		}
 
 		[Test]
@@ -118,16 +112,16 @@ before
 <component:Simple age=""<%= people[index].GetAge(In.Years) %>""></component:Simple>
 after
 ";
-			string expected = @"
+			 expected = @"
 before
-<% OutputViewComponent(""Simple"", ""age"", people[index].GetAge(In.Years)); %>
+<% InvokeViewComponent(""Simple"", null, new KeyValuePair<string, object>[] {  } , ""age"", people[index].GetAge(In.Years)); %>
 after
 ";
 
-			file.ViewSource = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(expected, file.ViewSource);
+			AssertStepOutput();
 		}
 	}
 }

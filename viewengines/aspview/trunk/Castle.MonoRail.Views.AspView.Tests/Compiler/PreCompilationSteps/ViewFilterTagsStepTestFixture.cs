@@ -16,23 +16,17 @@
 
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
-	using AspView.Compiler;
 	using AspView.Compiler.PreCompilationSteps;
 	using NUnit.Framework;
 
 	[TestFixture]
-	public class ViewFilterTagsStepTestFixture
+	public class ViewFilterTagsStepTestFixture : AbstractPreCompilationStepTestFixture
 	{
-		readonly IPreCompilationStep step = new ViewFilterTagsStep();
-
-		SourceFile file;
-
-		[SetUp]
-		public void Setup()
+		protected override void CreateStep()
 		{
-			file = new SourceFile();
+			step = new ViewFilterTagsStep();
 		}
-
+		
 		[Test]
 		public void Process_WhenThereAreNoViewFilterTags_DoesNothing()
 		{
@@ -42,10 +36,10 @@ fgkdlfk
 dfg
 fdslk";
 
-			file.ViewSource = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(source, file.ViewSource);
+			Assert.AreEqual(source, file.RenderBody);
 		}
 
 		[Test]
@@ -57,17 +51,17 @@ dkllgk
 fgkdlfk
 dfg
 fdslk";
-			string expected = @"
+			expected = @"
 dkllgk
 <% StartFiltering(""SimpleViewFilter""); %>some stuff<% EndFiltering(); %>
 fgkdlfk
 dfg
 fdslk";
 
-			file.ViewSource = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(expected, file.ViewSource);
+			Assert.AreEqual(expected, file.RenderBody);
 		}
 
 		[Test]
@@ -79,17 +73,17 @@ dkllgk
 fgkdlfk
 dfg
 fdslk";
-			string expected = @"
+			expected = @"
 dkllgk
 <% StartFiltering(new Castle.MonoRail.Views.AspView.ViewFilters.LowerCaseViewFilter()); %>some stuff<% EndFiltering(); %>
 fgkdlfk
 dfg
 fdslk";
 
-			file.ViewSource = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(expected, file.ViewSource);
+			Assert.AreEqual(expected, file.RenderBody);
 		}
 
 		[Test]
@@ -107,7 +101,7 @@ blah blah
 fgkdlfk
 dfg
 fdslk";
-			string expected = @"
+			expected = @"
 dkllgk
 <% StartFiltering(new Castle.MonoRail.Views.AspView.ViewFilters.LowerCaseViewFilter()); %>
 some stuff
@@ -120,10 +114,10 @@ fgkdlfk
 dfg
 fdslk";
 
-			file.ViewSource = source;
+			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(expected, file.ViewSource);
+			Assert.AreEqual(expected, file.RenderBody);
 		}
 	}
 }

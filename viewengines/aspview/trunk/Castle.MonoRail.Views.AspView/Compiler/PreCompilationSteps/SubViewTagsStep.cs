@@ -22,7 +22,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 	{
 		public void Process(SourceFile file)
 		{
-			file.ViewSource = Internal.RegularExpressions.SubViewTags.Replace(file.ViewSource, delegate(Match match)
+			file.RenderBody = Internal.RegularExpressions.SubViewTags.Replace(file.RenderBody, delegate(Match match)
 			{
 				string viewName = match.Groups["viewName"].Value.Replace('.', '/');
 

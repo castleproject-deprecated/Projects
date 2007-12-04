@@ -6,10 +6,14 @@ using Castle.MonoRail.Framework;
 using Castle.MonoRail.Views.AspView;
 namespace CompiledViews
 {
-public class viewfilters_mixviewfilters : AspViewBase
-{
-public override void Render()
-{
+	public class viewfilters_mixviewfilters : AspViewBase
+	{
+		protected override string ViewName { get { return "\\ViewFilters\\MixViewFilters.aspx"; } }
+		protected override string ViewDirectory { get { return "\\ViewFilters"; } }
+
+
+		public override void Render()
+		{
 Output(@"outside the filter
 ");
 StartFiltering("SingleLineViewFilter");
@@ -29,8 +33,7 @@ Output(@"
 outside the filter again - first line
 outside the filter again - second line");
 
-}
-protected override string ViewName { get { return "\\ViewFilters\\MixViewFilters.aspx"; } }
-protected override string ViewDirectory { get { return "\\ViewFilters"; } }
-}
+		}
+
+	}
 }

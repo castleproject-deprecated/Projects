@@ -22,12 +22,21 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 {
 	public class MarkupTransformationsStep : IPreCompilationStep
 	{
-		readonly ICollection<IMarkupTransformer> markupTransformers =
-			new DefaultMarkupTransformersProvider().GetMarkupTransformers();
+		readonly ICollection<IMarkupTransformer> markupTransformers;
+
+		public MarkupTransformationsStep() 
+			: this(new DefaultMarkupTransformersProvider())
+		{
+		}
+
+		public MarkupTransformationsStep(IMarkupTransformersProvider markupTransformersProvider)
+		{
+			markupTransformers = markupTransformersProvider.GetMarkupTransformers();
+		}
 
 		public void Process(SourceFile file)
 		{
-			file.ViewSource = Internal.RegularExpressions.Script.Replace(file.ViewSource, delegate(Match match)
+			file.RenderBody = Internal.RegularExpressions.Script.Replace(file.RenderBody, delegate(Match match)
 			{
 				string script = match.Groups["script"].Value;
 				string markup = match.Groups["markup"].Value;

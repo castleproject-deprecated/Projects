@@ -6,10 +6,14 @@ using Castle.MonoRail.Framework;
 using Castle.MonoRail.Views.AspView;
 namespace CompiledViews
 {
-public class usingdictionaryadapter_flashanddefaults_index : AspViewBase<AspViewTestSite.Interfaces.UsingDictionaryAdapter.IStupidView>
-{
-public override void Render()
-{
+	public class usingdictionaryadapter_flashanddefaults_index : AspViewBase<AspViewTestSite.Interfaces.UsingDictionaryAdapter.IStupidView>
+	{
+		protected override string ViewName { get { return "\\UsingDictionaryAdapter\\FlashAndDefaults\\Index.aspx"; } }
+		protected override string ViewDirectory { get { return "\\UsingDictionaryAdapter\\FlashAndDefaults"; } }
+
+
+		public override void Render()
+		{
 Output(@"<p>");
 Output(view.Message);
 Output(@"</p>
@@ -21,8 +25,7 @@ Output(@""" /> <br />
 	<input type=""submit"" />
 </form>");
 
-}
-protected override string ViewName { get { return "\\UsingDictionaryAdapter\\FlashAndDefaults\\Index.aspx"; } }
-protected override string ViewDirectory { get { return "\\UsingDictionaryAdapter\\FlashAndDefaults"; } }
-}
+		}
+
+	}
 }

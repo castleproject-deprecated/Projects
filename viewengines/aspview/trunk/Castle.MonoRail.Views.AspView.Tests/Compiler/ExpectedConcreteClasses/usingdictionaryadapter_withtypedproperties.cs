@@ -7,10 +7,14 @@ using Castle.MonoRail.Views.AspView;
 using TestModel;
 namespace CompiledViews
 {
-public class usingdictionaryadapter_withtypedproperties : AspViewBase<AspViewTestSite.Interfaces.UsingDictionaryAdapter.IWithTypedPropertiesView>
-{
-public override void Render()
-{
+	public class usingdictionaryadapter_withtypedproperties : AspViewBase<AspViewTestSite.Interfaces.UsingDictionaryAdapter.IWithTypedPropertiesView>
+	{
+		protected override string ViewName { get { return "\\UsingDictionaryAdapter\\WithTypedProperties.aspx"; } }
+		protected override string ViewDirectory { get { return "\\UsingDictionaryAdapter"; } }
+
+
+		public override void Render()
+		{
 Output(@"<p id=""No_");
 Output(view.Id);
 Output(@""">Hello ");
@@ -26,8 +30,7 @@ Output(@"' />
     <input type=""submit"" value=""Save"" />
 </form>");
 
-}
-protected override string ViewName { get { return "\\UsingDictionaryAdapter\\WithTypedProperties.aspx"; } }
-protected override string ViewDirectory { get { return "\\UsingDictionaryAdapter"; } }
-}
+		}
+
+	}
 }

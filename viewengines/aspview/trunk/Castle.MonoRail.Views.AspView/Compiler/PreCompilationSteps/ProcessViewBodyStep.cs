@@ -22,7 +22,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 
 		public void Process(SourceFile file)
 		{
-			file.ViewSource = scriptToCodeTransformer.Transform(file.ViewSource);
+			file.RenderBody = scriptToCodeTransformer.Transform(file.RenderBody);
 		}
 	}
 }

@@ -23,7 +23,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 	{
 		public void Process(SourceFile file)
 		{
-			file.ViewSource = Internal.RegularExpressions.ViewFiltersTags.Replace(file.ViewSource, HandleViewFilterTag);
+			file.RenderBody = Internal.RegularExpressions.ViewFiltersTags.Replace(file.RenderBody, HandleViewFilterTag);
 		}
 
 		private string HandleViewFilterTag(Match match)

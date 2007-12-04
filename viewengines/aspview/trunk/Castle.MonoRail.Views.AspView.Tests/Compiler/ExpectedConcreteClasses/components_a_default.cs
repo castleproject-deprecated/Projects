@@ -6,16 +6,19 @@ using Castle.MonoRail.Framework;
 using Castle.MonoRail.Views.AspView;
 namespace CompiledViews
 {
-public class components_a_default : AspViewBase
-{
-public override void Render()
-{
+	public class components_a_default : AspViewBase
+	{
+		protected override string ViewName { get { return "\\Components\\A\\Default.aspx"; } }
+		protected override string ViewDirectory { get { return "\\Components\\A"; } }
+
+
+		public override void Render()
+		{
 Output(@"<p>
 <strong>A ViewComponent</strong>
 </p>");
 
-}
-protected override string ViewName { get { return "\\Components\\A\\Default.aspx"; } }
-protected override string ViewDirectory { get { return "\\Components\\A"; } }
-}
+		}
+
+	}
 }

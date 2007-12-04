@@ -26,7 +26,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 
 		public void Process(SourceFile file)
 		{
-			file.ViewSource = Internal.RegularExpressions.PageDirective.Replace(file.ViewSource, delegate(Match match)
+			file.RenderBody = Internal.RegularExpressions.PageDirective.Replace(file.RenderBody, delegate(Match match)
 			{
 				file.BaseClassName = GetBaseClass(match.Groups["base"]);
 				file.TypedViewName = GetTypedViewName(match.Groups["view"]);
