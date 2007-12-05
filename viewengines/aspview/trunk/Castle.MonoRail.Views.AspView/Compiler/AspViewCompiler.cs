@@ -30,6 +30,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 	{
 		const string AssemblyAttributeAllowPartiallyTrustedCallers = "[assembly: System.Security.AllowPartiallyTrustedCallers]";
 
+
 		readonly IEnumerable<IPreCompilationStep> preCompilationSteps;
 
 		#region members

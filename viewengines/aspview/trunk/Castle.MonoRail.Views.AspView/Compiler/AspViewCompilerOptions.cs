@@ -14,8 +14,12 @@
 // limitations under the License.
 #endregion
 
+using Castle.MonoRail.Views.AspView.Compiler.MarkupTransformers;
+using Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps;
+
 namespace Castle.MonoRail.Views.AspView.Compiler
 {
+	using System;
 	using System.Collections.Generic;
 
 	public class AspViewCompilerOptions
@@ -28,6 +32,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 		private bool keepTemporarySourceFiles = false;
 		private string temporarySourceFilesDirectory = "temporarySourceFiles";
 		readonly List<ReferencedAssembly> assembliesToReference = new List<ReferencedAssembly>();
+		readonly IDictionary<Type, Type> providers;
 
 		static readonly ReferencedAssembly[] defaultAssemblies = new ReferencedAssembly[4]
 			{
@@ -42,6 +47,9 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 		public AspViewCompilerOptions()
 		{
 			AddReferences(defaultAssemblies);
+			providers = new Dictionary<Type, Type>(2);
+			providers.Add(typeof(IPreCompilationStepsProvider), typeof(DefaultPreCompilationStepsProvider));
+			providers.Add(typeof(IMarkupTransformersProvider), typeof(DefaultMarkupTransformersProvider));
 		}
 
 		public AspViewCompilerOptions(
@@ -51,7 +59,8 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 			bool? allowPartiallyTrustedCallers,
 			string temporarySourceFilesDirectory,
 			bool? keepTemporarySourceFiles,
-			IEnumerable<ReferencedAssembly> references)
+			IEnumerable<ReferencedAssembly> references,
+			IDictionary<Type, Type> providers)
 			: this()
 		{
 			if (debug.HasValue) this.debug = debug.Value;
@@ -60,8 +69,13 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 			if (allowPartiallyTrustedCallers.HasValue) this.allowPartiallyTrustedCallers = allowPartiallyTrustedCallers.Value;
 			if (keepTemporarySourceFiles.HasValue) this.keepTemporarySourceFiles = keepTemporarySourceFiles.Value;
 			if (temporarySourceFilesDirectory != null) this.temporarySourceFilesDirectory = temporarySourceFilesDirectory;
+
 			AddReferences(references);
+			if (providers != null)
+				foreach (Type service in providers.Keys)
+					this.providers[service] = providers[service];
 		}
+
 		#endregion
 
 		#region properties
@@ -96,7 +110,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 		{
 			get { return autoRecompilation; }
 			set { autoRecompilation = value; }
-		}		
+		}
 		/// <summary>
 		/// if true, the engine will compile the views with AllowPartiallyTrustedCallers
 		/// </summary>
@@ -127,6 +141,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 		{
 			assembliesToReference.AddRange(referencesToAdd);
 		}
+
 
 	}
 }

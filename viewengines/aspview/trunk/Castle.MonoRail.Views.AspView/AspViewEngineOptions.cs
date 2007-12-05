@@ -18,36 +18,25 @@ using Castle.MonoRail.Views.AspView.Compiler;
 
 namespace Castle.MonoRail.Views.AspView
 {
-    public class AspViewEngineOptions
-    {
-		private string _actionExtension;
-		readonly AspViewCompilerOptions _compilerOptions;
+	public class AspViewEngineOptions
+	{
+		readonly AspViewCompilerOptions compilerOptions;
 
-		public AspViewEngineOptions()
+		public AspViewEngineOptions() : this(new AspViewCompilerOptions())
 		{
-			_actionExtension = ".aspx";
-			_compilerOptions = new AspViewCompilerOptions();
-		}
-		public AspViewEngineOptions(string actionExtension, AspViewCompilerOptions compilerOptions)
-		{
-			_actionExtension = actionExtension;
-			_compilerOptions = compilerOptions;
 		}
 
-		/// <summary>
-        /// The actions extension (the virtual extension from the urls)
-        /// </summary>
-		public string ActionExtension
-        {
-			get { return _actionExtension; }
-			set { _actionExtension = value; }
+		public AspViewEngineOptions(AspViewCompilerOptions compilerOptions)
+		{
+			this.compilerOptions = compilerOptions;
 		}
+
 		/// <summary>
 		/// The compiler's options object
 		/// </summary>
 		public AspViewCompilerOptions CompilerOptions
 		{
-			get { return _compilerOptions; }
-		}		
-    }
+			get { return compilerOptions; }
+		}
+	}
 }
