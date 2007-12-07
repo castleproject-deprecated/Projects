@@ -87,6 +87,7 @@
     <Compile Include="Internal\TabbedStringWriter.cs" />
     <Compile Include="IViewBase.cs" />
     <Compile Include="IViewBaseInternal.cs" />
+    <Compile Include="ServiceDescriptor.cs" />
     <Compile Include="ViewAtDesignTimeWithGenericTypedInterface.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
