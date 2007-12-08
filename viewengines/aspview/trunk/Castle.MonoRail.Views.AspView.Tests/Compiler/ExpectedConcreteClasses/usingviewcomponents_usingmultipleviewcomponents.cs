@@ -17,10 +17,10 @@ namespace CompiledViews
 		{
 Output(@"Some view text
 ");
-InvokeViewComponent("CaptureFor2", CaptureFor20_body, null, "id", "capturedContent1");
+InvokeViewComponent("CaptureFor", CaptureFor0_body, null, "id", "capturedContent1");
 Output(@"
 ");
-InvokeViewComponent("CaptureFor2", CaptureFor21_body, null, "id", "capturedContent2");
+InvokeViewComponent("CaptureFor", CaptureFor1_body, null, "id", "capturedContent2");
 Output(@"
 Some view text
 The next text should be bolded:
@@ -31,7 +31,7 @@ Some view text - not bolded");
 
 		}
 
-		internal void CaptureFor20_body ()
+		internal void CaptureFor0_body ()
 		{
 			Output(@"
 			This content should be rendered in the captured-for place holder no. 1
@@ -39,7 +39,7 @@ Some view text - not bolded");
 
 		}
 
-		internal void CaptureFor21_body ()
+		internal void CaptureFor1_body ()
 		{
 			Output(@"
 			This content should be rendered in the captured-for place holder no. 2
