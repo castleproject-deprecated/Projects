@@ -19,6 +19,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Stubs
 		readonly NameValueCollection query = new NameValueCollection();
 		readonly IDictionary helpers = new Hashtable();
 		readonly ResourceDictionary resources = new ResourceDictionary();
+		string selectedViewName;
 
 		public StubController(IDictionary propertyBag, Flash flash, IRequest request, IResponse response)
 		{
@@ -66,6 +67,17 @@ namespace Castle.MonoRail.Views.AspView.Tests.Stubs
 			get { return "Stub"; }
 		}
 
+		public string AreaName
+		{
+			get { return "Stub"; }
+		}
+
+		public string SelectedViewName
+		{
+			get { return selectedViewName; }
+			set { selectedViewName = value; }
+		}
+		
 		public NameValueCollection Params
 		{
 			get { return theParams; }

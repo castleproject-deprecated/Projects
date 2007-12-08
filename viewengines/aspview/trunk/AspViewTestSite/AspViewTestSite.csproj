@@ -78,7 +78,6 @@
       <DependentUpon>MyResource.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewComponents\Bold.cs" />
-    <Compile Include="ViewComponents\CaptureFor2.cs" />
     <Compile Include="ViewComponents\Echo.cs" />
     <Compile Include="ViewComponents\ComponentWithASingleLetterName.cs" />
     <Compile Include="ViewComponents\ComponentWithDotInItsName.cs" />

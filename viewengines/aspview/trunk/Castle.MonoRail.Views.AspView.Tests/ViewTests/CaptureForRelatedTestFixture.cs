@@ -14,9 +14,10 @@
 // limitations under the License.
 #endregion
 
+using Castle.MonoRail.Framework.ViewComponents;
+
 namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 {
-	using ViewComponents;
 	using Views;
 	using NUnit.Framework;
 

@@ -145,7 +145,6 @@
     <Compile Include="ViewTests\LayoutsTestFixture.cs" />
     <Compile Include="ViewTests\SimpleViewTestFixture.cs" />
     <Compile Include="ViewTests\ViewComponents\BodyRendererViewComponent.cs" />
-    <Compile Include="ViewTests\ViewComponents\CaptureFor.cs" />
     <Compile Include="ViewTests\ViewComponents\SectionsRendererViewComponent.cs" />
     <Compile Include="ViewTests\ViewComponents\TextAndViewRendererViewComponent.cs" />
     <Compile Include="ViewTests\ViewComponents\ViewRendererViewComponent.cs" />

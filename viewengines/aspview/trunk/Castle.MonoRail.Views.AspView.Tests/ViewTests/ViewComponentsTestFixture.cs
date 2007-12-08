@@ -98,7 +98,7 @@ Parent";
 		}
 
 		[Test]
-		[ExpectedException(typeof(RailsException), ExpectedMessage = "This component does not have a body content to be rendered")]
+		[ExpectedException(typeof(AspViewException), ExpectedMessage = "This component does not have a body content to be rendered")]
 		public void WithBody_ButNoBody_Throws()
 		{
 			RegisterComponent("MyComponent", typeof(BodyRendererViewComponent));
