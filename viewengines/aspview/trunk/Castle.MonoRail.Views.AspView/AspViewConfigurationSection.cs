@@ -32,7 +32,7 @@ namespace Castle.MonoRail.Views.AspView
 		public object Create(object parent, object configContext, XmlNode section)
 		{
 			if (section == null)
-				throw new RailsException("AspView config section is missing or not found");
+				throw new AspViewException("AspView config section is missing or not found");
 			
 			IEnumerable<ReferencedAssembly> references = GetReferencesFrom(section);
 
@@ -69,12 +69,12 @@ namespace Castle.MonoRail.Views.AspView
 							isFromGac = bool.Parse(attribute.Value);
 							break;
 						default:
-							throw new RailsException("Config error: Unknown attribute [{0}] on reference node, in aspview config section", attribute.Name);
+							throw new AspViewException("Config error: Unknown attribute [{0}] on reference node, in aspview config section", attribute.Name);
 					}
 				}
 
 				if (string.IsNullOrEmpty(name))
-					throw new RailsException("Config error: reference must have an assembly name");
+					throw new AspViewException("Config error: reference must have an assembly name");
 
 				if (isFromGac)
 					source = ReferencedAssembly.AssemblySource.GlobalAssemblyCache;
@@ -118,7 +118,7 @@ namespace Castle.MonoRail.Views.AspView
 						saveFiles = bool.Parse(attribute.Value);
 						break;
 					default:
-						throw new RailsException("Config error: Unknown attribute [{0}] in aspview config section", attribute.Name);
+						throw new AspViewException("Config error: Unknown attribute [{0}] in aspview config section", attribute.Name);
 				}
 			}
 
@@ -156,7 +156,7 @@ namespace Castle.MonoRail.Views.AspView
 								implementationAssemblyName = typeParts[1].Trim();
 							break;
 						default:
-							throw new RailsException("Config error: Unknown attribute [{0}] in aspview config section, provider node.\r\nExpected attributes: [name, type]", attribute.Name);
+							throw new AspViewException("Config error: Unknown attribute [{0}] in aspview config section, provider node.\r\nExpected attributes: [name, type]", attribute.Name);
 					}
 				}
 				Assembly serviceAssembly;
@@ -173,24 +173,24 @@ namespace Castle.MonoRail.Views.AspView
 					string unloadedAssembly = isServiceAssemblyLoaded ?
 						implementationAssemblyName :
 						serviceAssemblyName;
-					throw new RailsException(string.Format("Could not load assembly [{0}]", unloadedAssembly), ex);
+					throw new AspViewException(string.Format("Could not load assembly [{0}]", unloadedAssembly), ex);
 				}
 
 				Type service = serviceAssembly.GetType(serviceName, false);
 
 				if (service == null)
-					throw new RailsException("Cannot find service [{0}] in assembly [{1}]", serviceName, serviceAssemblyName);
+					throw new AspViewException("Cannot find service [{0}] in assembly [{1}]", serviceName, serviceAssemblyName);
 
 				if (!service.IsInterface)
-					throw new RailsException("Type [{0}] is not an interface", serviceName);
+					throw new AspViewException("Type [{0}] is not an interface", serviceName);
 
 				Type implementation = implementationAssembly.GetType(typeName, false);
 
 				if (implementation == null)
-					throw new RailsException("Cannot find service implementation [{0}] in assembly [{1}]", typeName, implementationAssemblyName);
+					throw new AspViewException("Cannot find service implementation [{0}] in assembly [{1}]", typeName, implementationAssemblyName);
 
 				if (!service.IsAssignableFrom(implementation))
-					throw new RailsException("Type [{0}] does not implement service interface [{1}]", typeName, serviceName);
+					throw new AspViewException("Type [{0}] does not implement service interface [{1}]", typeName, serviceName);
 
 				providers.Add(service, implementation);
 

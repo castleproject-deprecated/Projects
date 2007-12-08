@@ -15,8 +15,9 @@
 namespace Castle.MonoRail.Views.AspView
 {
 	using System;
+	using Framework;
 
-	public class AspViewException : Exception
+	public class AspViewException : MonoRailException
 	{
 		public AspViewException(string message) : base(message) { }
 		public AspViewException(Exception innerException, string message) : base(message, innerException) { }

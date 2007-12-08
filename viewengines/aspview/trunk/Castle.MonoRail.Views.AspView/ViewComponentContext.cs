@@ -152,7 +152,7 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			if (body == null)
 			{
-				throw new RailsException("This component does not have a body content to be rendered");
+				throw new AspViewException("This component does not have a body content to be rendered");
 			}
 		}
 	}

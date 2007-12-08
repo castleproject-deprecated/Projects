@@ -128,15 +128,15 @@ namespace Castle.MonoRail.Views.AspView
 		#region NJS
 		public override object CreateJSGenerator(IRailsEngineContext context)
 		{
-			throw new RailsException("This version of AspView does not implements NJS.");
+			throw new AspViewException("This version of AspView does not implements NJS.");
 		}
 		public override string JSGeneratorFileExtension
 		{
-			get { throw new RailsException("This version of AspView does not implements NJS."); }
+			get { throw new AspViewException("This version of AspView does not implements NJS."); }
 		}
 		public override void ProcessPartial(TextWriter output, IRailsEngineContext context, IController controller, string partialName)
 		{
-			throw new RailsException("This version of AspView does not implements NJS.");
+			throw new AspViewException("This version of AspView does not implements NJS.");
 		}
 		public override bool SupportsJSGeneration
 		{
@@ -144,7 +144,7 @@ namespace Castle.MonoRail.Views.AspView
 		}
 		public override void GenerateJS(TextWriter output, IRailsEngineContext context, IController controller, string templateName)
 		{
-			throw new RailsException("This version of AspView does not implements NJS.");
+			throw new AspViewException("This version of AspView does not implements NJS.");
 		}
 
 		#endregion
@@ -163,7 +163,7 @@ namespace Castle.MonoRail.Views.AspView
 			Type viewType = compilations[className] as Type;
 
 			if (viewType == null)
-				throw new RailsException("Cannot find view type for {0}.",
+				throw new AspViewException("Cannot find view type for {0}.",
 					fileName);
 			// create a view instance
 			AspViewBase theView;
@@ -173,12 +173,12 @@ namespace Castle.MonoRail.Views.AspView
 			}
 			catch (Exception ex)
 			{
-				throw new RailsException(string.Format(
+				throw new AspViewException(string.Format(
 						"Cannot create view instance from '{0}'.",
 						fileName), ex);
 			}
 			if (theView == null)
-				throw new RailsException(string.Format(
+				throw new AspViewException(string.Format(
 					"Cannot find view '{0}'", fileName));
 			return theView;
 		}
@@ -233,7 +233,7 @@ namespace Castle.MonoRail.Views.AspView
 				}
 				catch (Exception ex)
 				{
-					throw new RailsException(string.Format("Could not load views assembly [{0}]", assembly),
+					throw new AspViewException(string.Format("Could not load views assembly [{0}]", assembly),
 						ex);
 				}
 

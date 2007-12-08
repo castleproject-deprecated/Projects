@@ -410,7 +410,7 @@ namespace Castle.MonoRail.Views.AspView
 				}
 			}
 			if (filterType == null)
-				throw new RailsException("Cannot find a viewfilter [{0}]", filterName);
+				throw new AspViewException("Cannot find a viewfilter [{0}]", filterName);
 			return filterType;
 		}
 
@@ -500,7 +500,7 @@ namespace Castle.MonoRail.Views.AspView
         {
             object value;
             if (!TryGetParameter(parameterName, out value, null))
-                throw new RailsException("Parameter '" + parameterName + "' was not found!");
+                throw new AspViewException("Parameter '" + parameterName + "' was not found!");
             return value;
         }
 

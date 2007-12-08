@@ -22,14 +22,14 @@ namespace Castle.MonoRail.Views.AspView
 		internal static IDictionary<string, object> ConvertArgumentsToParameters(object[] arguments)
 		{
 			if (arguments.Length % 2 != 0)
-				throw new RailsException("Parameters should be arranged as key and value pairs");
+				throw new AspViewException("Parameters should be arranged as key and value pairs");
 			int i = 0;
 			IDictionary<string, object> parameters = new Dictionary<string, object>(arguments.Length / 2);
 			while (i < arguments.Length)
 			{
 				string name = arguments[i] as string;
 				if (name == null)
-					throw new RailsException("Parameters should be arranged as key and value pairs");
+					throw new AspViewException("Parameters should be arranged as key and value pairs");
 				object key = arguments[i + 1];
 				parameters.Add(name, key);
 				i += 2;
