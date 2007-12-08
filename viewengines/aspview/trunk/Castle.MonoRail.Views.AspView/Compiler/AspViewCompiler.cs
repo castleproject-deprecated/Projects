@@ -28,22 +28,21 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 
 	public class AspViewCompiler
 	{
-		const string AssemblyAttributeAllowPartiallyTrustedCallers = "[assembly: System.Security.AllowPartiallyTrustedCallers]";
-
-
-		readonly IEnumerable<IPreCompilationStep> preCompilationSteps;
-
 		#region members
 		private CompilerParameters parameters;
 		readonly AspViewCompilerOptions options;
 		private static readonly ReferencedAssembly[] defaultAddedReferences = null;
 		private static readonly string defaultSiteRoot = AppDomain.CurrentDomain.BaseDirectory;
+		const string AssemblyAttributeAllowPartiallyTrustedCallers = "[assembly: System.Security.AllowPartiallyTrustedCallers]";
+		const string AllowPartiallyTrustedCallersFileName = "AllowPartiallyTrustedCallers.generated.cs";
+		readonly IEnumerable<IPreCompilationStep> preCompilationSteps;
 
-		public string PathToAssembly = null;
-		public Assembly Assembly = null;
+		private string pathToAssembly = null;
+		private Assembly assembly = null;
 
 		#endregion
 
+		#region c'tor
 		public AspViewCompiler(IPreCompilationStepsProvider preCompilationStepsProvider, AspViewCompilerOptions options)
 		{
 			preCompilationSteps = preCompilationStepsProvider.GetSteps();
@@ -52,6 +51,19 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 		}
 		public AspViewCompiler(AspViewCompilerOptions options) : this(new DefaultPreCompilationStepsProvider(), options)
 		{
+		}
+		#endregion
+
+		#region properties
+		public string PathToAssembly { get { return pathToAssembly; } }
+		public Assembly Assembly { get { return assembly; } }
+		#endregion
+
+		public void ApplyPreCompilationStepsOn(IEnumerable<SourceFile> files)
+		{
+			foreach (SourceFile file in files)
+				foreach (IPreCompilationStep step in preCompilationSteps)
+					step.Process(file);
 		}
 
 		public void CompileSite()
@@ -64,13 +76,6 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 			CompileSite(siteRoot, defaultAddedReferences);
 		}
 
-		public void ApplyPreCompilationStepsOn(IEnumerable<SourceFile> files)
-		{
-			foreach (SourceFile file in files)
-				foreach (IPreCompilationStep step in preCompilationSteps)
-					step.Process(file);
-		}
-
 		public void CompileSite(string siteRoot, ReferencedAssembly[] references)
 		{
 			List<SourceFile> files = GetSourceFiles(siteRoot ?? defaultSiteRoot);
@@ -81,36 +86,22 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 
 			string targetDirectory = Path.Combine(siteRoot, "Bin");
 
+			string targetTemporarySourceFilesDirectory = GetTargetTemporarySourceFilesDirectory(targetDirectory);
+
 			if (options.KeepTemporarySourceFiles)
 			{
-				string targetTemporarySourceFilesDirectory = GetTargetTemporarySourceFilesDirectory(targetDirectory);
+				DeleteFilesIn(targetTemporarySourceFilesDirectory);
+
 				foreach (SourceFile file in files)
 					SaveFile(file, targetTemporarySourceFilesDirectory);
+
+				if (options.AllowPartiallyTrustedCallers)
+					SaveAllowPartiallyTrustedCallersFileTo(targetTemporarySourceFilesDirectory);
 			}
 
-			CompilerResults results = Compile(files, references, targetDirectory);
-
-			if (options.InMemory)
-				Assembly = results.CompiledAssembly;
-			else 
-				PathToAssembly = results.PathToAssembly;
-
-		}
-
-		private string GetTargetTemporarySourceFilesDirectory(string targetDirectory)
-		{
-			string targetTemporarySourceFilesDirectory = options.TemporarySourceFilesDirectory;
-			if (!Path.IsPathRooted(targetTemporarySourceFilesDirectory))
-				targetTemporarySourceFilesDirectory = Path.Combine(targetDirectory, targetTemporarySourceFilesDirectory);
-			if (!Directory.Exists(targetTemporarySourceFilesDirectory))
-				Directory.CreateDirectory(targetTemporarySourceFilesDirectory);
-			return targetTemporarySourceFilesDirectory;
-		}
-
-		private CompilerResults Compile(ICollection<SourceFile> files, IEnumerable<ReferencedAssembly> references, string targetDirectory)
-		{
 			if (!parameters.GenerateInMemory)
 				parameters.OutputAssembly = Path.Combine(targetDirectory, "CompiledViews.dll");
+
 			List<ReferencedAssembly> actualReferences = new List<ReferencedAssembly>();
 			if (options.References != null)
 				actualReferences.AddRange(options.References);
@@ -125,50 +116,33 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 				parameters.CompilerOptions += " /r:\"" + assemblyName + "\"";
 			}
 
-			List<string> sources = new List<string>(files.Count);
-			foreach (SourceFile file in files)
-				sources.Add(file.ConcreteClass);
-
-			if (options.AllowPartiallyTrustedCallers)
+			CompilerResults results;
+			CodeDomProvider codeProvider = new CSharpCodeProvider();
+			if (options.KeepTemporarySourceFiles)
 			{
-				sources.Add(AssemblyAttributeAllowPartiallyTrustedCallers);
+				results = codeProvider.CompileAssemblyFromFile(parameters, Directory.GetFiles(targetTemporarySourceFilesDirectory, "*.cs", SearchOption.TopDirectoryOnly));
+			}
+			else
+			{
+				string[] sources = GetSourcesFrom(files);
+
+				results = codeProvider.CompileAssemblyFromSource(parameters, sources);
 			}
 
-			CompilerResults results = new CSharpCodeProvider().CompileAssemblyFromSource(parameters, sources.ToArray());
+			ThrowIfErrorsIn(results, files);
 
-			if (results.Errors.Count > 0)
-			{
-				StringBuilder message = new StringBuilder();
-				using (CSharpCodeProvider cSharpCodeProvider = new CSharpCodeProvider())
-				{
-					foreach (SourceFile file in files)
-					{
-						CompilerResults result = cSharpCodeProvider.CompileAssemblyFromSource(parameters, file.ConcreteClass);
-						if (result.Errors.Count > 0)
-							foreach (CompilerError err in result.Errors)
-								message.AppendLine(string.Format(@"
-On '{0}' (class name: {1}) Line {2}, Column {3}, {4} {5}:
-{6}
-========================================",
-								file.ViewName, 
-								file.ClassName, 
-								err.Line, 
-								err.Column,
-								err.IsWarning ? "Warning" : "Error",
-								err.ErrorNumber, 
-								err.ErrorText));
-					}
-				}
-				throw new Exception("Error while compiling views: " + message);
-			}
-			return results;
+			if (options.InMemory)
+				assembly = results.CompiledAssembly;
+			else
+				pathToAssembly = results.PathToAssembly;
+
 		}
 
 		public static List<SourceFile> GetSourceFiles(string siteRoot)
 		{
 			List<SourceFile> files = new List<SourceFile>();
 			string viewsDirectory = Path.Combine(siteRoot, "Views");
-			
+
 			if (!Directory.Exists(viewsDirectory))
 				throw new Exception(string.Format("Could not find views folder [{0}]", viewsDirectory));
 
@@ -185,6 +159,33 @@ On '{0}' (class name: {1}) Line {2}, Column {3}, {4} {5}:
 			return files;
 		}
 
+		#region helpers
+
+		private string[] GetSourcesFrom(ICollection<SourceFile> files)
+		{
+			List<string> sources=new List<string>(files.Count);
+			foreach (SourceFile file in files)
+				sources.Add(file.ConcreteClass);
+
+			if (options.AllowPartiallyTrustedCallers)
+			{
+				sources.Add(AssemblyAttributeAllowPartiallyTrustedCallers);
+			}
+
+			return sources.ToArray();
+		}
+
+		private string GetTargetTemporarySourceFilesDirectory(string targetDirectory)
+		{
+			string targetTemporarySourceFilesDirectory = options.TemporarySourceFilesDirectory;
+			if (!Path.IsPathRooted(targetTemporarySourceFilesDirectory))
+				targetTemporarySourceFilesDirectory = Path.Combine(targetDirectory, targetTemporarySourceFilesDirectory);
+			if (!Directory.Exists(targetTemporarySourceFilesDirectory))
+				Directory.CreateDirectory(targetTemporarySourceFilesDirectory);
+			return targetTemporarySourceFilesDirectory;
+		}
+
+		#region IO
 		private static string ReadFile(string fileName)
 		{
 			return File.ReadAllText(fileName);
@@ -193,13 +194,30 @@ On '{0}' (class name: {1}) Line {2}, Column {3}, {4} {5}:
 		private static void SaveFile(SourceFile file, string targetDirectory)
 		{
 			string fileName = Path.Combine(targetDirectory, file.FileName);
-			using (StreamWriter sw = new StreamWriter(fileName, false, Encoding.UTF8))
+			File.WriteAllText(fileName, file.ConcreteClass, Encoding.UTF8); 
+		}
+
+		private static void DeleteFilesIn(string directory)
+		{
+			foreach (string fileName in Directory.GetFiles(directory, "*.cs", SearchOption.TopDirectoryOnly))
 			{
-				sw.Write(file.ConcreteClass);
-				sw.Flush();
+				File.Delete(fileName);
 			}
 		}
 
+		private static void SaveAllowPartiallyTrustedCallersFileTo(string directory)
+		{
+			string fileName = Path.Combine(directory, AllowPartiallyTrustedCallersFileName);
+
+			string content = @"// This file was generated by a tool
+// Casle.MonoRail.Views.AspView compiler, version
+" + AssemblyAttributeAllowPartiallyTrustedCallers;
+
+			File.WriteAllText(fileName, content);
+		}
+		#endregion
+
+		#region Compiler related
 		private void InitializeCompilerParameters()
 		{
 			parameters = new CompilerParameters();
@@ -207,6 +225,38 @@ On '{0}' (class name: {1}) Line {2}, Column {3}, {4} {5}:
 			parameters.GenerateExecutable = false;
 			parameters.IncludeDebugInformation = options.Debug;
 		}
+
+		private void ThrowIfErrorsIn(CompilerResults results, IEnumerable<SourceFile> files)
+		{
+			if (results.Errors.Count > 0)
+			{
+				StringBuilder message = new StringBuilder();
+				using (CSharpCodeProvider cSharpCodeProvider = new CSharpCodeProvider())
+				{
+					foreach (SourceFile file in files)
+					{
+						CompilerResults result = cSharpCodeProvider.CompileAssemblyFromSource(parameters, file.ConcreteClass);
+						if (result.Errors.Count > 0)
+							foreach (CompilerError err in result.Errors)
+								message.AppendLine(string.Format(@"
+On '{0}' (class name: {1}) Line {2}, Column {3}, {4} {5}:
+{6}
+========================================",
+								file.ViewName,
+								file.ClassName,
+								err.Line,
+								err.Column,
+								err.IsWarning ? "Warning" : "Error",
+								err.ErrorNumber,
+								err.ErrorText));
+					}
+				}
+				throw new Exception("Error while compiling views: " + message);
+			}
+		}
+		#endregion
+
+		#endregion
 
 	}
 }

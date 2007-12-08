@@ -1,4 +1,3 @@
-#region license
 // Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,13 +11,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#endregion
 
-namespace Castle.MonoRail.Views.AspView.Tests.Engine
+using Castle.MonoRail.Views.AspView.Compiler;
+
+namespace Castle.MonoRail.Views.AspView.Tests
 {
 	using System.Collections;
 	using NUnit.Framework;
-	using AspView.Compiler;
 
 	[TestFixture]
 	public class ViewEngineTestCase

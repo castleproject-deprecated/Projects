@@ -16,20 +16,14 @@
 
 namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 {
-	using Stubs;
-	using System;
-	using System.Collections.Generic;
 	using ViewComponents;
 	using Framework;
-	using Framework.Services;
 	using Views;
 	using NUnit.Framework;
 
 	[TestFixture]
-	public class ViewComponentsTestFixture : AbstractViewTestFixture
+	public class ViewComponentsTestFixture : AbstractViewComponentsTestFixture
 	{
-
-		MyViewComponentFactory componentFactory = new MyViewComponentFactory();
 
 		[Test]
 		public void WithRenderText_Works()
@@ -137,37 +131,5 @@ component with subview in section
 component with subview in body
 nested components
 		 * */
-		protected override void Clear()
-		{
-			base.Clear();
-			componentFactory = null;
-		}
-
-		protected override void CreateStubsAndMocks()
-		{
-			base.CreateStubsAndMocks();
-			componentFactory = new MyViewComponentFactory();
-		}
-
-		protected override void CreateDefaultStubsAndMocks()
-		{
-			base.CreateDefaultStubsAndMocks();
-			context.AddService(typeof(IViewComponentFactory), componentFactory);
-		}
-
-		private void RegisterComponent(string name, Type type)
-		{
-			componentFactory.RegisteredComponents.Add(name, type);
-		}
-		class MyViewComponentFactory : DefaultViewComponentFactory
-		{
-			public readonly Dictionary<string, Type> RegisteredComponents =
-				new Dictionary<string, Type>();
-
-			public override ViewComponent Create(string name)
-			{
-				return Activator.CreateInstance(RegisteredComponents[name]) as ViewComponent;
-			}
-		}
 	}
 }

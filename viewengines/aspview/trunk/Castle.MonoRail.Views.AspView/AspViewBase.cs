@@ -33,7 +33,6 @@ namespace Castle.MonoRail.Views.AspView
 		private bool initialized = false;
 		private TextWriter outputWriter;
 		private IDictionary properties;
-		private IList<IDictionary> extentedPropertiesList;
 		private IRailsEngineContext context;
 		private IController controller;
 		private AspViewEngine viewEngine;
@@ -187,14 +186,8 @@ namespace Castle.MonoRail.Views.AspView
         {
             get { return properties; }
         }
-        /// <summary>
-        /// Gets the extended properties collection
-        /// </summary>
-        protected IList<IDictionary> ExtentedPropertiesList
-        {
-            get { return extentedPropertiesList; }
-        }
-        /// <summary>
+
+		/// <summary>
         /// Gets the current Rails context
         /// </summary>
         public IRailsEngineContext Context
@@ -254,6 +247,7 @@ namespace Castle.MonoRail.Views.AspView
 				contentView.Process();
 				rendered = contentWriter.GetStringBuilder().ToString();
 			}
+			GatherBubblingPropertiesFrom(contentView);
 			return rendered;
 		}
 
@@ -295,7 +289,6 @@ namespace Castle.MonoRail.Views.AspView
             properties["fullSiteRoot"] = context.Request.Uri != null?
 				context.Request.Uri.GetLeftPart(UriPartial.Authority) + context.ApplicationPath :
 				string.Empty;
-            extentedPropertiesList = new List<IDictionary>();
         }
         
 		/// <summary>
@@ -315,7 +308,7 @@ namespace Castle.MonoRail.Views.AspView
 			ViewComponentContext viewComponentContext = new ViewComponentContext(
 				this, bodyHandler, 
 				componentName, parameters);
-			AddProperties(viewComponentContext.ContextVars);
+
 			if (sectionHandlers != null)
 				foreach (KeyValuePair<string, ViewComponentSectionRendereDelegate> pair in sectionHandlers)
 					viewComponentContext.RegisterSection(pair.Key, pair.Value);
@@ -353,9 +346,27 @@ namespace Castle.MonoRail.Views.AspView
 					if (parameters[key] != null)
 						subView.Properties[key] = parameters[key];
 			subView.Render();
+			GatherBubblingPropertiesFrom(subView);
 		}
 
 		/// <summary>
+		/// Gathers properties marked with ".@bubbleUp" from an other view
+		/// Should be used with CaptureFor components and the likes
+		/// </summary>
+		/// <param name="otherView">The view to gather the bubbling properties from</param>
+		protected void GatherBubblingPropertiesFrom(IViewBase otherView)
+		{
+			foreach (DictionaryEntry entry in otherView.Properties)
+			{
+				if (!otherView.Properties.Contains(entry.Key + ".@bubbleUp"))
+					continue;
+				properties[entry.Key] = entry.Value;
+				properties[entry.Key + ".@bubbleUp"] = true;
+			}
+
+		}
+
+    	/// <summary>
 		/// Renders another view in place
 		/// </summary>
 		/// <param name="subViewName">The sub view's name</param>
@@ -522,23 +533,8 @@ namespace Castle.MonoRail.Views.AspView
                 return true;
             }
             
-            foreach (IDictionary dic in extentedPropertiesList)
-                if (dic.Contains(parameterName))
-                {
-                    parameter = dic[parameterName];
-                    return true;
-                }
             parameter = defaultValue;
             return false;
-        }
-
-        /// <summary>
-        /// Adds a property container to the extentedPropertiesList
-        /// </summary>
-		/// <param name="newProperties">A property container </param>
-        protected void AddProperties(IDictionary newProperties)
-        {
-			extentedPropertiesList.Add(newProperties);
         }
 
         protected abstract string ViewDirectory { get; }
