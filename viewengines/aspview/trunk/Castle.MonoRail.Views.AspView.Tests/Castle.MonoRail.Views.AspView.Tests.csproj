@@ -103,8 +103,8 @@
     <None Include="Compiler\ExpectedConcreteClasses\withlayout_withoutproperties.cs" />
     <None Include="Compiler\ExpectedConcreteClasses\withlayout_withproperties.cs" />
     <Compile Include="Compiler\PreCompilationSteps\AbstractPreCompilationStepTestFixture.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\DefaultStepsProviderIntegrationTestFixture.cs" />
     <Compile Include="Compiler\PreCompilationSteps\MarkupTransformationsStepTestFixture.cs" />
-    <Compile Include="Compiler\PreCompilationSteps\ProcessViewBodyStepTestFixture.cs" />
     <Compile Include="Compiler\PreCompilationSteps\RenderConcreteClassStepTestFixture.cs" />
     <Compile Include="HttpBasedIntegrationTests\AdditionalViewAssemblyTestCase.cs" />
     <Compile Include="Compiler\ClassesCreatedCorrectlyTestFixture.cs" />
@@ -117,7 +117,6 @@
     <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\CSharpPreProcessorTestCases.cs" />
     <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\EmptyControllerTestCase.cs" />
     <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\HelpersTestCase.cs" />
-    <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\LanguagePreProcessorTestCases.cs" />
     <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\NoLayoutTestCase.cs" />
     <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\PropertiesTestCases.cs" />
     <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\SanityTestCase.cs" />

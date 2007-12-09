@@ -26,10 +26,10 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 				new DetermineBaseClassStep(),
 				new ImportStatementsStep(),
 				new ProcessPropertiesStep(),
+				new MarkupTransformationsStep(),
 				new SubViewTagsStep(),
 				new ViewFilterTagsStep(),
 				new ViewComponentTagsStep(),
-				new MarkupTransformationsStep(),
 				new ProcessViewBodyStep(),
 				new RenderConcreteClassStep()
 			};
