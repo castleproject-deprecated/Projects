@@ -40,7 +40,7 @@ namespace Castle.MonoRail.AspView.VCompile
 			if (siteRoot == null)
 			{
 				string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-				siteRoot = baseDirectory.Substring(0, baseDirectory.LastIndexOf("\\bin"));
+				siteRoot = baseDirectory.Substring(0, baseDirectory.LastIndexOf("\\bin", StringComparison.InvariantCultureIgnoreCase));
 			}
 			Console.WriteLine("Compiling [" + siteRoot + "] ...");
 
