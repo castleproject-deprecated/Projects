@@ -972,6 +972,11 @@
               Looks up a localized string similar to Collection must not be empty.
             </summary>
         </member>
+        <member name="P:Castle.Components.Validator.Messages.credit_card_invalid">
+            <summary>
+              Looks up a localized string similar to Field value does not appear to be a valid credit card number, or is of an unsupported type..
+            </summary>
+        </member>
         <member name="P:Castle.Components.Validator.Messages.date_invalid">
             <summary>
               Looks up a localized string similar to Please enter a valid date.
@@ -1034,10 +1039,15 @@
         </member>
         <member name="P:Castle.Components.Validator.Messages.length_tooshort">
             <summary>
-              Looks up a localized string similar to Field must be more than {0} characters long.
+              Looks up a localized string similar to Field must be at least {0} characters long.
             </summary>
         </member>
         <member name="P:Castle.Components.Validator.Messages.not_same_as_invalid">
+            <summary>
+              Looks up a localized string similar to Fields should not match.
+            </summary>
+        </member>
+        <member name="P:Castle.Components.Validator.Messages.not_same_value_invalid">
             <summary>
               Looks up a localized string similar to Field must not equals &apos;{0}&apos;.
             </summary>
@@ -1067,6 +1077,11 @@
               Looks up a localized string similar to Fields do not match.
             </summary>
         </member>
+        <member name="P:Castle.Components.Validator.Messages.set_invalid">
+            <summary>
+              Looks up a localized string similar to Field must be within a given set of values..
+            </summary>
+        </member>
         <member name="P:Castle.Components.Validator.Messages.single_invalid">
             <summary>
               Looks up a localized string similar to Field value is invalid (not a valid single).
@@ -1075,16 +1090,6 @@
         <member name="P:Castle.Components.Validator.Messages.time_invalid">
             <summary>
               Looks up a localized string similar to Field value is invalid (not a valid time).
-            </summary>
-        </member>
-        <member name="P:Castle.Components.Validator.Messages.set_invalid">
-            <summary>
-              Looks up a localized string similar to Field must be within a given set of values..
-            </summary>
-        </member>
-        <member name="P:Castle.Components.Validator.Messages.credit_card_invalid">
-            <summary>
-              Looks up a localized string similar to Field value does not appear to be a valid credit card number, or is of an unsupported type..
             </summary>
         </member>
         <member name="T:Castle.Components.Validator.CachedValidationRegistry">

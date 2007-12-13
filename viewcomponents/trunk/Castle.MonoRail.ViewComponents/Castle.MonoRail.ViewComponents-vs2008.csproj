@@ -51,6 +51,7 @@
     <Compile Include="ChartDataItem.cs" />
     <Compile Include="ChartProperties.cs" />
     <Compile Include="CheckboxListComponent.cs" />
+    <Compile Include="CollapsiblePanelComponent.cs" />
     <Compile Include="ColumnChartComponent.cs" />
     <Compile Include="FaqItemComponent.cs" />
     <Compile Include="GridComponent .cs" />

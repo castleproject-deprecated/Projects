@@ -1,0 +1,9 @@
+﻿#component(MoreLessText with "Text=$text" "MaxLength=$maxlength")
+<hr />
+
+$HtmlHelper.Form("index.rails")
+Max Length: $HtmlHelper.InputText("maxlength", "$maxlength") <br />
+Text: $HtmlHelper.TextArea("text", 50, 14, "$text")
+$HtmlHelper.SubmitButton("Submit")
+$HtmlHelper.EndForm()
+

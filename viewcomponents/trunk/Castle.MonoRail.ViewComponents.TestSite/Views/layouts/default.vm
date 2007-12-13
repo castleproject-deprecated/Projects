@@ -11,8 +11,7 @@
 			  type="text/css"
 			  href="/style.css"
 			  media="screen, print" />
-		$Ajax.InstallScripts()
-		$Scriptaculous.InstallScripts()
+		#component(InsertJavascript with "Std=Ajax, Scriptaculous")
 	</head>
 	<body>
 
@@ -30,7 +29,9 @@
 			<div class="content">
 				$ChildContent
 			</div>
+
 		
+
 			<div class="right">
 
 				<div class="round">
@@ -46,8 +47,16 @@
 				</div>
 
 				<div class="subnav">
-
-					<h3>Grid</h3>
+                    <ul>
+						<li>
+							<a href="/home/index.rails">Home</a>
+						</li>
+					</ul>
+#blockcomponent(CollapsiblePanel with "id=GridComponent"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#caption
+<h3>Grid component</h3>
+#end
+#body
 					<ul>
 						<li>
 							<a href="/grid/index.rails">Basic Usage</a>
@@ -62,8 +71,14 @@
 							<a href="/grid/OverrideEmpty.rails">Override Empty Rendering</a>
 						</li>
 					</ul>
+#end
+#end
+#blockcomponent(CollapsiblePanel with "id=SmartGridComponent"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#caption
+				<h3>Smart grid component</h3>
+#end
+#body
 
-					<h3>Smart grid component</h3>
 					<ul>
 						<li>
 							<a href="/smartgrid/index.rails">Basic Usage</a>
@@ -89,21 +104,125 @@
 						<li>
 							<a href="/smartgrid/StartEndCell.rails">Start & End Cell behaviors</a>
 						</li>
+						<li>
+							<a href="/smartgrid/StartEndRow.rails">Start & End Row behaviors</a>
+						</li>
+						<li>
+							<a href="/smartgrid/SortBehavior.rails">Sorting Behavior</a>
+						</li>
+						<li>
+							<a href="/smartgrid/SortJSBehavior.rails">Sorting Behavior via Ajax</a>
+						</li>
 					</ul>
-					
-					<h3>CaptchaComponent</h3>
+#end
+#end
+#blockcomponent(CollapsiblePanel with "id=Captcha"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#caption
+					<h3>Captcha component</h3>
+#end
+#body					
+
 					<ul>
 						<li>
 							<a href="/captcha/index.rails">Basic Usage</a>
 						</li>
 					</ul>
+#end
+#end
+#blockcomponent(CollapsiblePanel with "id=Column"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#caption
 					<h3>Column chart component</h3>
+#end
+#body					
 					<ul>
 						<li>
 							<a href="/chart/index.rails">Sample Charts</a>
 						</li>
-					</ul>				
+					</ul>
+#end
+#end
+#blockcomponent(CollapsiblePanel with "id=Checkbox"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#caption
+					<h3>Checkbox list component</h3>
+#end
+#body					
+					<ul>
+						<li>
+							<a href="/checkboxlist/index.rails">Sample Checkbox Lists</a>
+						</li>
+					</ul>		
+#end
+#end
+#blockcomponent(CollapsiblePanel with "id=FAQ"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#caption
+					<h3>FAQ component</h3>
+#end
+#body
+					<ul>
+						<li>
+							<a href="/Faq/index.rails">FAQ Item</a>
+						</li>
+						<li>
+							<a href="/Faq/list.rails">FAQ List</a>
+						</li>
+					</ul>		
+#end
+#end
+#blockcomponent(CollapsiblePanel with "id=whitespace"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#caption
+					<h3>Whitespace filter component</h3>
+#end
+#body
+					<ul>
+						<li>
+							<a href="/whitespace/index.rails">Sample Charts Whitespaced</a>
+						</li>
+					</ul>		
+					
+#end
+#end
+#blockcomponent(CollapsiblePanel with "id=maskedtextbox"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#caption
+					<h3>Masked textbox component</h3>
+#end
+#body
+					<ul>
+						<li>
+							<a href="/maskedtextbox/index.rails">Masked Textbox Examples</a>
+						</li>
+					</ul>	
+					
+#end
+#end
+#blockcomponent(CollapsiblePanel with "id=collapsiblepanel"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#caption
+					<h3>Collapsible panel component</h3>
+#end
+#body
+					<ul>
+						<li>
+							<a href="/collapsiblepanel/index.rails">Sample Collapsible Panels</a>
+						</li>
+					</ul>	
+#end
+#end
+#blockcomponent(CollapsiblePanel with "id=morelesstext"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#caption
+					<h3>More or Less Text component</h3>
+#end
+#body
+					<ul>
+						<li>
+							<a href="/morelesstext/index.rails">Sample More or Less text</a>
+						</li>
+					</ul>	
+
+#end
+#end
+					
+					
 				</div>
+
 
 				<div class="round">
 					<div class="roundbl">

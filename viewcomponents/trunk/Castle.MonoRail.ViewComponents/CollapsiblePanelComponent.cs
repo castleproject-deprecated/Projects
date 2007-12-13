@@ -124,7 +124,7 @@ namespace Castle.MonoRail.ViewComponents
             if (Context.ContextVars[wasScriptaculousInstalledKey] as bool? != true)
             {
                 ScriptaculousHelper helper = new ScriptaculousHelper();
-                helper.SetController(RailsContext.CurrentController);
+                helper.SetController(RailsContext.CurrentController as Controller);
                 RenderTextFormat("\r\n{0}\r\n", helper.InstallScripts());
                 Context.ContextVars[wasScriptaculousInstalledKey] = true;
             }
