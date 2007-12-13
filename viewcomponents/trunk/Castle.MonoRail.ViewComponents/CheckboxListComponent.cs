@@ -261,8 +261,7 @@ namespace Castle.MonoRail.ViewComponents
             {
                 return parmValue;
             }
-            string cssPrefix = isHorizontal ? "horizontal" : "vertical";
-            return string.Format("{0}{1}", cssPrefix, "CheckboxList");
+            return (isHorizontal ? "horizontalCheckboxList" : "verticalCheckboxList");
         }
 
         /// <summary>

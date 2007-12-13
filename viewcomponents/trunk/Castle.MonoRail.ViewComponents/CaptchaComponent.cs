@@ -296,9 +296,10 @@ namespace Castle.MonoRail.ViewComponents
 		{
 			FormHelper form = new FormHelper();
 			HtmlHelper html = new HtmlHelper();
+            Controller controller = MonoRailHttpHandler.CurrentContext.CurrentController as Controller;
 
-			form.SetController(MonoRailHttpHandler.CurrentContext.CurrentController);
-			html.SetController(MonoRailHttpHandler.CurrentContext.CurrentController);
+            form.SetController(controller);
+            html.SetController(controller);
 
 			StringBuilder output = new StringBuilder();
 			output.Append(form.HiddenField(DataId, Data));
@@ -335,12 +336,12 @@ namespace Castle.MonoRail.ViewComponents
 			return IsValid(MonoRailHttpHandler.CurrentContext.CurrentController, id);
 		}
 
-		public static bool IsValid(Controller controller)
+		public static bool IsValid(IController controller)
 		{
 			return IsValid(controller, "captcha");
 		}
 
-		public static bool IsValid(Controller controller, string id)
+		public static bool IsValid(IController controller, string id)
 		{
 			string input = controller.Form[id];
 			string data = controller.Form[id + "_data"];

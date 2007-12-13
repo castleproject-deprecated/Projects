@@ -381,13 +381,22 @@ namespace Castle.MonoRail.ViewComponents
         {
             base.Initialize();
             id = Context.ComponentParameters["id"] as string;
-            if (id == null && sectionsUsed.Count > 0)
+
+            if (id == null)
             {
-                throw new ViewComponentException("JavascriptComponent: 'id' parameter must be specified if subsections are used.");
+                if (sectionsUsed.Count > 0)
+                {
+                    throw new ViewComponentException("JavascriptComponent: 'id' parameter must be specified if subsections are used.");
+                }
+                id = GetHashCode().ToString("x");
             }
             helper = new JavascriptHelper(this.Context, this.HttpContext, Flash, id);
             string std = Context.ComponentParameters["std"] as string ?? string.Empty;
             helper.IncludeStandardScripts(std);
+
+            string file = Context.ComponentParameters["file"] as string;
+            if (!string.IsNullOrEmpty(file))
+                helper.IncludeScriptFile(file);
         }
 
         /// <summary>
@@ -441,6 +450,10 @@ namespace Castle.MonoRail.ViewComponents
                 RenderSection("inline");
                 RenderText("</script>\n\r");
             }
+
+            string inlinefile = Context.ComponentParameters["inlinefile"] as string;
+            if (!string.IsNullOrEmpty(inlinefile))
+                RenderText(helper.RenderJavascriptFile(inlinefile));
 
             CancelView();
         }
@@ -815,14 +828,15 @@ namespace Castle.MonoRail.ViewComponents
         /// <param name="file">The filename.</param>
         public void IncludeScriptFile(string file)
         {
-            if (js.wasRendered)
+            if (!js.files.Contains(file))
             {
-                if (!js.files.Contains(file))
+                if (js.wasRendered)
                 {
                     this.context.Writer.Write(RenderJavascriptFile(file));
                 }
+                js.files.Add(file);
             }
-            js.files.Add(file);
+
         }
 
         internal string RenderJavascriptFile(string file)

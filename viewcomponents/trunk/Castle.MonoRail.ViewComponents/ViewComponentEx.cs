@@ -88,5 +88,15 @@ namespace Castle.MonoRail.ViewComponents
             }
             return value;
         }
+
+        public string MakeUniqueId(string prefix)
+        {
+            byte[] bytes = Guid.NewGuid().ToByteArray();
+            int a = BitConverter.ToInt32(bytes, 0);
+            int b = BitConverter.ToInt32(bytes, 4);
+            int c = BitConverter.ToInt32(bytes, 8);
+            int d = BitConverter.ToInt32(bytes, 12);
+            return prefix + (a ^ b ^ c ^ d).ToString("x08");
+        }
     }
 }
