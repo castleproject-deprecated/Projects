@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MonoRail.Views.AspView.Tests
+namespace Castle.MonoRail.Views.AspView.Tests.HttpBasedIntegrationTests.LegacyRegressionTests
 {
     using TestSupport;
     using NUnit.Framework;
     using System.Diagnostics;
 
     [TestFixture]
-    public class CSharpPreProcessorTestCases : AbstractMRTestCase
+    public class CSharpPreProcessorTestCases : BaseHttpBasedIntegrationTestFixture
     {
         [Test]
         public void SiteRootSignsWorks()

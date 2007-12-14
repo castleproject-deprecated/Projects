@@ -14,9 +14,19 @@
 
 namespace Castle.MonoRail.Views.AspView.Tests.HttpBasedIntegrationTests
 {
-    using TestSupport;
+	using System.Globalization;
+	using System.Threading;
+	using TestSupport;
+	using NUnit.Framework;
 
 	public class BaseHttpBasedIntegrationTestFixture : AbstractMRTestCase
-    {
-    }
+	{
+		[SetUp]
+		public override void Initialize()
+		{
+			Thread.CurrentThread.CurrentCulture = new CultureInfo("en-GB");
+			Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
+			base.Initialize();
+		}
+	}
 }

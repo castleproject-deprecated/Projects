@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MonoRail.Views.AspView.Tests
+namespace Castle.MonoRail.Views.AspView.Tests.HttpBasedIntegrationTests.LegacyRegressionTests
 {
 	using NUnit.Framework;
     using TestSupport;
 
     [TestFixture]
-    public class WithLayoutTestCase : AbstractMRTestCase
+    public class WithLayoutTestCase : BaseHttpBasedIntegrationTestFixture
     {
         [Test]
         public void WithoutProperties()

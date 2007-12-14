@@ -14,7 +14,7 @@
 
 using Castle.MonoRail.Views.AspView.Compiler;
 
-namespace Castle.MonoRail.Views.AspView.Tests
+namespace Castle.MonoRail.Views.AspView.Tests.HttpBasedIntegrationTests.LegacyRegressionTests
 {
 	using System.Collections;
 	using NUnit.Framework;
