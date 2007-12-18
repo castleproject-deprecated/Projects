@@ -32,7 +32,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 		private bool keepTemporarySourceFiles = false;
 		private string temporarySourceFilesDirectory = "temporarySourceFiles";
 		readonly List<ReferencedAssembly> assembliesToReference = new List<ReferencedAssembly>();
-		readonly IDictionary<Type, Type> providers;
+		readonly IDictionary<Type, Type> providers = new Dictionary<Type, Type>();
 
 		static readonly ReferencedAssembly[] defaultAssemblies = new ReferencedAssembly[4]
 			{
@@ -47,9 +47,6 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 		public AspViewCompilerOptions()
 		{
 			AddReferences(defaultAssemblies);
-			providers = new Dictionary<Type, Type>(2);
-			providers.Add(typeof(IPreCompilationStepsProvider), typeof(DefaultPreCompilationStepsProvider));
-			providers.Add(typeof(IMarkupTransformersProvider), typeof(DefaultMarkupTransformersProvider));
 		}
 
 		public AspViewCompilerOptions(
@@ -134,6 +131,13 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 		public ReferencedAssembly[] References
 		{
 			get { return assembliesToReference.ToArray(); }
+		}
+		/// <summary>
+		/// Gets list of assemblies that'll be referenced during the compile process by CompiledViews.dll
+		/// </summary>
+		public IDictionary<Type, Type> CustomProviders
+		{
+			get { return providers; }
 		}
 		#endregion
 

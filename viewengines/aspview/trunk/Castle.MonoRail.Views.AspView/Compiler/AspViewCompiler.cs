@@ -35,7 +35,6 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 		private static readonly string defaultSiteRoot = AppDomain.CurrentDomain.BaseDirectory;
 		const string AssemblyAttributeAllowPartiallyTrustedCallers = "[assembly: System.Security.AllowPartiallyTrustedCallers]";
 		const string AllowPartiallyTrustedCallersFileName = "AllowPartiallyTrustedCallers.generated.cs";
-		readonly IEnumerable<IPreCompilationStep> preCompilationSteps;
 
 		private string pathToAssembly = null;
 		private Assembly assembly = null;
@@ -43,14 +42,11 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 		#endregion
 
 		#region c'tor
-		public AspViewCompiler(IPreCompilationStepsProvider preCompilationStepsProvider, AspViewCompilerOptions options)
+		public AspViewCompiler(AspViewCompilerOptions options)
 		{
-			preCompilationSteps = preCompilationStepsProvider.GetSteps();
+			Resolve.Initialize(options.CustomProviders);
 			this.options = options;
 			InitializeCompilerParameters();
-		}
-		public AspViewCompiler(AspViewCompilerOptions options) : this(new DefaultPreCompilationStepsProvider(), options)
-		{
 		}
 		#endregion
 
@@ -61,6 +57,9 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 
 		public void ApplyPreCompilationStepsOn(IEnumerable<SourceFile> files)
 		{
+			IEnumerable<IPreCompilationStep> preCompilationSteps =
+				Resolve.PreCompilationStepsProvider.GetSteps();
+
 			foreach (SourceFile file in files)
 				foreach (IPreCompilationStep step in preCompilationSteps)
 					step.Process(file);

@@ -24,14 +24,9 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 	{
 		readonly ICollection<IMarkupTransformer> markupTransformers;
 
-		public MarkupTransformationsStep() 
-			: this(new DefaultMarkupTransformersProvider())
+		public MarkupTransformationsStep()
 		{
-		}
-
-		public MarkupTransformationsStep(IMarkupTransformersProvider markupTransformersProvider)
-		{
-			markupTransformers = markupTransformersProvider.GetMarkupTransformers();
+			markupTransformers = Resolve.MarkupTransformersProvider.GetMarkupTransformers();
 		}
 
 		public void Process(SourceFile file)

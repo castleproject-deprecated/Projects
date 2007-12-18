@@ -78,6 +78,7 @@
     <Compile Include="Compiler\PreCompilationSteps\DefaultPreCompilationStepsProvider.cs" />
     <Compile Include="Compiler\PreCompilationSteps\IPreCompilationStepsProvider.cs" />
     <Compile Include="Compiler\PreCompilationSteps\ProcessPropertiesStep.cs" />
+    <Compile Include="Compiler\Resolve.cs" />
     <Compile Include="Compiler\Utilities.cs" />
     <Compile Include="AspViewConfigurationSection.cs" />
     <Compile Include="AspViewBaseWithGenericTypedInterface.cs" />
@@ -87,7 +88,6 @@
     <Compile Include="Internal\TabbedStringWriter.cs" />
     <Compile Include="IViewBase.cs" />
     <Compile Include="IViewBaseInternal.cs" />
-    <Compile Include="ServiceDescriptor.cs" />
     <Compile Include="ViewAtDesignTimeWithGenericTypedInterface.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

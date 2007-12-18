@@ -14,6 +14,9 @@
 // limitations under the License.
 #endregion
 
+using System;
+using System.Collections.Generic;
+using Castle.MonoRail.Views.AspView.Compiler;
 
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
@@ -37,9 +40,10 @@ Output(s + ""Hello""); %>";
 
 		protected override void CreateStep()
 		{
-			step =
-				new MarkupTransformationsStep(
-					new MockMarkupTransformersProvider());
+			Dictionary <Type, Type> providers = new Dictionary<Type, Type>();
+			providers.Add(typeof(IMarkupTransformersProvider), typeof(MockMarkupTransformersProvider));
+			Resolve.Initialize(providers);
+			step = new MarkupTransformationsStep();
 		}
 
 		[Test]
