@@ -133,7 +133,7 @@ Output(s + ""Hello""); %>";
 		#region mocks
 		class MockMarkupTransformersProvider : IMarkupTransformersProvider
 		{
-			public System.Collections.Generic.ICollection<IMarkupTransformer> GetMarkupTransformers()
+			public ICollection<IMarkupTransformer> GetMarkupTransformers()
 			{
 				return new IMarkupTransformer[] { new MockMarkupTransformer() };
 			}

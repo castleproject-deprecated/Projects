@@ -16,18 +16,18 @@
 
 namespace Castle.MonoRail.Views.AspView.Compiler.MarkupTransformers
 {
-	using System.Collections.Generic;
+	using System.Text.RegularExpressions;
 
-	public class DefaultMarkupTransformersProvider : IMarkupTransformersProvider
+	public class InlineOutputDirectiveMarkupTransformer : IMarkupTransformer
 	{
-		public ICollection<IMarkupTransformer> GetMarkupTransformers()
+
+		public string Transform(string markup)
 		{
-			return new IMarkupTransformer[]
+			return Internal.RegularExpressions.InlineOutputDirective.Replace(markup, delegate(Match match)
 			{
-				new FullSiteRootMarkupTransformer(),
-				new SiteRootMarkupTransformer(),
-				new InlineOutputDirectiveMarkupTransformer()
-			};
+				string content = match.Groups["content"].Value;
+				return string.Format("<% OutputEncoded({0}); %>", content);
+			});
 		}
 	}
 }

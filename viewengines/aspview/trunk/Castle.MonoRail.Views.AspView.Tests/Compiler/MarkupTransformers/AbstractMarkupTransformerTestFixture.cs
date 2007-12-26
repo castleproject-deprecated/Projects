@@ -14,20 +14,28 @@
 // limitations under the License.
 #endregion
 
-namespace Castle.MonoRail.Views.AspView.Compiler.MarkupTransformers
+namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 {
-	using System.Collections.Generic;
+	using NUnit.Framework;
+	using AspView.Compiler.MarkupTransformers;
 
-	public class DefaultMarkupTransformersProvider : IMarkupTransformersProvider
+	public abstract class AbstractMarkupTransformerTestFixture
 	{
-		public ICollection<IMarkupTransformer> GetMarkupTransformers()
+		protected IMarkupTransformer transformer;
+		protected string input;
+		protected string expected;
+
+		[SetUp]
+		public virtual void SetUp()
 		{
-			return new IMarkupTransformer[]
-			{
-				new FullSiteRootMarkupTransformer(),
-				new SiteRootMarkupTransformer(),
-				new InlineOutputDirectiveMarkupTransformer()
-			};
+			CreateTransformer();
+		}
+
+		protected abstract void CreateTransformer();
+
+		public void AssertTranfromerOutput()
+		{
+			Assert.AreEqual(expected, transformer.Transform(input));
 		}
 	}
 }

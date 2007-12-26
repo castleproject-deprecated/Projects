@@ -62,6 +62,9 @@ namespace Castle.MonoRail.Views.AspView.Internal
 		private const string attributesBlock =
 @"(?<attributes>(\s*\w+=""[<][%]=\s*[\w\.\(\)\[\]""]+\s*[%][>]""|\s*\w+=""[\w.]*""|\s*)*)";
 
+		public static readonly Regex InlineOutputDirective = new Regex(
+@"\${(?<content>[\s\w\.\(\)\[\]""]+)}", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
 	}
 
 }

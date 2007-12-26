@@ -62,6 +62,7 @@
     <Compile Include="AspViewBase.cs" />
     <Compile Include="Compiler\AspViewCompiler.cs" />
     <Compile Include="Compiler\AspViewCompilerOptions.cs" />
+    <Compile Include="Compiler\MarkupTransformers\InlineOutputDirectiveMarkupTransformer.cs" />
     <Compile Include="Compiler\MarkupTransformers\DefaultMarkupTransformersProvider.cs" />
     <Compile Include="Compiler\MarkupTransformers\FullSiteRootMarkupTransformer.cs" />
     <Compile Include="Compiler\MarkupTransformers\IMarkupTransformer.cs" />
