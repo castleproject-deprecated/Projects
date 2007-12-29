@@ -69,6 +69,7 @@
     <Compile Include="Compiler\MarkupTransformers\IMarkupTransformersProvider.cs" />
     <Compile Include="Compiler\MarkupTransformers\SiteRootMarkupTransformer.cs" />
     <Compile Include="Compiler\PreCompilationSteps\ChainingStep.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\EmbededServerScriptStep.cs" />
     <Compile Include="Compiler\PreCompilationSteps\ProcessViewBodyStep.cs" />
     <Compile Include="Compiler\PreCompilationSteps\MarkupTransformationsStep.cs" />
     <Compile Include="Compiler\PreCompilationSteps\RenderConcreteClassStep.cs" />

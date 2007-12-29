@@ -51,6 +51,13 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 			file.ViewComponentSectionHandlers.Add("vc1_section1", "vc1_section1 body");
 			file.ViewComponentSectionHandlers.Add("vc1_section2", "vc1_section2 body");
 
+			file.EmbededScriptBlocks.Add(@"
+private string Text(string name)
+{
+	return ""<input type='text' name='"" + name + ""' />"";
+}
+");
+
 			#region expected
 			expected =
 @"using No.Such.Import;
@@ -85,6 +92,12 @@ RenderBody
 		internal void vc1_section2 ()
 		{
 			vc1_section2 body
+		}
+
+		
+		private string Text(string name)
+		{
+			return ""<input type='text' name='"" + name + ""' />"";
 		}
 
 	}

@@ -72,6 +72,12 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 				writer.WriteLine();
 			}
 
+			// render each embeded script block as raw class members
+			foreach (string block in file.EmbededScriptBlocks) 
+			{
+				writer.WriteLine(block);
+			}
+
 			writer.UnIndent();
 			writer.WriteLine("}");
 

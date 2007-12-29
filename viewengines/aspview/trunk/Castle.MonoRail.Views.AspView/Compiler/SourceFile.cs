@@ -29,6 +29,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 		private string typedViewName;
 		private string concreteClass;
 		private readonly StringSet imports = new StringSet();
+		private readonly IList<string> embededScriptBlocks = new List<string>();
 		private readonly IDictionary<string, ViewProperty> properties = new Dictionary<string, ViewProperty>();
 		private readonly IDictionary<string, string> viewComponentSectionHandlers = new Dictionary<string, string>();
 		
@@ -93,6 +94,14 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 		{
 			get { return viewComponentSectionHandlers; }
 		}
-		
+
+		/// <summary>
+		/// contains the list of embeded scripts blocks (&lt;script runat="server"/&gt; elements contents) 
+		/// that will be rendered as raw class content
+		/// </summary>
+		public IList<string> EmbededScriptBlocks 
+		{
+			get { return embededScriptBlocks; }
+		}
 	}
 }

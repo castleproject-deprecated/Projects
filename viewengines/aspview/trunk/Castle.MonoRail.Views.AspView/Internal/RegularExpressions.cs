@@ -14,10 +14,11 @@
 // limitations under the License.
 #endregion
 
-using System.Text.RegularExpressions;
 
 namespace Castle.MonoRail.Views.AspView.Internal
 {
+	using System.Text.RegularExpressions;
+
 	public static class RegularExpressions
 	{
 		public static readonly Regex PageDirective = new Regex(
@@ -62,9 +63,53 @@ namespace Castle.MonoRail.Views.AspView.Internal
 		private const string attributesBlock =
 @"(?<attributes>(\s*\w+=""[<][%]=\s*[\w\.\(\)\[\]""]+\s*[%][>]""|\s*\w+=""[\w.]*""|\s*)*)";
 
+
+		public static readonly Regex EmbededServerScriptBlock = new Regex(
+@"<script\s+runat\s*=\s*\""server\""\s*>(?<content>((?!</script>).)*)</script>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 		public static readonly Regex InlineOutputDirective = new Regex(
 @"\${(?<content>[\s\w\.\(\)\[\]""]+)}", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 	}
 
+}
+
+namespace ab
+{
+	using System.Text.RegularExpressions;
+
+	class A
+	{
+		public void B()
+		{
+			string s1 = @"
+<script runat = ""server"" > 
+</script>
+";
+			string s2 = @"<script runat=""server""></script>";
+			string s3 = @"<script runat=""server""> </script>";
+			string s4 = @"<script runat=""server"">
+</script>";
+			string s5 = @"<script runat=""server"">momo</script>
+
+<script runat=""server"">shlomo</script>";
+
+			System.Console.WriteLine(Castle.MonoRail.Views.AspView.Internal.RegularExpressions.EmbededServerScriptBlock
+			                         	.IsMatch(s1));
+			System.Console.WriteLine(Castle.MonoRail.Views.AspView.Internal.RegularExpressions.EmbededServerScriptBlock
+			                         	.IsMatch(s2));
+			System.Console.WriteLine(Castle.MonoRail.Views.AspView.Internal.RegularExpressions.EmbededServerScriptBlock
+			                         	.IsMatch(s3));
+			System.Console.WriteLine(Castle.MonoRail.Views.AspView.Internal.RegularExpressions.EmbededServerScriptBlock
+			                         	.IsMatch(s4));
+
+			MatchCollection m5 = Castle.MonoRail.Views.AspView.Internal.RegularExpressions.EmbededServerScriptBlock
+				.Matches(s5);
+
+			foreach (Match match in m5)
+			{
+				System.Console.WriteLine(match.Groups["content"].Value);
+			}
+
+		}
+	}
 }

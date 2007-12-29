@@ -14,12 +14,19 @@
 // limitations under the License.
 #endregion
 
-using System.Collections.Generic;
-
 namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 {
+	using System.Collections.Generic;
+
+	/// <summary>
+	/// Providing the default ordered list of compilation steps for the AspView precompiler
+	/// </summary>
 	public class DefaultPreCompilationStepsProvider : IPreCompilationStepsProvider
 	{
+		/// <summary>
+		/// Get the precompilation steps
+		/// </summary>
+		/// <returns>Array of pre-compilation steps</returns>
 		public ICollection<IPreCompilationStep> GetSteps()
 		{
 			return new IPreCompilationStep[] {
@@ -30,6 +37,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 				new SubViewTagsStep(),
 				new ViewFilterTagsStep(),
 				new ViewComponentTagsStep(),
+				new EmbededServerScriptStep(),
 				new ProcessViewBodyStep(),
 				new RenderConcreteClassStep()
 			};

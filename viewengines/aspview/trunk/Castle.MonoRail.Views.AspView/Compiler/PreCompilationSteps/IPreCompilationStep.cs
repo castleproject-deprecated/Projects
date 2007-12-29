@@ -16,8 +16,15 @@
 
 namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 {
+	/// <summary>
+	/// A unit that processes an AspView SourceFile, to make it ready for compilation
+	/// </summary>
 	public interface IPreCompilationStep
 	{
+		/// <summary>
+		/// Acts upon a source file
+		/// </summary>
+		/// <param name="file">The source file to process</param>
 		void Process(SourceFile file);
 	}
 }
