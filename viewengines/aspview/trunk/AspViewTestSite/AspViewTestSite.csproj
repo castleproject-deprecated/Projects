@@ -55,10 +55,6 @@
   <ItemGroup>
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\HelpersController.cs" />
-    <Compile Include="Controllers\UsingDictionaryAdapterController.cs">
-    </Compile>
-    <Compile Include="Controllers\UsingDictionaryAdapter\FlashAndDefaultsController.cs" />
-    <Compile Include="Controllers\UsingDictionaryAdapter\NestedController.cs" />
     <Compile Include="Controllers\UsingReferencesController.cs" />
     <Compile Include="Controllers\UsingViewComponentsController.cs" />
     <Compile Include="Controllers\ViewFiltersController.cs" />

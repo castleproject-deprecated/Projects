@@ -76,7 +76,6 @@
     <Compile Include="Compiler\PreCompilationSteps\SubViewTagsStepTestFixture.cs" />
     <Compile Include="Compiler\PreCompilationSteps\ProcessPropertiesStepTestFixture.cs" />
     <Compile Include="HttpBasedIntegrationTests\BaseHttpBasedIntegrationTestFixture.cs" />
-    <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\EmbededServerScriptsTestCase.cs" />
     <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\CSharpPreProcessorTestCases.cs" />
     <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\EmptyControllerTestCase.cs" />
     <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\HelpersTestCase.cs" />
@@ -84,7 +83,6 @@
     <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\PropertiesTestCases.cs" />
     <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\SanityTestCase.cs" />
     <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\SmartDispatcherTestCase.cs" />
-    <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\UsingDictionaryAdapterTestCases.cs" />
     <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\UsingReferencesTestCase.cs" />
     <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\ViewComponentsTestFixture.cs" />
     <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\ViewEngineTestCase.cs" />
