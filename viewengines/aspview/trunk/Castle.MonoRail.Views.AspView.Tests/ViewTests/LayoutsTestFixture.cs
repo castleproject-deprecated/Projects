@@ -36,5 +36,22 @@ Layout - after";
 			AssertViewOutputEqualsToExpected();
 		}
 
+		[Test]
+		public void Render_WhenHasNestedLayouts_RenderLayoutsAndInCorrectOrder()
+		{
+			InitializeView(typeof(SimpleView));
+			SetLayout(typeof(SimplestLayout));
+			SetLayout(typeof(OuterLayout));
+			view.Process();
+
+			expected = @"Outer Layout - before
+Layout - before
+Simple
+Layout - after
+Outer Layout - after";
+
+			AssertViewOutputEqualsToExpected();
+		}
+
 	}
 }

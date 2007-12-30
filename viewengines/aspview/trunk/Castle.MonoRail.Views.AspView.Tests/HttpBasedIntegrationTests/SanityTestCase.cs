@@ -62,5 +62,19 @@ End of normal view
             DoGet("home/index.rails");
             AssertReplyEqualTo(expected);
         }
-    }
+
+		[Test]
+		public void NestedLayoutsWorks()
+		{
+			#region expected
+			string expected = @"Simple layout
+Hello from nested layout
+A View without any properties
+Back in nested layout
+Back in Simple layout";
+			#endregion
+			DoGet("withlayout/nested.rails");
+			AssertReplyEqualTo(expected);
+		}
+	}
 }

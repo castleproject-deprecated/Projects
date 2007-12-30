@@ -39,6 +39,7 @@ Markup3"");
 
 			Assert.AreEqual(expected, transformed);
 		}
+
 		[Test]
 		public void Transform_WhenThereIsOnlyCode_WorksWell()
 		{
@@ -57,6 +58,7 @@ foreach (string s in strings)
 
 			Assert.AreEqual(expected, transformed);
 		}
+
 		[Test]
 		public void Transform_WhenStartsWithMarkupAndEndsWithMarkup_Transforms()
 		{
@@ -80,6 +82,7 @@ Markup3"");
 
 			Assert.AreEqual(expected, transformed);
 		}
+
 		[Test]
 		public void Transform_WhenStartsWithCodeAndEndsWithMarkup_Transforms()
 		{
@@ -99,6 +102,7 @@ Markup2"");
 
 			Assert.AreEqual(expected, transformed);
 		}
+
 		[Test]
 		public void Transform_WhenStartsWithMarkupAndEndsWithCode_Transforms()
 		{
@@ -119,6 +123,7 @@ string s2;
 
 			Assert.AreEqual(expected, transformed);
 		}
+
 		[Test]
 		public void Transform_WhenStartsWithCodeAndEndsWithCode_Transforms()
 		{
@@ -135,6 +140,7 @@ string s2;
 
 			Assert.AreEqual(expected, transformed);
 		}
+
 		[Test]
 		public void Transform_OutputShorthand_RendersInline()
 		{
@@ -147,6 +153,7 @@ Output(@""Markup2"");
 
 			Assert.AreEqual(expected, transformed);
 		}
+
 		[Test]
 		public void Transform_OutputShorthandWhenFollowedByNewLine_KeepsFollowingNewline()
 		{
@@ -161,6 +168,7 @@ Markup2"");
 
 			Assert.AreEqual(expected, transformed);
 		}
+
 		[Test]
 		public void Transform_OutputShorthandWhenPreceededWithNewLine_KeepsPreceedingNewline()
 		{
@@ -175,6 +183,7 @@ Output(@""Markup2"");
 
 			Assert.AreEqual(expected, transformed);
 		}
+
 		[Test]
 		public void Transform_WithDoubleQuotesInMarkup_HandledCorrectly()
 		{
@@ -189,6 +198,7 @@ Output(@""Markup2"");
 
 			Assert.AreEqual(expected, transformed);
 		}
+
 		[Test]
 		public void Transform_WithDoubleQuotesInCode()
 		{
@@ -197,6 +207,21 @@ Output(@""Markup2"");
 			string expected = @"Output(@""Markup1
 "");
 Output(""code"");
+Output(@""Markup2"");
+";
+			string transformed = scriptTransformer.Transform(source);
+
+			Assert.AreEqual(expected, transformed);
+		}
+
+		[Test]
+		public void Transform_CodeWithSharp_TreatedAsEncodedOutput()
+		{
+			string source = @"Markup1
+<%# var %>Markup2";
+			string expected = @"Output(@""Markup1
+"");
+OutputEncoded( var);
 Output(@""Markup2"");
 ";
 			string transformed = scriptTransformer.Transform(source);

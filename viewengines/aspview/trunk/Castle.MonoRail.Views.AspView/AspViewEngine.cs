@@ -99,11 +99,16 @@ namespace Castle.MonoRail.Views.AspView
 			string fileName = GetFileName(templateName);
 			IViewBaseInternal view;
 			view = GetView(fileName, output, context, controller);
-			if (controller.LayoutName != null)
+			if (!string.IsNullOrEmpty(controller.LayoutName))
 			{
-				IViewBaseInternal layout = GetLayout(output, context, controller);
-				layout.ContentView = view;
-				view = layout;
+				string[] layoutNames = controller.LayoutName.Split(',');
+				for (int i = layoutNames.Length - 1; i >= 0; --i)
+				{
+					string layoutName = layoutNames[i].Trim();
+					IViewBaseInternal layout = GetLayout(layoutName, output, context, controller);
+					layout.ContentView = view;
+					view = layout;
+				}
 			}
 			controller.PreSendView(view);
 			view.Process();
@@ -112,9 +117,9 @@ namespace Castle.MonoRail.Views.AspView
 		public override void ProcessContents(IRailsEngineContext context, IController controller, string contents)
 		{
 			TextWriter viewOutput = controller.Response.Output;
-			if (controller.LayoutName != null)
+			if (!string.IsNullOrEmpty(controller.LayoutName))
 			{
-				IViewBaseInternal layout = GetLayout(viewOutput, context, controller);
+				IViewBaseInternal layout = GetLayout(controller.LayoutName, viewOutput, context, controller);
 				layout.SetContent(contents);
 				layout.Process();
 			}
@@ -183,15 +188,14 @@ namespace Castle.MonoRail.Views.AspView
 			return theView;
 		}
 
-		protected virtual AspViewBase GetLayout(TextWriter output, IRailsEngineContext context, IController controller)
+		protected virtual AspViewBase GetLayout(string layoutName, TextWriter output, IRailsEngineContext context, IController controller)
 		{
-			string layoutTemplate = "layouts\\" + controller.LayoutName;
+			string layoutTemplate = "layouts\\" + layoutName;
+			if (layoutName.StartsWith("\\"))
+				layoutTemplate = layoutName;
 			string layoutFileName = GetFileName(layoutTemplate);
-			AspViewBase layout;
-			layout = GetView(layoutFileName, output, context, controller);
-			return layout;
+			return GetView(layoutFileName, output, context, controller);
 		}
-
 
 		protected virtual void CompileViewsInMemory()
 		{

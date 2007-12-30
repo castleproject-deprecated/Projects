@@ -40,8 +40,6 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 		private static void AppendMarkup(StringBuilder sb, string markup)
 		{
 			markup = markup.Replace("\"", "\"\"");
-			//markup = markup.Replace("~~", "\"); Output(fullSiteRoot); Output(@\"");
-			//markup = markup.Replace("~", "\"); Output(siteRoot); Output(@\"");
 			sb.AppendFormat("Output(@\"{0}\");", markup)
 				.AppendLine();
 		}
@@ -50,6 +48,8 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 		{
 			if (code.StartsWith("="))
 				code = "Output(" + code.Substring(1) + ");";
+			if (code.StartsWith("#"))
+				code = "OutputEncoded(" + code.Substring(1) + ");";
 			sb.AppendLine(code);
 		}
 

@@ -94,6 +94,8 @@
     <Content Include="Views\Home\SiteRoot.aspx" />
     <Content Include="Views\Home\SubViewSample.aspx" />
     <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Layouts\Simple.aspx" />
+    <Content Include="Views\Layouts\Nested.aspx" />
     <Content Include="Views\Layouts\UsingMultipleViewComponents.aspx" />
     <Content Include="Views\Layouts\UsingCaptureFor.aspx" />
     <Content Include="Views\Layouts\Default.aspx" />

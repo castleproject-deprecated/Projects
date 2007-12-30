@@ -21,17 +21,25 @@ namespace AspViewTestSite.Controllers
     {
         public void WithoutProperties()
         {
-
         }
+
         public void UsingFlash()
         {
             Flash["data"] = "Flashed data";
             RenderView("WithProperties");
         }
+
         public void UsingPropertyBag()
         {
             PropertyBag["data"] = "PropertyBaged data";
             RenderView("WithProperties");
         }
-    }
+
+		public void Nested()
+		{
+			LayoutName = "simple, nested";
+			RenderView("WithoutProperties");
+		}
+	
+	}
 }
