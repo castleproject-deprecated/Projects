@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.IO;
 using Castle.MonoRail.Framework;
+using Castle.MonoRail.Framework.Services;
 using Castle.MonoRail.Framework.Test;
 using Castle.MonoRail.Views.AspView.Tests.Stubs;
 using NUnit.Framework;
@@ -21,7 +22,13 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 		protected UrlInfo url;
 		protected ITrace trace;
 		protected IController controller;
-		protected IRailsEngineContext context;
+		protected IControllerContext controllerContext;
+		protected IEngineContext context;
+		protected IUrlBuilder urlBuilder;
+		protected IFilterFactory filterFactory;
+		protected IViewEngineManager viewEngineManager;
+		protected IActionSelector actionSelector;
+		protected IMonoRailServices monoRailServices;
 		protected string expected;
 
 		[SetUp]
@@ -60,7 +67,8 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 			url = url ?? new UrlInfo("", "Stub", "Stub");
 			trace = trace ?? new MockTrace();
 			propertyBag = propertyBag ?? new Hashtable();
-			context = context ?? new MockRailsEngineContext(request, response, trace, url);
+			monoRailServices = monoRailServices ?? new MockServices();
+			context = context ?? new MockEngineContext(request, response, monoRailServices, url);
 			flash = flash ?? context.Flash;
 			controller = controller ?? new StubController(propertyBag, flash, request, response);
 		}
@@ -92,7 +100,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 
 		protected void InitializeView(IViewBaseInternal viewInstance)
 		{
-			viewInstance.Initialize(engine, writer, context, controller);
+			viewInstance.Initialize(engine, writer, context, controller, controllerContext);
 		}
 		
 		protected void InitializeView()

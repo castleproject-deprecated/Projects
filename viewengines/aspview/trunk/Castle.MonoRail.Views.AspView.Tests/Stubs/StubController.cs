@@ -7,9 +7,11 @@ using Castle.MonoRail.Framework.Internal;
 
 namespace Castle.MonoRail.Views.AspView.Tests.Stubs
 {
+		/*
 	[Resource("Samples", "Castle.MonoRail.Views.AspView.Tests.Resources.Samples")]
 	public class StubController : IController
 	{
+		/*
 		IDictionary propertyBag;
 		readonly Flash flash;
 		readonly IRequest request;
@@ -141,5 +143,18 @@ namespace Castle.MonoRail.Views.AspView.Tests.Stubs
 		}
 
 		#endregion
+		#region IController Members
+
+		public event ControllerHandler AfterAction;
+
+		public event ControllerHandler BeforeAction;
+
+		public void Process(IEngineContext engineContext, IControllerContext context)
+		{
+			throw new Exception("The method or operation is not implemented.");
+		}
+
+		#endregion
 	}
+*/
 }

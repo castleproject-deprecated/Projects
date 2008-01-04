@@ -48,13 +48,6 @@ namespace Castle.MonoRail.Views.AspView
 
 		#region IInitializable Members
 
-		public AspViewBase CreateView(Type type, TextWriter output, IRailsEngineContext context, IController controller)
-		{
-			AspViewBase view = (AspViewBase)FormatterServices.GetUninitializedObject(type);
-			view.Initialize(this, output, context, controller);
-			return view;
-		}
-
 		public void Initialize(AspViewEngineOptions newOptions)
 		{
 			options = newOptions;
@@ -90,22 +83,24 @@ namespace Castle.MonoRail.Views.AspView
 			string className = GetClassName(templateName);
 			return compilations.ContainsKey(className);
 		}
-		public override void Process(IRailsEngineContext context, IController controller, string templateName)
+
+		public override void Process(string templateName, string layoutName, TextWriter output, System.Collections.Generic.IDictionary<string, object> parameters)
 		{
-			Process(context.Response.Output, context, controller, templateName);
+			throw new Exception("The method or operation is not implemented.");
 		}
-		public override void Process(TextWriter output, IRailsEngineContext context, IController controller, string templateName)
+
+		public override void Process(string templateName, TextWriter output, IEngineContext context, IController controller, IControllerContext controllerContext)
 		{
 			string fileName = GetFileName(templateName);
 			IViewBaseInternal view;
-			view = GetView(fileName, output, context, controller);
-			if (!string.IsNullOrEmpty(controller.LayoutName))
+			view = GetView(fileName, output, context, controller, controllerContext);
+			if (controllerContext.LayoutNames != null)
 			{
-				string[] layoutNames = controller.LayoutName.Split(',');
+				string[] layoutNames = controllerContext.LayoutNames;
 				for (int i = layoutNames.Length - 1; i >= 0; --i)
 				{
 					string layoutName = layoutNames[i].Trim();
-					IViewBaseInternal layout = GetLayout(layoutName, output, context, controller);
+					IViewBaseInternal layout = GetLayout(layoutName, output, context, controller, controllerContext);
 					layout.ContentView = view;
 					view = layout;
 				}
@@ -114,48 +109,39 @@ namespace Castle.MonoRail.Views.AspView
 			view.Process();
 			controller.PostSendView(view);
 		}
-		public override void ProcessContents(IRailsEngineContext context, IController controller, string contents)
+
+		public override void ProcessPartial(string partialName, TextWriter output, IEngineContext context, IController controller, IControllerContext controllerContext)
 		{
-			TextWriter viewOutput = controller.Response.Output;
-			if (!string.IsNullOrEmpty(controller.LayoutName))
-			{
-				IViewBaseInternal layout = GetLayout(controller.LayoutName, viewOutput, context, controller);
-				layout.SetContent(contents);
-				layout.Process();
-			}
-			else 
-				viewOutput.Write(contents);
+			throw new Exception("The method or operation is not implemented.");
 		}
+
 		public override string ViewFileExtension
 		{
 			get { return "aspx"; }
 		}
+
 		#region NJS
-		public override object CreateJSGenerator(IRailsEngineContext context)
-		{
-			throw new AspViewException("This version of AspView does not implements NJS.");
-		}
 		public override string JSGeneratorFileExtension
 		{
 			get { throw new AspViewException("This version of AspView does not implements NJS."); }
 		}
-		public override void ProcessPartial(TextWriter output, IRailsEngineContext context, IController controller, string partialName)
-		{
-			throw new AspViewException("This version of AspView does not implements NJS.");
-		}
+
 		public override bool SupportsJSGeneration
 		{
 			get { return false; }
 		}
-		public override void GenerateJS(TextWriter output, IRailsEngineContext context, IController controller, string templateName)
+
+		#endregion
+		#endregion
+
+		public AspViewBase CreateView(Type type, TextWriter output, IEngineContext context, IController controller, IControllerContext controllerContext)
 		{
-			throw new AspViewException("This version of AspView does not implements NJS.");
+			AspViewBase view = (AspViewBase)FormatterServices.GetUninitializedObject(type);
+			view.Initialize(this, output, context, controller, controllerContext);
+			return view;
 		}
 
-		#endregion
-		#endregion
-
-		public virtual AspViewBase GetView(string fileName, TextWriter output, IRailsEngineContext context, IController controller)
+		public virtual AspViewBase GetView(string fileName, TextWriter output, IEngineContext context, IController controller, IControllerContext controllerContext)
 		{
 			fileName = NormalizeFileName(fileName);
 			string className = GetClassName(fileName);
@@ -174,7 +160,7 @@ namespace Castle.MonoRail.Views.AspView
 			AspViewBase theView;
 			try
 			{
-				theView = CreateView(viewType, output, context, controller);
+				theView = CreateView(viewType, output, context, controller, controllerContext);
 			}
 			catch (Exception ex)
 			{
@@ -188,13 +174,13 @@ namespace Castle.MonoRail.Views.AspView
 			return theView;
 		}
 
-		protected virtual AspViewBase GetLayout(string layoutName, TextWriter output, IRailsEngineContext context, IController controller)
+		protected virtual AspViewBase GetLayout(string layoutName, TextWriter output, IEngineContext context, IController controller, IControllerContext controllerContext)
 		{
 			string layoutTemplate = "layouts\\" + layoutName;
 			if (layoutName.StartsWith("\\"))
 				layoutTemplate = layoutName;
 			string layoutFileName = GetFileName(layoutTemplate);
-			return GetView(layoutFileName, output, context, controller);
+			return GetView(layoutFileName, output, context, controller, controllerContext);
 		}
 
 		protected virtual void CompileViewsInMemory()
@@ -246,6 +232,7 @@ namespace Castle.MonoRail.Views.AspView
 			}
 
 		}
+
 		private void LoadCompiledViewsFrom(Assembly viewsAssembly)
 		{
 			if (viewsAssembly != null)
@@ -267,10 +254,12 @@ namespace Castle.MonoRail.Views.AspView
 
 			return className;
 		}
+
 		public static string NormalizeFileName(string fileName)
 		{
 			return fileName.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar);
 		}
+
 		private static void InitializeConfig()
 		{
 			InitializeConfig("aspView");
@@ -279,9 +268,64 @@ namespace Castle.MonoRail.Views.AspView
 			if (options == null)
 				options = new AspViewEngineOptions();
 		}
+
 		private static void InitializeConfig(string configName)
 		{
 			options = (AspViewEngineOptions)ConfigurationManager.GetSection(configName);
+		}
+
+		///<summary>
+		///
+		///            Implementors should return a generator instance if
+		///            the view engine supports JS generation.
+		///            
+		///</summary>
+		///
+		///<param name="generatorInfo">The generator info.</param>
+		///<param name="context">The request context.</param>
+		///<param name="controller">The controller.</param>
+		///<param name="controllerContext">The controller context.</param>
+		///<returns>
+		///A JS generator instance
+		///</returns>
+		///
+		public override object CreateJSGenerator(JSCodeGeneratorInfo generatorInfo, IEngineContext context,
+		                                         IController controller, IControllerContext controllerContext)
+		{
+			throw new NotImplementedException();
+		}
+
+		///<summary>
+		///
+		///            Processes the js generation view template - using the templateName
+		///            to obtain the correct template, and using the specified <see cref="T:System.IO.TextWriter" />
+		///            to output the result.
+		///            
+		///</summary>
+		///
+		///<param name="templateName">Name of the template.</param>
+		///<param name="output">The output.</param>
+		///<param name="generatorInfo">The generator info.</param>
+		///<param name="context">The request context.</param>
+		///<param name="controller">The controller.</param>
+		///<param name="controllerContext">The controller context.</param>
+		public override void GenerateJS(string templateName, TextWriter output, JSCodeGeneratorInfo generatorInfo,
+		                                IEngineContext context, IController controller, IControllerContext controllerContext)
+		{
+			throw new NotImplementedException();
+		}
+
+		///<summary>
+		///
+		///            Wraps the specified content in the layout using the 
+		///            context to output the result.
+		///            
+		///</summary>
+		///
+		public override void RenderStaticWithinLayout(string contents, IEngineContext context, IController controller,
+		                                              IControllerContext controllerContext)
+		{
+			throw new NotImplementedException();
 		}
 	}
 

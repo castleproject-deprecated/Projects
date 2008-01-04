@@ -44,53 +44,6 @@
             <param name="member">The member.</param>
             <returns></returns>
         </member>
-        <member name="T:Castle.Components.DictionaryAdapter.DictionaryAdapterPropertyBinder">
-            <summary>
-            Base class for property binders which defines the bidirectional conversion methods.
-            </summary>
-        </member>
-        <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterPropertyBinder.ConvertFromDictionary(System.Object)">
-            <summary>
-            Performs the dictionary -> interface conversion for when client code is attempting to read out
-            of the "adapted" dictionary.
-            </summary>
-            <param name="value">The string value to convert to the property type.</param>
-            <returns>The converted value.</returns>
-        </member>
-        <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterPropertyBinder.PerformConversionFromDictionary(System.Object)">
-            <summary>
-            Performs the conversion from dictionary.
-            </summary>
-            <param name="value">The value.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterPropertyBinder.ConvertFromInterface(System.Object)">
-            <summary>
-            Performs the interface -> dictionary conversion for when the client code is attempting to write
-            into the "adapted" dictionary.
-            </summary>
-            <param name="value">The value to convert.</param>
-            <returns>The converted value.</returns>
-        </member>
-        <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterPropertyBinder.AssertDictionaryValueHasExpectedType(System.Object,System.Type)">
-            <summary>
-            Asserts that the type in the dictionary is the type expected, and if not, throws a meaningful
-            exception rather than InvalidCastException.
-            </summary>
-            <param name="value"></param>
-            <param name="interfaceType"></param>
-        </member>
-        <member name="P:Castle.Components.DictionaryAdapter.DictionaryAdapterPropertyBinder.DictionaryType">
-            <summary>
-            Gets the type of the dictionary.
-            </summary>
-            <value>The type of the dictionary.</value>
-        </member>
-        <member name="T:Castle.Components.DictionaryAdapter.DictionaryAdapterPropertyBinderAttribute">
-            <summary>
-            Allows the user to convert the values in the dictionary into a different type on access.
-            </summary>
-        </member>
         <member name="T:Castle.Components.DictionaryAdapter.DictionaryBehaviorAttribute">
             <summary>
             Assignes a specific dictionary key.
@@ -111,120 +64,6 @@
             Determines relative order to apply related behaviors.
             </summary>
         </member>
-        <member name="T:Castle.Components.DictionaryAdapter.IDictionaryPropertyGetter">
-            <summary>
-            Defines the contract for retrieving dictionary values.
-            </summary>
-        </member>
-        <member name="M:Castle.Components.DictionaryAdapter.IDictionaryPropertyGetter.GetPropertyValue(Castle.Components.DictionaryAdapter.IDictionaryAdapterFactory,System.Collections.IDictionary,System.String,System.Object,Castle.Components.DictionaryAdapter.PropertyDescriptor)">
-            <summary>
-            Gets the effective dictionary value.
-            </summary>
-            <param name="factory">The dictionary factory.</param>
-            <param name="dictionary">The dictionary.</param>
-            <param name="key">The key.</param>
-            <param name="storedValue">The stored value.</param>
-            <param name="property">The property.</param>
-            <returns>The effective property value.</returns>
-        </member>
-        <member name="T:Castle.Components.DictionaryAdapter.IDictionaryPropertySetter">
-            <summary>
-            Defines the contract for updating dictionary values.
-            </summary>
-        </member>
-        <member name="M:Castle.Components.DictionaryAdapter.IDictionaryPropertySetter.SetPropertyValue(Castle.Components.DictionaryAdapter.IDictionaryAdapterFactory,System.Collections.IDictionary,System.String,System.Object@,Castle.Components.DictionaryAdapter.PropertyDescriptor)">
-            <summary>
-            Sets the stored dictionary value.
-            </summary>
-            <param name="factory">The dictionary factory.</param>
-            <param name="dictionary">The dictionary.</param>
-            <param name="key">The key.</param>
-            <param name="value">The stored value.</param>
-            <param name="property">The property.</param>
-            <returns>true if the property should be stored.</returns>
-        </member>
-        <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterPropertyBinderAttribute.#ctor(System.Type)">
-            <summary>
-            Specifies a binder to perform conversion between the type currently stored in the 
-            adapted dictionary, and the type the client code wishes to use via the interface.
-            </summary>
-            <param name="binderType"></param>
-        </member>
-        <member name="T:Castle.Components.DictionaryAdapter.DictionaryAdapterPropertyBindingException">
-            <summary>
-            The exception throw when the property binder cannot convert a value
-            from the dictionary type into the interface type.
-            </summary>
-        </member>
-        <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterPropertyBindingException.#ctor(System.Type,System.Object,System.Type)">
-            <summary>
-            Constructor.
-            </summary>
-            <param name="binder">The type of binder being used.</param>
-            <param name="value">The value that caused the exception.</param>
-            <param name="interfaceType">The type the binder was attempting to convert the value into.</param>
-        </member>
-        <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterPropertyBindingException.#ctor(System.Type,System.Object,System.Type,System.Exception)">
-            <summary>
-            Constructor.
-            </summary>
-            <param name="binder">The type of binder being used.</param>
-            <param name="value">The value that caused the exception.</param>
-            <param name="interfaceType">The type the binder was attempting to convert the value into.</param>
-            <param name="innerException">An exception that occurred during conversion.</param>
-        </member>
-        <member name="T:Castle.Components.DictionaryAdapter.DictionaryAdapterStringToNullableGuidBinder">
-            <summary>
-            Performs property binding for converting string values into Guids.
-            </summary>
-        </member>
-        <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterStringToNullableGuidBinder.PerformConversionFromDictionary(System.Object)">
-            <summary>
-            Performs the dictionary -> interface conversion for when client code is attempting to read out
-            of the "adapted" dictionary.
-            </summary>
-            <param name="value">The string value to convert to the property type.</param>
-            <returns>The converted value.</returns>
-        </member>
-        <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterStringToNullableGuidBinder.ConvertFromInterface(System.Object)">
-            <summary>
-            Performs the interface -> dictionary conversion for when the client code is attempting to write
-            into the "adapted" dictionary.
-            </summary>
-            <param name="value">The value to convert.</param>
-            <returns>The converted value.</returns>
-        </member>
-        <member name="P:Castle.Components.DictionaryAdapter.DictionaryAdapterStringToNullableGuidBinder.DictionaryType">
-            <summary>
-            The type expected for the value obtained from the dictionary.
-            </summary>
-        </member>
-        <member name="T:Castle.Components.DictionaryAdapter.DictionaryAdapterStringToNullableIntBinder">
-            <summary>
-            Performs property binding for converting string values into ints.
-            </summary>
-        </member>
-        <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterStringToNullableIntBinder.PerformConversionFromDictionary(System.Object)">
-            <summary>
-            Performs the dictionary -> interface conversion for when client code is attempting to read out
-            of the "adapted" dictionary.
-            </summary>
-            <param name="value">The string value to convert to the property type.</param>
-            <returns>The converted value.</returns>
-        </member>
-        <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterStringToNullableIntBinder.ConvertFromInterface(System.Object)">
-            <summary>
-            Performs the interface -> dictionary conversion for when the client code is attempting to write
-            into the "adapted" dictionary.
-            </summary>
-            <param name="value">The value to convert.</param>
-            <returns>The converted value.</returns>
-        </member>
-        <member name="P:Castle.Components.DictionaryAdapter.DictionaryAdapterStringToNullableIntBinder.DictionaryType">
-            <summary>
-            The type expected for the value obtained from the dictionary.
-            </summary>
-        </member>
         <member name="T:Castle.Components.DictionaryAdapter.DictionaryComponentAttribute">
             <summary>
             Identifies a property should be represented as a nested component.
@@ -243,6 +82,22 @@
             <param name="key">The current key.</param>
             <param name="property">The property.</param>
             <returns>The updated key</returns>
+        </member>
+        <member name="T:Castle.Components.DictionaryAdapter.IDictionaryPropertyGetter">
+            <summary>
+            Defines the contract for retrieving dictionary values.
+            </summary>
+        </member>
+        <member name="M:Castle.Components.DictionaryAdapter.IDictionaryPropertyGetter.GetPropertyValue(Castle.Components.DictionaryAdapter.IDictionaryAdapterFactory,System.Collections.IDictionary,System.String,System.Object,Castle.Components.DictionaryAdapter.PropertyDescriptor)">
+            <summary>
+            Gets the effective dictionary value.
+            </summary>
+            <param name="factory">The dictionary factory.</param>
+            <param name="dictionary">The dictionary.</param>
+            <param name="key">The key.</param>
+            <param name="storedValue">The stored value.</param>
+            <param name="property">The property.</param>
+            <returns>The effective property value.</returns>
         </member>
         <member name="P:Castle.Components.DictionaryAdapter.DictionaryComponentAttribute.NoPrefix">
             <summary>
@@ -304,6 +159,22 @@
             Identifies a property should be represented as a
             delimited string value.
             </summary>
+        </member>
+        <member name="T:Castle.Components.DictionaryAdapter.IDictionaryPropertySetter">
+            <summary>
+            Defines the contract for updating dictionary values.
+            </summary>
+        </member>
+        <member name="M:Castle.Components.DictionaryAdapter.IDictionaryPropertySetter.SetPropertyValue(Castle.Components.DictionaryAdapter.IDictionaryAdapterFactory,System.Collections.IDictionary,System.String,System.Object@,Castle.Components.DictionaryAdapter.PropertyDescriptor)">
+            <summary>
+            Sets the stored dictionary value.
+            </summary>
+            <param name="factory">The dictionary factory.</param>
+            <param name="dictionary">The dictionary.</param>
+            <param name="key">The key.</param>
+            <param name="value">The stored value.</param>
+            <param name="property">The property.</param>
+            <returns>true if the property should be stored.</returns>
         </member>
         <member name="P:Castle.Components.DictionaryAdapter.DictionaryStringListAttribute.Separator">
             <summary>
@@ -611,9 +482,55 @@
             <param name="y"></param>
             <returns></returns>
         </member>
+        <member name="T:Castle.Components.DictionaryAdapter.NameValueCollectionAdapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Castle.Components.DictionaryAdapter.NameValueCollectionAdapter.#ctor(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Components.DictionaryAdapter.NameValueCollectionAdapter"/> class.
+            </summary>
+            <param name="nameValues">The name values.</param>
+        </member>
+        <member name="M:Castle.Components.DictionaryAdapter.NameValueCollectionAdapter.Contains(System.Object)">
+            <summary>
+            Determines whether the <see cref="T:System.Collections.IDictionary"></see> object contains an element with the specified key.
+            </summary>
+            <param name="key">The key to locate in the <see cref="T:System.Collections.IDictionary"></see> object.</param>
+            <returns>
+            true if the <see cref="T:System.Collections.IDictionary"></see> contains an element with the key; otherwise, false.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">key is null. </exception>
+        </member>
+        <member name="M:Castle.Components.DictionaryAdapter.NameValueCollectionAdapter.Adapt(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Adapts the specified name values.
+            </summary>
+            <param name="nameValues">The name values.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Castle.Components.DictionaryAdapter.NameValueCollectionAdapter.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the <see cref="T:System.Collections.IDictionary"></see> object is read-only.
+            </summary>
+            <value></value>
+            <returns>true if the <see cref="T:System.Collections.IDictionary"></see> object is read-only; otherwise, false.</returns>
+        </member>
+        <member name="P:Castle.Components.DictionaryAdapter.NameValueCollectionAdapter.Item(System.Object)">
+            <summary>
+            Gets or sets the <see cref="T:System.Object"/> with the specified key.
+            </summary>
+            <value></value>
+        </member>
         <member name="T:Castle.Components.DictionaryAdapter.PropertyDescriptor">
             <summary>
             Describes a dictionary property.
+            </summary>
+        </member>
+        <member name="M:Castle.Components.DictionaryAdapter.PropertyDescriptor.#ctor">
+            <summary>
+            Initializes an empty <see cref="T:Castle.Components.DictionaryAdapter.PropertyDescriptor"/> class.
             </summary>
         </member>
         <member name="M:Castle.Components.DictionaryAdapter.PropertyDescriptor.#ctor(System.Reflection.PropertyInfo)">

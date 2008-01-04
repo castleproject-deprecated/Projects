@@ -45,14 +45,9 @@ namespace Castle.MonoRail.Views.AspView
 		PaginationHelper Pagination { get; }
 
 		/// <summary>
-		/// Gets the PrototypeHelper instance
-		/// </summary>
-		PrototypeHelper Prototype { get; }
-
-		/// <summary>
 		/// Gets the ScriptaculousHelper instance
 		/// </summary>
-		ScriptaculousHelper ScriptaculousHelper { get; }
+		ScriptaculousHelper Scriptaculous { get; }
 
 		/// <summary>
 		/// Gets the UrlHelper instance
@@ -62,12 +57,12 @@ namespace Castle.MonoRail.Views.AspView
 		/// <summary>
 		/// Gets the ValidationHelper instance
 		/// </summary>
-		ValidationHelper ValidationHelper { get; }
+		ValidationHelper Validation { get; }
 
 		/// <summary>
 		/// Gets the WizardHelper instance
 		/// </summary>
-		WizardHelper WizardHelper { get; }
+		WizardHelper Wizard { get; }
 
 		/// <summary>
 		/// Gets the ZebdaHelper instance

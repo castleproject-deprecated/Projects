@@ -31,8 +31,9 @@ namespace Castle.MonoRail.Views.AspView
 	{
 		protected IDictionaryAdapterFactory dictionaryAdapterFactory;
 		private IViewBaseInternal contentView;
-		private IRailsEngineContext context;
+		private IEngineContext context;
 		private IController controller;
+		private IControllerContext controllerContext;
 		private IHelpersAccesor helpers;
 		private bool initialized = false;
 		private TextWriter outputWriter;
@@ -239,7 +240,7 @@ namespace Castle.MonoRail.Views.AspView
 		protected void OutputSubView(string subViewName, TextWriter writer, IDictionary parameters)
 		{
 			string subViewFileName = GetSubViewFileName(subViewName);
-			AspViewBase subView = viewEngine.GetView(subViewFileName, writer, context, controller);
+			AspViewBase subView = viewEngine.GetView(subViewFileName, writer, context, controller, controllerContext);
 			if (parameters != null)
 				foreach (string key in parameters.Keys)
 					if (parameters[key] != null)
@@ -355,23 +356,23 @@ namespace Castle.MonoRail.Views.AspView
 			properties.Add("response", context.Response);
 			properties.Add("session", context.Session);
 			properties.Add("controller", controller);
-			if (controller.Resources != null)
-				foreach (string key in controller.Resources.Keys)
+			if (controllerContext.Resources != null)
+				foreach (string key in controllerContext.Resources.Keys)
 					if (key != null)
-						properties[key] = controller.Resources[key];
-			if (controller.Helpers != null)
-				foreach (string key in controller.Helpers.Keys)
+						properties[key] = controllerContext.Resources[key];
+			if (controllerContext.Helpers != null)
+				foreach (string key in controllerContext.Helpers.Keys)
 					if (key != null)
-						properties[key] = controller.Helpers[key];
-			if (controller.Params != null)
-				foreach (string key in context.Params.Keys)
+						properties[key] = controllerContext.Helpers[key];
+			if (context.Request.Params != null)
+				foreach (string key in context.Request.Params.Keys)
 					if (key != null)
-						properties[key] = context.Params[key];
+						properties[key] = context.Request.Params[key];
 			if (context.Flash != null)
 				foreach (DictionaryEntry entry in context.Flash)
 					properties[entry.Key.ToString()] = entry.Value;
-			if (controller.PropertyBag != null)
-				foreach (DictionaryEntry entry in controller.PropertyBag)
+			if (controllerContext.PropertyBag != null)
+				foreach (DictionaryEntry entry in controllerContext.PropertyBag)
 					properties[entry.Key.ToString()] = entry.Value;
 			properties["siteRoot"] = context.ApplicationPath ?? string.Empty;
 			properties["fullSiteRoot"] = context.Request.Uri != null
@@ -408,7 +409,7 @@ namespace Castle.MonoRail.Views.AspView
 		/// <summary>
 		/// Gets the current Rails context
 		/// </summary>
-		public IRailsEngineContext Context
+		public IEngineContext Context
 		{
 			get { return context; }
 		}
@@ -437,8 +438,8 @@ namespace Castle.MonoRail.Views.AspView
 			get { return parentView; }
 		}
 
-		public virtual void Initialize(AspViewEngine newViewEngine, TextWriter output, IRailsEngineContext newContext,
-		                               IController newController)
+		public virtual void Initialize(AspViewEngine newViewEngine, TextWriter output, IEngineContext newContext,
+		                               IController newController, IControllerContext newControllerContext)
 		{
 			if (initialized)
 				throw new ApplicationException("Sorry, but a view instance cannot be initialized twice");
@@ -447,6 +448,7 @@ namespace Castle.MonoRail.Views.AspView
 			outputWriter = output;
 			context = newContext;
 			controller = newController;
+			controllerContext = newControllerContext;
 			InitProperties();
 			dictionaryAdapterFactory = new DictionaryAdapterFactory();
 			outputWriters = new Stack<TextWriter>();

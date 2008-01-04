@@ -48,7 +48,7 @@ namespace Castle.MonoRail.Views.AspView
 		/// <summary>
 		/// Gets the current Rails context.
 		/// </summary>
-		IRailsEngineContext Context { get; }
+		IEngineContext Context { get; }
 
 		/// <summary>
 		/// Gets the controller which have asked for this view to be rendered.
@@ -67,8 +67,9 @@ namespace Castle.MonoRail.Views.AspView
 		/// <param name="output">The writer to which the view would be rendered.</param>
 		/// <param name="context">The rails engine content.</param>
 		/// <param name="controller">The controller which have asked for this view to be rendered.</param>
-		void Initialize(AspViewEngine viewEngine, TextWriter output, IRailsEngineContext context,
-		                IController controller);
+		/// <param name="controllerContext">The controller's context.</param>
+		void Initialize(AspViewEngine viewEngine, TextWriter output, IEngineContext context,
+						IController controller, IControllerContext controllerContext);
 
 		/// <summary>
 		/// When overriden in a concrete view class, renders the view content to the output writer.

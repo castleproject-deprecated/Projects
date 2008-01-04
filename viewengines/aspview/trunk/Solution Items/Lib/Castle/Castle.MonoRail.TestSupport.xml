@@ -4,286 +4,6 @@
         <name>Castle.MonoRail.TestSupport</name>
     </assembly>
     <members>
-        <member name="T:Castle.MonoRail.TestSupport.AbstractMRTestCase">
-            <summary>
-            Base class for tests cases using the ASP.Net Runtime 
-            to run the web project. Deprecated.
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.ReinstateRequest(System.Byte[])">
-            <summary>
-            Reinstates the request.
-            </summary>
-            <param name="serializedRequest">The serialized request.</param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.GetSerializedRequest">
-            <summary>
-            Gets the serialized request.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.DoGet(System.String,System.String[])">
-            <summary>
-            Performs a GET operation on the specified path.
-            </summary>
-            <example>
-            <code>
-            DoGet("home/index.rails");
-            </code>
-            </example>
-            <param name="path">The resource being request, for example <c>home/index.rails</c></param>
-            <param name="queryStringParams">A list of key/value pair, for example <c>name=johndoe</c></param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.DoGet(System.String,System.Boolean,System.String[])">
-            <summary>
-            Performs a GET operation on the specified path.
-            </summary>
-            <example><code>
-            DoGet("home/index.rails");</code>
-            </example>
-            <param name="path">The resource being request, for example <c>home/index.rails</c></param>
-            <param name="resendCookies">if set to <c>true</c> [resend cookies].</param>
-            <param name="queryStringParams">A list of key/value pair, for example <c>name=johndoe</c></param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.DoPost(System.String,System.String[])">
-            <summary>
-            Performs a POST operation on the specified path.
-            </summary>
-            <example>
-            <code>
-            DoPost("producto/search.rails", "name=mac", "page=1");
-            </code>
-            </example>
-            <param name="path">The resource being request, for example <c>home/index.rails</c></param>
-            <param name="postStringParams">A list of key/value pair, for example <c>name=johndoe</c></param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.DoPost(System.String,System.Boolean,System.String[])">
-            <summary>
-            Performs a POST operation on the specified path.
-            </summary>
-            <example>
-            <code>
-            DoPost("producto/search.rails", "name=mac", "page=1");
-            </code>
-            </example>
-            <param name="path">The resource being request, for example <c>home/index.rails</c></param>
-            <param name="resendCookies">if set to <c>true</c> [resend cookies].</param>
-            <param name="postStringParams">A list of key/value pair, for example <c>name=johndoe</c></param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.DoHead(System.String,System.String[])">
-            <summary>
-            Performs a HEAD operation on the specified path.
-            </summary>
-            <example>
-            <code>
-            DoHead("producto/search.rails", "name=mac", "page=1");
-            </code>
-            </example>
-            <param name="path">The resource being request, for example <c>home/index.rails</c></param>
-            <param name="postStringParams">A list of key/value pair, for example <c>name=johndoe</c></param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertResponseNodeCount(System.String,System.Int32)">
-            <summary>
-            Asserts that the response contains a number of nodes matching an XPath expression.
-            </summary>
-            <param name="xpathExpression">The xpath expression to match against.</param>
-            <param name="numberOfExpectedNodes">The number of expected nodes.</param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertNotRedirectedTo(System.String)">
-            <summary>
-            Asserts that the response was NOT a redirect to the specified
-            <c>url</c> - for example check that your request was not sent to a login screen.
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertSuccess">
-            <summary>
-            Asserts the return status code is less than 400
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertReplyEqualTo(System.String)">
-            <summary>
-            Asserts that reply has exactly the samme 
-            content of <c>expectedContents</c>
-            </summary>
-            <param name="expectedContents"></param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertReplyStartsWith(System.String)">
-            <summary>
-            Asserts that reply starts with 
-            <c>expectedContents</c>
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertReplyEndsWith(System.String)">
-            <summary>
-            Asserts that reply ends with 
-            <c>expectedContents</c>
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertReplyContains(System.String)">
-            <summary>
-            Asserts that reply contains the specified
-            <c>expectedContents</c>
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertReplyIsBlank">
-            <summary>
-            Asserts that reply have only whitespace characters
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertReplyMatch(System.String)">
-            <summary>
-            Asserts that reply contents match the specified pattern, ignoring any whitespaces
-            <c>pattern</c>
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertReplyMatch(System.String,System.Boolean)">
-            <summary>
-            Asserts that reply contents match the specified pattern
-            <c>pattern</c>
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertReplyMatch(System.String,System.Boolean,System.Text.RegularExpressions.RegexOptions)">
-            <summary>
-            Asserts that reply contents match the specified pattern
-            <c>pattern</c>
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertReplyDoesNotContain(System.String)">
-            <summary>
-            Asserts that reply does not contain
-            <c>expectedContents</c>
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertRedirectedTo(System.String)">
-            <summary>
-            Asserts that the response was a redirect to the specified
-            <c>url</c>
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertContentTypeEqualsTo(System.String)">
-            <summary>
-            Asserts that the content-type header is equals to the specified
-            value
-            </summary>
-            <param name="expectedContentType">value to assert to</param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertContentTypeStartsWith(System.String)">
-            <summary>
-            Asserts that the content-type header starts with to the specified
-            value
-            </summary>
-            <param name="expectedContentType">value to assert to</param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertContentTypeEndsWith(System.String)">
-            <summary>
-            Asserts that the content-type header ends with the specified
-            value
-            </summary>
-            <param name="expectedContentType">value to assert to</param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertHasHeader(System.String)">
-            <summary>
-            Asserts that response contains the specified header.
-            </summary>
-            <param name="headerName">value to assert to</param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertPropertyBagContains(System.String)">
-            <summary>
-            Asserts that PropertyBag contains the specified key.
-            </summary>
-            <param name="entryKey">key name</param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertPropertyBagEntryEquals(System.String,System.Object)">
-            <summary>
-            Asserts that PropertyBag's entry value equals to the specified value.
-            </summary>
-            <param name="entryKey">key name</param>
-            <param name="expectedValue">value to assert to</param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertFlashContains(System.String)">
-            <summary>
-            Asserts that Flash contains the specified key.
-            </summary>
-            <param name="entryKey">key name</param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertFlashDoesNotContain(System.String)">
-            <summary>
-            Asserts that Flash does not contains the specified key.
-            </summary>
-            <param name="entryKey">key name</param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertFlashEntryEquals(System.String,System.Object)">
-            <summary>
-            Asserts that Flash's entry value equals to the specified value.
-            </summary>
-            <param name="entryKey">key name</param>
-            <param name="expectedValue">value to assert to</param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertSessionContains(System.String)">
-            <summary>
-            Asserts that Session contains the specified key.
-            </summary>
-            <param name="entryKey">key name</param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertSessionDoesNotContain(System.String)">
-            <summary>
-            Asserts that Session does not contains the specified key.
-            </summary>
-            <param name="entryKey">key name</param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertSessionEntryEqualsTo(System.String,System.Object)">
-            <summary>
-            Asserts that Session's entry value equals to the specified value.
-            </summary>
-            <param name="entryKey">key name</param>
-            <param name="expectedValue">value to assert to</param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertHasCookie(System.String)">
-            <summary>
-            Asserts that the response contains the specified cookie.
-            </summary>
-            <param name="cookieName">cookie name</param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertCookieValueEqualsTo(System.String,System.String)">
-            <summary>
-            Asserts that Response cookie entry value equals to the specified value.
-            </summary>
-            <param name="cookieName">cookie name</param>
-            <param name="expectedValue">value to assert to</param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.AssertCookieExpirationEqualsTo(System.String,System.DateTime)">
-            <summary>
-            Asserts that the response cookie has the specified expiration.
-            </summary>
-            <param name="cookieName">cookie name</param>
-            <param name="expectedExpiration">value to assert to</param>
-        </member>
-        <member name="M:Castle.MonoRail.TestSupport.AbstractMRTestCase.ResendCookies">
-            <summary>
-            Ensures that cookies (and therefore the session) will persist between requests,
-            emulating the behaviour of a genuine web client.
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.TestSupport.AbstractMRTestCase.Request">
-            <summary>
-            Gets the <c>TestRequest</c>
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.TestSupport.AbstractMRTestCase.Response">
-            <summary>
-            Gets the <c>TestResponse</c>
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.TestSupport.AbstractMRTestCase.Output">
-            <summary>
-            Gets the request response
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.TestSupport.AbstractMRTestCase.SessionId">
-            <summary>
-            Returns the sessionId related to the current session
-            </summary>
-        </member>
         <member name="T:Castle.MonoRail.TestSupport.BaseControllerTest">
             <summary>
             Base class that set ups the necessary infrastructure 
@@ -422,7 +142,7 @@
             <param name="actionName">Name of the action.</param>
             <param name="contextInitializer">The context initializer.</param>
         </member>
-        <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.BuildRailsContext(System.String,System.String,System.String)">
+        <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.BuildEngineContext(System.String,System.String,System.String)">
             <summary>
             Constructs a mock context.
             </summary>
@@ -430,7 +150,7 @@
             <param name="controllerName">Name of the controller.</param>
             <param name="actionName">Name of the action.</param>
         </member>
-        <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.BuildRailsContext(System.String,System.String,System.String,Castle.MonoRail.TestSupport.ContextInitializer)">
+        <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.BuildEngineContext(System.String,System.String,System.String,Castle.MonoRail.TestSupport.ContextInitializer)">
             <summary>
             Constructs a mock context.
             </summary>
@@ -442,6 +162,12 @@
         <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.BuildRequest">
             <summary>
             Builds the request.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.BuildServices">
+            <summary>
+            Builds the services.
             </summary>
             <returns></returns>
         </member>
@@ -457,13 +183,14 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.BuildRailsEngineContext(Castle.MonoRail.Framework.IRequest,Castle.MonoRail.Framework.IResponse,Castle.MonoRail.Framework.ITrace,Castle.MonoRail.Framework.UrlInfo)">
+        <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.BuildRailsEngineContext(Castle.MonoRail.Framework.IRequest,Castle.MonoRail.Framework.IResponse,Castle.MonoRail.Framework.IMonoRailServices,Castle.MonoRail.Framework.ITrace,Castle.MonoRail.Framework.UrlInfo)">
             <summary>
-            Builds the a mock context. You can override this method to 
+            Builds the a mock context. You can override this method to
             create a special configured mock context.
             </summary>
             <param name="request">The request.</param>
             <param name="response">The response.</param>
+            <param name="services">The services.</param>
             <param name="trace">The trace.</param>
             <param name="urlInfo">The URL info.</param>
             <returns></returns>
@@ -477,11 +204,11 @@
             <param name="actionName">Name of the action.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.InitializeRailsEngineContext(Castle.MonoRail.Framework.Test.MockRailsEngineContext)">
+        <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.InitializeEngineContext(Castle.MonoRail.Framework.Test.MockEngineContext)">
             <summary>
-            Allows modifying of the engine context created by <see cref="M:Castle.MonoRail.TestSupport.BaseControllerTest.BuildRailsEngineContext(Castle.MonoRail.Framework.IRequest,Castle.MonoRail.Framework.IResponse,Castle.MonoRail.Framework.ITrace,Castle.MonoRail.Framework.UrlInfo)"/>
+            Allows modifying of the engine context created by <see cref="M:Castle.MonoRail.TestSupport.BaseControllerTest.BuildRailsEngineContext(Castle.MonoRail.Framework.IRequest,Castle.MonoRail.Framework.IResponse,Castle.MonoRail.Framework.IMonoRailServices,Castle.MonoRail.Framework.ITrace,Castle.MonoRail.Framework.UrlInfo)"/>
             </summary>
-            <param name="mockRailsEngineContext">The engine context to modify</param>
+            <param name="mockEngineContext">The engine context to modify</param>
         </member>
         <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.HasRenderedEmailTemplateNamed(System.String)">
             <summary>
@@ -521,6 +248,18 @@
             Gets the trace.
             </summary>
             <value>The trace.</value>
+        </member>
+        <member name="P:Castle.MonoRail.TestSupport.BaseControllerTest.ControllerContext">
+            <summary>
+            Gets the controller context.
+            </summary>
+            <value>The controller context.</value>
+        </member>
+        <member name="P:Castle.MonoRail.TestSupport.BaseControllerTest.Services">
+            <summary>
+            Gets the services.
+            </summary>
+            <value>The services.</value>
         </member>
         <member name="P:Castle.MonoRail.TestSupport.BaseControllerTest.MessagesSent">
             <summary>
@@ -674,11 +413,6 @@
         <member name="M:Castle.MonoRail.TestSupport.GenericBaseWizardStepTest`2.RunRenderWizardView">
             <summary>
             Runs the step render method.
-            </summary>
-        </member>
-        <member name="T:Castle.MonoRail.TestSupport.MonoRailTestWorkerRequest">
-            <summary>
-            Used to integrate with the ASP.Net Runtime
             </summary>
         </member>
         <member name="T:Castle.MonoRail.TestSupport.WebServer">
