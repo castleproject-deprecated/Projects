@@ -1,6 +1,6 @@
 ﻿
 #region License
-// Copyright (c) 2007, James M. Curran
+// Copyright (c) 2007-2008, James M. Curran
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -38,6 +38,37 @@ namespace Castle.MonoRail.ViewComponents
         {
             string content = String.Format(format, args);
             base.RenderText(content);
+        }
+
+
+        /// <summary>
+        /// Renders the optional section, or the default text, if section not present.
+        /// </summary>
+        /// <param name="section">The section.</param>
+        /// <param name="defaultText">The default text.</param>
+        protected bool RenderOptionalSection(string section, string defaultText)
+        {
+            if (Context.HasSection(section))
+            {
+                Context.RenderSection(section);
+				return true;
+            }
+            RenderText(defaultText);
+			return false;
+        }
+
+        /// <summary>
+        /// Renders the optional section.
+        /// </summary>
+        /// <param name="section">The section.</param>
+        protected bool RenderOptionalSection(string section)
+        {
+            if (Context.HasSection(section))
+            {
+                Context.RenderSection(section);
+				return true;
+            }
+			return false;
         }
 
         /// <summary>
@@ -89,6 +120,16 @@ namespace Castle.MonoRail.ViewComponents
             return value;
         }
 
+        /// <summary>
+        /// Makes an unique id.
+        /// </summary>
+        /// <remarks>The given prefix is prepended to the generated number.
+        /// The ID isn't actual guarenteed to be unique (which would require
+        /// using all 32 digits of the guid). But this produce ids sufficently
+        /// distinctive to generate multiple controls on a page.
+        /// </remarks>
+        /// <param name="prefix">The prefix.</param>
+        /// <returns>A string usable as a Html element Id</returns>
         public string MakeUniqueId(string prefix)
         {
             byte[] bytes = Guid.NewGuid().ToByteArray();

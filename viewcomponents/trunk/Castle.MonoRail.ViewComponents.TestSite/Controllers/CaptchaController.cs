@@ -8,5 +8,12 @@ namespace Castle.MonoRail.ViewComponents.TestSite.Controllers
 		public void Index()
 		{
 		}
+
+		[AccessibleThrough(Verb.Post)]
+		public void TestValue()
+		{
+			 PropertyBag["IsCorrect"] =
+				CaptchaComponent.IsValid(this)  ? "Correct" : "WRONG";
+		}
 	}
 }

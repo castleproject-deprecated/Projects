@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+﻿// Copyright 2004-2008 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,29 +20,24 @@ namespace Castle.MonoRail.ViewComponents
 	using Castle.MonoRail.Framework;
 	using Castle.MonoRail.Framework.Helpers;
 
-	public class GridComponent : ViewComponent
+    /// <summary>
+    /// The grid component is simple component, similar to the WebForms Repeater in style.
+    /// It can take an IEnumerable data source and render it on the view. 
+    /// The Grid Component is intentionally very simple and bare bones components, 
+    /// it has very few capabilities, but it is very flexible.                                                     <para/>
+    /// It handles rendering of sections, alternate lines, and pagination (using IPaginatedPage) 
+    /// automatically, but it leaves all the markup generation to the user.             <para/>
+    /// 
+    /// Full documentation and examples at:
+    /// http://using.castleproject.org/display/Contrib/Grid+Component
+    /// 
+    /// </summary>
+    [ViewComponentDetails("Grid",Sections="header,footer,pagination,empty,item,alternateItem,tablestart,tableend,paginationLink")]
+	public class GridComponent : ViewComponentEx
 	{
-		private static readonly string[] sections = new string[]
-			{
-				"header", "footer",
-				"pagination", "empty",
-				"item", "alternateItem",
-				"tablestart", "tableend",
-				"paginationLink",
-			};
-
-		public override bool SupportsSection(string name)
-		{
-			foreach(string section in sections)
-			{
-				if (section.Equals(name, StringComparison.InvariantCultureIgnoreCase))
-				{
-					return true;
-				}
-			}
-			return false;
-		}
-
+        /// <summary>
+        /// Renders this instance.
+        /// </summary>
 		public override void Render()
 		{
 			IEnumerable source = ComponentParams["source"] as IEnumerable;
@@ -53,18 +48,18 @@ namespace Castle.MonoRail.ViewComponents
 					"The grid requires a view component parameter named 'source' which should contain 'IEnumerable' instance");
 			}
 
-			ShowStartTable();
-			ShowHeader(source);
+            RenderOptionalSection("tablestart", "<table class='grid' cellspacing='0' cellpadding='0'>");
+            ShowHeader(source);
 
 			bool hasItems = ShowRows(source);
 
-			ShowFooter();
-			ShowEndTable();
+            RenderOptionalSection("footer");
+            RenderOptionalSection("tableend", "</table>");
 
 			if (hasItems == false)
 			{
-				ShowEmpty();
-			}
+                RenderOptionalSection("empty", "Grid has no data");
+            }
 
 			IPaginatedPage page = source as IPaginatedPage;
 			
@@ -102,18 +97,6 @@ namespace Castle.MonoRail.ViewComponents
 			}
 			
 			return hasItems;
-		}
-
-		private void ShowEmpty()
-		{
-			if (Context.HasSection("empty"))
-			{
-				Context.RenderSection("empty");
-			}
-			else
-			{
-				RenderText("Grid has no data");
-			}
 		}
 
 		private void ShowPagination(IPaginatedPage page)
@@ -209,44 +192,13 @@ Showing {0} - {1} of {2}
 			return table;
 		}
 
-		private void ShowStartTable()
-		{
-			if (Context.HasSection("tablestart"))
-			{
-				Context.RenderSection("tablestart");
-			}
-			else
-			{
-				RenderText("<table class='grid' cellspacing='0' cellpadding='0'>");
-			}
-		}
-
-		private void ShowEndTable()
-		{
-			if (Context.HasSection("tableend"))
-			{
-				Context.RenderSection("tableend");
-			}
-			else
-			{
-				RenderText("</table>");
-			}
-		}
-
-		private void ShowFooter()
-		{
-			if (Context.HasSection("footer"))
-			{
-				Context.RenderSection("footer");
-			}
-		}
-
+        /// <summary>
+        /// Shows the header.
+        /// </summary>
+        /// <param name="source">The source.</param>
 		protected virtual void ShowHeader(IEnumerable source)
 		{
-			if (Context.HasSection("header") == false)
-			{
-				throw new ViewComponentException("A GridComponent must has a header");
-			}
+            ConfirmSectionPresent("header");
 			Context.RenderSection("header");
 		}
 	}

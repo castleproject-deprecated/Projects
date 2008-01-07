@@ -1,4 +1,4 @@
-// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2008 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,20 +22,9 @@ namespace Castle.MonoRail.ViewComponents
     /// <summary>
     /// A ViewComponent that renders a collapsible panel.
     /// </summary>
+    [ViewComponentDetails("CollapsiblePanel",Sections="body,caption")]
     public class CollapsiblePanelComponent : ViewComponentEx
     {
-        private static readonly string[] sections = new string[] { "body", "caption", };
-
-        public override bool SupportsSection(string name)
-        {
-            foreach (string section in sections)
-            {
-                if (section.Equals(name, StringComparison.InvariantCultureIgnoreCase))
-                    return true;
-            }
-            return false;
-        }
-
         private string javascriptFunctionName;
         private const string wasScriptaculousInstalledKey = "wasScriptaculousInstalled";
 
@@ -58,6 +47,9 @@ namespace Castle.MonoRail.ViewComponents
         private string effect;
         private double effectDuration;
 
+        /// <summary>
+        /// Initializes this instance.
+        /// </summary>
         public override void Initialize()
         {
             GetParameters();
@@ -96,6 +88,9 @@ namespace Castle.MonoRail.ViewComponents
             javascriptFunctionName = string.Format("expandCollapse_{0}", id);
         }
 
+        /// <summary>
+        /// Renders this instance.
+        /// </summary>
         public override void Render()
         {
             RenderComponent();
@@ -123,8 +118,7 @@ namespace Castle.MonoRail.ViewComponents
         {
             if (Context.ContextVars[wasScriptaculousInstalledKey] as bool? != true)
             {
-                ScriptaculousHelper helper = new ScriptaculousHelper();
-                helper.SetController(RailsContext.CurrentController as Controller);
+				ScriptaculousHelper helper = new ScriptaculousHelper(EngineContext);
                 RenderTextFormat("\r\n{0}\r\n", helper.InstallScripts());
                 Context.ContextVars[wasScriptaculousInstalledKey] = true;
             }
@@ -184,8 +178,10 @@ namespace Castle.MonoRail.ViewComponents
         {
             get
             {
-                return string.Format(
-@"
+				if (!toggleOnClickHeader)
+				{
+					return string.Format(
+	@"
 function {0}(controlName, togglerName)
 {{
     new Effect.toggle(controlName, '{1}', {{duration:{2}}});
@@ -200,14 +196,28 @@ function {0}(controlName, togglerName)
     }}
 }}
 ",
-                javascriptFunctionName, 
-                effect, 
-                effectDuration,
-                useImage ? "alt" : "innerHTML",
-                collapseLinkText,
-                expandLinkText,
-                useImage ? string.Format(" toggler.src = '{0}';", expandImagePath) : null,
-                useImage ? string.Format(" toggler.src = '{0}';", collapseImagePath) : null);
+					javascriptFunctionName,
+					effect,
+					effectDuration,
+					useImage ? "alt" : "innerHTML",
+					collapseLinkText,
+					expandLinkText,
+					useImage ? string.Format(" toggler.src = '{0}';", expandImagePath) : null,
+					useImage ? string.Format(" toggler.src = '{0}';", collapseImagePath) : null);
+				}
+				else
+				{
+					return string.Format(
+	@"
+function {0}(controlName, togglerName)
+{{
+    new Effect.toggle(controlName, '{1}', {{duration:{2}}});
+}}
+",
+					javascriptFunctionName,
+					effect,
+					effectDuration);
+				}
             }
         }
     }

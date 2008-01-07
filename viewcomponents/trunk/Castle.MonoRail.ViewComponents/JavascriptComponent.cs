@@ -555,6 +555,7 @@ namespace Castle.MonoRail.ViewComponents
     /// See <see cref="JavascriptComponent"/> for an example of usage.
     /// </example>
     /// <seealso cref="JavascriptHelper"/> <seealso cref="JavascriptComponent"/>
+//	[ViewComponentDetails("InsertJavascriptComponent")]
     public class InsertJavascriptComponent : ViewComponentEx
     {
         JavascriptHelper helper;

@@ -500,7 +500,7 @@ namespace Castle.MonoRail.ViewComponents
         /// <summary>
         /// Builds the item.
         /// </summary>
-        /// <remarks> This attempts to always "do the right thins", hence, if javascript is enabled,
+        /// <remarks> This attempts to always "do the right thing", hence, if javascript is enabled,
         /// the answer is hidden, and clicking the question reveals it.  However, if Javascript is disabled,
         /// that won't work, so the answer must always be display. But, at rendering time, we have no way of knowing
         /// if Javascript is enabled or not, and, when displayed in the browser, we cannot define a "no scripting" 

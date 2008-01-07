@@ -1,4 +1,5 @@
 // Copyright 2007 WickedNite Productions - http://www.wickednite.com/
+#region License
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,10 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License
 
+#endregion
 
 
 namespace Castle.MonoRail.ViewComponents
 {
+    #region References
     using System;
     using System.Collections.Generic;
     using System.Configuration;
@@ -27,12 +30,144 @@ namespace Castle.MonoRail.ViewComponents
     using System.Web.UI;
     using Castle.MonoRail.Framework;
     using Castle.MonoRail.Framework.Helpers;
-    
-    
+    #endregion
+
+    /// <summary>
+    /// ViewComponent to create a CAPTCHA ("<i>Completely Automated Public 
+    /// Turing test to tell Computers and Humans Apart</i>") HTML form.
+    /// </summary>
+    /// <remarks>Can be used as a line component (create a asimple form) 
+    /// or as a block component where the layout of the form is specified. <para/>
+    /// 
+    /// Requires <see cref="CaptchaImageHandler"/> to be installed as a httpHandler. (see examples) <para />
+    /// Based on the techniques described in these articles:                          <para/>
+    /// <i>CAPTCHA Image</i> By "BrainJar"                                                   <para/>
+    /// http://www.codeproject.com/aspnet/CaptchaControl.asp                          <para/>
+    /// and                                                                           <para/>
+    /// <i>A CAPTCHA Server Control for ASP.NET</i> By "wumpus1" (aka Jeff Atwood, www.codinghorror.com) <para/>
+    /// http://www.codeproject.com/aspnet/CaptchaImage.asp                            <para/>
+    /// 
+    /// <list type="table">
+    /// <listheader>
+    ///     <term>Component property</term>
+    ///     <description>Description</description>
+    /// </listheader>
+    /// <item>
+    /// <term>               Id                   </term>
+    /// <description>string, id used to create data id and text field id, defaults to "captcha" </description>
+    /// </item>
+    /// <item>
+    /// <term>              ForegroundColor      </term>
+    /// <description>string, defaults to "#000000" (black)</description>
+    /// </item>
+    /// <item>
+    /// <term>              BackgroundColor      </term>
+    /// <description>string, defaults to "#FFFFFF" (white)</description>
+    /// </item>
+    /// <item>
+    /// <term>              ForegroundNoiseColor      </term>
+    /// <description>string, defaults to "#CCCCCC" (a light grey) </description>
+    /// </item>
+    /// <item>
+    /// <term>              BackgroundNoiseColor      </term>
+    /// <description>string defaults to "#666666" (a darker greenish grey)</description>
+    /// </item>
+    /// <item>
+    /// <term>              Width      </term>
+    /// <description>int, defaults to 256</description>
+    /// </item>
+    /// <item>
+    /// <term>              Height      </term>
+    /// <description>int, defaults to 64</description>
+    /// </item>
+    /// <item>
+    /// <term>              Length      </term>
+    /// <description>int, the number of characters in the image. defaults to 4.</description>
+    /// </item>
+    /// <item>
+    /// <term>              FontWarp      </term>
+    /// <description>(int 0 - 4), defaults to 1</description>
+    /// </item>
+    /// <item>
+    /// <term>              Url      </term>
+    /// <description>string, defaults to "captchaimage.ashx?d={0}"</description>
+    /// </item>
+    /// <item>
+    /// <term>              Letters      </term>
+    /// <description>string, Characters used to create the image. defaults to A-Z and 0-9</description>
+    /// </item>
+    /// <item>
+    /// <term>              ValidFor      </term>
+    /// <description>int, Minutes that the image is valid for, defaults to 15</description>
+    /// </item>
+    /// </list>
+    /// <list type="table">
+    /// <listheader><term>View Variable</term><description>Description</description>
+    /// </listheader>
+    /// <item>
+    /// <term>               DataId                   </term>
+    /// <description>id of data field</description>
+    /// </item>
+    /// <item>
+    /// <term>               FieldId                   </term>
+    /// <description>id of text field</description>
+    /// </item>
+    /// <item>
+    /// <term>               width                   </term>
+    /// <description> </description>
+    /// </item>
+    /// <item>
+    /// <term>               height                   </term>
+    /// <description> </description>
+    /// </item>
+    /// <item>
+    /// <term>               data                   </term>
+    /// <description>encrypted data for validation</description>
+    /// </item>
+    /// <item>
+    /// <term>               url                   </term>
+    /// <description>url to image</description>
+    /// </item>
+    /// </list>
+    /// </remarks>
+    /// <example>
+    /// Add to httpHandlers section of Web.config
+    /// <code><![CDATA[
+    /// <add verb="*" path="captchaimage.aspx" 
+    ///     type="Castle.MonoRail.ViewComponents.CaptchaImageHandler, Castle.MonoRail.ViewcComponents"/> 
+    /// ]]></code>
+    /// 
+    /// From your view (short version, brail): 
+    /// <code><![CDATA[
+    /// <% component CaptchaComponent, { } %> 
+    /// ]]></code>
+    /// From your controller (to validate - short version): 
+    /// <code><![CDATA[
+    /// CaptchaComponent.IsValid() 
+    /// ]]></code>
+    ///
+    /// From your view (longer version): 
+    /// <code><![CDATA[
+    /// <% component CaptchaComponent, { 'id' : 'two', 'foregroundColor' : '#00FF00', 'fontWarp' : 3 }: %> 
+    /// <% section template: %> 
+    ///    ${FormHelper.HiddenField(dataId, data)} 
+    ///    <img src="${url}" alt="captcha" width="${width}" height="${height}" /> 
+    ///    ${FormHelper.TextField(fieldId)} 
+    /// <% end %> 
+    /// <% end %> 
+    /// ]]></code>
+    ///
+    /// From your controller (to validate - longer version): 
+    /// <code><![CDATA[
+    ///   CaptchaComponent.IsValid("two") 
+    /// ]]></code>
+    /// 
+    /// </example>
     [ViewComponentDetails("CaptchaComponent", Sections = "template")]
 	public class CaptchaComponent : ViewComponent
-	{
-		private string m_id = "captcha";
+    {
+        #region private Instance fields
+        private string m_id = "captcha";
 		private string m_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		private string m_url = "captchaimage.ashx?d={0}";
 		private string m_data;
@@ -45,7 +180,11 @@ namespace Castle.MonoRail.ViewComponents
 		private int m_height = 64;
 		private int m_length = 4;
 		private int m_validFor = 15;
+#endregion
 
+        /// <summary>
+        /// Handles Encrypting &amp; Decrypting text.
+        /// </summary>
 		public class EncryptionHelper
 		{
 			private static object s_syncRoot = new object();
@@ -83,6 +222,11 @@ namespace Castle.MonoRail.ViewComponents
 				return new Pair(iv, key);
 			}
 
+            /// <summary>
+            /// Encrypts the specified plain text.
+            /// </summary>
+            /// <param name="plain">The plain text.</param>
+            /// <returns></returns>
 			public static string Encrypt(string plain)
 			{
 				lock(s_syncRoot)
@@ -106,6 +250,11 @@ namespace Castle.MonoRail.ViewComponents
 				}
 			}
 
+            /// <summary>
+            /// Decrypts the specified cypher  text.
+            /// </summary>
+            /// <param name="cypher">The cypher.</param>
+            /// <returns></returns>
 			public static string Decrypt(string cypher)
 			{
 				lock(s_syncRoot)
@@ -128,6 +277,10 @@ namespace Castle.MonoRail.ViewComponents
 			}
 		}
 
+        /// <summary>
+        /// Gets or sets id used to create data id and text field id, defaults to "captcha"
+        /// </summary>
+        /// <value>The id.</value>
 		[ViewComponentParam]
 		public string Id
 		{
@@ -135,11 +288,19 @@ namespace Castle.MonoRail.ViewComponents
 			set { m_id = value; }
 		}
 
+        /// <summary>
+        /// Gets the id of data field.
+        /// </summary>
+        /// <value>The data id.</value>
 		public string DataId
 		{
 			get { return Id + "_data"; }
 		}
 
+        /// <summary>
+        /// Gets or sets the Characters used to create the image. defaults to A-Z and 0-9.
+        /// </summary>
+        /// <value>The letters.</value>
 		[ViewComponentParam]
 		public string Letters
 		{
@@ -147,6 +308,10 @@ namespace Castle.MonoRail.ViewComponents
 			set { m_letters = value; }
 		}
 
+        /// <summary>
+        /// Gets or sets the width.
+        /// </summary>
+        /// <value>The width.</value>
 		[ViewComponentParam]
 		public int Width
 		{
@@ -154,6 +319,10 @@ namespace Castle.MonoRail.ViewComponents
 			set { m_width = value; }
 		}
 
+        /// <summary>
+        /// Gets or sets the height.
+        /// </summary>
+        /// <value>The height.</value>
 		[ViewComponentParam]
 		public int Height
 		{
@@ -161,6 +330,10 @@ namespace Castle.MonoRail.ViewComponents
 			set { m_height = value; }
 		}
 
+        /// <summary>
+        /// Gets or sets the number of characters in the image..
+        /// </summary>
+        /// <value>The length.</value>
 		[ViewComponentParam]
 		public int Length
 		{
@@ -168,6 +341,10 @@ namespace Castle.MonoRail.ViewComponents
 			set { m_length = value; }
 		}
 
+        /// <summary>
+        /// Gets or sets the URL. defaults to "captchaimage.ashx?d={0}"
+        /// </summary>
+        /// <value>The URL.</value>
 		[ViewComponentParam]
 		public string Url
 		{
@@ -175,12 +352,20 @@ namespace Castle.MonoRail.ViewComponents
 			set { m_url = value; }
 		}
 
+        /// <summary>
+        /// Gets or sets the encrypted data for validation.
+        /// </summary>
+        /// <value>The data.</value>
 		public string Data
 		{
 			get { return m_data; }
 			set { m_data = value; }
 		}
 
+        /// <summary>
+        /// Gets or sets the color of the foreground. defaults to "#000000"
+        /// </summary>
+        /// <value>The color of the foreground.</value>
 		[ViewComponentParam]
 		public string ForegroundColor
 		{
@@ -188,6 +373,10 @@ namespace Castle.MonoRail.ViewComponents
 			set { m_foregroundColor = value; }
 		}
 
+        /// <summary>
+        /// Gets or sets the color of the background, defaults to "#FFFFFF" 
+        /// </summary>
+        /// <value>The color of the background.</value>
 		[ViewComponentParam]
 		public string BackgroundColor
 		{
@@ -195,6 +384,10 @@ namespace Castle.MonoRail.ViewComponents
 			set { m_backgroundColor = value; }
 		}
 
+        /// <summary>
+        /// Gets or sets the color of the background noise. defaults to "#666666" (a darker greenish grey)
+        /// </summary>
+        /// <value>The color of the background noise.</value>
 		[ViewComponentParam]
 		public string BackgroundNoiseColor
 		{
@@ -202,6 +395,10 @@ namespace Castle.MonoRail.ViewComponents
 			set { m_backgroundNoiseColor = value; }
 		}
 
+        /// <summary>
+        /// Gets or sets the color of the foreground noise, defaults to "#CCCCCC" (a light grey)
+        /// </summary>
+        /// <value>The color of the foreground noise.</value>
 		[ViewComponentParam]
 		public string ForegroundNoiseColor
 		{
@@ -209,6 +406,10 @@ namespace Castle.MonoRail.ViewComponents
 			set { m_foregroundNoiseColor = value; }
 		}
 
+        /// <summary>
+        /// Gets or sets the font warp. (int 0 - 4), defaults to 1
+        /// </summary>
+        /// <value>The font warp.</value>
 		[ViewComponentParam]
 		public int FontWarp
 		{
@@ -216,6 +417,10 @@ namespace Castle.MonoRail.ViewComponents
 			set { m_fontWarp = value; }
 		}
 
+        /// <summary>
+        /// Gets or sets the Minutes that the image is valid for, defaults to 15.
+        /// </summary>
+        /// <value>The valid for.</value>
 		[ViewComponentParam]
 		public int ValidFor
 		{
@@ -223,6 +428,9 @@ namespace Castle.MonoRail.ViewComponents
 			set { m_validFor = value; }
 		}
 
+        /// <summary>
+        /// Renders this instance.
+        /// </summary>
 		public override void Render()
 		{
 			string sequence = GenerateRandomSequence();
@@ -238,8 +446,7 @@ namespace Castle.MonoRail.ViewComponents
 			captchaParameters["fontWarp"] = FontWarp.ToString();
 
 			Data = EncryptionHelper.Encrypt(
-				String.Concat(sequence, "|", 
-							  DateTime.Now.AddMinutes(ValidFor).ToString("yyyyMMddHHmmss")));
+				sequence+"|"+ DateTime.Now.AddMinutes(ValidFor).ToString("yyyyMMddHHmmss"));
 
 			PropertyBag["fieldId"] = Id;
 			PropertyBag["dataId"] = DataId;
@@ -259,6 +466,11 @@ namespace Castle.MonoRail.ViewComponents
 			}
 		}
 
+        /// <summary>
+        /// Packs the parameters.
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns></returns>
 		public static string PackParameters(IDictionary<string, string> parameters)
 		{
 			StringBuilder output = new StringBuilder();
@@ -270,11 +482,15 @@ namespace Castle.MonoRail.ViewComponents
 					output.AppendFormat(String.Format("{0}={1}&", key, HttpUtility.UrlEncode(parameters[key])));
 				}
 			}
-
-			string text = output.ToString();
-			return EncryptionHelper.Encrypt(text.Substring(0, text.Length - 1)); //remove the trailing & and encrypt
+            output.Length--;        //remove the trailing & 
+			return EncryptionHelper.Encrypt(output.ToString()); 
 		}
 
+        /// <summary>
+        /// Unpacks the parameters.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <returns></returns>
 		public static Dictionary<string, string> UnpackParameters(string text)
 		{
 			Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -295,11 +511,9 @@ namespace Castle.MonoRail.ViewComponents
 		private void Show()
 		{
 			FormHelper form = new FormHelper();
-			HtmlHelper html = new HtmlHelper();
-            Controller controller = MonoRailHttpHandler.CurrentContext.CurrentController as Controller;
-
-            form.SetController(controller);
-            html.SetController(controller);
+			
+			form.SetController(EngineContext.CurrentController, EngineContext.CurrentControllerContext);
+			form.SetContext(EngineContext);
 
 			StringBuilder output = new StringBuilder();
 			output.Append(form.HiddenField(DataId, Data));
@@ -326,25 +540,60 @@ namespace Castle.MonoRail.ViewComponents
 			return sequence.ToString();
 		}
 
-		public static bool IsValid()
-		{
-			return IsValid(MonoRailHttpHandler.CurrentContext.CurrentController, "captcha");
-		}
+        /// <summary>
+        /// Determines whether the Captcha response is correct.
+        /// </summary>
+        /// <returns>
+        /// 	<c>true</c> if this instance is valid; otherwise, <c>false</c>.
+        /// </returns>
+		//public static bool IsValid()
+		//{
+		//    return IsValid(MonoRailHttpHandler.CurrentContext.CurrentController, "captcha");
+		//}
 
-		public static bool IsValid(string id)
-		{
-			return IsValid(MonoRailHttpHandler.CurrentContext.CurrentController, id);
-		}
-
-		public static bool IsValid(IController controller)
+		public static bool IsValid(Controller controller)
 		{
 			return IsValid(controller, "captcha");
 		}
 
-		public static bool IsValid(IController controller, string id)
+		/// <summary>
+		/// Determines whether the Captcha response for the specified id is valid.
+		/// </summary>
+		/// <param name="controller">The controller.</param>
+		/// <param name="id">The id.</param>
+		/// <returns>
+		/// 	<c>true</c> if the specified id is valid; otherwise, <c>false</c>.
+		/// </returns>
+		public static bool IsValid(Controller controller, string id)
 		{
-			string input = controller.Form[id];
-			string data = controller.Form[id + "_data"];
+			return IsValid(controller.Context, id);
+		}
+
+        /// <summary>
+        /// Determines whether the Captcha response for the specified controller is valid.
+        /// </summary>
+		/// <param name="context">The context.</param>
+        /// <returns>
+        /// 	<c>true</c> if the specified controller is valid; otherwise, <c>false</c>.
+        /// </returns>
+		public static bool IsValid(IEngineContext context)
+		{
+			return IsValid(context, "captcha");
+		}
+
+        /// <summary>
+        /// Determines whether the Captcha response for the 
+        /// specified id in the specified controller is valid.
+        /// </summary>
+		/// <param name="context">The context.</param>
+        /// <param name="id">The id.</param>
+        /// <returns>
+        /// 	<c>true</c> if the specified controller is valid; otherwise, <c>false</c>.
+        /// </returns>
+		public static bool IsValid(IEngineContext context, string id)
+		{
+			string input = context.Request.Form[id];
+			string data = context.Request.Form[id + "_data"];
 
 			if (!String.IsNullOrEmpty(input) && !String.IsNullOrEmpty(data))
 			{

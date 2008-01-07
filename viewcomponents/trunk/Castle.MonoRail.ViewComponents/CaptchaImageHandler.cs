@@ -21,7 +21,11 @@ namespace Castle.MonoRail.ViewComponents
     using System.Net;
     using System.Web;
 
-    
+
+    /// <summary>
+    /// HttpHandler to be used with <see cref="CaptchaComponent"/> ViewComponent.
+    /// See <see cref="CaptchaComponent"/> for usage details and example.
+    /// </summary>
     public class CaptchaImageHandler : IHttpHandler
     {
         private Dictionary<string, string> GetParameters(HttpContext context)
@@ -52,6 +56,10 @@ namespace Castle.MonoRail.ViewComponents
             return new Rectangle(0, 0, width, height);
         }
 
+        /// <summary>
+        /// Enables processing of HTTP Web requests by a custom HttpHandler that implements the <see cref="T:System.Web.IHttpHandler"/> interface.
+        /// </summary>
+        /// <param name="context">An <see cref="T:System.Web.HttpContext"/> object that provides references to the intrinsic server objects (for example, Request, Response, Session, and Server) used to service HTTP requests.</param>
         public void ProcessRequest(HttpContext context)
         {
             Dictionary<string, string> parameters;
@@ -97,6 +105,11 @@ namespace Castle.MonoRail.ViewComponents
             context.ApplicationInstance.CompleteRequest();
         }
 
+        /// <summary>
+        /// Gets a value indicating whether another request can use the <see cref="T:System.Web.IHttpHandler"/> instance.
+        /// </summary>
+        /// <value></value>
+        /// <returns>true if the <see cref="T:System.Web.IHttpHandler"/> instance is reusable; otherwise, false.</returns>
         public bool IsReusable
         {
             get { return true; }

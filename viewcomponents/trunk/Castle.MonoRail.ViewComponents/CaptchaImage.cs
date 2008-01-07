@@ -27,13 +27,35 @@ namespace Castle.MonoRail.ViewComponents
     /// </summary>
     public class CaptchaImage
     {
+		/// <summary>
+		/// Describe the amount of contortion added to the characters displayed.
+		/// </summary>
         public enum FontWarpFactor
         {
+			/// <summary>
+			/// Characters are no distorted
+			/// </summary>
             None,
+			/// <summary>
+			/// Characters are slightly distorted
+			/// </summary>
             Low,
+			/// <summary>
+			/// Characters are distorted
+			/// </summary>
             Medium,
+			/// <summary>
+			/// Characters are very distorted
+			/// </summary>
             High,
+			/// <summary>
+			/// Characters are extremely distorted
+			/// </summary>
             Extreme,
+			/// <summary>
+			/// Characters are distorted based on user specified
+			/// WarpDivisor, RangeModifier and FontSizeAdjust.
+			/// </summary>
             Custom
         }
 
@@ -51,6 +73,12 @@ namespace Castle.MonoRail.ViewComponents
         private Color m_backgroundNoiseColor = Color.LightGray;
         private Color m_foregroundNoiseColor = Color.DarkGray;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="CaptchaImage"/> class.
+		/// </summary>
+		/// <param name="sequence">The sequence of characters to render.</param>
+		/// <param name="width">The width.</param>
+		/// <param name="height">The height.</param>
         public CaptchaImage(string sequence, int width, int height)
         {
             m_random = new Random();
@@ -59,24 +87,41 @@ namespace Castle.MonoRail.ViewComponents
             m_height = height;
         }
 
+		/// <summary>
+		/// Gets or sets the width of the image
+		/// </summary>
+		/// <value>The width.</value>
         public int Width
         {
             get { return m_width; }
             set { m_width = value; }
         }
 
+		/// <summary>
+		/// Gets or sets the height of the image.
+		/// </summary>
+		/// <value>The height.</value>
         public int Height
         {
             get { return m_height; }
             set { m_height = value; }
         }
 
+		/// <summary>
+		/// Gets or sets the characters to display in the image.
+		/// </summary>
+		/// <value>The sequence.</value>
         public string Sequence
         {
             get { return m_sequence; }
             set { m_sequence = value; }
         }
 
+		/// <summary>
+		/// Gets or sets the warp divisor.
+		/// Automatically sets FontWarp to "Custom"
+		/// </summary>
+		/// <value>The warp divisor.</value>
         public float WarpDivisor
         {
             get { return m_warpDivisor; }
@@ -87,6 +132,11 @@ namespace Castle.MonoRail.ViewComponents
             }
         }
 
+		/// <summary>
+		/// Gets or sets the range modifier.
+		/// Automatically sets FontWarp to "Custom"
+		/// </summary>
+		/// <value>The range modifier.</value>
         public float RangeModifier
         {
             get { return m_rangeModifier; }
@@ -97,6 +147,11 @@ namespace Castle.MonoRail.ViewComponents
             }
         }
 
+		/// <summary>
+		/// Gets or sets the font size adjust.
+		/// Automatically sets FontWarp to "Custom"
+		/// </summary>
+		/// <value>The font size adjust.</value>
         public float FontSizeAdjust
         {
             get { return m_fontSizeAdjust; }
@@ -107,36 +162,60 @@ namespace Castle.MonoRail.ViewComponents
             }
         }
 
+		/// <summary>
+		/// Gets or sets the color of the foreground.
+		/// </summary>
+		/// <value>The color of the foreground.</value>
         public Color ForegroundColor
         {
             get { return m_foregroundColor; }
             set { m_foregroundColor = value; }
         }
 
+		/// <summary>
+		/// Gets or sets the color of the background.
+		/// </summary>
+		/// <value>The color of the background.</value>
         public Color BackgroundColor
         {
             get { return m_backgroundColor; }
             set { m_backgroundColor = value; }
         }
 
+		/// <summary>
+		/// Gets or sets the color of the background noise.
+		/// </summary>
+		/// <value>The color of the background noise.</value>
         public Color BackgroundNoiseColor
         {
             get { return m_backgroundNoiseColor; }
             set { m_backgroundNoiseColor = value; }
         }
 
+		/// <summary>
+		/// Gets or sets the color of the foreground noise.
+		/// </summary>
+		/// <value>The color of the foreground noise.</value>
         public Color ForegroundNoiseColor
         {
             get { return m_foregroundNoiseColor; }
             set { m_foregroundNoiseColor = value; }
         }
 
+		/// <summary>
+		/// Gets or sets the noise divisor.
+		/// </summary>
+		/// <value>The noise divisor.</value>
         public int NoiseDivisor
         {
             get { return m_noiseDivisor; }
             set { m_noiseDivisor = value; }
         }
 
+		/// <summary>
+		/// Gets or sets the font warp.
+		/// </summary>
+		/// <value>The font warp.</value>
         public FontWarpFactor FontWarp
         {
             get { return m_fontWarp; }
@@ -174,6 +253,11 @@ namespace Castle.MonoRail.ViewComponents
             }
         }
 
+		/// <summary>
+		/// Creates the image.
+		/// Called by CaptchaImageHandler.
+		/// </summary>
+		/// <returns></returns>
         public Bitmap Create()
         {
             Bitmap image = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);

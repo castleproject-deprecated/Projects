@@ -51,32 +51,32 @@ namespace Castle.MonoRail.Framework.Filters
     {
         #region IFilter Members
 
-        /// <summary>
-        /// Called by Framework.
-        /// </summary>
-        /// <param name="exec">When this filter is being invoked. Must be BeforeAction</param>
-        /// <param name="context">Current context</param>
-        /// <param name="controller">The controller instance</param>
-        /// <returns>
-        /// 	<c>true</c> Always
-        /// </returns>
-        public bool Perform(ExecuteEnum exec, IRailsEngineContext context, IController controller)
-        {
-            if (exec != ExecuteEnum.BeforeAction)
-            {
-                throw new ControllerException("MobileFilter can only be performed as a ExecuteEnum.BeforeAction");
-            }
+		/// <summary>
+		/// Called by Framework.
+		/// </summary>
+		/// <param name="exec">When this filter is being invoked. Must be BeforeAction</param>
+		/// <param name="context">Current context</param>
+		/// <param name="controller">The controller instance</param>
+		/// <param name="controllerContext">The controller context.</param>
+		/// <returns><c>true</c> Always</returns>
 
-            if (context.UnderlyingContext.Request.Browser.IsMobileDevice ||
-                 context.UnderlyingContext.Request.UserAgent.Contains("Windows CE") ||
-                 context.UnderlyingContext.Request.UserAgent.Contains("Smartphone"))
-            {
-                controller.LayoutName = "mobile-" + controller.LayoutName;
-                controller.PropertyBag["_IsMobileDevice"] = "True";
-            }
-           return true;
-        }
+		public bool Perform(ExecuteEnum exec, IEngineContext context, IController controller, IControllerContext controllerContext)
+		{
+			if (exec != ExecuteEnum.BeforeAction)
+			{
+				throw new ControllerException("MobileFilter can only be performed as a ExecuteEnum.BeforeAction");
+			}
 
-        #endregion
-    }
+			if (context.UnderlyingContext.Request.Browser.IsMobileDevice ||
+				 context.UnderlyingContext.Request.UserAgent.Contains("Windows CE") ||
+				 context.UnderlyingContext.Request.UserAgent.Contains("Smartphone"))
+			{
+				controllerContext.LayoutNames[0] = "mobile-" + controllerContext.LayoutNames[0];
+				controllerContext.PropertyBag["_IsMobileDevice"] = "True";
+			}
+			return true;
+		}
+
+		#endregion
+	}
 }

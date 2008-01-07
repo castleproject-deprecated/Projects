@@ -35,8 +35,14 @@
     <DocumentationFile>bin\Release\Castle.MonoRail.ViewComponents.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL" />
-    <Reference Include="Castle.MonoRail.Framework, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL" />
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.Framework, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Castle.MonoRail.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -66,6 +72,22 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="javascript\MaskedTextbox.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="javascript\.svn\all-wcprops" />
+    <None Include="javascript\.svn\entries" />
+    <None Include="javascript\.svn\format" />
+    <None Include="javascript\.svn\text-base\MaskedTextbox.js.svn-base" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="javascript\.svn\prop-base\" />
+    <Folder Include="javascript\.svn\props\" />
+    <Folder Include="javascript\.svn\tmp\prop-base\" />
+    <Folder Include="javascript\.svn\tmp\props\" />
+    <Folder Include="javascript\.svn\tmp\text-base\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

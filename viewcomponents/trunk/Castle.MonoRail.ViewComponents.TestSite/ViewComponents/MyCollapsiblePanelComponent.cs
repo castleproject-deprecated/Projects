@@ -1,5 +1,7 @@
 namespace Castle.MonoRail.ViewComponents.TestSite.ViewComponents
 {
+	using Castle.MonoRail.Framework;
+
     /// <summary>
     /// A CollapsiblePanelComponent that sets show and hide images.
     /// </summary>

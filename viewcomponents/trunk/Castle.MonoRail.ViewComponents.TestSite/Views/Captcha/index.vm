@@ -1,3 +1,5 @@
-
+${FormHelper.FormTag('TestValue.rails', "%{}")}
+${FormHelper.DisableValidation()}
 #component(CaptchaComponent)
-
+${FormHelper.Submit("Test Value", "%{class='button'}")}
+${FormHelper.EndFormTag()}

@@ -15,14 +15,14 @@ namespace Castle.MonoRail.ViewComponents
     /// </summary>
     public class WhitespaceTransformFilter : TransformFilter
     {
-        ///private static readonly Regex _reg = new Regex(@"(?<=[^])\t{2,}|(?<=[>])\s{2,}(?=[<])|(?<=[>])\s{2,11}(?=[<])|(?=[\n])\s{2,}");
+        //private static readonly Regex _reg = new Regex(@"(?<=[^])\t{2,}|(?<=[>])\s{2,}(?=[<])|(?<=[>])\s{2,11}(?=[<])|(?=[\n])\s{2,}");
 
         ///New simplified Regex found at http://blog.madskristensen.dk/post/Remove-whitespace-from-your-pages.aspx
         private static readonly Regex _betweenTags = new Regex(@">\s+<", RegexOptions.Compiled);
         private static readonly Regex _lineBreaks = new Regex(@"\n\s+", RegexOptions.Compiled);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WhitespaceFilter"/> class.
+		/// Initializes a new instance of the <see cref="WhitespaceTransformFilter"/> class.
 		/// </summary>
 		/// <param name="baseStream">The stream to write to after filtering.</param>
         public WhitespaceTransformFilter(Stream baseStream)

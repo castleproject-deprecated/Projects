@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+﻿// Copyright 2004-2008 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,6 +20,9 @@ namespace Castle.MonoRail.ViewComponents
     using System.Reflection;
     using System.Text.RegularExpressions;
 
+	/// <summary>
+	/// 
+	/// </summary>
     public class SmartGridComponent : GridComponent
     {
         private static readonly Hashtable validTypesCache = Hashtable.Synchronized(new Hashtable());
@@ -28,11 +31,27 @@ namespace Castle.MonoRail.ViewComponents
         private PropertyInfo[] properties;
         private string _sortFunction;
 
+		/// <summary>
+		/// Implementor should return true only if the
+		/// <c>name</c> is a known section the view component
+		/// supports.
+		/// </summary>
+		/// <param name="name">section being added</param>
+		/// <returns>
+		/// 	<see langword="true"/> always, as any column can be a section.
+		/// </returns>
+
         public override bool SupportsSection(string name)
         {
             return true;
         }
 
+		/// <summary>
+		/// Render the rows from the source, return true if there are rows to render,
+		/// false otherwise.
+		/// </summary>
+		/// <param name="source"></param>
+		/// <returns></returns>
         protected override bool ShowRows(IEnumerable source)
         {
             if (properties == null) //there are no rows, if this is the case
@@ -46,17 +65,14 @@ namespace Castle.MonoRail.ViewComponents
 
                 if (isAlternate)
                 {
-                    RenderStartAlternateRow();
+                    RenderOptionalSection("startAlternateRow", "<tr class='grid_alternateItem'>");
                 }
                 else
                 {
-                    RenderStartRow();
+                    RenderOptionalSection("startRow", "<tr class='grid_item'>");
                 }
 
-                if (Context.HasSection("columnStartRow"))
-                {
-                    Context.RenderSection("columnStartRow");
-                }
+                RenderOptionalSection("columnStartRow");
 
                 foreach (PropertyInfo property in properties)
                 {
@@ -69,26 +85,23 @@ namespace Castle.MonoRail.ViewComponents
                         continue;
                     }
 
-                    RenderStartCell();
+                    RenderOptionalSection("startCell", "<td>");
 
                     object val = property.GetValue(item, null) ?? "null";
 
                     RenderText(System.Web.HttpUtility.HtmlEncode(val.ToString()));
-                    RenderEndCell();
-                }
+                    RenderOptionalSection("endCell", "</td>");
 
-                if (Context.HasSection("more"))
-                {
-                    Context.RenderSection("more");
                 }
+                RenderOptionalSection("more");
 
                 if (isAlternate)
                 {
-                    RenderEndAlternateRow();
+                    RenderOptionalSection("endAlternateRow", "</tr>");
                 }
                 else
                 {
-                    RenderEndRow();
+                    RenderOptionalSection("endRow", "</tr>");
                 }
 
                 isAlternate = !isAlternate;
@@ -97,66 +110,12 @@ namespace Castle.MonoRail.ViewComponents
 
             return true;
         }
-        private void RenderStartRow()
-        {
-            if (Context.HasSection("startRow"))
-            {
-                Context.RenderSection("startRow");
-                return;
-            }
-            RenderText("<tr class='grid_item'>");
-        }
 
-        private void RenderEndRow()
-        {
-            if (Context.HasSection("endRow"))
-            {
-                Context.RenderSection("endRow");
-                return;
-            }
-            RenderText("</tr>");
-        }
 
-        private void RenderStartAlternateRow()
-        {
-            if (Context.HasSection("startAlternateRow"))
-            {
-                Context.RenderSection("startAlternateRow");
-                return;
-            }
-            RenderText("<tr class='grid_alternateItem'>");
-        }
-
-        private void RenderEndAlternateRow()
-        {
-            if (Context.HasSection("endAlternateRow"))
-            {
-                Context.RenderSection("endAlternateRow");
-                return;
-            }
-            RenderText("</tr>");
-        }
-
-        private void RenderEndCell()
-        {
-            if (Context.HasSection("endCell"))
-            {
-                Context.RenderSection("endCell");
-                return;
-            }
-            RenderText("</td>");
-        }
-
-        private void RenderStartCell()
-        {
-            if (Context.HasSection("startCell"))
-            {
-                Context.RenderSection("startCell");
-                return;
-            }
-            RenderText("<td>");
-        }
-
+        /// <summary>
+        /// Shows the header.
+        /// </summary>
+        /// <param name="source">The source.</param>
         protected override void ShowHeader(IEnumerable source)
         {
             IEnumerator enumerator = source.GetEnumerator();
@@ -171,27 +130,11 @@ namespace Castle.MonoRail.ViewComponents
             object first = enumerator.Current;
             InitializeProperties(first);
 
-            if (Context.HasSection("caption"))
-            {
-                Context.RenderSection("caption");
-            }
+            RenderOptionalSection("caption");
+            RenderOptionalSection("preHeaderRow", "<thead><tr>");
+            RenderOptionalSection("columnStartRowHeader");
 
-            if (Context.HasSection("preHeaderRow"))
-            {
-                Context.RenderSection("preHeaderRow");
-            }
-            else
-                RenderText("<thead><tr>");
-
-            if (Context.HasSection("columnStartRowHeader"))
-            {
-                Context.RenderSection("columnStartRowHeader");
-            }
-
-
-            string sortBy = ComponentParams["sortBy"] as string;
-            if (sortBy == null)
-                sortBy = string.Empty;
+            string sortBy = ComponentParams["sortBy"] as string ?? string.Empty;
 
             bool? sortDirection = ComponentParams["sortAsc"] as bool?;
 
@@ -226,7 +169,7 @@ namespace Castle.MonoRail.ViewComponents
                         RenderHeaderSortCellStart(property.Name, true, false);
 
                     RenderText(System.Web.HttpUtility.HtmlEncode(SplitPascalCase(property.Name)));
-                    RenderHeaderSortCellEnd();
+                    RenderOptionalSection("endHeaderSortCell", "</a></th>");
                 }
                 else
                 {
@@ -236,48 +179,16 @@ namespace Castle.MonoRail.ViewComponents
                         Context.RenderSection(overrideSection);
                         continue;
                     }
-                    RenderHeaderCellStart();
+                    RenderOptionalSection("startHeaderCell", "<th class='grid_header'>");
                     RenderText(System.Web.HttpUtility.HtmlEncode(SplitPascalCase(property.Name)));
-                    RenderHeaderCellEnd();
+                    RenderOptionalSection("endHeaderCell", "</th>");
                 }
             }
-            if (Context.HasSection("moreHeader"))
-            {
-                Context.RenderSection("moreHeader");
-            }
+            RenderOptionalSection("moreHeader");
 
-            if (Context.HasSection("postHeaderRow"))
-            {
-                Context.RenderSection("postHeaderRow");
-            }
-            else
-                RenderText("</tr></thead>");
+            RenderOptionalSection("postHeaderRow", "</tr></thead>");
 
-
-            if (Context.HasSection("tFoot"))
-            {
-                Context.RenderSection("tFoot");
-            }
-        }
-
-        private void RenderHeaderCellEnd()
-        {
-            if (Context.HasSection("endHeaderCell"))
-            {
-                Context.RenderSection("endHeaderCell");
-                return;
-            }
-            RenderText("</th>");
-        }
-
-        private void RenderHeaderCellStart()
-        {
-            if (Context.HasSection("startHeaderCell"))
-            {
-                Context.RenderSection("startHeaderCell");
-                return;
-            }
-            RenderText("<th class='grid_header'>");
+            RenderOptionalSection("tFoot");
         }
 
         private void RenderHeaderSortCellStart(string fieldName, bool sortAsc, bool showArrow)
@@ -298,7 +209,7 @@ namespace Castle.MonoRail.ViewComponents
             }
             else
             {
-                string url = RailsContext.Request.FilePath;
+                string url = EngineContext.Request.FilePath;
                 string separator = "?";
                 if (url.IndexOf('?') > 0)
                     separator = "&";
@@ -311,16 +222,6 @@ namespace Castle.MonoRail.ViewComponents
                 style = !sortAsc ? " sortAscHeader" : " sortDescHeader";
 
             RenderText(String.Format("<th class=\"grid_header{0}\"><a href=\"{1}\">", style, href));
-        }
-
-        private void RenderHeaderSortCellEnd()
-        {
-            if (Context.HasSection("endHeaderSortCell"))
-            {
-                Context.RenderSection("endHeaderSortCell");
-                return;
-            }
-            RenderText("</a></th>");
         }
 
         /// <summary>

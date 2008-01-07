@@ -1844,6 +1844,24 @@
             Debug logging level
             </summary>
         </member>
+        <member name="T:Castle.Core.Configuration.Xml.XmlConfigurationDeserializer">
+            <summary>
+            Pendent
+            </summary>
+        </member>
+        <member name="M:Castle.Core.Configuration.Xml.XmlConfigurationDeserializer.Deserialize(System.Xml.XmlNode)">
+            <summary>
+            Deserializes the specified node into an abstract representation of configuration.
+            </summary>
+            <param name="node">The node.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.Core.Configuration.Xml.XmlConfigurationDeserializer.GetConfigValue(System.String)">
+            <summary>
+            If a config value is an empty string we return null, this is to keep
+            backward compability with old code
+            </summary>
+        </member>
         <member name="T:Castle.Core.Configuration.AbstractConfiguration">
             <summary>
             This is an abstract <see cref="T:Castle.Core.Configuration.IConfiguration"/> implementation
@@ -2135,6 +2153,9 @@
         <member name="F:Castle.Core.ComponentModel.interceptors">
             <summary>Interceptors associated</summary>
         </member>
+        <member name="F:Castle.Core.ComponentModel.customDependencies">
+            <summary>/// Custom dependencies/// </summary>
+        </member>
         <member name="M:Castle.Core.ComponentModel.#ctor(System.String,System.Type,System.Type)">
             <summary>
             Constructs a ComponentModel
@@ -2239,6 +2260,12 @@
             registered here, so the kernel (as a matter 
             of fact the handler) can check them
             </summary>
+        </member>
+        <member name="P:Castle.Core.ComponentModel.CustomDependencies">
+            <summary>
+            Gets or sets the custom dependencies.
+            </summary>
+            <value>The custom dependencies.</value>
         </member>
         <member name="T:Castle.Core.ConstructorCandidate">
             <summary>
@@ -2419,6 +2446,20 @@
             Initializes a new instance of the <see cref="T:Castle.Core.InterceptorReference"/> class.
             </summary>
             <param name="serviceType">Type of the service.</param>
+        </member>
+        <member name="M:Castle.Core.InterceptorReference.WithKey(System.String)">
+            <summary>
+            Gets an <see cref="T:Castle.Core.InterceptorReference"/> for the component key.
+            </summary>
+            <param name="key">The component key.</param>
+            <returns>The <see cref="T:Castle.Core.InterceptorReference"/></returns>
+        </member>
+        <member name="M:Castle.Core.InterceptorReference.WithType(System.Type)">
+            <summary>
+            Gets an <see cref="T:Castle.Core.InterceptorReference"/> for the service.
+            </summary>
+            <param name="service">The service.</param>
+            <returns>The <see cref="T:Castle.Core.InterceptorReference"/></returns>
         </member>
         <member name="P:Castle.Core.InterceptorReference.ServiceType">
             <summary>

@@ -1,4 +1,4 @@
-// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2008 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,6 +17,22 @@ using Castle.MonoRail.Framework;
 
 namespace Castle.MonoRail.ViewComponents
 {
+	/// <summary>
+	/// ColumnChartComponent is a view component that renders column charts 
+	/// (i.e., vertically oriented bars) with a single data series. It takes 
+	/// only one parameter, "properties" of type 
+	/// <see cref="ChartProperties"/>. 
+	/// ChartProperties holds the chart's data source along with various settings
+	/// that control how the chart is rendered. The data source can be of type 
+	/// IDictionary&lt;object, decimal> or IList&lt;<see cref="ChartDataItem"/> >. 
+	/// The appearance of the chart is controlled using a combination of ChartProperties, 
+	/// CSS classes and view component sections.
+	/// 
+	/// Full documentation and examples at:
+	/// http://using.castleproject.org/display/Contrib/Column+Chart+Component
+	/// 
+	/// </summary>
+	[ViewComponentDetails("ColumnChart", Sections="title,empty,containerStart,containerEnd,xUnitLabel,yUnitLabel")]
     public class ColumnChartComponent : ViewComponent
     {
 
@@ -28,12 +44,6 @@ namespace Castle.MonoRail.ViewComponents
         #endregion constants
 
         #region private fields
-        
-        private static readonly string[] sections = new string[]
-            {
-                "title", "empty", "containerStart", "containerEnd",
-                "xUnitLabel", "yUnitLabel"
-            };
         private decimal _maxValue;
         private decimal _columnCount;
         private decimal _pxPerUnit;
@@ -51,16 +61,11 @@ namespace Castle.MonoRail.ViewComponents
             get { return ComponentParams["properties"] as ChartProperties; }
         }
 
-        public override bool SupportsSection(string name)
-        {
-            foreach (string section in sections)
-            {
-                if (section.Equals(name, StringComparison.InvariantCultureIgnoreCase))
-                    return true;
-            }
-            return false;
-        }
 
+		/// <summary>
+		/// Called by the framework so the component can
+		/// render its content
+		/// </summary>
         public override void Render()
         {
             if (Props == null)

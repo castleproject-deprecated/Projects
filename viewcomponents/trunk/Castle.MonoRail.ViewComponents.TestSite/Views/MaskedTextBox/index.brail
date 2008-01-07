@@ -1,4 +1,6 @@
-﻿${Form.FormTag('TestValues.rails', {@stopOnFirst : 'true'})}
+﻿<?brail component Javascript, { @Std : "Validate" } ?>
+
+${Form.FormTag('TestValues.rails', {@stopOnFirst : 'true'})}
 
 <?brail component MaskedTextbox, { 
 	@AutoFillMask : "true", @Mask : "999-99-9999", @Id : "SSN", @Label : "SSN" } ?>

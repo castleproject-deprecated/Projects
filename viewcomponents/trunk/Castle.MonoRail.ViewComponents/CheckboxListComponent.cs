@@ -1,4 +1,4 @@
-// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2008 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,24 +21,24 @@ namespace Castle.MonoRail.ViewComponents
     using Castle.MonoRail.Framework.Helpers;
     using System.Text;
 
+	/// <summary>
+	/// CheckboxListComponent is a Monorail view component that renders 
+	/// a checkbox list. Two parameters are required: source and target. 
+	/// "source" contains the data to populate the checkbox list items. 
+	/// "target" is the name of the object that contains the selected values. 
+	/// The data source may consist of primitives such as enums or can be 
+	/// objects of a complex type. The list can be be displayed in a vertical 
+	/// or horizontal orientation, and in multiple columns. 
+	/// By default CheckboxListComponent splits label values that are 
+	/// "Pascal Case." For example "InProcess" will be displayed as "In Process".    <para/>
+	/// 
+	/// Full documentation and examples at:
+	/// http://using.castleproject.org/display/Contrib/Checkbox+List+Component
+	/// 
+	/// </summary>
+    [ViewComponentDetails("CheckboxList", Sections="containerStart,containerEnd,itemStart,itemEnd")]
     public class CheckboxListComponent : ViewComponent
     {
-        private static readonly string[] sections = new string[]
-            {
-                "containerStart", "containerEnd", "itemStart", "itemEnd"
-            };
-
-        public override bool SupportsSection(string name)
-        {
-            foreach (string section in sections)
-            {
-                if (section.Equals(name, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
 
         private bool isHorizontal;
         private IEnumerable source;
@@ -53,7 +53,11 @@ namespace Castle.MonoRail.ViewComponents
         private string columnVerticalAlign;
         private string toolTip;
         private string labelFormat;
-        
+
+		/// <summary>
+		/// Called by the framework so the component can
+		/// render its content
+		/// </summary>
         public override void Render()
         {
             GetParameters();

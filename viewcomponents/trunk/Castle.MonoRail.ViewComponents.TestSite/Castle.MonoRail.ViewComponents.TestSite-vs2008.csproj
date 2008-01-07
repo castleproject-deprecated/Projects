@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Captcha\index.vm" />
+    <None Include="Views\Captcha\TestValue.vm" />
     <None Include="Views\Chart\index.brail" />
     <None Include="Views\CheckboxList\index.brail" />
     <None Include="Views\CollapsiblePanel\index.brail" />
