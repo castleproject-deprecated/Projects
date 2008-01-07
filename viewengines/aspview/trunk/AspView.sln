@@ -81,6 +81,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspViewTestSite", "AspViewT
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{36052ED8-861B-49E3-B2D8-9C7DCDAF7E14} = {36052ED8-861B-49E3-B2D8-9C7DCDAF7E14}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

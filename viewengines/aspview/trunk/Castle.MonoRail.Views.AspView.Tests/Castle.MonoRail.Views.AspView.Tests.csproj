@@ -109,9 +109,6 @@
     <Compile Include="ViewTests\Views\SimplestLayout.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.configt" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Castle.MonoRail.Views.AspView\Castle.MonoRail.Views.AspView.csproj">
       <Project>{41B2C873-254B-4BC5-8514-AD33ED3B5934}</Project>
       <Name>Castle.MonoRail.Views.AspView</Name>
