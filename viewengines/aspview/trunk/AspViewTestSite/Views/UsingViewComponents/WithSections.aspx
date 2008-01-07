@@ -1,5 +1,4 @@
 <%@ Page Language="C#" %>
-<%@ Import Namespace="Castle.MonoRail.Framework.Helpers" %>
 <aspView:properties>
 <%
 	string[] items;

@@ -53,7 +53,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Engine
 		[Test]
 		public void HasTemplate_WhenAskedForRealTemplate_ReturnsTrue()
 		{
-			string templateName = "home/index";
+			string templateName = "home/simple";
 			Assert.IsTrue(engine.HasTemplate(templateName));
 		}
 

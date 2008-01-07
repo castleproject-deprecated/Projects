@@ -2,7 +2,9 @@
 <aspView:properties>
 <%
     string message;
- %>
+    int number;
+%>
 </aspView:properties>
- Saved OK. <br />
- message: <%=message %>
+WithProperties view
+message: <%=message %>
+number: <%=number %>
