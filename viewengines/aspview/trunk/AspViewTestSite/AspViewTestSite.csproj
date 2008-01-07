@@ -41,6 +41,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Solution Items\Lib\Castle\Castle.Components.DictionaryAdapter.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\Lib\Castle\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.MonoRail.Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Solution Items\Lib\Castle\Castle.MonoRail.Framework.dll</HintPath>
@@ -55,7 +59,6 @@
   <ItemGroup>
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\HelpersController.cs" />
-    <Compile Include="Controllers\UsingReferencesController.cs" />
     <Compile Include="Controllers\UsingViewComponentsController.cs" />
     <Compile Include="Controllers\ViewFiltersController.cs" />
     <Compile Include="Controllers\WithLayoutController.cs" />
@@ -85,25 +88,17 @@
     <Content Include="Views\Components\A\Default.aspx" />
     <Content Include="Views\Components\With.Dot.In.Name\Default.aspx" />
     <Content Include="Views\Helpers\Index.aspx" />
-    <Content Include="Views\Home\NullableValueTypesWithDefaultValue.aspx" />
+    <Content Include="Views\Home\WithProperties.aspx" />
     <Content Include="Views\Home\DefaultValues.aspx" />
     <Content Include="Views\Home\SiteRoot.aspx" />
     <Content Include="Views\Home\SubViewSample.aspx" />
-    <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Home\Simple.aspx" />
     <Content Include="Views\Layouts\Simple.aspx" />
     <Content Include="Views\Layouts\Nested.aspx" />
     <Content Include="Views\Layouts\UsingMultipleViewComponents.aspx" />
     <Content Include="Views\Layouts\UsingCaptureFor.aspx" />
-    <Content Include="Views\Layouts\Default.aspx" />
-    <Content Include="Views\NoLayout\WithProperties.aspx" />
-    <Content Include="Views\NoLayout\WithoutProperties.aspx" />
     <Content Include="Views\Rescues\404.aspx" />
-    <Content Include="Views\SmartDispatcherTest\Save.aspx" />
-    <Content Include="Views\UsingDictionaryAdapter\FlashAndDefaults\DoStuff.aspx" />
-    <Content Include="Views\UsingDictionaryAdapter\FlashAndDefaults\Index.aspx" />
-    <Content Include="Views\UsingDictionaryAdapter\Nested\AlsoWithTypedProperties.aspx" />
-    <Content Include="Views\UsingDictionaryAdapter\WithTypedProperties.aspx" />
-    <Content Include="Views\UsingReferences\Show.aspx" />
+    <Content Include="Views\Home\WithTypedProperties.aspx" />
     <Content Include="Views\UsingViewComponents\NestedInCaptureFor.aspx" />
     <Content Include="Views\UsingViewComponents\Nested.aspx" />
     <Content Include="Views\UsingViewComponents\UsingComponentWithDotInALiteralParameterValue.aspx" />
@@ -120,22 +115,12 @@
     <Content Include="Views\ViewFilters\LowerAndUpperCaseViewFilters.aspx" />
     <Content Include="Views\ViewFilters\MixViewFilters.aspx" />
     <Content Include="Views\ViewFilters\SingleLineCustomViewFilter.aspx" />
-    <Content Include="Views\WithLayout\WithoutProperties.aspx" />
-    <Content Include="Views\WithLayout\WithProperties.aspx" />
     <Content Include="Views\WithResource\Index.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AdditionalViewsTestSite\AdditionalViewsTestSite.csproj">
-      <Project>{B475BE89-37F9-41CE-A1E2-5D1E69440A8E}</Project>
-      <Name>AdditionalViewsTestSite</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Castle.MonoRail.Views.AspView\Castle.MonoRail.Views.AspView.csproj">
       <Project>{41B2C873-254B-4BC5-8514-AD33ED3B5934}</Project>
       <Name>Castle.MonoRail.Views.AspView</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TestModel\TestModel.csproj">
-      <Project>{5BCEC661-5B7B-4E00-AA19-95B367BF996F}</Project>
-      <Name>TestModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
