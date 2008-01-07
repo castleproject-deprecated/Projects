@@ -156,8 +156,9 @@
   </ProjectExtensions>
   <PropertyGroup>
     <PreBuildEvent>copy "$(SolutionDir)Solution Items\lib\castle\Castle.Components.Common.EmailSender.*" $(TargetDir)
-copy "$(SolutionDir)Solution Items\lib\castle\Castle.Components.Validator.*" $(TargetDir)</PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
+copy "$(SolutionDir)Solution Items\lib\castle\Castle.Components.Validator.*" $(TargetDir)
+</PreBuildEvent>
+    <PostBuildEvent>copy "$(SolutionDir)vcompile\bin\$(Configuration)\vcompile.exe" $(TargetDir)
+$(TargetDir)vcompile</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -109,7 +109,7 @@
     <Compile Include="ViewTests\Views\SimplestLayout.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.configt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Castle.MonoRail.Views.AspView\Castle.MonoRail.Views.AspView.csproj">
@@ -126,9 +126,9 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy $(ProjectDir)App.config $(TargetPath).config</PostBuildEvent>
-    <PreBuildEvent>copy "$(SolutionDir)VCompile\bin\$(ConfigurationName)\vcompile.exe" $(SolutionDir)\AspViewTestSite\bin\
-$(SolutionDir)\AspViewTestSite\bin\vcompile.exe
-copy $(SolutionDir)\AspViewTestSite\bin\CompiledViews.dll $(TargetDir)</PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>

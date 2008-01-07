@@ -21,6 +21,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Engine
 	using AspView.Compiler;
 
 	[TestFixture]
+	[Ignore("Should redo this fixture in isolation from actual CompiledViews.dll")]
 	public class ViewEngineTestCase
 	{
 		AspViewEngine engine;
