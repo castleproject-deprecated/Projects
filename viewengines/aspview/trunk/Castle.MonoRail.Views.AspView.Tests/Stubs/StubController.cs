@@ -1,137 +1,45 @@
-using System;
-using System.Collections;
-using System.Collections.Specialized;
-using System.IO;
-using Castle.MonoRail.Framework;
-using Castle.MonoRail.Framework.Internal;
+#region license
+// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+#endregion
 
 namespace Castle.MonoRail.Views.AspView.Tests.Stubs
 {
-		/*
-	[Resource("Samples", "Castle.MonoRail.Views.AspView.Tests.Resources.Samples")]
-	public class StubController : IController
+	using System;
+	using Framework;
+
+	public class ControllerStub : IController
 	{
-		/*
-		IDictionary propertyBag;
-		readonly Flash flash;
-		readonly IRequest request;
-		readonly IResponse response;
-		readonly NameValueCollection form = new NameValueCollection();
-		readonly NameValueCollection theParams = new NameValueCollection();
-		readonly NameValueCollection query = new NameValueCollection();
-		readonly IDictionary helpers = new Hashtable();
-		readonly ResourceDictionary resources = new ResourceDictionary();
-		string selectedViewName;
-
-		public StubController(IDictionary propertyBag, Flash flash, IRequest request, IResponse response)
-		{
-			this.propertyBag = propertyBag;
-			this.flash = flash;
-			this.request = request;
-			this.response = response;
-		}
-
 		#region IController Members
 
-		public string Action
-		{
-			get { return "Stub"; }
-		}
+		public event ControllerHandler AfterAction;
 
-		public Flash Flash
-		{
-			get { return flash; }
-		}
-
-		public NameValueCollection Form
-		{
-			get { return form; }
-		}
-
-		public IDictionary Helpers
-		{
-			get { return helpers; }
-		}
-
-		public void InPlaceRenderSharedView(TextWriter output, string name)
-		{
-			throw new Exception("The method or operation is not implemented.");
-		}
-
-		public string LayoutName
-		{
-			get { return ""; }
-			set { throw new Exception("The method or operation is not implemented."); }
-		}
-
-		public string Name
-		{
-			get { return "Stub"; }
-		}
-
-		public string AreaName
-		{
-			get { return "Stub"; }
-		}
-
-		public string SelectedViewName
-		{
-			get { return selectedViewName; }
-			set { selectedViewName = value; }
-		}
-		
-		public NameValueCollection Params
-		{
-			get { return theParams; }
-		}
+		public event ControllerHandler BeforeAction;
 
 		public void PostSendView(object view)
 		{
+			throw new Exception("The method or operation is not implemented.");
 		}
 
 		public void PreSendView(object view)
 		{
-		}
-
-		public IDictionary PropertyBag
-		{
-			get { return propertyBag; }
-			set { propertyBag = value; }
-		}
-
-		public NameValueCollection Query
-		{
-			get { return query; }
-		}
-
-		public IRequest Request
-		{
-			get { return request; }
-		}
-
-		public ResourceDictionary Resources
-		{
-			get { return resources; }
-		}
-
-		public IResponse Response
-		{
-			get { return response; }
-		}
-
-		public void Send(string action, IDictionary actionArgs)
-		{
 			throw new Exception("The method or operation is not implemented.");
 		}
 
-		public void Send(string action)
+		public void Process(IEngineContext engineContext, IControllerContext context)
 		{
 			throw new Exception("The method or operation is not implemented.");
-		}
-
-		public string ViewFolder
-		{
-			get { return ""; }
 		}
 
 		#endregion
@@ -140,21 +48,9 @@ namespace Castle.MonoRail.Views.AspView.Tests.Stubs
 
 		public void Dispose()
 		{
-		}
-
-		#endregion
-		#region IController Members
-
-		public event ControllerHandler AfterAction;
-
-		public event ControllerHandler BeforeAction;
-
-		public void Process(IEngineContext engineContext, IControllerContext context)
-		{
 			throw new Exception("The method or operation is not implemented.");
 		}
 
 		#endregion
 	}
-*/
 }

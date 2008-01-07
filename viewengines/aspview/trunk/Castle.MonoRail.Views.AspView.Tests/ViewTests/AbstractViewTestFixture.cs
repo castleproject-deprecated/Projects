@@ -1,14 +1,30 @@
-using System;
-using System.Collections;
-using System.IO;
-using Castle.MonoRail.Framework;
-using Castle.MonoRail.Framework.Services;
-using Castle.MonoRail.Framework.Test;
-using Castle.MonoRail.Views.AspView.Tests.Stubs;
-using NUnit.Framework;
+#region license
+// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+#endregion
 
 namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 {
+	using System;
+	using System.Collections;
+	using System.IO;
+	using Framework;
+	using Framework.Services;
+	using Framework.Test;
+	using NUnit.Framework;
+	using Stubs;
+
 	public abstract class AbstractViewTestFixture
 	{
 		protected IViewBaseInternal view;
@@ -70,7 +86,10 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 			monoRailServices = monoRailServices ?? new MockServices();
 			context = context ?? new MockEngineContext(request, response, monoRailServices, url);
 			flash = flash ?? context.Flash;
-			controller = controller ?? new StubController(propertyBag, flash, request, response);
+			controller = controller ?? new ControllerStub();
+			controllerContext = controllerContext ?? new ControllerContextStub();
+			controllerContext.PropertyBag = propertyBag;
+			context.Flash = flash;
 		}
 
 		/// <summary>

@@ -1,15 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspViewTestSite", "AspViewTestSite\AspViewTestSite.csproj", "{65929B65-C749-43C8-9EA8-5EFFFAE16A5C}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(ProjectDependencies) = postProject
-		{36052ED8-861B-49E3-B2D8-9C7DCDAF7E14} = {36052ED8-861B-49E3-B2D8-9C7DCDAF7E14}
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.Views.AspView", "Castle.MonoRail.Views.AspView\Castle.MonoRail.Views.AspView.csproj", "{41B2C873-254B-4BC5-8514-AD33ED3B5934}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
@@ -26,9 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.Views.AspVi
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(ProjectDependencies) = postProject
-		{65929B65-C749-43C8-9EA8-5EFFFAE16A5C} = {65929B65-C749-43C8-9EA8-5EFFFAE16A5C}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{648DC04C-1AAE-4113-A8E9-097F444AA0D8}"
@@ -89,11 +77,6 @@ Global
 		Run vcompile in Debug|Any CPU = Run vcompile in Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{65929B65-C749-43C8-9EA8-5EFFFAE16A5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65929B65-C749-43C8-9EA8-5EFFFAE16A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{65929B65-C749-43C8-9EA8-5EFFFAE16A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{65929B65-C749-43C8-9EA8-5EFFFAE16A5C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{65929B65-C749-43C8-9EA8-5EFFFAE16A5C}.Run vcompile in Debug|Any CPU.ActiveCfg = Run vcompile in Debug|Any CPU
 		{41B2C873-254B-4BC5-8514-AD33ED3B5934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{41B2C873-254B-4BC5-8514-AD33ED3B5934}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41B2C873-254B-4BC5-8514-AD33ED3B5934}.Release|Any CPU.ActiveCfg = Release|Any CPU

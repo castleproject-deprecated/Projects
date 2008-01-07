@@ -69,32 +69,16 @@
     <Compile Include="Compiler\PreCompilationSteps\EmbededServerScriptStepTestFixture.cs" />
     <Compile Include="Compiler\PreCompilationSteps\MarkupTransformationsStepTestFixture.cs" />
     <Compile Include="Compiler\PreCompilationSteps\RenderConcreteClassStepTestFixture.cs" />
-    <Compile Include="HttpBasedIntegrationTests\AdditionalViewAssemblyTestCase.cs" />
     <Compile Include="Compiler\PreCompilationSteps\ScriptToCodeTransformerTestFixture.cs" />
     <Compile Include="Compiler\PreCompilationSteps\ViewComponentTagsStepTestFixture.cs" />
     <Compile Include="Compiler\PreCompilationSteps\ViewFilterTagsStepTestFixture.cs" />
     <Compile Include="Compiler\PreCompilationSteps\SubViewTagsStepTestFixture.cs" />
     <Compile Include="Compiler\PreCompilationSteps\ProcessPropertiesStepTestFixture.cs" />
-    <Compile Include="HttpBasedIntegrationTests\BaseHttpBasedIntegrationTestFixture.cs" />
-    <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\CSharpPreProcessorTestCases.cs" />
-    <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\EmptyControllerTestCase.cs" />
-    <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\HelpersTestCase.cs" />
-    <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\NoLayoutTestCase.cs" />
-    <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\PropertiesTestCases.cs" />
-    <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\SanityTestCase.cs" />
-    <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\SmartDispatcherTestCase.cs" />
-    <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\UsingReferencesTestCase.cs" />
-    <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\ViewComponentsTestFixture.cs" />
-    <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\ViewEngineTestCase.cs" />
-    <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\ViewFiltersTestCases.cs" />
-    <Compile Include="HttpBasedIntegrationTests\LegacyRegressionTests\WithLayoutTestCase.cs" />
-    <Compile Include="HttpBasedIntegrationTests\WithResourceTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="HttpBasedIntegrationTests\SanityTestCase.cs" />
-    <Compile Include="HttpBasedIntegrationTests\UsingReferencesTestCase.cs" />
     <Compile Include="Engine\ViewEngineTestCase.cs" />
     <Compile Include="Compiler\PreCompilationSteps\ImportStatementsStepTestFixture.cs" />
     <Compile Include="Compiler\PreCompilationSteps\DetermineBaseClassStepTestFixture.cs" />
+    <Compile Include="Stubs\ControllerContextStub.cs" />
     <Compile Include="Stubs\StubController.cs" />
     <Compile Include="Stubs\StubView.cs" />
     <Compile Include="ViewTests\AbstractViewTestFixture.cs" />
@@ -131,10 +115,6 @@
     <ProjectReference Include="..\AdditionalViewsTestSite\AdditionalViewsTestSite.csproj">
       <Project>{B475BE89-37F9-41CE-A1E2-5D1E69440A8E}</Project>
       <Name>AdditionalViewsTestSite</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AspViewTestSite\AspViewTestSite.csproj">
-      <Project>{65929B65-C749-43C8-9EA8-5EFFFAE16A5C}</Project>
-      <Name>AspViewTestSite</Name>
     </ProjectReference>
     <ProjectReference Include="..\Castle.MonoRail.Views.AspView\Castle.MonoRail.Views.AspView.csproj">
       <Project>{41B2C873-254B-4BC5-8514-AD33ED3B5934}</Project>

@@ -25,7 +25,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 		[Test]
 		public void Render_WhenRendersSimpleStringAndNoLayout_Works()
 		{
-			InitializeView(typeof(SimpleView));
+			InitializeView(typeof (SimpleView));
 
 			view.Process();
 
@@ -33,6 +33,5 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 
 			AssertViewOutputEqualsToExpected();
 		}
-
 	}
 }
