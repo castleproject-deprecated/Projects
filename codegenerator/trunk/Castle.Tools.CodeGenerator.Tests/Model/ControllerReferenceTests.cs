@@ -9,7 +9,9 @@ using NUnit.Framework;
 
 namespace Castle.Tools.CodeGenerator.Model
 {
-  [TestFixture]
+	using Castle.MonoRail.Framework.Test;
+
+	[TestFixture]
   public class ActionArgumentTests
   {
     #region Member Data
@@ -77,6 +79,7 @@ namespace Castle.Tools.CodeGenerator.Model
     public void Render_Always_SetsSelectedView()
     {
       Controller controller = new TestController();
+    	controller.ControllerContext = this._mocks.Stub<IControllerContext>();
       ControllerViewReference reference = new ControllerViewReference(_services, typeof(TestController), "Area", "Test", "Action");
 
       using (_mocks.Unordered())
@@ -95,6 +98,7 @@ namespace Castle.Tools.CodeGenerator.Model
     public void Render_NoArea_SetsSelectedView()
     {
       Controller controller = new TestController();
+    	controller.ControllerContext = this._mocks.Stub<IControllerContext>();
       ControllerViewReference reference = new ControllerViewReference(_services, typeof(TestController), "", "Test", "Action");
 
       using (_mocks.Unordered())
@@ -119,27 +123,43 @@ namespace Castle.Tools.CodeGenerator.Model
     protected TestController _controller;
     protected ControllerActionReference _reference;
     protected IServerUtility _serverUtility;
-    protected IRailsEngineContext _railsContext;
+    protected IEngineContext _railsContext;
     protected IRedirectService _redirectService;
     protected IArgumentConversionService _argumentConversionService;
     protected IResponse _response;
-    protected string _virtualDirectory;
+    protected string _virtualDirectory = String.Empty;
     #endregion
 
     #region Test Setup and Teardown Methods
     [SetUp]
     public virtual void Setup()
     {
-      _virtualDirectory = String.Empty;
+      
       _mocks = new MockRepository();
       _services = _mocks.CreateMock<ICodeGeneratorServices>();
-      _railsContext = _mocks.CreateMock<IRailsEngineContext>();
-      _serverUtility = _mocks.CreateMock<IServerUtility>();
+      //_railsContext = _mocks.CreateMock<IEngineContext>();
+      _response = _mocks.CreateMock<IResponse>();
+    	UrlInfo url =
+    		new UrlInfo("eleutian.com", "www", _virtualDirectory, "http", 80,
+    		            Path.Combine(Path.Combine("Area", "Controller"), "Action"), "Area", "Controller", "Action", "rails",
+    		            "");
+    	_railsContext =
+    		new Castle.MonoRail.Framework.Test.MockEngineContext(new MockRequest(), _response, new MockServices(),url);
+    	
+			((MockEngineContext) _railsContext).Server = _mocks.DynamicMock<IServerUtility>();
+    	_serverUtility = _railsContext.Server;
+
       _redirectService = _mocks.CreateMock<IRedirectService>();
       _argumentConversionService = _mocks.CreateMock<IArgumentConversionService>();
-      _response = _mocks.CreateMock<IResponse>();
       _controller = new TestController();
+			
+    	
     }
+
+		[TearDown]
+		public virtual void Teardown() {
+			_virtualDirectory = String.Empty;
+		}
     #endregion
 
     #region Methods
@@ -148,11 +168,11 @@ namespace Castle.Tools.CodeGenerator.Model
       Expect.Call(_services.ArgumentConversionService).Return(_argumentConversionService).Repeat.Any();
       Expect.Call(_services.RedirectService).Return(_redirectService).Repeat.Any();
       Expect.Call(_services.RailsContext).Return(_railsContext).Repeat.Any();
-      Expect.Call(_railsContext.Server).Return(_serverUtility).Repeat.Any();
-      Expect.Call(_railsContext.UrlInfo).Return(
-        new UrlInfo("eleutian.com", "www", _virtualDirectory, "http", 80,
-                    Path.Combine(Path.Combine("Area", "Controller"), "Action"), "Area", "Controller",
-                    "Action", "rails", "")).Repeat.Any();
+//      Expect.Call(_railsContext.Server).Return(_serverUtility).Repeat.Any();
+			//Expect.Call(_railsContext.UrlInfo).Return(
+			//  new UrlInfo("eleutian.com", "www", _virtualDirectory, "http", 80,
+			//              Path.Combine(Path.Combine("Area", "Controller"), "Action"), "Area", "Controller",
+			//              "Action", "rails", "")).Repeat.Any();
     }
     #endregion
   }
@@ -218,7 +238,7 @@ namespace Castle.Tools.CodeGenerator.Model
         SetupMocks();
         Expect.Call(_argumentConversionService.ConvertArgument(null, argument)).Return("Jacob");
         Expect.Call(_argumentConversionService.ConvertKey(null, argument)).Return("name");
-        Expect.Call(_serverUtility.UrlEncode("name")).Return("name");
+				Expect.Call(_serverUtility.UrlEncode("name")).Return("name");
         Expect.Call(_serverUtility.UrlEncode("Jacob")).Return("Jacob");
       }
 
@@ -239,7 +259,8 @@ namespace Castle.Tools.CodeGenerator.Model
         SetupMocks();
         Expect.Call(_argumentConversionService.ConvertArgument(null, argument)).Return("Jacob");
         Expect.Call(_argumentConversionService.ConvertKey(null, argument)).Return("name");
-        Expect.Call(_serverUtility.UrlEncode("name")).Return("Ename");
+				
+				Expect.Call(_serverUtility.UrlEncode("name")).Return("Ename");
         Expect.Call(_serverUtility.UrlEncode("Jacob")).Return("EJacob");
       }
 
@@ -269,17 +290,14 @@ namespace Castle.Tools.CodeGenerator.Model
     public void Redirect_Ajax_Works()
     {
       Controller controller = new TestController();
+    	controller.ControllerContext = _mocks.Stub<IControllerContext>();
       New("Area", "Controller", "Action");
-
-      BindingFlags flags = BindingFlags.FlattenHierarchy | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod;
-      FieldInfo field = controller.GetType().GetField("context", flags);
-      field.SetValue(controller, _railsContext);
-
+			
+			controller.SetEngineContext(_railsContext);
       using (_mocks.Unordered())
       {
         SetupMocks();
         Expect.Call(_services.Controller).Return(controller).Repeat.Any();
-        Expect.Call(_railsContext.Response).Return(_response).Repeat.Any();
         _response.Write("<script type=\"text/javascript\">window.location = \"/Area/Controller/Action.rails\";</script>");
       }
 
@@ -329,6 +347,7 @@ namespace Castle.Tools.CodeGenerator.Model
     public void Transfer_MethodIsReal_InvokesAction()
     {
       Controller controller = new TestController();
+    	controller.ControllerContext = _mocks.Stub<IControllerContext>();
       ActionArgument argument = new ActionArgument(0, "name", "Jacob");
       New("Area", "Controller", "Index", argument);
 
@@ -348,6 +367,7 @@ namespace Castle.Tools.CodeGenerator.Model
     public void Transfer_MethodIsBad_Throws()
     {
       Controller controller = new TestController();
+    	controller.ControllerContext = _mocks.Stub<IControllerContext>();
       ActionArgument argument = new ActionArgument(0, "name", "Jacob");
       New("Area", "Controller", "BadAction", argument);
 
@@ -378,8 +398,8 @@ namespace Castle.Tools.CodeGenerator.Model
     [SetUp]
     public override void Setup()
     {
-      base.Setup();
       _virtualDirectory = "Directory";
+      base.Setup();
     }
     #endregion
 
@@ -435,6 +455,7 @@ namespace Castle.Tools.CodeGenerator.Model
   {
     public void Index(string name)
     {
+		
     }
   }
 }

@@ -18,7 +18,7 @@ namespace Castle.Tools.CodeGenerator.Services
     private IRedirectService _redirectService;
     private IControllerReferenceFactory _controllerReferenceFactory;
     private IArgumentConversionService _argumentConversionService;
-    private IRailsEngineContext _context;
+    private IEngineContext _context;
     private IRuntimeInformationService _runtimeInformationService;
     private TestController _controller;
     #endregion
@@ -34,7 +34,7 @@ namespace Castle.Tools.CodeGenerator.Services
       _argumentConversionService = _mocks.CreateMock<IArgumentConversionService>();
       _runtimeInformationService = _mocks.CreateMock<IRuntimeInformationService>();
       _services = new DefaultCodeGeneratorServices(_controllerReferenceFactory, _redirectService, _argumentConversionService, _runtimeInformationService);
-      _context = _mocks.CreateMock<IRailsEngineContext>();
+      _context = _mocks.CreateMock<IEngineContext>();
       Assert.AreEqual(_controllerReferenceFactory, _services.ControllerReferenceFactory);
       Assert.AreEqual(_redirectService, _services.RedirectService);
       Assert.AreEqual(_argumentConversionService, _services.ArgumentConversionService);

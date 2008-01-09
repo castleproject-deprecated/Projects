@@ -10,7 +10,7 @@ namespace Castle.Tools.CodeGenerator.Services
     private Controller _controller;
     private IControllerReferenceFactory _controllerReferenceFactory;
     private IRedirectService _redirectService;
-    private IRailsEngineContext _railsContext;
+    private IEngineContext _railsContext;
     private IArgumentConversionService _argumentConversionService;
     private IRuntimeInformationService _runtimeInformationService;
     #endregion
@@ -42,7 +42,7 @@ namespace Castle.Tools.CodeGenerator.Services
       get { return _redirectService; }
     }
 
-    public IRailsEngineContext RailsContext
+    public IEngineContext RailsContext
     {
       get { return _railsContext; }
       set { _railsContext = value; }

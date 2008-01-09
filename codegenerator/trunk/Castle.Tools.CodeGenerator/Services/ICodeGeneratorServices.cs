@@ -21,8 +21,8 @@ namespace Castle.Tools.CodeGenerator.Services
     {
       get;
     }
-
-    IRailsEngineContext RailsContext
+	  
+    IEngineContext RailsContext
     {
       get;
       set;
