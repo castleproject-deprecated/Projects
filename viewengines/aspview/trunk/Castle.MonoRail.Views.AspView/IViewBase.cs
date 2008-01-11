@@ -18,9 +18,9 @@
 
 namespace Castle.MonoRail.Views.AspView
 {
-	using System.Collections;
 	using System.IO;
 	using Framework;
+	using System.Collections.Generic;
 
 	public interface IViewBase
 	{
@@ -43,7 +43,7 @@ namespace Castle.MonoRail.Views.AspView
 		/// <summary>
 		/// Gets the properties container. Based on current property containers that was sent from the controller, such us PropertyBag, Flash, etc.
 		/// </summary>
-		IDictionary Properties { get; }
+		IDictionary<string, object> Properties { get; }
 
 		/// <summary>
 		/// Gets the current Rails context.

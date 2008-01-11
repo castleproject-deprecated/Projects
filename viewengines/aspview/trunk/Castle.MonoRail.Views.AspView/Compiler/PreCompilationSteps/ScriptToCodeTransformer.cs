@@ -14,24 +14,39 @@
 // limitations under the License.
 #endregion
 
-using System.Text;
-using System.Text.RegularExpressions;
-
 namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 {
+	using System;
+	using System.Text;
+	using System.Text.RegularExpressions;
+	using StatementProcessors;
+
 	public class ScriptToCodeTransformer
 	{
+		/// <summary>
+		/// Code Generators - would transform &lt;% %&gt; blocks to actual code.
+		/// <remarks>
+		/// The order is important
+		/// </remarks>
+		/// </summary>
+		static readonly IStatementProcessor[] statementProcessors = new IStatementProcessor[]
+			{
+				new EqualsAndParenthesisStatementProcessor(),
+				new EqualsStatementProcessor(),
+				new SharpStatementProcessor()
+			};
+
 		public string Transform(string mixed)
 		{
 			StringBuilder sb = new StringBuilder(mixed.Length);
 			foreach (Match match in Internal.RegularExpressions.Script.Matches(mixed))
 			{
 				string markup = match.Groups["markup"].Value;
-				string code = match.Groups["code"].Value.Trim();
+				string statement = match.Groups["statement"].Value.Trim();
 				if (!string.IsNullOrEmpty(markup))
 					AppendMarkup(sb, markup);
-				if (!string.IsNullOrEmpty(code))
-					AppendCode(sb, code);
+				if (!string.IsNullOrEmpty(statement))
+					AppendStatement(sb, statement);
 			}
 
 			return sb.ToString();
@@ -44,14 +59,27 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 				.AppendLine();
 		}
 
-		private static void AppendCode(StringBuilder sb, string code)
+		private static void AppendStatement(StringBuilder sb, string statement)
 		{
-			if (code.StartsWith("="))
-				code = "Output(" + code.Substring(1) + ");";
-			if (code.StartsWith("#"))
-				code = "OutputEncoded(" + code.Substring(1) + ");";
+			string code = GetCodeFrom(statement);
 			sb.AppendLine(code);
 		}
 
+		private static string GetCodeFrom(string statement)
+		{
+			IStatementProcessor processor = GetProcessorFor(statement);
+			if (processor == null)
+				return statement;
+
+			return processor.GetInfoFor(statement).ToCode();
+		}
+
+		private static IStatementProcessor GetProcessorFor(string statement)
+		{
+			return Array.Find(statementProcessors, delegate(IStatementProcessor processor)
+			{
+				return processor.CanHandle(statement);
+			});
+		}
 	}
 }

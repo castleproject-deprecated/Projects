@@ -1,3 +1,5 @@
+#region license
+
 // Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,19 +14,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MonoRail.Views.AspView
-{
-	using System.Collections;
-	using System.IO;
-    using Framework;
+#endregion
 
-	public abstract class AspViewBase<IView> : AspViewBase
-    {
-		protected IView view;
-		public override void Initialize(AspViewEngine viewEngine, TextWriter output, IEngineContext context, IController controller, IControllerContext controllerContext)
-		{
-			base.Initialize(viewEngine, output, context, controller, controllerContext);
-			view = dictionaryAdapterFactory.GetAdapter<IView>((IDictionary)Properties);
-        }
+namespace Castle.MonoRail.Views.AspView.Tests.ViewTests.Views
+{
+	public interface IAmSimple
+	{
+		string Name { get;set; }
+		int Id { get;set; }
 	}
 }

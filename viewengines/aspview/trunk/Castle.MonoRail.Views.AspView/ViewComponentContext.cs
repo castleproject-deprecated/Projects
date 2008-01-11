@@ -83,7 +83,7 @@ namespace Castle.MonoRail.Views.AspView
 
 		public IDictionary ContextVars
 		{
-			get { return callingView.Properties; }
+			get { return (IDictionary)callingView.Properties; }
 		}
 
 		public bool HasSection(string sectionName)

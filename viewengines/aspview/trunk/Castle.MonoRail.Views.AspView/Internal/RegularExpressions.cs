@@ -58,7 +58,7 @@ namespace Castle.MonoRail.Views.AspView.Internal
 
 		public static readonly Regex Script = new Regex(@"
 (?<markup>((?!<%).)*)
-(?<script><%(?<code>((?!<%).)*)%>)?", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.Singleline);
+(?<script><%(?<statement>((?!<%).)*)%>)?", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.Singleline);
 
 		private const string attributesBlock =
 @"(?<attributes>(\s*\w+=""[<][%]=\s*[\w\.\(\)\[\]""]+\s*[%][>]""|\s*\w+=""[\w.]*""|\s*)*)";
@@ -71,45 +71,4 @@ namespace Castle.MonoRail.Views.AspView.Internal
 
 	}
 
-}
-
-namespace ab
-{
-	using System.Text.RegularExpressions;
-
-	class A
-	{
-		public void B()
-		{
-			string s1 = @"
-<script runat = ""server"" > 
-</script>
-";
-			string s2 = @"<script runat=""server""></script>";
-			string s3 = @"<script runat=""server""> </script>";
-			string s4 = @"<script runat=""server"">
-</script>";
-			string s5 = @"<script runat=""server"">momo</script>
-
-<script runat=""server"">shlomo</script>";
-
-			System.Console.WriteLine(Castle.MonoRail.Views.AspView.Internal.RegularExpressions.EmbededServerScriptBlock
-			                         	.IsMatch(s1));
-			System.Console.WriteLine(Castle.MonoRail.Views.AspView.Internal.RegularExpressions.EmbededServerScriptBlock
-			                         	.IsMatch(s2));
-			System.Console.WriteLine(Castle.MonoRail.Views.AspView.Internal.RegularExpressions.EmbededServerScriptBlock
-			                         	.IsMatch(s3));
-			System.Console.WriteLine(Castle.MonoRail.Views.AspView.Internal.RegularExpressions.EmbededServerScriptBlock
-			                         	.IsMatch(s4));
-
-			MatchCollection m5 = Castle.MonoRail.Views.AspView.Internal.RegularExpressions.EmbededServerScriptBlock
-				.Matches(s5);
-
-			foreach (Match match in m5)
-			{
-				System.Console.WriteLine(match.Groups["content"].Value);
-			}
-
-		}
-	}
 }

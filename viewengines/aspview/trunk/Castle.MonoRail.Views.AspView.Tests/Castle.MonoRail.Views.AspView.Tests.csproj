@@ -64,6 +64,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compiler\MarkupTransformers\AbstractMarkupTransformerTestFixture.cs" />
+    <Compile Include="Compiler\MarkupTransformers\FullSiteRootMarkupTransformerTestFixture.cs" />
+    <Compile Include="Compiler\MarkupTransformers\SiteRootMarkupTransformerTestFixture.cs" />
+    <Compile Include="Compiler\MarkupTransformers\InlineOutputDirectiveMarkupTransformerTestFixture.cs" />
+    <Compile Include="Compiler\StatementProcessors\OutputMethodGenerators\OutputMethodGeneratorFixture.cs" />
+    <Compile Include="Compiler\StatementProcessors\OutputMethodGenerators\EncodedOutputMethodGeneratorFixture.cs" />
+    <Compile Include="Compiler\StatementProcessors\SharpStatementProcessorFixture.cs" />
+    <Compile Include="Compiler\StatementProcessors\EqualsAndParenthesisStatementProcessorFixture.cs" />
+    <Compile Include="Compiler\StatementProcessors\EqualsStatementProcessorFixture.cs" />
     <Compile Include="Compiler\PreCompilationSteps\AbstractPreCompilationStepTestFixture.cs" />
     <Compile Include="Compiler\PreCompilationSteps\DefaultStepsProviderIntegrationTestFixture.cs" />
     <Compile Include="Compiler\PreCompilationSteps\EmbededServerScriptStepTestFixture.cs" />
@@ -84,6 +93,7 @@
     <Compile Include="ViewTests\AbstractViewTestFixture.cs" />
     <Compile Include="ViewTests\CaptureForRelatedTestFixture.cs" />
     <Compile Include="ViewTests\AbstractViewComponentsTestFixture.cs" />
+    <Compile Include="ViewTests\TypedPropertiesTestFixture.cs" />
     <Compile Include="ViewTests\ViewComponentsTestFixture.cs" />
     <Compile Include="ViewTests\SubViewsTestFixture.cs" />
     <Compile Include="ViewTests\LayoutsTestFixture.cs" />
@@ -93,6 +103,8 @@
     <Compile Include="ViewTests\ViewComponents\TextAndViewRendererViewComponent.cs" />
     <Compile Include="ViewTests\ViewComponents\ViewRendererViewComponent.cs" />
     <Compile Include="ViewTests\ViewComponents\TextRendererViewComponent.cs" />
+    <Compile Include="ViewTests\Views\IAmSimple.cs" />
+    <Compile Include="ViewTests\Views\WithTypedProperties.cs" />
     <Compile Include="ViewTests\Views\OuterLayout.cs" />
     <Compile Include="ViewTests\Views\UsingBubbledCaptureFromSubView.cs" />
     <Compile Include="ViewTests\Views\LayoutUsesCaptureFor.cs" />

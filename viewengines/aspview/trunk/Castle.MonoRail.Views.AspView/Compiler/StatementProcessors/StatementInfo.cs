@@ -1,3 +1,4 @@
+#region license
 // Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,20 +12,30 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#endregion
 
-namespace Castle.MonoRail.Views.AspView
+namespace Castle.MonoRail.Views.AspView.Compiler.StatementProcessors
 {
-	using System.Collections;
-	using System.IO;
-    using Framework;
+	using OutputMethodGenerators;
 
-	public abstract class AspViewBase<IView> : AspViewBase
-    {
-		protected IView view;
-		public override void Initialize(AspViewEngine viewEngine, TextWriter output, IEngineContext context, IController controller, IControllerContext controllerContext)
+	public class StatementInfo
+	{
+		readonly string content;
+		readonly IOutputMethodGenerator generator;
+
+		public StatementInfo(IOutputMethodGenerator generator, string content)
 		{
-			base.Initialize(viewEngine, output, context, controller, controllerContext);
-			view = dictionaryAdapterFactory.GetAdapter<IView>((IDictionary)Properties);
-        }
+			this.content = content;
+			this.generator = generator;
+		}
+
+		public string Content { get { return content; } }
+
+		public IOutputMethodGenerator Generator { get { return generator; } }
+
+		public string ToCode()
+		{
+			return generator.GenerateFrom(content);
+		}
 	}
 }

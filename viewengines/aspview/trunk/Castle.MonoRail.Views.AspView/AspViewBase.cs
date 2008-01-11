@@ -44,7 +44,7 @@ namespace Castle.MonoRail.Views.AspView
 		private Stack<TextWriter> outputWriters;
 
 		private IViewBase parentView;
-		private IDictionary properties;
+		private IDictionary<string, object> properties;
 		private string viewContents;
 		private AspViewEngine viewEngine;
 
@@ -69,7 +69,7 @@ namespace Castle.MonoRail.Views.AspView
 			get
 			{
 				if (helpers == null)
-					helpers = dictionaryAdapterFactory.GetAdapter<IHelpersAccesor>(Properties);
+					helpers = dictionaryAdapterFactory.GetAdapter<IHelpersAccesor>((IDictionary)Properties);
 				return helpers;
 			}
 		}
@@ -110,9 +110,9 @@ namespace Castle.MonoRail.Views.AspView
 		/// <param name="otherView">The view to gather the bubbling properties from</param>
 		protected void GatherBubblingPropertiesFrom(IViewBase otherView)
 		{
-			foreach (DictionaryEntry entry in otherView.Properties)
+			foreach (KeyValuePair<string, object> entry in otherView.Properties)
 			{
-				if (!otherView.Properties.Contains(entry.Key + ".@bubbleUp"))
+				if (!otherView.Properties.ContainsKey(entry.Key + ".@bubbleUp"))
 					continue;
 				properties[entry.Key] = entry.Value;
 				properties[entry.Key + ".@bubbleUp"] = true;
@@ -290,7 +290,7 @@ namespace Castle.MonoRail.Views.AspView
 		/// <returns>True if the property is found, False elsewhere</returns>
 		protected bool TryGetParameter(string parameterName, out object parameter, object defaultValue)
 		{
-			if (properties.Contains(parameterName))
+			if (properties.ContainsKey(parameterName))
 			{
 				parameter = properties[parameterName];
 				return true;
@@ -401,7 +401,7 @@ namespace Castle.MonoRail.Views.AspView
 		/// <summary>
 		/// Gets the properties container. Based on current property containers that was sent from the controller, such us PropertyBag, Flash, etc.
 		/// </summary>
-		public IDictionary Properties
+		public IDictionary<string, object> Properties
 		{
 			get { return properties; }
 		}
