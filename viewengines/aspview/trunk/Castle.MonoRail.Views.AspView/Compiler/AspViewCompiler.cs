@@ -25,6 +25,8 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 	using System.CodeDom.Compiler;
 	using Microsoft.CSharp;
 	using System.Reflection;
+	using System.Configuration;
+	using System.Security;
 
 	public class AspViewCompiler
 	{
@@ -116,7 +118,20 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 			}
 
 			CompilerResults results;
-			CodeDomProvider codeProvider = new CSharpCodeProvider();
+			CodeDomProvider codeProvider;
+			try
+			{
+				codeProvider = CodeDomProvider.GetCompilerInfo("csharp").CreateProvider();
+			}
+			catch (SecurityException)
+			{
+				codeProvider = new CSharpCodeProvider();
+			}
+			catch (ConfigurationException)
+			{
+				codeProvider = new CSharpCodeProvider();
+			}
+
 			if (options.KeepTemporarySourceFiles)
 			{
 				results = codeProvider.CompileAssemblyFromFile(parameters, Directory.GetFiles(targetTemporarySourceFilesDirectory, "*.cs", SearchOption.TopDirectoryOnly));
