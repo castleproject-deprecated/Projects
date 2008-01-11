@@ -24,7 +24,7 @@ namespace Castle.MonoRail.Views.AspView
 			if (arguments.Length % 2 != 0)
 				throw new AspViewException("Parameters should be arranged as key and value pairs");
 			int i = 0;
-			IDictionary<string, object> parameters = new Dictionary<string, object>(arguments.Length / 2);
+			IDictionary<string, object> parameters = new Dictionary<string, object>(arguments.Length / 2, CaseInsensitiveStringComparer.Default);
 			while (i < arguments.Length)
 			{
 				string name = arguments[i] as string;
@@ -36,6 +36,5 @@ namespace Castle.MonoRail.Views.AspView
 			}
 			return parameters;
 		}
-
 	}
 }
