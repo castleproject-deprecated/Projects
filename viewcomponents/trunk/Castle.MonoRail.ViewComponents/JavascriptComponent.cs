@@ -390,7 +390,7 @@ namespace Castle.MonoRail.ViewComponents
                 }
                 id = GetHashCode().ToString("x");
             }
-            helper = new JavascriptHelper(this.Context, this.HttpContext, Flash, id);
+			helper = new JavascriptHelper(this.Context, this.EngineContext, id);
             string std = Context.ComponentParameters["std"] as string ?? string.Empty;
             helper.IncludeStandardScripts(std);
 
@@ -574,7 +574,7 @@ namespace Castle.MonoRail.ViewComponents
         {
             base.Initialize();
 
-            helper = new JavascriptHelper(this.Context, this.HttpContext, Flash, "DummyInsertJavascript");
+			helper = new JavascriptHelper(this.Context, this.EngineContext, "DummyInsertJavascript");
             string std = Context.ComponentParameters["std"] as string ?? string.Empty;
             helper.IncludeStandardScripts(std);
         }
@@ -683,6 +683,7 @@ namespace Castle.MonoRail.ViewComponents
         /// <param name="httpcontext">The httpcontext.</param>
         /// <param name="flash">The viewComponent's Flash collection.</param>
         /// <param name="key">The string that uniquely identifies the script block.</param>
+		[Obsolete("Please use 'JavascriptHelper(IViewComponentContext, IEngineContext, string)' ctor instead." )]
         public JavascriptHelper(IViewComponentContext context,HttpContext httpcontext, Flash flash, string key)
         {
             this.context = context;
@@ -695,9 +696,34 @@ namespace Castle.MonoRail.ViewComponents
 
             this.browCaps = httpcontext.Request.Browser;
             this.scriptBuilder = new StringBuilder(1024);
-        }
+		}
 
-        /// <summary>
+		/// <summary>
+		/// Initializes a new instance of the JavascriptHelper class.
+		/// </summary>
+		/// <remarks>Different instances of JavascriptHelper created with the same key are render only once.
+		/// </remarks>
+		/// <example><code>
+		/// JavascriptHelper helper = new JavascriptHelper(viewcomp.Context, viewcomp.EngineContext, "MyScript");
+		/// </code></example>
+		/// <param name="context">The context.</param>
+		/// <param name="engine">The engine.</param>
+		/// <param name="key">The key.</param>
+		public JavascriptHelper(IViewComponentContext context, IEngineContext engine, string key)
+		{
+			this.context = context;
+			js = engine.Flash["JSsegments"] as JSsegments ?? new JSsegments();
+			engine.Flash["JSsegments"] = js;
+
+			this.id = key;
+			if (((ICollection<string>)js.segments.Keys).Contains(key))
+				skipRender = true;
+
+			this.browCaps = engine.UnderlyingContext.Request.Browser;
+			this.scriptBuilder = new StringBuilder(1024);
+		}
+
+		/// <summary>
         /// Includes the script text for the given browser in the given version range.
         /// </summary>
         /// <remarks>Script blocks are only include in the output is the browser specified matches the

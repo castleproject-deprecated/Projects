@@ -153,6 +153,22 @@
 					</ul>		
 #end
 #end
+
+#blockcomponent(CollapsiblePanel with "id=DualList"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#caption
+					<h3>Dual List component</h3>
+#end
+#body					
+					<ul>
+						<li>
+							<a href="/DualList/index.rails">Sample Dual List</a>
+						</li>
+					</ul>		
+#end
+#end
+
+
+
 #blockcomponent(CollapsiblePanel with "id=FAQ"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
 #caption
 					<h3>FAQ component</h3>

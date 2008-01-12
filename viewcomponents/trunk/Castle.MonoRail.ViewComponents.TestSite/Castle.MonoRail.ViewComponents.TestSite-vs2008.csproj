@@ -74,6 +74,7 @@
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\CheckboxListController.cs" />
     <Compile Include="Controllers\CollapsiblePanelController.cs" />
+    <Compile Include="Controllers\DualListController.cs" />
     <Compile Include="Controllers\FaqController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaskedTextBoxController.cs" />
@@ -97,6 +98,7 @@
     <None Include="Views\Chart\index.brail" />
     <None Include="Views\CheckboxList\index.brail" />
     <None Include="Views\CollapsiblePanel\index.brail" />
+    <None Include="Views\DualList\index.brail" />
     <None Include="Views\Faq\index.brail" />
     <None Include="Views\Faq\List.brail" />
     <None Include="Views\Grid\Alternate.brail" />

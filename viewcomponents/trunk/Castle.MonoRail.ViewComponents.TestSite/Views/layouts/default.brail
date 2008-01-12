@@ -155,6 +155,21 @@ section body: %>
 					</ul>		
 <%    end
   end %>
+
+<% component CollapsiblePanel, {@id:"DualList",   @expandImagePath:"/Images/expand.jpg", @collapseImagePath:"/Images/collapse.jpg", @collapsed:true}:
+section caption: %>
+					<h3>DualList component</h3>
+<% end
+section body: %>					
+					<ul>
+						<li>
+							<a href="/DualList/index.rails">Sample Dual List</a>
+						</li>
+					</ul>
+<%    end
+  end %>
+
+
 <% component CollapsiblePanel, {@id:"FAQComponent",   @expandImagePath:"/Images/expand.jpg", @collapseImagePath:"/Images/collapse.jpg", @collapsed:true}:
 section caption: %>
 					<h3>FAQ component</h3>

@@ -162,7 +162,7 @@ namespace Castle.MonoRail.ViewComponents
                 int inx = Text.LastIndexOf(' ', MaxLength);
                 RenderText(Text.Substring(0, inx));
 
-                JavascriptHelper helper = new JavascriptHelper(Context, HttpContext, Flash, "MoreLessComponent");
+				JavascriptHelper helper = new JavascriptHelper(Context, EngineContext, "MoreLessComponent");
                 helper.IncludeStandardScripts("Ajax");
                 helper.IncludeScriptText("function moreless(key) {Element.toggle('extraText:'+key);Element.toggle('more:'+key);}");
                 string key = base.MakeUniqueId("");

@@ -1,0 +1,23 @@
+﻿<h2>Original Usage, Properties of an Object (Here a SmartDispatchController)</h2>			  
+<%
+component DualListComponent, {@sourceColumnsType: sourceColumnsType, 
+    @selectedColumns: selectedColumns} 
+%>
+<hr />
+<h2>New Syntax Usage, Values of an Enum (Here a ParamStore)</h2>			  
+<%
+
+component DualListComponent, {@sourceColumnsType: sourceColumnsType2, 
+    @selectedColumns: selectedColumns2 } 
+%>
+
+<hr />
+<h2>New Syntax Usage, Values from a string IEnumerator </h2>			  
+
+<%
+
+component DualListComponent, {@sourceColumns: sourceColumnsType3, 
+    @selectedColumns: selectedColumns3 } 
+
+%>
+

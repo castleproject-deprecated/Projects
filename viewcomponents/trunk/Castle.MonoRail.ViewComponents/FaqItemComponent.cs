@@ -231,7 +231,7 @@ namespace Castle.MonoRail.ViewComponents
             param.QuestionCssClass = questionCssClass;
             param.Number = faqNum.Value;
             param.WrapItems = wrapItems;
-            param.helper = new JavascriptHelper(Context, HttpContext, Flash, "FaqItemComponent");
+            param.helper = new JavascriptHelper(Context, EngineContext, "FaqItemComponent");
             param.helper.IncludeStandardScripts("Ajax");
 
             RenderText(FaqItemHelper.BuildItem(question, answer, param));
@@ -422,7 +422,7 @@ namespace Castle.MonoRail.ViewComponents
             param = new FaqParameters();
             param.QuestionCssClass = Context.ComponentParameters["QuestionCssClass"] as string ?? "Question";
             param.AnswerCssClass = Context.ComponentParameters["AnswerCssClass"] as string ?? "Answer";
-            param.helper = new JavascriptHelper(Context, HttpContext,Flash, "FaqListComponent");
+            param.helper = new JavascriptHelper(Context, EngineContext,"FaqListComponent");
             param.helper.IncludeStandardScripts("Ajax");
 
             string listType = Context.ComponentParameters["ListType"] as string ?? "none";

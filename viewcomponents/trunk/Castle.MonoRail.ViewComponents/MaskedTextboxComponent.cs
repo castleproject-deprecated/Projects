@@ -174,7 +174,7 @@ namespace Castle.MonoRail.ViewComponents
 
         private void RenderJSFiles()
         {
-            _javascriptHelper = new JavascriptHelper(Context, HttpContext, Flash, "MaskedTextboxComponent");
+            _javascriptHelper = new JavascriptHelper(Context, EngineContext, "MaskedTextboxComponent");
             _javascriptHelper.IncludeScriptFile("MaskedTextbox.js");
         }
 
