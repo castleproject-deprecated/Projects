@@ -1,9 +1,7 @@
 <%@ Page Language="C#" Inherits="Castle.MonoRail.Views.AspView.ViewAtDesignTime" %>
-<aspView:properties>
-<% 
+<script runat="server" type="aspview/properties">
 	object capturedContent;
-%>
-</aspView:properties>
+</script>
 UsingCaptureFor layout
 ViewContents: <%=ViewContents%>
 capturedContent: <%=capturedContent%>

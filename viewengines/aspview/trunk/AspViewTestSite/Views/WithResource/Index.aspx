@@ -1,8 +1,6 @@
 <%@ Page Language="C#" Inherits="Castle.MonoRail.Views.AspView.ViewAtDesignTime" %>
 <%@ Import namespace="Castle.MonoRail.Framework.Resources"%>
-<aspView:properties>
-<%
+<script runat="server" type="aspview/properties">
 	ResourceFacade MyResource;
-%>
-</aspView:properties>
+</script>
 <%=MyResource["name"] %>

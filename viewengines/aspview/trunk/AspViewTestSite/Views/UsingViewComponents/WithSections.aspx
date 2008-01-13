@@ -1,10 +1,8 @@
 <%@ Page Language="C#" %>
-<aspView:properties>
-<%
+<script runat="server" type="aspview/properties">
 	string[] items;
 	string item;
-%>
-</aspView:properties>
+</script>
 A simple viewcomponent, without a body and sections
 <component:Repeater source="<%=items%>">
 	<section:header>

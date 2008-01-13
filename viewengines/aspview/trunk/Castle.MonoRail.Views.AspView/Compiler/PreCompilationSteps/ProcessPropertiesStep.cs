@@ -25,30 +25,39 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 		{
 			file.RenderBody = Internal.RegularExpressions.PropertiesSection.Replace(file.RenderBody, delegate(Match match)
 			{
-				string propertiesSection = match.Groups["properties"].Value.Trim();
-				if (propertiesSection.EndsWith("%>"))
-					propertiesSection = propertiesSection.Substring(0, propertiesSection.Length - 2);
-				string[] propertiesDeclerations = propertiesSection.Split(';');
-				foreach (string propertiesDecleration in propertiesDeclerations)
-				{
-					string prop = propertiesDecleration.Trim();
-					if (prop == string.Empty)
-						continue;
-					string[] mainParts = prop.Split(new char[1] { '=' }, 2);
-					string propDecleration = mainParts[0].Trim();
-					string defaultValue = null;
-					if (mainParts.Length == 2)
-						defaultValue = mainParts[1].Trim();
-					int lastSpace = propDecleration.LastIndexOf(" ");
-					if (lastSpace == -1)
-						throw new Exception("Illegal property decleration: '" + prop + "'");
-					string type = propDecleration.Substring(0, lastSpace).Trim();
-					string name = propDecleration.Substring(lastSpace).Trim();
-					file.Properties.Add(name, new ViewProperty(name, type, defaultValue));
-				}
+				HandlePropertiesSection(match, file);
+				return string.Empty;
+			});
+			file.RenderBody = Internal.RegularExpressions.PropertiesServerScriptSection.Replace(file.RenderBody, delegate(Match match)
+			{
+				HandlePropertiesSection(match, file);
 				return string.Empty;
 			});
 		}
 
+		private static void HandlePropertiesSection(Match match, SourceFile file)
+		{
+			string propertiesSection = match.Groups["properties"].Value.Trim();
+			if (propertiesSection.EndsWith("%>"))
+				propertiesSection = propertiesSection.Substring(0, propertiesSection.Length - 2);
+			string[] propertiesDeclerations = propertiesSection.Split(';');
+			foreach (string propertiesDecleration in propertiesDeclerations)
+			{
+				string prop = propertiesDecleration.Trim();
+				if (prop == string.Empty)
+					continue;
+				string[] mainParts = prop.Split(new char[1] { '=' }, 2);
+				string propDecleration = mainParts[0].Trim();
+				string defaultValue = null;
+				if (mainParts.Length == 2)
+					defaultValue = mainParts[1].Trim();
+				int lastSpace = propDecleration.LastIndexOf(" ");
+				if (lastSpace == -1)
+					throw new Exception("Illegal property decleration: '" + prop + "'");
+				string type = propDecleration.Substring(0, lastSpace).Trim();
+				string name = propDecleration.Substring(lastSpace).Trim();
+				file.Properties.Add(name, new ViewProperty(name, type, defaultValue));
+			}
+		}
 	}
 }

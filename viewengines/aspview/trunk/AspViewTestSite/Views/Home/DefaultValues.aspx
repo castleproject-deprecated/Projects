@@ -1,11 +1,9 @@
 <%@ Page Language="C#" Inherits="Castle.MonoRail.Views.AspView.ViewAtDesignTime" %>
-<aspView:properties>
-<%
+<script runat="server" type="aspview/properties">
     string message = "default";
     int number = 1;
     DateTime? date = null;
-%>
-</aspView:properties>
+</script>
 message: <%=message%>
 number: <%=number%>
 date is null?:  <%=date==null%>

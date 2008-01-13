@@ -1,10 +1,8 @@
 <%@ Page Language="C#" Inherits="Castle.MonoRail.Views.AspView.ViewAtDesignTime" %>
-<aspView:properties>
-<%
+<script runat="server" type="aspview/properties">
     string message;
     int number;
-%>
-</aspView:properties>
+</script>
 WithProperties view
-message: <%=message %>
+message: <%= message %>
 number: <%=number %>

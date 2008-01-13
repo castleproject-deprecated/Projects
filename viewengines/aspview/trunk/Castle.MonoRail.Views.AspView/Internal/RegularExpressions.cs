@@ -30,6 +30,9 @@ namespace Castle.MonoRail.Views.AspView.Internal
 		public static readonly Regex PropertiesSection = new Regex(
 @"<aspview:properties>(?:\s*<%)?(?<properties>.*)(?:%\s*>)?</aspview:properties>\s*\n", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
+		public static readonly Regex PropertiesServerScriptSection = new Regex(
+@"<script\s+runat\s*=\s*\""server\""\s+type=""aspview/properties""\s*>(?<properties>((?!</script>).)*)</script>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+
 		public static readonly Regex SubViewTags = new Regex(
 @"<subView:(?<viewName>[\w\.]+)" + attributesBlock + @">\s*</subView:\k<viewName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
@@ -66,6 +69,7 @@ namespace Castle.MonoRail.Views.AspView.Internal
 
 		public static readonly Regex EmbededServerScriptBlock = new Regex(
 @"<script\s+runat\s*=\s*\""server\""\s*>(?<content>((?!</script>).)*)</script>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+
 		public static readonly Regex InlineOutputDirective = new Regex(
 @"\${(?<content>[\s\w\.\(\)\[\]""]+)}", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
