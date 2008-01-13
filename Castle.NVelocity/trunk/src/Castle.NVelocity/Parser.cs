@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
 
 namespace Castle.NVelocity
 {
-    using System;
     using Castle.NVelocity.Ast;
     using System.Collections.Generic;
 
@@ -117,10 +116,14 @@ namespace Castle.NVelocity
                 templateNode.AddRange(content);
 
                 //TODO write some comments
-                if (content.Count == 0 || (content.Count == 0 && _scanner.EOF))
+                if (content.Count == 0 && !_scanner.EOF)
                 {
                     AddError("The parser has been pre-emptively terminated because it appears " +
-                        "as if the parser is stuck. [In ParseXmlRestElement()]");
+                        "as if the parser is stuck. [In ParseTemplate()]");
+                    break;
+                }
+                else if (content.Count == 0)
+                {
                     break;
                 }
             }
@@ -184,13 +187,14 @@ namespace Castle.NVelocity
                 {
                     Token token = _scanner.PeekToken(1);
 
-                    // If no token follows then return the content list
-                    if (token == null)
-                    {
-                        return content;
-                    }
+                    //TODO: does this need to be here because it stops the parsing of "<"
+//                    // If no token follows then return the content list
+//                    if (token == null)
+//                    {
+//                        return content;
+//                    }
 
-                    if (token.Type == TokenType.XmlForwardSlash)
+                    if (token != null && token.Type == TokenType.XmlForwardSlash)
                     {
                         // The '<' starts a end tag so exit the loop of the parent element body
                         // Return nodes created and do not process the closing tag
@@ -231,7 +235,7 @@ namespace Castle.NVelocity
 
             MatchToken(TokenType.XmlTagStart);
 
-            string elementName = "";
+            string elementName;
             if (CurrentTokenType == TokenType.XmlTagName)
             {
                 elementName = _scanner.CurrentToken.Image;
@@ -240,6 +244,9 @@ namespace Castle.NVelocity
             else
             {
                 AddError("Expected XML tag name.");
+                XmlElement emptyXmlElement = new XmlElement("");
+                emptyXmlElement.Position = startPos;
+                return emptyXmlElement;
             }
 
             XmlElement xmlElement = new XmlElement(elementName);
@@ -253,6 +260,12 @@ namespace Castle.NVelocity
                 {
                     xmlElement.Attributes.Add(statement);
                 }
+            }
+
+            // Consume TokenType.XmlAttributeMemberSelect tokens
+            while (CurrentTokenType == TokenType.XmlAttributeMemberSelect)
+            {
+                _scanner.GetToken();
             }
 
             while (CurrentTokenType == TokenType.XmlAttributeName)
@@ -269,6 +282,12 @@ namespace Castle.NVelocity
                     AddError("The parser has been pre-emptively terminated because it appears " +
                         "as if the parser is stuck. [In ParseXmlElement()]");
                     break;
+                }
+
+                // Consume TokenType.XmlAttributeMemberSelect tokens
+                while (CurrentTokenType == TokenType.XmlAttributeMemberSelect)
+                {
+                    _scanner.GetToken();
                 }
             }
 
@@ -290,7 +309,7 @@ namespace Castle.NVelocity
                 if (CurrentTokenType == TokenType.XmlTagEnd)
                 {
                     xmlElement.Position.End = GetCurrentTokenPosition();
-
+                    xmlElement.IsComplete = true;
                     _scanner.GetToken();
                 }
             }
@@ -304,8 +323,17 @@ namespace Castle.NVelocity
                     List<AstNode> content = ParseContent();
                     xmlElement.Content.AddRange(content);
 
+                    // Set the parent property on the XmlElement
+                    foreach (AstNode astNode in content)
+                    {
+                        if (astNode is XmlElement)
+                        {
+                            ((XmlElement)astNode).Parent = xmlElement;
+                        }
+                    }
+
                     //TODO write some comments
-                    if (content.Count == 0)
+                    if (content.Count == 0 && !_scanner.EOF)
                     {
                         AddError("The parser has been pre-emptively terminated because it appears " +
                             "as if the parser is stuck. [In ParseXmlRestElement()]");
@@ -313,7 +341,7 @@ namespace Castle.NVelocity
                     }
                     else if (_scanner.EOF)
                     {
-                        AddError("Expected closing tag.");
+                        AddError(string.Format("Expected closing tag for opening tag '{0}'.", xmlElement.Name));
                         break;
                     }
                 }
@@ -352,6 +380,7 @@ namespace Castle.NVelocity
             {
                 xmlElement.Position.End = GetCurrentTokenPosition();
                 xmlElement.EndTagPosition = GetCurrentTokenPosition();
+                xmlElement.IsComplete = true;
                 _scanner.GetToken();
             }
             else
@@ -381,9 +410,25 @@ namespace Castle.NVelocity
 
             MatchToken(TokenType.XmlEquals);
 
-            MatchToken(TokenType.XmlDoubleQuote);
+            bool doubleQuotes;
+            if (_scanner.CurrentToken.Type == TokenType.XmlDoubleQuote)
+            {
+                _scanner.GetToken();
+                doubleQuotes = true;
+            }
+            else if (_scanner.CurrentToken.Type == TokenType.XmlSingleQuote)
+            {
+                _scanner.GetToken();
+                doubleQuotes = false;
+            }
+            else
+            {
+                AddError("Expected quotes around attribute value.");
+                return null;
+            }
 
-            while (CurrentTokenType != TokenType.XmlDoubleQuote)
+            while ((CurrentTokenType != TokenType.XmlDoubleQuote && doubleQuotes) ||
+                (CurrentTokenType != TokenType.XmlSingleQuote && !doubleQuotes))
             {
                 AstNode astNode;
 
@@ -406,7 +451,14 @@ namespace Castle.NVelocity
             }
             //TODO: else if(CurrentTokenType == TokenType.XmlSingleQuote)
 
-            MatchToken(TokenType.XmlDoubleQuote);
+            if (doubleQuotes)
+            {
+                MatchToken(TokenType.XmlDoubleQuote);
+            }
+            else
+            {
+                MatchToken(TokenType.XmlSingleQuote);
+            }
 
             return xmlAttribute;
         }
@@ -526,16 +578,17 @@ namespace Castle.NVelocity
                     List<AstNode> content = ParseContent();
                     ((NVForeachDirective)nvDirective).Content.AddRange(content);
 
-                    //TODO write some comments
-                    if (content.Count == 0)
+                    // If this is the end of the file then return what has been build
+                    if (_scanner.EOF)
+                    {
+                        AddError("Expected #end directive.");
+                        nvDirective.Position = new Position(startPos, _scanner.CurrentPos);
+                        return nvDirective;
+                    }
+                    else if (content.Count == 0)
                     {
                         AddError("The parser has been pre-emptively terminated because it appears " +
                             "as if the parser is stuck. [In ParseNVForeachDirective()]");
-                        break;
-                    }
-                    else if (_scanner.EOF)
-                    {
-                        AddError("Expected #end directive.");
                         break;
                     }
                 }
@@ -627,6 +680,7 @@ namespace Castle.NVelocity
             while (CurrentTokenType == TokenType.NVDot)
             {
                 Position startSelectorPosition = new Position(_scanner.CurrentPos.Start);
+                Position dotPosition = new Position(_scanner.CurrentPos);
                 _scanner.GetToken();
 
                 if (CurrentTokenType == TokenType.NVIdentifier)
@@ -654,10 +708,10 @@ namespace Castle.NVelocity
                     AddError("Expected identifier");
                     
                     NVSelector selector = new NVSelector(new NVMethodNode("", null), nvReference);
-                    selector.Position = new Position(_scanner.CurrentPos);
+                    selector.Position = new Position(dotPosition);
                     nvReference.Designator.Selectors.Add(selector);
 
-                    nvReference.Position.End = new Position(_scanner.CurrentPos);
+                    nvReference.Position.End = new Position(selector.Position.End);
 
                     return nvReference;
                 }
@@ -944,6 +998,7 @@ namespace Castle.NVelocity
                     //TODO make only work in intellisense mode
                     else if (CurrentTokenType == TokenType.Error)
                     {
+                        //TODO: check if this is causing CVSI to lock up
                         return new NVStringExpression("");
                     }
                     else

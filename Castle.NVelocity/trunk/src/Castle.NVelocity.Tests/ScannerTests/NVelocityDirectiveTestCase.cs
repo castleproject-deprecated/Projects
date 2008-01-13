@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -69,14 +69,10 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
             AssertMatchToken(TokenType.XmlText, "text");
             AssertMatchToken(TokenType.NVDirectiveHash);
+            AssertMatchToken(TokenType.NVDirectiveName, "if");
 
-            try
-            {
-                _scanner.GetToken();
-                Assert.Fail();
-            }
-            catch (ScannerError) {}
-            
+            Assert.AreEqual(1, _scanner.Errors.Count);
+            Assert.AreEqual("Scanner: Expected '}' for closing directive name", _scanner.Errors[0].Description);
         }
 
         [Test]

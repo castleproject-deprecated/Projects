@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
             _scanner.SetSource(
                 "First Second !@#");
 
-            _scanner.SplitTextTokens = true;
+            _scanner.Options.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlText, "First", new Position(1, 1, 1, 6));
             AssertMatchToken(TokenType.XmlText, " ", new Position(1, 6, 1, 7));

@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
 namespace Castle.VisualStudio.NVelocityLanguageService
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Drawing;
     using System.Runtime.InteropServices;
@@ -164,6 +165,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
 
             Trace.WriteLine(string.Format("NVelocityLanguage.ParseSource(). Reason:{0}", req.Reason));
 
+            // Parse the input if required
             if (req.Reason == ParseReason.Check ||
                 req.Reason == ParseReason.DisplayMemberList ||
                 req.Reason == ParseReason.MemberSelect ||
@@ -173,11 +175,8 @@ namespace Castle.VisualStudio.NVelocityLanguageService
 
                 try
                 {
-                    ScannerOptions scannerOptions = new ScannerOptions();
-                    scannerOptions.EnableIntelliSenseTriggerTokens = true;
-
                     Scanner scanner = new Scanner(errors);
-                    scanner.Options = scannerOptions;
+                    scanner.Options.EnableIntelliSenseTriggerTokens = true;
                     scanner.SetSource(req.Text);
 
                     Parser parser = new Parser(scanner, errors);
@@ -234,6 +233,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                 //MessageBox.Show("Unparsed ParseReason: " + req.Reason);
             }
             
+            // Perform other operations
             if (req.Reason == ParseReason.MethodTip)
             {
                 TextSpan textSpan = new TextSpan();
@@ -248,8 +248,15 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                 Trace.WriteLine("MethodTip at line " + req.Line + " col " + req.Col);
             }
 
-            NVelocityAuthoringScope scope = new NVelocityAuthoringScope(_templateNode, req.FileName);
+            if (req.Sink.HiddenRegions)
+            {
+                AddHiddenRegions(req.Sink, _templateNode.Content);
 
+                req.Sink.ProcessHiddenRegions = true;
+            }
+
+            NVelocityAuthoringScope scope = new NVelocityAuthoringScope(_templateNode, req.FileName);
+            
             //if (req.Sink.BraceMatching && req.Col > 30)
             //{
             //    TextSpan startBrace = new TextSpan();
@@ -268,6 +275,37 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             //}
 
             return scope;
+        }
+
+        private static void AddHiddenRegions(AuthoringSink sink, IEnumerable<AstNode> content)
+        {
+            foreach (AstNode astNode in content)
+            {
+                if ((astNode is XmlElement || astNode is NVForeachDirective)
+                    && (astNode.Position.StartLine < astNode.Position.EndLine))
+                {
+//                    NewHiddenRegion region = new NewHiddenRegion();
+//                    region.dwBehavior = (uint)HIDDEN_REGION_BEHAVIOR.hrbEditorControlled;
+//                    region.dwState = (uint)HIDDEN_REGION_STATE.hrsExpanded;
+//                    region.iType = (int)HIDDEN_REGION_TYPE.hrtCollapsible;
+//                    region.pszBanner = "..." + xmlElement.Name + "...";
+
+                    TextSpan hiddenTextSpan = new TextSpan();
+                    hiddenTextSpan.iStartLine = astNode.Position.StartLine - 1;
+                    hiddenTextSpan.iStartIndex = astNode.Position.StartPos - 1;
+                    hiddenTextSpan.iEndLine = astNode.Position.EndLine - 1;
+                    hiddenTextSpan.iEndIndex = astNode.Position.EndPos - 1;
+//                    region.tsHiddenText = hiddenTextSpan;
+
+                    sink.AddHiddenRegion(hiddenTextSpan);
+
+                    // Add child regions
+                    if (astNode is XmlElement)
+                        AddHiddenRegions(sink, ((XmlElement)astNode).Content);
+                    else if (astNode is NVForeachDirective)
+                        AddHiddenRegions(sink, ((NVForeachDirective)astNode).Content);
+                }
+            }
         }
 
         private void PrepareTemplateNode(string fileName)

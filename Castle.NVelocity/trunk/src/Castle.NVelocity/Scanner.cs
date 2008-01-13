@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,14 +32,13 @@ namespace Castle.NVelocity
 
         private static readonly char CR = '\r';
         private static readonly char LF = '\n';
+        private readonly Dictionary<string, TokenType> nvKeywords = new Dictionary<string, TokenType>();
 
         private Stack<ScannerState> state = new Stack<ScannerState>();
-        private Queue<Token> _prereadTokens = new Queue<Token>();
-
+        private readonly Queue<Token> _prereadTokens = new Queue<Token>();
         private Token _currentToken;
-
         private readonly ErrorHandler _errors;
-
+        private ScannerOptions _options = new ScannerOptions();
         private char ch;
         private string _source;
         private int pos = 1;
@@ -48,13 +47,6 @@ namespace Castle.NVelocity
         private ArrayList linestarts;
         private Position currPos = new Position(0, 0);
         private Position prevPos = new Position(0, 0);
-
-        private readonly Dictionary<string, TokenType> nvKeywords = new Dictionary<string, TokenType>();
-
-        //TODO Scanner options, the fields need to be refactored into the object
-        private bool isLineScanner = false;
-        private bool splitTextTokens = false;
-        private ScannerOptions _options = new ScannerOptions();
 
         /// <summary>
         /// Creates a new Scanner.
@@ -80,12 +72,23 @@ namespace Castle.NVelocity
         }
 
         /// <summary>
-        /// Returns the stack of state information from the scanner. The returned stack a new
-        /// stack created from the data in the state.
+        /// Returns the stack of state information from the scanner. The returned
+        /// stack is a new stack object created from the data in the state stack.
         /// </summary>
-        /// <returns></returns>
         public Stack<ScannerState> RetrieveState()
         {
+            // If the scanner is currently in an refernece then pop out because
+            // this will be a new line
+            if (_options.IsLineScanner)
+            {
+                while (state.Peek() == ScannerState.NVReference ||
+                       state.Peek() == ScannerState.NVReferenceSelectors ||
+                       state.Peek() == ScannerState.NVReferenceFormal)
+                {
+                    state.Pop();
+                }
+            }
+
             return new Stack<ScannerState>(state.ToArray());
         }
 
@@ -95,7 +98,7 @@ namespace Castle.NVelocity
         /// <param name="source">The input template source.</param>
         public void SetSource(string source)
         {
-            if (!isLineScanner || state.Count == 0)
+            if (!_options.IsLineScanner || state.Count == 0)
             {
                 state.Clear();
                 state.Push(ScannerState.Default);
@@ -166,26 +169,6 @@ namespace Castle.NVelocity
                 }
                 return eof;
             }
-        }
-
-        /// <summary>
-        /// Specifies whether the scanner should return error when reaching the end of the input
-        /// with unclosed syntax.
-        /// </summary>
-        public bool IsLineScanner
-        {
-            get { return isLineScanner; }
-            set { isLineScanner = value; }
-        }
-
-        /// <summary>
-        /// Specifies whether XML and NVelocity text tokens should be returned as multiple tokens
-        /// based on word boundaries.
-        /// </summary>
-        public bool SplitTextTokens
-        {
-            get { return splitTextTokens; }
-            set { splitTextTokens = value; }
         }
 
         /// <summary>
@@ -334,7 +317,8 @@ namespace Castle.NVelocity
                 case ScannerState.XmlTagAttributes:
                     token = ScanTokenXmlTag();
                     break;
-                case ScannerState.XmlTagAttributeValue:
+                case ScannerState.XmlTagAttributeValueDouble:
+                case ScannerState.XmlTagAttributeValueSingle:
                     token = ScanTokenXmlTagAttributeValue();
                     break;
                 case ScannerState.XmlCData:
@@ -380,7 +364,6 @@ namespace Castle.NVelocity
                     token = ScanTokenNVBrack();
                     break;
                 default:
-                    //TODO: throw new ScannerError("Unknown state '" + currentState + "'");
                     AddError(string.Format("Unknown state '{0}'", currentState));
                     break;
             }
@@ -393,11 +376,8 @@ namespace Castle.NVelocity
 
             if (token != null && token.Type == TokenType.Error)
             {
-                //TODO
-//                throw new ScannerError(string.Format("Unknown symbol '{0}' in state {1}",
-//                                                     ch, ScannerStateToString(state.Peek())));
                 AddError(string.Format("Unknown symbol '{0}' in state {1}",
-                                       ch, ScannerStateToString(state.Peek())));
+                    ch, ScannerStateToString(state.Peek())));
             }
 
             return token;
@@ -424,7 +404,7 @@ namespace Castle.NVelocity
                         // It is an XML comment
                         int startCommentPos = pos;
                         GetCh(4);
-                        if (isLineScanner)
+                        if (_options.IsLineScanner)
                         {
                             token.Type = TokenType.XmlCommentStart;
                             state.Push(ScannerState.XmlComment);
@@ -477,7 +457,7 @@ namespace Castle.NVelocity
                 else if (LookAhead(1) == '*')
                 {
                     GetCh();
-                    if (isLineScanner)
+                    if (_options.IsLineScanner)
                     {
                         token.Type = TokenType.NVMultilineCommentStart;
                         state.Push(ScannerState.NVMultilineComment);
@@ -542,7 +522,7 @@ namespace Castle.NVelocity
                 }
                 else
                 {
-                    if (splitTextTokens)
+                    if (_options.SplitTextTokens)
                     {
                         if (char.IsLetter(ch))
                         {
@@ -654,7 +634,22 @@ namespace Castle.NVelocity
         {
             Token token = new Token();
 
-            ConsumeWhiteSpace();
+            // Return whitespace characters between XML attributes as IntelliSense token
+            if (_options.EnableIntelliSenseTriggerTokens)
+            {
+                if (char.IsWhiteSpace(ch))
+                {
+                    token.Type = TokenType.XmlAttributeMemberSelect;
+                    token.Image = ch.ToString();
+                    token.Position = CurrentPos;
+                    GetCh();
+                    return token;
+                }
+            }
+            else
+            {
+                ConsumeWhiteSpace();
+            }
 
             token.SetStartPosition(lineNo, linePos);
 
@@ -723,7 +718,11 @@ namespace Castle.NVelocity
                         break;
                     case '"':
                         token.Type = TokenType.XmlDoubleQuote;
-                        state.Push(ScannerState.XmlTagAttributeValue);
+                        state.Push(ScannerState.XmlTagAttributeValueDouble);
+                        break;
+                    case '\'':
+                        token.Type = TokenType.XmlSingleQuote;
+                        state.Push(ScannerState.XmlTagAttributeValueSingle);
                         break;
                     case '?':
                         token.Type = TokenType.XmlQuestionMark;
@@ -773,7 +772,7 @@ namespace Castle.NVelocity
                 return (ch == ']' && LookAhead(1) == ']' && LookAhead(2) == '>') || eof;
             });
 
-            if (eof && !isLineScanner)
+            if (eof && !_options.IsLineScanner)
             {
                 throw new ScannerError("End-of-file found but CData section was not closed");
             }
@@ -789,9 +788,23 @@ namespace Castle.NVelocity
 
             bool scanXmlText = true;
 
-            if (ch == '"')
+            if (ch == '"' && CurrentState == ScannerState.XmlTagAttributeValueDouble)
             {
                 token.Type = TokenType.XmlDoubleQuote;
+                GetCh();
+                state.Pop(); // Pop XmlTagAttributeValue
+                scanXmlText = false;
+            }
+            else if (ch == '\'' && CurrentState == ScannerState.XmlTagAttributeValueSingle)
+            {
+                token.Type = TokenType.XmlSingleQuote;
+                GetCh();
+                state.Pop(); // Pop XmlTagAttributeValue
+                scanXmlText = false;
+            }
+            else if (ch == '\'')
+            {
+                token.Type = TokenType.XmlSingleQuote;
                 GetCh();
                 state.Pop(); // Pop XmlTagAttributeValue
                 scanXmlText = false;
@@ -815,13 +828,14 @@ namespace Castle.NVelocity
             {
                 token = ReadText(TokenType.XmlAttributeText, delegate
                 {
-                    return ch == '"' ||
+                    return (ch == '"' && CurrentState == ScannerState.XmlTagAttributeValueDouble) ||
+                           (ch == '\'' && CurrentState == ScannerState.XmlTagAttributeValueSingle) ||
                            (ch == '#' && NVDirectiveFollows()) ||
                            (ch == '$' && NVReferenceFollows());
                 });
             }
-            
-            if (eof && !isLineScanner)
+
+            if (eof && !_options.IsLineScanner)
             {
                 //TODO throw new ScannerError("End-of-file found but quoted string literal was not closed");
                 AddError("End-of-file found but quoted string literal was not closed");
@@ -858,9 +872,9 @@ namespace Castle.NVelocity
                        LookAhead(6) == 'p' && LookAhead(7) == 't' && LookAhead(8) == '>';
             });
 
-            if (eof && !isLineScanner)
+            if (eof && !_options.IsLineScanner)
             {
-                throw new ScannerError("Expected closing 'script' element");
+                AddError("Expected closing 'script' element");
             }
 
             return token;
@@ -931,7 +945,7 @@ namespace Castle.NVelocity
                     }
                     else
                     {
-                        throw new ScannerError("Expected '}' for closing directive name");
+                        AddError("Expected '}' for closing directive name");
                     }
                 }
 
@@ -1014,26 +1028,31 @@ namespace Castle.NVelocity
             else if (ch == '{')
             {
                 token.Type = TokenType.NVReferenceLCurly;
+                state.Pop(); // Pop NVReference
+                state.Push(ScannerState.NVReferenceFormal);
+                state.Push(ScannerState.NVReference);
                 GetCh();
             }
             else if (ch == '"')
             {
                 token.Type = TokenType.NVDoubleQuote;
                 state.Pop(); // Pop NVReference
+                if (state.Peek() == ScannerState.NVReferenceFormal)
+                    state.Pop(); // Pop NVReferenceFormal
                 state.Pop(); // Pop NVStringLiteralDouble
                 GetCh();
             }
             else
             {
+                AddError("Expected reference identifier");
                 if (_options.EnableIntelliSenseTriggerTokens)
                 {
-                    AddError("Expected reference identifier");
                     state.Pop(); // Pop NVReference
+                    if (state.Peek() == ScannerState.NVReferenceFormal)
+                    {
+                        state.Pop(); // Pop NVReferenceFormal
+                    }
                     return null;
-                }
-                else
-                {
-                    throw new ScannerError("Expected reference identifier");
                 }
             }
 
@@ -1070,18 +1089,27 @@ namespace Castle.NVelocity
             }
             else if (ch == '}')
             {
-                token.Type = TokenType.NVReferenceRCurly;
-                if (state.Peek() == ScannerState.NVReferenceSelectors)
+                state.Pop(); // Pop NVReferenceSelectors
+                state.Pop(); // Pop NVReference
+
+                if (state.Peek() == ScannerState.NVReferenceFormal)
                 {
-                    state.Pop(); // Pop NVReferenceSelectors
-                    state.Pop(); // Pop NVReference
+                    token.Type = TokenType.NVReferenceRCurly;
+                    state.Pop(); // Pop NVReferenceFormal
+
+                    GetCh();
                 }
-                GetCh();
+                else
+                {
+                    token = GetToken();
+                }
             }
             else
             {
                 state.Pop(); // Pop NVReferenceSelectors
                 state.Pop(); // Pop NVReference
+                if (state.Peek() == ScannerState.NVReferenceFormal)
+                    state.Pop(); // Pop NVReferenceFormal
                 token = GetToken();
             }
 
@@ -1110,7 +1138,7 @@ namespace Castle.NVelocity
                 return ch == '\'';
             });
 
-            if (eof && !isLineScanner)
+            if (eof && !_options.IsLineScanner)
             {
                 AddError("Expected end of string literal");
             }
@@ -1158,7 +1186,7 @@ namespace Castle.NVelocity
                        (ch == '$' && NVReferenceFollows());
             });
 
-            if (eof && !isLineScanner)
+            if (eof && !_options.IsLineScanner)
             {
                 AddError("Expected end of string literal");
                 state.Pop();
@@ -1315,14 +1343,6 @@ namespace Castle.NVelocity
             }
         }
 
-        //private void ConsumeNewLines()
-        //{
-        //    while (ch == CR || ch == LF)
-        //    {
-        //        GetCh();
-        //    }
-        //}
-
         private char NextCharAfterSingleLineWhiteSpace()
         {
             if (_source.Length == 0)
@@ -1366,14 +1386,14 @@ namespace Castle.NVelocity
                             GetCh();
                         }
                         else
-                            throw new ScannerError("Expected end of XML comment");
+                            AddError("Expected end of XML comment");
                     }
                 }
                 else
                     GetCh();
             }
             if (!endFound && eof)
-                throw new ScannerError("Expected end of XML comment");
+                AddError("Expected end of XML comment");
         }
 
         private Token ReadNVelocityMultiLineComment()
@@ -1632,8 +1652,10 @@ namespace Castle.NVelocity
                     return "XML Tag";
                 case ScannerState.XmlTagAttributes:
                     return "XML Tag Attributes";
-                case ScannerState.XmlTagAttributeValue:
-                    return "XML Tag Attribute Value";
+                case ScannerState.XmlTagAttributeValueDouble:
+                    return "XML Tag Attribute Value Double Quotes";
+                case ScannerState.XmlTagAttributeValueSingle:
+                    return "XML Tag Attribute Value Single Quotes";
                 case ScannerState.XmlCData:
                     return "XML CData";
                 case ScannerState.XmlScriptElementContent:

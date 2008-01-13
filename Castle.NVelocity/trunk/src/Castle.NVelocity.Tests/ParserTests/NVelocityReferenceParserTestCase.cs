@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -211,6 +211,31 @@ namespace Castle.NVelocity.Tests.ParserTests
             NVSelector selector = nvReference.Designator.Selectors[0];
             Assert.AreEqual("LinkToRemote", selector.Name);
             Assert.AreEqual(0, selector.Actuals.Count);
+        }
+
+        [Test]
+        public void ParsePartialNVReferenceWithDollarIdentDotInXmlElement()
+        {
+            ScannerOptions scannerOptions = new ScannerOptions();
+            scannerOptions.EnableIntelliSenseTriggerTokens = true;
+
+            Parser parser = GetNewParser(
+                "<tag>\n" +
+                "  $Ajax.\n" +
+                "</tag>");
+            TemplateNode templateNode = parser.ParseTemplate();
+
+            // Check the TemplateNode
+            Assert.AreEqual(1, templateNode.Content.Count);
+            XmlElement xmlElement = (XmlElement)templateNode.Content[0];
+            NVReference nvReference = (NVReference)xmlElement.Content[1];
+            Assert.AreEqual("Ajax", nvReference.Designator.Name);
+            Assert.AreEqual(1, nvReference.Designator.Selectors.Count);
+
+            AssertPosition(new Position(1, 1, 3, 7), xmlElement.Position);
+            AssertPosition(new Position(2, 3, 2, 9), nvReference.Position);
+            AssertPosition(new Position(2, 3, 2, 9), nvReference.Designator.Position);
+            AssertPosition(new Position(2, 8, 2, 9), nvReference.Designator.Selectors[0].Position);
         }
     }
 }

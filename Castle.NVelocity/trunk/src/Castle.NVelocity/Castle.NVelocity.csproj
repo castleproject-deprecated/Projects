@@ -72,7 +72,7 @@
     <Compile Include="TokenType.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Ast\ClassDiagrams\AstClrNodes.cd" />
+    <None Include="Ast\ClassDiagrams\AstTypeNodes.cd" />
     <None Include="Ast\ClassDiagrams\AstExpressionNodes.cd" />
     <None Include="Ast\ClassDiagrams\AstNodes.cd" />
     <None Include="Ast\ClassDiagrams\AstXmlNodes.cd" />

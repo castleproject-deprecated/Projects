@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,8 +18,8 @@ namespace Castle.NVelocity.Ast
 
     public class XmlAttribute : AstNode
     {
-        private string _name;
-        private List<AstNode> _content = new List<AstNode>();
+        private readonly string _name;
+        private readonly List<AstNode> _content = new List<AstNode>();
 
         public XmlAttribute(string name)
         {
@@ -34,6 +34,27 @@ namespace Castle.NVelocity.Ast
         public List<AstNode> Content
         {
             get { return _content; }
+        }
+
+        public override void DoSemanticChecks(ErrorHandler errs, Scope currentScope)
+        {
+            foreach (AstNode astNode in _content)
+            {
+                astNode.DoSemanticChecks(errs, currentScope);
+            }
+        }
+
+        public override AstNode GetNodeAt(int line, int pos)
+        {
+            foreach (AstNode astNode in _content)
+            {
+                AstNode foundNode = astNode.GetNodeAt(line, pos);
+                if (foundNode != null)
+                {
+                    return foundNode;
+                }
+            }
+            return null;
         }
     }
 }

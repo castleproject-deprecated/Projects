@@ -5,7 +5,7 @@
     <Position X="4.25" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Ast\AstNode.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAQgAAAAAAAAAAAAAAAAQIAAAAAAAEA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAQgAAAAAAAAAAAAAAgAQIAAAAAAAEA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="Castle.NVelocity.Ast.NVDesignator" Collapsed="true">
@@ -45,7 +45,7 @@
     <Position X="2.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <FileName>Ast\NVReference.cs</FileName>
-      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQIAAAAAAAEA=</HashCode>
+      <HashCode>AIAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAQIAAAAAAAEA=</HashCode>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Designator" />
@@ -69,7 +69,14 @@
     <Position X="6" Y="2" Width="1.5" />
     <TypeIdentifier>
       <FileName>Ast\TemplateNode.cs</FileName>
-      <HashCode>AAIIAAAAAgAAACABAABgAAAAABAAAAAAAICAQAAEAEA=</HashCode>
+      <HashCode>AAIIAAAAAgAAACABAABgAAAAABAAAAgAAICAQAAEAEA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Castle.NVelocity.Ast.NVForeachDirective" Collapsed="true">
+    <Position X="4.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Ast\NVForeachDirective.cs</FileName>
+      <HashCode>AAAIACAAAgAAQGABAAAAAAEAAAAAAAgAAIAAAAAAAEA=</HashCode>
     </TypeIdentifier>
   </Class>
 </ClassDiagram>

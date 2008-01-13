@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -58,6 +58,11 @@ namespace Castle.NVelocity.Ast
             if (!string.IsNullOrEmpty(_iterator))
             {
                 _scope.Add(new NVLocalNode(_iterator, null));
+            }
+
+            foreach (AstNode astNode in _content)
+            {
+                astNode.DoSemanticChecks(errs, _scope);
             }
         }
 

@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@ namespace Castle.VisualStudio.NVelocityLanguageService
 
         public NVelocityScanner()
         {
-            scanner.IsLineScanner = true;
-            scanner.SplitTextTokens = true;
+            scanner.Options.IsLineScanner = true;
+            scanner.Options.SplitTextTokens = true;
             scanner.Options.EnableIntelliSenseTriggerTokens = true;
 
             // Insert the state for the initial line number
@@ -215,16 +215,14 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             {
                 case TokenType.NVDollar:
                 case TokenType.NVDot:
-                    tokenInfo.Trigger = TokenTriggers.MemberSelect;
-                    break;
                 case TokenType.NVDirectiveHash:
                 case TokenType.NVDirectiveLParen:
+                case TokenType.XmlTagStart:
+                case TokenType.XmlAttributeMemberSelect:
                     tokenInfo.Trigger = TokenTriggers.MemberSelect;
                     break;
 
                 case TokenType.NVLParen:
-                    tokenInfo.Trigger = TokenTriggers.ParameterStart | TokenTriggers.MatchBraces;
-                    break;
                 case TokenType.NVRParen:
                     tokenInfo.Trigger = TokenTriggers.ParameterEnd | TokenTriggers.MatchBraces;
                     break;

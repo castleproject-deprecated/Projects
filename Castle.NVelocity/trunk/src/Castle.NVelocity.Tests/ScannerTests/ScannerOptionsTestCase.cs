@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -43,6 +43,18 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.NVDot);
 
             AssertEOF();
+        }
+
+        [Test]
+        public void EnableIntelliSenseTriggerTokens_ScansXmlAttributeMemberSelectSpaces()
+        {
+            _scanner.Options.EnableIntelliSenseTriggerTokens = true;
+            _scanner.SetSource(
+                "<tag ");
+
+            AssertMatchToken(TokenType.XmlTagStart);
+            AssertMatchToken(TokenType.XmlTagName, "tag");
+            AssertMatchToken(TokenType.XmlAttributeMemberSelect);
         }
     }
 }

@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@ namespace Castle.NVelocity.Ast
     {
         private string _name;
         private bool _isSelfClosing = false;
+        private bool _isComplete = false;
+        private XmlElement parent;
         private readonly List<AstNode> _attributes = new List<AstNode>();
         private readonly List<AstNode> _content = new List<AstNode>();
 
@@ -41,6 +43,18 @@ namespace Castle.NVelocity.Ast
         {
             get { return _isSelfClosing; }
             set { _isSelfClosing = value; }
+        }
+
+        public bool IsComplete
+        {
+            get { return _isComplete; }
+            set { _isComplete = value; }
+        }
+
+        public XmlElement Parent
+        {
+            get { return parent; }
+            set { parent = value; }
         }
 
         public List<AstNode> Attributes
@@ -65,6 +79,19 @@ namespace Castle.NVelocity.Ast
             set { _endTagPosition = value; }
         }
 
+        public override void DoSemanticChecks(ErrorHandler errs, Scope currentScope)
+        {
+            foreach (AstNode astNode in _attributes)
+            {
+                astNode.DoSemanticChecks(errs, currentScope);
+            }
+
+            foreach (AstNode astNode in _content)
+            {
+                astNode.DoSemanticChecks(errs, currentScope);
+            }
+        }
+
         public override Scope GetScopeAt(int line, int pos)
         {
             foreach (AstNode astNode in _content)
@@ -80,6 +107,15 @@ namespace Castle.NVelocity.Ast
 
         public override AstNode GetNodeAt(int line, int pos)
         {
+            foreach (AstNode astNode in _attributes)
+            {
+                AstNode foundNode = astNode.GetNodeAt(line, pos);
+                if (foundNode != null)
+                {
+                    return foundNode;
+                }
+            }
+
             foreach (AstNode astNode in _content)
             {
                 AstNode foundNode = astNode.GetNodeAt(line, pos);
@@ -88,7 +124,8 @@ namespace Castle.NVelocity.Ast
                     return foundNode;
                 }
             }
-            return null;
+
+            return base.GetNodeAt(line, pos);
         }
     }
 }

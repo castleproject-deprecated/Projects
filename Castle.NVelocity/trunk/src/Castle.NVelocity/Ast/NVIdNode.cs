@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ namespace Castle.NVelocity.Ast
     {
         protected string _name;
         protected NVClassNode _parent; // the class which owns this id
-        protected NVTypeNode _type; // the C#- type of this id
+        protected NVTypeNode _type; // the- type of this id
 
         public NVIdNode(string name)
         {

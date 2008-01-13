@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using Castle.NVelocity.Ast;
     using Microsoft.VisualStudio;
     using Microsoft.VisualStudio.Package;
@@ -23,7 +24,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
 
     public class NVelocityAuthoringScope : AuthoringScope
     {
-        private TemplateNode _templateNode;
+        private readonly TemplateNode _templateNode;
         private string _fileName;
 
         public NVelocityAuthoringScope(TemplateNode templateNode, string fileName)
@@ -44,9 +45,10 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             AstNode astNode = _templateNode.GetNodeAt(line + 1, col + 1);
             if (astNode == null)
             {
+                Trace.Fail("Null AstNode when attempting to provide IntelliSense in NVelocityAuthoringScope.");
                 return null;
             }
-
+            
             NVelocityDeclarations declarations = new NVelocityDeclarations();
 
             if (astNode is NVDesignator)
@@ -94,6 +96,18 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                         declarations.Add(new NVelocityDeclaration(methodNode.Name, methodNode, IntelliSenseIcons.Method));
                     }
                 }
+                else
+                {
+                    if (typeNode == null)
+                    {
+                        declarations.Add(new NVelocityDeclaration("_TypeNode_Is_Null", null, IntelliSenseIcons.Error));
+                    }
+                    else
+                    {
+                        declarations.Add(new NVelocityDeclaration("_Unsupported_Type_For_NVSelector_" + typeNode.GetType().Name,
+                            null, IntelliSenseIcons.Error));
+                    }
+                }
             }
             else if (astNode is NVDirective)
             {
@@ -103,7 +117,6 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                     // TODO: change the if expression so that it checks if the col is between the # and (
                     //       because you can bring up the intellisense list in the middle of the identifier
                     //       and it should display the list of the directives instead of the view components.
-                    // TODO: move 'elseif' and 'else' to context sensentive within 'if' only
                     List<string> directivesList = new List<string>();
                     directivesList.AddRange(new string[]
                         {
@@ -131,9 +144,36 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                     }
                 }
             }
+            else if (astNode is XmlElement)
+            {
+                XmlElement xmlElement = (XmlElement)astNode;
+                if (xmlElement.Name == "")
+                {
+                    if (xmlElement.Parent != null)
+                    {
+                        declarations.Add(new NVelocityDeclaration("Has_XHTML_Parent_"+xmlElement.Parent.Name, null,
+                            IntelliSenseIcons.XmlElement));
+
+                        if (!xmlElement.Parent.IsSelfClosing && !xmlElement.IsComplete)
+                        {
+                            declarations.Add(new NVelocityDeclaration(string.Format("/{0}>", xmlElement.Parent.Name),
+                                null, IntelliSenseIcons.XmlElement));
+                        }
+                    }
+
+                    declarations.Add(new NVelocityDeclaration("body", null, IntelliSenseIcons.XmlElement));
+                    declarations.Add(new NVelocityDeclaration("head", null, IntelliSenseIcons.XmlElement));
+                    declarations.Add(new NVelocityDeclaration("html", null, IntelliSenseIcons.XmlElement));
+                }
+                else
+                {
+                    declarations.Add(new NVelocityDeclaration("attribute_for_element_" + xmlElement.Name,
+                        null, IntelliSenseIcons.Property));
+                }
+            }
             else
             {
-                declarations.Add(new NVelocityDeclaration("Context_Unknown_Type_" + astNode.GetType().Name,
+                declarations.Add(new NVelocityDeclaration("Context_Unknown_Type_Is_" + astNode.GetType().Name,
                     null, IntelliSenseIcons.Error));
             }
 

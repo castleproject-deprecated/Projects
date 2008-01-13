@@ -1,4 +1,4 @@
-﻿// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+﻿// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -38,12 +38,12 @@ namespace Castle.VisualStudio.NVelocityLanguageService
     [PackageRegistration(UseManagedResourcesOnly = true)]
 
     [ProvideService(typeof(NVelocityLanguage), ServiceName = "NVelocity")]
-    
+
     [ProvideLanguageService(typeof(NVelocityLanguage), "NVelocity", 100,
-        //AutoOutlining = true,
+        AutoOutlining = true,
         //CodeSense = true,
         //CodeSenseDelay = 0,
-        DefaultToInsertSpaces = true,
+        //DefaultToInsertSpaces = true,
         //EnableAsyncCompletion = true,
         //EnableCommenting = true,
         MatchBraces = true,
@@ -65,7 +65,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
 
     // This attribute is used to register the informations needed to show the this package
     // in the Help/About dialog of Visual Studio.
-    [InstalledProductRegistration(true, "#ProductName", "#ProductDetails", "0.1", IconResourceID = 100,
+    [InstalledProductRegistration(true, "#ProductName", "#ProductDetails", "0.2", IconResourceID = 100,
         LanguageIndependentName = "Castle Visual Studio Integration")]
     
     // In order be loaded inside Visual Studio in a machine that does not have the VS SDK

@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,11 +17,12 @@ namespace Castle.NVelocity
     public enum ScannerState
     {
         Default,
-        
+
         XmlComment,
         XmlTag,
         XmlTagAttributes,
-        XmlTagAttributeValue,
+        XmlTagAttributeValueDouble,
+        XmlTagAttributeValueSingle,
         XmlCData,
         XmlScriptElementContent,
 
@@ -31,6 +32,7 @@ namespace Castle.NVelocity
         NVDirectiveParams,
         NVReference,
         NVReferenceSelectors,
+        NVReferenceFormal,
         NVStringLiteralSingle,
         NVStringLiteralDouble,
         NVDictionary,

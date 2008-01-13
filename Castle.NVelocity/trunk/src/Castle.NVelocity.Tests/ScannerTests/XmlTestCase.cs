@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -420,6 +420,23 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlDoubleQuote);
             AssertMatchToken(TokenType.XmlAttributeText, "I have $100.");
             AssertMatchToken(TokenType.XmlDoubleQuote);
+            AssertMatchToken(TokenType.XmlForwardSlash);
+            AssertMatchToken(TokenType.XmlTagEnd);
+        }
+
+        [Test]
+        public void XmlAttributeWithSingleQuotes()
+        {
+            _scanner.SetSource(
+                "<tag attr='before\"after' />");
+
+            AssertMatchToken(TokenType.XmlTagStart);
+            AssertMatchToken(TokenType.XmlTagName, "tag");
+            AssertMatchToken(TokenType.XmlAttributeName);
+            AssertMatchToken(TokenType.XmlEquals);
+            AssertMatchToken(TokenType.XmlSingleQuote);
+            AssertMatchToken(TokenType.XmlAttributeText, "before\"after");
+            AssertMatchToken(TokenType.XmlSingleQuote);
             AssertMatchToken(TokenType.XmlForwardSlash);
             AssertMatchToken(TokenType.XmlTagEnd);
         }

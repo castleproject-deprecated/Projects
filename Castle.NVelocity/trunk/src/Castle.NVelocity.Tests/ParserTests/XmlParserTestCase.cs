@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -45,6 +45,18 @@ namespace Castle.NVelocity.Tests.ParserTests
             Assert.AreEqual("This is some XmlText", xmlTextNode.Text);
 
             AssertNoErrors(parser);
+        }
+
+        [Test]
+        public void ParseXmlTagOpenAsElement()
+        {
+            Parser parser = GetNewParser("<");
+            TemplateNode templateNode = parser.ParseTemplate();
+
+            // Template has 1 element
+            Assert.AreEqual(1, templateNode.Content.Count);
+            Assert.AreEqual("", ((XmlElement)templateNode.Content[0]).Name);
+            AssertPosition(new Position(1, 1, 1, 2), templateNode.Content[0].Position);
         }
 
         [Test]
@@ -137,7 +149,10 @@ namespace Castle.NVelocity.Tests.ParserTests
         [Test]
         public void ParseXmlElementWithEmptyAttributeValue()
         {
-            Parser parser = GetNewParser("<tag attr=\"\"/>");
+            ScannerOptions scannerOptions = new ScannerOptions();
+            scannerOptions.EnableIntelliSenseTriggerTokens = true;
+
+            Parser parser = GetNewParser(scannerOptions, "<tag attr=\"\" />");
             TemplateNode templateNode = parser.ParseTemplate();
 
             // Element has 1 attribute with no content nodes
@@ -172,7 +187,10 @@ namespace Castle.NVelocity.Tests.ParserTests
         [Test]
         public void ParseXmlElementWithTwoAttributes()
         {
-            Parser parser = GetNewParser("<tag attr1=\"\" attr2=\"\" />");
+            ScannerOptions scannerOptions = new ScannerOptions();
+            scannerOptions.EnableIntelliSenseTriggerTokens = true;
+
+            Parser parser = GetNewParser(scannerOptions, "<tag attr1=\"\" attr2=\"\" />");
             TemplateNode templateNode = parser.ParseTemplate();
 
             // XML Element has 2 attributes
@@ -182,6 +200,67 @@ namespace Castle.NVelocity.Tests.ParserTests
             Assert.AreEqual("attr2", ((XmlAttribute)xmlElement.Attributes[1]).Name);
 
             AssertNoErrors(parser);
+        }
+
+        [Test]
+        public void ParseXmlElementWithSingleQuotesAroundAttribute()
+        {
+            ScannerOptions scannerOptions = new ScannerOptions();
+            scannerOptions.EnableIntelliSenseTriggerTokens = true;
+
+            Parser parser = GetNewParser(scannerOptions, "<tag attr='value'/>");
+            TemplateNode template = parser.ParseTemplate();
+
+            // Template has 1 XML Element
+            XmlElement xmlElement = (XmlElement)template.Content[0];
+
+            // Element has 1 Attribute
+            Assert.AreEqual(1, xmlElement.Attributes.Count);
+            XmlAttribute xmlAttribute = (XmlAttribute)xmlElement.Attributes[0];
+            Assert.AreEqual("attr", xmlAttribute.Name);
+
+            // Element has 1 XML text node
+            Assert.AreEqual(1, xmlAttribute.Content.Count);
+            XmlTextNode xmlTextNode = (XmlTextNode)xmlAttribute.Content[0];
+            Assert.AreEqual("value",  xmlTextNode.Text);
+
+            AssertNoErrors(parser);
+        }
+
+        [Test]
+        public void XmlElementsHaveParentElements()
+        {
+            ScannerOptions scannerOptions = new ScannerOptions();
+            scannerOptions.EnableIntelliSenseTriggerTokens = true;
+
+            Parser parser = GetNewParser(scannerOptions, "<outer><inner></inner></outer>");
+            TemplateNode templateNode = parser.ParseTemplate();
+
+            Assert.AreEqual(
+                templateNode.Content[0],
+                ((XmlElement)((XmlElement)templateNode.Content[0]).Content[0]).Parent);
+
+            AssertNoErrors(parser);
+        }
+
+        [Test]
+        public void XmlElementIsCompleteWhenSyntaxicallyCorrect()
+        {
+            Parser parser = GetNewParser("<tag></tag>");
+            TemplateNode templateNode = parser.ParseTemplate();
+
+            Assert.IsTrue(((XmlElement)templateNode.Content[0]).IsComplete);
+
+            AssertNoErrors(parser);
+        }
+
+        [Test]
+        public void XmlElementIsNotCompleteWhenSyntaxicallyIncomplete()
+        {
+            Parser parser = GetNewParser("<tag><");
+            TemplateNode templateNode = parser.ParseTemplate();
+
+            Assert.IsFalse(((XmlElement)templateNode.Content[0]).IsComplete);
         }
     }
 }

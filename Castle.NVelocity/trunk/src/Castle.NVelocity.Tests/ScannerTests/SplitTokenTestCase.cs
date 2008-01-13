@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
             _scanner.SetSource(
                 "First Second Third");
 
-            _scanner.SplitTextTokens = true;
+            _scanner.Options.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlText, "First");
             AssertMatchToken(TokenType.XmlText, " ");
@@ -40,7 +40,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
             _scanner.SetSource(
                 "First   Second");
 
-            _scanner.SplitTextTokens = true;
+            _scanner.Options.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlText, "First");
             AssertMatchToken(TokenType.XmlText, "   ");
@@ -53,7 +53,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
             _scanner.SetSource(
                 "First! Second ? !@#");
 
-            _scanner.SplitTextTokens = true;
+            _scanner.Options.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlText, "First");
             AssertMatchToken(TokenType.XmlText, "!");
@@ -73,7 +73,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
             _scanner.SetSource(
                 "text $var #directive text #$%");
 
-            _scanner.SplitTextTokens = true;
+            _scanner.Options.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlText, "text");
             AssertMatchToken(TokenType.XmlText, " ");
@@ -96,7 +96,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
             _scanner.SetSource(
                 "<div class=\"someClass anotherClass\"/>");
 
-            _scanner.SplitTextTokens = true;
+            _scanner.Options.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlTagStart);
             AssertMatchToken(TokenType.XmlTagName, "div");
@@ -117,7 +117,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
             _scanner.SetSource(
                 "<![CDATA[First Second Third]]>");
 
-            _scanner.SplitTextTokens = true;
+            _scanner.Options.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlCDataStart, new Position(1, 1, 1, 10));
             AssertMatchToken(TokenType.XmlCDataSection, "First", new Position(1, 10, 1, 15));
@@ -134,7 +134,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
             _scanner.SetSource(
                 "<script>This is JavaScript</script>");
 
-            _scanner.SplitTextTokens = true;
+            _scanner.Options.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlTagStart, new Position(1, 1, 1, 2));
             AssertMatchToken(TokenType.XmlTagName, "script", new Position(1, 2, 1, 8));
@@ -158,7 +158,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
             _scanner.SetSource(
                 "$a.B(\"First $second Third\")");
 
-            _scanner.SplitTextTokens = true;
+            _scanner.Options.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.NVDollar, new Position(1, 1, 1, 2));
             AssertMatchToken(TokenType.NVIdentifier, "a", new Position(1, 2, 1, 3));

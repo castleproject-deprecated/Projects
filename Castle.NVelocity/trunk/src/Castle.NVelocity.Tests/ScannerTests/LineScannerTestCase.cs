@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void XmlTagThatIsOnMultipleLines()
         {
-            _scanner.IsLineScanner = true;
+            _scanner.Options.IsLineScanner = true;
             
             _scanner.SetSource(
                 "<div");
@@ -51,7 +51,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void XmlAttributeValueThatIsOnMultipleLines()
         {
-            _scanner.IsLineScanner = true;
+            _scanner.Options.IsLineScanner = true;
 
             _scanner.SetSource(
                 "<div class=\"start");
@@ -81,7 +81,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void NVMultilineCommentThatIsOnMultipleLines()
         {
-            _scanner.IsLineScanner = true;
+            _scanner.Options.IsLineScanner = true;
 
             _scanner.SetSource(
                 "text#*comment");
@@ -107,7 +107,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void XmlCommentThatIsOnMultipleLines()
         {
-            _scanner.IsLineScanner = true;
+            _scanner.Options.IsLineScanner = true;
 
             _scanner.SetSource(
                 "text<!--comment");
@@ -133,7 +133,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void XmlCommentThatIsOnMultipleLinesWithNoPrecedingXmlText()
         {
-            _scanner.IsLineScanner = true;
+            _scanner.Options.IsLineScanner = true;
 
             _scanner.SetSource(
                 "<!--comment");

@@ -3,8 +3,7 @@
 +===================+
 Step 1 - Install VS SDK
 -----------------------
-- As I have not yet registered the Visual Studio integration package with Microsoft. To use it you will need to
-  preinstall the Visual Studio 2005 SDK Version 4.0:
+- To develop extensions for Visual Studio you will need to install the Visual Studio 2005 SDK Version 4.0:
   
   http://www.microsoft.com/downloads/details.aspx?FamilyID=51A5C65B-C020-4E08-8AC0-3EB9C06996F4&displaylang=en
 
@@ -12,13 +11,13 @@ Step 2 - Build Castle.VisualStudio.NVelocityLanguageService
 -----------------------------------------------------------
 - Ensure you have checked out \Castle.NVelocity\ from the castle contrib repository as well. Both Castle.NVelocity
   and CVSI folders need to be located the same as they are on the repository. The easiest option is to checkout
-  the entire contrib.
+  the entire contrib repository.
 - Open \CVSI\trunk\src\Castle.VisualStudio.NVelocityLanguageService\Castle.VisualStudio.NVelocityLanguageService.sln
   in Visual Studio.
 - Go into the project properties, under Debug set these values (without the quotes):
-  Set "Start external program" to "C:\Program Files\Microsoft Visual Studio 8\Common7\IDE\devenv.exe"
-  Set "Command line arguments" to "/rootsuffix Exp"
-- Run the solution without debugging.
+  - Set "Start external program" to "C:\Program Files\Microsoft Visual Studio 8\Common7\IDE\devenv.exe"
+  - Set "Command line arguments" to "/rootsuffix Exp"
+- Run the project.
 
 Step 3 - Use Castle Visual Studio Integration
 ---------------------------------------------
@@ -32,12 +31,12 @@ Step 3 - Use Castle Visual Studio Integration
 +=================+
 - You can start the Visual Studio experimental hive copy at anytime via the
   "Start Visual Studio 2005 under Experimental hive" menu item in the start menu.
-- If you installed the SDK into the 64bit Program Files directory or changed the default directory then you
+- If you installed the SDK into the 64-bit Program Files directory or changed the default directory then you
   will need to update the path to the targets file in the Castle.VisualStudio.NVelocityLanguageService.csproj
   file.
 
 +=================+
 |  Known Issues   |
 +=================+
-- You cannot have multiple NVelocity files open at once because they all overwrite the same scanner state used
-  by the other files. As a workaround, you can run multiple instances of Visual Studio to open multiple files.
+- Issues are logged in the Castle Project's JIRA (http://support.castleproject.org) under the Contrib project
+  with the Castle Visual Studio Integration component.

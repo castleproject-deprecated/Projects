@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -211,7 +211,6 @@ namespace Castle.NVelocity.Tests.ScannerTests
         }
 
         [Test]
-        [Ignore]
         public void NVDictionaryDoesNotConsumeRCurlyOnIdentifierWithoutInitialLCurly()
         {
             _scanner.SetSource(
@@ -234,6 +233,31 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.NVDoubleQuote);
 
             AssertMatchToken(TokenType.NVRParen);
+
+            AssertEOF();
+        }
+
+        [Test]
+        public void ReferenceFollowedByTextOnFollowingLine()
+        {
+            _scanner.Options.IsLineScanner = true;
+            _scanner.Options.SplitTextTokens = true;
+            _scanner.Options.EnableIntelliSenseTriggerTokens = true;
+
+            _scanner.SetSource(
+                "$var.Method");
+
+            AssertMatchToken(TokenType.NVDollar);
+            AssertMatchToken(TokenType.NVIdentifier, "var");
+            AssertMatchToken(TokenType.NVDot);
+            AssertMatchToken(TokenType.NVIdentifier, "Method");
+
+            _scanner.RestoreState(_scanner.RetrieveState());
+
+            _scanner.SetSource(
+                "text");
+
+            AssertMatchToken(TokenType.XmlText, "text");
 
             AssertEOF();
         }
