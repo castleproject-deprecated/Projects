@@ -1,5 +1,6 @@
 using System;
-using Castle.Tools.CodeGenerator.Model;
+using Castle.Tools.CodeGenerator.Model.TreeNodes;
+using Castle.Tools.CodeGenerator.Services.Generators;
 using NUnit.Framework;
 using Rhino.Mocks;
 

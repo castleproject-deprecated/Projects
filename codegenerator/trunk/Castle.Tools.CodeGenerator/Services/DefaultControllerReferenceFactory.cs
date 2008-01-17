@@ -13,12 +13,6 @@ namespace Castle.Tools.CodeGenerator.Services
 			return new ControllerActionReference(services, controllerType, areaName, controllerName, actionName, signature, arguments);
 		}
 
-		public IControllerActionReference CreateRouteReference(ICodeGeneratorServices services, string routeName,
-		                                                       ActionArgument[] arguments)
-		{
-			return new ControllerRouteReference(services, routeName, arguments);
-		}
-
 		public IControllerViewReference CreateViewReference(ICodeGeneratorServices services, Type controllerType,
 		                                                    string controllerName, string areaName, string actionName)
 		{

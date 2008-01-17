@@ -2,28 +2,20 @@ using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using Castle.Tools.CodeGenerator.Model;
+using Castle.Tools.CodeGenerator.Model.TreeNodes;
+using Castle.Tools.CodeGenerator.Services.Generators;
 
-namespace Castle.Tools.CodeGenerator.Services
+namespace Castle.Tools.CodeGenerator.Services.Generators
 {
 	public class ActionMapGenerator : AbstractGenerator
 	{
-		#region Member Data
-
 		private Dictionary<string, short> _occurences;
-
-		#endregion
-
-		#region ActionMapGenerator()
 
 		public ActionMapGenerator(ILogger logger, ISourceGenerator source, INamingService naming, string targetNamespace,
 		                          string serviceType)
 			: base(logger, source, naming, targetNamespace, serviceType)
 		{
 		}
-
-		#endregion
-
-		#region Methods
 
 		public override void Visit(ControllerTreeNode node)
 		{
@@ -87,48 +79,6 @@ namespace Castle.Tools.CodeGenerator.Services
 		{
 			Visit((ControllerTreeNode) node);
 		}
-
-		#endregion
-
-		#region Methods
-
-		/*
-    I opted to only get this information when it was necessary, but decided to check this in at least once because it might be useful. -jlewalle
-    protected string CreateMethodInformation(ActionTreeNode node, CodeTypeDeclaration type, List<string> actionArgumentTypes)
-    {
-      string methodInfoName = _naming.ToMethodSignatureName(node.Name, actionArgumentTypes.ToArray());
-      string memberName = _naming.ToMemberVariableName(methodInfoName);
-      CodeMemberField field = new CodeMemberField(_source[typeof(MethodInformation)], memberName);
-      field.Attributes = MemberAttributes.Family;
-      type.Members.Add(field);
-
-      List<CodeExpression> actionArgumentRuntimeTypes = new List<CodeExpression>();
-      foreach (string typeName in actionArgumentTypes)
-      {
-        actionArgumentRuntimeTypes.Add(new CodeTypeOfExpression(_source[typeName]));
-      }
-      _constructor.Statements.Add(
-        new CodeAssignStatement(
-          new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), memberName),
-          new CodeMethodInvokeExpression(
-            new CodeMethodReferenceExpression(
-              new CodePropertyReferenceExpression(
-                new CodeArgumentReferenceExpression(_naming.ToVariableName(_serviceIdentifier)), "RuntimeInformationService"
-              ),
-              "ResolveMethodInformation"
-            ),
-            new CodeExpression[]
-            {
-              new CodeTypeOfExpression(node.Controller.FullName),
-              new CodePrimitiveExpression(node.Name),
-              new CodeArrayCreateExpression(_source[typeof(Type)], actionArgumentRuntimeTypes.ToArray())
-            }
-          )
-        )
-      );
-      return memberName;
-    }
-    */
 
 		protected CodeExpression CreateNewActionReference(ActionTreeNode node, List<CodeExpression> actionArguments,
 		                                                  List<string> actionArgumentTypes)
@@ -205,6 +155,42 @@ namespace Castle.Tools.CodeGenerator.Services
 			return actionArguments;
 		}
 
-		#endregion
+		/*
+		I opted to only get this information when it was necessary, but decided to check this in at least once because it might be useful. -jlewalle
+		protected string CreateMethodInformation(ActionTreeNode node, CodeTypeDeclaration type, List<string> actionArgumentTypes)
+		{
+		  string methodInfoName = _naming.ToMethodSignatureName(node.Name, actionArgumentTypes.ToArray());
+		  string memberName = _naming.ToMemberVariableName(methodInfoName);
+		  CodeMemberField field = new CodeMemberField(_source[typeof(MethodInformation)], memberName);
+		  field.Attributes = MemberAttributes.Family;
+		  type.Members.Add(field);
+
+		  List<CodeExpression> actionArgumentRuntimeTypes = new List<CodeExpression>();
+		  foreach (string typeName in actionArgumentTypes)
+		  {
+			actionArgumentRuntimeTypes.Add(new CodeTypeOfExpression(_source[typeName]));
+		  }
+		  _constructor.Statements.Add(
+			new CodeAssignStatement(
+			  new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), memberName),
+			  new CodeMethodInvokeExpression(
+				new CodeMethodReferenceExpression(
+				  new CodePropertyReferenceExpression(
+					new CodeArgumentReferenceExpression(_naming.ToVariableName(_serviceIdentifier)), "RuntimeInformationService"
+				  ),
+				  "ResolveMethodInformation"
+				),
+				new CodeExpression[]
+				{
+				  new CodeTypeOfExpression(node.Controller.FullName),
+				  new CodePrimitiveExpression(node.Name),
+				  new CodeArrayCreateExpression(_source[typeof(Type)], actionArgumentRuntimeTypes.ToArray())
+				}
+			  )
+			)
+		  );
+		  return memberName;
+		}
+		*/
 	}
 }

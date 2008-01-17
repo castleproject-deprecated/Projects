@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Castle.Tools.CodeGenerator.Model;
+using Castle.Tools.CodeGenerator.Model.TreeNodes;
+using Castle.Tools.CodeGenerator.Services.Visitors;
 using ICSharpCode.NRefactory;
 using ICSharpCode.NRefactory.Ast;
 using NUnit.Framework;
@@ -209,12 +210,10 @@ namespace Castle.Tools.CodeGenerator.Services
     [Test]
     public void VisitMethodDeclaration_ActionMemberWithRouteAttribute_CreatesEntryInNode()
     {
-    	int order = 10;
     	string route = "route1";
 		string pattern = "pattern/<param1:string>";
 
 		List<Expression> arguments = new List<Expression>();
-		arguments.Add(new PrimitiveExpression(order, order.ToString()));
 		arguments.Add(new PrimitiveExpression(route, route));
 		arguments.Add(new PrimitiveExpression(pattern, pattern));
 
@@ -235,7 +234,6 @@ namespace Castle.Tools.CodeGenerator.Services
 		_mocks.VerifyAll();
 
     	RouteTreeNode routeNode = (RouteTreeNode) node.Children[0].Children[0];
-		Assert.AreEqual(order, routeNode.Order);
 		Assert.AreEqual(route, routeNode.Name);
 		Assert.AreEqual(pattern, routeNode.Pattern);
 

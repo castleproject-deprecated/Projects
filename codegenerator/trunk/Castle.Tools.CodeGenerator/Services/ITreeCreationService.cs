@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Castle.Tools.CodeGenerator.Model;
+using Castle.Tools.CodeGenerator.Model.TreeNodes;
 
 namespace Castle.Tools.CodeGenerator.Services
 {

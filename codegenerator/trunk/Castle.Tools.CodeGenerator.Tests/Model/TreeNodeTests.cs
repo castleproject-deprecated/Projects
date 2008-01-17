@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Castle.Tools.CodeGenerator.Model.TreeNodes;
 using Rhino.Mocks;
 using NUnit.Framework;
 

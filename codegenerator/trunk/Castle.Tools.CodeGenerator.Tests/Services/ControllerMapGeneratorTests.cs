@@ -1,11 +1,10 @@
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
-
+using Castle.Tools.CodeGenerator.Model.TreeNodes;
+using Castle.Tools.CodeGenerator.Services.Generators;
 using Rhino.Mocks;
 using NUnit.Framework;
-
-using Castle.Tools.CodeGenerator.Model;
 
 namespace Castle.Tools.CodeGenerator.Services
 {

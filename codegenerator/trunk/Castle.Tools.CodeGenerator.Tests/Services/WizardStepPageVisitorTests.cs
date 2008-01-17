@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Castle.Tools.CodeGenerator.Services.Visitors;
 using ICSharpCode.NRefactory.Ast;
 using NUnit.Framework;
 using Rhino.Mocks;

@@ -2,6 +2,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using Castle.Tools.CodeGenerator.Services;
+using Castle.Tools.CodeGenerator.Services.Generators;
 
 namespace Castle.Tools.CodeGenerator.MsBuild
 {

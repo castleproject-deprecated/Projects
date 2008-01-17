@@ -1,3 +1,5 @@
+using Castle.Tools.CodeGenerator.Services.Visitors;
+
 namespace Castle.Tools.CodeGenerator.Services
 {
 	using System;

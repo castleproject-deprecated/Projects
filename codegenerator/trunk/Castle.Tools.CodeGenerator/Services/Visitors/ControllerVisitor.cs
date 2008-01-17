@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using Castle.MonoRail.Framework;
-using Castle.Tools.CodeGenerator.Model;
+using Castle.Tools.CodeGenerator.Model.TreeNodes;
 using ICSharpCode.NRefactory.Ast;
 using Attribute=ICSharpCode.NRefactory.Ast.Attribute;
 
-namespace Castle.Tools.CodeGenerator.Services
+namespace Castle.Tools.CodeGenerator.Services.Visitors
 {
 	public class ControllerVisitor : TypeResolvingVisitor
 	{
@@ -58,35 +57,31 @@ namespace Castle.Tools.CodeGenerator.Services
 			foreach (AttributeSection attributeSection in methodDeclaration.Attributes)
 			{
 				List<Attribute> attributes = attributeSection.Attributes.FindAll(
-					delegate(Attribute attribute) { return attribute.Name == "Route"; });
+					delegate(Attribute attribute) { return attribute.Name == "StaticRoute"; });
 
 				foreach (Attribute attribute in attributes)
 				{
-					PrimitiveExpression order = (PrimitiveExpression) attribute.PositionalArguments[0];
-					PrimitiveExpression name = (PrimitiveExpression) attribute.PositionalArguments[1];
-					PrimitiveExpression pattern = (PrimitiveExpression) attribute.PositionalArguments[2];
+					PrimitiveExpression name = (PrimitiveExpression) attribute.PositionalArguments[0];
+					PrimitiveExpression pattern = (PrimitiveExpression) attribute.PositionalArguments[1];
 
-					RouteTreeNode routeTreeNode = new RouteTreeNode((int) order.Value, (string) name.Value, (string) pattern.Value);
+					StaticRouteTreeNode routeTreeNode = new StaticRouteTreeNode((string) name.Value, (string) pattern.Value);
 					action.AddChild(routeTreeNode);
+				}
 
-					Regex regex = new Regex(@"^((/)*(\w+|(?<parameter>\<\w+:\w+\>)))+(/)*$");
-					Match match = regex.Match(routeTreeNode.Pattern);
-					Group parameters = match.Groups["parameter"];
+				attributes = attributeSection.Attributes.FindAll(
+					delegate(Attribute attribute) { return attribute.Name == "PatternRoute"; });
 
-					for (int i = 0; i < parameters.Captures.Count; i++)
-					{
-						Capture capture = parameters.Captures[i];
-						string[] parts = capture.Value.Split(':');
-						string paramName = parts[0].Substring(1);
-						string paramType = parts[1].Substring(0, parts[1].Length - 1);
+				foreach (Attribute attribute in attributes)
+				{
+					PrimitiveExpression name = (PrimitiveExpression)attribute.PositionalArguments[0];
+					PrimitiveExpression pattern = (PrimitiveExpression)attribute.PositionalArguments[1];
+					string[] defaults = new string[attribute.PositionalArguments.Count - 2];
 
-						if (paramType.ToLowerInvariant() == "string")
-							paramType = typeof(string).ToString();
-						else if (paramType.ToLowerInvariant() == "int")
-							paramType = typeof(int).ToString();
+					for(int i = 0; i < defaults.Length; i++)
+						defaults[i] = (string) ((PrimitiveExpression) attribute.PositionalArguments[2 + i]).Value;
 
-						routeTreeNode.AddChild(new ParameterTreeNode(paramName, paramType));
-					}
+					PatternRouteTreeNode routeTreeNode = new PatternRouteTreeNode((string)name.Value, (string)pattern.Value, defaults);
+					action.AddChild(routeTreeNode);
 				}
 			}
 
@@ -169,24 +164,24 @@ namespace Castle.Tools.CodeGenerator.Services
 			List<string> types = new List<string>();
 
 			arrayCreateExpression.ArrayInitializer.CreateExpressions.ForEach(delegate(Expression expression)
-			                                                                 	{
-			                                                                 		if (expression is ObjectCreateExpression)
-			                                                                 		{
-			                                                                 			ObjectCreateExpression objectCreateExpression =
-			                                                                 				(ObjectCreateExpression) expression;
+			{
+				if (expression is ObjectCreateExpression)
+				{
+					ObjectCreateExpression objectCreateExpression =
+						(ObjectCreateExpression) expression;
 
-			                                                                 			types.Add(objectCreateExpression.CreateType.Type);
-			                                                                 		}
-			                                                                 		else if (expression is InvocationExpression)
-			                                                                 		{
-			                                                                 			InvocationExpression invocationExpression =
-			                                                                 				(InvocationExpression) expression;
+					types.Add(objectCreateExpression.CreateType.Type);
+				}
+				else if (expression is InvocationExpression)
+				{
+					InvocationExpression invocationExpression =
+						(InvocationExpression) expression;
 
-			                                                                 			if (invocationExpression.TypeArguments.Count == 1)
-			                                                                 				types.Add(
-			                                                                 					invocationExpression.TypeArguments[0].Type);
-			                                                                 		}
-			                                                                 	});
+					if (invocationExpression.TypeArguments.Count == 1)
+						types.Add(
+							invocationExpression.TypeArguments[0].Type);
+				}
+			});
 
 			return types.ToArray();
 		}

@@ -1,24 +1,18 @@
 using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Castle.Tools.CodeGenerator.Model;
-using ICSharpCode.NRefactory.Parser;
-
-using Microsoft.Build.BuildEngine;
+using Castle.Tools.CodeGenerator.Services.Generators;
+using Castle.Tools.CodeGenerator.Services.Visitors;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-
 using Castle.Tools.CodeGenerator.Services;
-
 using ILogger = Castle.Tools.CodeGenerator.Services.ILogger;
 
 namespace Castle.Tools.CodeGenerator.MsBuild
 {
     public class GenerateMonoRailSiteTreeTask : AppDomainIsolatedTask
     {
-        #region Member Data
         private ISiteTreeGeneratorService _service;
         private List<ITaskItem> _generatedItems = new List<ITaskItem>();
         private ITaskItem[] _controllerSources;
@@ -38,9 +32,7 @@ namespace Castle.Tools.CodeGenerator.MsBuild
         private IViewSourceMapper _viewSourceMapper;
         private List<IGenerator> _generators = new List<IGenerator>();
 		private bool _debug = false;
-        #endregion
-
-        #region Properties
+        
         [Required]
         public string Namespace
         {
@@ -108,9 +100,6 @@ namespace Castle.Tools.CodeGenerator.MsBuild
     		set { _debug = value; }
     	}
 
-    	#endregion
-
-        #region GenerateMonoRailSiteTreeTask()
         public GenerateMonoRailSiteTreeTask()
         {
             _logger = new MsBuildLogger(this.Log);
@@ -137,9 +126,7 @@ namespace Castle.Tools.CodeGenerator.MsBuild
             _generators.Add(generator);
             this.ServiceTypeName = typeof(ICodeGeneratorServices).FullName;
         }
-        #endregion
 
-        #region Task Members
         public override bool Execute()
         {
             this.Log.LogMessage(MessageImportance.High, "OutputFile: {0}", this.OutputFile);
@@ -213,6 +200,5 @@ namespace Castle.Tools.CodeGenerator.MsBuild
 
             return true;
         }
-        #endregion
     }
 }

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Castle.Tools.CodeGenerator.Model;
+using Castle.Tools.CodeGenerator.Model.TreeNodes;
 
 namespace Castle.Tools.CodeGenerator.Services
 {
@@ -40,7 +40,12 @@ namespace Castle.Tools.CodeGenerator.Services
 			Accept(node.Children);
 		}
 
-		public virtual void Visit(RouteTreeNode node)
+		public virtual void Visit(StaticRouteTreeNode node)
+		{
+			Accept(node.Children);
+		}
+
+		public virtual void Visit(PatternRouteTreeNode node)
 		{
 			Accept(node.Children);
 		}

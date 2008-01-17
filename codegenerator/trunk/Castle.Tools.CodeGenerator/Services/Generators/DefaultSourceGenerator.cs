@@ -4,31 +4,22 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using Castle.Tools.CodeGenerator.CodeDom;
 
-namespace Castle.Tools.CodeGenerator.Services
+namespace Castle.Tools.CodeGenerator.Services.Generators
 {
 	public class DefaultSourceGenerator : ISourceGenerator
 	{
-		#region Member Data
-
 		private Dictionary<string, CodeTypeReference> _typeReferences = new Dictionary<string, CodeTypeReference>();
 		private Dictionary<string, CodeNamespace> _namespaces = new Dictionary<string, CodeNamespace>();
 		private List<string> _defaultUsings = new List<string>();
 		private CodeCompileUnit _ccu;
 		private INamingService _naming;
 
-		#endregion
-
-		#region Properties
-
 		public CodeCompileUnit Ccu
 		{
 			get { return _ccu; }
 		}
-
-		#endregion
-
-		#region DefaultSourceGenerator()
 
 		public DefaultSourceGenerator()
 		{
@@ -36,10 +27,6 @@ namespace Castle.Tools.CodeGenerator.Services
 			_ccu = new CodeCompileUnit();
 			_defaultUsings.Add("System");
 		}
-
-		#endregion
-
-		#region Methods
 
 		public CodeNamespace LookupNamespace(string path)
 		{
@@ -53,70 +40,94 @@ namespace Castle.Tools.CodeGenerator.Services
 			return _namespaces[path];
 		}
 
-		public virtual CodeTypeDeclaration GenerateTypeDeclaration(string targetNamespace, string name)
+		public virtual CodeTypeDeclaration GenerateTypeDeclaration(string targetNamespace, string name, params string[] parents)
 		{
-			CodeTypeDeclaration type = new CodeTypeDeclaration(name);
-			type.TypeAttributes = TypeAttributes.Public;
-			type.IsPartial = true;
-			type.CustomAttributes.Add(
-				new CodeAttributeDeclaration(new CodeTypeReference(typeof (GeneratedCodeAttribute)),
-				                             new CodeAttributeArgument(new CodePrimitiveExpression("Castle.Tools.CodeGenerator")),
-				                             new CodeAttributeArgument(new CodePrimitiveExpression("0.1"))));
-			LookupNamespace(targetNamespace).Types.Add(type);
+			CodeTypeDeclaration type = 
+				CreateTypeDeclaration.Called(name)
+					.AsPartial
+					.WithAttributes(TypeAttributes.Public)
+					.WithCustomAttributes(CodeGeneratorAttribute)
+					.Type;
+
+			CodeNamespace ns = LookupNamespace(targetNamespace);
+
+			if (parents.Length == 0)
+				ns.Types.Add(type);
+			else
+			{
+				CodeTypeMemberCollection members = GetMemberCollectionForTypeDeclaration(ns.Types, parents[0]);
+
+				for (int i = 1; i < parents.Length; i++)
+					members = GetMemberCollectionForTypeMember(members, parents[i]);
+				
+				members.Add(type);
+			}
+
 			return type;
+		}
+
+		private static CodeTypeMemberCollection GetMemberCollectionForTypeDeclaration(CodeTypeDeclarationCollection collection, string typeName)
+		{
+			foreach (CodeTypeDeclaration typeDeclaration in collection)
+			{
+				if (typeDeclaration.Name == typeName)
+					return typeDeclaration.Members;				
+			}
+
+			throw new Exception("Couldn't find type " + typeName + ".");
+		}
+
+		private static CodeTypeMemberCollection GetMemberCollectionForTypeMember(CodeTypeMemberCollection collection, string typeName)
+		{
+			for (int i = 0; i < collection.Count; i++)
+			{
+				if (collection[i] is CodeTypeDeclaration)
+				{
+					CodeTypeDeclaration codeTypeDeclaration = (CodeTypeDeclaration)collection[i];
+
+					if (codeTypeDeclaration.Name == typeName)
+						return codeTypeDeclaration.Members;					
+				}
+			}
+
+			throw new Exception("Couldn't find type " + typeName + ".");
 		}
 
 		public virtual CodeMemberProperty CreateReadOnlyProperty(string name, CodeTypeReference type,
 		                                                         CodeExpression returnExpression)
 		{
-			CodeMemberProperty property = new CodeMemberProperty();
-			property.Attributes = MemberAttributes.Public;
-			property.Name = name;
-			property.HasGet = true;
-			property.HasSet = false;
-			property.Type = type;
-			property.GetStatements.Add(new CodeMethodReturnStatement(returnExpression));
-			property.CustomAttributes.Add(DebuggerAttribute);
-			return property;
-		}
-
-		public CodeMemberField NewField(string name, string type)
-		{
-			CodeMemberField field = new CodeMemberField();
-			field.Attributes = MemberAttributes.Private;
-			field.Name = _naming.ToMemberVariableName(name);
-			field.Type = this[type];
-			return field;
+			return CreateMemberProperty.OfType(type)
+				.Called(name)
+				.WithAttributes(MemberAttributes.Public)
+				.WithCustomAttributes(DebuggerAttribute)
+				.WithGetter(new CodeMethodReturnStatement(returnExpression))
+				.Property;
 		}
 
 		public CodeMemberProperty NewGetFieldProperty(string name, CodeMemberField field)
 		{
-			CodeMemberProperty property = new CodeMemberProperty();
-			property.Attributes = MemberAttributes.Public;
-			property.Name = _naming.ToPropertyName(name);
-			property.HasGet = true;
-			property.HasSet = false;
-			property.Type = field.Type;
-			property.GetStatements.Add(
-				new CodeMethodReturnStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), field.Name)));
-			property.CustomAttributes.Add(DebuggerAttribute);
-			return property;
+			return CreateMemberProperty.OfType(field.Type)
+				.Called(_naming.ToPropertyName(name))
+				.WithAttributes(MemberAttributes.Public)
+				.WithCustomAttributes(DebuggerAttribute)
+				.WithGetter(new CodeMethodReturnStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), field.Name)))
+				.Property;
 		}
 
-		/*
-    public CodeMemberProperty NewGetExpressionProperty(string name, CodeTypeReference type, CodeExpression expression)
-    {
-      CodeMemberProperty property = new CodeMemberProperty();
-      property.Attributes = MemberAttributes.Public;
-      property.Name = _naming.ToPropertyName(name);
-      property.HasGet = true;
-      property.HasSet = false;
-      property.Type = type;
-      property.GetStatements.Add(new CodeMethodReturnStatement(expression));
-      property.CustomAttributes.Add(DebuggerAttribute);
-      return property;
-    }
-    */
+		public CodeMemberField NewField(string name, string type)
+		{
+			return CreateMemberField.WithNameAndType(_naming.ToMemberVariableName(name), type)
+				.WithAttributes(MemberAttributes.Private)
+				.Field;			
+		}
+
+		public CodeMemberField NewPublicConstant<T>(string name, T value)
+		{
+			return CreateMemberField.WithNameAndType<T>(name)
+				.WithAttributes(MemberAttributes.Public | MemberAttributes.Const)
+				.WithInitialValue(value)
+				.Field;
+		}
 
 		public CodeThisReferenceExpression This
 		{
@@ -125,7 +136,18 @@ namespace Castle.Tools.CodeGenerator.Services
 
 		public CodeAttributeDeclaration DebuggerAttribute
 		{
-			get { return new CodeAttributeDeclaration(new CodeTypeReference(typeof (DebuggerNonUserCodeAttribute))); }
+			get { return CreateAttributeDeclaration.ForAttributeType<DebuggerNonUserCodeAttribute>().Attribute; }
+		}
+
+		public CodeAttributeDeclaration CodeGeneratorAttribute
+		{
+			get
+			{
+				return CreateAttributeDeclaration.ForAttributeType<GeneratedCodeAttribute>()
+					.WithArgument("Castle.Tools.CodeGenerator")
+					.WithArgument("0.2")
+					.Attribute;
+			}
 		}
 
 		public void AddFieldPropertyConstructorInitialize(CodeTypeDeclaration type, string name, string fieldType)
@@ -223,7 +245,5 @@ namespace Castle.Tools.CodeGenerator.Services
 		{
 			get { return this[type.FullName]; }
 		}
-
-		#endregion
 	}
 }

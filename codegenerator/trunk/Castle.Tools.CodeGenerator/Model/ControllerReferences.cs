@@ -218,7 +218,8 @@ namespace Castle.Tools.CodeGenerator.Model
 					index++;
 				}
 				UrlInfo urlInfo = this.Services.RailsContext.UrlInfo;
-				return urlBuilder.BuildUrl(urlInfo, this.AreaName, this.ControllerName, this.ActionName, parameters);
+				UrlBuilderParameters urlBuilderParameters = new UrlBuilderParameters(this.AreaName, this.ControllerName, this.ActionName);
+				return urlBuilder.BuildUrl(urlInfo, urlBuilderParameters, parameters);
 			}
 		}
 
@@ -243,76 +244,5 @@ namespace Castle.Tools.CodeGenerator.Model
 		}
 
 		#endregion
-	}
-
-	public class ControllerRouteReference : IControllerActionReference
-	{
-		private readonly ActionArgument[] arguments;
-		private readonly ICodeGeneratorServices services;
-		private readonly string routeName;
-		
-		public ControllerRouteReference(ICodeGeneratorServices services, string routeName, params ActionArgument[] arguments)
-		{
-			this.services = services;
-			this.routeName = routeName;
-			this.arguments = arguments;
-		}
-
-		public void Redirect()
-		{
-			Redirect(false);
-		}
-
-		public void Redirect(bool useJavascript)
-		{
-			if (useJavascript)
-			{
-				string type = "text/javascript";
-				string javascript = String.Format("<script type=\"{0}\">window.location = \"{1}\";</script>", type, Url);
-				Services.Controller.CancelView();
-				Services.Controller.RenderText(javascript);
-			}
-			else
-			{
-				Services.RedirectService.Redirect(Url);
-			}
-		}
-
-		public void Transfer()
-		{
-			Services.RedirectService.Transfer(Url);
-		}
-
-		public ActionArgument[] Arguments
-		{
-			get { return arguments; }
-		}
-
-		public string RouteName
-		{
-			get { return routeName; }
-		}
-		
-		public ICodeGeneratorServices Services
-		{
-			get { return services; }
-		}
-
-		public string Url
-		{
-			get
-			{
-				DefaultUrlBuilder urlBuilder = new DefaultUrlBuilder();
-				urlBuilder.RoutingEngine = RoutingModuleEx.Engine;
-				urlBuilder.ServerUtil = Services.RailsContext.Server;
-				IDictionary parameters = new Hashtable();
-				
-				foreach (ActionArgument argument in Arguments)
-					parameters.Add(argument.Name, argument.Value);
-				
-				UrlInfo urlInfo = Services.RailsContext.UrlInfo;
-				return urlBuilder.BuildRouteUrl(urlInfo, RouteName, parameters);
-			}
-		}
 	}
 }

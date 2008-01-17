@@ -1,21 +1,16 @@
 using System.CodeDom;
-using Castle.Tools.CodeGenerator.Model;
+using Castle.Tools.CodeGenerator.Model.TreeNodes;
+using Castle.Tools.CodeGenerator.Services.Generators;
 
-namespace Castle.Tools.CodeGenerator.Services
+namespace Castle.Tools.CodeGenerator.Services.Generators
 {
 	public class ControllerPartialsGenerator : AbstractGenerator
 	{
-		#region ControllerPartialsGenerator()
-
 		public ControllerPartialsGenerator(ILogger logger, ISourceGenerator source, INamingService naming,
 		                                   string targetNamespace, string serviceType)
 			: base(logger, source, naming, targetNamespace, serviceType)
 		{
 		}
-
-		#endregion
-
-		#region TreeWalker Members
 
 		public override void Visit(ControllerTreeNode node)
 		{
@@ -39,9 +34,9 @@ namespace Castle.Tools.CodeGenerator.Services
 
 			string routeWrapperName = _namespace + "." + node.PathNoSlashes + _naming.ToRouteWrapperName(node.Name);
 			type.Members.Add(
-			  _source.CreateReadOnlyProperty("MyRoutes", _source[routeWrapperName],
-									 new CodeObjectCreateExpression(_source[routeWrapperName],
-									   new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), "CodeGeneratorServices"))));
+				_source.CreateReadOnlyProperty("MyRoutes", _source[routeWrapperName],
+				                               new CodeObjectCreateExpression(_source[routeWrapperName],
+				                                                              new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), "CodeGeneratorServices"))));
 
 			CodeMemberMethod initialize = new CodeMemberMethod();
 			initialize.Attributes = MemberAttributes.Override | MemberAttributes.Family;
@@ -63,10 +58,6 @@ namespace Castle.Tools.CodeGenerator.Services
 			Visit((ControllerTreeNode) node);
 		}
 
-		#endregion
-
-		#region Methods
-
 		protected virtual CodeStatement AddPropertyToPropertyBag(string property)
 		{
 			CodeStatement assign = new CodeAssignStatement(
@@ -78,7 +69,5 @@ namespace Castle.Tools.CodeGenerator.Services
 				);
 			return assign;
 		}
-
-		#endregion
 	}
 }

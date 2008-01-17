@@ -10,7 +10,6 @@ namespace Castle.Tools.CodeGenerator.Services
 	{
 		private Dictionary<string, ControllerActionReference> _actions = new Dictionary<string, ControllerActionReference>();
 		private MockRepository _mocks;
-		private Dictionary<string, ControllerRouteReference> _routes = new Dictionary<string, ControllerRouteReference>();
 		private Dictionary<string, ControllerViewReference> _views = new Dictionary<string, ControllerViewReference>();
 
 		public MockControllerReferenceFactory(MockRepository mocks)
@@ -30,16 +29,6 @@ namespace Castle.Tools.CodeGenerator.Services
 					                                             signature, arguments);
 			}
 			return _actions[key];
-		}
-
-		public IControllerActionReference CreateRouteReference(ICodeGeneratorServices services, string routeName,
-		                                                       ActionArgument[] arguments)
-		{
-			if (!_routes.ContainsKey(routeName))
-			{
-				_routes[routeName] = _mocks.CreateMock<ControllerRouteReference>(services, routeName, arguments);
-			}
-			return _routes[routeName];
 		}
 
 		public IControllerViewReference CreateViewReference(ICodeGeneratorServices services, Type controllerType,

@@ -1,21 +1,16 @@
 using System.CodeDom;
-using Castle.Tools.CodeGenerator.Model;
+using Castle.Tools.CodeGenerator.Model.TreeNodes;
+using Castle.Tools.CodeGenerator.Services.Generators;
 
-namespace Castle.Tools.CodeGenerator.Services
+namespace Castle.Tools.CodeGenerator.Services.Generators
 {
 	public class ControllerMapGenerator : AbstractGenerator
 	{
-		#region ControllerMapGenerator()
-
 		public ControllerMapGenerator(ILogger logger, ISourceGenerator source, INamingService naming, string targetNamespace,
 		                              string serviceType)
 			: base(logger, source, naming, targetNamespace, serviceType)
 		{
 		}
-
-		#endregion
-
-		#region Visitor Methods
 
 		public override void Visit(AreaTreeNode node)
 		{
@@ -49,10 +44,10 @@ namespace Castle.Tools.CodeGenerator.Services
 
 			type.Members.Add(
 				_source.CreateReadOnlyProperty("Views",
-					new CodeTypeReference(node.PathNoSlashes + _naming.ToViewWrapperName(node.Name)),
-				    new CodeObjectCreateExpression(
-						new CodeTypeReference(node.PathNoSlashes + _naming.ToViewWrapperName(node.Name)),
-						new CodeFieldReferenceExpression(_source.This, _naming.ToMemberVariableName(_serviceIdentifier)))));
+				                               new CodeTypeReference(node.PathNoSlashes + _naming.ToViewWrapperName(node.Name)),
+				                               new CodeObjectCreateExpression(
+				                               	new CodeTypeReference(node.PathNoSlashes + _naming.ToViewWrapperName(node.Name)),
+				                               	new CodeFieldReferenceExpression(_source.This, _naming.ToMemberVariableName(_serviceIdentifier)))));
 			/*
 			  type.Members.Add(
 				_source.CreateReadOnlyProperty("Actions", new CodeTypeReference(node.PathNoSlashes + _naming.ToActionWrapperName(node.Name)),
@@ -62,13 +57,13 @@ namespace Castle.Tools.CodeGenerator.Services
 			*/
 
 			type.Members.Add(_source.CreateReadOnlyProperty("Actions", 
-				new CodeTypeReference(node.PathNoSlashes + _naming.ToActionWrapperName(node.Name)), _source.This));
+			                                                new CodeTypeReference(node.PathNoSlashes + _naming.ToActionWrapperName(node.Name)), _source.This));
 
-			type.Members.Add(_source.CreateReadOnlyProperty("Routes",
-			    new CodeTypeReference(node.PathNoSlashes + _naming.ToRouteWrapperName(node.Name)), 
-				new CodeObjectCreateExpression(
-					new CodeTypeReference(node.PathNoSlashes + _naming.ToRouteWrapperName(node.Name)),
-					new CodeFieldReferenceExpression(_source.This, _naming.ToMemberVariableName( _serviceIdentifier)))));
+			//type.Members.Add(_source.CreateReadOnlyProperty("Routes",
+			//    new CodeTypeReference(node.PathNoSlashes + _naming.ToRouteWrapperName(node.Name)), 
+			//    new CodeObjectCreateExpression(
+			//        new CodeTypeReference(node.PathNoSlashes + _naming.ToRouteWrapperName(node.Name)),
+			//        new CodeFieldReferenceExpression(_source.This, _naming.ToMemberVariableName( _serviceIdentifier)))));
 		}
 
 		public override void Visit(WizardControllerTreeNode node)
@@ -83,16 +78,14 @@ namespace Castle.Tools.CodeGenerator.Services
 				{
 					type.Members.Add(
 						_source.CreateReadOnlyProperty("Steps",
-							new CodeTypeReference(node.PathNoSlashes + _naming.ToWizardStepWrapperName(node.Name)),
-							new CodeObjectCreateExpression(
-								new CodeTypeReference(node.PathNoSlashes + _naming.ToWizardStepWrapperName(node.Name)),
-								new CodeFieldReferenceExpression(_source.This, _naming.ToMemberVariableName(_serviceIdentifier)))));
+						                               new CodeTypeReference(node.PathNoSlashes + _naming.ToWizardStepWrapperName(node.Name)),
+						                               new CodeObjectCreateExpression(
+						                               	new CodeTypeReference(node.PathNoSlashes + _naming.ToWizardStepWrapperName(node.Name)),
+						                               	new CodeFieldReferenceExpression(_source.This, _naming.ToMemberVariableName(_serviceIdentifier)))));
 
 					break;
 				}
 			}
 		}
-
-		#endregion
 	}
 }

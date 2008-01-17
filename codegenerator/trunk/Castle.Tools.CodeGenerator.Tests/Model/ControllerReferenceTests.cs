@@ -126,7 +126,7 @@ namespace Castle.Tools.CodeGenerator.Model
     protected IEngineContext _railsContext;
     protected IRedirectService _redirectService;
     protected IArgumentConversionService _argumentConversionService;
-    protected IResponse _response;
+    protected IMockResponse _response;
     protected string _virtualDirectory = String.Empty;
     #endregion
 
@@ -137,8 +137,7 @@ namespace Castle.Tools.CodeGenerator.Model
       
       _mocks = new MockRepository();
       _services = _mocks.CreateMock<ICodeGeneratorServices>();
-      //_railsContext = _mocks.CreateMock<IEngineContext>();
-      _response = _mocks.CreateMock<IResponse>();
+      _response = _mocks.CreateMock<IMockResponse>();
     	UrlInfo url =
     		new UrlInfo("eleutian.com", "www", _virtualDirectory, "http", 80,
     		            Path.Combine(Path.Combine("Area", "Controller"), "Action"), "Area", "Controller", "Action", "rails",

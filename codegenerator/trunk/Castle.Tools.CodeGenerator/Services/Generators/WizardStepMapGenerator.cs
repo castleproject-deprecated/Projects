@@ -1,9 +1,10 @@
 using System;
 using System.CodeDom;
-using System.Collections.Generic;
 using Castle.Tools.CodeGenerator.Model;
+using Castle.Tools.CodeGenerator.Model.TreeNodes;
+using Castle.Tools.CodeGenerator.Services.Generators;
 
-namespace Castle.Tools.CodeGenerator.Services
+namespace Castle.Tools.CodeGenerator.Services.Generators
 {
 	public class WizardStepMapGenerator : AbstractGenerator
 	{

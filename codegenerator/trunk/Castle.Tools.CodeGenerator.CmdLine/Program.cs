@@ -7,6 +7,8 @@ using System.Xml;
 using System.Xml.XPath;
 using Castle.Tools.CodeGenerator.MsBuild;
 using Castle.Tools.CodeGenerator.Services;
+using Castle.Tools.CodeGenerator.Services.Generators;
+using Castle.Tools.CodeGenerator.Services.Visitors;
 using CommandLine;
 
 namespace Castle.Tools.CodeGenerator.CmdLine

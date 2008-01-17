@@ -1,5 +1,6 @@
 using System;
-using Castle.Tools.CodeGenerator.Model;
+using Castle.Tools.CodeGenerator.Model.TreeNodes;
+using Castle.Tools.CodeGenerator.Services.Generators;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -79,7 +80,7 @@ namespace Castle.Tools.CodeGenerator.Services
 		[Test]
 		public void VisitRouteNode_NoParameters_CreatesMethod()
 		{
-			RouteTreeNode node = new RouteTreeNode(3, "Index", "index");
+			RouteTreeNode node = new StaticRouteTreeNode("Index", "index");
 			ActionTreeNode actionTreeNode = new ActionTreeNode("action");
 			actionTreeNode.AddChild(node);
 			controller.AddChild(actionTreeNode);
@@ -95,7 +96,7 @@ namespace Castle.Tools.CodeGenerator.Services
 		[Test]
 		public void VisitRouteNode_OneParameters_CreatesMethod()
 		{
-			RouteTreeNode node = new RouteTreeNode(10, "AuthenticateLogIn", "login/authenticate/<userName:string>/<password:string>");
+			RouteTreeNode node = new StaticRouteTreeNode("AuthenticateLogIn", "login/authenticate/<userName:string>/<password:string>");
 			ActionTreeNode actionTreeNode = new ActionTreeNode("action");
 			actionTreeNode.AddChild(node);
 			controller.AddChild(actionTreeNode);
