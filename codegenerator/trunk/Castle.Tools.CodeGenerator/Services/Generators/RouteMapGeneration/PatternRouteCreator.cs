@@ -190,7 +190,7 @@ namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration
 					}
 					else if (routeParameter.Value is IntRouteParameterType)
 					{
-						expression = new CodePropertyReferenceExpression(restrict, "ValidInt");
+						expression = new CodePropertyReferenceExpression(restrict, "ValidInteger");
 					}
 				}
 			}
