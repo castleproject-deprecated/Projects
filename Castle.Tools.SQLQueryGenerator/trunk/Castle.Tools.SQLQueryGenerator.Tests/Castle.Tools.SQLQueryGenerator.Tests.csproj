@@ -42,12 +42,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generated.cs" />
+    <Compile Include="Generated\SQL.cs" />
+    <Compile Include="Generated\Tables_Blogs_Id.cs" />
+    <Compile Include="Generated\Tables_Blogs_Name.cs" />
+    <Compile Include="Generated\Tables_Blogs.cs" />
+    <Compile Include="Generated\Tables_Posts.cs" />
+    <Compile Include="Generated\Tables_Posts_BlogId.cs" />
+    <Compile Include="Generated\Tables_Posts_Id.cs" />
+    <Compile Include="Generated\Tables_Posts_Title.cs" />
     <Compile Include="MetadataProcessorTests.cs" />
     <Compile Include="Mocks\MockDatabaseMetadataProvider.cs" />
     <Compile Include="SQL2005MetadataProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Castle.Tools.SQLQueryGenerator.Runtime\Castle.Tools.SQLQueryGenerator.Runtime.csproj">
+      <Project>{AEBEF7B8-E3F5-4CB4-BC66-9A77CDAF0A09}</Project>
+      <Name>Castle.Tools.SQLQueryGenerator.Runtime</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Castle.Tools.SQLQueryGenerator\Castle.Tools.SQLQueryGenerator.csproj">
       <Project>{08341DE7-1D4A-481F-BE10-6399C3DDA1B8}</Project>
       <Name>Castle.Tools.SQLQueryGenerator</Name>

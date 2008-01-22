@@ -26,6 +26,15 @@ namespace Castle.Tools.SQLQueryGenerator.DatabaseMetadataProviders
 				Schema, Table, Column, Type.Name, IsNullable ? "Nullable" : "Not Nullable");
 		}
 
+		public string GeneratedClassName
+		{
+			get 
+			{ 
+				return string.Format("Tables_{0}_{1}_{2}",
+					Schema, Table, Column);
+			}
+		}
+
 		public override bool Equals(object obj)
 		{
 			if (obj == null) return false;

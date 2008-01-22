@@ -1,4 +1,4 @@
-namespace Castle.Tools.SQLQueryGenerator.Helpers
+namespace Castle.Tools.SQLQueryGenerator.Runtime
 {
 	public class StringLike
 	{

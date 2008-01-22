@@ -4,11 +4,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{08341DE7-1D4A-481F-BE10-6399C3DDA1B8}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{AEBEF7B8-E3F5-4CB4-BC66-9A77CDAF0A09}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Castle.Tools.SQLQueryGenerator</RootNamespace>
-    <AssemblyName>Castle.Tools.SQLQueryGenerator</AssemblyName>
+    <RootNamespace>Castle.Tools.SQLQueryGenerator.Runtime</RootNamespace>
+    <AssemblyName>Castle.Tools.SQLQueryGenerator.Runtime</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,18 +33,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseMetadataProviders\DbPropertyMetadata.cs" />
-    <Compile Include="DatabaseMetadataProviders\IDatabaseMetadataProvider.cs" />
-    <Compile Include="DatabaseMetadataProviders\SQL2005MetadataProvider.cs" />
-    <Compile Include="Descriptors\TableDescriptor.cs" />
-    <Compile Include="Helpers\CaseInsensitiveStringComparer.cs" />
-    <Compile Include="MetadataProcessor.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Runtime.cs" />
+    <Compile Include="Clauses\AbstractSqlClause.cs" />
+    <Compile Include="Clauses\FromClause.cs" />
+    <Compile Include="Clauses\SelectClause.cs" />
+    <Compile Include="Clauses\WhereClause.cs" />
+    <Compile Include="Expressions\JoinExpression.cs" />
+    <Compile Include="Expressions\WhereExpression.cs" />
+    <Compile Include="Model\Field.cs" />
+    <Compile Include="Model\Table.cs" />
+    <Compile Include="SQLQuery.cs" />
+    <Compile Include="Queries\SQLSelectQuery.cs" />
+    <Compile Include="StringLike.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Clauses\" />
+    <None Include="CreateRuntimeFile.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
