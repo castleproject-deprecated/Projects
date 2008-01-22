@@ -24,13 +24,13 @@ namespace Castle.Tools.SQLQueryGenerator.Runtime.Queries
 			return select.ToString();
 		}
 
-		public SQLSelectQuery From(Model.Table table)
+		public SQLSelectQuery From(Model.Table.AbstractTable table)
 		{
 			fromClause = new Clauses.FromClause(table);
 			return this;
 		}
 
-		public SQLSelectQuery Join(Model.Table table, Expressions.WhereExpression on)
+		public SQLSelectQuery Join(Model.Table.AbstractTable table, Expressions.WhereExpression on)
 		{
 			fromClause.Join(new Expressions.JoinExpression(table, on));
 			return this;

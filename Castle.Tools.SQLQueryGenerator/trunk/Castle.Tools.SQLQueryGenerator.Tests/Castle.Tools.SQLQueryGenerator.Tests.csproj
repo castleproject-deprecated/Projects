@@ -41,17 +41,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Generated.cs" />
-    <Compile Include="Generated\SQL.cs" />
-    <Compile Include="Generated\Tables_Blogs_Id.cs" />
-    <Compile Include="Generated\Tables_Blogs_Name.cs" />
-    <Compile Include="Generated\Tables_Blogs.cs" />
-    <Compile Include="Generated\Tables_Posts.cs" />
-    <Compile Include="Generated\Tables_Posts_BlogId.cs" />
-    <Compile Include="Generated\Tables_Posts_Id.cs" />
-    <Compile Include="Generated\Tables_Posts_Title.cs" />
+    <Compile Include="GeneratedClasses\SQL.cs" />
+    <Compile Include="GeneratedClasses\Tables_Blogs.cs" />
+    <Compile Include="GeneratedClasses\Tables_Blogs_Id.cs" />
+    <Compile Include="GeneratedClasses\Tables_Blogs_Name.cs" />
+    <Compile Include="GeneratedClasses\Tables_Posts.cs" />
+    <Compile Include="GeneratedClasses\Tables_Posts_BlogId.cs" />
+    <Compile Include="GeneratedClasses\Tables_Posts_Id.cs" />
+    <Compile Include="GeneratedClasses\Tables_Posts_Title.cs" />
+    <Compile Include="GeneratedTests.cs" />
     <Compile Include="MetadataProcessorTests.cs" />
     <Compile Include="Mocks\MockDatabaseMetadataProvider.cs" />
+    <Compile Include="RuntimeFixtures\FromClauseTests.cs" />
+    <Compile Include="RuntimeFixtures\SelectClauseTests.cs" />
     <Compile Include="SQL2005MetadataProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

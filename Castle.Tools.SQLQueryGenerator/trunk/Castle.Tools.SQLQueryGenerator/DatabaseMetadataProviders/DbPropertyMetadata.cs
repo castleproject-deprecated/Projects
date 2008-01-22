@@ -5,8 +5,8 @@ namespace Castle.Tools.SQLQueryGenerator.DatabaseMetadataProviders
 		public DbPropertyMetadata(string schema, string table, string column, string type, bool isNullable)
 		{
 			Schema = schema;
-			Table=table;
-			Column=column;
+			Table = table;
+			Column = column;
 			Type = System.Type.GetType(type);
 			IsNullable = isNullable;
 
@@ -28,8 +28,8 @@ namespace Castle.Tools.SQLQueryGenerator.DatabaseMetadataProviders
 
 		public string GeneratedClassName
 		{
-			get 
-			{ 
+			get
+			{
 				return string.Format("Tables_{0}_{1}_{2}",
 					Schema, Table, Column);
 			}

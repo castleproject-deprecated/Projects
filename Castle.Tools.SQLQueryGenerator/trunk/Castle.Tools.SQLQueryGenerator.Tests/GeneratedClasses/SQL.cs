@@ -1,4 +1,4 @@
-namespace Castle.Tools.SQLQueryGenerator.Tests.Generated
+namespace Castle.Tools.SQLQueryGenerator.Tests.GeneratedClasses
 {
 	public static class SQL
 	{

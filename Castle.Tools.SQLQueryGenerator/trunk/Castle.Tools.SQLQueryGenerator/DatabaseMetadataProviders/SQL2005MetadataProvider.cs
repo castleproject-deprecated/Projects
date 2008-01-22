@@ -77,9 +77,9 @@ ORDER BY [Schema], [Table], [Column], [Type]";
 				{
 					while (reader.Read())
 						properties.Add(new DbPropertyMetadata(
-							"[" + reader.GetString(0) + "]",
-							"[" + reader.GetString(1) + "]",
-							"[" + reader.GetString(2) + "]",
+							reader.GetString(0),
+							reader.GetString(1),
+							reader.GetString(2),
 							reader.GetString(3),
 							reader.GetBoolean(4)));
 				}

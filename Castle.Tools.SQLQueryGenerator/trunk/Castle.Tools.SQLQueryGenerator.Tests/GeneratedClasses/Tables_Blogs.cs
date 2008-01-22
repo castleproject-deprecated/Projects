@@ -1,9 +1,9 @@
-namespace Castle.Tools.SQLQueryGenerator.Tests.Generated
+namespace Castle.Tools.SQLQueryGenerator.Tests.GeneratedClasses
 {
-	public class Tables_Blogs : Runtime.Model.Table
+	public class Tables_Blogs : Runtime.Model.Table.AbstractTable
 	{
 		public Tables_Blogs()
-			: base("Blogs")
+			: base("dbo", "Blogs")
 		{
 			Id = new Tables_Blogs_Id(this);
 			name = new Tables_Blogs_Name(this);

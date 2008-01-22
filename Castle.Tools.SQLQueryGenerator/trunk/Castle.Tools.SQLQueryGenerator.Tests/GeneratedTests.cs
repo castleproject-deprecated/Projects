@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SQLQueryGenerator.Generated
+namespace Castle.Tools.SQLQueryGenerator.Tests
 {
-	public class Class1
+	public class GeneratedTests
 	{
 		public void a()
 		//{

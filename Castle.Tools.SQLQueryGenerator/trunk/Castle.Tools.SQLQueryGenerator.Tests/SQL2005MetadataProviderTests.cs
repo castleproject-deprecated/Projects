@@ -74,18 +74,18 @@ CREATE TABLE dbo.Authors
 
 			DbPropertyMetadata[] expectedProperties = new DbPropertyMetadata[]
 			{
-				new DbPropertyMetadata("[dbo]", "[Blogs]", "[Id]", "System.Int32", false), 
-				new DbPropertyMetadata("[dbo]", "[Blogs]", "[Title]", "System.String", false), 
-				new DbPropertyMetadata("[dbo]", "[Blogs]", "[AuthorId]", "System.Int32", false), 
-				new DbPropertyMetadata("[dbo]", "[Posts]", "[Id]", "System.Int32", false), 
-				new DbPropertyMetadata("[dbo]", "[Posts]", "[Title]", "System.String", false), 
-				new DbPropertyMetadata("[dbo]", "[Posts]", "[Content]", "System.String", true), 
-				new DbPropertyMetadata("[dbo]", "[Posts]", "[BlogId]", "System.Int32", false), 
-				new DbPropertyMetadata("[dbo]", "[Posts]", "[CreationDate]", "System.DateTime", false), 
-				new DbPropertyMetadata("[dbo]", "[Posts]", "[LastUpdated]", "System.DateTime", true), 
-				new DbPropertyMetadata("[dbo]", "[Authors]", "[Id]", "System.Int32", false), 
-				new DbPropertyMetadata("[dbo]", "[Authors]", "[Name]", "System.String", false), 
-				new DbPropertyMetadata("[dbo]", "[Authors]", "[Email]", "System.String", true), 
+				new DbPropertyMetadata("dbo", "Blogs", "Id", "System.Int32", false), 
+				new DbPropertyMetadata("dbo", "Blogs", "Title", "System.String", false), 
+				new DbPropertyMetadata("dbo", "Blogs", "AuthorId", "System.Int32", false), 
+				new DbPropertyMetadata("dbo", "Posts", "Id", "System.Int32", false), 
+				new DbPropertyMetadata("dbo", "Posts", "Title", "System.String", false), 
+				new DbPropertyMetadata("dbo", "Posts", "Content", "System.String", true), 
+				new DbPropertyMetadata("dbo", "Posts", "BlogId", "System.Int32", false), 
+				new DbPropertyMetadata("dbo", "Posts", "CreationDate", "System.DateTime", false), 
+				new DbPropertyMetadata("dbo", "Posts", "LastUpdated", "System.DateTime", true), 
+				new DbPropertyMetadata("dbo", "Authors", "Id", "System.Int32", false), 
+				new DbPropertyMetadata("dbo", "Authors", "Name", "System.String", false), 
+				new DbPropertyMetadata("dbo", "Authors", "Email", "System.String", true), 
 			};
 
 			IDatabaseMetadataProvider provider = new SQL2005MetadataProvider("test");
