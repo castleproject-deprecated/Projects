@@ -1,3 +1,4 @@
+using Castle.Tools.SQLQueryGenerator.Runtime;
 using Castle.Tools.SQLQueryGenerator.Runtime.Clauses;
 using Castle.Tools.SQLQueryGenerator.Runtime.Model.Field;
 using Castle.Tools.SQLQueryGenerator.Tests.GeneratedClasses;
@@ -12,7 +13,7 @@ namespace Castle.Tools.SQLQueryGenerator.Tests.RuntimeFixtures
 		{
 			Tables_Blogs table = new Tables_Blogs();
 
-			IField[] fields = new IField[]
+			IFormatableField[] fields = new IFormatableField[]
 			{
 				new Tables_Blogs_Id(table)
 			};
@@ -29,7 +30,7 @@ namespace Castle.Tools.SQLQueryGenerator.Tests.RuntimeFixtures
 		{
 			Tables_Blogs table = new Tables_Blogs();
 
-			IField[] fields = new IField[]
+			IFormatableField[] fields = new IFormatableField[]
 			{
 				new Tables_Blogs_Id(table),
 				new Tables_Blogs_Name(table)
@@ -47,7 +48,7 @@ namespace Castle.Tools.SQLQueryGenerator.Tests.RuntimeFixtures
 		{
 			Tables_Blogs table = new Tables_Blogs();
 
-			IField[] fields = new IField[]
+			IFormatableField[] fields = new IFormatableField[]
 			{
 				new Tables_Blogs_Id(table).As("MyId"),
 				new Tables_Blogs_Name(table)

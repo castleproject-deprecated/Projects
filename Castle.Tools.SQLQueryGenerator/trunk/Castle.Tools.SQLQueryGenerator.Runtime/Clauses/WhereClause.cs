@@ -12,8 +12,8 @@ namespace Castle.Tools.SQLQueryGenerator.Runtime.Clauses
 		public override string ToString()
 		{
 			System.Text.StringBuilder where = new System.Text.StringBuilder()
-				.Append("WHERE ")
-				.Append(whereExpression);
+				.AppendLine("WHERE")
+				.AppendLine(whereExpression.ToWhereString());
 
 			return where.ToString();
 		}	

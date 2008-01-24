@@ -2,18 +2,24 @@ namespace Castle.Tools.SQLQueryGenerator.Tests.GeneratedClasses
 {
 	public class Tables_Blogs : Runtime.Model.Table.AbstractTable
 	{
-		public Tables_Blogs()
-			: base("dbo", "Blogs")
+		public Tables_Blogs(string alias) : base("dbo", "Blogs", alias)
 		{
 			Id = new Tables_Blogs_Id(this);
-			name = new Tables_Blogs_Name(this);
+			Name = new Tables_Blogs_Name(this);
+		}
+
+		public Tables_Blogs() : base("dbo", "Blogs")
+		{
+			Id = new Tables_Blogs_Id(this);
+			Name = new Tables_Blogs_Name(this);
 		}
 
 		public readonly Tables_Blogs_Id Id;
-		readonly Tables_Blogs_Name name;
+		public readonly Tables_Blogs_Name Name;
 
-		//public Tables_Blogs_Id Id { get { return id; } }
-		public Tables_Blogs_Name Name { get { return name; } }
-
+		public Tables_Blogs As(string alias)
+		{
+			return new Tables_Blogs(alias);
+		}
 	}
 }

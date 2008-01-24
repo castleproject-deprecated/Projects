@@ -1,6 +1,6 @@
 namespace Castle.Tools.SQLQueryGenerator.Runtime.Model.Table
 {
-	public interface IFormatableTable : IAliasedTable, INonAliasedTable
+	public interface IFormatableTable
 	{
 		string Schema { get; }
 		string Name { get; }

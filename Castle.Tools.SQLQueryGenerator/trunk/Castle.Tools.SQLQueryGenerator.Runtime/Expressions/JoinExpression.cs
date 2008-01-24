@@ -2,10 +2,10 @@ namespace Castle.Tools.SQLQueryGenerator.Runtime.Expressions
 {
 	public class JoinExpression
 	{
-		readonly Model.Table.ITable table;
+		readonly Model.Table.AbstractTable table;
 		readonly WhereExpression on;
 
-		public JoinExpression(Model.Table.ITable table, WhereExpression on)
+		public JoinExpression(Model.Table.AbstractTable table, WhereExpression on)
 		{
 			this.table = table;
 			this.on = on;
@@ -13,7 +13,7 @@ namespace Castle.Tools.SQLQueryGenerator.Runtime.Expressions
 
 		public override string ToString()
 		{
-			return " JOIN " + table + " ON " + on;
+			return "\tJOIN\t\t" + Format.Formatting.FormatForFromClause(table) + " ON" + System.Environment.NewLine + on.ToOnString();
 		}
 
 	}

@@ -1,6 +1,6 @@
 namespace Castle.Tools.SQLQueryGenerator.Runtime.Model.Field
 {
-	public interface IField
+	public interface IField : IFormatableField
 	{
 	}
 }

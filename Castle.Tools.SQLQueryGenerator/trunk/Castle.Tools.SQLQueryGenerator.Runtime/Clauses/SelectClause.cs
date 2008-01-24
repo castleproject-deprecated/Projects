@@ -2,25 +2,28 @@ namespace Castle.Tools.SQLQueryGenerator.Runtime.Clauses
 {
 	public class SelectClause : AbstractSqlClause
 	{
-		readonly System.Collections.Generic.IEnumerable<Model.Field.IField> fields;
+		readonly System.Collections.Generic.IEnumerable<Model.Field.IFormatableField> fields;
 
-		public SelectClause(System.Collections.Generic.IEnumerable<Model.Field.IField> fields)
+		public SelectClause(System.Collections.Generic.IEnumerable<Model.Field.IFormatableField> fields)
 		{
 			this.fields = fields;
 		}
 
-		System.Collections.Generic.IEnumerable<Model.Field.IField> Fields { get { return fields; } }
+		System.Collections.Generic.IEnumerable<Model.Field.IFormatableField> Fields { get { return fields; } }
 		public override string ToString()
 		{
 			System.Text.StringBuilder select = new System.Text.StringBuilder()
-				.Append("SELECT ");
+				.AppendLine("SELECT");
+
 			System.Collections.Generic.List<string> fieldNames = new System.Collections.Generic.List<string>();
 
-			foreach (Model.Field.IField field in Fields)
-				fieldNames.Add(field.ToString());
-			select.Append(string.Join(", ", fieldNames.ToArray()));
+			foreach (Model.Field.IFormatableField field in Fields)
+				fieldNames.Add("\t\t\t\t" + Format.Formatting.FormatForSelectClause(field));
 
-			select.Append(' ');
+			select
+				.Append(string.Join("," + System.Environment.NewLine , fieldNames.ToArray()))
+				.AppendLine();
+
 			return select.ToString();
 		}
 	}

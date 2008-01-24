@@ -13,13 +13,13 @@ namespace Castle.Tools.SQLQueryGenerator.Runtime.Queries
 		public override string ToString()
 		{
 			System.Text.StringBuilder select = new System.Text.StringBuilder()
-				.AppendLine(selectClause);
+				.Append(selectClause);
 
 			if (fromClause != null)
-				select.AppendLine(fromClause);
+				select.Append(fromClause);
 
 			if (whereClause != null)
-				select.AppendLine(whereClause);
+				select.Append(whereClause);
 
 			return select.ToString();
 		}

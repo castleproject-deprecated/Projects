@@ -16,5 +16,15 @@ namespace Castle.Tools.SQLQueryGenerator.Runtime.Expressions
 		{
 			return Expression;
 		}
+
+		public virtual string ToOnString()
+		{
+			return "\t\t\t\t\t" + Expression;
+		}
+
+		public virtual string ToWhereString()
+		{
+			return "\t\t\t\t" + Expression;
+		}
 	}
 }
