@@ -5,7 +5,6 @@
 
   <PropertyGroup>
     <PropertiesDirectory>$(MSBuildProjectDirectory)\Properties</PropertiesDirectory>
-    <AssemblyTitle>AspView</AssemblyTitle>
   </PropertyGroup>
 
 	<Target Name="GenerateAssemblyInfo" DependsOnTargets="Version" >

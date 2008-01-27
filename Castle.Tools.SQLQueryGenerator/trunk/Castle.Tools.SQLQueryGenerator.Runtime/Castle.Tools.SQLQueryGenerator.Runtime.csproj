@@ -50,12 +50,10 @@
     <Compile Include="Model\Parameter.cs" />
     <Compile Include="Model\Table\IFormatableTable.cs" />
     <Compile Include="Model\Table\AbstractTable.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLQuery.cs" />
     <Compile Include="Queries\SQLSelectQuery.cs" />
     <Compile Include="StringLike.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
