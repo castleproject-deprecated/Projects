@@ -16,12 +16,18 @@
 
 namespace Castle.Tools.SQLQueryGenerator.Runtime.Queries
 {
+	using Clauses;
+	using Expressions;
+
 	public class SQLSelectQuery : SQLQuery
 	{
-		readonly Clauses.SelectClause selectClause;
-		Clauses.FromClause fromClause;
-		Clauses.WhereClause whereClause;
-		public SQLSelectQuery(Clauses.SelectClause selectClause)
+		readonly SelectClause selectClause;
+		FromClause fromClause;
+		WhereClause whereClause;
+		OrderByClause orderByClause;
+
+
+		public SQLSelectQuery(SelectClause selectClause)
 		{
 			this.selectClause = selectClause;
 		}
@@ -37,35 +43,49 @@ namespace Castle.Tools.SQLQueryGenerator.Runtime.Queries
 			if (whereClause != null)
 				select.Append(whereClause);
 
+			if (orderByClause != null)
+				select.Append(orderByClause);
+
 			return select.ToString();
 		}
 
 		public SQLSelectQuery From(Model.Table.AbstractTable table)
 		{
-			return From(new Clauses.FromClause(table));
+			return From(new FromClause(table));
 		}
 
-		public SQLSelectQuery From(Clauses.FromClause from)
+		public SQLSelectQuery From(FromClause from)
 		{
 			fromClause = from;
 			return this;
 		}
 		
-		public SQLSelectQuery Join(Model.Table.AbstractTable table, Expressions.WhereExpression on)
+		public SQLSelectQuery Join(Model.Table.AbstractTable table, WhereExpression on)
 		{
-			fromClause.Join(new Expressions.JoinExpression(table, on));
+			fromClause.Join(new JoinExpression(table, on));
 			return this;
 		}
 
-		public SQLSelectQuery Where(Expressions.WhereExpression where)
+		public SQLSelectQuery Where(WhereExpression where)
 		{
-			return Where(new Clauses.WhereClause(where));
+			return Where(new WhereClause(where));
 		}
 
-		public SQLSelectQuery Where(Clauses.WhereClause where)
+		public SQLSelectQuery Where(WhereClause where)
 		{
 			whereClause = where;
 			return this;
+		}
+
+		public SQLSelectQuery OrderBy(OrderByClause order)
+		{
+			orderByClause = order;
+			return this;
+		}
+
+		public SQLSelectQuery OrderBy(params OrderByExpression[] orders)
+		{
+			return OrderBy(new OrderByClause(orders));
 		}
 
 		public static implicit operator string(SQLSelectQuery q)

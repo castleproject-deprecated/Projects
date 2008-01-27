@@ -34,9 +34,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clauses\AbstractSqlClause.cs" />
+    <Compile Include="Clauses\OrderByClause.cs" />
     <Compile Include="Clauses\FromClause.cs" />
     <Compile Include="Clauses\SelectClause.cs" />
     <Compile Include="Clauses\WhereClause.cs" />
+    <Compile Include="Expressions\OrderByExpression.cs" />
     <Compile Include="Model\IOperateable.cs" />
     <Compile Include="Expressions\JoinExpression.cs" />
     <Compile Include="Expressions\WhereExpression.cs" />

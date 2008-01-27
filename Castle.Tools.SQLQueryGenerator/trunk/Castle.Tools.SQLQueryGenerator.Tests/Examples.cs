@@ -15,6 +15,7 @@
 #endregion
 
 using Castle.Tools.SQLQueryGenerator.Runtime.Clauses;
+using Castle.Tools.SQLQueryGenerator.Runtime.Expressions;
 
 namespace Castle.Tools.SQLQueryGenerator.Tests
 {
@@ -226,8 +227,7 @@ WHERE
 			Assert.Equal(expectedQ1, q1.ToString());
 			Assert.Equal(expectedQ2, q2.ToString());
 		}
-
-
+		
 		[Fact]
 		public void ComplexWhereClause()
 		{
@@ -254,7 +254,34 @@ WHERE
 
 			Assert.Equal(expectedQ1, q1.ToString());
 		}
-		
+
+		[Fact]
+		public void OrderBy()
+		{
+			#region expected
+			string expected =
+@"SELECT
+				[dbo].[Blogs].[Id]
+FROM
+				[dbo].[Blogs]
+WHERE
+				([dbo].[Blogs].[Id] > 2)
+ORDER BY
+				[dbo].[Blogs].[Id],
+				[dbo].[Blogs].[Name] DESC
+";
+
+			#endregion
+
+			SQLQuery q = SQLQuery
+				.Select(SQL.Blogs.Id)
+				.From(SQL.Blogs)
+				.Where(SQL.Blogs.Id > 2)
+				.OrderBy(Order.By(SQL.Blogs.Id), Order.By(SQL.Blogs.Name).Desc);
+
+			Assert.Equal(expected, q.ToString());
+		}
+
 		static void Spit(string sql)
 		{
 			System.Console.WriteLine(sql
