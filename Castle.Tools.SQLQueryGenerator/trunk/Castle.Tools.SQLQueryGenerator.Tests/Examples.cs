@@ -227,6 +227,34 @@ WHERE
 			Assert.Equal(expectedQ2, q2.ToString());
 		}
 
+
+		[Fact]
+		public void ComplexWhereClause()
+		{
+			#region expected
+			string expectedQ1 =
+@"SELECT
+				[dbo].[Blogs].[Id]
+FROM
+				[dbo].[Blogs]
+WHERE
+				(([dbo].[Blogs].[Id] > 2) OR ([dbo].[Blogs].[Name] = N'Ken'))
+";
+
+			#endregion
+
+			FromClause from = new FromClause(SQL.Blogs);
+			WhereClause whereIdGraterThan2 = new WhereClause(SQL.Blogs.Id > 2);
+			WhereClause whereIdNameIsKen = new WhereClause(SQL.Blogs.Name == "Ken");
+
+			SQLQuery q1 = SQLQuery
+				.Select(SQL.Blogs.Id)
+				.From(from)
+				.Where(whereIdGraterThan2 || whereIdNameIsKen);
+
+			Assert.Equal(expectedQ1, q1.ToString());
+		}
+		
 		static void Spit(string sql)
 		{
 			System.Console.WriteLine(sql

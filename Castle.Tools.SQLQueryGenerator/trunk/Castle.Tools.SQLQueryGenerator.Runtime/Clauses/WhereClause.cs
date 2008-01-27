@@ -18,20 +18,41 @@ namespace Castle.Tools.SQLQueryGenerator.Runtime.Clauses
 {
 	public class WhereClause : AbstractSqlClause
 	{
-		readonly Expressions.WhereExpression whereExpression;
+		public readonly Expressions.WhereExpression Expression;
 
 		public WhereClause(Expressions.WhereExpression whereExpression)
 		{
-			this.whereExpression = whereExpression;
+			this.Expression = whereExpression;
 		}
 
 		public override string ToString()
 		{
 			System.Text.StringBuilder where = new System.Text.StringBuilder()
 				.AppendLine("WHERE")
-				.AppendLine(whereExpression.ToWhereString());
+				.AppendLine(Expression.ToWhereString());
 
 			return where.ToString();
-		}	
+		}
+
+		public static WhereClause operator |(WhereClause where, WhereClause other)
+		{
+			return new WhereClause(where.Expression | other.Expression);
+		}
+		public static WhereClause operator &(WhereClause where, WhereClause other)
+		{
+			return new WhereClause(where.Expression & other.Expression);
+		}
+		public static WhereClause operator !(WhereClause where)
+		{
+			return new WhereClause(!where.Expression);
+		}
+		public static bool operator true(WhereClause where)
+		{
+			return false;
+		}
+		public static bool operator false(WhereClause where)
+		{
+			return false;
+		}
 	}
 }
