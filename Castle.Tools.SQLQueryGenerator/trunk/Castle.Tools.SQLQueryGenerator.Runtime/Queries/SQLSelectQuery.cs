@@ -42,10 +42,15 @@ namespace Castle.Tools.SQLQueryGenerator.Runtime.Queries
 
 		public SQLSelectQuery From(Model.Table.AbstractTable table)
 		{
-			fromClause = new Clauses.FromClause(table);
-			return this;
+			return From(new Clauses.FromClause(table));
 		}
 
+		public SQLSelectQuery From(Clauses.FromClause from)
+		{
+			fromClause = from;
+			return this;
+		}
+		
 		public SQLSelectQuery Join(Model.Table.AbstractTable table, Expressions.WhereExpression on)
 		{
 			fromClause.Join(new Expressions.JoinExpression(table, on));
@@ -54,7 +59,12 @@ namespace Castle.Tools.SQLQueryGenerator.Runtime.Queries
 
 		public SQLSelectQuery Where(Expressions.WhereExpression where)
 		{
-			whereClause = new Clauses.WhereClause(where);
+			return Where(new Clauses.WhereClause(where));
+		}
+
+		public SQLSelectQuery Where(Clauses.WhereClause where)
+		{
+			whereClause = where;
 			return this;
 		}
 

@@ -14,6 +14,8 @@
 // limitations under the License.
 #endregion
 
+using Castle.Tools.SQLQueryGenerator.Runtime.Clauses;
+
 namespace Castle.Tools.SQLQueryGenerator.Tests
 {
 	using Runtime;
@@ -184,6 +186,45 @@ WHERE
 				.Where(SQL.Blogs.Id == blogId);
 
 			Assert.Equal(expected, q.ToString());
+		}
+
+		[Fact]
+		public void ReusingClauses()
+		{
+			#region expected
+			string expectedQ1 =
+@"SELECT
+				[dbo].[Blogs].[Id]
+FROM
+				[dbo].[Blogs]
+WHERE
+				([dbo].[Blogs].[Id] = 2)
+";
+			string expectedQ2 =
+@"SELECT
+				[dbo].[Blogs].[Name]
+FROM
+				[dbo].[Blogs]
+WHERE
+				([dbo].[Blogs].[Id] = 2)
+";
+			#endregion
+
+			FromClause from = new FromClause(SQL.Blogs);
+			WhereClause where = new WhereClause(SQL.Blogs.Id == 2);
+
+			SQLQuery q1 = SQLQuery
+				.Select(SQL.Blogs.Id)
+				.From(from)
+				.Where(where);
+
+			SQLQuery q2 = SQLQuery
+				.Select(SQL.Blogs.Name)
+				.From(from)
+				.Where(where);
+
+			Assert.Equal(expectedQ1, q1.ToString());
+			Assert.Equal(expectedQ2, q2.ToString());
 		}
 
 		static void Spit(string sql)
