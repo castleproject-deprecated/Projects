@@ -42,7 +42,6 @@
     <Compile Include="MetadataProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Runtime.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Clauses\" />

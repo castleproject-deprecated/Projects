@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Castle.Tools.SQLQueryGenerator.DatabaseMetadataProviders;
 using Castle.Tools.SQLQueryGenerator.Descriptors;
@@ -24,6 +25,7 @@ namespace Castle.Tools.SQLQueryGenerator
 				string connectionString = null;
 				string userId = null;
 				string password = null;
+				string output = "SQLQuery.Generated.cs";
 				bool withSchema = false;
 
 				foreach (string arg in args)
@@ -35,6 +37,10 @@ namespace Castle.Tools.SQLQueryGenerator
 							ns = parts[1];
 							break;
 
+						case "/output":
+							output = parts[1];
+							break;
+						
 						case "/server":
 							server = parts[1];
 							break;
@@ -91,9 +97,13 @@ namespace Castle.Tools.SQLQueryGenerator
 					SQLQueryFile.AppendLine(GetClassesFrom(table));
 				}
 
-				string sqlQueryFile = WrapInNamespace(ns, SQLQueryFile);
+				WrapInNamespace(ns, SQLQueryFile);
 
-				Console.WriteLine(sqlQueryFile);
+				AddCopyrightNotice(SQLQueryFile);
+
+				File.WriteAllText(output, SQLQueryFile.ToString(), Encoding.UTF8);
+
+				Console.WriteLine("That's it folks.");
 			}
 			catch (SQLQueryGenerator ex)
 			{
@@ -101,13 +111,12 @@ namespace Castle.Tools.SQLQueryGenerator
 			}
 		}
 
-		static string WrapInNamespace(string ns, StringBuilder content)
+		static void WrapInNamespace(string ns, StringBuilder content)
 		{
 			content.Insert(0, string.Format(@"namespace {0}
 {{
 ", ns));
 			content.AppendLine("}");
-			return content.ToString();
 		}
 
 		static string GetSQLClassesFrom(IEnumerable<TableDescriptor> tables)
@@ -204,6 +213,11 @@ namespace Castle.Tools.SQLQueryGenerator
 		}
 
 
+		static void AddCopyrightNotice(StringBuilder content)
+		{
+			content.Insert(0, @"
+");
+		}
 
 
 		static void Error(string message)
