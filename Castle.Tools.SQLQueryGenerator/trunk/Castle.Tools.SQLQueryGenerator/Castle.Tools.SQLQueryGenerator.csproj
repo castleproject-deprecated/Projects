@@ -38,6 +38,7 @@
     <Compile Include="DatabaseMetadataProviders\SQL2005MetadataProvider.cs" />
     <Compile Include="Descriptors\TableDescriptor.cs" />
     <Compile Include="Helpers\CaseInsensitiveStringComparer.cs" />
+    <Compile Include="Helpers\Formatter.cs" />
     <Compile Include="MetadataProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

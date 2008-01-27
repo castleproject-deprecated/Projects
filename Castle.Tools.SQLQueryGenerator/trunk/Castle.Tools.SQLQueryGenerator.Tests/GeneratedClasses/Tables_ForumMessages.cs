@@ -9,11 +9,8 @@ namespace Castle.Tools.SQLQueryGenerator.Tests.GeneratedClasses
 			Content = new Tables_ForumMessages_Content(this);
 		}
 
-		public Tables_ForumMessages() : base("dbo", "ForumMessages")
+		public Tables_ForumMessages() : this(null)
 		{
-			Id = new Tables_ForumMessages_Id(this);
-			ParentId = new Tables_ForumMessages_ParentId(this);
-			Content = new Tables_ForumMessages_Content(this);
 		}
 
 		public readonly Tables_ForumMessages_Id Id;

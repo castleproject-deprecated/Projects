@@ -66,7 +66,7 @@ CREATE TABLE dbo.Authors
 
 		}
 
-		[Fact]
+		[Fact(Skip="Dependant on a real DB - Leav it out for the time being")]
 		public void ExtractMetadata_Always_Work()
 		{
 			DropSchema();

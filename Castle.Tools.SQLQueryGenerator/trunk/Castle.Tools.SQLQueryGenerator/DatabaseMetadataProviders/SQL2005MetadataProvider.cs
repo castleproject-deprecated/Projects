@@ -56,13 +56,25 @@ WHERE
 ORDER BY [Schema], [Table], [Column], [Type]";
 		#endregion
 
-		string connectionString;
+		readonly string connectionString;
 
-		public SQL2005MetadataProvider(string dbName)
+		public SQL2005MetadataProvider(string connectionString)
+		{
+			this.connectionString = connectionString;
+		}
+
+		public SQL2005MetadataProvider(string server, string dbName, string userId, string password)
 		{
 			connectionString = string.Format(
-				"Server=(local);Initial Catalog={0};Integrated Security=SSPI;",
-				dbName);
+				"Server={0};Initial Catalog={1};User ID={2};Password={3};",
+				server, dbName, userId, password);
+		}
+
+		public SQL2005MetadataProvider(string server, string dbName)
+		{
+			connectionString = string.Format(
+				"Server={0};Initial Catalog={1};Integrated Security=SSPI;",
+				server, dbName);
 		}
 
 		public IEnumerable<DbPropertyMetadata> ExtractMetadata()

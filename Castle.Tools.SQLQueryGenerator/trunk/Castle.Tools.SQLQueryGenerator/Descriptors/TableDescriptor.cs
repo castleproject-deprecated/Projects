@@ -1,4 +1,5 @@
 using System;
+using Castle.Tools.SQLQueryGenerator.Helpers;
 
 namespace Castle.Tools.SQLQueryGenerator.Descriptors
 {
@@ -9,19 +10,33 @@ namespace Castle.Tools.SQLQueryGenerator.Descriptors
 	{
 		readonly IDictionary<string, DbPropertyMetadata> properties = new Dictionary<string, DbPropertyMetadata>();
 
-		public TableDescriptor(string table) : this(null, table)
-		{
-		}
-
-		public TableDescriptor(string schema, string table)
-		{
-			if (string.IsNullOrEmpty(schema))
-				Name = table;
-			else
-				Name = schema + "." + table;
-		}
-
 		public readonly string Name;
+		public readonly string Schema;
+		public readonly string ClassName;
+
+		public TableDescriptor(string table, bool schemaInClassName) : this(null, table, schemaInClassName)
+		{
+		}
+
+		public TableDescriptor(string schema, string table, bool schemaInClassName)
+		{
+			Name = table;
+			Schema = schema;
+			ClassName = GetClassNameFrom(Schema, Name, schemaInClassName);
+		}
+
+
+		static string GetClassNameFrom(string schema, string name, bool schemaInClassName)
+		{
+			if (schemaInClassName == false)
+				return Formatter.FormatClassNameFrom(name);
+
+			string className = schema == null
+				? name
+				: schema + "." + name;
+
+			return Formatter.FormatClassNameFrom(className);
+		}
 
 		public void Add(DbPropertyMetadata property)
 		{

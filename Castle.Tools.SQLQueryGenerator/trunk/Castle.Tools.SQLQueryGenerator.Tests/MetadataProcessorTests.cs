@@ -21,24 +21,25 @@ namespace Castle.Tools.SQLQueryGenerator.Tests
 		public void GetTableDescriptorFrom_Always_CreatesTheTableDescriptor()
 		{
 			DbPropertyMetadata propertyMetadata = new DbPropertyMetadata(
-				"[dbo]", "[MyTable]", "[Id]", "int", false);
+				"dbo", "MyTable", "Id", "int", false);
 
-			TableDescriptor table = processor.GetTableDescriptorFrom(propertyMetadata);
+			TableDescriptor table = processor.GetTableDescriptorFrom(propertyMetadata, true);
 
-			Assert.Equal(table.Name, "[dbo].[MyTable]");
+			Assert.Equal(table.Name, "MyTable");
+			Assert.Equal(table.Schema, "dbo");
 		}
 
 		[Fact]
 		public void GetTableDescriptorFrom_WhenCalledWithExistingTableData_ReturnsTheExistingTable()
 		{
 			DbPropertyMetadata property1 = new DbPropertyMetadata(
-				"[dbo]", "[MyTable]", "[Id]", "int", false);
+				"dbo", "MyTable", "Id", "int", false);
 
 			DbPropertyMetadata property2 = new DbPropertyMetadata(
-				"[dbo]", "[MyTable]", "[Name]", "string", false);
+				"dbo", "MyTable", "Name", "string", false);
 
-			TableDescriptor table1 = processor.GetTableDescriptorFrom(property1);
-			TableDescriptor table2 = processor.GetTableDescriptorFrom(property2);
+			TableDescriptor table1 = processor.GetTableDescriptorFrom(property1, true);
+			TableDescriptor table2 = processor.GetTableDescriptorFrom(property2, true);
 
 			Assert.Equal(table1, table2);
 		}
@@ -46,25 +47,25 @@ namespace Castle.Tools.SQLQueryGenerator.Tests
 		[Fact]
 		public void Process_WhenFindsNewTable_AddsTheTable()
 		{
-			GetTables().Add("[Initial]", new TableDescriptor("[Initial]"));
-			Assert.Contains("[Initial]", GetTables().Keys);
+			GetTables().Add("Initial", new TableDescriptor("Initial", true));
+			Assert.Contains("Initial", GetTables().Keys);
 
 			processor.Process(new DbPropertyMetadata(
-				"[dbo]", "[MyTable]", "[Id]", "int", false));
+				"dbo", "MyTable", "Id", "int", false), true);
 
 			Assert.Equal(2, GetTables().Keys.Count);
 
-			Assert.Contains("[dbo].[MyTable]", GetTables().Keys);
+			Assert.Contains("dbo_MyTable", GetTables().Keys);
 		}
 
 		[Fact]
 		public void Process_WhenFindsExistingTable_WillNotAddTheTable()
 		{
-			GetTables().Add("[Initial]", new TableDescriptor("[Initial]"));
-			Assert.Contains("[Initial]", GetTables().Keys);
+			GetTables().Add("Initial", new TableDescriptor("Initial", true));
+			Assert.Contains("Initial", GetTables().Keys);
 
 			processor.Process(new DbPropertyMetadata(
-				null, "[Initial]", "[Id]", "int", false));
+				null, "Initial", "Id", "int", false), true);
 
 			Assert.Equal(1, GetTables().Keys.Count);
 		}

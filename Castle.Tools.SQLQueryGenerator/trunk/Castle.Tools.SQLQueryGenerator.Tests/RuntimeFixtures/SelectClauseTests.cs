@@ -1,4 +1,3 @@
-using Castle.Tools.SQLQueryGenerator.Runtime;
 using Castle.Tools.SQLQueryGenerator.Runtime.Clauses;
 using Castle.Tools.SQLQueryGenerator.Runtime.Model.Field;
 using Castle.Tools.SQLQueryGenerator.Tests.GeneratedClasses;
@@ -20,7 +19,10 @@ namespace Castle.Tools.SQLQueryGenerator.Tests.RuntimeFixtures
 
 			SelectClause select = new SelectClause(fields);
 
-			string expected = "SELECT [dbo].[Blogs].[Id] ";
+			string expected = 
+@"SELECT
+				[dbo].[Blogs].[Id]
+";
 
 			Assert.Equal(expected, select.ToString());
 		}
@@ -38,7 +40,11 @@ namespace Castle.Tools.SQLQueryGenerator.Tests.RuntimeFixtures
 
 			SelectClause select = new SelectClause(fields);
 
-			string expected = "SELECT [dbo].[Blogs].[Id], [dbo].[Blogs].[Name] ";
+			string expected = 
+@"SELECT
+				[dbo].[Blogs].[Id],
+				[dbo].[Blogs].[Name]
+";
 
 			Assert.Equal(expected, select.ToString());
 		}
@@ -56,7 +62,11 @@ namespace Castle.Tools.SQLQueryGenerator.Tests.RuntimeFixtures
 
 			SelectClause select = new SelectClause(fields);
 
-			string expected = "SELECT [dbo].[Blogs].[Id], [dbo].[Blogs].[Name] ";
+			string expected = 
+@"SELECT
+				[dbo].[Blogs].[Id] AS [MyId],
+				[dbo].[Blogs].[Name]
+";
 
 			Assert.Equal(expected, select.ToString());
 		}

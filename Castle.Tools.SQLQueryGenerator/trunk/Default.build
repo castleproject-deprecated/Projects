@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="BuildAndTest" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+    <SolutionDir>$(MSBuildProjectDirectory)</SolutionDir>
+    <Configuration Condition="!Exists('$(Configuration)')">Debug</Configuration>
+		<GeneratorBinDir>$(SolutionDir)\Castle.Tools.SQLQueryGenerator\Bin\$(Configuration)</GeneratorBinDir>
+    <RuntimeBinDir>$(SolutionDir)\Castle.Tools.SQLQueryGenerator.Runtime\Bin\$(Configuration)</RuntimeBinDir>
+    <BuildDir>$(SolutionDir)\Build</BuildDir>
+    <BuildDllDir>$(BuildDir)\$(Configuration)</BuildDllDir>
+	</PropertyGroup>
+	
+	<Import Project="Common.Build.xml" />
+
+  <Target Name="CreateBuildDir">
+		<MakeDir Directories="$(BuildDir)"></MakeDir>		
+  </Target>
+
+  <Target Name="BuildAndTest" DependsOnTargets="Build;Test;CopyOutputToBuildDir;Zip">
+		<Message Text="BuildAndTest ..." />
+  </Target>
+
+  <Target Name="ReBuildAndTest" DependsOnTargets="Clean;BuildAndTest;">
+		<Message Text="BuildAndTest ..." />
+  </Target>
+
+  <Target Name="GenerateAssemblyInfo">
+		<Message Text="Generating AssemblyInfo ..." />
+		<MSBuild	Projects="GenerateAssemblyInfo.build" />
+  </Target>
+
+	<Target Name="Clean">
+		<Message Text="Cleaning build folders ..." />
+		<MSBuild	Projects="Castle.Tools.SQLQueryGenerator.sln"
+							Properties="Configuration=$(Configuration)"
+							Targets="Clean" />
+	</Target>
+	
+	<Target Name="Build" DependsOnTargets="GenerateAssemblyInfo;">
+		<Message Text="Building solution ..." />
+		<MSBuild	Projects="Castle.Tools.SQLQueryGenerator.sln"
+							Properties="Configuration=$(Configuration)" />
+	</Target>
+
+
+  <Target Name="Rebuild" DependsOnTargets="Clean;Build;">
+		<Message Text="Rebuild ..." />
+  </Target>
+
+	<Target Name="CopyOutputToBuildDir" DependsOnTargets="CreateBuildDir;">
+		<Message Text="Deleting old Dll files from build directory ..." />
+		<RemoveDir Directories="$(BuildDllDir)"></RemoveDir>
+		<MakeDir Directories="$(BuildDllDir)"></MakeDir>		
+		
+		<Message Text="Copying Dll files to build directory ..." />
+		<CreateItem Include="$(GeneratorBinDir)\Castle.Tools.SQLQueryGenerator.exe;$(GeneratorBinDir)\Castle.Tools.SQLQueryGenerator.pdb;$(RuntimeBinDir)\Castle.Tools.SQLQueryGenerator.Runtime.dll;$(RuntimeBinDir)\Castle.Tools.SQLQueryGenerator.Runtime.pdb;">
+			<Output ItemName="DllFiles" TaskParameter="Include"/>
+		</CreateItem>
+		<Copy	SourceFiles="@(DllFiles)"
+					DestinationFolder="$(BuildDllDir)" />
+	</Target>
+	
+	<Target Name="Zip" DependsOnTargets="GetRevision;">
+		<CreateProperty value="$(BuildDir)\AspView-$(Major).$(Minor).$(Build).$(Revision)-$(Configuration).zip">
+			<Output TaskParameter="Value"
+							PropertyName="ZipFileName" />
+		</CreateProperty>
+		<CreateItem Include="$(BuildDllDir)\*.*">
+			<Output ItemName="ZipFiles" TaskParameter="Include"/>
+		</CreateItem>
+		<Zip 	Files="@(ZipFiles)" ZipLevel="9"
+					WorkingDirectory="$(MSBuildProjectDirectory)"
+					ZipFileName="$(ZipFileName)" />
+	</Target>
+	
+  <Target Name="Test" DependsOnTargets="CreateBuildDir;">
+		<Message Text="Running tests ..." />
+    <Exec WorkingDirectory="$(SolutionDir)\Castle.Tools.SQLQueryGenerator.Tests\bin\$(Configuration)" 
+					Command="&quot;$(SolutionDir)\SolutionItems\Lib\xunit.console.exe&quot; Castle.Tools.SQLQueryGenerator.Tests.dll /html &quot;$(BuildDir)\test-results.html&quot;"
+    />
+
+  </Target>
+
+</Project>

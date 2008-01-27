@@ -10,7 +10,6 @@ namespace Castle.Tools.SQLQueryGenerator.Helpers
 		public bool Equals(string x, string y)
 		{
 			return x.Equals(y, StringComparison.InvariantCultureIgnoreCase);
-			throw new System.Exception("The method or operation is not implemented.");
 		}
 
 		public int GetHashCode(string obj)

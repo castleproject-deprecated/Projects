@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="GenerateAssemblyInfo" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="$(MSBuildProjectDirectory)\..\Common.build.xml"/>
+
+  <PropertyGroup>
+    <PropertiesDirectory>$(MSBuildProjectDirectory)\Properties</PropertiesDirectory>
+    <AssemblyTitle>AspView</AssemblyTitle>
+  </PropertyGroup>
+
+	<Target Name="GenerateAssemblyInfo" DependsOnTargets="Version" >
+    <Message Text="Generating assembly info for $(AssemblyTitle) Version $(Major).$(Minor).$(Build).$(Revision)" />
+    <MakeDir Directories="$(PropertiesDirectory)" />
+		<AssemblyInfo CodeLanguage="CS"
+				OutputFile="$(PropertiesDirectory)\AssemblyInfo.cs"
+				AssemblyTitle="$(AssemblyTitle)"
+				AssemblyDescription="Runtime Components for SQL Query Generator"
+				AssemblyCompany="$(AssemblyCompany)"
+				AssemblyProduct="$(AssemblyProduct)"
+				AssemblyCopyright="$(AssemblyCopyright)"
+				ComVisible="$(ComVisible)"
+				CLSCompliant="$(CLSCompliant)"
+				AssemblyVersion="$(Major).$(Minor).$(Build).$(Revision)"
+				AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)"
+				Condition="$(Revision) != '0' "/>
+	</Target>
+
+</Project>

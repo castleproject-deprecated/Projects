@@ -1,4 +1,5 @@
 using Castle.Tools.SQLQueryGenerator.Runtime;
+using Castle.Tools.SQLQueryGenerator.Runtime.Model;
 using Castle.Tools.SQLQueryGenerator.Tests.GeneratedClasses;
 using Xunit;
 
@@ -144,6 +145,30 @@ WHERE
 			Assert.Equal(expected, q.ToString());
 		}
 
+		[Fact]
+		public void SimpleSelectWithWhereAndParameter()
+		{
+			#region expected
+			string expected =
+@"SELECT
+				[dbo].[Blogs].[Id],
+				[dbo].[Blogs].[Name]
+FROM
+				[dbo].[Blogs]
+WHERE
+				([dbo].[Blogs].[Id] = @BlogId)
+";
+			#endregion
+
+			Parameter<int> blogId = new Parameter<int>("BlogId");
+
+			SQLQuery q = SQLQuery
+				.Select(SQL.Blogs.Id, SQL.Blogs.Name)
+				.From(SQL.Blogs)
+				.Where(SQL.Blogs.Id == blogId);
+
+			Assert.Equal(expected, q.ToString());
+		}
 
 		static void Spit(string sql)
 		{
@@ -154,3 +179,4 @@ WHERE
 		}
 	}
 }
+

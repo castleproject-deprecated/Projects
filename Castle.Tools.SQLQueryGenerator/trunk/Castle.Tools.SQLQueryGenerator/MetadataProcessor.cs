@@ -9,29 +9,29 @@ namespace Castle.Tools.SQLQueryGenerator
 	{
 		IDictionary<string, TableDescriptor> tables;
 
-		public TableDescriptor GetTableDescriptorFrom(DbPropertyMetadata propertyMetadata)
+		public TableDescriptor GetTableDescriptorFrom(DbPropertyMetadata propertyMetadata, bool schemaInClassName)
 		{
-			TableDescriptor table = new TableDescriptor(propertyMetadata.Schema, propertyMetadata.Table);
-			if (tables.ContainsKey(table.Name))
-				return tables[table.Name];
+			TableDescriptor table = new TableDescriptor(propertyMetadata.Schema, propertyMetadata.Table, schemaInClassName);
+			if (tables.ContainsKey(table.ClassName))
+				return tables[table.ClassName];
 
-			tables.Add(table.Name, table);
+			tables.Add(table.ClassName, table);
 			return table;
 		}
 
-		public void Process(DbPropertyMetadata propertyMetadata)
+		public void Process(DbPropertyMetadata propertyMetadata, bool schemaInClassName)
 		{
-			TableDescriptor table = GetTableDescriptorFrom(propertyMetadata);
+			TableDescriptor table = GetTableDescriptorFrom(propertyMetadata, schemaInClassName);
 			table.Add(propertyMetadata);
 		}
 
-		public IDictionary<string, TableDescriptor> GetTableDescriptorsFrom(IEnumerable<DbPropertyMetadata> metadata)
+		public IDictionary<string, TableDescriptor> GetTableDescriptorsFrom(IEnumerable<DbPropertyMetadata> metadata, bool schemaInClassName)
 		{
 			tables = new Dictionary<string, TableDescriptor>(new CaseInsensitiveStringComparer());
 
 			foreach (DbPropertyMetadata propertyMetadata in metadata)
 			{
-				Process(propertyMetadata);
+				Process(propertyMetadata, schemaInClassName);
 			}
 			return tables;
 		}

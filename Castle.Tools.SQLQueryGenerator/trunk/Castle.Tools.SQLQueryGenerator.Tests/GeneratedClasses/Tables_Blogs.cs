@@ -8,10 +8,8 @@ namespace Castle.Tools.SQLQueryGenerator.Tests.GeneratedClasses
 			Name = new Tables_Blogs_Name(this);
 		}
 
-		public Tables_Blogs() : base("dbo", "Blogs")
+		public Tables_Blogs() : this(null)
 		{
-			Id = new Tables_Blogs_Id(this);
-			Name = new Tables_Blogs_Name(this);
 		}
 
 		public readonly Tables_Blogs_Id Id;
