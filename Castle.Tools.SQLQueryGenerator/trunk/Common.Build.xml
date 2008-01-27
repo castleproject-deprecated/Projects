@@ -17,9 +17,9 @@
 	</Target>
 	
 	<PropertyGroup>
-		<Major>1</Major>
-		<Minor>0</Minor>
-		<Build>4</Build>
+		<Major>0</Major>
+		<Minor>9</Minor>
+		<Build>0</Build>
 		<AssemblyCompany>http://www.kenegozi.com/blog</AssemblyCompany>
 		<AssemblyProduct>Castle.Tools.SQLQueryGenerator</AssemblyProduct>
 		<AssemblyCopyright>Copyright © Ken Egozi 2008</AssemblyCopyright>

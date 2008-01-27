@@ -61,7 +61,7 @@
 	</Target>
 	
 	<Target Name="Zip" DependsOnTargets="GetRevision;">
-		<CreateProperty value="$(BuildDir)\AspView-$(Major).$(Minor).$(Build).$(Revision)-$(Configuration).zip">
+		<CreateProperty value="$(BuildDir)\Castle.Tools.SQLQueryGenerator-$(Major).$(Minor).$(Build).$(Revision)-$(Configuration).zip">
 			<Output TaskParameter="Value"
 							PropertyName="ZipFileName" />
 		</CreateProperty>
