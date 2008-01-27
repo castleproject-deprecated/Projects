@@ -62,6 +62,16 @@ namespace Castle.Tools.SQLQueryGenerator.Runtime.Expressions
 		{
 			return new WhereExpression("NOT " + where);
 		}
+
+		public static bool operator true(WhereExpression where)
+		{
+			return false;
+		}
+
+		public static bool operator false(WhereExpression where)
+		{
+			return false;
+		}
 	}
 
 	public class ComplexWhereExpression : WhereExpression
