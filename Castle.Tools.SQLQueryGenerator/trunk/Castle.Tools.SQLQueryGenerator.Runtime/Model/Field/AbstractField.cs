@@ -75,7 +75,38 @@ namespace Castle.Tools.SQLQueryGenerator.Runtime.Model.Field
 		{
 			return new WhereExpression(field, " <> ", other);
 		}
-
+		public static WhereExpression operator >(AbstractField<T> field, T other)
+		{
+			return new WhereExpression(field, " > ", other);
+		}
+		public static WhereExpression operator >(AbstractField<T> field, IOperateable<T> other)
+		{
+			return new WhereExpression(field, " > ", other);
+		}
+		public static WhereExpression operator <(AbstractField<T> field, T other)
+		{
+			return new WhereExpression(field, " < ", other);
+		}
+		public static WhereExpression operator <(AbstractField<T> field, IOperateable<T> other)
+		{
+			return new WhereExpression(field, " < ", other);
+		}
+		public static WhereExpression operator >=(AbstractField<T> field, T other)
+		{
+			return new WhereExpression(field, " >= ", other);
+		}
+		public static WhereExpression operator >=(AbstractField<T> field, IOperateable<T> other)
+		{
+			return new WhereExpression(field, " >= ", other);
+		}
+		public static WhereExpression operator <=(AbstractField<T> field, T other)
+		{
+			return new WhereExpression(field, " <= ", other);
+		}
+		public static WhereExpression operator <=(AbstractField<T> field, IOperateable<T> other)
+		{
+			return new WhereExpression(field, " <= ", other);
+		}
 		public override IField As(string alias)
 		{
 			IFormatableField thisField = this;
