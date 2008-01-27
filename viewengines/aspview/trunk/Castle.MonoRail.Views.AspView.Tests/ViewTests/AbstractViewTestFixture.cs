@@ -14,6 +14,8 @@
 // limitations under the License.
 #endregion
 
+using System.Web;
+
 namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 {
 	using System;
@@ -24,6 +26,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 	using Framework.Test;
 	using NUnit.Framework;
 	using Stubs;
+	using System.Collections.Generic;
 
 	public abstract class AbstractViewTestFixture
 	{
@@ -32,9 +35,9 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 		protected Flash flash;
 		protected StringWriter writer;
 		protected AspViewEngine engine;
-		protected IDictionary cookies;
-		protected IRequest request;
-		protected IResponse response;
+		protected IDictionary<string, HttpCookie> cookies;
+		protected IMockRequest request;
+		protected IMockResponse response;
 		protected UrlInfo url;
 		protected ITrace trace;
 		protected IController controller;
@@ -77,7 +80,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 		{
 			writer = writer ?? new StringWriter();
 			engine = engine ?? new AspViewEngine();
-			cookies = cookies ?? new Hashtable();
+			cookies = cookies ?? new Dictionary<string, HttpCookie>();
 			request = request ?? new MockRequest(cookies);
 			response = response ?? new MockResponse(cookies);
 			url = url ?? new UrlInfo("", "Stub", "Stub");

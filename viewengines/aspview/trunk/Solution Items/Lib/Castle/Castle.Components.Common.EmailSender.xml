@@ -183,6 +183,14 @@
             <param name="mediaType">Look at System.Net.Mime.MediaTypeNames for help.</param>
             <param name="stream">File stream.</param>
         </member>
+        <member name="M:Castle.Components.Common.EmailSender.MessageAttachment.#ctor(System.String,System.String,System.IO.Stream)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Components.Common.EmailSender.MessageAttachment"/> class.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="mediaType">Type of the media.</param>
+            <param name="stream">The stream.</param>
+        </member>
         <member name="P:Castle.Components.Common.EmailSender.MessageAttachment.FileName">
             <summary>
             Gets the name of the file.

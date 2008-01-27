@@ -762,10 +762,190 @@
             an <see cref="T:System.Web.HttpResponse"/> instance.
             </summary>
         </member>
+        <member name="T:Castle.MonoRail.Framework.Internal.BaseResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Test.IMockResponse">
+            <summary>
+            Exposes methods on top of <see cref="T:Castle.MonoRail.Framework.IResponse"/>
+            that are used by unit tests
+            </summary>
+        </member>
         <member name="T:Castle.MonoRail.Framework.IResponse">
             <summary>
             Represents the response data and operations
             </summary>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.IRedirectSupport">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.RedirectToSiteRoot">
+            <summary> 
+            Redirects to the site root directory (<c>Context.ApplicationPath + "/"</c>).
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.RedirectToUrl(System.String)">
+            <summary>
+            Redirects to the specified url
+            </summary>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.RedirectToUrl(System.String,System.Boolean)">
+            <summary>
+            Redirects to the specified url
+            </summary>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+            <param name="endProcess">if set to <c>true</c>, sends the redirect and 
+            kills the current request process.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.RedirectToUrl(System.String,System.Collections.IDictionary)">
+            <summary>
+            Redirects to the specified url
+            </summary>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.RedirectToUrl(System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Redirects to the specified url
+            </summary>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.RedirectToUrl(System.String,System.String[])">
+            <summary>
+            Redirects to the specified url
+            </summary>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.RedirectToUrl(System.String,System.Object)">
+            <summary>
+            Redirects to the specified url
+            </summary>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+            <param name="queryStringAnonymousDictionary">The querystring entries as an anonymous dictionary</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.Redirect(System.String,System.String)">
+            <summary>
+            Redirects to another controller's action.
+            </summary>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.Redirect(System.String,System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Redirects to another controller's action with the specified parameters.
+            </summary>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.Redirect(System.String,System.String,System.Collections.IDictionary)">
+            <summary>
+            Redirects to another controller's action with the specified parameters.
+            </summary>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.Redirect(System.String,System.String,System.Object)">
+            <summary>
+            Redirects to another controller's action with the specified parameters.
+            </summary>
+            <param name="queryStringAnonymousDictionary">The querystring entries as an anonymous dictionary</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.Redirect(System.String,System.String,System.String)">
+            <summary>
+            Redirects to another controller's action in a different area.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.Redirect(System.String,System.String,System.String,System.Collections.IDictionary)">
+            <summary>
+            Redirects to another controller's action in a different area with the specified parameters.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.Redirect(System.String,System.String,System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Redirects to another controller's action in a different area with the specified parameters.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.Redirect(System.String,System.String,System.String,System.Object)">
+            <summary>
+            Redirects to another controller's action in a different area with the specified parameters.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="queryStringAnonymousDictionary">The querystring entries as an anonymous dictionary</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.RedirectUsingRoute(System.String,System.String,System.Boolean)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="useCurrentRouteParams">if set to <c>true</c> the current request matching route rules will be used.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.RedirectUsingRoute(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="useCurrentRouteParams">if set to <c>true</c> the current request matching route rules will be used.</param>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.RedirectUsingRoute(System.String,System.String,System.Collections.IDictionary)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="routeParameters">The routing rule parameters.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.RedirectUsingRoute(System.String,System.String,System.Object)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="routeParameters">The routing rule parameters.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.RedirectUsingRoute(System.String,System.String,System.String,System.Collections.IDictionary)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="routeParameters">The routing rule parameters.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRedirectSupport.RedirectUsingRoute(System.String,System.String,System.String,System.Object)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="routeParameters">The routing rule parameters.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.IResponse.AppendHeader(System.String,System.String)">
             <summary>
@@ -773,6 +953,18 @@
             </summary>
             <param name="name">The name.</param>
             <param name="value">The value.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IResponse.BinaryWrite(System.Byte[])">
+            <summary>
+            Writes the buffer to the browser
+            </summary>
+            <param name="buffer">The buffer.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IResponse.BinaryWrite(System.IO.Stream)">
+            <summary>
+            Writes the stream to the browser
+            </summary>
+            <param name="stream">The stream.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.IResponse.Clear">
             <summary>
@@ -810,73 +1002,11 @@
             <param name="index">The index.</param>
             <param name="count">The count.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.IResponse.Redirect(System.Object)">
+        <member name="M:Castle.MonoRail.Framework.IResponse.WriteFile(System.String)">
             <summary>
-            Redirects the specified controller.
+            Writes the file.
             </summary>
-            <param name="parameters">The parameters.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.IResponse.Redirect(System.String,System.String)">
-            <summary>
-            Redirects the specified controller.
-            </summary>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.IResponse.Redirect(System.String,System.String,System.String)">
-            <summary>
-            Redirects the specified area.
-            </summary>
-            <param name="area">The area.</param>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.IResponse.Redirect(System.String,System.String,System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Redirects to another controller and action with the specified paramters.
-            </summary>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
-            <param name="parameters">Key/value pairings</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.IResponse.Redirect(System.String,System.String,System.String,System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Redirects to another controller and action with the specified paramters.
-            </summary>
-            <param name="area">Area name</param>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
-            <param name="parameters">Key/value pairings</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.IResponse.Redirect(System.String,System.String,System.Collections.IDictionary)">
-            <summary>
-            Redirects to another controller and action with the specified paramters.
-            </summary>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
-            <param name="parameters">Key/value pairings</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.IResponse.Redirect(System.String,System.String,System.String,System.Collections.IDictionary)">
-            <summary>
-            Redirects to another controller and action with the specified paramters.
-            </summary>
-            <param name="area">Area name</param>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
-            <param name="parameters">Key/value pairings</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.IResponse.RedirectToUrl(System.String)">
-            <summary>
-            Redirects the specified URL.
-            </summary>
-            <param name="url">The URL.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.IResponse.RedirectToUrl(System.String,System.Boolean)">
-            <summary>
-            Redirects the specified URL.
-            </summary>
-            <param name="url">The URL.</param>
-            <param name="endProcess">if set to <c>true</c> [end process].</param>
+            <param name="fileName">Name of the file.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.IResponse.CreateCookie(System.String,System.String)">
             <summary>
@@ -965,13 +1095,404 @@
             	<c>true</c> if this instance is client connected; otherwise, <c>false</c>.
             </value>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.#ctor(System.Web.HttpResponse,Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.IUrlBuilder)">
+        <member name="P:Castle.MonoRail.Framework.Test.IMockResponse.RedirectedTo">
+            <summary>
+            Gets the urls the request was redirected to.
+            </summary>
+            <value>The redirected to.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.IMockResponse.Output">
+            <summary>
+            Sets the output.
+            </summary>
+            <value>The output.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.IMockResponse.CachePolicy">
+            <summary>
+            Sets the cache policy.
+            </summary>
+            <value>The cache policy.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.IMockResponse.OutputContent">
+            <summary>
+            Gets the output.
+            </summary>
+            <value>The output.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.IMockResponse.UrlInfo">
+            <summary>
+            Gets or sets the URL info.
+            </summary>
+            <value>The URL info.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.IMockResponse.UrlBuilder">
+            <summary>
+            Gets or sets the URL builder.
+            </summary>
+            <value>The URL builder.</value>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.Internal.BaseResponse.redirected">
+            <summary>
+            Indicates if a redirected has been issued
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.#ctor(Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.IUrlBuilder,Castle.MonoRail.Framework.IServerUtility,Castle.MonoRail.Framework.Routing.RouteMatch)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Internal.BaseResponse"/> class.
+            </summary>
+            <param name="currentUrl">The current URL.</param>
+            <param name="urlBuilder">The URL builder.</param>
+            <param name="serverUtility">The server utility.</param>
+            <param name="routeMatch">The route match.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.AppendHeader(System.String,System.String)">
+            <summary>
+            Appends the header.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.BinaryWrite(System.Byte[])">
+            <summary>
+            Writes the buffer to the browser
+            </summary>
+            <param name="buffer">The buffer.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.BinaryWrite(System.IO.Stream)">
+            <summary>
+            Writes the stream to the browser
+            </summary>
+            <param name="stream">The stream.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.Clear">
+            <summary>
+            Clears the response (only works if buffered)
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.ClearContent">
+            <summary>
+            Clears the response content (only works if buffered).
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.Write(System.String)">
+            <summary>
+            Writes the specified string.
+            </summary>
+            <param name="s">The string.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.Write(System.Object)">
+            <summary>
+            Writes the specified obj.
+            </summary>
+            <param name="obj">The obj.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.Write(System.Char)">
+            <summary>
+            Writes the specified char.
+            </summary>
+            <param name="ch">The char.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.Write(System.Char[],System.Int32,System.Int32)">
+            <summary>
+            Writes the specified buffer.
+            </summary>
+            <param name="buffer">The buffer.</param>
+            <param name="index">The index.</param>
+            <param name="count">The count.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.WriteFile(System.String)">
+            <summary>
+            Writes the file.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.RedirectToUrl(System.String,System.Boolean)">
+            <summary>
+            Redirects to the specified url
+            </summary>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+            <param name="endProcess">if set to <c>true</c>, sends the redirect and
+            kills the current request process.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.RedirectToSiteRoot">
+            <summary>
+            Redirects to the site root directory (<c>Context.ApplicationPath + "/"</c>).
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.RedirectToUrl(System.String)">
+            <summary>
+            Redirects to the specified url
+            </summary>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.RedirectToUrl(System.String,System.Collections.IDictionary)">
+            <summary>
+            Redirects to the specified url
+            </summary>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.RedirectToUrl(System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Redirects to the specified url
+            </summary>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.RedirectToUrl(System.String,System.String[])">
+            <summary>
+            Redirects to the specified url
+            </summary>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.RedirectToUrl(System.String,System.Object)">
+            <summary>
+            Redirects to the specified url
+            </summary>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+            <param name="queryStringAnonymousDictionary">The querystring entries as an anonymous dictionary</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.Redirect(System.String,System.String)">
+            <summary>
+            Redirects to another controller's action.
+            </summary>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.Redirect(System.String,System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Redirects to another controller's action with the specified parameters.
+            </summary>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.Redirect(System.String,System.String,System.Collections.IDictionary)">
+            <summary>
+            Redirects to another controller's action with the specified parameters.
+            </summary>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.Redirect(System.String,System.String,System.Object)">
+            <summary>
+            Redirects to another controller's action with the specified parameters.
+            </summary>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="queryStringAnonymousDictionary">The querystring entries as an anonymous dictionary</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.Redirect(System.String,System.String,System.String)">
+            <summary>
+            Redirects to another controller's action in a different area.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.Redirect(System.String,System.String,System.String,System.Collections.IDictionary)">
+            <summary>
+            Redirects to another controller's action in a different area with the specified parameters.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.Redirect(System.String,System.String,System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Redirects to another controller's action in a different area with the specified parameters.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.Redirect(System.String,System.String,System.String,System.Object)">
+            <summary>
+            Redirects to another controller's action in a different area with the specified parameters.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="queryStringAnonymousDictionary">The querystring entries as an anonymous dictionary</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.RedirectUsingRoute(System.String,System.String,System.Boolean)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="useCurrentRouteParams">if set to <c>true</c> the current request matching route rules will be used.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.RedirectUsingRoute(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="useCurrentRouteParams">if set to <c>true</c> the current request matching route rules will be used.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.RedirectUsingRoute(System.String,System.String,System.Collections.IDictionary)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="routeParameters">The routing rule parameters.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.RedirectUsingRoute(System.String,System.String,System.Object)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="routeParameters">The routing rule parameters.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.RedirectUsingRoute(System.String,System.String,System.String,System.Collections.IDictionary)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="routeParameters">The routing rule parameters.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.RedirectUsingRoute(System.String,System.String,System.String,System.Object)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="routeParameters">The routing rule parameters.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.CreateCookie(System.String,System.String)">
+            <summary>
+            Creates the cookie.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="cookieValue">The cookie value.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.CreateCookie(System.String,System.String,System.DateTime)">
+            <summary>
+            Creates the cookie.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="cookieValue">The cookie value.</param>
+            <param name="expiration">The expiration.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.CreateCookie(System.Web.HttpCookie)">
+            <summary>
+            Creates the cookie.
+            </summary>
+            <param name="cookie">The cookie.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.RemoveCookie(System.String)">
+            <summary>
+            Removes the cookie.
+            </summary>
+            <param name="name">The name.</param>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.StatusCode">
+            <summary>
+            Gets or sets the status code.
+            </summary>
+            <value>The status code.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.StatusDescription">
+            <summary>
+            Gets or sets the status code.
+            </summary>
+            <value>The status code.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.ContentType">
+            <summary>
+            Gets or sets the type of the content.
+            </summary>
+            <value>The type of the content.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.CachePolicy">
+            <summary>
+            Gets the caching policy (expiration time, privacy,
+            vary clauses) of a Web page.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.CacheControlHeader">
+            <summary>
+            Sets the Cache-Control HTTP header to Public or Private.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.Charset">
+            <summary>
+            Gets or sets the HTTP character set of the output stream.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.Output">
+            <summary>
+            Gets the output.
+            </summary>
+            <value>The output.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.OutputStream">
+            <summary>
+            Gets the output stream.
+            </summary>
+            <value>The output stream.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.WasRedirected">
+            <summary>
+            Gets a value indicating whether the response sent a redirect.
+            </summary>
+            <value><c>true</c> if was redirected; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.IsClientConnected">
+            <summary>
+            Gets a value indicating whether this instance is client connected.
+            </summary>
+            <value>
+            	<c>true</c> if this instance is client connected; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.RedirectedTo">
+            <summary>
+            Gets the urls the request was redirected to.
+            </summary>
+            <value>The redirected to.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.OutputContent">
+            <summary>
+            Gets the output.
+            </summary>
+            <value>The output.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.UrlInfo">
+            <summary>
+            Gets or sets the URL info.
+            </summary>
+            <value>The URL info.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.UrlBuilder">
+            <summary>
+            Gets or sets the URL builder.
+            </summary>
+            <value>The URL builder.</value>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.#ctor(System.Web.HttpResponse,Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.IUrlBuilder,Castle.MonoRail.Framework.IServerUtility,Castle.MonoRail.Framework.Routing.RouteMatch)">
             <summary>
             Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Adapters.ResponseAdapter"/> class.
             </summary>
-            <param name="response">The response.</param>
             <param name="currentUrl">The current URL.</param>
             <param name="urlBuilder">The URL builder.</param>
+            <param name="serverUtility">The server utility.</param>
+            <param name="routeMatch">The route match.</param>
+            <param name="response">The response.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.AppendHeader(System.String,System.String)">
             <summary>
@@ -979,6 +1500,18 @@
             </summary>
             <param name="name">The name.</param>
             <param name="headerValue">The header value.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.BinaryWrite(System.Byte[])">
+            <summary>
+            Writes the buffer to the browser
+            </summary>
+            <param name="buffer">The buffer.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.BinaryWrite(System.IO.Stream)">
+            <summary>
+            Writes the stream to the browser
+            </summary>
+            <param name="stream">The stream.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.Clear">
             <summary>
@@ -1016,100 +1549,25 @@
             <param name="index">The index.</param>
             <param name="count">The count.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.RedirectToUrl(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.WriteFile(System.String)">
             <summary>
-            Redirects the specified URL.
+            Writes the file.
             </summary>
-            <param name="url">The URL.</param>
+            <param name="fileName">Name of the file.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.RedirectToUrl(System.String,System.Boolean)">
             <summary>
-            Redirects the specified URL.
+            Redirects to the specified url
             </summary>
-            <param name="url">The URL.</param>
-            <param name="endProcess">if set to <c>true</c> [end process].</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.Redirect(System.String,System.String)">
-            <summary>
-            Redirects the specified controller.
-            </summary>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.Redirect(System.Object)">
-            <summary>
-            Redirects the specified controller.
-            </summary>
-            <param name="parameters">The parameters.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.Redirect(System.String,System.String,System.String)">
-            <summary>
-            Redirects the specified area.
-            </summary>
-            <param name="area">The area.</param>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.Redirect(System.String,System.String,System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Redirects to another controller and action with the specified paramters.
-            </summary>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
-            <param name="parameters">Key/value pairings</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.Redirect(System.String,System.String,System.String,System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Redirects to another controller and action with the specified paramters.
-            </summary>
-            <param name="area">Area name</param>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
-            <param name="parameters">Key/value pairings</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.Redirect(System.String,System.String,System.Collections.IDictionary)">
-            <summary>
-            Redirects to another controller and action with the specified paramters.
-            </summary>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
-            <param name="parameters">Key/value pairings</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.Redirect(System.String,System.String,System.String,System.Collections.IDictionary)">
-            <summary>
-            Redirects to another controller and action with the specified paramters.
-            </summary>
-            <param name="area">Area name</param>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
-            <param name="parameters">Key/value pairings</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.CreateCookie(System.String,System.String)">
-            <summary>
-            Creates the cookie.
-            </summary>
-            <param name="name">The name.</param>
-            <param name="cookieValue">The cookie value.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.CreateCookie(System.String,System.String,System.DateTime)">
-            <summary>
-            Creates the cookie.
-            </summary>
-            <param name="name">The name.</param>
-            <param name="cookieValue">The cookie value.</param>
-            <param name="expiration">The expiration.</param>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+            <param name="endProcess">if set to <c>true</c>, sends the redirect and
+            kills the current request process.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.CreateCookie(System.Web.HttpCookie)">
             <summary>
             Creates the cookie.
             </summary>
             <param name="cookie">The cookie.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.RemoveCookie(System.String)">
-            <summary>
-            Removes the cookie.
-            </summary>
-            <param name="name">The name.</param>
         </member>
         <member name="P:Castle.MonoRail.Framework.Adapters.ResponseAdapter.CachePolicy">
             <summary>
@@ -2005,7 +2463,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.FilterAttribute.#ctor(Castle.MonoRail.Framework.ExecuteEnum,System.Type)">
+        <member name="M:Castle.MonoRail.Framework.FilterAttribute.#ctor(Castle.MonoRail.Framework.ExecuteWhen,System.Type)">
             <summary>
             Constructs a FilterAttribute associating 
             the filter type and when the filter should be invoked.
@@ -3250,6 +3708,11 @@
             <seealso cref="T:Castle.MonoRail.Framework.IScaffoldingSupport"/>
             </summary>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Configuration.ScaffoldConfig.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Configuration.ScaffoldConfig"/> class.
+            </summary>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Configuration.ScaffoldConfig.Deserialize(System.Xml.XmlNode)">
             <summary>
             Deserializes the configuration section looking 
@@ -3521,6 +3984,18 @@
             </summary>
             <value>The resource factory.</value>
         </member>
+        <member name="P:Castle.MonoRail.Framework.IMonoRailServices.ServiceInitializer">
+            <summary>
+            Gets or sets the service initializer.
+            </summary>
+            <value>The service initializer.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.IMonoRailServices.HelperFactory">
+            <summary>
+            Gets or sets the helper factory.
+            </summary>
+            <value>The helper factory.</value>
+        </member>
         <member name="P:Castle.MonoRail.Framework.IMonoRailServices.ExtensionManager">
             <summary>
             Gets or sets the extension manager.
@@ -3541,6 +4016,11 @@
         <member name="M:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.UseServicesFromParent">
             <summary>
             Pendent
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.InstallPrimordialServices">
+            <summary>
+            Installs the primordial services.
             </summary>
         </member>
         <member name="M:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.InstallMissingServices">
@@ -3685,6 +4165,18 @@
             Gets or sets the resource factory.
             </summary>
             <value>The resource factory.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.ServiceInitializer">
+            <summary>
+            Gets or sets the service initializer.
+            </summary>
+            <value>The service initializer.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.HelperFactory">
+            <summary>
+            Gets or sets the helper factory.
+            </summary>
+            <value>The helper factory.</value>
         </member>
         <member name="T:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.ServiceIdentification">
             <summary>
@@ -4016,7 +4508,7 @@
             an implementation of <see cref="T:Castle.MonoRail.Framework.IFilter"/>.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Descriptors.FilterDescriptor.#ctor(System.Type,Castle.MonoRail.Framework.ExecuteEnum,System.Int32,Castle.MonoRail.Framework.FilterAttribute)">
+        <member name="M:Castle.MonoRail.Framework.Descriptors.FilterDescriptor.#ctor(System.Type,Castle.MonoRail.Framework.ExecuteWhen,System.Int32,Castle.MonoRail.Framework.FilterAttribute)">
             <summary>
             Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Descriptors.FilterDescriptor"/> class.
             </summary>
@@ -4734,7 +5226,7 @@
             after the action invocation.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.IFilter.Perform(Castle.MonoRail.Framework.ExecuteEnum,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
+        <member name="M:Castle.MonoRail.Framework.IFilter.Perform(Castle.MonoRail.Framework.ExecuteWhen,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
             <summary>
             Implementors should perform they filter logic and
             return <c>true</c> if the action should be processed.
@@ -4748,7 +5240,7 @@
             should be invoked, otherwise <c>false</c>
             </returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Filters.AntiGoogleWebAcceleratorFilter.Perform(Castle.MonoRail.Framework.ExecuteEnum,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
+        <member name="M:Castle.MonoRail.Framework.Filters.AntiGoogleWebAcceleratorFilter.Perform(Castle.MonoRail.Framework.ExecuteWhen,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
             <summary>
             Implementors should perform they filter logic and
             return <c>true</c> if the action should be processed.
@@ -4810,7 +5302,7 @@
             </summary>
             <value>The filter.</value>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Filters.LocalizationFilter.Perform(Castle.MonoRail.Framework.ExecuteEnum,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
+        <member name="M:Castle.MonoRail.Framework.Filters.LocalizationFilter.Perform(Castle.MonoRail.Framework.ExecuteWhen,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
             <summary>
             Executes a sequence of steps to determine the browser location/culture.
             </summary>
@@ -4852,7 +5344,7 @@
             Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Filters.RequestValidatorFilter"/> class.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Filters.RequestValidatorFilter.Perform(Castle.MonoRail.Framework.ExecuteEnum,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
+        <member name="M:Castle.MonoRail.Framework.Filters.RequestValidatorFilter.Perform(Castle.MonoRail.Framework.ExecuteWhen,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
             <summary>
             Implementors should perform they filter logic and
             return <c>true</c> if the action should be processed.
@@ -5559,6 +6051,18 @@
             <param name="controller">The controller.</param>
             <param name="context">The controller context.</param>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.AbstractHelper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.AbstractHelper"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.AbstractHelper.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.AbstractHelper"/> class, 
+            setting the Controller, Context and ControllerContext.
+            </summary>
+            <param name="engineContext">The engine context.</param>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.AbstractHelper.SetContext(Castle.MonoRail.Framework.IEngineContext)">
             <summary>
             Sets the context.
@@ -5859,6 +6363,18 @@
             </description></item>
             </list>
             </remarks>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.AjaxHelper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.AjaxHelper"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.AjaxHelper.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.AjaxHelper"/> class.
+            setting the Controller, Context and ControllerContext.
+            </summary>
+            <param name="engineContext">The engine context.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.AjaxHelper.Service(System.IServiceProvider)">
             <summary>
@@ -6384,6 +6900,18 @@
             Before using it, you must install the scripts. See <see cref="M:Castle.MonoRail.Framework.Helpers.BehaviourHelper.InstallScripts"/>
             </remarks>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.BehaviourHelper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.BehaviourHelper"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.BehaviourHelper.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.BehaviourHelper"/> class.
+            setting the Controller, Context and ControllerContext.
+            </summary>
+            <param name="engineContext">The engine context.</param>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.BehaviourHelper.InstallScripts">
             <summary>
             Renders a script tag refering the Behaviour library code.
@@ -6432,6 +6960,18 @@
             Simple helper for date formatting
             </summary>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.DateFormatHelper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.DateFormatHelper"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.DateFormatHelper.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.DateFormatHelper"/> class.
+            setting the Controller, Context and ControllerContext.
+            </summary>
+            <param name="engineContext">The engine context.</param>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.DateFormatHelper.AlternativeFriendlyFormatFromNow(System.DateTime)">
             <summary>
             Alternative representation of a difference
@@ -6478,30 +7018,95 @@
             Helper used to create <see cref="T:System.Collections.IDictionary"/> instances
             </summary>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.DictHelper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.DictHelper"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.DictHelper.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.DictHelper"/> class.
+            </summary>
+            <param name="engineContext">The engine context.</param>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.DictHelper.CreateDict(System.String[])">
             <summary>
             Creates an <see cref="T:System.Collections.IDictionary"/> with entries
             infered from the arguments. 
-            <code>
-            CreateDict( "style=display: none;", "selected" )
-            </code>
             </summary>
+            <example>
+            <code>
+            helper.CreateDict( "style=display: none;", "selected" )
+            </code></example>
             <param name="args"></param>
-            <returns></returns>
+            <returns>an <see cref="T:System.Collections.IDictionary"/></returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.DictHelper.Create(System.String[])">
             <summary>
             Creates a dictionary from specified arguments.
             </summary>
+            <remarks> Returns a MonoRailDictionary object, 
+            which is an IDictionary like previous versions of this method.
+            </remarks>
+            <example>
+            <code>
+            DictHelper.Create( "style=display: none;", "selected" )
+            </code></example>
             <param name="args">The arguments.</param>
-            <returns></returns>
+            <returns>an <see cref="T:System.Collections.IDictionary"/></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.DictHelper.N(System.String,System.Object)">
+            <summary>
+            Creates an <see cref="T:System.Collections.IDictionary"/> and adds the 
+            specified key &amp; value to the collection.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="value">The value.</param>
+            <returns>an <see cref="T:System.Collections.IDictionary"/></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.DictHelper.CreateN(System.String,System.Object)">
+            <summary>
+            Creates an <see cref="T:System.Collections.IDictionary"/> and adds the 
+            specified key &amp; value to the collection.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+            <returns>an <see cref="T:System.Collections.IDictionary"/></returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.DictHelper.FromNameValueCollection(System.Collections.Specialized.NameValueCollection)">
             <summary>
-            Creates a dictionary fros a name value collection.
+            Creates a dictionary froms a name value collection.
             </summary>
             <param name="collection">The collection.</param>
             <returns></returns>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Helpers.DictHelper.MonoRailDictionary">
+            <summary>
+            Helper (for the Helper) used to create <see cref="T:System.Collections.IDictionary"/> instances.
+            
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.DictHelper.MonoRailDictionary.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.DictHelper.MonoRailDictionary"/> class.
+            Forces case Insensitivty.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.DictHelper.MonoRailDictionary.N(System.String,System.Object)">
+            <summary>
+            Adds the specified key &amp; value to the collection.
+            </summary>
+            <remarks>Usuable in placed where the generic version is not available.</remarks>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+            <returns>itself, to allow for chaning.</returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.DictHelper.MonoRailDictionary.N(System.String)">
+            <summary>
+            Adds the specified key to the collection.
+            </summary>
+            <param name="key">The key.</param>
+            <returns>itself, to allow for chaning.</returns>
         </member>
         <member name="T:Castle.MonoRail.Framework.Helpers.Effects2Helper">
             <summary>
@@ -6521,6 +7126,18 @@
             Before using it, you must install the scripts. 
             See <see cref="M:Castle.MonoRail.Framework.Helpers.ScriptaculousHelper.InstallScripts"/>
             </remarks>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ScriptaculousHelper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.ScriptaculousHelper"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ScriptaculousHelper.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.ScriptaculousHelper"/> class.
+            setting the Controller, Context and ControllerContext.
+            </summary>
+            <param name="engineContext">The engine context.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.ScriptaculousHelper.InstallScripts">
             <summary>
@@ -6598,6 +7215,18 @@
             <param name="elementId">The element id to act upon.</param>
             <param name="queue">A dictionary used to specify options to the DropOut behavior</param>
             <returns>A JS snippet</returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.Effects2Helper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.Effects2Helper"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.Effects2Helper.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.Effects2Helper"/> class.
+            setting the Controller, Context and ControllerContext.
+            </summary>
+            <param name="engineContext">The engine context.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.Effects2Helper.Appear(System.String)">
             <summary>
@@ -6773,6 +7402,18 @@
             <p id="paragraph1" class="fade-0066FF">Watch me fade from Blue (#0066FF)</p>
             SEE MORE HERE: http://www.axentric.com/posts/default/7
             </remarks>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.EffectsFatHelper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.EffectsFatHelper"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.EffectsFatHelper.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.EffectsFatHelper"/> class.
+            setting the Controller, Context and ControllerContext.
+            </summary>
+            <param name="engineContext">The engine context.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.EffectsFatHelper.InstallScripts">
             <summary>
@@ -7014,6 +7655,13 @@
             <summary>
             Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.FormHelper"/> class.
             </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.FormHelper"/> class.
+            setting the Controller, Context and ControllerContext.
+            </summary>
+            <param name="engineContext">The engine context.</param>
         </member>
         <member name="F:Castle.MonoRail.Framework.Helpers.FormHelper.logger">
             <summary>
@@ -8440,6 +9088,18 @@
             <remarks>This helper provides the means to generate commonly used HTML tags. 
             All of it's methods return <see cref="T:System.String"/> that holds resulting HTML.
             </remarks>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.HtmlHelper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.HtmlHelper"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.HtmlHelper.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.HtmlHelper"/> class.
+            setting the Controller, Context and ControllerContext.
+            </summary>
+            <param name="engineContext">The engine context.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.HtmlHelper.FieldSet(System.String)">
             <summary>
@@ -10172,6 +10832,18 @@
             Provides utilities methods to work with JSON.
             </summary>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.JSONHelper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.JSONHelper"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.JSONHelper.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.JSONHelper"/> class.
+            setting the Controller, Context and ControllerContext.
+            </summary>
+            <param name="engineContext">The engine context.</param>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.JSONHelper.ToJSON(System.Object)">
             <summary>
             Converts a instance of the model to its JSON representation.
@@ -10247,6 +10919,18 @@
             <summary>
             The parameter key that the helper looks for on the request
             </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.PaginationHelper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.PaginationHelper"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.PaginationHelper.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.PaginationHelper"/> class.
+            setting the Controller, Context and ControllerContext.
+            </summary>
+            <param name="engineContext">The engine context.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.PaginationHelper.CreatePageLink(System.Int32,System.String)">
             <summary>
@@ -10910,6 +11594,25 @@
             Default word connector
             </summary>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.TextHelper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.TextHelper"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.TextHelper.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.TextHelper"/> class.
+            setting the Controller, Context and ControllerContext.
+            </summary>
+            <param name="engineContext">The engine context.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.TextHelper.ConvertSpecialCharsToHtml(System.String)">
+            <summary>
+            Converts the special characters to HTML.
+            </summary>
+            <param name="content">The content.</param>
+            <returns></returns>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.TextHelper.FormatPhone(System.String)">
             <summary>
             Formats the specified string as a phone number, varying according to the culture. 
@@ -11121,6 +11824,18 @@
             
             <seealso cref="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.Collections.IDictionary)"/>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.UrlHelper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.UrlHelper"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.UrlHelper.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.UrlHelper"/> class.
+            setting the Controller, Context and ControllerContext.
+            </summary>
+            <param name="engineContext">The engine context.</param>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.UrlHelper.SetContext(Castle.MonoRail.Framework.IEngineContext)">
             <summary>
             Sets the context.
@@ -11283,8 +11998,15 @@
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.ValidationHelper.#ctor">
             <summary>
-            Constructor.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.ValidationHelper"/> class.
             </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationHelper.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.ValidationHelper"/> class.
+            setting the Controller, Context and ControllerContext.
+            </summary>
+            <param name="engineContext">The engine context.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.ValidationHelper.InstallScripts">
             <summary>
@@ -11343,6 +12065,18 @@
             Provide useful helpers to be used in a layout view
             or in the wizards steps views.
             </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.WizardHelper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.WizardHelper"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.WizardHelper.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.WizardHelper"/> class.
+            setting the Controller, Context and ControllerContext.
+            </summary>
+            <param name="engineContext">The engine context.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.WizardHelper.HasNextStep">
             <summary>
@@ -11547,6 +12281,18 @@
             <summary>
             MonoRail Helper that delivers Zebda validation capabilities.
             </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ZebdaHelper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.ZebdaHelper"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ZebdaHelper.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.ZebdaHelper"/> class.
+            setting the Controller, Context and ControllerContext.
+            </summary>
+            <param name="engineContext">The engine context.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.ZebdaHelper.InstallScripts">
             <summary>
@@ -11817,6 +12563,16 @@
             <param name="area">The area.</param>
             <param name="controller">The controller.</param>
             <param name="action">The action.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.UrlInfo.#ctor(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.UrlInfo"/> class.
+            </summary>
+            <param name="area">The area.</param>
+            <param name="controller">The controller.</param>
+            <param name="action">The action.</param>
+            <param name="appVirtualDir">The app virtual dir.</param>
+            <param name="extension">The extension.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.UrlInfo.#ctor(System.String,System.String,System.String,System.String,System.Int32,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
@@ -12538,8 +13294,29 @@
         </member>
         <member name="M:Castle.MonoRail.Framework.JSGeneration.AbstractJSGenerator.Render(System.Object)">
             <summary>
-            Pendent
+            Outputs the content using the renderOptions approach.
+            <para>
+            If the renderOptions is a string, the content is escaped and quoted.
+            </para>
+            	<para>
+            If the renderOptions is a dictionary, we extract the key <c>partial</c>
+            and evaluate the template it points to. The content is escaped and quoted.
+            </para>
             </summary>
+            <param name="renderOptions">The render options.</param>
+            <returns></returns>
+            <example>
+            The following example uses nvelocity syntax:
+            <code>
+            $page.Call('myJsFunction', $page.render("%{partial='shared/newmessage.vm'}") )
+            </code>
+            	<para>
+            Which outputs:
+            </para>
+            	<code>
+            myJsFunction('the content from the newmessage partial view template')
+            </code>
+            </example>
         </member>
         <member name="M:Castle.MonoRail.Framework.JSGeneration.AbstractJSGenerator.CreateElementGenerator(System.String)">
             <summary>
@@ -12676,32 +13453,6 @@
             The following example uses nvelocity syntax:
             <code>
             $page.Remove('div1', 'div2')
-            </code>
-            </example>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeGenerator.Render(System.Object)">
-            <summary>
-            Outputs the content using the renderOptions approach.
-            <para>
-            If the renderOptions is a string, the content is escaped and quoted.
-            </para>
-            	<para>
-            If the renderOptions is a dictionary, we extract the key <c>partial</c>
-            and evaluate the template it points to. The content is escaped and quoted.
-            </para>
-            </summary>
-            <param name="renderOptions">The render options.</param>
-            <returns></returns>
-            <example>
-            The following example uses nvelocity syntax:
-            <code>
-            $page.Call('myJsFunction', $page.render("%{partial='shared/newmessage.vm'}") )
-            </code>
-            	<para>
-            Which outputs:
-            </para>
-            	<code>
-            myJsFunction('the content from the newmessage partial view template')
             </code>
             </example>
         </member>
@@ -13989,6 +14740,13 @@
             </summary>
             <param name="rule">The rule.</param>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.IRoutingRuleContainer.Add(Castle.MonoRail.Framework.Routing.IRoutingRule,Castle.MonoRail.Framework.Routing.RouteAction)">
+            <summary>
+            Pendent
+            </summary>
+            <param name="rule">The rule.</param>
+            <param name="action">The action executed if the rule matches.</param>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Routing.IRoutingRuleContainer.CreateUrl(System.String,System.String,System.String,System.Collections.IDictionary)">
             <summary>
             Pendent
@@ -14000,6 +14758,14 @@
             <returns></returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Routing.IRoutingRuleContainer.CreateUrl(System.String,System.Collections.IDictionary)">
+            <summary>
+            Pendent
+            </summary>
+            <param name="virtualPath">The virtual path.</param>
+            <param name="parameters">The parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.IRoutingRuleContainer.CreateUrl(System.String,System.Object)">
             <summary>
             Pendent
             </summary>
@@ -14027,6 +14793,11 @@
             </summary>
             <param name="rule">The rule.</param>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleContainer.Add(Castle.MonoRail.Framework.Routing.IRoutingRule,Castle.MonoRail.Framework.Routing.RouteAction)">
+            <summary>
+            Pendent
+            </summary>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleContainer.CreateUrl(System.String,System.String,System.String,System.Collections.IDictionary)">
             <summary>
             Creates the URL.
@@ -14038,6 +14809,14 @@
             <returns></returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleContainer.CreateUrl(System.String,System.Collections.IDictionary)">
+            <summary>
+            Pendent
+            </summary>
+            <param name="virtualPath">The virtual path.</param>
+            <param name="parameters">The parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleContainer.CreateUrl(System.String,System.Object)">
             <summary>
             Pendent
             </summary>
@@ -14058,6 +14837,46 @@
             Gets a value indicating whether this container is empty.
             </summary>
             <value><c>true</c> if this instance is empty; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.IRouteContext">
+            <summary>
+            Context used for matching routes.
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.IRouteContext.ApplicationPath">
+            <summary>
+            The ApplicationPath
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.IRouteContext.Request">
+            <summary>
+            The Http Request
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.IRouteContext.ContextItems">
+            <summary>
+            Gets the context items.
+            </summary>
+            <value>The context items.</value>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.IRoutingEngine">
+            <summary>
+            Pendent
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRoutingEngine.ForDomain(System.String)">
+            <summary>
+            Pendent
+            </summary>
+            <param name="domainName">Name of the domain.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IRoutingEngine.ForSubDomain(System.String)">
+            <summary>
+            Pendent
+            </summary>
+            <param name="subdomain">The subdomain.</param>
+            <returns></returns>
         </member>
         <member name="T:Castle.MonoRail.Framework.Routing.IRoutingRule">
             <summary>
@@ -14092,6 +14911,11 @@
             </summary>
             <value>The name of the route.</value>
         </member>
+        <member name="T:Castle.MonoRail.Framework.Routing.RouteAction">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:Castle.MonoRail.Framework.Routing.PatternRoute">
             <summary>
             Pendent
@@ -14101,6 +14925,13 @@
             <summary>
             Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Routing.PatternRoute"/> class.
             </summary>
+            <param name="pattern">The pattern.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.PatternRoute.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Routing.PatternRoute"/> class.
+            </summary>
+            <param name="name">The route name.</param>
             <param name="pattern">The pattern.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Routing.PatternRoute.CreateUrl(System.String,System.String,System.Collections.IDictionary)">
@@ -14189,16 +15020,30 @@
         </member>
         <member name="M:Castle.MonoRail.Framework.Routing.PatternRoute.RestrictionConfigurer.AnyOf(System.String[])">
             <summary>
-            Anies the of.
+            Restricts this named pattern part to only accept one of the 
+            strings passed in.
             </summary>
             <param name="validNames">The valid names.</param>
             <returns></returns>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.PatternRoute.RestrictionConfigurer.ValidRegex(System.String)">
+            <summary>
+            Restricts this named pattern part to only accept strings
+            matching the regular expression passed in.
+            </summary>
+            <param name="regex"></param>
+            <returns></returns>
+        </member>
         <member name="P:Castle.MonoRail.Framework.Routing.PatternRoute.RestrictionConfigurer.ValidInteger">
             <summary>
-            Gets the valid integer.
+            Restricts this named pattern part to only accept integers.
             </summary>
             <value>The valid integer.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Routing.PatternRoute.RestrictionConfigurer.ValidGuid">
+            <summary>
+            Restricts this named pattern part to only accept guids.
+            </summary>
         </member>
         <member name="T:Castle.MonoRail.Framework.Routing.PatternRoute.DefaultConfigurer">
             <summary>
@@ -14236,27 +15081,13 @@
             The default RouteContext
             </summary>
         </member>
-        <member name="T:Castle.MonoRail.Framework.IRouteContext">
-            <summary>
-            Context used for matching routes.
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.IRouteContext.ApplicationPath">
-            <summary>
-            The ApplicationPath
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.IRouteContext.Request">
-            <summary>
-            The Http Request
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Routing.RouteContext.#ctor(Castle.MonoRail.Framework.IRequest,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Routing.RouteContext.#ctor(Castle.MonoRail.Framework.IRequest,System.String,System.Collections.IDictionary)">
             <summary>
             Creates a new RouteContext
             </summary>
-            <param name="request"></param>
-            <param name="applicationPath"></param>
+            <param name="request">The request.</param>
+            <param name="applicationPath">The application path.</param>
+            <param name="contextItems">The context items.</param>
         </member>
         <member name="P:Castle.MonoRail.Framework.Routing.RouteContext.ApplicationPath">
             <summary>
@@ -14267,6 +15098,12 @@
             <summary>
             The Http Request
             </summary>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Routing.RouteContext.ContextItems">
+            <summary>
+            Gets the context items.
+            </summary>
+            <value>The context items.</value>
         </member>
         <member name="T:Castle.MonoRail.Framework.Routing.RouteMatch">
             <summary>
@@ -14296,29 +15133,16 @@
             </summary>
             <value>The parameters.</value>
         </member>
+        <member name="P:Castle.MonoRail.Framework.Routing.RouteMatch.IsEmpty">
+            <summary>
+            Gets a value indicating whether this instance is empty.
+            </summary>
+            <value><c>true</c> if this instance is empty; otherwise, <c>false</c>.</value>
+        </member>
         <member name="T:Castle.MonoRail.Framework.Routing.RoutingEngine">
             <summary>
             Pendent
             </summary>
-        </member>
-        <member name="T:Castle.MonoRail.Framework.IRoutingEngine">
-            <summary>
-            Pendent
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.IRoutingEngine.ForDomain(System.String)">
-            <summary>
-            Pendent
-            </summary>
-            <param name="domainName">Name of the domain.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.IRoutingEngine.ForSubDomain(System.String)">
-            <summary>
-            Pendent
-            </summary>
-            <param name="subdomain">The subdomain.</param>
-            <returns></returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Routing.RoutingEngine.ForDomain(System.String)">
             <summary>
@@ -14363,6 +15187,43 @@
             Gets the engine.
             </summary>
             <value>The engine.</value>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Routing.RoutingRuleWithActionDecorator">
+            <summary>
+            Pendent
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleWithActionDecorator.#ctor(Castle.MonoRail.Framework.Routing.IRoutingRule,Castle.MonoRail.Framework.Routing.RouteAction)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Routing.RoutingRuleWithActionDecorator"/> class.
+            </summary>
+            <param name="inner">The real routing rule.</param>
+            <param name="action">The action.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleWithActionDecorator.CreateUrl(System.String,System.String,System.Collections.IDictionary)">
+            <summary>
+            Pendent
+            </summary>
+            <param name="hostname">The hostname.</param>
+            <param name="virtualPath">The virtual path.</param>
+            <param name="parameters">The parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleWithActionDecorator.Matches(System.String,Castle.MonoRail.Framework.IRouteContext,Castle.MonoRail.Framework.Routing.RouteMatch)">
+            <summary>
+            Determines if the specified URL matches the
+            routing rule.
+            </summary>
+            <param name="url">The URL.</param>
+            <param name="context">The context</param>
+            <param name="match">The match.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Routing.RoutingRuleWithActionDecorator.RouteName">
+            <summary>
+            Gets the name of the route.
+            </summary>
+            <value>The name of the route.</value>
         </member>
         <member name="T:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.IAjaxProxyGenerator">
             <summary>
@@ -15144,19 +16005,20 @@
             Pendent
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.IEngineContextFactory.Create(Castle.MonoRail.Framework.Container.IMonoRailContainer,Castle.MonoRail.Framework.UrlInfo,System.Web.HttpContext)">
+        <member name="M:Castle.MonoRail.Framework.IEngineContextFactory.Create(Castle.MonoRail.Framework.Container.IMonoRailContainer,Castle.MonoRail.Framework.UrlInfo,System.Web.HttpContext,Castle.MonoRail.Framework.Routing.RouteMatch)">
             <summary>
             Pendent.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultEngineContextFactory.Create(Castle.MonoRail.Framework.Container.IMonoRailContainer,Castle.MonoRail.Framework.UrlInfo,System.Web.HttpContext)">
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultEngineContextFactory.Create(Castle.MonoRail.Framework.Container.IMonoRailContainer,Castle.MonoRail.Framework.UrlInfo,System.Web.HttpContext,Castle.MonoRail.Framework.Routing.RouteMatch)">
             <summary>
             Pendent.
             </summary>
             <param name="container"></param>
             <param name="urlInfo"></param>
             <param name="context"></param>
+            <param name="routeMatch"></param>
             <returns></returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Services.DefaultEngineContextFactory.ResolveRequestSession(Castle.MonoRail.Framework.Container.IMonoRailContainer,Castle.MonoRail.Framework.UrlInfo,System.Web.HttpContext)">
@@ -15212,6 +16074,68 @@
             Releases a filter instance
             </summary>
             <param name="filter">The filter instance</param>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Services.DefaultHelperFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.IHelperFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IHelperFactory.Create(System.Type,Castle.MonoRail.Framework.IEngineContext,System.Boolean@)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultHelperFactory.Create(System.Type,Castle.MonoRail.Framework.IEngineContext,System.Boolean@)">
+            <summary>
+            Creates the helper.
+            </summary>
+            <param name="helperType">Type of the helper.</param>
+            <param name="engineContext">The engine context.</param>
+            <param name="initialized">if set to <c>true</c> the helper is already initialized.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Services.DefaultServiceInitializer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.IServiceInitializer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IServiceInitializer.Initialize(System.Object,Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes the specified service instance.
+            </summary>
+            <param name="serviceInstance">The service instance.</param>
+            <param name="engineContext">The engine context.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IServiceInitializer.Initialize(System.Object,Castle.MonoRail.Framework.IMonoRailServices)">
+            <summary>
+            Initializes the specified service instance.
+            </summary>
+            <param name="serviceInstance">The service instance.</param>
+            <param name="container">The container.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultServiceInitializer.Initialize(System.Object,Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes the specified service instance.
+            </summary>
+            <param name="serviceInstance">The service instance.</param>
+            <param name="engineContext">The engine context.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultServiceInitializer.Initialize(System.Object,Castle.MonoRail.Framework.IMonoRailServices)">
+            <summary>
+            Initializes the specified service instance.
+            </summary>
+            <param name="serviceInstance">The service instance.</param>
+            <param name="container">The container.</param>
         </member>
         <member name="T:Castle.MonoRail.Framework.Services.DefaultStaticResourceRegistry">
             <summary>
@@ -15368,12 +16292,6 @@
             <remarks>
             The property <see cref="P:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.UseExtensions"/> defines whether the builder should output
             file extension. This might be handy to use in combination with a url rewrite strategy
-            
-            <para>
-            If you want to create a custom urlbuilder, you can extend this one and override 
-            the <see cref="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.InternalBuildUrl(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean,System.Boolean,System.String)"/>
-            </para>
-            
             </remarks>
             <seealso cref="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.Collections.IDictionary)"/>
         </member>
@@ -15384,114 +16302,111 @@
             It offers a central place to change MonoRail behavior on how to deal with urls. 
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.CreateUrlPartsBuilder(Castle.MonoRail.Framework.UrlInfo,System.Collections.IDictionary)">
+        <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.UrlBuilderParameters)">
             <summary>
-            Builds the URL using the current url as contextual information and a parameter dictionary.
+            Builds the URL using the current url as contextual information and the specified parameters.
             <para>
-            Common parameters includes area, controller and action. 
+            Common parameters includes area, controller and action. See <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/>
+            for more information regarding the parameters. 
             </para>
             </summary>
             <param name="current">The current Url information.</param>
             <param name="parameters">The parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.UrlBuilderParameters,System.Collections.IDictionary)">
+            <summary>
+            Builds the URL using the current url as contextual information and the specified parameters.
+            <para>
+            Common parameters includes area, controller and action. See <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/>
+            for more information regarding the parameters.
+            </para>
+            </summary>
+            <param name="current">The current Url information.</param>
+            <param name="parameters">The parameters.</param>
+            <param name="routeParameters">The route parameters.</param>
             <returns></returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.Collections.IDictionary)">
             <summary>
-            Builds the URL using the current url as contextual information and a parameter dictionary.
+            Builds the URL using the current url as contextual information and the specified parameters.
             <para>
-            Common parameters includes area, controller and action. 
+            Common parameters includes area, controller and action. See <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/>
+            for more information regarding the parameters.
             </para>
             </summary>
             <param name="current">The current Url information.</param>
             <param name="parameters">The parameters.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.String,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.Collections.IDictionary,System.Collections.IDictionary)">
             <summary>
-            Builds an URL using the controller name and action name.
+            Builds the URL using the current url as contextual information and the specified parameters.
+            <para>
+            Common parameters includes area, controller and action. See <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/>
+            for more information regarding the parameters.
+            </para>
             </summary>
             <param name="current">The current Url information.</param>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
+            <param name="parameters">The parameters.</param>
+            <param name="routeParameters">The route parameters.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.String,System.String,System.Collections.IDictionary)">
+        <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.CreateUrlPartsBuilder(Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.UrlBuilderParameters)">
             <summary>
-            Builds an URL using the controller name, action name, and a querystring dictionary.
+            Builds the URL using the current url as contextual information and the specified parameters.
+            <para>
+            Common parameters includes area, controller and action. See <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/>
+            for more information regarding the parameters.
+            </para>
             </summary>
             <param name="current">The current Url information.</param>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-            <param name="queryStringParams">The query string params.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.String,System.String,System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Builds an URL using the controller name, action name, and a querystring name value collection.
-            </summary>
-            <param name="current">The current Url information.</param>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-            <param name="queryStringParams">The query string params.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.String,System.String,System.String)">
-            <summary>
-            Builds an URL using the area name, controller name and action name.
-            </summary>
-            <param name="current">The current Url information.</param>
-            <param name="area">The area.</param>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.String,System.String,System.String,System.Collections.IDictionary)">
-            <summary>
-            Builds an URL using the area name, controller name, action name, and a querystring dictionary.
-            </summary>
-            <param name="current">The current Url information.</param>
-            <param name="area">The area.</param>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-            <param name="queryStringParams">The query string params.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.String,System.String,System.String,System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Builds an URL using the area name, controller name, action name, and a querystring name value collection.
-            </summary>
-            <param name="current">The current Url information.</param>
-            <param name="area">The area.</param>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-            <param name="queryStringParams">The query string params.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.BuildRouteUrl(Castle.MonoRail.Framework.UrlInfo,System.String)">
-            <summary>
-            Pendent.
-            </summary>
-            <param name="current">The current.</param>
-            <param name="routeName">Name of the route.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.BuildRouteUrl(Castle.MonoRail.Framework.UrlInfo,System.String,System.Collections.IDictionary)">
-            <summary>
-            Pendent.
-            </summary>
-            <param name="current">The current.</param>
-            <param name="routeName">Name of the route.</param>
             <param name="parameters">The parameters.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.BuildRouteUrl(Castle.MonoRail.Framework.UrlInfo,System.String,System.Object)">
+        <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.CreateUrlPartsBuilder(Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.UrlBuilderParameters,System.Collections.IDictionary)">
             <summary>
-            Pendent.
+            Builds the URL using the current url as contextual information and the specified parameters.
+            <para>
+            Common parameters includes area, controller and action. See <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/>
+            for more information regarding the parameters.
+            </para>
             </summary>
-            <param name="current">The current.</param>
-            <param name="routeName">Name of the route.</param>
+            <param name="current">The current Url information.</param>
+            <param name="parameters">The parameters.</param>
+            <param name="routeParameters">The route parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.CreateUrlPartsBuilder(Castle.MonoRail.Framework.UrlInfo,System.Collections.IDictionary)">
+            <summary>
+            Builds the URL using the current url as contextual information and the specified parameters.
+            <para>
+            Common parameters includes area, controller and action. See <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/>
+            for more information regarding the parameters.
+            </para>
+            </summary>
+            <param name="current">The current Url information.</param>
             <param name="parameters">The parameters.</param>
             <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.IUrlBuilder.CreateUrlPartsBuilder(Castle.MonoRail.Framework.UrlInfo,System.Collections.IDictionary,System.Collections.IDictionary)">
+            <summary>
+            Builds the URL using the current url as contextual information and the specified parameters.
+            <para>
+            Common parameters includes area, controller and action. See <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/>
+            for more information regarding the parameters.
+            </para>
+            </summary>
+            <param name="current">The current Url information.</param>
+            <param name="parameters">The parameters.</param>
+            <param name="routeParameters">The route parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.IUrlBuilder.UseExtensions">
+            <summary>
+            Gets or sets a value indicating whether the builder should output an extension.
+            </summary>
+            <value><c>true</c> if should use extensions; otherwise, <c>false</c>.</value>
         </member>
         <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.#ctor">
             <summary>
@@ -15511,244 +16426,154 @@
             </summary>
             <param name="provider">The provider.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.CreateUrlPartsBuilder(Castle.MonoRail.Framework.UrlInfo,System.Collections.IDictionary)">
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.Collections.IDictionary)">
             <summary>
-            Builds the URL using the current url as contextual information and a parameter dictionary.
+            Builds the URL using the current url as contextual information and the specified parameters.
             <para>
-            Common parameters includes area, controller and action. 
+            Common parameters includes area, controller and action. See <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/>
+            for more information regarding the parameters.
             </para>
             </summary>
             <param name="current">The current Url information.</param>
             <param name="parameters">The parameters.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.Collections.IDictionary)">
-             <summary>
-             Builds the URL using the current url as contextual information and a parameter dictionary.
-             
-             </summary>
-             
-             <remarks>
-             <para>
-             Common parameters includes <c>area</c>, <c>controller</c> and <c>action</c>, which outputs
-             <c>/area/controller/name.extension</c>
-             </para>
-             
-             <para>
-             Please note that if you dont specify an area or controller name, they will be inferred from the 
-             context. If you want to use an empty area, you must specify <c>area=''</c>. 
-             This is commonly a source of confusion, so understand the following cases:
-             </para>
-             
-             <example>
-             <code>
-             UrlInfo current = ... // Assume that the current is area Admin, controller Products and action List
-             
-             BuildUrl(current, {action: 'view'})
-             // returns /Admin/Products/view.castle
-             
-             BuildUrl(current, {controller: 'Home', action: 'index'})
-             // returns /Admin/Home/index.castle
-              
-             BuildUrl(current, {area:'', controller: 'Home', action: 'index'})
-             // returns /Home/index.castle
-             </code>
-             </example>
-             
-             <para>
-             The <c>querystring</c> parameter can be a string or a dictionary. It appends a query string to the url:
-             <c>/area/controller/name.extension?id=1</c>
-             </para>
-             
-             <para>
-             The <c>absolute</c> parameter forces the builder to output a full url like
-             <c>http://hostname/virtualdir/area/controller/name.extension</c>
-             </para>
-            
-             <para>
-             The <c>pathinfo</c> parameter can be used to add information between the resource identifier and the 
-             query string (optional)
-             <c>http://hostname/virtualdir/area/controller/name.extension/path/info/here</c> or
-             <c>http://hostname/virtualdir/area/controller/name.extension/path/info/here?key=value</c>
-             </para>
-             
-             <para>
-             The <c>encode</c> parameter forces the builder to encode the querystring
-             <c>/controller/name.extension?id=1&amp;name=John</c> which is required to output full xhtml compliant content.
-             </para>
-             
-             </remarks>
-             <param name="current">The current Url information.</param>
-             <param name="parameters">The parameters.</param>
-             <returns></returns>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.BuildRouteUrl(Castle.MonoRail.Framework.UrlInfo,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.Collections.IDictionary,System.Collections.IDictionary)">
             <summary>
-            Pendent.
+            Builds the URL using the current url as contextual information and the specified parameters.
+            <para>
+            Common parameters includes area, controller and action. See <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/>
+            for more information regarding the parameters.
+            </para>
             </summary>
-            <param name="current">The current.</param>
-            <param name="routeName">Name of the route.</param>
+            <param name="current">The current Url information.</param>
+            <param name="parameters">The parameters.</param>
+            <param name="routeParameters">The route parameters.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.BuildRouteUrl(Castle.MonoRail.Framework.UrlInfo,System.String,System.Collections.IDictionary)">
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.UrlBuilderParameters)">
             <summary>
-            Pendent.
+            Builds the URL using the current url as contextual information and the specified parameters.
+            <para>
+            Common parameters includes area, controller and action. See <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/>
+            for more information regarding the parameters.
+            </para>
             </summary>
-            <param name="current">The current.</param>
-            <param name="routeName">Name of the route.</param>
+            <param name="current">The current Url information.</param>
             <param name="parameters">The parameters.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.BuildRouteUrl(Castle.MonoRail.Framework.UrlInfo,System.String,System.Object)">
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.UrlBuilderParameters,System.Collections.IDictionary)">
             <summary>
-            Pendent.
+            Builds the URL using the current url as contextual information and the specified parameters.
+            <para>
+            Common parameters includes area, controller and action. See <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/>
+            for more information regarding the parameters.
+            </para>
             </summary>
-            <param name="current">The current.</param>
-            <param name="routeName">Name of the route.</param>
+            <param name="current">The current Url information.</param>
+            <param name="parameters">The parameters.</param>
+            <param name="routeParameters">The route parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.CreateUrlPartsBuilder(Castle.MonoRail.Framework.UrlInfo,System.Collections.IDictionary)">
+            <summary>
+            Builds the URL using the current url as contextual information and the specified parameters.
+            <para>
+            Common parameters includes area, controller and action. See <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/>
+            for more information regarding the parameters.
+            </para>
+            </summary>
+            <param name="current">The current Url information.</param>
             <param name="parameters">The parameters.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.String,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.CreateUrlPartsBuilder(Castle.MonoRail.Framework.UrlInfo,System.Collections.IDictionary,System.Collections.IDictionary)">
             <summary>
-            Builds an URL using the controller name and action name.
+            Builds the URL using the current url as contextual information and the specified parameters.
+            <para>
+            Common parameters includes area, controller and action. See <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/>
+            for more information regarding the parameters.
+            </para>
             </summary>
             <param name="current">The current Url information.</param>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
+            <param name="parameters">The parameters.</param>
+            <param name="routeParameters">The route parameters.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.String,System.String,System.Collections.IDictionary)">
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.CreateUrlPartsBuilder(Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.UrlBuilderParameters)">
             <summary>
-            Builds an URL using the controller name, action name, and a querystring dictionary.
+            Builds the URL using the current url as contextual information and the specified parameters.
+            <para>
+            Common parameters includes area, controller and action. See <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/>
+            for more information regarding the parameters.
+            </para>
             </summary>
             <param name="current">The current Url information.</param>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-            <param name="queryStringParams">The query string params.</param>
+            <param name="parameters">The parameters.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.String,System.String,System.Collections.Specialized.NameValueCollection)">
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.CreateUrlPartsBuilder(Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.UrlBuilderParameters,System.Collections.IDictionary)">
             <summary>
-            Builds an URL using the controller name, action name, and a querystring name value collection.
+            Builds the URL using the current url as contextual information and the specified parameters.
+            <para>
+            Common parameters includes area, controller and action. See <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/>
+            for more information regarding the parameters.
+            </para>
             </summary>
             <param name="current">The current Url information.</param>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-            <param name="queryStringParams">The query string params.</param>
+            <param name="parameters">The parameters.</param>
+            <param name="routeParameters">The route parameters.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.String,System.String,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.TryCreateUrlUsingRegisteredRoutes(Castle.MonoRail.Framework.Services.UrlBuilderParameters,System.String,System.Collections.IDictionary)">
             <summary>
-            Builds an URL using the area name, controller name and action name.
+            Tries the create URL using registered routes.
             </summary>
-            <param name="current">The current Url information.</param>
-            <param name="area">The area.</param>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.String,System.String,System.String,System.Collections.IDictionary)">
-            <summary>
-            Builds an URL using the area name, controller name, action name, and a querystring dictionary.
-            </summary>
-            <param name="current">The current Url information.</param>
-            <param name="area">The area.</param>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-            <param name="queryStringParams">The query string params.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.BuildUrl(Castle.MonoRail.Framework.UrlInfo,System.String,System.String,System.String,System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Builds an URL using the area name, controller name, action name, and a querystring name value collection.
-            </summary>
-            <param name="current">The current Url information.</param>
-            <param name="area">The area.</param>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-            <param name="queryStringParams">The query string params.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.InternalBuildUrl(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean,System.Boolean,System.String)">
-            <summary>
-            Internals the build URL.
-            </summary>
-            <param name="area">The area.</param>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-            <param name="protocol">The protocol.</param>
-            <param name="port">The port.</param>
-            <param name="domain">The domain.</param>
-            <param name="subdomain">The subdomain.</param>
+            <param name="parameters">The parameters.</param>
             <param name="appVirtualDir">The app virtual dir.</param>
-            <param name="extension">The extension.</param>
-            <param name="absolutePath">if set to <c>true</c> [absolute path].</param>
-            <param name="applySubdomain">if set to <c>true</c> [apply subdomain].</param>
-            <param name="suffix">The suffix.</param>
+            <param name="routeParameters">The route parameters.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.InternalBuildUrl(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean,System.Boolean,System.String,System.String,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.AppendPathInfo(Castle.MonoRail.Framework.Services.UrlParts,Castle.MonoRail.Framework.Services.UrlBuilderParameters)">
             <summary>
-            Internals the build URL.
+            Appends the path info.
             </summary>
-            <param name="area">The area.</param>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-            <param name="protocol">The protocol.</param>
-            <param name="port">The port.</param>
-            <param name="domain">The domain.</param>
-            <param name="subdomain">The subdomain.</param>
-            <param name="appVirtualDir">The app virtual dir.</param>
-            <param name="extension">The extension.</param>
-            <param name="absolutePath">if set to <c>true</c> [absolute path].</param>
-            <param name="applySubdomain">if set to <c>true</c> [apply subdomain].</param>
-            <param name="suffix">The suffix.</param>
-            <param name="basePath">The base path.</param>
-            <param name="pathInfo">Path info</param>
-            <returns></returns>
+            <param name="parts">The parts.</param>
+            <param name="parameters">The parameters.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.InternalBuildRouteUrl(System.String,System.String,System.String,System.Object,System.Boolean)">
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.ConvertRouteParams(System.Object)">
             <summary>
-            Internals the build route URL.
+            Converts the route params.
             </summary>
-            <param name="hostname">The hostname.</param>
-            <param name="virtualDir">The virtual dir.</param>
-            <param name="name">The name.</param>
             <param name="routeParams">The route params.</param>
-            <param name="encode">if set to <c>true</c> [encode].</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.InternalBuildUsingAppVirtualDir(System.Boolean,System.String,System.Boolean,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.ComputeStandardBasePath(System.String,System.String)">
             <summary>
-            Internals the build using app virtual dir.
+            Computes the standard base path.
             </summary>
-            <param name="absolutePath">if set to <c>true</c> [absolute path].</param>
-            <param name="action">The action.</param>
-            <param name="applySubdomain">if set to <c>true</c> [apply subdomain].</param>
             <param name="appVirtualDir">The app virtual dir.</param>
             <param name="area">The area.</param>
-            <param name="controller">The controller.</param>
-            <param name="domain">The domain.</param>
-            <param name="port">The port.</param>
-            <param name="protocol">The protocol.</param>
-            <param name="subdomain">The subdomain.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.InternalBuildUrlUsingBasePath(System.String,System.String,System.String,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.ApplyBasePathOrAbsolutePathIfNecessary(System.String,System.String,Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.UrlBuilderParameters,System.String)">
             <summary>
-            Internals the build URL using base path.
+            Applies the base path or absolute path if necessary.
             </summary>
-            <param name="action">The action.</param>
+            <param name="appVirtualDir">The app virtual dir.</param>
             <param name="area">The area.</param>
-            <param name="basePath">The base path.</param>
-            <param name="controller">The controller.</param>
+            <param name="current">The current.</param>
+            <param name="parameters">The parameters.</param>
+            <param name="path">The path.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.CreateUrlUsingRouting(System.String,System.String,System.String,System.String,System.Collections.IDictionary,System.Object,System.Boolean)">
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.AppendQueryString(Castle.MonoRail.Framework.Services.UrlParts,Castle.MonoRail.Framework.Services.UrlBuilderParameters)">
             <summary>
-            Routings the can create URL.
+            Appends the query string.
             </summary>
-            <returns></returns>
+            <param name="parts">The parts.</param>
+            <param name="parameters">The parameters.</param>
         </member>
         <member name="P:Castle.MonoRail.Framework.Services.DefaultUrlBuilder.UseExtensions">
             <summary>
@@ -16285,6 +17110,174 @@
             <param name="jsonString">The json representation of an object string.</param>
             <returns></returns>
         </member>
+        <member name="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters">
+            <summary>
+            Represents an static typed definition of the
+            <see cref="T:Castle.MonoRail.Framework.Services.IUrlBuilder"/> parameters.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.UrlBuilderParameters.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.UrlBuilderParameters.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/> class.
+            </summary>
+            <param name="controller">The controller.</param>
+            <param name="action">The action.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.UrlBuilderParameters.#ctor(System.String,System.String,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/> class.
+            </summary>
+            <param name="controller">The controller.</param>
+            <param name="action">The action.</param>
+            <param name="queryString">The query string.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.UrlBuilderParameters.#ctor(System.String,System.String,System.String,System.Boolean,System.String,System.String,System.String,System.String,System.Int32,System.String,System.Object,System.Boolean,System.Collections.IDictionary,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.UrlBuilderParameters.From(System.Collections.IDictionary)">
+            <summary>
+            Creates an <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/> from the 
+            dictionary
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.UrlBuilderParameters.From(System.Collections.IDictionary,System.Object)">
+            <summary>
+            Creates an <see cref="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters"/> from the
+            dictionary
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <param name="routeParams">The route params.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.UrlBuilderParameters.SetQueryString(System.Object)">
+            <summary>
+            Sets the query string.
+            </summary>
+            <param name="queryString">The query string.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.UrlBuilderParameters.SetRouteMatch(System.Boolean,Castle.MonoRail.Framework.Routing.RouteMatch)">
+            <summary>
+            Sets the route match.
+            </summary>
+            <param name="useCurrentRouteParams">if set to <c>true</c> [use current route params].</param>
+            <param name="routeMatch">The route match.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.UrlBuilderParameters.SetRouteMatch(Castle.MonoRail.Framework.Routing.RouteMatch)">
+            <summary>
+            Sets the route match.
+            </summary>
+            <param name="routeMatch">The route match.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.UrlBuilderParameters.CreateAbsolutePath">
+            <summary>
+            Gets or sets a value indicating whether [create absolute path].
+            </summary>
+            <value><c>true</c> if [create absolute path]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.UrlBuilderParameters.EncodeForLink">
+            <summary>
+            Gets or sets a value indicating whether [encode for link].
+            </summary>
+            <value><c>true</c> if [encode for link]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.UrlBuilderParameters.Area">
+            <summary>
+            Gets or sets the area.
+            </summary>
+            <value>The area.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.UrlBuilderParameters.Controller">
+            <summary>
+            Gets or sets the controller.
+            </summary>
+            <value>The controller.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.UrlBuilderParameters.Action">
+            <summary>
+            Gets or sets the action.
+            </summary>
+            <value>The action.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.UrlBuilderParameters.Domain">
+            <summary>
+            Gets or sets the domain.
+            </summary>
+            <value>The domain.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.UrlBuilderParameters.Subdomain">
+            <summary>
+            Gets or sets the subdomain.
+            </summary>
+            <value>The subdomain.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.UrlBuilderParameters.Protocol">
+            <summary>
+            Gets or sets the protocol.
+            </summary>
+            <value>The protocol.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.UrlBuilderParameters.BasePath">
+            <summary>
+            Gets or sets the base path.
+            </summary>
+            <value>The base path.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.UrlBuilderParameters.Port">
+            <summary>
+            Gets or sets the port.
+            </summary>
+            <value>The port.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.UrlBuilderParameters.PathInfo">
+            <summary>
+            Gets or sets the path info.
+            </summary>
+            <value>The path info.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.UrlBuilderParameters.QueryString">
+            <summary>
+            Gets or sets the query string.
+            </summary>
+            <value>The query string.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.UrlBuilderParameters.UseCurrentRouteParams">
+            <summary>
+            Gets or sets a value indicating whether [use current route params].
+            </summary>
+            <value>
+            	<c>true</c> if [use current route params]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.UrlBuilderParameters.RouteParameters">
+            <summary>
+            Gets or sets the route parameters.
+            </summary>
+            <value>The route parameters.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.UrlBuilderParameters.RouteMatch">
+            <summary>
+            Gets or sets the route match.
+            </summary>
+            <value>The route match.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.UrlBuilderParameters.CustomParameters">
+            <summary>
+            Gets or sets the custom parameters.
+            </summary>
+            <value>The custom parameters.</value>
+        </member>
         <member name="T:Castle.MonoRail.Framework.Services.MonoRailSmtpSender">
             <summary>
             MonoRail internal email sender service
@@ -16358,97 +17351,97 @@
             <param name="jsonString">The json representation of an object string.</param>
             <returns></returns>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Services.UrlPartsBuilder">
+        <member name="T:Castle.MonoRail.Framework.Services.UrlParts">
             <summary>
             Pendent
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.UrlPartsBuilder.#ctor(System.String[])">
+        <member name="M:Castle.MonoRail.Framework.Services.UrlParts.#ctor(System.String[])">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Services.UrlPartsBuilder"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Services.UrlParts"/> class.
             </summary>
             <param name="pathPieces">The path pieces.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.UrlPartsBuilder.Parse(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.UrlParts.Parse(System.String)">
             <summary>
             Pendent
             </summary>
             <param name="url">The URL.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.UrlPartsBuilder.SetQueryString(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.UrlParts.SetQueryString(System.String)">
             <summary>
             Pendent
             </summary>
             <param name="queryStringParam">The query string.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.UrlPartsBuilder.QueryStringAsString">
+        <member name="M:Castle.MonoRail.Framework.Services.UrlParts.QueryStringAsString">
             <summary>
             Pendent
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.UrlPartsBuilder.ConvertPathInfoToDict">
+        <member name="M:Castle.MonoRail.Framework.Services.UrlParts.ConvertPathInfoToDict">
             <summary>
             Pendent
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.UrlPartsBuilder.BuildPath">
+        <member name="M:Castle.MonoRail.Framework.Services.UrlParts.BuildPath">
             <summary>
             Builds the path.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.UrlPartsBuilder.BuildPathForLink(Castle.MonoRail.Framework.IServerUtility)">
+        <member name="M:Castle.MonoRail.Framework.Services.UrlParts.BuildPathForLink(Castle.MonoRail.Framework.IServerUtility)">
             <summary>
             Builds the path.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.UrlPartsBuilder.AppendPath(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.UrlParts.AppendPath(System.String)">
             <summary>
             Pendent
             </summary>
             <param name="piece">The piece.</param>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfo">
+        <member name="P:Castle.MonoRail.Framework.Services.UrlParts.PathInfo">
             <summary>
             Gets the path info builder.
             </summary>
             <value>The path info.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfoDict">
+        <member name="P:Castle.MonoRail.Framework.Services.UrlParts.PathInfoDict">
             <summary>
             Gets the path info builder with dictionary api.
             </summary>
             <value>The path info.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Services.UrlPartsBuilder.QueryString">
+        <member name="P:Castle.MonoRail.Framework.Services.UrlParts.QueryString">
             <summary>
             Pendent
             </summary>
             <value>The query string.</value>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfoBuilder">
+        <member name="T:Castle.MonoRail.Framework.Services.UrlParts.PathInfoBuilder">
             <summary>
             Pendent
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfoBuilder.#ctor(Castle.MonoRail.Framework.Services.UrlPartsBuilder)">
+        <member name="M:Castle.MonoRail.Framework.Services.UrlParts.PathInfoBuilder.#ctor(Castle.MonoRail.Framework.Services.UrlParts)">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfoBuilder"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Services.UrlParts.PathInfoBuilder"/> class.
             </summary>
             <param name="parent">The parent.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfoBuilder.Add(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.UrlParts.PathInfoBuilder.Add(System.String)">
             <summary>
             Adds a path info piece.
             </summary>
             <param name="pathInfoPiece">The path info piece.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfoBuilder.ToString">
+        <member name="M:Castle.MonoRail.Framework.Services.UrlParts.PathInfoBuilder.ToString">
              <summary>
              Returns a <see cref="T:System.String"></see> that represents the current <see cref="T:System.Object"></see>.
              </summary>
@@ -16457,29 +17450,29 @@
              A <see cref="T:System.String"></see> that represents the current <see cref="T:System.Object"></see>.
              </returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfoBuilder.Build(System.Text.StringBuilder)">
+        <member name="M:Castle.MonoRail.Framework.Services.UrlParts.PathInfoBuilder.Build(System.Text.StringBuilder)">
             <summary>
             Builds the specified URL.
             </summary>
             <param name="url">The URL.</param>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfoBuilder.Done">
+        <member name="P:Castle.MonoRail.Framework.Services.UrlParts.PathInfoBuilder.Done">
             <summary>
             Returns to the previous builder context.
             </summary>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfoDictBuilder">
+        <member name="T:Castle.MonoRail.Framework.Services.UrlParts.PathInfoDictBuilder">
             <summary>
             Pendent
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfoDictBuilder.#ctor(Castle.MonoRail.Framework.Services.UrlPartsBuilder)">
+        <member name="M:Castle.MonoRail.Framework.Services.UrlParts.PathInfoDictBuilder.#ctor(Castle.MonoRail.Framework.Services.UrlParts)">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfoBuilder"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Services.UrlParts.PathInfoBuilder"/> class.
             </summary>
             <param name="parent">The parent.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfoDictBuilder.Add(System.String,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.UrlParts.PathInfoDictBuilder.Add(System.String,System.String)">
             <summary>
             Adds a path info piece.
             </summary>
@@ -16487,31 +17480,31 @@
             <param name="value">The value.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfoDictBuilder.Parse(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.UrlParts.PathInfoDictBuilder.Parse(System.String)">
             <summary>
             Parses the specified path info.
             </summary>
             <param name="pathInfo">The path info.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfoDictBuilder.Build(System.Text.StringBuilder)">
+        <member name="M:Castle.MonoRail.Framework.Services.UrlParts.PathInfoDictBuilder.Build(System.Text.StringBuilder)">
             <summary>
             Builds the specified URL.
             </summary>
             <param name="url">The URL.</param>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfoDictBuilder.Item(System.String)">
+        <member name="P:Castle.MonoRail.Framework.Services.UrlParts.PathInfoDictBuilder.Item(System.String)">
             <summary>
             Gets or sets the <see cref="T:System.String"/> with the specified key.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfoDictBuilder.Count">
+        <member name="P:Castle.MonoRail.Framework.Services.UrlParts.PathInfoDictBuilder.Count">
             <summary>
             Gets the count.
             </summary>
             <value>The count.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Services.UrlPartsBuilder.PathInfoDictBuilder.Done">
+        <member name="P:Castle.MonoRail.Framework.Services.UrlParts.PathInfoDictBuilder.Done">
             <summary>
             Returns to the previous builder context.
             </summary>
@@ -16594,36 +17587,6 @@
             Sets the IP host address of the remote client. 
             </summary>
             <value>The IP address of the remote client.</value>
-        </member>
-        <member name="T:Castle.MonoRail.Framework.Test.IMockResponse">
-            <summary>
-            Exposes methods on top of <see cref="T:Castle.MonoRail.Framework.IResponse"/>
-            that are used by unit tests
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.IMockResponse.RedirectedTo">
-            <summary>
-            Gets the urls the request was redirected to.
-            </summary>
-            <value>The redirected to.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.IMockResponse.Output">
-            <summary>
-            Sets the output.
-            </summary>
-            <value>The output.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.IMockResponse.CachePolicy">
-            <summary>
-            Sets the cache policy.
-            </summary>
-            <value>The cache policy.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.IMockResponse.OutputContent">
-            <summary>
-            Gets the output.
-            </summary>
-            <value>The output.</value>
         </member>
         <member name="T:Castle.MonoRail.Framework.Test.IMockViewComponentContext">
             <summary>
@@ -16816,7 +17779,7 @@
             Represents a mock implementation of <see cref="T:Castle.MonoRail.Framework.IEngineContext"/> for unit test purposes.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockEngineContext.#ctor(Castle.MonoRail.Framework.IRequest,Castle.MonoRail.Framework.IResponse,Castle.MonoRail.Framework.IMonoRailServices,Castle.MonoRail.Framework.UrlInfo)">
+        <member name="M:Castle.MonoRail.Framework.Test.MockEngineContext.#ctor(Castle.MonoRail.Framework.Test.IMockRequest,Castle.MonoRail.Framework.Test.IMockResponse,Castle.MonoRail.Framework.IMonoRailServices,Castle.MonoRail.Framework.UrlInfo)">
             <summary>
             Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockEngineContext"/> class.
             </summary>
@@ -16957,7 +17920,7 @@
             Represents a mock implementation of <see cref="T:Castle.MonoRail.Framework.IRequest"/> for unit test purposes.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockRequest.#ctor(System.Collections.IDictionary)">
+        <member name="M:Castle.MonoRail.Framework.Test.MockRequest.#ctor(System.Collections.Generic.IDictionary{System.String,System.Web.HttpCookie})">
             <summary>
             Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockRequest"/> class.
             </summary>
@@ -17128,7 +18091,16 @@
             Represents a mock implementation of <see cref="T:Castle.MonoRail.Framework.Test.IMockResponse"/> for unit test purposes.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.#ctor(System.Collections.IDictionary)">
+        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.#ctor(Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.IUrlBuilder,Castle.MonoRail.Framework.IServerUtility,Castle.MonoRail.Framework.Routing.RouteMatch)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockResponse"/> class.
+            </summary>
+            <param name="currentUrl">The current URL.</param>
+            <param name="urlBuilder">The URL builder.</param>
+            <param name="serverUtility">The server utility.</param>
+            <param name="routeMatch">The route match.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.#ctor(System.Collections.Generic.IDictionary{System.String,System.Web.HttpCookie})">
             <summary>
             Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockResponse"/> class.
             </summary>
@@ -17145,6 +18117,18 @@
             </summary>
             <param name="name">The name.</param>
             <param name="value">The value.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.BinaryWrite(System.Byte[])">
+            <summary>
+            Writes the buffer to the browser
+            </summary>
+            <param name="buffer">The buffer.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.BinaryWrite(System.IO.Stream)">
+            <summary>
+            Writes the stream to the browser
+            </summary>
+            <param name="stream">The stream.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Test.MockResponse.Clear">
             <summary>
@@ -17182,114 +18166,25 @@
             <param name="index">The index.</param>
             <param name="count">The count.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.Redirect(System.Object)">
+        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.WriteFile(System.String)">
             <summary>
-            Redirects the specified controller.
+            Writes the file.
             </summary>
-            <param name="parameters">The parameters.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.Redirect(System.String,System.String)">
-            <summary>
-            Redirects the specified controller.
-            </summary>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.Redirect(System.String,System.String,System.String)">
-            <summary>
-            Redirects the specified area.
-            </summary>
-            <param name="area">The area.</param>
-            <param name="controller">The controller.</param>
-            <param name="action">The action.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.Redirect(System.String,System.String,System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Redirects to another controller and action with the specified paramters.
-            </summary>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
-            <param name="parameters">Key/value pairings</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.Redirect(System.String,System.String,System.String,System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Redirects to another controller and action with the specified paramters.
-            </summary>
-            <param name="area">Area name</param>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
-            <param name="parameters">Key/value pairings</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.Redirect(System.String,System.String,System.Collections.IDictionary)">
-            <summary>
-            Redirects to another controller and action with the specified paramters.
-            </summary>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
-            <param name="parameters">Key/value pairings</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.Redirect(System.String,System.String,System.String,System.Collections.IDictionary)">
-            <summary>
-            Redirects to another controller and action with the specified paramters.
-            </summary>
-            <param name="area">Area name</param>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
-            <param name="parameters">Key/value pairings</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.RedirectToUrl(System.String)">
-            <summary>
-            Redirects the specified URL.
-            </summary>
-            <param name="url">The URL.</param>
+            <param name="fileName">Name of the file.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Test.MockResponse.RedirectToUrl(System.String,System.Boolean)">
             <summary>
-            Redirects the specified URL.
+            Redirects to the specified url
             </summary>
-            <param name="url">The URL.</param>
-            <param name="endProcess">if set to <c>true</c> [end process].</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.CreateCookie(System.String,System.String)">
-            <summary>
-            Creates a cookie.
-            </summary>
-            <param name="name">The name.</param>
-            <param name="value">The value.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.CreateCookie(System.String,System.String,System.DateTime)">
-            <summary>
-            Creates a cookie.
-            </summary>
-            <param name="name">The name.</param>
-            <param name="value">The value.</param>
-            <param name="expiration">The expiration.</param>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+            <param name="endProcess">if set to <c>true</c>, sends the redirect and
+            kills the current request process.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Test.MockResponse.CreateCookie(System.Web.HttpCookie)">
             <summary>
-            Creates a cookie.
+            Creates a http cookie.
             </summary>
             <param name="cookie">The cookie.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.RemoveCookie(System.String)">
-            <summary>
-            Removes a cookie.
-            </summary>
-            <param name="name">The name.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.ToQueryString(System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Creates a querystring string representation of the namevalue collection.
-            </summary>
-            <param name="parameters">The parameters.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.ToQueryString(System.Collections.IDictionary)">
-            <summary>
-            Creates a querystring string representation of the entries in the dictionary.
-            </summary>
-            <param name="parameters">The parameters.</param>
-            <returns></returns>
         </member>
         <member name="P:Castle.MonoRail.Framework.Test.MockResponse.RedirectedTo">
             <summary>
@@ -17661,6 +18556,18 @@
             Gets or sets the resource factory.
             </summary>
             <value>The resource factory.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.MockServices.ServiceInitializer">
+            <summary>
+            Gets or sets the service initializer.
+            </summary>
+            <value>The service initializer.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.MockServices.HelperFactory">
+            <summary>
+            Gets or sets the helper factory.
+            </summary>
+            <value>The helper factory.</value>
         </member>
         <member name="P:Castle.MonoRail.Framework.Test.MockServices.ExtensionManager">
             <summary>
@@ -18787,10 +19694,10 @@
         </member>
         <member name="M:Castle.MonoRail.Framework.ViewComponents.AbstractPaginationViewComponent.CreateUrlForPage(System.Int32)">
             <summary>
-            Pendent
+            Compute url for given page index.
             </summary>
             <param name="pageIndex">The page index.</param>
-            <returns></returns>
+            <returns>return the computed url for given page index.</returns>
         </member>
         <member name="P:Castle.MonoRail.Framework.ViewComponents.AbstractPaginationViewComponent.Page">
             <summary>
@@ -18825,11 +19732,33 @@
             </summary>
             <value>The paginate function.</value>
         </member>
+        <member name="P:Castle.MonoRail.Framework.ViewComponents.AbstractPaginationViewComponent.PaginatefunctionFixedArgs">
+            <summary>
+            Gets or sets the js paginate function fixed args.
+            </summary>
+            <value>The paginate function fixed args.</value>
+        </member>
         <member name="P:Castle.MonoRail.Framework.ViewComponents.AbstractPaginationViewComponent.Url">
             <summary>
             Gets or sets the URL to be used when generating links
             </summary>
             <value>The URL.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.ViewComponents.AbstractPaginationViewComponent.PreserveQueryString">
+            <summary>
+            Gets or sets a value indicating whether the component should render existing query string arguments and overwrite page parameter 
+            </summary>
+            <remarks>
+            <para>
+            Default value is <c>false</c>
+            </para>
+            <para>
+            Only has effect when <see cref="P:Castle.MonoRail.Framework.ViewComponents.AbstractPaginationViewComponent.Url"/> or <see cref="P:Castle.MonoRail.Framework.ViewComponents.AbstractPaginationViewComponent.PaginateFunction"/> are not defined
+            </para>
+            </remarks>
+            <value>
+            <c>true</c> if it should preserve existing query string arguments; otherwise <c>false</c>.
+            </value>
         </member>
         <member name="T:Castle.MonoRail.Framework.ViewComponents.AlwaysCacheKeyGenerator">
             <summary>
@@ -20549,144 +21478,224 @@
             </summary>
             <param name="templateName"></param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Controller.RedirectToRoute(System.String)">
-            <summary>
-            Pendent.
-            </summary>
-            <param name="routeName">Name of the route.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Controller.RedirectToRoute(System.String,System.Collections.IDictionary)">
-            <summary>
-            Pendent.
-            </summary>
-            <param name="routeName">Name of the route.</param>
-            <param name="parameters">The parameters.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Controller.RedirectToRoute(System.String,System.Object)">
-            <summary>
-            Pendent.
-            </summary>
-            <param name="routeName">Name of the route.</param>
-            <param name="parameters">The parameters.</param>
-        </member>
         <member name="M:Castle.MonoRail.Framework.Controller.RedirectToAction(System.String)">
-            <summary> 
+            <summary>
             Redirects to another action in the same controller.
             </summary>
             <param name="action">The action name</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Controller.RedirectToAction(System.String,System.String[])">
-            <summary> 
-            Redirects to another action in the same controller.
-            </summary>
-            <param name="action">The action name</param>
-            <param name="queryStringParameters">list of key/value pairs. Each string is supposed
-            to have the format "key=value" that will be converted to a proper 
-            query string</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Controller.RedirectToAction(System.String,System.Collections.IDictionary)">
-            <summary> 
-            Redirects to another action in the same controller.
+            <summary>
+            Redirects to another action in the same controller passing the specified querystring parameters.
             </summary>
             <param name="action">The action name</param>
-            <param name="queryStringParameters">Query string entries</param>
+            <param name="queryStringParameters">The querystring entries</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Controller.RedirectToAction(System.String,System.Collections.Specialized.NameValueCollection)">
-            <summary> 
-            Redirects to another action in the same controller.
+            <summary>
+            Redirects to another action in the same controller passing the specified querystring parameters.
             </summary>
             <param name="action">The action name</param>
-            <param name="queryStringParameters">Query string entries</param>
+            <param name="queryStringParameters">The querystring entries</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Controller.RedirectToReferer">
+        <member name="M:Castle.MonoRail.Framework.Controller.RedirectToAction(System.String,System.String[])">
             <summary>
-            Redirects to the referrer action, according to the "HTTP_REFERER" header (<c>Context.UrlReferrer</c>).
+            Redirects to another action in the same controller passing the specified querystring parameters.
             </summary>
+            <param name="action">The action name</param>
+            <param name="queryStringParameters">The querystring entries</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Controller.RedirectToReferrer">
+        <member name="M:Castle.MonoRail.Framework.Controller.RedirectToAction(System.String,System.Object)">
             <summary>
-            Redirects to the referrer action, according to the "HTTP_REFERER" header (<c>Context.UrlReferrer</c>).
+            Redirects to another action in the same controller passing the specified querystring parameters.
             </summary>
+            <param name="action">The action name</param>
+            <param name="queryStringAnonymousDictionary">The querystring entries as an anonymous dictionary</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Controller.RedirectToSiteRoot">
-            <summary> 
+            <summary>
             Redirects to the site root directory (<c>Context.ApplicationPath + "/"</c>).
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Controller.Redirect(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Controller.RedirectToUrl(System.String)">
             <summary>
-            Redirects to the specified URL. All other Redirects call this one.
+            Redirects to the specified url
             </summary>
-            <param name="url">Target URL</param>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Controller.Redirect(System.Object)">
+        <member name="M:Castle.MonoRail.Framework.Controller.RedirectToUrl(System.String,System.Boolean)">
             <summary>
-            Redirects to the specified URL. All other Redirects call this one.
+            Redirects to the specified url
             </summary>
-            <param name="parameters">The parameters.</param>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+            <param name="endProcess">if set to <c>true</c>, sends the redirect and
+            kills the current request process.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Controller.Redirect(System.String,System.Collections.IDictionary)">
+        <member name="M:Castle.MonoRail.Framework.Controller.RedirectToUrl(System.String,System.Collections.IDictionary)">
             <summary>
-            Redirects to the specified URL. 
+            Redirects to the specified url
             </summary>
-            <param name="url">Target URL</param>
-            <param name="parameters">URL parameters</param>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+            <param name="queryStringParameters">The querystring entries</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Controller.Redirect(System.String,System.Collections.Specialized.NameValueCollection)">
+        <member name="M:Castle.MonoRail.Framework.Controller.RedirectToUrl(System.String,System.Collections.Specialized.NameValueCollection)">
             <summary>
-            Redirects to the specified URL. 
+            Redirects to the specified url
             </summary>
-            <param name="url">Target URL</param>
-            <param name="parameters">URL parameters</param>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.RedirectToUrl(System.String,System.String[])">
+            <summary>
+            Redirects to the specified url
+            </summary>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.RedirectToUrl(System.String,System.Object)">
+            <summary>
+            Redirects to the specified url
+            </summary>
+            <param name="url">An relative or absolute URL to redirect the client to</param>
+            <param name="queryStringAnonymousDictionary">The querystring entries as an anonymous dictionary</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Controller.Redirect(System.String,System.String)">
             <summary>
-            Redirects to another controller and action.
+            Redirects to another controller's action.
             </summary>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Controller.Redirect(System.String,System.String,System.String)">
-            <summary>
-            Redirects to another controller and action.
-            </summary>
-            <param name="area">Area name</param>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Controller.Redirect(System.String,System.String,System.Collections.Specialized.NameValueCollection)">
             <summary>
-            Redirects to another controller and action with the specified paramters.
+            Redirects to another controller's action with the specified parameters.
             </summary>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
-            <param name="parameters">Key/value pairings</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Controller.Redirect(System.String,System.String,System.String,System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Redirects to another controller and action with the specified paramters.
-            </summary>
-            <param name="area">Area name</param>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
-            <param name="parameters">Key/value pairings</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="queryStringParameters">The querystring entries</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Controller.Redirect(System.String,System.String,System.Collections.IDictionary)">
             <summary>
-            Redirects to another controller and action with the specified paramters.
+            Redirects to another controller's action with the specified parameters.
             </summary>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
-            <param name="parameters">Key/value pairings</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.Redirect(System.String,System.String,System.Object)">
+            <summary>
+            Redirects to another controller's action with the specified parameters.
+            </summary>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="queryStringAnonymousDictionary">The querystring entries as an anonymous dictionary</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.Redirect(System.String,System.String,System.String)">
+            <summary>
+            Redirects to another controller's action in a different area.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Controller.Redirect(System.String,System.String,System.String,System.Collections.IDictionary)">
             <summary>
-            Redirects to another controller and action with the specified paramters.
+            Redirects to another controller's action in a different area with the specified parameters.
             </summary>
-            <param name="area">Area name</param>
-            <param name="controller">Controller name</param>
-            <param name="action">Action name</param>
-            <param name="parameters">Key/value pairings</param>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.Redirect(System.String,System.String,System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Redirects to another controller's action in a different area with the specified parameters.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="queryStringParameters">The querystring entries</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.Redirect(System.String,System.String,System.String,System.Object)">
+            <summary>
+            Redirects to another controller's action in a different area with the specified parameters.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="queryStringAnonymousDictionary">The querystring entries as an anonymous dictionary</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.RedirectUsingRoute(System.String,System.Boolean)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="useCurrentRouteParams">if set to <c>true</c> the current request matching route rules will be used.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.RedirectUsingRoute(System.String,System.Collections.IDictionary)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="routeParameters">The routing rule parameters.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.RedirectUsingRoute(System.String,System.Object)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="routeParameters">The routing rule parameters.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.RedirectUsingRoute(System.String,System.String,System.Boolean)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="useCurrentRouteParams">if set to <c>true</c> the current request matching route rules will be used.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.RedirectUsingRoute(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="useCurrentRouteParams">if set to <c>true</c> the current request matching route rules will be used.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.RedirectUsingRoute(System.String,System.String,System.Collections.IDictionary)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="routeParameters">The routing rule parameters.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.RedirectUsingRoute(System.String,System.String,System.Object)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="routeParameters">The routing rule parameters.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.RedirectUsingRoute(System.String,System.String,System.String,System.Collections.IDictionary)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="routeParameters">The routing rule parameters.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.RedirectUsingRoute(System.String,System.String,System.String,System.Object)">
+            <summary>
+            Tries to resolve the target redirect url by using the routing rules registered.
+            </summary>
+            <param name="area">The area the target controller belongs to.</param>
+            <param name="controller">The controller name to be redirected to.</param>
+            <param name="action">The desired action on the target controller.</param>
+            <param name="routeParameters">The routing rule parameters.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Controller.ToQueryString(System.Collections.Specialized.NameValueCollection)">
             <summary>
@@ -20846,13 +21855,6 @@
             Creates the standard helpers.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Controller.PerformHelperInitialization(System.Object)">
-            <summary>
-            Performs the additional helper initialization
-            checking if the helper instance implements <see cref="T:Castle.Core.IServiceEnabledComponent"/>.
-            </summary>
-            <param name="helperInstance">The helper instance.</param>
-        </member>
         <member name="M:Castle.MonoRail.Framework.Controller.ShouldSkipFilters(Castle.MonoRail.Framework.IExecutableAction)">
             <summary>
             Identifies if no filter should run for the given action.
@@ -20915,6 +21917,12 @@
             </summary>
             <param name="action">Raw action name</param>
             <returns>Properly formatted action name</returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.RegisterExceptionAndNotifyExtensions(System.Exception)">
+            <summary>
+            Registers the exception and notify extensions.
+            </summary>
+            <param name="exception">The exception.</param>
         </member>
         <member name="E:Castle.MonoRail.Framework.Controller.BeforeAction">
             <summary>
@@ -21104,12 +22112,6 @@
             </para>
             </summary>
             <value>The dynamic actions dictionary.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Controller.UrlBuilder">
-            <summary>
-            Gets the URL builder instance.
-            </summary>
-            <value>The URL builder.</value>
         </member>
         <member name="P:Castle.MonoRail.Framework.Controller.IsClientConnected">
             <summary>
@@ -21533,10 +22535,10 @@
         <member name="T:Castle.MonoRail.Framework.Filter">
             <summary>
             Base class for filters which dispatches to virtual methods
-            based on the <see cref="T:Castle.MonoRail.Framework.ExecuteEnum"/> value.
+            based on the <see cref="T:Castle.MonoRail.Framework.ExecuteWhen"/> value.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Filter.Perform(Castle.MonoRail.Framework.ExecuteEnum,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
+        <member name="M:Castle.MonoRail.Framework.Filter.Perform(Castle.MonoRail.Framework.ExecuteWhen,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
             <summary>
             Implementors should perform they filter logic and
             return <c>true</c> if the action should be processed.
@@ -21553,7 +22555,7 @@
         <member name="M:Castle.MonoRail.Framework.Filter.OnAfterAction(Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
             <summary>
             Override this method if the filter was set to
-            handle <see cref="F:Castle.MonoRail.Framework.ExecuteEnum.AfterAction"/>
+            handle <see cref="F:Castle.MonoRail.Framework.ExecuteWhen.AfterAction"/>
             </summary>
             <param name="context">The MonoRail request context</param>
             <param name="controller">The controller instance</param>
@@ -21562,7 +22564,7 @@
         <member name="M:Castle.MonoRail.Framework.Filter.OnAfterRendering(Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
             <summary>
             Override this method if the filter was set to
-            handle <see cref="F:Castle.MonoRail.Framework.ExecuteEnum.AfterRendering"/>
+            handle <see cref="F:Castle.MonoRail.Framework.ExecuteWhen.AfterRendering"/>
             </summary>
             <param name="context">The MonoRail request context</param>
             <param name="controller">The controller instance</param>
@@ -21571,7 +22573,7 @@
         <member name="M:Castle.MonoRail.Framework.Filter.OnBeforeAction(Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
             <summary>
             Override this method if the filter was set to
-            handle <see cref="F:Castle.MonoRail.Framework.ExecuteEnum.BeforeAction"/>
+            handle <see cref="F:Castle.MonoRail.Framework.ExecuteWhen.BeforeAction"/>
             </summary>
             <param name="context">The MonoRail request context</param>
             <param name="controller">The controller instance</param>
@@ -21731,43 +22733,43 @@
             <param name="controller">The target controller</param>
             <param name="controllerContext">The controller context.</param>
         </member>
-        <member name="T:Castle.MonoRail.Framework.ExecuteEnum">
+        <member name="T:Castle.MonoRail.Framework.ExecuteWhen">
             <summary>
             Enum (flag) to indicate when the filter should 
             or is invoked.
             </summary>
         </member>
-        <member name="F:Castle.MonoRail.Framework.ExecuteEnum.Before">
+        <member name="F:Castle.MonoRail.Framework.ExecuteWhen.Before">
             <summary>
             The filter is invoked before the action.
             </summary>
         </member>
-        <member name="F:Castle.MonoRail.Framework.ExecuteEnum.After">
+        <member name="F:Castle.MonoRail.Framework.ExecuteWhen.After">
             <summary>
             The filter is invoked after the action.
             </summary>
         </member>
-        <member name="F:Castle.MonoRail.Framework.ExecuteEnum.Around">
+        <member name="F:Castle.MonoRail.Framework.ExecuteWhen.Around">
             <summary>
             The filter is invoked before and after the action.
             </summary>
         </member>
-        <member name="F:Castle.MonoRail.Framework.ExecuteEnum.BeforeAction">
+        <member name="F:Castle.MonoRail.Framework.ExecuteWhen.BeforeAction">
             <summary>
             The filter is invoked before the action.
             </summary>
         </member>
-        <member name="F:Castle.MonoRail.Framework.ExecuteEnum.AfterAction">
+        <member name="F:Castle.MonoRail.Framework.ExecuteWhen.AfterAction">
             <summary>
             The filter is invoked after the action.
             </summary>
         </member>
-        <member name="F:Castle.MonoRail.Framework.ExecuteEnum.AfterRendering">
+        <member name="F:Castle.MonoRail.Framework.ExecuteWhen.AfterRendering">
             <summary>
             The filter is invoked after the rendering.
             </summary>
         </member>
-        <member name="F:Castle.MonoRail.Framework.ExecuteEnum.Always">
+        <member name="F:Castle.MonoRail.Framework.ExecuteWhen.Always">
             <summary>
             The filter is invoked around all steps.
             </summary>

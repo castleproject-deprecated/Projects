@@ -183,7 +183,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.BuildRailsEngineContext(Castle.MonoRail.Framework.IRequest,Castle.MonoRail.Framework.IResponse,Castle.MonoRail.Framework.IMonoRailServices,Castle.MonoRail.Framework.ITrace,Castle.MonoRail.Framework.UrlInfo)">
+        <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.BuildRailsEngineContext(Castle.MonoRail.Framework.Test.IMockRequest,Castle.MonoRail.Framework.Test.IMockResponse,Castle.MonoRail.Framework.IMonoRailServices,Castle.MonoRail.Framework.ITrace,Castle.MonoRail.Framework.UrlInfo)">
             <summary>
             Builds the a mock context. You can override this method to
             create a special configured mock context.
@@ -206,7 +206,7 @@
         </member>
         <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.InitializeEngineContext(Castle.MonoRail.Framework.Test.MockEngineContext)">
             <summary>
-            Allows modifying of the engine context created by <see cref="M:Castle.MonoRail.TestSupport.BaseControllerTest.BuildRailsEngineContext(Castle.MonoRail.Framework.IRequest,Castle.MonoRail.Framework.IResponse,Castle.MonoRail.Framework.IMonoRailServices,Castle.MonoRail.Framework.ITrace,Castle.MonoRail.Framework.UrlInfo)"/>
+            Allows modifying of the engine context created by <see cref="M:Castle.MonoRail.TestSupport.BaseControllerTest.BuildRailsEngineContext(Castle.MonoRail.Framework.Test.IMockRequest,Castle.MonoRail.Framework.Test.IMockResponse,Castle.MonoRail.Framework.IMonoRailServices,Castle.MonoRail.Framework.ITrace,Castle.MonoRail.Framework.UrlInfo)"/>
             </summary>
             <param name="mockEngineContext">The engine context to modify</param>
         </member>
