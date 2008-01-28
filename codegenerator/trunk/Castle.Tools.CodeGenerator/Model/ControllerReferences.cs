@@ -205,9 +205,12 @@ namespace Castle.Tools.CodeGenerator.Model
 		{
 			get
 			{
-				DefaultUrlBuilder urlBuilder = new DefaultUrlBuilder();
-				urlBuilder.ServerUtil = this.Services.RailsContext.Server;
+				IUrlBuilder urlBuilder = this.Services.RailsContext.Services.UrlBuilder;
 				urlBuilder.UseExtensions = true;
+
+				if (urlBuilder is DefaultUrlBuilder)
+					((DefaultUrlBuilder) urlBuilder).ServerUtil = this.Services.RailsContext.Server;
+
 				IDictionary parameters = new Hashtable();
 				IArgumentConversionService conversionService = this.Services.ArgumentConversionService;
 				int index = 0;
@@ -219,7 +222,8 @@ namespace Castle.Tools.CodeGenerator.Model
 				}
 				UrlInfo urlInfo = this.Services.RailsContext.UrlInfo;
 				UrlBuilderParameters urlBuilderParameters = new UrlBuilderParameters(this.AreaName, this.ControllerName, this.ActionName);
-				return urlBuilder.BuildUrl(urlInfo, urlBuilderParameters, parameters);
+				urlBuilderParameters.QueryString = parameters;
+				return urlBuilder.BuildUrl(urlInfo, urlBuilderParameters);
 			}
 		}
 
