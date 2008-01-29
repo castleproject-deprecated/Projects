@@ -238,7 +238,7 @@ namespace Castle.Tools.CodeGenerator.Model
 			}
 			else
 			{
-				this.Services.RedirectService.Redirect(this.Url);
+				this.Services.RailsContext.Response.RedirectToUrl(this.Url, false);
 			}
 		}
 

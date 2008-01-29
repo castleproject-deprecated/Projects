@@ -207,40 +207,6 @@ namespace Castle.Tools.CodeGenerator.Services
       Assert.AreEqual("parameter", node.Children[0].Children[0].Name);
     }
 
-    [Test]
-    public void VisitMethodDeclaration_ActionMemberWithRouteAttribute_CreatesEntryInNode()
-    {
-    	string route = "route1";
-		string pattern = "pattern/<param1:string>";
-
-		List<Expression> arguments = new List<Expression>();
-		arguments.Add(new PrimitiveExpression(route, route));
-		arguments.Add(new PrimitiveExpression(pattern, pattern));
-
-		List<Attribute> attributes = new List<Attribute>();
-		attributes.Add(new Attribute("Route", arguments, null));
-
-		MethodDeclaration method = new MethodDeclaration("Action", Modifiers.Public, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
-		method.Attributes.Add(new AttributeSection(null, attributes));
-		ControllerTreeNode node = new ControllerTreeNode("SomeController", "SomeNamespace");
-
-		using (_mocks.Unordered())
-		{
-			Expect.Call(_treeService.Peek).Return(node);
-		}
-
-		_mocks.ReplayAll();
-		_visitor.VisitMethodDeclaration(method, null);
-		_mocks.VerifyAll();
-
-    	RouteTreeNode routeNode = (RouteTreeNode) node.Children[0].Children[0];
-		Assert.AreEqual(route, routeNode.Name);
-		Assert.AreEqual(pattern, routeNode.Pattern);
-
-    	ParameterTreeNode parameterTreeNode = (ParameterTreeNode) routeNode.Children[0];
-		Assert.AreEqual("param1", parameterTreeNode.Name);
-		Assert.AreEqual("System.String", parameterTreeNode.Type);
-    }
     #endregion
 
     #region Methods

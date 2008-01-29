@@ -90,7 +90,7 @@ namespace Castle.Tools.CodeGenerator.Services
 			mocks.VerifyAll();
 
 			CodeDomAssert.AssertHasField(source.Ccu.Namespaces[0].Types[0], "_services");
-			CodeDomAssert.AssertHasMethod(source.Ccu.Namespaces[0].Types[0], "Index");
+			CodeDomAssert.AssertHasMethod(source.Ccu.Namespaces[0].Types[2], "Index");
 		}
 
 		[Test]
@@ -111,7 +111,7 @@ namespace Castle.Tools.CodeGenerator.Services
 			mocks.VerifyAll();
 
 			CodeDomAssert.AssertHasField(source.Ccu.Namespaces[0].Types[0], "_services");
-			CodeDomAssert.AssertHasMethod(source.Ccu.Namespaces[0].Types[0], "AuthenticateLogIn");
+			CodeDomAssert.AssertHasMethod(source.Ccu.Namespaces[0].Types[2], "AuthenticateLogIn");
 		}
 
 		#endregion

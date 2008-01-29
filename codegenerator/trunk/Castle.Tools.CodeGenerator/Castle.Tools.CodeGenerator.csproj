@@ -86,7 +86,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Generators\AbstractGenerator.cs" />
     <Compile Include="Services\Generators\ActionMapGenerator.cs" />
-    <Compile Include="Services\AspDotNetRedirectService.cs" />
     <Compile Include="Services\Generators\ControllerPartialsGenerator.cs" />
     <Compile Include="Services\Generators\RouteMapGeneration\PatternRouteCreator.cs" />
     <Compile Include="Services\Generators\RouteMapGeneration\StaticRouteCreator.cs" />
@@ -114,7 +113,6 @@
     <Compile Include="Services\INamingService.cs" />
     <Compile Include="Services\IParsedSourceStorageService.cs" />
     <Compile Include="Services\IParserFactory.cs" />
-    <Compile Include="Services\IRedirectService.cs" />
     <Compile Include="Services\IRuntimeInformationService.cs" />
     <Compile Include="Services\ISiteTreeGeneratorService.cs" />
     <Compile Include="Services\Generators\ISourceGenerator.cs" />

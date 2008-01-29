@@ -16,11 +16,6 @@ namespace Castle.Tools.CodeGenerator.Services
     {
       get;
     }
-
-    IRedirectService RedirectService
-    {
-      get;
-    }
 	  
     IEngineContext RailsContext
     {
