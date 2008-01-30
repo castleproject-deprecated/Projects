@@ -70,10 +70,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\CaptchaController.cs" />
+    <Compile Include="Controllers\CaptchaController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\CheckboxListController.cs" />
     <Compile Include="Controllers\CollapsiblePanelController.cs" />
+    <Compile Include="Controllers\CompositeController.cs" />
     <Compile Include="Controllers\DualListController.cs" />
     <Compile Include="Controllers\FaqController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -98,6 +101,7 @@
     <None Include="Views\Chart\index.brail" />
     <None Include="Views\CheckboxList\index.brail" />
     <None Include="Views\CollapsiblePanel\index.brail" />
+    <None Include="Views\Composite\index.vm" />
     <None Include="Views\DualList\index.brail" />
     <None Include="Views\Faq\index.brail" />
     <None Include="Views\Faq\List.brail" />
@@ -127,6 +131,9 @@
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="css\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" Condition="'$(Solutions.VSVersion)' == '8.0'" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -142,7 +149,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>64327</DevelopmentServerPort>
+          <DevelopmentServerPort>52703</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/Castle.MonoRail.ViewComponents.TestSite</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

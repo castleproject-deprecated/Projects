@@ -11,6 +11,9 @@
 			  type="text/css"
 			  href="/style.css"
 			  media="screen, print" />
+#if ($css)
+$css
+#end			  
 		#component(InsertJavascript with "Std=Ajax, Scriptaculous")
 	</head>
 	<body>
@@ -129,6 +132,19 @@
 					</ul>
 #end
 #end
+#blockcomponent(CollapsiblePanel with "id=Checkbox"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#caption
+					<h3>Checkbox list component</h3>
+#end
+#body					
+					<ul>
+						<li>
+							<a href="/checkboxlist/index.rails">Sample Checkbox Lists</a>
+						</li>
+					</ul>		
+#end
+#end
+
 #blockcomponent(CollapsiblePanel with "id=Column"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
 #caption
 					<h3>Column chart component</h3>
@@ -141,14 +157,14 @@
 					</ul>
 #end
 #end
-#blockcomponent(CollapsiblePanel with "id=Checkbox"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#blockcomponent(CollapsiblePanel with "id=Composite"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
 #caption
-					<h3>Checkbox list component</h3>
+					<h3>Composite components</h3>
 #end
 #body					
 					<ul>
 						<li>
-							<a href="/checkboxlist/index.rails">Sample Checkbox Lists</a>
+							<a href="/Composite/index.rails">Sample Composite component</a>
 						</li>
 					</ul>		
 #end

@@ -60,9 +60,9 @@ namespace Castle.MonoRail.Framework.Filters
 		/// <param name="controllerContext">The controller context.</param>
 		/// <returns><c>true</c> Always</returns>
 
-		public bool Perform(ExecuteEnum exec, IEngineContext context, IController controller, IControllerContext controllerContext)
+		public bool Perform(ExecuteWhen exec, IEngineContext context, IController controller, IControllerContext controllerContext)
 		{
-			if (exec != ExecuteEnum.BeforeAction)
+			if (exec != ExecuteWhen.BeforeAction)
 			{
 				throw new ControllerException("MobileFilter can only be performed as a ExecuteEnum.BeforeAction");
 			}

@@ -131,18 +131,6 @@ section body: %>
 					</ul>
 <%    end
   end %>
-<% component CollapsiblePanel, {@id:"Column",   @expandImagePath:"/Images/expand.jpg", @collapseImagePath:"/Images/collapse.jpg", @collapsed:true}:
-section caption: %>
-					<h3>Column chart component</h3>
-<% end
-section body: %>
-					<ul>
-						<li>
-							<a href="/chart/index.rails">Sample Charts</a>
-						</li>
-					</ul>
-<%    end
-  end %>
 <% component CollapsiblePanel, {@id:"Checkbox",   @expandImagePath:"/Images/expand.jpg", @collapseImagePath:"/Images/collapse.jpg", @collapsed:true}:
 section caption: %>
 					<h3>Checkbox list component</h3>
@@ -155,6 +143,33 @@ section body: %>
 					</ul>		
 <%    end
   end %>
+
+<% component CollapsiblePanel, {@id:"Column",   @expandImagePath:"/Images/expand.jpg", @collapseImagePath:"/Images/collapse.jpg", @collapsed:true}:
+section caption: %>
+					<h3>Column chart component</h3>
+<% end
+section body: %>
+					<ul>
+						<li>
+							<a href="/chart/index.rails">Sample Charts</a>
+						</li>
+					</ul>
+<%    end
+  end %>
+
+<% component CollapsiblePanel, {@id:"Composite",   @expandImagePath:"/Images/expand.jpg", @collapseImagePath:"/Images/collapse.jpg", @collapsed:true}:
+section caption: %>
+					<h3>Composite components</h3>
+<% end
+section body: %>
+					<ul>
+						<li>
+							<a href="/Composite/index.rails">Sample Composite Component</a>
+						</li>
+					</ul>		
+<%    end
+  end %>
+
 
 <% component CollapsiblePanel, {@id:"DualList",   @expandImagePath:"/Images/expand.jpg", @collapseImagePath:"/Images/collapse.jpg", @collapsed:true}:
 section caption: %>

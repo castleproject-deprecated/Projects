@@ -63,10 +63,12 @@
     <Compile Include="FaqItemComponent.cs" />
     <Compile Include="GridComponent .cs" />
     <Compile Include="JavascriptComponent.cs" />
+    <Compile Include="LinkSubmitButtonComponent.cs" />
     <Compile Include="MaskedTextboxComponent.cs" />
     <Compile Include="MobileFilter.cs" />
     <Compile Include="MoreLessTextComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchFormComponent.cs" />
     <Compile Include="SmartGridComponent.cs" />
     <Compile Include="ViewComponentEx.cs" />
     <Compile Include="WhitespaceTransformFilter.cs" />

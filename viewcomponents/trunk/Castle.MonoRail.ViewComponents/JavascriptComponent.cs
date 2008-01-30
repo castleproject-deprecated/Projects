@@ -58,14 +58,6 @@ namespace Castle.MonoRail.ViewComponents
         internal Dictionary<string, string> segments;
         internal StringSet files;
 
-        internal void Preserve(Flash flash)
-        {
-            JSsegments js = flash["JSsegments"] as JSsegments;
-            if (js == null)
-                flash["JSsegments"] = this;
-            else if (js != this)
-                throw new ViewComponentException("JSsegment mismatch");
-        }
     }
     /// <summary>
     /// Speicifies how the version field of a <see cref="BrowserSpec"/> object is interpreted.
@@ -408,10 +400,10 @@ namespace Castle.MonoRail.ViewComponents
             base.Render();
             StringWriter script = new StringWriter();
 
-            js = Flash["JSsegments"] as JSsegments ?? new JSsegments();
-            Flash["JSsegments"] = js;
+			js = Context.ContextVars["JSsegments"] as JSsegments ?? new JSsegments();
+			Context.ContextVars["JSsegments"] = js;
 
-            // if a script has already been provided with the same id, then we use that one
+			// if a script has already been provided with the same id, then we use that one
             // and ignore this one.  This way, multiple components can provide the same script, and
             // it will be included only once.
 
@@ -600,7 +592,7 @@ namespace Castle.MonoRail.ViewComponents
         public override void Render()
         {
             base.Render();
-            JSsegments js = Flash["JSsegments"] as JSsegments;
+			JSsegments js = Context.ContextVars["JSsegments"] as JSsegments;
             CancelView();
             if (js == null)
                 return;
@@ -681,14 +673,14 @@ namespace Castle.MonoRail.ViewComponents
         /// </code></example>
         /// <param name="context">The context.</param>
         /// <param name="httpcontext">The httpcontext.</param>
-        /// <param name="flash">The viewComponent's Flash collection.</param>
         /// <param name="key">The string that uniquely identifies the script block.</param>
 		[Obsolete("Please use 'JavascriptHelper(IViewComponentContext, IEngineContext, string)' ctor instead." )]
-        public JavascriptHelper(IViewComponentContext context,HttpContext httpcontext, Flash flash, string key)
+        public JavascriptHelper(IViewComponentContext context,HttpContext httpcontext, string key)
         {
             this.context = context;
-            js = flash["JSsegments"] as JSsegments ?? new JSsegments();
-            flash["JSsegments"] = js;
+
+			js = context.ContextVars["JSsegments"] as JSsegments ?? new JSsegments();
+			context.ContextVars["JSsegments"] = js;
 
             this.id = key;
             if (((ICollection<string>)js.segments.Keys).Contains(key))
@@ -712,8 +704,9 @@ namespace Castle.MonoRail.ViewComponents
 		public JavascriptHelper(IViewComponentContext context, IEngineContext engine, string key)
 		{
 			this.context = context;
-			js = engine.Flash["JSsegments"] as JSsegments ?? new JSsegments();
-			engine.Flash["JSsegments"] = js;
+
+			js = context.ContextVars["JSsegments"] as JSsegments ?? new JSsegments();
+			context.ContextVars["JSsegments"] = js;
 
 			this.id = key;
 			if (((ICollection<string>)js.segments.Keys).Contains(key))
@@ -721,6 +714,29 @@ namespace Castle.MonoRail.ViewComponents
 
 			this.browCaps = engine.UnderlyingContext.Request.Browser;
 			this.scriptBuilder = new StringBuilder(1024);
+		}
+
+		/// <summary>
+		/// Browsers the is.
+		/// </summary>
+		/// <param name="browser">The browser.</param>
+		/// <param name="baseversion">The baseversion.</param>
+		/// <param name="direction">The direction.</param>
+		/// <returns></returns>
+		public bool BrowserIs(string browser, int baseversion, versionDirection direction)
+		{
+			BrowserSpec spec = new BrowserSpec(browser, baseversion, direction);
+			return spec.MatchesBrowser(browCaps);
+		}
+
+		public bool BrowserIs(string browser)
+		{
+			return BrowserIs(browser, 0, versionDirection.Exact);
+		}
+
+		public bool BrowserIs(string browser, int baseversion)
+		{
+			return BrowserIs(browser, baseversion, versionDirection.Exact);
 		}
 
 		/// <summary>
@@ -909,18 +925,16 @@ namespace Castle.MonoRail.ViewComponents
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(Environment.NewLine);
-            sb.Append(@"<script type=""text/javascript"">");
-            sb.Append(Environment.NewLine);
+            sb.AppendLine(@"<script type=""text/javascript"">");
+			sb.AppendLine(@"//<![CDATA[");
 
             foreach (string script in js.segments.Values)
             {
-                sb.Append(script);
-                sb.Append(Environment.NewLine);
+                sb.AppendLine(script);
             }
 
-            sb.Append(Environment.NewLine);
-            sb.Append("</script>");
-            sb.Append(Environment.NewLine);
+			sb.AppendLine(@"//]]>");
+            sb.AppendLine("</script>");
             return sb.ToString();
         }
 

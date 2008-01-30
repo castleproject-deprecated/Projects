@@ -14,19 +14,21 @@
 
 namespace Castle.MonoRail.ViewComponents
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using System.Text.RegularExpressions;
+	using System;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Reflection;
+	using System.Text.RegularExpressions;
+	using Castle.MonoRail.Framework.Helpers;
 
 	/// <summary>
 	/// 
 	/// </summary>
     public class SmartGridComponent : GridComponent
     {
-        private static readonly Hashtable validTypesCache = Hashtable.Synchronized(new Hashtable());
-        private static readonly Hashtable propertiesCache = Hashtable.Synchronized(new Hashtable());
+        private  readonly Hashtable validTypesCache = Hashtable.Synchronized(new Hashtable());
+		private Dictionary<string, PropertyInfo[]> objPropertiesCache = new Dictionary<string, PropertyInfo[]>();
+		private Dictionary<string, PropertyInfo> memberPropertiesCache = new Dictionary<string, PropertyInfo>();
 
         private PropertyInfo[] properties;
         private string _sortFunction;
@@ -54,7 +56,7 @@ namespace Castle.MonoRail.ViewComponents
 		/// <returns></returns>
         protected override bool ShowRows(IEnumerable source)
         {
-            if (properties == null) //there are no rows, if this is the case
+            if (properties == null || properties.Length ==0) //there are no rows, if this is the case
                 return false;
 
             bool isAlternate = false;
@@ -74,25 +76,23 @@ namespace Castle.MonoRail.ViewComponents
 
                 RenderOptionalSection("columnStartRow");
 
-                foreach (PropertyInfo property in properties)
-                {
-                    if (ValidPropertyToAutoGenerate(property) == false) continue;
+				foreach (PropertyInfo property in properties)
+				{
+					if (Context.HasSection(property.Name))
+					{
+						PropertyBag["value"] = property.GetValue(item, null);
+						Context.RenderSection(property.Name);
+					}
+					else
+					{
+						RenderOptionalSection("startCell", "<td>");
 
-                    if (Context.HasSection(property.Name))
-                    {
-                        PropertyBag["value"] = property.GetValue(item, null);
-                        Context.RenderSection(property.Name);
-                        continue;
-                    }
+						object val = property.GetValue(item, null) ?? "null";
 
-                    RenderOptionalSection("startCell", "<td>");
-
-                    object val = property.GetValue(item, null) ?? "null";
-
-                    RenderText(System.Web.HttpUtility.HtmlEncode(val.ToString()));
-                    RenderOptionalSection("endCell", "</td>");
-
-                }
+						RenderText(System.Web.HttpUtility.HtmlEncode(val.ToString()));
+						RenderOptionalSection("endCell", "</td>");
+					}
+				}
                 RenderOptionalSection("more");
 
                 if (isAlternate)
@@ -116,80 +116,81 @@ namespace Castle.MonoRail.ViewComponents
         /// Shows the header.
         /// </summary>
         /// <param name="source">The source.</param>
-        protected override void ShowHeader(IEnumerable source)
-        {
-            IEnumerator enumerator = source.GetEnumerator();
+		protected override void ShowHeader(IEnumerable source)
+		{
+			IEnumerator enumerator = source.GetEnumerator();
+			TextHelper text = PropertyBag["TextHelper"] as TextHelper;
 
-            bool hasItem = enumerator.MoveNext();
+			bool hasItem = enumerator.MoveNext();
 
-            if (hasItem == false)
-            {
-                return;
-            }
+			if (hasItem == false)
+			{
+				return;
+			}
 
-            object first = enumerator.Current;
-            InitializeProperties(first);
+			object first = enumerator.Current;
+			InitializeProperties(first);
 
-            RenderOptionalSection("caption");
-            RenderOptionalSection("preHeaderRow", "<thead><tr>");
-            RenderOptionalSection("columnStartRowHeader");
+			RenderOptionalSection("caption");
+			RenderOptionalSection("preHeaderRow", "<thead><tr>");
+			RenderOptionalSection("columnStartRowHeader");
 
-            string sortBy = ComponentParams["sortBy"] as string ?? string.Empty;
+			string sortBy = ComponentParams["sortBy"] as string ?? string.Empty;
 
-            bool? sortDirection = ComponentParams["sortAsc"] as bool?;
+			bool? sortDirection = ComponentParams["sortAsc"] as bool?;
 
-            bool? sortEnabled = ComponentParams["enableSort"] as bool?;
-            if (!sortEnabled.HasValue)
-                sortEnabled = false;
+			bool sortEnabled = (bool) (ComponentParams["enableSort"] ?? false ) ;
 
-            _sortFunction = ComponentParams["sortFunction"] as string;
 
-            foreach (PropertyInfo property in properties)
-            {
-                if (ValidPropertyToAutoGenerate(property) == false) continue;
-                string overrideSection = property.Name + "Header";
-                if (Context.HasSection(overrideSection))
-                {
-                    Context.RenderSection(overrideSection);
-                    continue;
-                }
+			_sortFunction = ComponentParams["sortFunction"] as string;
 
-                overrideSection = string.Empty;
-                if (sortEnabled.Value)
-                {
-                    overrideSection = property.Name + "SortHeader";
-                    if (Context.HasSection(overrideSection))
-                    {
-                        Context.RenderSection(overrideSection);
-                        continue;
-                    }
-                    if (sortBy == property.Name)
-                        RenderHeaderSortCellStart(property.Name, sortDirection.HasValue ? !sortDirection.Value : true, true);
-                    else
-                        RenderHeaderSortCellStart(property.Name, true, false);
+			foreach (PropertyInfo property in properties)
+			{
+				string overrideSection = property.Name + "Header";
+				if (Context.HasSection(overrideSection))
+				{
+					Context.RenderSection(overrideSection);
+				}
+				else
+				{
+					overrideSection = string.Empty;
+					if (sortEnabled)
+					{
+						overrideSection = property.Name + "SortHeader";
+						if (Context.HasSection(overrideSection))
+						{
+							Context.RenderSection(overrideSection);
+							continue;
+						}
+						if (sortBy == property.Name)
+							RenderHeaderSortCellStart(property.Name, sortDirection.HasValue ? !sortDirection.Value : true, true);
+						else
+							RenderHeaderSortCellStart(property.Name, true, false);
 
-                    RenderText(System.Web.HttpUtility.HtmlEncode(SplitPascalCase(property.Name)));
-                    RenderOptionalSection("endHeaderSortCell", "</a></th>");
-                }
-                else
-                {
-                    overrideSection = property.Name + "Header";
-                    if (Context.HasSection(overrideSection))
-                    {
-                        Context.RenderSection(overrideSection);
-                        continue;
-                    }
-                    RenderOptionalSection("startHeaderCell", "<th class='grid_header'>");
-                    RenderText(System.Web.HttpUtility.HtmlEncode(SplitPascalCase(property.Name)));
-                    RenderOptionalSection("endHeaderCell", "</th>");
-                }
-            }
-            RenderOptionalSection("moreHeader");
+						RenderText(System.Web.HttpUtility.HtmlEncode(TextHelper.PascalCaseToWord(property.Name)));
+						RenderOptionalSection("endHeaderSortCell", "</a></th>");
+					}
+					else
+					{
+						overrideSection = property.Name + "Header";
+						if (Context.HasSection(overrideSection))
+						{
+							Context.RenderSection(overrideSection);
+						}
+						else
+						{
+							RenderOptionalSection("startHeaderCell", "<th class='grid_header'>");
+							RenderText(System.Web.HttpUtility.HtmlEncode(TextHelper.PascalCaseToWord(property.Name)));
+							RenderOptionalSection("endHeaderCell", "</th>");
+						}
+					}
+				}
 
-            RenderOptionalSection("postHeaderRow", "</tr></thead>");
-
-            RenderOptionalSection("tFoot");
-        }
+				RenderOptionalSection("moreHeader");
+			}
+			RenderOptionalSection("postHeaderRow", "</tr></thead>");
+			RenderOptionalSection("tFoot");
+		}
 
         private void RenderHeaderSortCellStart(string fieldName, bool sortAsc, bool showArrow)
         {
@@ -224,40 +225,45 @@ namespace Castle.MonoRail.ViewComponents
             RenderText(String.Format("<th class=\"grid_header{0}\"><a href=\"{1}\">", style, href));
         }
 
-        /// <summary>
-        /// Split a PascalCase string into Pascal Case words.
-        /// Note that if the string contains spaces, we assume it is already formatted
-        /// http://weblogs.asp.net/jgalloway/archive/2005/09/27/426087.aspx
-        /// </summary>
-        private static string SplitPascalCase(string input)
-        {
-            if (input.Contains(" ")) return input;
-            return Regex.Replace(input, "([A-Z])", "$1", RegexOptions.Compiled);
-        }
-
         private void InitializeProperties(object first)
         {
             Type type = first.GetType();
-            if (ComponentParams.Contains("columns") == false)
+			List<PropertyInfo> props = new List<PropertyInfo>();
+
+            if (!ComponentParams.Contains("columns"))
             {
-                if (propertiesCache.Contains(type))
-                    properties = (PropertyInfo[])propertiesCache[type];
-                else
-                    propertiesCache[type] = properties = type.GetProperties();
-                return;
+				if (objPropertiesCache.ContainsKey(type.FullName))
+				{
+					properties = objPropertiesCache[type.FullName] as PropertyInfo[];
+					return;
+				}
+				else
+				{
+					foreach (PropertyInfo prop in type.GetProperties())
+					{
+						if (ValidPropertyToAutoGenerate(prop))
+							props.Add(prop);
+					}
+					properties = props.ToArray();
+					objPropertiesCache[type.FullName] = properties;
+					return;
+				}
             }
-            List<PropertyInfo> props = new List<PropertyInfo>();
+
             IEnumerable columns = (IEnumerable)ComponentParams["columns"];
             foreach (string columnName in columns)
             {
                 string key = type.FullName + "." + columnName;
                 PropertyInfo propertyInfo;
-                if (propertiesCache.Contains(key))
-                    propertyInfo = (PropertyInfo)propertiesCache[key];
-                else
-                    propertiesCache[key] =
-                        propertyInfo = type.GetProperty(columnName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
-                if (propertyInfo != null)
+				if (objPropertiesCache.ContainsKey(key))
+					propertyInfo = memberPropertiesCache[key];
+				else
+				{
+					propertyInfo = type.GetProperty(columnName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
+					memberPropertiesCache[key] = propertyInfo;
+				}
+
+				if (propertyInfo != null && ValidPropertyToAutoGenerate(propertyInfo))
                     props.Add(propertyInfo);
             }
             properties = props.ToArray();
@@ -272,22 +278,26 @@ namespace Castle.MonoRail.ViewComponents
             return IsValidType(property.PropertyType);
         }
 
-        private static bool IsValidType(Type typeToCheck)
+        private  bool IsValidType(Type typeToCheck)
         {
             if (validTypesCache.ContainsKey(typeToCheck))
                 return (bool)validTypesCache[typeToCheck];
-            bool result;
+
+			bool result = true;
             if (typeof(ICollection).IsAssignableFrom(typeToCheck))
             {
                 result = false;
             }
             else if (typeToCheck.IsGenericType)
             {
-                result = typeof(ICollection<>).IsAssignableFrom(typeToCheck.GetGenericTypeDefinition());
+                result = !typeof(ICollection<>).IsAssignableFrom(typeToCheck.GetGenericTypeDefinition());
             }
-            else
+            
+			if (result)   // if we haven't already eliminated it.
             {
-                result = true;
+				// Make sure it not using Object.ToString()
+				MethodInfo methToString = typeToCheck.GetMethod("ToString", Type.EmptyTypes);
+				result = (methToString.DeclaringType != typeof(System.Object));
             }
             validTypesCache[typeToCheck] = result;
             return result;
