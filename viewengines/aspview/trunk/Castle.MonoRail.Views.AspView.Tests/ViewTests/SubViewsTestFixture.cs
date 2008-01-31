@@ -17,12 +17,12 @@
 namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 {
 	using Views;
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class SubViewsTestFixture : AbstractViewTestFixture
 	{
-		[Test]
+		[Fact]
 		public void SubViewWithNoProperties_Works()
 		{
 			InitializeView(typeof(WithSubView));
@@ -38,7 +38,7 @@ Parent";
 			AssertViewOutputEqualsToExpected();
 		}
 
-		[Test]
+		[Fact]
 		public void SubViewCanSeePropertyBag()
 		{
 			propertyBag["prop"] = "property";
@@ -58,7 +58,7 @@ Parent";
 			AssertViewOutputEqualsToExpected();
 		}
 
-		[Test]
+		[Fact]
 		public void SubViewCanSeeFlash()
 		{
 			flash["prop"] = "property";
@@ -78,7 +78,7 @@ Parent";
 			AssertViewOutputEqualsToExpected();
 		}
 
-		[Test]
+		[Fact]
 		public void SubViewCanSeeParameters()
 		{
 			InitializeView(typeof(WithSubViewWithParameters));
@@ -96,7 +96,7 @@ Parent";
 			AssertViewOutputEqualsToExpected();
 		}
 
-		[Test]
+		[Fact]
 		public void SubViewParametersOverrideViewParameter()
 		{
 			propertyBag["prop"] = "yoodle";
@@ -116,7 +116,7 @@ Parent";
 			AssertViewOutputEqualsToExpected();
 		}
 
-		[Test]
+		[Fact]
 		public void SubViewParametersAreHiddenFromTheView()
 		{
 			propertyBag["prop"] = "yoodle";
@@ -137,7 +137,7 @@ Parent";
 			AssertViewOutputEqualsToExpected();
 		}
 
-		[Test]
+		[Fact]
 		public void SubViewCanBeRenderedFromLayout()
 		{
 			propertyBag["prop"] = "yoodle";

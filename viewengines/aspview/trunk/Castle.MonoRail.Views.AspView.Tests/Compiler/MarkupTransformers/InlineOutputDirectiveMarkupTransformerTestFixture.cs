@@ -16,10 +16,10 @@
 
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 {
-	using NUnit.Framework;
+	using Xunit;
 	using AspView.Compiler.MarkupTransformers;
 	
-	[TestFixture]
+	
 	public class InlineOutputDirectiveMarkupTransformerTestFixture : AbstractMarkupTransformerTestFixture
 	{
 		protected override void CreateTransformer()
@@ -27,7 +27,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 			transformer = new InlineOutputDirectiveMarkupTransformer();
 		}
 
-		[Test]
+		[Fact]
 		public void Transform_WhenNoDirective_DoNothing()
 		{
 			input = "Some stuff";
@@ -36,7 +36,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 			AssertTranfromerOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Transform_OnlyDirective_Transforms()
 		{
 			input = "${someVar}";
@@ -44,7 +44,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 			AssertTranfromerOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Transform_WhenDirectiveAndRegularMarkup_Transforms()
 		{
 			input = "this is my ${name}.";

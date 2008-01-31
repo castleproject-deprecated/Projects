@@ -17,14 +17,14 @@
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
 	using AspView.Compiler.PreCompilationSteps;
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class ScriptToCodeTransformerTestFixture
 	{
 		readonly ScriptToCodeTransformer scriptTransformer = new ScriptToCodeTransformer();
 
-		[Test]
+		[Fact]
 		public void Transform_WhenThereIsOnlyMarkup_WorksWell()
 		{
 			string source = @"Markup1
@@ -37,10 +37,10 @@ Markup3"");
 
 			string transformed = scriptTransformer.Transform(source);
 
-			Assert.AreEqual(expected, transformed);
+			Assert.Equal(expected, transformed);
 		}
 
-		[Test]
+		[Fact]
 		public void Transform_WhenThereIsOnlyCode_WorksWell()
 		{
 			string source = @"<%
@@ -56,10 +56,10 @@ foreach (string s in strings)
 
 			string transformed = scriptTransformer.Transform(source);
 
-			Assert.AreEqual(expected, transformed);
+			Assert.Equal(expected, transformed);
 		}
 
-		[Test]
+		[Fact]
 		public void Transform_WhenStartsWithMarkupAndEndsWithMarkup_Transforms()
 		{
 			string source = @"Markup1
@@ -80,10 +80,10 @@ Markup3"");
 
 			string transformed = scriptTransformer.Transform(source);
 
-			Assert.AreEqual(expected, transformed);
+			Assert.Equal(expected, transformed);
 		}
 
-		[Test]
+		[Fact]
 		public void Transform_WhenStartsWithCodeAndEndsWithMarkup_Transforms()
 		{
 			string source = @"<% string s1; %>
@@ -100,10 +100,10 @@ Markup2"");
 ";
 			string transformed = scriptTransformer.Transform(source);
 
-			Assert.AreEqual(expected, transformed);
+			Assert.Equal(expected, transformed);
 		}
 
-		[Test]
+		[Fact]
 		public void Transform_WhenStartsWithMarkupAndEndsWithCode_Transforms()
 		{
 			string source = @"Markup1
@@ -121,10 +121,10 @@ string s2;
 
 			string transformed = scriptTransformer.Transform(source);
 
-			Assert.AreEqual(expected, transformed);
+			Assert.Equal(expected, transformed);
 		}
 
-		[Test]
+		[Fact]
 		public void Transform_WhenStartsWithCodeAndEndsWithCode_Transforms()
 		{
 			string source = @"<% string s1; %>
@@ -138,10 +138,10 @@ string s2;
 ";
 			string transformed = scriptTransformer.Transform(source);
 
-			Assert.AreEqual(expected, transformed);
+			Assert.Equal(expected, transformed);
 		}
 
-		[Test]
+		[Fact]
 		public void Transform_OutputShorthand_RendersInline()
 		{
 			string source = @"Markup1<%=code%>Markup2";
@@ -151,10 +151,10 @@ Output(@""Markup2"");
 ";
 			string transformed = scriptTransformer.Transform(source);
 
-			Assert.AreEqual(expected, transformed);
+			Assert.Equal(expected, transformed);
 		}
 
-		[Test]
+		[Fact]
 		public void Transform_OutputShorthandWhenFollowedByNewLine_KeepsFollowingNewline()
 		{
 			string source = @"Markup1<%=code%>
@@ -166,10 +166,10 @@ Markup2"");
 ";
 			string transformed = scriptTransformer.Transform(source);
 
-			Assert.AreEqual(expected, transformed);
+			Assert.Equal(expected, transformed);
 		}
 
-		[Test]
+		[Fact]
 		public void Transform_OutputShorthandWhenPreceededWithNewLine_KeepsPreceedingNewline()
 		{
 			string source = @"Markup1
@@ -181,10 +181,10 @@ Output(@""Markup2"");
 ";
 			string transformed = scriptTransformer.Transform(source);
 
-			Assert.AreEqual(expected, transformed);
+			Assert.Equal(expected, transformed);
 		}
 
-		[Test]
+		[Fact]
 		public void Transform_WithDoubleQuotesInMarkup_HandledCorrectly()
 		{
 			string source = @"Mark""up1
@@ -196,10 +196,10 @@ Output(@""Markup2"");
 ";
 			string transformed = scriptTransformer.Transform(source);
 
-			Assert.AreEqual(expected, transformed);
+			Assert.Equal(expected, transformed);
 		}
 
-		[Test]
+		[Fact]
 		public void Transform_WithDoubleQuotesInCode()
 		{
 			string source = @"Markup1
@@ -211,10 +211,10 @@ Output(@""Markup2"");
 ";
 			string transformed = scriptTransformer.Transform(source);
 
-			Assert.AreEqual(expected, transformed);
+			Assert.Equal(expected, transformed);
 		}
 
-		[Test]
+		[Fact]
 		public void Transform_CodeWithSharp_TreatedAsEncodedOutput()
 		{
 			string source = @"Markup1
@@ -226,7 +226,7 @@ Output(@""Markup2"");
 ";
 			string transformed = scriptTransformer.Transform(source);
 
-			Assert.AreEqual(expected, transformed);
+			Assert.Equal(expected, transformed);
 		}
 	}
 }

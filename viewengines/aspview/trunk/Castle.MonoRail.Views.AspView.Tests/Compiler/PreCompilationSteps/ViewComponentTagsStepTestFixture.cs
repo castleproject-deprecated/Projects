@@ -17,9 +17,9 @@
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
 	using AspView.Compiler.PreCompilationSteps;
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class ViewComponentTagsStepTestFixture : AbstractPreCompilationStepTestFixture
 	{
 		protected override void CreateStep()
@@ -27,7 +27,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 			step = new ViewComponentTagsStep();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenThereAreNoViewComponentTags_DoesNothing()
 		{
 			string source = @"
@@ -39,10 +39,10 @@ fdslk";
 			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(source, file.RenderBody);
+			Assert.Equal(source, file.RenderBody);
 		}
 
-		[Test]
+		[Fact]
 		public void Process_ViewComponentsWithStringAttribute_Transforms()
 		{
 			string source = @"
@@ -64,7 +64,7 @@ after
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_ViewComponentsWithVariableAttribute_Transforms()
 		{
 			string source = @"
@@ -84,7 +84,7 @@ after
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_ViewComponentsWithVariableAndDotAttribute_Transforms()
 		{
 			string source = @"
@@ -104,7 +104,7 @@ after
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_ViewComponentsWithComplexVariableAttribute_Transforms()
 		{
 			string source = @"
@@ -124,7 +124,7 @@ after
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_ViewComponentsWithBody_CreatesAndRegistersBodyHandler()
 		{
 			string source = @"
@@ -138,16 +138,16 @@ after
 			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.IsTrue(file.ViewComponentSectionHandlers.ContainsKey("Simple0_body"));
+			Assert.True(file.ViewComponentSectionHandlers.ContainsKey("Simple0_body"));
 			string actualBody = file.ViewComponentSectionHandlers["Simple0_body"];
 			string expectedBody = @"Output(@""
 body
 "");
 ";
-			Assert.AreEqual(expectedBody, actualBody);
+			Assert.Equal(expectedBody, actualBody);
 		}
 
-		[Test]
+		[Fact]
 		public void Process_ViewComponentsWithBody_PassesBodyHandlerToTheComponent()
 		{
 			string source = @"
@@ -169,7 +169,7 @@ after
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_ViewComponentsWithSections_CreatesAndRegistersSectionHandlers()
 		{
 			string source = @"
@@ -189,9 +189,9 @@ after
 			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.IsTrue(file.ViewComponentSectionHandlers.ContainsKey("Simple0_body"));
-			Assert.IsTrue(file.ViewComponentSectionHandlers.ContainsKey("Simple0_section1"));
-			Assert.IsTrue(file.ViewComponentSectionHandlers.ContainsKey("Simple0_section2"));
+			Assert.True(file.ViewComponentSectionHandlers.ContainsKey("Simple0_body"));
+			Assert.True(file.ViewComponentSectionHandlers.ContainsKey("Simple0_section1"));
+			Assert.True(file.ViewComponentSectionHandlers.ContainsKey("Simple0_section2"));
 
 			string actualBody = file.ViewComponentSectionHandlers["Simple0_body"];
 			string actualSection1Body = file.ViewComponentSectionHandlers["Simple0_section1"];
@@ -210,9 +210,9 @@ section1
 section2
 "");
 ";
-			Assert.AreEqual(expectedBody, actualBody);
-			Assert.AreEqual(actualSection1Body, expectedSection1Body);
-			Assert.AreEqual(actualSection2Body, expectedSection2Body);
+			Assert.Equal(expectedBody, actualBody);
+			Assert.Equal(actualSection1Body, expectedSection1Body);
+			Assert.Equal(actualSection2Body, expectedSection2Body);
 		}
 	}
 }

@@ -22,9 +22,9 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
 	using AspView.Compiler.MarkupTransformers;
 	using AspView.Compiler.PreCompilationSteps;
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class MarkupTransformationsStepTestFixture : AbstractPreCompilationStepTestFixture
 	{
 		#region constants
@@ -46,7 +46,7 @@ Output(s + ""Hello""); %>";
 			step = new MarkupTransformationsStep();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenThereIsCodeOnly_NothingHappens()
 		{
 			file.RenderBody = CODE;
@@ -58,7 +58,7 @@ Output(s + ""Hello""); %>";
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenThereAreTwoAdjacentCodeSections_NothingHappens()
 		{
 			file.RenderBody = CODE + CODE;
@@ -70,7 +70,7 @@ Output(s + ""Hello""); %>";
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenThereIsMarkupOnly_Works()
 		{
 			file.RenderBody = MARKUP;
@@ -82,7 +82,7 @@ Output(s + ""Hello""); %>";
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenThereIsMarkupFollowedByCode_Works()
 		{
 			file.RenderBody = MARKUP + CODE;
@@ -94,7 +94,7 @@ Output(s + ""Hello""); %>";
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenThereIsCodeFollowedByMarkup_Works()
 		{
 			file.RenderBody = CODE + MARKUP;
@@ -106,7 +106,7 @@ Output(s + ""Hello""); %>";
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_MarkupCodeMarkup_Works()
 		{
 			file.RenderBody = MARKUP + CODE + MARKUP;
@@ -118,7 +118,7 @@ Output(s + ""Hello""); %>";
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_CodeMarkupCode_Works()
 		{
 			file.RenderBody = CODE + MARKUP + CODE;

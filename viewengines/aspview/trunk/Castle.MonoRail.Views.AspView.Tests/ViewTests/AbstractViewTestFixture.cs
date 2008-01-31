@@ -24,7 +24,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 	using Framework;
 	using Framework.Services;
 	using Framework.Test;
-	using NUnit.Framework;
+	using Xunit;
 	using Stubs;
 	using System.Collections.Generic;
 
@@ -50,7 +50,11 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 		protected IMonoRailServices monoRailServices;
 		protected string expected;
 
-		[SetUp]
+		public AbstractViewTestFixture()
+		{
+			SetUp();
+		}
+
 		public void SetUp()
 		{
 			Clear();
@@ -140,7 +144,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 
 		protected void AssertViewOutputEqualsToExpected()
 		{
-			Assert.AreEqual(expected, ViewOutput, "View output differ. Output was:\r\n" + ViewOutput);
+			Assert.Equal(expected, ViewOutput, "View output differ. Output was:\r\n" + ViewOutput);
 		}
 
 		protected virtual string ViewOutput

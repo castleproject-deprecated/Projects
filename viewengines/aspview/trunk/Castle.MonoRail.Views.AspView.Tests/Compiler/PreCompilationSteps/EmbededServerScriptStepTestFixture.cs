@@ -16,10 +16,10 @@
 
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
-	using NUnit.Framework;
+	using Xunit;
 	using AspView.Compiler.PreCompilationSteps;
 
-	[TestFixture]
+	
 	public class EmbededServerScriptStepTestFixture : AbstractPreCompilationStepTestFixture
 	{
 		#region string constant
@@ -41,7 +41,7 @@ public void SayHello(string personToGreet)
 			step = new EmbededServerScriptStep();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenThereIsOneScriptTag_StripsFromBodyAndAddToList()
 		{
 
@@ -64,15 +64,15 @@ view content
 			step.Process(file);
 
 			// there is one embeded script
-			Assert.AreEqual(file.EmbededScriptBlocks.Count, 1, "Missing script block from 'file.EmbededScriptBlocks'");
+			Assert.Equal(file.EmbededScriptBlocks.Count, 1, "Missing script block from 'file.EmbededScriptBlocks'");
 
 			// script content has expected value
-			Assert.AreEqual(DEMO_SCRIPT, file.EmbededScriptBlocks[0], "Script block was not registered correctly");
+			Assert.Equal(DEMO_SCRIPT, file.EmbededScriptBlocks[0], "Script block was not registered correctly");
 
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenThereIsMoreThanOneScriptTag_StripsFromBodyAndAddToList()
 		{
 			#region view contents
@@ -100,16 +100,16 @@ int anotherVar;
 			step.Process(file);
 
 			// there is one embeded script
-			Assert.AreEqual(file.EmbededScriptBlocks.Count, 2);
+			Assert.Equal(file.EmbededScriptBlocks.Count, 2);
 
 			// script content has expected values
-			Assert.AreEqual(DEMO_SCRIPT, file.EmbededScriptBlocks[0], "Script block was not registered correctly");
-			Assert.AreEqual(DEMO_SCRIPT2, file.EmbededScriptBlocks[1], "Script block was not registered correctly");
+			Assert.Equal(DEMO_SCRIPT, file.EmbededScriptBlocks[0], "Script block was not registered correctly");
+			Assert.Equal(DEMO_SCRIPT2, file.EmbededScriptBlocks[1], "Script block was not registered correctly");
 
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenScriptTagsAreStrange_StripsFromBodyAndAddToList()
 		{
 
@@ -139,11 +139,11 @@ int anotherVar;
 
 			step.Process(file);
 
-			Assert.AreEqual(file.EmbededScriptBlocks.Count, 6, "Missing script block from 'file.EmbededScriptBlocks'");
+			Assert.Equal(file.EmbededScriptBlocks.Count, 6, "Missing script block from 'file.EmbededScriptBlocks'");
 
 			// script content has expected value
 			for (int i = 0; i <= 5; ++i)
-				Assert.AreEqual("script" + i, file.EmbededScriptBlocks[i], "Script block was not registered correctly");
+				Assert.Equal("script" + i, file.EmbededScriptBlocks[i], "Script block was not registered correctly");
 
 			AssertStepOutput();
 		}

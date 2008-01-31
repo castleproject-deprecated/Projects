@@ -17,12 +17,12 @@
 namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 {
 	using Views;
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class SimpleViewTestFixture : AbstractViewTestFixture
 	{
-		[Test]
+		[Fact]
 		public void Render_WhenRendersSimpleStringAndNoLayout_Works()
 		{
 			InitializeView(typeof (SimpleView));

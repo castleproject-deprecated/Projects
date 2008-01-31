@@ -17,12 +17,12 @@
 namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 {
 	using Views;
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class TypedPropertiesTestFixture : AbstractViewTestFixture
 	{
-		[Test]
+		[Fact]
 		public void Render_UsingTypedProperties_Works()
 		{
 			InitializeView(typeof (WithTypedProperties));

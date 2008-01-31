@@ -17,13 +17,11 @@
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.StatementProcessors.OutputMethodGenerators
 {
 	using AspView.Compiler.StatementProcessors.OutputMethodGenerators;
-	using NUnit.Framework;
-	using NUnit.Framework.SyntaxHelpers;
-
-	[TestFixture]
+	using Xunit;
+	
 	public class OutputMethodGeneratorFixture
 	{
-		[Test]
+		[Fact]
 		public void GenerateFrom_Always_GeneratedTheCorrectMethod()
 		{
 			OutputMethodGenerator generator = new OutputMethodGenerator();
@@ -34,7 +32,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.StatementProcessors.Outpu
 
 			string actual = generator.GenerateFrom(content);
 
-			Assert.That(actual, Is.EqualTo(expected));
+			Assert.Equal(expected, actual);
 		}
 	}
 }

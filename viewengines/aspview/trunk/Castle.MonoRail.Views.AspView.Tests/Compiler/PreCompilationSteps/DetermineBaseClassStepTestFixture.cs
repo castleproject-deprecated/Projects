@@ -17,9 +17,9 @@
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
 	using AspView.Compiler.PreCompilationSteps;
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class DetermineBaseClassStepTestFixture : AbstractPreCompilationStepTestFixture
 	{
 		protected override void CreateStep()
@@ -30,10 +30,10 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 		private static void AssertPageDirectiveHasBeenRemoved(string viewSource)
 		{
 			if (Internal.RegularExpressions.PageDirective.IsMatch(viewSource))
-				Assert.Fail("Page directive was not removed from view source");
+				throw new AssertException("Page directive was not removed from view source");
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenInheritsIsMissing_SetsDefault()
 		{
 			file.RenderBody = @"
@@ -41,12 +41,12 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 view content";
 			step.Process(file);
 
-			Assert.AreEqual(DetermineBaseClassStep.DefaultBaseClassName, file.BaseClassName);
+			Assert.Equal(DetermineBaseClassStep.DefaultBaseClassName, file.BaseClassName);
 
 			AssertPageDirectiveHasBeenRemoved(file.RenderBody);
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenUsingDefault_SetsDefault()
 		{
 			file.RenderBody = @"
@@ -54,12 +54,12 @@ view content";
 view content";
 			step.Process(file);
 
-			Assert.AreEqual(DetermineBaseClassStep.DefaultBaseClassName, file.BaseClassName);
+			Assert.Equal(DetermineBaseClassStep.DefaultBaseClassName, file.BaseClassName);
 
 			AssertPageDirectiveHasBeenRemoved(file.RenderBody);
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenUsingDefaultAndTypedView_SetsDefaultAndView()
 		{
 			file.RenderBody = @"
@@ -67,13 +67,13 @@ view content";
 view content";
 			step.Process(file);
 
-			Assert.AreEqual(DetermineBaseClassStep.DefaultBaseClassName + "<IView>", file.BaseClassName);
-			Assert.AreEqual("IView", file.TypedViewName);
+			Assert.Equal(DetermineBaseClassStep.DefaultBaseClassName + "<IView>", file.BaseClassName);
+			Assert.Equal("IView", file.TypedViewName);
 
 			AssertPageDirectiveHasBeenRemoved(file.RenderBody);
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenUsingClassName_SetsClassName()
 		{
 			file.RenderBody = @"
@@ -81,12 +81,12 @@ view content";
 view content";
 			step.Process(file);
 
-			Assert.AreEqual("SomeClass", file.BaseClassName);
+			Assert.Equal("SomeClass", file.BaseClassName);
 
 			AssertPageDirectiveHasBeenRemoved(file.RenderBody);
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenUsingClassNameAndTypedView_SetsClassNameAndView()
 		{
 			file.RenderBody = @"
@@ -94,13 +94,13 @@ view content";
 view content";
 			step.Process(file);
 
-			Assert.AreEqual("SomeClass<IView>", file.BaseClassName);
-			Assert.AreEqual("IView", file.TypedViewName);
+			Assert.Equal("SomeClass<IView>", file.BaseClassName);
+			Assert.Equal("IView", file.TypedViewName);
 
 			AssertPageDirectiveHasBeenRemoved(file.RenderBody);
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenUsingClassNameAtDesignTime_SetsClassName()
 		{
 			file.RenderBody = @"
@@ -108,12 +108,12 @@ view content";
 view content";
 			step.Process(file);
 
-			Assert.AreEqual("SomeClass", file.BaseClassName);
+			Assert.Equal("SomeClass", file.BaseClassName);
 
 			AssertPageDirectiveHasBeenRemoved(file.RenderBody);
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenUsingClassNameAtDesignTimeAndTypedView_SetsClassNameAndView()
 		{
 			file.RenderBody = @"
@@ -121,8 +121,8 @@ view content";
 view content";
 			step.Process(file);
 
-			Assert.AreEqual("SomeClass<IView>", file.BaseClassName);
-			Assert.AreEqual("IView", file.TypedViewName);
+			Assert.Equal("SomeClass<IView>", file.BaseClassName);
+			Assert.Equal("IView", file.TypedViewName);
 
 			AssertPageDirectiveHasBeenRemoved(file.RenderBody);
 		}		

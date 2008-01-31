@@ -17,17 +17,14 @@
 namespace Castle.MonoRail.Views.AspView.Tests.Engine
 {
 	using System.Collections;
-	using NUnit.Framework;
+	using Xunit;
 	using AspView.Compiler;
 
-	[TestFixture]
-	[Ignore("Should redo this fixture in isolation from actual CompiledViews.dll")]
 	public class ViewEngineTestCase
 	{
 		AspViewEngine engine;
 		IAspViewEngineTestAccess engineWithTestAccess;
 
-		[SetUp]
 		public void SetupFixture()
 		{
 			AspViewEngineOptions options = new AspViewEngineOptions(new AspViewCompilerOptions());
@@ -36,26 +33,26 @@ namespace Castle.MonoRail.Views.AspView.Tests.Engine
 			engineWithTestAccess = engine;
 		}
 
-		[Test]
+		[Fact(Skip="Should redo this fixture in isolation from actual CompiledViews.dll")]
 		public void ViewEngine_Always_LoadCompiledViewsAssembly()
 		{
 			IDictionary compilations = engineWithTestAccess.Compilations;
-			Assert.IsNotNull(compilations);
-			Assert.Greater(compilations.Count, 0);
+			Assert.NotNull(compilations);
+			Assert.True(compilations.Count >  0);
 		}
 
-		[Test]
+		[Fact(Skip = "Should redo this fixture in isolation from actual CompiledViews.dll")]
 		public void HasTemplate_WhenAskedForFakeTemplate_ReturnsFalse()
 		{
 			string fakeTemplateName = "nosuchcontroller/nosuchtemplate";
-			Assert.IsFalse(engine.HasTemplate(fakeTemplateName));
+			Assert.False(engine.HasTemplate(fakeTemplateName));
 		}
 
-		[Test]
+		[Fact(Skip = "Should redo this fixture in isolation from actual CompiledViews.dll")]
 		public void HasTemplate_WhenAskedForRealTemplate_ReturnsTrue()
 		{
 			string templateName = "home/simple";
-			Assert.IsTrue(engine.HasTemplate(templateName));
+			Assert.True(engine.HasTemplate(templateName));
 		}
 
 		/*

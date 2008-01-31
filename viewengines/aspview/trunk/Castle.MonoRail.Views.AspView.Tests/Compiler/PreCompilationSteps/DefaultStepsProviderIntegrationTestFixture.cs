@@ -19,13 +19,18 @@ using Castle.MonoRail.Views.AspView.Compiler;
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
 	using AspView.Compiler.PreCompilationSteps;
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class DefaultStepsProviderIntegrationTestFixture 
 	{
 		IPreCompilationStepsProvider provider;
-		[SetUp]
+
+		public DefaultStepsProviderIntegrationTestFixture()
+		{
+			SetUp();
+		}
+
 		public void SetUp()
 		{
 			provider = new DefaultPreCompilationStepsProvider();
@@ -39,7 +44,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void Proces_WithSiteRootInComponentBody_TransformsTheSiteRoot()
 		{
 			string source = @"<%@ Page Language=""C#"" %>
@@ -84,7 +89,7 @@ InvokeViewComponent(""Bold"", Bold0_body, null);
 ";
 			#endregion
 
-			Assert.AreEqual(expected, file.ConcreteClass);
+			Assert.Equal(expected, file.ConcreteClass);
 		}
 	}
 }

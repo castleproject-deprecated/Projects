@@ -18,15 +18,15 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
 	using AspView.Compiler;
 	using AspView.Compiler.PreCompilationSteps;
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class ProcessServerScriptPropertiesStepTestFixture : AbstractPreCompilationStepTestFixture
 	{
 		private static void AssertPropertiesSectionHasBeenRemoved(string viewSource)
 		{
 			if (Internal.RegularExpressions.PropertiesSection.IsMatch(viewSource))
-				Assert.Fail("Properties section has not been removed from view source");
+				throw new AssertException("Properties section has not been removed from view source");
 		}
 
 		protected override void CreateStep()
@@ -34,7 +34,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 			step = new ProcessPropertiesStep();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenEmpty_DoesNotRegisterAnyProperties()
 		{
 			file.RenderBody = @"
@@ -43,12 +43,12 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 view content";
 			step.Process(file);
 
-			Assert.AreEqual(0, file.Properties.Count);
+			Assert.Equal(0, file.Properties.Count);
 
 			AssertPropertiesSectionHasBeenRemoved(file.RenderBody);
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenHasOnlyScriptMarkers_DoesNotRegisterAnyProperties()
 		{
 			file.RenderBody = @"
@@ -57,12 +57,12 @@ view content";
 view content";
 			step.Process(file);
 
-			Assert.AreEqual(0, file.Properties.Count);
+			Assert.Equal(0, file.Properties.Count);
 
 			AssertPropertiesSectionHasBeenRemoved(file.RenderBody);
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenHasRegularProperty_RegistersThatProperty()
 		{
 			file.RenderBody = @"
@@ -77,7 +77,7 @@ view content";
 			AssertPropertiesSectionHasBeenRemoved(file.RenderBody);
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenHasTwoProperties_RegistersBoth()
 		{
 			file.RenderBody = @"
@@ -94,7 +94,7 @@ view content";
 			AssertPropertiesSectionHasBeenRemoved(file.RenderBody);
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenHasDefaultValue_RegistersPropertyWithTheValue()
 		{
 			file.RenderBody = @"
@@ -114,15 +114,15 @@ view content";
 		#region helpers
 		private void AssertViewPropertyEqual(ViewProperty expectedProperty, string propertyName)
 		{
-			Assert.IsTrue(file.Properties.ContainsKey(propertyName), "Property [{0}] is missing.", propertyName);
+			Assert.True(file.Properties.ContainsKey(propertyName), string.Format("Property [{0}] is missing.", propertyName));
 			ViewProperty actual = file.Properties[propertyName];
-			Assert.AreEqual(expectedProperty.Type, actual.Type, "Property [{0}] should be of type [{1}], but was of type [{2}] instead.", propertyName, expectedProperty.Type, actual.Type);
+			Assert.Equal(expectedProperty.Type, actual.Type, string.Format("Property [{0}] should be of type [{1}], but was of type [{2}] instead.", propertyName, expectedProperty.Type, actual.Type));
 			if (expectedProperty.DefaultValue == null)
-				Assert.IsNull(actual.DefaultValue, "Property [{0}] should have had no default value, however a default value of [{1}] was found.", propertyName, actual.DefaultValue);
+				Assert.Null(actual.DefaultValue, string.Format("Property [{0}] should have had no default value, however a default value of [{1}] was found.", propertyName, actual.DefaultValue));
 			else
 			{
-				Assert.IsNotNull(actual.DefaultValue, "Property [{0}] should have had a default value, however none was found.", propertyName);
-				Assert.AreEqual(expectedProperty.DefaultValue, actual.DefaultValue, "Property [{0}] should have had a default value of [{1}], however [{2}] was found.", propertyName, expectedProperty.DefaultValue, actual.DefaultValue);
+				Assert.NotNull(actual.DefaultValue, string.Format("Property [{0}] should have had a default value, however none was found.", propertyName));
+				Assert.Equal(expectedProperty.DefaultValue, actual.DefaultValue, string.Format("Property [{0}] should have had a default value of [{1}], however [{2}] was found.", propertyName, expectedProperty.DefaultValue, actual.DefaultValue));
 			}
 		}
 		#endregion

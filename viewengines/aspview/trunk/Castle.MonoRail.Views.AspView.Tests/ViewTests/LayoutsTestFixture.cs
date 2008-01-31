@@ -17,12 +17,12 @@
 namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 {
 	using Views;
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class LayoutsTestFixture : AbstractViewTestFixture
 	{
-		[Test]
+		[Fact]
 		public void Render_WhenRendersSimpleStringAndNoLayout_Works()
 		{
 			InitializeView(typeof(SimpleView));
@@ -36,7 +36,7 @@ Layout - after";
 			AssertViewOutputEqualsToExpected();
 		}
 
-		[Test]
+		[Fact]
 		public void Render_WhenHasNestedLayouts_RenderLayoutsAndInCorrectOrder()
 		{
 			InitializeView(typeof(SimpleView));

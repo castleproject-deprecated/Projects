@@ -18,7 +18,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
 	using AspView.Compiler;
 	using AspView.Compiler.PreCompilationSteps;
-	using NUnit.Framework;
+	using Xunit;
 
 	public abstract class AbstractPreCompilationStepTestFixture
 	{
@@ -26,8 +26,12 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 		protected SourceFile file;
 		protected string expected;
 
-		[SetUp]
-		public virtual void SetUp()
+		public AbstractPreCompilationStepTestFixture()
+		{
+			SetUp();
+		}
+
+		public void SetUp()
 		{
 			CreateSourceFile();
 			CreateStep();
@@ -41,7 +45,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 
 		public void AssertStepOutput()
 		{
-			Assert.AreEqual(expected, file.RenderBody);
+			Assert.Equal(expected, file.RenderBody);
 		}
 	}
 }

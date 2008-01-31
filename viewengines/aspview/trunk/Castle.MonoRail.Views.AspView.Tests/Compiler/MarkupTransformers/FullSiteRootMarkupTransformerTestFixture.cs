@@ -16,10 +16,9 @@
 
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 {
-	using NUnit.Framework;
+	using Xunit;
 	using AspView.Compiler.MarkupTransformers;
 	
-	[TestFixture]
 	public class FullSiteRootMarkupTransformerTestFixture : AbstractMarkupTransformerTestFixture
 	{
 		protected override void CreateTransformer()
@@ -27,7 +26,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 			transformer = new FullSiteRootMarkupTransformer();
 		}
 
-		[Test]
+		[Fact]
 		public void Transform_WhenNoSiteRoot_DoNothing()
 		{
 			input = "Some stuff";
@@ -36,7 +35,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 			AssertTranfromerOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Transform_WhenHasSingleFullSiteRoot_Transforms()
 		{
 			input = "~~foo";
@@ -44,7 +43,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 			AssertTranfromerOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Transform_WhenHasMoreThanOneSiteRoot_Transforms()
 		{
 			input = "~~foo ~~bar";

@@ -17,9 +17,9 @@
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
 	using AspView.Compiler.PreCompilationSteps;
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class ImportStatementsStepTestFixture : AbstractPreCompilationStepTestFixture
 	{
 		protected override void CreateStep()
@@ -29,10 +29,10 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 		private static void AssertImportDirectivesHasBeenRemoved(string viewSource)
 		{
 			if (Internal.RegularExpressions.ImportDirective.IsMatch(viewSource))
-				Assert.Fail("Imports directives were not removed from view source");
+				throw new AssertException("Imports directives were not removed from view source");
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenImportingCustomNamespace_SetsImport()
 		{
 			file.RenderBody = @"
@@ -40,12 +40,12 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 view content";
 			step.Process(file);
 
-			Assert.IsTrue(file.Imports.Contains("My.Name.Space"));
+			Assert.True(file.Imports.Contains("My.Name.Space"));
 
 			AssertImportDirectivesHasBeenRemoved(file.RenderBody);
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenImportingSameNamespace_WouldStillSetImport()
 		{
 			file.RenderBody = @"
@@ -54,12 +54,12 @@ view content";
 view content";
 			step.Process(file);
 
-			Assert.IsTrue(file.Imports.Contains("My.Name.Space"));
+			Assert.True(file.Imports.Contains("My.Name.Space"));
 
 			AssertImportDirectivesHasBeenRemoved(file.RenderBody);
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenImportingDefaultNamespace_WouldStillSetImport()
 		{
 			file.RenderBody = @"
@@ -68,8 +68,8 @@ view content";
 view content";
 			step.Process(file);
 
-			Assert.IsTrue(file.Imports.Contains("My.Name.Space"));
-			Assert.IsTrue(file.Imports.Contains("System"));
+			Assert.True(file.Imports.Contains("My.Name.Space"));
+			Assert.True(file.Imports.Contains("System"));
 
 			AssertImportDirectivesHasBeenRemoved(file.RenderBody);
 		}

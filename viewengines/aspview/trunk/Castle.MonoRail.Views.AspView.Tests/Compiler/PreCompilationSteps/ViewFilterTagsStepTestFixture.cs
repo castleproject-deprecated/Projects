@@ -17,9 +17,9 @@
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
 	using AspView.Compiler.PreCompilationSteps;
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class ViewFilterTagsStepTestFixture : AbstractPreCompilationStepTestFixture
 	{
 		protected override void CreateStep()
@@ -27,7 +27,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 			step = new ViewFilterTagsStep();
 		}
 		
-		[Test]
+		[Fact]
 		public void Process_WhenThereAreNoViewFilterTags_DoesNothing()
 		{
 			string source = @"
@@ -39,10 +39,10 @@ fdslk";
 			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(source, file.RenderBody);
+			Assert.Equal(source, file.RenderBody);
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenThereIsAViewFilterTag_Transforms()
 		{
 			string source = @"
@@ -61,10 +61,10 @@ fdslk";
 			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(expected, file.RenderBody);
+			Assert.Equal(expected, file.RenderBody);
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenThereIsAnEarlyBoundViewFilterTag_Transforms()
 		{
 			string source = @"
@@ -83,10 +83,10 @@ fdslk";
 			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(expected, file.RenderBody);
+			Assert.Equal(expected, file.RenderBody);
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenNested_Transforms()
 		{
 			string source = @"
@@ -117,7 +117,7 @@ fdslk";
 			file.RenderBody = source;
 			step.Process(file);
 
-			Assert.AreEqual(expected, file.RenderBody);
+			Assert.Equal(expected, file.RenderBody);
 		}
 	}
 }

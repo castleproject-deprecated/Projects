@@ -17,15 +17,14 @@
 namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 {
 	using ViewComponents;
-	using Framework;
 	using Views;
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class ViewComponentsTestFixture : AbstractViewComponentsTestFixture
 	{
 
-		[Test]
+		[Fact]
 		public void WithRenderText_Works()
 		{
 			RegisterComponent("MyComponent", typeof(TextRendererViewComponent));
@@ -42,7 +41,7 @@ Parent";
 			AssertViewOutputEqualsToExpected();
 		}
 
-		[Test]
+		[Fact]
 		public void WithRenderView_Works()
 		{
 			RegisterComponent("MyComponent", typeof(ViewRendererViewComponent));
@@ -61,7 +60,7 @@ Parent";
 			AssertViewOutputEqualsToExpected();
 		}
 
-		[Test]
+		[Fact]
 		public void WithRenderTextAndView_ViewIsAlwaysAfterTheText()
 		{
 			RegisterComponent("MyComponent", typeof(TextAndViewRendererViewComponent));
@@ -80,7 +79,7 @@ Parent";
 			AssertViewOutputEqualsToExpected();
 		}
 
-		[Test]
+		[Fact]
 		public void WithBody_RendersTheBody()
 		{
 			RegisterComponent("MyComponent", typeof(BodyRendererViewComponent));
@@ -97,18 +96,21 @@ Parent";
 			AssertViewOutputEqualsToExpected();
 		}
 
-		[Test]
-		[ExpectedException(typeof(AspViewException), ExpectedMessage = "This component does not have a body content to be rendered")]
+		[Fact]
 		public void WithBody_ButNoBody_Throws()
 		{
 			RegisterComponent("MyComponent", typeof(BodyRendererViewComponent));
 
 			InitializeView(typeof(WithComponent));
 
-			view.Process();
+			Assert.Throws(typeof(AspViewException), "This component does not have a body content to be rendered", delegate 
+			{
+				view.Process();
+			});
+			
 		}
 
-		[Test]
+		[Fact]
 		public void WithSections_RendersTheSections()
 		{
 			RegisterComponent("MyComponent", typeof(SectionsRendererViewComponent));

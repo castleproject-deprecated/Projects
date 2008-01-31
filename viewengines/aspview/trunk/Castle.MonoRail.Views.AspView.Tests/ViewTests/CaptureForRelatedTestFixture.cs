@@ -19,12 +19,12 @@ using Castle.MonoRail.Framework.ViewComponents;
 namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 {
 	using Views;
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class CaptureForRelatedTestFixture : AbstractViewComponentsTestFixture
 	{
-		[Test]
+		[Fact]
 		public void CaptureForInView_VisibleInLayout()
 		{
 			RegisterComponent("CaptureFor", typeof(CaptureFor));
@@ -40,7 +40,7 @@ From CaptureFor: The captured content";
 			AssertViewOutputEqualsToExpected();
 		}
 
-		[Test]
+		[Fact]
 		public void CaptureForInSubView_VisibleInLayout()
 		{
 			RegisterComponent("CaptureFor", typeof(CaptureFor));
@@ -59,7 +59,7 @@ From CaptureFor: The captured content";
 			AssertViewOutputEqualsToExpected();
 		}
 
-		[Test]
+		[Fact]
 		public void CaptureForInSubView_VisibleInView()
 		{
 			RegisterComponent("CaptureFor", typeof(CaptureFor));

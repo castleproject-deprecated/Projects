@@ -18,10 +18,10 @@ using Castle.MonoRail.Views.AspView.Compiler;
 
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
-	using NUnit.Framework;
+	using Xunit;
 	using AspView.Compiler.PreCompilationSteps;
 
-	[TestFixture]
+	
 	public class RenderConcreteClassStepTestFixture : AbstractPreCompilationStepTestFixture
 	{
 		protected override void CreateStep()
@@ -29,7 +29,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 			step = new RenderConcreteClassStep();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_Always_Works()
 		{
 			file.Imports.Add("No.Such.Import");
@@ -106,7 +106,7 @@ RenderBody
 			#endregion
 
 			step.Process(file);
-			Assert.AreEqual(expected, file.ConcreteClass);
+			Assert.Equal(expected, file.ConcreteClass);
 		}
 
 	}

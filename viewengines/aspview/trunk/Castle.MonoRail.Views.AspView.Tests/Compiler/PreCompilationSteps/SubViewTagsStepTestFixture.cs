@@ -17,9 +17,9 @@
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 {
 	using AspView.Compiler.PreCompilationSteps;
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class SubViewTagsStepTestFixture : AbstractPreCompilationStepTestFixture
 	{
 		protected override void CreateStep()
@@ -27,7 +27,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 			step = new SubViewTagsStep();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_WhenThereAreNoSubViewTags_DoesNothing()
 		{
 			string source = @"
@@ -42,7 +42,7 @@ fdslk";
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_SimpleSubViewTag_Transforms()
 		{
 			string source = @"
@@ -62,7 +62,7 @@ after
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_TwoSubViewTags_Transforms()
 		{
 			string source = @"
@@ -84,7 +84,7 @@ after
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_SubViewsWithSimpleStringAttribute_Transforms()
 		{
 			string source = @"
@@ -104,7 +104,7 @@ after
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_SubViewsWithConstantAttribute_Transforms()
 		{
 			string source = @"
@@ -124,7 +124,7 @@ after
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_SubViewsWithStringAttribute_Transforms()
 		{
 			string source = @"
@@ -144,7 +144,7 @@ after
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_SubViewsWithVariableAttribute_Transforms()
 		{
 			string source = @"
@@ -164,7 +164,7 @@ after
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_SubViewsWithVariableAndDotAttribute_Transforms()
 		{
 			string source = @"
@@ -184,7 +184,7 @@ after
 			AssertStepOutput();
 		}
 
-		[Test]
+		[Fact]
 		public void Process_SubViewsWithComplexVariableAttribute_Transforms()
 		{
 			string source = @"

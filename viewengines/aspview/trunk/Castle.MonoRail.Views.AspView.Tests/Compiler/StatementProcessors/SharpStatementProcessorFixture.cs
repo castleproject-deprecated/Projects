@@ -18,42 +18,44 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.StatementProcessors
 {
 	using AspView.Compiler.StatementProcessors;
 	using AspView.Compiler.StatementProcessors.OutputMethodGenerators;
-	using NUnit.Framework.SyntaxHelpers;
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
 	public class SharpStatementProcessorFixture
 	{
 		SharpStatementProcessor processor;
-		
-		[SetUp]
+
+		public SharpStatementProcessorFixture()
+		{
+			SetUp();
+		}
+
 		public void SetUp()
 		{
 			processor = new SharpStatementProcessor();
 		}
 
-		[Test]
+		[Fact]
 		public void CanHandle_WhenStartsWithSharpSign_Matches()
 		{
 			string statement = "# foo";
-			Assert.That(processor.CanHandle(statement), Is.True);
+			Assert.True(processor.CanHandle(statement));
 		}
 
-		[Test]
+		[Fact]
 		public void CanHandle_WhenStartsWithWhitespaceAndSharpSign_Matches()
 		{
 			string statement = "  # foo";
-			Assert.That(processor.CanHandle(statement), Is.True);
+			Assert.True(processor.CanHandle(statement));
 		}
 
-		[Test]
+		[Fact]
 		public void CanHandle_WhenDoesNotStartsWithArbitraryWhitespaceAndSharpSign_DoNotMatches()
 		{
 			string statement = " foo";
-			Assert.That(processor.CanHandle(statement), Is.False);
+			Assert.False(processor.CanHandle(statement));
 		}
 
-		[Test]
+		[Fact]
 		public void GetInfo_WhenStartsWithSharpSign_GetsCorrectInfo()
 		{
 			string statement = "# foo";
@@ -62,12 +64,12 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.StatementProcessors
 
 			StatementInfo statementInfo = processor.GetInfoFor(statement);
 
-			Assert.That(statementInfo.Content , Is.EqualTo(expectedContent));
+			Assert.Equal(expectedContent, statementInfo.Content);
 
-			Assert.That(statementInfo.Generator, Is.InstanceOfType(typeof(EncodedOutputMethodGenerator)));
+			Assert.IsType(typeof(EncodedOutputMethodGenerator), statementInfo.Generator);
 		}
 
-		[Test]
+		[Fact]
 		public void GetInfo_WhenStartsWithWhitespaceAndSharpSign_GetsCorrectInfo()
 		{
 			string statement = "  # foo";
@@ -76,9 +78,9 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.StatementProcessors
 
 			StatementInfo statementInfo = processor.GetInfoFor(statement);
 
-			Assert.That(statementInfo.Content, Is.EqualTo(expectedContent));
+			Assert.Equal(expectedContent, statementInfo.Content);
 
-			Assert.That(statementInfo.Generator, Is.InstanceOfType(typeof(EncodedOutputMethodGenerator)));
+			Assert.IsType(typeof(EncodedOutputMethodGenerator), statementInfo.Generator);
 		}
 
 

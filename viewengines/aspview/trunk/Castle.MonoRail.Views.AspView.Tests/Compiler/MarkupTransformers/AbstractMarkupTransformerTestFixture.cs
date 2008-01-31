@@ -16,7 +16,7 @@
 
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 {
-	using NUnit.Framework;
+	using Xunit;
 	using AspView.Compiler.MarkupTransformers;
 
 	public abstract class AbstractMarkupTransformerTestFixture
@@ -25,8 +25,12 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 		protected string input;
 		protected string expected;
 
-		[SetUp]
-		public virtual void SetUp()
+		public AbstractMarkupTransformerTestFixture()
+		{
+			SetUp();
+		}
+
+		protected void SetUp()
 		{
 			CreateTransformer();
 		}
@@ -35,7 +39,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 
 		public void AssertTranfromerOutput()
 		{
-			Assert.AreEqual(expected, transformer.Transform(input));
+			Assert.Equal(expected, transformer.Transform(input));
 		}
 	}
 }
