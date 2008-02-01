@@ -29,7 +29,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Stubs
 		ControllerMetaDescriptor controllerDescriptor = new ControllerMetaDescriptor();
 		IDictionary<string, object> customActionParameters = new Dictionary<string, object>();
 		IDictionary<string, IDynamicAction> dynamicActions = new Dictionary<string, IDynamicAction>();
-		IDictionary helpers = new Hashtable();
+		HelperDictionary helpers = new HelperDictionary();
 		string[] layoutNames = new string[1] { "Layout" };
 		string name = "Stub";
 		IDictionary propertyBag = new Hashtable();
@@ -69,7 +69,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Stubs
 			get { return dynamicActions; }
 		}
 
-		public IDictionary Helpers
+		public HelperDictionary Helpers
 		{
 			get { return helpers; }
 			set { helpers = value; }
