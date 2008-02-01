@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using NUnit.Framework;
-
 namespace ViewUpgrader.Tests
 {
-	[TestFixture]
+	using Xunit;
+
 	public class TrasformersFixture
 	{
-		[Test]
+		[Fact]
 		public void TransformPropertyDecleration_WhenInputIsView_Transforms()
 		{
 			string input = @"<%@ Page Language=""C#"" Inherits=""Castle.MonoRail.Views.AspView.ViewAtDesignTime"" %>
@@ -37,10 +36,10 @@ namespace ViewUpgrader.Tests
 <%=someIntegerWithDefaultValue%>
 ";
 			string actual = Transformer.TransformPropertyDecleration(input);
-			Assert.AreEqual(expected, actual);
+			Assert.Equal(expected, actual);
 		}
 
-		[Test]
+		[Fact]
 		public void TransformSubViewProperties_WhenInputIsView_Transforms()
 		{
 			string input = @"<%@ Page Language=""C#"" Inherits=""Castle.MonoRail.Views.AspView.ViewAtDesignTime"" %>
@@ -82,18 +81,18 @@ End of normal view
 <input type=""submit"" value=""send"" />
 </form>";
 			string actual = Transformer.TransformSubViewProperties(input);
-			Assert.AreEqual(expected, actual);
+			Assert.Equal(expected, actual);
 		}
 
-		[Test]
+		[Fact]
 		public void TransformPropertyDecleration_WhenInputIsNotView_ReturnsInput()
 		{
 			string input = @"Not a view";
 			string actual = Transformer.TransformPropertyDecleration(input);
-			Assert.AreEqual(input, actual);
+			Assert.Equal(input, actual);
 		}
 
-		[Test]
+		[Fact]
 		public void TransformPropertyDecleration_WhenInputHasAlreadyBeenTransformed_ReturnsInput()
 		{
 			string input = @"<%@ Page Language=""C#"" Inherits=""Castle.MonoRail.Views.AspView.ViewAtDesignTime"" %>
@@ -105,18 +104,18 @@ End of normal view
 <%=someIntegerWithDefaultValue%>
 ";
 			string actual = Transformer.TransformPropertyDecleration(input);
-			Assert.AreEqual(input, actual);
+			Assert.Equal(input, actual);
 		}
 
-		[Test]
+		[Fact]
 		public void TransformSubViewProperties_WhenInputIsNotView_ReturnsInput()
 		{
 			string input = @"Not a view";
 			string actual = Transformer.TransformSubViewProperties(input);
-			Assert.AreEqual(input, actual);
+			Assert.Equal(input, actual);
 		}
 
-		[Test]
+		[Fact]
 		public void TransformSubViewProperties_WhenInputHasAlreadyBeenTransformed_Transforms()
 		{
 			string input = @"<%@ Page Language=""C#"" Inherits=""Castle.MonoRail.Views.AspView.ViewAtDesignTime"" %>
@@ -139,7 +138,7 @@ End of normal view
 <input type=""submit"" value=""send"" />
 </form>";
 			string actual = Transformer.TransformSubViewProperties(input);
-			Assert.AreEqual(input, actual);
+			Assert.Equal(input, actual);
 		}
 	}
 }
