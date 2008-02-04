@@ -7962,6 +7962,19 @@
             <param name="attributes">Attributes for the FormHelper method and for the html element it generates</param>
             <returns>The generated form element</returns>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.TextFieldAutoComplete(System.String,System.String,System.Collections.IDictionary,System.Collections.IDictionary)">
+            <summary>
+            Combines <see cref="M:Castle.MonoRail.Framework.Helpers.AjaxHelper.InputTextWithAutoCompletion(System.String,System.String,System.Collections.IDictionary,System.Collections.IDictionary)"/>
+            with <see cref="M:Castle.MonoRail.Framework.Helpers.FormHelper.TextField(System.String,System.Collections.IDictionary)"/> to achieve an TextField that offers
+            both input completion and databinding support.
+            </summary>
+            <param name="target">The target of the text field (analogous to <see cref="M:Castle.MonoRail.Framework.Helpers.FormHelper.TextField(System.String,System.Collections.IDictionary)"/>)</param>
+            <param name="url">The url to call for completion options (analogous to <see cref="M:Castle.MonoRail.Framework.Helpers.AjaxHelper.InputTextWithAutoCompletion(System.String,System.String,System.Collections.IDictionary,System.Collections.IDictionary)"/>)</param>
+            <param name="tagAttributes">The attributes to apply to the text input field. If this dictionary does not contain a value for browser-based autocompletion (autocomplete="off|on"), it will default to "off" to prevent interference of AJAX-based and browser-based autocompletion.</param>
+            <param name="completionOptions">The options for the AJAX-call analogous to <see cref="M:Castle.MonoRail.Framework.Helpers.AjaxHelper.InputTextWithAutoCompletion(System.String,System.String,System.Collections.IDictionary,System.Collections.IDictionary)"/>.</param>
+            <returns>The generated form elements.</returns>
+            <remarks>Please note that this function requires Ajax scripts (Prototype/Scriptaculous)</remarks>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.FilteredTextField(System.String,System.Collections.IDictionary)">
             <summary>
             Generates an input text element with a javascript that prevents the 
@@ -8375,6 +8388,18 @@
             <param name="item"></param>
             <param name="attributes">Attributes for the FormHelper method and for the html element it generates</param>
             <returns>The generated form element</returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.CheckboxLabel(System.Int32,System.String,System.String,System.String,System.Collections.IDictionary)">
+            <summary>
+            Creates a label for an item of the checkbox list (internal use). The method mirrors
+            <see cref="M:Castle.MonoRail.Framework.Helpers.FormHelper.CheckboxItem(System.Int32,System.String,System.String,Castle.MonoRail.Framework.Helpers.SetItem,System.Collections.IDictionary)"/> to ensure that the HTML ID is created consistently.
+            </summary>
+            <param name="index">Index for creating HTML ID</param>
+            <param name="target">Target object for which the HTML ID is needed</param>
+            <param name="suffix"></param>
+            <param name="label">The label to display</param>
+            <param name="attributes">additional attributes that influence HTML ID creation</param>
+            <returns></returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.CheckboxField(System.String)">
             <summary>
@@ -8847,6 +8872,23 @@
             </summary>
             <param name="id">The element id</param>
             <returns>The generated input element</returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.CheckboxList.LabelFor(System.String)">
+            <summary>
+            Outputs a label for the current checkbox element based on the generated id. 
+            <seealso cref="M:Castle.MonoRail.Framework.Helpers.FormHelper.CreateCheckboxList(System.String,System.Collections.IEnumerable,System.Collections.IDictionary)"/>
+            </summary>
+            <param name="label">The text to display</param>
+            <returns>The generated label element</returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.CheckboxList.LabelFor(System.String,System.String)">
+            <summary>
+            Outputs a label for the current checkbox element based on the given id.
+            <seealso cref="M:Castle.MonoRail.Framework.Helpers.FormHelper.CreateCheckboxList(System.String,System.Collections.IEnumerable,System.Collections.IDictionary)"/>
+            </summary>
+            <param name="id">The id to use within the label</param>
+            <param name="label">The text to display</param>
+            <returns>The generated label element</returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.CheckboxList.GetEnumerator">
             <summary>
@@ -22684,6 +22726,22 @@
             <value>
             	<c>true</c> if this instance has items to keep; otherwise, <c>false</c>.
             </value>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.HelperDictionary">
+            <summary>
+            Dictionary containing helpers.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.HelperDictionary.#ctor">
+            <summary>
+            Instatiates a new HelperDictionary.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.HelperDictionary.Add(System.Object)">
+            <summary>
+            Adds the supplied helper using the standard key naming rules.
+            </summary>
+            <param name="helper">The helper to be added</param>
         </member>
         <member name="T:Castle.MonoRail.Framework.ControllerHandler">
             <summary>

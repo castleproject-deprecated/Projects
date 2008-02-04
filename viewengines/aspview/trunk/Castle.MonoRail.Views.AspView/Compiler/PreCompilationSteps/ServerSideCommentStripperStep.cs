@@ -16,32 +16,28 @@
 
 namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 {
-	using System.Collections.Generic;
+	using System.Text.RegularExpressions;
 
 	/// <summary>
-	/// Providing the default ordered list of compilation steps for the AspView precompiler
+	/// Strips any server side comment (&lt;%-- --%&gt;) found in the view template
 	/// </summary>
-	public class DefaultPreCompilationStepsProvider : IPreCompilationStepsProvider
+	public class ServerSideCommentStripperStep : IPreCompilationStep 
 	{
+		#region IPreCompilationStep Members
+
 		/// <summary>
-		/// Get the precompilation steps
+		/// Performs server side comment stripping
 		/// </summary>
-		/// <returns>Array of pre-compilation steps</returns>
-		public ICollection<IPreCompilationStep> GetSteps()
+		/// <param name="file">The source file object to act upon.</param>
+		void IPreCompilationStep.Process(SourceFile file) 
 		{
-			return new IPreCompilationStep[] {
-				new ServerSideCommentStripperStep(),
-				new DetermineBaseClassStep(),
-				new ImportStatementsStep(),
-				new ProcessPropertiesStep(),
-				new MarkupTransformationsStep(),
-				new SubViewTagsStep(),
-				new ViewFilterTagsStep(),
-				new ViewComponentTagsStep(),
-				new EmbededServerScriptStep(),
-				new ProcessViewBodyStep(),
-				new RenderConcreteClassStep()
-			};
+			file.RenderBody = Internal.RegularExpressions.ServerSideComment.Replace(
+				file.RenderBody,
+				string.Empty
+			);
+			
 		}
+
+		#endregion
 	}
 }

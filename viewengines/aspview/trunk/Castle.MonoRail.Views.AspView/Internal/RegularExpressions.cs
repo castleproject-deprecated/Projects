@@ -73,6 +73,8 @@ namespace Castle.MonoRail.Views.AspView.Internal
 		public static readonly Regex InlineOutputDirective = new Regex(
 @"\${(?<content>[\s\w\.\(\)\[\]""]+)}", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
+		public static readonly Regex ServerSideComment = new Regex(
+@"<%--(?<content>((?!--%>).)*)--%>", RegexOptions.Compiled | RegexOptions.Singleline);
 	}
 
 }
