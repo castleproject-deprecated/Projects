@@ -37,7 +37,7 @@ namespace Castle.MonoRail.Views.AspView.Internal
 @"<subView:(?<viewName>[\w\.]+)" + attributesBlock + @">\s*</subView:\k<viewName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 		public static readonly Regex Attributes = new Regex(
-@"\s*(?<name>\w+)\s*=\s*""(?<value>[\w.]*|\s*<%=\s*[\w\.\(\)\[\]""]+\s*%>\s*)""\s*");
+@"\s*(?<name>\w+)\s*=\s*""(?<value>(\s*<%=\s*[\w\.\(\)\[\]""]+\s*%>\s*)|([^""]*))""\s*");
 
 		public static readonly Regex ViewFiltersTags = new Regex("<filter:(?<filterName>\\w+)>(?<content>.*)</filter:\\k<filterName>>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
@@ -64,7 +64,7 @@ namespace Castle.MonoRail.Views.AspView.Internal
 (?<script><%(?<statement>((?!<%).)*)%>)?", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.Singleline);
 
 		private const string attributesBlock =
-@"(?<attributes>(\s*\w+=""[<][%]=\s*[\w\.\(\)\[\]""]+\s*[%][>]""|\s*\w+=""[\w.]*""|\s*)*)";
+@"(?<attributes>(\s*\w+=""[<][%]=\s*[\w\.\(\)\[\]""]+\s*[%][>]""|\s*\w+=""[^""]*""|\s*)*)";
 
 
 		public static readonly Regex EmbededServerScriptBlock = new Regex(
