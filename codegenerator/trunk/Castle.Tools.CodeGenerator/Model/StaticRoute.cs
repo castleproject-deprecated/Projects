@@ -63,7 +63,7 @@ namespace Castle.Tools.CodeGenerator.Model
 
 			for (int i = 0; i < parts.Length; i++)
 			{
-				if (parts[i] != routeParts[i])
+				if (string.Compare(parts[i], routeParts[i], true) != 0)
 				{
 					return false;
 				}
