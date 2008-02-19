@@ -1,0 +1,156 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5797C3B2-2994-42F4-9FCE-12B288A8A1E8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Castle.MonoRail.Views.AspView.Tests</RootNamespace>
+    <AssemblyName>Castle.MonoRail.Views.AspView.Tests</AssemblyName>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Run vcompile in Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Run vcompile in Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\Lib\Castle\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\Lib\Castle\Castle.MonoRail.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.TestSupport, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\Lib\Castle\Castle.MonoRail.TestSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="CompiledViews, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\AspViewTestSite\bin\CompiledViews.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="xunit, Version=1.0.0.1105, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\Tools\xunit\xunit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Compiler\MarkupTransformers\AbstractMarkupTransformerTestFixture.cs" />
+    <Compile Include="Compiler\MarkupTransformers\FullSiteRootMarkupTransformerTestFixture.cs" />
+    <Compile Include="Compiler\MarkupTransformers\SiteRootMarkupTransformerTestFixture.cs" />
+    <Compile Include="Compiler\MarkupTransformers\InlineOutputDirectiveMarkupTransformerTestFixture.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\ProcessServerScriptPropertiesStepTestFixture.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\ServerSideCommentStripperStepTestFixture.cs" />
+    <Compile Include="Compiler\StatementProcessors\OutputMethodGenerators\OutputMethodGeneratorFixture.cs" />
+    <Compile Include="Compiler\StatementProcessors\OutputMethodGenerators\EncodedOutputMethodGeneratorFixture.cs" />
+    <Compile Include="Compiler\StatementProcessors\SharpStatementProcessorFixture.cs" />
+    <Compile Include="Compiler\StatementProcessors\EqualsAndParenthesisStatementProcessorFixture.cs" />
+    <Compile Include="Compiler\StatementProcessors\EqualsStatementProcessorFixture.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\AbstractPreCompilationStepTestFixture.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\DefaultStepsProviderIntegrationTestFixture.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\EmbededServerScriptStepTestFixture.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\MarkupTransformationsStepTestFixture.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\RenderConcreteClassStepTestFixture.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\ScriptToCodeTransformerTestFixture.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\ViewComponentTagsStepTestFixture.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\ViewFilterTagsStepTestFixture.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\SubViewTagsStepTestFixture.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\ProcessPropertiesStepTestFixture.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Engine\ViewEngineTestCase.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\ImportStatementsStepTestFixture.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\DetermineBaseClassStepTestFixture.cs" />
+    <Compile Include="Stubs\ControllerContextStub.cs" />
+    <Compile Include="Stubs\StubController.cs" />
+    <Compile Include="Stubs\StubView.cs" />
+    <Compile Include="ViewTests\AbstractViewTestFixture.cs" />
+    <Compile Include="ViewTests\CaptureForRelatedTestFixture.cs" />
+    <Compile Include="ViewTests\AbstractViewComponentsTestFixture.cs" />
+    <Compile Include="ViewTests\TypedPropertiesTestFixture.cs" />
+    <Compile Include="ViewTests\ViewComponentsTestFixture.cs" />
+    <Compile Include="ViewTests\SubViewsTestFixture.cs" />
+    <Compile Include="ViewTests\LayoutsTestFixture.cs" />
+    <Compile Include="ViewTests\SimpleViewTestFixture.cs" />
+    <Compile Include="ViewTests\ViewComponents\BodyRendererViewComponent.cs" />
+    <Compile Include="ViewTests\ViewComponents\SectionsRendererViewComponent.cs" />
+    <Compile Include="ViewTests\ViewComponents\TextAndViewRendererViewComponent.cs" />
+    <Compile Include="ViewTests\ViewComponents\ViewRendererViewComponent.cs" />
+    <Compile Include="ViewTests\ViewComponents\TextRendererViewComponent.cs" />
+    <Compile Include="ViewTests\Views\IAmSimple.cs" />
+    <Compile Include="ViewTests\Views\WithTypedProperties.cs" />
+    <Compile Include="ViewTests\Views\OuterLayout.cs" />
+    <Compile Include="ViewTests\Views\UsingBubbledCaptureFromSubView.cs" />
+    <Compile Include="ViewTests\Views\LayoutUsesCaptureFor.cs" />
+    <Compile Include="ViewTests\Views\WithCaptureFor.cs" />
+    <Compile Include="ViewTests\Views\WithComponentAndSections.cs" />
+    <Compile Include="ViewTests\Views\WithComponentAndBody.cs" />
+    <Compile Include="ViewTests\Views\WithComponent.cs" />
+    <Compile Include="ViewTests\Views\LayoutWithSubView.cs" />
+    <Compile Include="ViewTests\Views\WithSubViewWithParameters.cs" />
+    <Compile Include="ViewTests\Views\WithPropertyAndWithSubViewWithParameters.cs" />
+    <Compile Include="ViewTests\Views\WithProperty.cs" />
+    <Compile Include="ViewTests\Views\WithSubView.cs" />
+    <Compile Include="ViewTests\Views\SimpleView.cs" />
+    <Compile Include="ViewTests\Views\SimplestLayout.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Castle.MonoRail.Views.AspView\Castle.MonoRail.Views.AspView.csproj">
+      <Project>{41B2C873-254B-4BC5-8514-AD33ED3B5934}</Project>
+      <Name>Castle.MonoRail.Views.AspView</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+</Project>
