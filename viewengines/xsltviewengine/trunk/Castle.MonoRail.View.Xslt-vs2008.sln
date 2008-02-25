@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.View.Xslt.Example", "Castle.MonoRail.View.Example\Castle.MonoRail.View.Xslt.Example.csproj", "{83C0DF44-9ACB-42AD-8759-0356532DF416}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.View.Xslt", "Castle.MonoRail.View.Xslt\Castle.MonoRail.View.Xslt.csproj", "{54026AB2-CC5B-45A8-9F0B-09C8F7565A4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.View.Xslt.NativeEngine", "Castle.MonoRail.View.Xslt.NativeEngine\Castle.MonoRail.View.Xslt.NativeEngine.csproj", "{A0F05BE9-E9D2-4D06-9D31-7E9DDCE4A450}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83C0DF44-9ACB-42AD-8759-0356532DF416}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83C0DF44-9ACB-42AD-8759-0356532DF416}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83C0DF44-9ACB-42AD-8759-0356532DF416}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83C0DF44-9ACB-42AD-8759-0356532DF416}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54026AB2-CC5B-45A8-9F0B-09C8F7565A4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54026AB2-CC5B-45A8-9F0B-09C8F7565A4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54026AB2-CC5B-45A8-9F0B-09C8F7565A4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54026AB2-CC5B-45A8-9F0B-09C8F7565A4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0F05BE9-E9D2-4D06-9D31-7E9DDCE4A450}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0F05BE9-E9D2-4D06-9D31-7E9DDCE4A450}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0F05BE9-E9D2-4D06-9D31-7E9DDCE4A450}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0F05BE9-E9D2-4D06-9D31-7E9DDCE4A450}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

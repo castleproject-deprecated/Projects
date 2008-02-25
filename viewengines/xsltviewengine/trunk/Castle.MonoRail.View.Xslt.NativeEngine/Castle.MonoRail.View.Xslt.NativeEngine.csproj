@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A0F05BE9-E9D2-4D06-9D31-7E9DDCE4A450}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Castle.MonoRail.View.Xslt.NativeEngine</RootNamespace>
+    <AssemblyName>Castle.MonoRail.View.Xslt.NativeEngine</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\castleproject-1.1-build_642-net-2.0-debug\bin\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdapterBuilder\AdapterBase.cs" />
+    <Compile Include="AdapterBuilder\AdapterBuilderStageContext.cs" />
+    <Compile Include="AdapterBuilder\DynamicAdapterCachingBuilder.cs" />
+    <Compile Include="AdapterBuilder\Stages\AddIDicitionaryConversionLogicStage.cs" />
+    <Compile Include="AdapterBuilder\Stages\CopyParametersAndReturnTypeStage.cs" />
+    <Compile Include="AdapterBuilder\Stages\CopyReturnTypeStage.cs" />
+    <Compile Include="AdapterBuilder\Stages\CorrectIDictionaryMethodInvocationParamsStage.cs" />
+    <Compile Include="AdapterBuilder\Stages\DictionaryParameterToXPathNavigableStage.cs" />
+    <Compile Include="AdapterBuilder\IDynamicAdapterBuilderStage.cs" />
+    <Compile Include="AdapterBuilder\Stages\InitMethodInvocationParamsStage.cs" />
+    <Compile Include="AdapterBuilder\Stages\InvokeMethodStage.cs" />
+    <Compile Include="AdapterBuilder\Stages\ReturnStage.cs" />
+    <Compile Include="AdapterBuilder\Stages\SetupEmitterStage.cs" />
+    <Compile Include="HelperTransformationBuilder.cs" />
+    <Compile Include="HelperTransformationResolver.cs" />
+    <Compile Include="AdapterBuilder\DynamicAdapterBuilder.cs" />
+    <Compile Include="XsltEngine.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XsltTransform.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Castle.MonoRail.View.Xslt\Castle.MonoRail.View.Xslt.csproj">
+      <Project>{54026AB2-CC5B-45A8-9F0B-09C8F7565A4F}</Project>
+      <Name>Castle.MonoRail.View.Xslt</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
