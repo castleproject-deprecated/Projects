@@ -33,27 +33,31 @@
   <ItemGroup>
     <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\castleproject-1.1-build_642-net-2.0-debug\bin\Castle.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\castleproject-1.1-build_642-net-2.0-debug\bin\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.MonoRail.Framework, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\castleproject-1.1-build_642-net-2.0-debug\bin\Castle.MonoRail.Framework.dll</HintPath>
+      <HintPath>..\..\..\..\..\castleproject-1.1-build_642-net-2.0-debug\bin\Castle.MonoRail.Framework.dll</HintPath>
     </Reference>
     <Reference Include="sdf.XPath, Version=1.4.0.6, Culture=neutral, PublicKeyToken=e289c8c5614bc0f1">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\sdf.XPath\sdf.XPath.dll</HintPath>
+      <HintPath>..\..\..\..\..\sdf.XPath\sdf.XPath.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IXsltEngine.cs" />
+    <Compile Include="IXsltTemplateResolver.cs" />
     <Compile Include="IXsltTransform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XsltPipeline.cs" />
     <Compile Include="XsltPipelineStage.cs" />
     <Compile Include="XsltPipelineStageEventArgs.cs" />
+    <Compile Include="XsltReflectionHelper.cs" />
     <Compile Include="XsltTemplateStore.cs" />
+    <Compile Include="XsltTemplateStoreBasedXsltTemplateResolver.cs" />
     <Compile Include="XsltTransformationArguments.cs" />
     <Compile Include="XsltTransformationParameter.cs" />
     <Compile Include="XsltViewEngine.cs" />

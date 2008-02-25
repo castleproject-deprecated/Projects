@@ -1,4 +1,4 @@
-// Copyright 2004-2006 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2008 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,14 +18,9 @@ namespace Castle.MonoRail.Framework.View.Xslt
 	using System.IO;
 	using System.Xml;
 	using System.Collections.Generic;
-	using System.Xml.Serialization;
-	using System.Reflection;
-	using System.Collections;
-	using System.Diagnostics;
-	using System.Text;
 	using System.Xml.XPath;
-	using Castle.MonoRail.Framework.Helpers;
 	using sdf.XPath;
+
 
 	/// <summary>
 	/// 
@@ -60,7 +55,7 @@ namespace Castle.MonoRail.Framework.View.Xslt
 			//Instantiate the IXsltEngine
 			//TODO: put in configuration somewhere
 			//Type xsltEngineType = Type.GetType("Castle.MonoRail.View.Xslt.Saxon.XsltEngine, Castle.MonoRail.View.Xslt.Saxon");
-			Type xsltEngineType = Type.GetType("Castle.MonoRail.View.Xslt.NativeEngine.XsltEngine, Castle.MonoRail.View.Xslt.NativeEngine");
+			Type xsltEngineType = Type.GetType("Castle.MonoRail.Framework.View.Xslt.NativeEngine.XsltEngine, Castle.MonoRail.View.Xslt.NativeEngine");
 			_xsltEngine = Activator.CreateInstance(xsltEngineType) as IXsltEngine;
 		}
 
@@ -146,7 +141,14 @@ namespace Castle.MonoRail.Framework.View.Xslt
 			{
 				pipeline.AddStage(new XsltPipelineStage(TemplateStore.LoadTemplate(@"layouts\" + controller.LayoutName, arguments)));
 			}
-
+			string xhtmlDocType = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">";
+			if (XHtmlRendering)
+			{
+				using (StreamWriter writer = new StreamWriter(context.Response.OutputStream))
+                {
+					writer.WriteLine(xhtmlDocType);
+                }
+			}
 			//Execute pipeline
 			pipeline.Execute(InputDocument, new XmlTextWriter(context.Response.Output));
 		}
@@ -220,7 +222,8 @@ namespace Castle.MonoRail.Framework.View.Xslt
 				arguments.AddExtensionObject(helper);
 				extensions.Add(name);
 			}
-			
+
+			arguments.AddExtensionObject(new XsltReflectionHelper());
 			
 		}
 
@@ -257,8 +260,17 @@ namespace Castle.MonoRail.Framework.View.Xslt
 			if (context.Flash.Keys.Count == 0) return;
 
 				ObjectXPathContext ocontext = new ObjectXPathContext();
+				//For each object in the flash build an ObjectXPathNavigator to
+				//create an XPath-able represenation of that object
+				foreach (String key in context.Flash.Keys)
+				{
+					object value = context.Flash[key];
 
-			arguments.AddParam(Flash.FlashKey, string.Empty, ocontext.CreateNavigator(context.Flash));
+					if (value != null)
+					{
+						arguments.AddParam(key, string.Empty, ocontext.CreateNavigator(value));
+					}
+				}
 		}
 
 		/// <summary>
@@ -316,4 +328,5 @@ namespace Castle.MonoRail.Framework.View.Xslt
 		}
 	}
 }
+
 

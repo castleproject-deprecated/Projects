@@ -1,5 +1,5 @@
 
-namespace Castle.MonoRail.View.Xslt.NativeEngine.AdapterBuilder
+namespace Castle.MonoRail.Framework.View.Xslt.NativeEngine.AdapterBuilder
 {
 
 	using System.Xml.XPath;
@@ -7,7 +7,7 @@ namespace Castle.MonoRail.View.Xslt.NativeEngine.AdapterBuilder
 	using System;
 	using Castle.DynamicProxy.Generators.Emitters;
 	using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-	using Castle.MonoRail.View.Xslt.NativeEngine.AdapterBuilder.Stages;
+	using Castle.MonoRail.Framework.View.Xslt.NativeEngine.AdapterBuilder.Stages;
 	using System.Collections.Generic;
 	using System.Reflection;
 	using Castle.DynamicProxy;

@@ -52,7 +52,7 @@
     </Reference>
     <Reference Include="Castle.MonoRail.Framework, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\castleproject-1.1-build_642-net-2.0-debug\bin\Castle.MonoRail.Framework.dll</HintPath>
+      <HintPath>..\..\..\..\..\castleproject-1.1-build_642-net-2.0-debug\bin\Castle.MonoRail.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -81,11 +81,11 @@
     <Content Include="Views\rescues\generalerror.xslt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="E:\Project1\Castle.MonoRail.View.Xslt.NativeEngine\Castle.MonoRail.View.Xslt.NativeEngine.csproj">
+    <ProjectReference Include="..\Castle.MonoRail.View.Xslt.NativeEngine\Castle.MonoRail.View.Xslt.NativeEngine.csproj">
       <Project>{A0F05BE9-E9D2-4D06-9D31-7E9DDCE4A450}</Project>
       <Name>Castle.MonoRail.View.Xslt.NativeEngine</Name>
     </ProjectReference>
-    <ProjectReference Include="E:\Project1\Castle.MonoRail.View.Xslt\Castle.MonoRail.View.Xslt.csproj">
+    <ProjectReference Include="..\Castle.MonoRail.View.Xslt\Castle.MonoRail.View.Xslt.csproj">
       <Project>{54026AB2-CC5B-45A8-9F0B-09C8F7565A4F}</Project>
       <Name>Castle.MonoRail.View.Xslt</Name>
     </ProjectReference>
