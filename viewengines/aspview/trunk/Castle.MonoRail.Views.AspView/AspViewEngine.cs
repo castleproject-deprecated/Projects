@@ -21,16 +21,18 @@ namespace Castle.MonoRail.Views.AspView
 	using System.IO;
 	using System.Configuration;
 	using System.Reflection;
+	using System.Runtime.Serialization;
+	using System.Text.RegularExpressions;
 
 	using Framework;
 	using Core;
-	using System.Runtime.Serialization;
 
 	public class AspViewEngine : ViewEngineBase, IInitializable, IAspViewEngineTestAccess
 	{
 		static bool needsRecompiling = false;
 		static AspViewEngineOptions options;
 		string siteRoot;
+		static readonly Regex invalidClassNameCharacters = new Regex("[^a-zA-Z0-9\\-*#=/\\\\_.]", RegexOptions.Compiled); 
 
 		readonly Hashtable compilations = Hashtable.Synchronized(new Hashtable(CaseInsensitiveStringComparer.Default));
 
@@ -246,9 +248,16 @@ namespace Castle.MonoRail.Views.AspView
 			if (fileName.EndsWith(".aspx"))
 				fileName = fileName.Substring(0, fileName.Length - 5);
 
+			fileName = invalidClassNameCharacters.Replace(fileName, "_");
+
 			string className = fileName
 				.Replace('\\', '_')
 				.Replace('/', '_')
+				.Replace("-", "_dash_")
+				.Replace("=", "_equals_")
+				.Replace("*", "_star_")
+				.Replace("#", "_sharp_")
+				.Replace("=", "_equals_")
 				.TrimStart('_')
 				.Replace('.', '_');
 
