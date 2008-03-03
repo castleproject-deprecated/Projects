@@ -13,8 +13,7 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 	{
 		public const string engineContextFieldName = "engineContext";
 
-		private static CodeTypeDeclaration routesType = null;
-		private static CodeTypeDeclaration routeDefinitionsType = null;
+		private CodeTypeDeclaration routesType = null;
 		
 		public RouteMapGenerator(ILogger logger, ISourceGenerator source, INamingService naming, string targetNamespace,
 		                         string serviceType) : base(logger, source, naming, targetNamespace, serviceType)
@@ -102,10 +101,7 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 		{
 			get
 			{
-				if (routeDefinitionsType == null)
-					routeDefinitionsType = GetParentType("RouteDefinitions");
-
-				return routeDefinitionsType;
+				return GetParentType("RouteDefinitions");
 			}
 		}
 	}

@@ -13,7 +13,7 @@ namespace Castle.Tools.CodeGenerator.Services
 			MethodInfo method = GetType().GetMethod("Visit", new Type[] {type});
 			if (method != null)
 			{
-				method.Invoke(this, new object[] {node});
+				method.Invoke(this, new object[] { node });
 			}
 		}
 

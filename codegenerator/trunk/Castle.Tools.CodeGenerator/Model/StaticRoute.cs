@@ -33,8 +33,9 @@ namespace Castle.Tools.CodeGenerator.Model
 			get { return routeName; }
 		}
 
-		public string CreateUrl(string hostname, string virtualPath, IDictionary parameters)
+		public string CreateUrl(string hostname, string virtualPath, IDictionary parameters, out int points)
 		{
+			points = 0;
 			if ((parameters["area"] != area) || (parameters["controller"] != controller) || (parameters["action"] != action))
 				return null;
 
@@ -49,23 +50,24 @@ namespace Castle.Tools.CodeGenerator.Model
 
 			AppendSlash(text);
 
+			points = 100;
 			return text.ToString();
 		}
 
-		public bool Matches(string url, IRouteContext context, RouteMatch match)
+		public int Matches(string url, IRouteContext context, RouteMatch match)
 		{
 			string[] parts = GetParts(url);
 
 			if (parts.Length != routeParts.Length)
 			{
-				return false;
+				return 0;
 			}
 
 			for (int i = 0; i < parts.Length; i++)
 			{
 				if (string.Compare(parts[i], routeParts[i], true) != 0)
 				{
-					return false;
+					return 0;
 				}
 			}
 
@@ -73,7 +75,7 @@ namespace Castle.Tools.CodeGenerator.Model
 			match.Parameters.Add("controller", controller);
 			match.Parameters.Add("action", action);
 
-			return true;
+			return 100;
 		}
 
 		private static void AppendSlash(StringBuilder text)
