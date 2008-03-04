@@ -245,7 +245,21 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 			if (results.Errors.Count > 0)
 			{
 				StringBuilder message = new StringBuilder();
-				using (CSharpCodeProvider cSharpCodeProvider = new CSharpCodeProvider())
+				CodeDomProvider cSharpCodeProvider;
+				try
+				{
+					cSharpCodeProvider = CodeDomProvider.GetCompilerInfo("csharp").CreateProvider();
+				}
+				catch (SecurityException)
+				{
+					cSharpCodeProvider = new CSharpCodeProvider();
+				}
+				catch (ConfigurationException)
+				{
+					cSharpCodeProvider = new CSharpCodeProvider();
+				}
+
+				try
 				{
 					foreach (SourceFile file in files)
 					{
@@ -264,6 +278,10 @@ On '{0}' (class name: {1}) Line {2}, Column {3}, {4} {5}:
 								err.ErrorNumber,
 								err.ErrorText));
 					}
+				}
+				finally
+				{
+					cSharpCodeProvider.Dispose();
 				}
 				throw new Exception("Error while compiling views: " + message);
 			}
