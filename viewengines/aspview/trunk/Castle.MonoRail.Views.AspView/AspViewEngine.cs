@@ -34,7 +34,7 @@ namespace Castle.MonoRail.Views.AspView
 		string siteRoot;
 		static readonly Regex invalidClassNameCharacters = new Regex("[^a-zA-Z0-9\\-*#=/\\\\_.]", RegexOptions.Compiled); 
 
-		readonly Hashtable compilations = Hashtable.Synchronized(new Hashtable(CaseInsensitiveStringComparer.Default));
+		readonly Hashtable compilations = Hashtable.Synchronized(new Hashtable(StringComparer.InvariantCultureIgnoreCase));
 
 		#region IAspViewEngineTestAccess
 		Hashtable IAspViewEngineTestAccess.Compilations

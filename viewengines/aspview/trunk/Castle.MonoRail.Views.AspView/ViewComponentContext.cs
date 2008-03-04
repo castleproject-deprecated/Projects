@@ -54,7 +54,7 @@ namespace Castle.MonoRail.Views.AspView
 		/// <param name="arguments">The arguments.</param>
 		public ViewComponentContext(IViewBaseInternal callingView, ViewComponentSectionRendereDelegate body,
 										 string name, params object[] arguments)
-			: this(callingView, body, name, (IDictionary)Utilities.ConvertArgumentsToParameters(arguments)) { }
+			: this(callingView, body, name, Utilities.ConvertArgumentsToParameters(arguments)) { }
 
 		public ViewComponentSectionRendereDelegate Body
 		{

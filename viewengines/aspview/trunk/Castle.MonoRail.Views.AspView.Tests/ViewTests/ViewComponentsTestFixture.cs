@@ -127,6 +127,29 @@ Parent";
 			AssertViewOutputEqualsToExpected();
 		}
 
+		
+		[Fact]
+		public void WithViewComponent_ParameterNamesAreCaseInsentive() {
+
+			// if component parameter's names where case sensitive 
+			// WithMandatoryParameterViewComponent would throw because 'Text' parameter was not set
+
+			#region test context var
+			string text = "insensitive check pass";
+			#endregion
+			
+			RegisterComponent("withmandatoryparameter", typeof(WithMandatoryParameterViewComponent));
+		
+			InitializeView(typeof(WithComponentWithParameter));
+			
+			view.Properties["text"] = text;
+			
+			view.Process();
+
+			expected = text;
+			AssertViewOutputEqualsToExpected();
+
+		}
 		/*
 component with subview in view
 component with subview in section

@@ -115,8 +115,9 @@
     <Compile Include="ViewTests\ViewComponents\SectionsRendererViewComponent.cs" />
     <Compile Include="ViewTests\ViewComponents\TextAndViewRendererViewComponent.cs" />
     <Compile Include="ViewTests\ViewComponents\ViewRendererViewComponent.cs" />
-    <Compile Include="ViewTests\ViewComponents\TextRendererViewComponent.cs" />
-    <Compile Include="ViewTests\Views\IAmSimple.cs" />
+		<Compile Include="ViewTests\ViewComponents\TextRendererViewComponent.cs" />
+		<Compile Include="ViewTests\ViewComponents\WithMandatoryParameterViewComponent.cs" />
+		<Compile Include="ViewTests\Views\IAmSimple.cs" />
     <Compile Include="ViewTests\Views\WithTypedProperties.cs" />
     <Compile Include="ViewTests\Views\OuterLayout.cs" />
     <Compile Include="ViewTests\Views\UsingBubbledCaptureFromSubView.cs" />
@@ -124,8 +125,9 @@
     <Compile Include="ViewTests\Views\WithCaptureFor.cs" />
     <Compile Include="ViewTests\Views\WithComponentAndSections.cs" />
     <Compile Include="ViewTests\Views\WithComponentAndBody.cs" />
-    <Compile Include="ViewTests\Views\WithComponent.cs" />
-    <Compile Include="ViewTests\Views\LayoutWithSubView.cs" />
+		<Compile Include="ViewTests\Views\WithComponent.cs" />
+		<Compile Include="ViewTests\Views\WithComponentWithParameter.cs" />
+		<Compile Include="ViewTests\Views\LayoutWithSubView.cs" />
     <Compile Include="ViewTests\Views\WithSubViewWithParameters.cs" />
     <Compile Include="ViewTests\Views\WithPropertyAndWithSubViewWithParameters.cs" />
     <Compile Include="ViewTests\Views\WithProperty.cs" />

@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections;
+using Castle.MonoRail.Framework.Helpers;
+
 namespace Castle.MonoRail.Views.AspView
 {
-	using System.Collections.Generic;
-	using Framework;
-
 	internal static class Utilities
 	{
-		internal static IDictionary<string, object> ConvertArgumentsToParameters(object[] arguments)
+		internal static IDictionary ConvertArgumentsToParameters(object[] arguments)
 		{
 			if (arguments.Length % 2 != 0)
 				throw new AspViewException("Parameters should be arranged as key and value pairs");
 			int i = 0;
-			IDictionary<string, object> parameters = new Dictionary<string, object>(arguments.Length / 2, CaseInsensitiveStringComparer.Default);
+			IDictionary parameters = new DictHelper.MonoRailDictionary();
 			while (i < arguments.Length)
 			{
 				string name = arguments[i] as string;

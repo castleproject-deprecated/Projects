@@ -107,6 +107,8 @@
     <Compile Include="ViewTests\ViewComponents\TextAndViewRendererViewComponent.cs" />
     <Compile Include="ViewTests\ViewComponents\ViewRendererViewComponent.cs" />
     <Compile Include="ViewTests\ViewComponents\TextRendererViewComponent.cs" />
+    <Compile Include="ViewTests\ViewComponents\WithMandatoryParameterViewComponent.cs" />
+    <Compile Include="ViewTests\Views\WithComponentWithParameter.cs" />
     <Compile Include="ViewTests\Views\IAmSimple.cs" />
     <Compile Include="ViewTests\Views\WithTypedProperties.cs" />
     <Compile Include="ViewTests\Views\OuterLayout.cs" />

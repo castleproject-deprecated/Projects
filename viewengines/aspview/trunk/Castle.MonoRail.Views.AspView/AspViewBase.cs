@@ -16,6 +16,9 @@
 
 #endregion
 
+using System.Collections.Specialized;
+using Castle.MonoRail.Framework.Helpers;
+
 namespace Castle.MonoRail.Views.AspView
 {
 	using System;
@@ -44,7 +47,7 @@ namespace Castle.MonoRail.Views.AspView
 		private Stack<TextWriter> outputWriters;
 
 		private IViewBase parentView;
-		private IDictionary<string, object> properties;
+		private IDictionary properties;
 		private string viewContents;
 		private AspViewEngine viewEngine;
 
@@ -110,12 +113,12 @@ namespace Castle.MonoRail.Views.AspView
 		/// <param name="otherView">The view to gather the bubbling properties from</param>
 		protected void GatherBubblingPropertiesFrom(IViewBase otherView)
 		{
-			foreach (KeyValuePair<string, object> entry in otherView.Properties)
+			foreach (string key in otherView.Properties.Keys)
 			{
-				if (!otherView.Properties.ContainsKey(entry.Key + ".@bubbleUp"))
+				if (!otherView.Properties.Contains(key + ".@bubbleUp"))
 					continue;
-				properties[entry.Key] = entry.Value;
-				properties[entry.Key + ".@bubbleUp"] = true;
+				properties[key] = otherView.Properties[key];
+				properties[key + ".@bubbleUp"] = true;
 			}
 		}
 
@@ -290,7 +293,7 @@ namespace Castle.MonoRail.Views.AspView
 		/// <returns>True if the property is found, False elsewhere</returns>
 		protected bool TryGetParameter(string parameterName, out object parameter, object defaultValue)
 		{
-			if (properties.ContainsKey(parameterName))
+			if (properties.Contains(parameterName))
 			{
 				parameter = properties[parameterName];
 				return true;
@@ -350,7 +353,7 @@ namespace Castle.MonoRail.Views.AspView
 
 		private void InitProperties()
 		{
-			properties = new Dictionary<string, object>(CaseInsensitiveStringComparer.Default);
+			properties = new DictHelper.MonoRailDictionary();// HybridDictionary( <string, object>(CaseInsensitiveStringComparer.Default);
 			properties.Add("context", context);
 			properties.Add("request", context.Request);
 			properties.Add("response", context.Response);
@@ -401,7 +404,7 @@ namespace Castle.MonoRail.Views.AspView
 		/// <summary>
 		/// Gets the properties container. Based on current property containers that was sent from the controller, such us PropertyBag, Flash, etc.
 		/// </summary>
-		public IDictionary<string, object> Properties
+		public IDictionary Properties
 		{
 			get { return properties; }
 		}

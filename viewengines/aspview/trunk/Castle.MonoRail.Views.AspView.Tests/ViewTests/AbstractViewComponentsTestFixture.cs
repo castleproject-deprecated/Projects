@@ -14,10 +14,11 @@
 // limitations under the License.
 #endregion
 
+using Castle.MonoRail.Framework.Helpers;
+
 namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 {
 	using System;
-	using System.Collections.Generic;
 	using Framework;
 	using Framework.Services;
 
@@ -49,12 +50,12 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 		}
 		protected class MyViewComponentFactory : DefaultViewComponentFactory
 		{
-			public readonly Dictionary<string, Type> RegisteredComponents =
-				new Dictionary<string, Type>();
+			public readonly DictHelper.MonoRailDictionary RegisteredComponents =
+				new DictHelper.MonoRailDictionary();
 
 			public override ViewComponent Create(string name)
 			{
-				return Activator.CreateInstance(RegisteredComponents[name]) as ViewComponent;
+				return Activator.CreateInstance((Type)RegisteredComponents[name]) as ViewComponent;
 			}
 		}
 	}
