@@ -59,8 +59,6 @@ after
 			file.RenderBody = source;
 			step.Process(file);
 
-			System.Console.WriteLine(file.RenderBody);
-
 			AssertStepOutput();
 		}
 
@@ -81,7 +79,25 @@ after
 			file.RenderBody = source;
 			step.Process(file);
 
-			System.Console.WriteLine(file.RenderBody);
+			AssertStepOutput();
+		}
+
+		[Fact]
+		public void Process_ViewComponentsWithStringLiteralContainigSpacesAttribute_Transforms()
+		{
+			string source = @"
+before
+<component:Simple name=""A B C""></component:Simple>
+after
+";
+			expected = @"
+before
+<% InvokeViewComponent(""Simple"", null, null, ""name"", ""A B C""); %>
+after
+";
+
+			file.RenderBody = source;
+			step.Process(file);
 
 			AssertStepOutput();
 		}
