@@ -89,7 +89,6 @@
     <Compile Include="Services\DefaultNamingServiceTests.cs" />
     <Compile Include="Services\DefaultRuntimeInformationServiceTests.cs" />
     <Compile Include="Services\DefaultSourceStorageServiceTests.cs" />
-    <Compile Include="Services\MockControllerReferenceFactory.cs" />
     <Compile Include="Services\NRefactoryParserFactoryTests.cs" />
     <Compile Include="Services\NullLoggerTests.cs" />
     <Compile Include="Services\ControllerMapGeneratorTests.cs" />
@@ -107,6 +106,10 @@
     <Compile Include="Services\WizardStepPageVisitorTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Castle.Tools.CodeGenerator.Testing\Castle.Tools.CodeGenerator.Testing.csproj">
+      <Project>{9B75CDA5-F949-46EF-9E89-4ACB920D6344}</Project>
+      <Name>Castle.Tools.CodeGenerator.Testing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Castle.Tools.CodeGenerator\Castle.Tools.CodeGenerator.csproj">
       <Project>{AD98AAA1-00B5-4766-87E2-62C82DC09896}</Project>
       <Name>Castle.Tools.CodeGenerator</Name>

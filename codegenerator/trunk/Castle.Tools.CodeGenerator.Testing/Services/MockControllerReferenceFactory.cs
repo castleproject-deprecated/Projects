@@ -9,12 +9,14 @@ namespace Castle.Tools.CodeGenerator.Services
 	public class MockControllerReferenceFactory : IControllerReferenceFactory
 	{
 		private Dictionary<string, ControllerActionReference> _actions = new Dictionary<string, ControllerActionReference>();
-		private MockRepository _mocks;
+		private readonly MockRepository _mocks;
+		private readonly object _control;
 		private Dictionary<string, ControllerViewReference> _views = new Dictionary<string, ControllerViewReference>();
 
 		public MockControllerReferenceFactory(MockRepository mocks)
 		{
 			_mocks = mocks;
+			_control = mocks.CreateMock<object>();
 		}
 
 		public IControllerActionReference CreateActionReference(ICodeGeneratorServices services, Type controllerType,
@@ -25,8 +27,8 @@ namespace Castle.Tools.CodeGenerator.Services
 			if (!_actions.ContainsKey(key))
 			{
 				_actions[key] =
-					_mocks.CreateMock<ControllerActionReference>(services, controllerType, areaName, controllerName, actionName,
-					                                             signature, arguments);
+					ReplayIfNecessary(_mocks.DynamicMock<ControllerActionReference>(services, controllerType, areaName, controllerName, actionName,
+					                                             signature, arguments));
 			}
 			return _actions[key];
 		}
@@ -38,9 +40,19 @@ namespace Castle.Tools.CodeGenerator.Services
 			if (!_views.ContainsKey(key))
 			{
 				_views[key] =
-					_mocks.CreateMock<ControllerViewReference>(services, controllerType, controllerName, areaName, actionName);
+					ReplayIfNecessary(_mocks.DynamicMock<ControllerViewReference>(services, controllerType, controllerName, areaName, actionName));
 			}
 			return _views[key];
+		}
+
+		private T ReplayIfNecessary<T>(T mock)
+		{
+			if (_mocks.IsInReplayMode(_control))
+			{
+				_mocks.Replay(mock);
+			}
+
+			return mock;
 		}
 
 		private static string MakeKey(string areaName, string controllerName, string actionName)
