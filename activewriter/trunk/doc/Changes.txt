@@ -20,6 +20,7 @@ Fixed:
 - Contrib-70: Using a custom type that is defined in a user project fails (Partial patch: David Gardiner)
 - Contrib-72: Option to remove prefix from generated property names.(Patch: David Gardiner) (Implemented as model level RegEx)
 - Contrib-73: Look for Castle.ActiveWriter and NHibernate in project references. (Patch: David Gardiner)
+- Oracle support is now fully working (Patch: Marjan Flis)
 
 Preview 3.1
 

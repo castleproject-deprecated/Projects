@@ -14,14 +14,12 @@
 
 namespace Altinoren.ActiveWriter.ServerExplorerSupport
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Data;
-    using System.Text;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
 
-	internal class OracleHelper : IDbHelper
-	{
-
+    internal class OracleHelper : IDbHelper
+    {
         private bool useCamelCase = true;
         public bool UseCamelCase
         {
@@ -29,14 +27,14 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
             set { useCamelCase = value; }
         }
 
-		private IDbConnection _connection = null;
+        private IDbConnection _connection = null;
 
         public OracleHelper(IDbConnection connection)
-		{
-			Connection = connection;
-		}
+        {
+            Connection = connection;
+        }
 
-		#region IDbHelper Members
+        #region IDbHelper Members
 
         public IDbConnection Connection
         {
@@ -44,208 +42,230 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
             set { _connection = value; }
         }
 
-		public List<Column> GetProperties(ModelClass cls)
-		{
+        public List<Column> GetProperties(ModelClass cls)
+        {
+            List<Column> list = new List<Column>();
 
-            
-			List<Column> list = new List<Column>();
+            IDbCommand command = GetColumnCommand(cls.Table, cls.Schema);
+            using (IDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Column column;
 
-			IDbCommand command = GetColumnCommand(cls.Table, cls.Schema);
-			using(IDataReader reader = command.ExecuteReader())
-			{
-				while(reader.Read())
-				{
-					Column column;
+                    column = list.Find(delegate(Column col) { return col.Name == reader["COLUMN_NAME"].ToString(); }
+                        );
 
-					column = list.Find(delegate(Column col) { return col.Name == reader["CNAME"].ToString(); }
-						);
+                    if (column == null)
+                    {
+                        column = new Column();
+                        column.Name = reader["COLUMN_NAME"].ToString();
 
-					if (column == null)
-					{
-						column = new Column();
-                        column.Name = reader["CNAME"].ToString();
-                        
-						column.Schema = cls.Schema;
-						column.Table = cls.Table;
+                        column.Schema = cls.Schema;
+                        column.Table = cls.Table;
 
-
-						column.DataType = reader["COLTYPE"].ToString();
+                        column.DataType = reader["DATA_TYPE"].ToString();
                         if (column.DataType == "NUMBER")
                         {
-                            string scale = reader["SCALE"].ToString();
-                            if (scale == "0" || scale == "")
+                            string scale = reader["DATA_SCALE"].ToString();
+                            if (scale == "0" || string.IsNullOrEmpty(scale))
                             {
                                 column.DataType = "INTEGER";
+                                // If field is primary key and "integer" it is reasonably safe to assume that it is has
+                                // a sequence behind it. Confirming that would in Oracle require trigger parsing
+                                column.Identity = reader["PKEY"] != DBNull.Value ? true : false;
                             }
                         }
 
-                        ///TODO Check for foreign, primary keys
+                        if (reader["PKEY"] != DBNull.Value)
+                        {
+                            column.Primary = true;
+                            column.PrimaryConstraintName = reader["PKEY"].ToString();
+                        }
 
+                        if (reader["FKEY"] != DBNull.Value)
+                        {
+                            column.ForeignConstraints.Add(reader["FKEY"].ToString());
+                        }
 
-                        column.Nullable = reader["NULLS"].ToString() == "NOT NULL" ? false : true;
-						//column.Identity = reader["IS_IDENTITY"].ToString() == "1" ? true : false;
-                        // Not sure what this means
-                        column.Identity = false;
-						list.Add(column);
-					}
-				}
-			}
+                        column.Nullable = reader["NULLABLE"].ToString() == "N" ? false : true;
+                        list.Add(column);
+                    }
+                }
+            }
+            return list;
+        }
 
-			return list;
-		}
-
-		public NHibernateType GetNHibernateType(string type)
-		{
-			switch(type.ToUpperInvariant())
-			{
-				case "NUMBER":
-					return NHibernateType.Decimal;
+        public NHibernateType GetNHibernateType(string type)
+        {
+            switch (type.ToUpperInvariant())
+            {
+                case "NUMBER":
+                    return NHibernateType.Decimal;
                 case "INTEGER":
                     return NHibernateType.Int32;
                 case "DATE":
-					return NHibernateType.DateTime;
-				case "CHAR":
+                    return NHibernateType.DateTime;
+                case "CHAR":
                 case "NCHAR":
-				case "VARCHAR":
+                case "VARCHAR":
                 case "VARCHAR2":
                 case "NVARCHAR2":
-					return NHibernateType.String;
-				case "LONG":
+                    return NHibernateType.String;
+                case "LONG":
                 case "CLOB":
                 case "NCLOB":
-					return NHibernateType.StringClob;
+                    return NHibernateType.StringClob;
                 case "RAW":
                 case "LONG RAW":
-					return NHibernateType.Binary;
-                case "BLOB": 
+                    return NHibernateType.Binary;
+                case "BLOB":
                     return NHibernateType.BinaryBlob;
-				case "TIMESTAMP":
-					return NHibernateType.Timestamp;
-			}
+                case "TIMESTAMP":
+                    return NHibernateType.Timestamp;
+            }
 
-			return NHibernateType.String;
-		}
+            return NHibernateType.String;
+        }
 
-		public List<Relation> GetFKRelations(ModelClass cls)
-		{
-			List<Relation> list = new List<Relation>();
+        // Konèano
+        public List<Relation> GetFKRelations(ModelClass cls)
+        {
+            List<Relation> list = new List<Relation>();
+
+            IDbCommand command = _connection.CreateCommand();
+            command.CommandText =
+                @"
+SELECT st.column_name, om.r_owner, om.constraint_name, rm.table_name r_table_name, sr.column_name r_column_name
+  FROM all_constraints om INNER JOIN all_constraints rm ON om.r_owner = rm.owner
+                                                      AND om.r_constraint_name = rm.constraint_name
+       INNER JOIN all_cons_columns st ON om.constraint_name = st.constraint_name
+                                    AND st.owner = om.owner
+                                    AND st.table_name = om.table_name
+       INNER JOIN all_cons_columns sr ON rm.constraint_name = sr.constraint_name
+                                    AND sr.owner = rm.owner
+                                    AND sr.table_name = rm.table_name
+ WHERE om.constraint_type = 'R'
+   AND st.table_name = :tname
+   AND st.owner = :owner
+                ";
+
+            AddSchemaAndTableParams(command, cls.Schema, cls.Table);
+
+            using (IDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Relation relation = new Relation();
+                    relation.RelationType = RelationType.Unknown;
+                    relation.RelationName = reader["CONSTRAINT_NAME"].ToString();
+                    relation.PrimaryOwner = reader["R_OWNER"].ToString();
+                    relation.PrimaryTable = reader["R_TABLE_NAME"].ToString();
+                    relation.PrimaryColumn = reader["R_COLUMN_NAME"].ToString();
+                    relation.ForeignOwner = cls.Schema;
+                    relation.ForeignTable = cls.Table;
+                    relation.ForeignColumn = reader["COLUMN_NAME"].ToString();
+
+                    list.Add(relation);
+                }
+            }
+
             return list;
 
-            /*
+        }
 
-			IDbCommand command = _connection.CreateCommand();
-			command.CommandText =
-                @"select 
-                    distinct b.column_name
-                from
-                    ALL_CONSTRAINTS a,
-                    ALL_CONS_COLUMNS b
+        public List<Relation> GetPKRelations(ModelClass cls)
+        {
+            List<Relation> list = new List<Relation>();
 
-                where
-                    UPPER(b.table_name) = (:table)
-                    AND (UPPER(a.table_name) = (:table) and a.constraint_type = 'P')
-                    AND (a.constraint_name = b.constraint_name)
+            IDbCommand command = _connection.CreateCommand();
+            command.CommandText =
+                @"
+            SELECT st.column_name, om.owner, om.constraint_name, om.table_name, sr.column_name r_column_name
+              FROM all_constraints om INNER JOIN all_constraints rm ON om.r_owner = rm.owner
+                                                                  AND om.r_constraint_name = rm.constraint_name
+                   INNER JOIN all_cons_columns st ON om.constraint_name = st.constraint_name
+                                                AND st.owner = om.owner
+                                                AND st.table_name = om.table_name
+                   INNER JOIN all_cons_columns sr ON rm.constraint_name = sr.constraint_name
+                                                AND sr.owner = rm.owner
+                                                AND sr.table_name = rm.table_name
+             WHERE om.constraint_type = 'R'
+               AND rm.table_name = :tname
+               AND om.r_owner = :owner
                 ";
 
-			AddSchemaAndTableParams(command, cls.Schema, cls.Table);
+            AddSchemaAndTableParams(command, cls.Schema, cls.Table);
 
-			using(IDataReader reader = command.ExecuteReader())
-			{
-				while(reader.Read())
-				{
-					Relation relation = new Relation();
-					relation.RelationType = RelationType.Unknown;
-					relation.RelationName = reader["CONSTRAINT_NAME"].ToString();
-					relation.PrimaryOwner = reader["REFERENCED_TABLE_SCHEMA"].ToString();
-					relation.PrimaryTable = reader["REFERENCED_TABLE_NAME"].ToString();
-					relation.PrimaryColumn = reader["REFERENCED_COLUMN_NAME"].ToString();
-					relation.ForeignOwner = cls.Schema;
-					relation.ForeignTable = cls.Table;
-					relation.ForeignColumn = reader["COLUMN_NAME"].ToString();
+            using (IDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Relation relation = new Relation();
+                    relation.RelationType = RelationType.Unknown;
+                    relation.RelationName = reader["CONSTRAINT_NAME"].ToString();
+                    relation.PrimaryOwner = cls.Schema;
+                    relation.PrimaryTable = cls.Table;
+                    relation.PrimaryColumn = reader["R_COLUMN_NAME"].ToString();
+                    relation.ForeignOwner = reader["OWNER"].ToString();
+                    relation.ForeignTable = reader["TABLE_NAME"].ToString();
+                    relation.ForeignColumn = reader["COLUMN_NAME"].ToString();
 
-					list.Add(relation);
-				}
-			}
+                    list.Add(relation);
+                }
+            }
 
-			return list;
-             * 
-             */
-		}
-
-		public List<Relation> GetPKRelations(ModelClass cls)
-		{
-			List<Relation> list = new List<Relation>();
             return list;
-            /*
-			IDbCommand command = _connection.CreateCommand();
-			command.CommandText =
-                @"select 
-                    a.*, b.COLUMN_NAME
-                from
-                    ALL_CONSTRAINTS a,
-                    ALL_CONS_COLUMNS b
 
-                where
-                    UPPER(b.table_name) = (:tname)
-                    AND (UPPER(a.table_name) = (:tname) and a.constraint_type = 'P')
-                    AND (a.constraint_name = b.constraint_name)
+        }
+
+        #endregion
+
+        private IDbCommand GetColumnCommand(string table, string owner)
+        {
+            IDbCommand command = _connection.CreateCommand();
+            // "group by" in commandtext is in there just becouse the test runs 20x faster with it
+            command.CommandText =
+                @"
+SELECT owner, table_name, tcols.column_name, data_type, data_length, data_precision, data_scale, nullable, pkey, fkey
+  FROM (SELECT owner, table_name, column_name, data_type, data_length, data_precision, data_scale, nullable
+          FROM all_tab_columns
+         WHERE table_name = :tname
+           AND owner = :owner) tcols
+       LEFT JOIN
+       (SELECT   column_name, MAX (DECODE (constraint_type, 'P', om.constraint_name, NULL)) pkey,
+                 MAX (DECODE (constraint_type, 'R', om.constraint_name, NULL)) fkey
+            FROM all_constraints om INNER JOIN all_cons_columns st
+                 ON om.constraint_name = st.constraint_name
+               AND st.owner = om.owner
+               AND st.table_name = om.table_name
+           WHERE (   constraint_type = 'P'
+                  OR constraint_type = 'R')
+             AND st.table_name = :tname
+             AND st.owner = :owner
+        GROUP BY column_name) tcons ON tcols.column_name = tcons.column_name 
                 ";
 
-			AddSchemaAndTableParams(command, cls.Schema, cls.Table);
+            AddSchemaAndTableParams(command, owner, table);
 
-			using(IDataReader reader = command.ExecuteReader())
-			{
-				while(reader.Read())
-				{
-					Relation relation = new Relation();
-					relation.RelationType = RelationType.Unknown;
-					relation.RelationName = reader["CONSTRAINT_NAME"].ToString();
-					relation.PrimaryOwner = cls.Schema;
-					relation.PrimaryTable = cls.Table;
-                    relation.PrimaryColumn = reader["COLUMN_NAME"].ToString();
-					relation.ForeignOwner = reader["OWNER"].ToString();
-					relation.ForeignTable = reader["TABLE_NAME"].ToString();
-					relation.ForeignColumn = reader["COLUMN_NAME"].ToString();
+            return command;
+        }
 
-					list.Add(relation);
-				}
-			}
+        private void AddSchemaAndTableParams(IDbCommand command, string owner, string table)
+        {
+            IDbDataParameter param1 = command.CreateParameter();
+            param1.DbType = DbType.String;
+            param1.ParameterName = ":owner";
+            param1.Size = 128;
+            param1.Value = owner;
+            command.Parameters.Add(param1);
 
-			return list;
-             */
-		}
-
-		#endregion
-
-		private IDbCommand GetColumnCommand(string table, string owner)
-		{
-			IDbCommand command = _connection.CreateCommand();
-			command.CommandText =
-                @"  select * from col
-                    where tname = :tname
-                    order by colno
-                ";
-
-			AddSchemaAndTableParams(command, owner, table);
-
-			return command;
-		}
-
-		private void AddSchemaAndTableParams(IDbCommand command, string owner, string table)
-		{
-			//IDbDataParameter param1 = command.CreateParameter();
-			//param1.DbType = DbType.String;
-			//param1.ParameterName = "?schema";
-			//param1.Size = 128;
-			//param1.Value = owner;
-			//command.Parameters.Add(param1);
-
-			IDbDataParameter param2 = command.CreateParameter();
-			param2.DbType = DbType.String;
-			param2.ParameterName = ":tname";
-			param2.Size = 128;
-			param2.Value = table;
-			command.Parameters.Add(param2);
-		}
-	}
+            IDbDataParameter param2 = command.CreateParameter();
+            param2.DbType = DbType.String;
+            param2.ParameterName = ":tname";
+            param2.Size = 128;
+            param2.Value = table;
+            command.Parameters.Add(param2);
+        }
+    }
 }
