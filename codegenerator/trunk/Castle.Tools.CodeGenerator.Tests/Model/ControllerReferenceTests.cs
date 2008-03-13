@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.IO;
 using Castle.MonoRail.Framework;
 using Castle.MonoRail.Framework.Test;
@@ -126,6 +127,7 @@ namespace Castle.Tools.CodeGenerator.Model
 		protected IServerUtility _serverUtility;
 		protected ICodeGeneratorServices _services;
 		protected string _virtualDirectory = String.Empty;
+	  protected IDictionary _parameters;
 
 		#endregion
 
@@ -163,18 +165,14 @@ namespace Castle.Tools.CodeGenerator.Model
 
 		protected void SetupMocks()
 		{
+		  _parameters = new Hashtable();
 			Expect.Call(_services.ArgumentConversionService).Return(_argumentConversionService).Repeat.Any();
 			Expect.Call(_services.RailsContext).Return(_railsContext).Repeat.Any();
 			Expect.Call(_services.Controller).Return(_controller).Repeat.Any();
+			Expect.Call(_argumentConversionService.CreateParameters()).Return(_parameters).Repeat.Any();
 
 			_controller.ControllerContext = _mocks.Stub<IControllerContext>();
 			_controller.SetEngineContext(_railsContext);
-
-			//Expect.Call(_railsContext.Server).Return(_serverUtility).Repeat.Any();
-			//Expect.Call(_railsContext.UrlInfo).Return(
-			//  new UrlInfo("eleutian.com", "www", _virtualDirectory, "http", 80,
-			//              Path.Combine(Path.Combine("Area", "Controller"), "Action"), "Area", "Controller",
-			//              "Action", "rails", "")).Repeat.Any();
 		}
 
 		#endregion
@@ -185,8 +183,7 @@ namespace Castle.Tools.CodeGenerator.Model
 	{
 		protected void New(string area, string controller, string action, params ActionArgument[] arguments)
 		{
-			_reference =
-				new ControllerActionReference(_services, typeof (TestController), area, controller, action, null, arguments);
+			_reference = new ControllerActionReference(_services, typeof (TestController), area, controller, action, null, arguments);
 		}
 
 		[Test]
@@ -265,10 +262,10 @@ namespace Castle.Tools.CodeGenerator.Model
 			using (_mocks.Unordered())
 			{
 				SetupMocks();
-				Expect.Call(_argumentConversionService.ConvertArgument(null, argument)).Return("Jacob");
-				Expect.Call(_argumentConversionService.ConvertKey(null, argument)).Return("name");
-				Expect.Call(_serverUtility.UrlEncode("name")).Return("Ename");
-				Expect.Call(_serverUtility.UrlEncode("Jacob")).Return("EJacob");
+				Expect.Call(_argumentConversionService.ConvertArgument(null, argument, _parameters)).Return(true);
+				Expect.Call(_serverUtility.UrlEncode("name")).Return("name");
+				Expect.Call(_serverUtility.UrlEncode("Jacob")).Return("Jacob");
+			  _parameters.Add("name", "Jacob");
 			}
 
 			_mocks.ReplayAll();
@@ -276,7 +273,7 @@ namespace Castle.Tools.CodeGenerator.Model
 			_mocks.VerifyAll();
 
 			Assert.IsTrue(this._controller.Context.Response.WasRedirected);
-			Assert.AreEqual(_response.RedirectedTo, "/Area/Controller/Action.rails?Ename=EJacob");
+			Assert.AreEqual("/Area/Controller/Action.rails?name=Jacob", _response.RedirectedTo);
 		}
 
 		[Test]
@@ -352,38 +349,16 @@ namespace Castle.Tools.CodeGenerator.Model
 			using (_mocks.Unordered())
 			{
 				SetupMocks();
-				Expect.Call(_argumentConversionService.ConvertArgument(null, argument)).Return("Jacob");
-				Expect.Call(_argumentConversionService.ConvertKey(null, argument)).Return("name");
+				Expect.Call(_argumentConversionService.ConvertArgument(null, argument, _parameters)).Return(true);
 				Expect.Call(_serverUtility.UrlEncode("name")).Return("name");
 				Expect.Call(_serverUtility.UrlEncode("Jacob")).Return("Jacob");
+			  _parameters.Add("name", "Jacob");
 			}
 
 			_mocks.ReplayAll();
 			string actual = _reference.Url;
 			_mocks.VerifyAll();
 			Assert.AreEqual("/Area/Controller/Action.rails?name=Jacob", actual);
-		}
-
-		[Test]
-		public void Url_OneArgument_ReturnsUrlUsesEncoded()
-		{
-			ActionArgument argument = new ActionArgument(0, "name", "Jacob");
-			New("Area", "Controller", "Action", argument);
-
-			using (_mocks.Unordered())
-			{
-				SetupMocks();
-				Expect.Call(_argumentConversionService.ConvertArgument(null, argument)).Return("Jacob");
-				Expect.Call(_argumentConversionService.ConvertKey(null, argument)).Return("name");
-
-				Expect.Call(_serverUtility.UrlEncode("name")).Return("Ename");
-				Expect.Call(_serverUtility.UrlEncode("Jacob")).Return("EJacob");
-			}
-
-			_mocks.ReplayAll();
-			string actual = _reference.Url;
-			_mocks.VerifyAll();
-			Assert.AreEqual("/Area/Controller/Action.rails?Ename=EJacob", actual);
 		}
 	}
 
@@ -434,10 +409,10 @@ namespace Castle.Tools.CodeGenerator.Model
 			using (_mocks.Unordered())
 			{
 				SetupMocks();
-				Expect.Call(_argumentConversionService.ConvertArgument(null, argument)).Return("Jacob");
-				Expect.Call(_argumentConversionService.ConvertKey(null, argument)).Return("name");
+				Expect.Call(_argumentConversionService.ConvertArgument(null, argument, _parameters)).Return(true);
 				Expect.Call(_serverUtility.UrlEncode("name")).Return("name");
 				Expect.Call(_serverUtility.UrlEncode("Jacob")).Return("Jacob");
+			  _parameters.Add("name", "Jacob");
 			}
 
 			_mocks.ReplayAll();

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using Castle.Tools.CodeGenerator.Model;
@@ -31,7 +32,9 @@ namespace Castle.Tools.CodeGenerator.Services
     {
       string value = "Hello, World!";
       ActionArgument argument = new ActionArgument(0, "name", value);
-      Assert.AreEqual(value, _service.ConvertArgument(null, argument));
+      IDictionary parameters = new Hashtable();
+      Assert.IsTrue(_service.ConvertArgument(null, argument, parameters));
+      Assert.AreEqual(value, parameters["name"]);
     }
     #endregion	
   }

@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Collections;
 
 using Castle.Tools.CodeGenerator.Model;
 
@@ -8,16 +8,16 @@ namespace Castle.Tools.CodeGenerator.Services
   public class DefaultArgumentConversionService : IArgumentConversionService
   {
     #region IArgumentConversionService Members
-    public object ConvertArgument(MethodSignature signature, ActionArgument argument)
+    public IDictionary CreateParameters()
     {
-      return argument.Value;
+      return new Hashtable();
     }
 
-  	public string ConvertKey(MethodSignature signature, ActionArgument argument)
-  	{
-  	  return argument.Name;
-  	}
-
+    public bool ConvertArgument(MethodSignature signature, ActionArgument argument, IDictionary parameters)
+    {
+      parameters.Add(argument.Name, argument.Value);
+      return true;
+    }
   	#endregion
   }
 }

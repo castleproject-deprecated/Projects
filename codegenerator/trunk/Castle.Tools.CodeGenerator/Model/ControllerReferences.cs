@@ -204,27 +204,26 @@ namespace Castle.Tools.CodeGenerator.Model
 		public virtual string Url
 		{
 			get
-			{
-				IUrlBuilder urlBuilder = this.Services.RailsContext.Services.UrlBuilder;
-				urlBuilder.UseExtensions = true;
+      {
+        IUrlBuilder urlBuilder = this.Services.RailsContext.Services.UrlBuilder;
+        urlBuilder.UseExtensions = true;
 
-				if (urlBuilder is DefaultUrlBuilder)
-					((DefaultUrlBuilder) urlBuilder).ServerUtil = this.Services.RailsContext.Server;
+        if (urlBuilder is DefaultUrlBuilder)
+        {
+          ((DefaultUrlBuilder)urlBuilder).ServerUtil = this.Services.RailsContext.Server;
+        }
 
-				IDictionary parameters = new Hashtable();
-				IArgumentConversionService conversionService = this.Services.ArgumentConversionService;
-				int index = 0;
-				foreach (ActionArgument argument in this.Arguments)
-				{
-					parameters.Add(conversionService.ConvertKey(this.ActionMethodSignature, argument),
-					               conversionService.ConvertArgument(this.ActionMethodSignature, argument));
-					index++;
-				}
-				UrlInfo urlInfo = this.Services.RailsContext.UrlInfo;
-				UrlBuilderParameters urlBuilderParameters = new UrlBuilderParameters(this.AreaName, this.ControllerName, this.ActionName);
-				urlBuilderParameters.QueryString = parameters;
-				return urlBuilder.BuildUrl(urlInfo, urlBuilderParameters);
-			}
+        IArgumentConversionService conversionService = this.Services.ArgumentConversionService;
+        IDictionary parameters = conversionService.CreateParameters();
+        foreach (ActionArgument argument in this.Arguments)
+        {
+          conversionService.ConvertArgument(this.ActionMethodSignature, argument, parameters);
+        }
+        UrlInfo urlInfo = this.Services.RailsContext.UrlInfo;
+        UrlBuilderParameters urlBuilderParameters = new UrlBuilderParameters(this.AreaName, this.ControllerName, this.ActionName);
+        urlBuilderParameters.QueryString = parameters;
+        return urlBuilder.BuildUrl(urlInfo, urlBuilderParameters);
+      }
 		}
 
 		public virtual void Redirect(bool useJavascript)
