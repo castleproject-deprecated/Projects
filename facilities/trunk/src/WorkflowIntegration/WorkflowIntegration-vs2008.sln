@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Facilities.WorkflowIntegration-vs2008", "Castle.Facilities.WorkflowIntegration\Castle.Facilities.WorkflowIntegration-vs2008.csproj", "{33ACBA5E-F1AE-421B-9779-AF889275E277}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Facilities.WorkflowIntegration.Tests-vs2008", "Castle.Facilities.WorkflowIntegration.Tests\Castle.Facilities.WorkflowIntegration.Tests-vs2008.csproj", "{E02A557B-82F9-46CA-AD1D-6B372AD318CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33ACBA5E-F1AE-421B-9779-AF889275E277}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33ACBA5E-F1AE-421B-9779-AF889275E277}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33ACBA5E-F1AE-421B-9779-AF889275E277}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33ACBA5E-F1AE-421B-9779-AF889275E277}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E02A557B-82F9-46CA-AD1D-6B372AD318CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E02A557B-82F9-46CA-AD1D-6B372AD318CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E02A557B-82F9-46CA-AD1D-6B372AD318CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E02A557B-82F9-46CA-AD1D-6B372AD318CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
