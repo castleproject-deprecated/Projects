@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd">
+<chapter>
+	<title>Unit Testing</title>
+	<section>
+	<title>Introduction</title>
+	<para>
+		Previously MonoRail used the ASP.Net infrastructure to run a web
+		site and run tests against it. This worked for simple scenarios
+		but didn't scale well or allow access to all aspects of the
+		RailsEngineContext.
+	</para>
+	<para>
+		During RC2, BaseControllerTest was added to the trunk.
+		BaseControllerTest exposed all of the properties of the MonoRail
+		pipeline so that you can now inspect values as if running in a
+		web context. This allowed us to mock the RailsEngineContext and
+		inject mocks into the pipeline.
+	</para>
+	</section>
+	<section>
+		<title>The TestSupport Assembly</title>
+		<para>
+			<literal>Castle.MonoRail.TestSupport</literal>
+			was created to enable easy testing of MonoRail projects.
+			Classes in this namespace are for performing tests on
+			MonoRail Controllers. It exposes the
+			<literal>PropertyBag</literal>
+			,
+			<literal>Flash</literal>
+			and
+			<literal>Session</literal>
+			dictionaries so you can write assert for their contents. You
+			also have access to MockRailsEngineContext via the Context
+			property to insert values to be used during the Controller
+			execution.
+		</para>
+		<para>
+			In order to use the ASP.Net runtime for deprecated
+			AbstractMRTestCase,
+			<emphasis>
+				the assembly
+				<literal>Castle.MonoRail.TestSupport.dll</literal>
+				must be registered in the GAC
+			</emphasis>
+			. If you have installed Castle using the MSI distribution
+			this was already done for you. Otherwise, execute:
+			<programlisting><![CDATA[
+> gacutil /i Castle.MonoRail.TestSupport
+]]></programlisting>
+		</para>
+	</section>
+	<section>
+		<title>Setting Up a Test Project</title>
+		<para>
+			To set up a test project perform the following steps:
+		</para>
+		<para>
+			<orderedlist>
+				<listitem>
+					<para>
+						Create a Class Library project (usually you are
+						going to use the same solution of the web
+						project)
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Add references to :
+						<itemizedlist>
+							<listitem>
+								<para>
+									<literal>nunit.framework</literal>
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<literal>
+										Castle.MonoRail.Framework
+									</literal>
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<literal>
+										Castle.MonoRail.TestSupport
+									</literal>
+								</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Create test cases class extending
+						BaseControllerTest
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Call the PrepareController method passing
+						Controller Instance, Area, Controller Name and
+						Action Name.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Finally make Assertion calls on PropertyBag or
+						other parts of the Controller that is under
+						test. You can access the RailsEngineContext from
+						BaseControllerTest.Context
+					</para>
+				</listitem>
+			</orderedlist>
+		</para>
+		<section>
+			<title>A simple example from MonoRail test case</title>
+			<para>
+				The following class is a snippet of one of the MonoRail
+				test cases:
+			</para>
+			<programlisting lang="cs"><![CDATA[
+[TestFixture]
+public class BasicFunctionalityTestCase : BaseControllerTest
+{
+	[Test]
+	public void SimpleControllerAction()
+	{
+		SimpleController simpleController = new SimpleController();
+		PrepareController(simpleController, "areaName", "simplecontroller", "index");
+
+		simpleController.Index();
+
+		// Some Assertions here
+	}
+
+	[Test]
+	public void Flash()
+	{
+		SimpleController simpleController = new SimpleController();
+		PrepareController(simpleController, "areaName", "simplecontroller", "someotheraction");
+
+		simpleController.SomeOtherAction();
+
+		Assert.IsNotNull(simpleController.Flash["someothervalue"]);
+	}
+
+	[Test]
+	public void Redirect()
+	{
+		SimpleController simpleController = new SimpleController();
+		PrepareController(simpleController, "areaName", "simplecontroller", "redirectaction");
+
+		simpleController.RedirectAction();
+
+		Assert.IsNotNull("controller/action.rails", Response.RedirectedTo);
+	}
+
+	[Test]
+	public void PropertyBag()
+	{
+		SimpleController simpleController = new SimpleController();
+		PrepareController(simpleController, "areaName", "simpleController", "propertybagaction");
+
+		simpleController.PropertyBagAction();
+
+		Assert.IsNotNull(simpleController.PropertyBag["somevalue"]);
+	}
+
+	[Test]
+	public void CurrentUser()
+	{
+		SimpleController simpleController = new SimpleController();
+		PrepareController(simpleController, "areaName", "simpleController", "currentuseraction");
+
+		simpleController.CurrentUserAction();
+
+		Assert.IsNotNull(Context.CurrentUser);
+	}
+}
+]]></programlisting>
+			<para>
+				For for a more detailed example see
+				<ulink
+					url="http://using.castleproject.org/display/MR/TDDingControllers">
+					TDDingControllers on using.castleproject.org
+				</ulink>
+
+				For more documentation, please see the
+				<ulink
+					url="http://svn.castleproject.org:8080/svn/castle/trunk/MonoRail/Castle.MonoRail.TestSupport/">
+					Castle.MonoRail.TestSupport namespace classes
+				</ulink>
+				.
+			</para>
+		</section>
+	</section>
+</chapter>

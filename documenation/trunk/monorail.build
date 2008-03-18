@@ -1,0 +1,197 @@
+<?xml version="1.0" ?>
+<project 
+	name="monorail_docs" 
+	default="build" 
+	xmlns="http://nant.sf.net/release/0.85-rc3/nant.xsd"
+	basedir="."
+>
+	<property name="source.dir" value="src/monorail" />
+	<property name="output.dir" value="build/monorail" overwrite="false" />
+
+	<target name="init" unless="${target::has-executed('init')}" description="Set the documentation version and the date of generation.">
+		
+	</target>	
+
+	<target name="clean" description="Cleans any previous builds">
+		<delete dir="${output.dir}" failonerror="false" />
+	</target>
+
+	<target name="build" depends="init" description="Generates the documentation in multiple formats from the docbook files.">
+		<call target="build-html" />
+		<call target="build-chm" />
+		<!-- <call target="build-pdf" /> -->
+	</target>
+
+	<target name="build-html" depends="init" description="Generates html from docbook files.">
+
+		<!-- Define the output directories -->
+		<property name="build.dir" value="${output.dir}/html" />
+		<property name="build.single.dir" value="${build.dir}/single" />
+		<property name="build.chunk.dir" value="${build.dir}/chunked" />
+
+		<!-- Create the output directories -->
+		<mkdir dir="${build.dir}" failonerror="false" />
+		<mkdir dir="${build.single.dir}" failonerror="false" />
+		<mkdir dir="${build.chunk.dir}" failonerror="false" />
+		
+		<copy todir="${build.dir}/images/" overwrite="true" >
+			<fileset basedir="src/monorail/images/">
+				<include name="*" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${build.dir}/" overwrite="true" >
+			<fileset basedir="customizations/html/">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		
+		<!-- Generate single page HTML output -->
+		<exec program="java" useruntimeengine="true" verbose="true">
+			<arg value="-cp" />
+			<arg>
+				<path>
+					<pathelement file="toolchain/saxon/saxon.jar" />
+					<pathelement file="toolchain/xslthl/xslthl.jar" />
+					<pathelement file="toolchain/xerces-2_9_1/xercesImpl.jar" />
+				</path>
+			</arg>
+			<arg value="-Dxslthl.config=file:///${project::get-base-directory()}/customizations/highlighters/xslthl-config.xml" />
+			<arg value="-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl" />
+			<arg value="-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl" />
+			<arg value="-Dorg.apache.xerces.xni.parser.XMLParserConfiguration=org.apache.xerces.parsers.XIncludeParserConfiguration" />
+			
+			<arg value="com.icl.saxon.StyleSheet" />
+			<arg value="-o"/>
+			<arg value="${build.single.dir}/index.html"/>
+			<arg value="${source.dir}/book.xml"/>
+			<arg value="customizations/html_single.xsl"/>			
+		</exec>
+		
+		<!-- Generate multi-page HTML output -->
+		<exec program="java" useruntimeengine="true" verbose="true">
+			<arg value="-cp" />
+			<arg>
+				<path>
+					<pathelement file="toolchain/saxon/saxon.jar" />
+					<pathelement file="toolchain/xslthl/xslthl.jar" />
+					<pathelement file="toolchain/xerces-2_9_1/xercesImpl.jar" />
+				</path>
+			</arg>
+			<arg value="-Dxslthl.config=file:///${project::get-base-directory()}/customizations/highlighters/xslthl-config.xml" />
+			<arg value="-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl" />
+			<arg value="-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl" />
+			<arg value="-Dorg.apache.xerces.xni.parser.XMLParserConfiguration=org.apache.xerces.parsers.XIncludeParserConfiguration" />
+			
+			<arg value="com.icl.saxon.StyleSheet" />
+			<arg value="${source.dir}/book.xml"/>
+			<arg value="customizations/html_chunked.xsl"/>			
+			<arg value="base.dir=${build.chunk.dir}/"/>
+		</exec>
+			
+	</target>
+	
+	<target name="build-chm" depends="init" description="Generates chm file from docbook files.">
+	
+		<!-- default install location -->
+		<property name="hhc.exe" value="${environment::get-folder-path('ProgramFiles')}\HTML Help Workshop\hhc" />
+		<property name="build.chm.dir" value="${output.dir}/chm" />
+
+		<mkdir dir="${build.chm.dir}" failonerror="false" />
+		
+		<copy todir="${build.chm.dir}/images/" overwrite="true" >
+			<fileset basedir="src/monorail/images/">
+				<include name="*" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${build.chm.dir}/" overwrite="true" >
+			<fileset basedir="customizations/html/">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+
+		<!-- make the htmlhelp version of the helpfile -->
+		<exec program="java" useruntimeengine="true" verbose="true">
+			<arg value="-cp" />
+			<arg>
+				<path>
+					<pathelement file="toolchain/saxon/saxon.jar" />
+					<pathelement file="toolchain/xslthl/xslthl.jar" />
+					<pathelement file="toolchain/xerces-2_9_1/xercesImpl.jar" />
+				</path>
+			</arg>
+			<arg value="-Dxslthl.config=file:///${project::get-base-directory()}/customizations/highlighters/xslthl-config.xml" />
+			<arg value="-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl" />
+			<arg value="-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl" />
+			<arg value="-Dorg.apache.xerces.xni.parser.XMLParserConfiguration=org.apache.xerces.parsers.XIncludeParserConfiguration" />
+			
+			<arg value="com.icl.saxon.StyleSheet" />
+			<arg value="${source.dir}/book.xml"/>
+			<arg value="customizations/chm.xsl"/>
+			<arg value="base.dir=${build.chm.dir}/"/>
+			<arg value="manifest.in.base.dir=1"/>
+		</exec>
+
+		<!-- TODO: Don't know why its return code is 1 (stop NAnt, if failonerror="true") -->
+		<exec program="${hhc.exe}" failonerror="false">
+			<arg file="${build.chm.dir}/htmlhelp.hhp" />
+		</exec>
+
+		<copy file="${build.chm.dir}/htmlhelp.chm" tofile="${output.dir}/monorail.chm" />
+		<delete dir="${build.chm.dir}" />
+	</target>
+	
+	<target name="build-pdf" depends="init" description="Generates pdf file from docbook files.">
+	
+		<!-- default install location -->
+		<property name="build.pdf.dir" value="${output.dir}/pdf" />
+
+		<mkdir dir="${build.pdf.dir}" failonerror="false" />
+		
+		<copy todir="${build.pdf.dir}/images/" overwrite="true" >
+			<fileset basedir="src/monorail/images/">
+				<include name="*" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${build.pdf.dir}/" overwrite="true" >
+			<fileset basedir="customizations/html/">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+
+		<!-- make the htmlhelp version of the helpfile -->
+		<exec program="java" useruntimeengine="true" verbose="true">
+			<arg value="-cp" />
+			<arg>
+				<path>
+					<pathelement file="toolchain/saxon/saxon.jar" />
+					<pathelement file="toolchain/xslthl/xslthl.jar" />
+					<pathelement file="toolchain/xerces-2_9_1/xercesImpl.jar" />
+				</path>
+			</arg>
+			<arg value="-Dxslthl.config=file:///${project::get-base-directory()}/customizations/highlighters/xslthl-config.xml" />
+			<arg value="-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl" />
+			<arg value="-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl" />
+			<arg value="-Dorg.apache.xerces.xni.parser.XMLParserConfiguration=org.apache.xerces.parsers.XIncludeParserConfiguration" />
+			
+			<arg value="com.icl.saxon.StyleSheet" />
+			<arg value="-o"/>
+			<arg value="${build.pdf.dir}/monorail.fo"/>
+			<arg value="${source.dir}/book.xml"/>
+			<arg value="customizations/pdf.xsl"/>
+		</exec>
+
+		<!-- TODO: Don't know why its return code is 1 (stop NAnt, if failonerror="true") -->
+		<exec program="fop/fop" basedir="toolchain" verbose="true">
+			<arg value="-q" />
+			<arg value="${build.pdf.dir}/monorail.fo"/>
+			<arg value="${build.pdf.dir}/monorail.pdf"/>
+		</exec>
+		
+		<copy file="${build.pdf.dir}/monorail.pdf" tofile="${output.dir}/monorail.pdf" />
+		<delete dir="${build.pdf.dir}" />
+	</target>
+</project>
+

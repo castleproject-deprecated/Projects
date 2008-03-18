@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../../toolchain/docbook-xml/docbookx.dtd">
+<section>
+	<title>NVelocity</title>
+	<para>
+		<emphasis>Pros:</emphasis>
+		<itemizedlist>
+			<listitem>
+				<para>
+					Limited set of functions forces you to code only
+					view logic (good for separation of concerns)
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Easy to learn
+					<ulink url="">template language</ulink>
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Same syntax as
+					<ulink url="http://jakarta.apache.org/velocity/">
+						Velocity
+					</ulink>
+					(for Java), allowing view reuse among different
+					platforms
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Reuse skills for people with Java experience
+				</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+	<para>
+		<emphasis>Cons:</emphasis>
+		<itemizedlist>
+			<listitem>
+				<para>Interpreted</para>
+			</listitem>
+			<listitem>
+				<para>
+					Community seem very inactive. That forced Castle
+					Project to fork NVelocity and work on improvements
+					and bug fixes.
+				</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+	<para>
+		The NVelocity View Engine uses
+		<ulink url="">NVelocity</ulink>
+	</para>
+	<para>
+		NVelocity is a port of the excellent Apache Jakarta Velocity
+		project. It is a very simple, easy to learn and extensible
+		template engine. Due to the lack of releases, support and bug
+		fixes on the original port, the Castle Team decided to fork the
+		project, bringing it to our code repository, fixing the bugs and
+		improving it with more features.
+	</para>
+	<para>
+		The first thing you need to read about NVelocity is not even on
+		this web site. You can find on the original Velocity web site.
+	</para>
+	<itemizedlist>
+		<listitem>
+			<para>
+				<ulink url="???">The user guide</ulink>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				<ulink url="???">The language reference</ulink>
+			</para>
+		</listitem>
+	</itemizedlist>
+	<para>
+		Frequently Asked Questions on NVelocity View Engine can be found
+		on the standard
+		<ulink url="">MonoRail FAQ</ulink>
+		.
+	</para>
+	<para>
+		To use NVelocity View Engine inform the type on the
+		<literal>customEngine</literal>
+		on the configuration file:
+	</para>
+	<programlisting lang="html"><![CDATA[
+<viewEngine 
+	viewPathRoot="views" 
+	customEngine="Castle.MonoRail.Framework.Views.NVelocity.NVelocityViewEngine, Castle.MonoRail.Framework.Views.NVelocity" />
+]]></programlisting>
+
+	<section>
+		<title>NVelocity files</title>
+		<para>
+			NVelocity uses the extension
+			<literal>.vm</literal>
+			so just create your views with that extension. Remember that
+			from your controller you should not reference file
+			extensions when defining views to render.
+		</para>
+	</section>
+	<section>
+		<title>Layouts</title>
+		<para>
+			Use
+			<literal>$childContent</literal>
+			context variable to render the content of the view on the
+			layout template. The following is a simple layout using
+			NVelocity:
+		</para>
+		<programlisting lang="html"><![CDATA[
+<html>
+
+Welcome
+
+$childContent
+
+Footer
+
+</html>
+]]></programlisting>
+		<note>
+			<para>
+				The view template selected by the controller is executed
+				before the layout template. In fact the layout template
+				is merged with the result of the view template
+				execution.
+			</para>
+		</note>
+	</section>
+	<section>
+		<title>Configuration</title>
+		<para>
+			The NVelocity View Engine looks for a file
+			<literal>nvelocity.properties</literal>
+			in the root of the view folder. You can use this file to
+			configure how NVelocity should behave.
+		</para>
+		<para>
+			For example, to configure NVelocity to support Chinese
+			encoding create a text file named
+			<literal>nvelocity.properties</literal>
+			, save it to your views folder and add the following
+			content:
+		</para>
+		<programlisting><![CDATA[
+input.encoding=GB2312
+output.encoding=GB2312
+]]></programlisting>
+		<para>
+			More information on the entries can be found on the original
+			Velocity documentation.
+		</para>
+	</section>
+	<section>
+		<title>Macros</title>
+		<para>
+			The NVelocity supports macros, but keep in mind that they
+			have problems. If you want to use macros you can create a
+			folder
+			<literal>macros</literal>
+			under the your views root folder.
+		</para>
+		<para>
+			All
+			<literal>.vm</literal>
+			files in this folder will be loaded as a NVelocity Macro
+			library so the macros will be available to all templates.
+		</para>
+	</section>
+	<section>
+		<title>
+			Fancy
+			<literal>foreach</literal>
+			Loops
+		</title>
+		<para>
+			Inspired on
+			http://www.fogcreek.com/CityDesk/2.0/help/Scripting_With_CityScript/FancyLoops.html.
+			The following code should be self-explanatory:
+		</para>
+		<programlisting lang="html"><![CDATA[
+#foreach($i in $items)
+#each (this is optional since it's the default section)
+       text which appears for each item
+#before
+       text which appears before each item
+#after
+       text which appears after each item
+#between
+       text which appears between each two items
+#odd
+       text which appears for every other item, including the first
+#even
+       text which appears for every other item, starting with the second
+#nodata
+       Content rendered if $items evaluated to null or empty
+#beforeall
+       text which appears before the loop, only if there are items
+       matching condition
+#afterall
+       text which appears after the loop, only of there are items
+       matching condition
+#end
+]]></programlisting>
+		<para>
+			All sections are optional, and they can appear in any order
+			multiple times (sections with same name will have their
+			content appended)
+		</para>
+		<para>
+			So for example you can use it to create a table contents
+			with alternating styles:
+		</para>
+		<programlisting lang="html"><![CDATA[
+#foreach($person in $people)
+#beforeall
+       <table>
+               <tr>
+               <th>Name</th>
+               <th>Age</th>
+               </tr>
+#before
+       <tr
+#odd
+       Style='color:gray'>
+#even
+       Style='color:white'>
+
+#each
+       <td>$person.Name</td>
+       <td>$person.Age</td>
+
+#after
+       </tr>
+
+#between
+       <tr><td colspan='2'>$person.bio</td></tr>
+
+#afterall
+       </table>
+
+#nodata
+       Sorry No Person Found
+#end
+]]></programlisting>
+		<para>Which will output something like:</para>
+		<programlisting lang="html"><![CDATA[
+<table>
+       <tr>
+       <th>Name</th>
+       <th>Age</th>
+       </tr>
+       <tr style='color:white'>
+               <td>John</td>
+               <td>32</td>
+       </tr>
+       <tr><td colspan='2'>Monorail programmer</td></tr>
+       <tr style='color:gray'>
+               <td>Jin</td>
+               <td>12</td>
+       </tr>
+       <tr><td colspan='2'>Castle guru</td></tr>
+</table>
+]]></programlisting>
+		<para>
+			If the
+			<literal>$people</literal>
+			variable was null the output will be:
+		</para>
+		<programlisting lang="html"><![CDATA[Sorry No Person Found]]></programlisting>
+	</section>
+	<section>
+		<title>NVelocityViewEngine Variables</title>
+		<para>
+			The NVelocityViewEngine is responsible for making "useful"
+			variables available to your view. Here's the list of
+			variables added to the context by the NVelocityViewEngine:
+		</para>
+		<informaltable>
+			<tgroup cols="2">
+				<colspec colnum="1" colname="col1" />
+				<colspec colnum="2" colname="col2" />
+				<thead>
+					<row>
+						<entry>Context Variable</entry>
+						<entry>Description</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>$controller</entry>
+						<entry>The controller being executed.</entry>
+					</row>
+					<row>
+						<entry>$context</entry>
+						<entry>The IRailsEngineContext.</entry>
+					</row>
+					<row>
+						<entry>$request</entry>
+						<entry>context.Request</entry>
+					</row>
+					<row>
+						<entry>$response</entry>
+						<entry>context.Response</entry>
+					</row>
+					<row>
+						<entry>$session</entry>
+						<entry>context.Session</entry>
+					</row>
+					<row>
+						<entry>$childContent</entry>
+						<entry>
+							Used inside Layouts. It defines the content
+							rendered by a View.
+						</entry>
+					</row>
+					<row>
+						<entry>$page</entry>
+						<entry>
+							Available in *.njs views and is added in the
+							GenerateJS method.
+						</entry>
+					</row>
+					<row>
+						<entry>$siteroot</entry>
+						<entry>context.ApplicationPath</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</informaltable>
+		<para>
+			Additionally - the contents of the following collections are
+			merged into the context.
+		</para>
+		<itemizedlist>
+			<listitem>
+				<para>controller.Resources</para>
+			</listitem>
+			<listitem>
+				<para>context.Params</para>
+			</listitem>
+			<listitem>
+				<para>controller.Helpers</para>
+			</listitem>
+			<listitem>
+				<para>context.Flash</para>
+			</listitem>
+			<listitem>
+				<para>controller.PropertyBag</para>
+			</listitem>
+		</itemizedlist>
+		<para>
+			Each key in each of the collections becomes a $variable. For
+			example:
+
+			<programlisting lang="cs"><![CDATA[
+class MyController 
+{
+	public void Index() 
+	{
+	   PropertyBag["myvariable"] = "some value";
+	   Context.Params["othervariable"] = "some other value value";
+	   Context.Flash["anothervariable"] = "yet one more";
+	}
+}
+]]></programlisting>
+
+			In your view you will have the following variables:
+			<programlisting lang="html"><![CDATA[
+$myvariable
+$othervariable
+$anothervariable
+]]></programlisting>
+		</para>
+		<para>
+			Helpers are also added to allow you to invoke static members
+			on some common types:
+		</para>
+		<itemizedlist>
+			<listitem>
+				<para>$Byte</para>
+			</listitem>
+			<listitem>
+				<para>$SByte</para>
+			</listitem>
+			<listitem>
+				<para>$Int16</para>
+			</listitem>
+			<listitem>
+				<para>$Int32</para>
+			</listitem>
+			<listitem>
+				<para>$Int64</para>
+			</listitem>
+			<listitem>
+				<para>$UInt16</para>
+			</listitem>
+			<listitem>
+				<para>$UInt32</para>
+			</listitem>
+			<listitem>
+				<para>$UInt64</para>
+			</listitem>
+			<listitem>
+				<para>$Single</para>
+			</listitem>
+			<listitem>
+				<para>$Double</para>
+			</listitem>
+			<listitem>
+				<para>$Boolean</para>
+			</listitem>
+			<listitem>
+				<para>$Char</para>
+			</listitem>
+			<listitem>
+				<para>$Decimal</para>
+			</listitem>
+			<listitem>
+				<para>$String</para>
+			</listitem>
+			<listitem>
+				<para>$Guid</para>
+			</listitem>
+			<listitem>
+				<para>$DateTime</para>
+			</listitem>
+		</itemizedlist>
+		<para>
+			This allows you to do useful things like:
+
+			<programlisting lang="html"><![CDATA[The Current time is: $DateTime.Now]]></programlisting>
+		</para>
+	</section>
+	<section>
+		<title>Accessing the PropertyBag</title>
+		<para>
+			If you want to list the variables in the property bag - then
+			add a reference to the PropertyBag to the PropertyBag.
+
+			<programlisting lang="cs"><![CDATA[
+class MyController 
+{
+	public void Index() 
+	{
+		PropertyBag["PropertyBag"] = PropertyBag;
+	}
+}
+]]></programlisting>
+
+			then in your view $PropertyBag is what you want:
+
+			<programlisting lang="html"><![CDATA[
+Property bag variables
+#foreach($key in $PropertyBag)
+#beforeall
+
+	Name
+	value
+		
+#each
+
+	$key
+	$PropertyBag.get_Item($key)
+			
+#afterall
+	
+#end
+]]></programlisting>
+		</para>
+	</section>
+	<section>
+		<title>ViewComponent Support</title>
+		<para>
+			NVelocity allows you to create your own directives, so
+			that's how we introduced components to it. Basically you can
+			use:
+		</para>
+		<para>
+			<literal>for inline components</literal>
+			<programlisting lang="html"><![CDATA[#component(ComponentName)]]></programlisting>
+		</para>
+		<para>
+			<literal>
+				for components with body content (aka block components)
+			</literal>
+			<programlisting lang="html"><![CDATA[
+#blockcomponent(ComponentName)
+  some content
+#end
+]]></programlisting>
+		</para>
+		<para>
+			ViewComponents have access to the
+			<literal>IRailsContext</literal>
+			so you can access form parameters, session, etc. Sometimes
+			however it's important to specify some parameters.
+		</para>
+		<section>
+			<title>Passing Parameters in a Dictionary</title>
+			<para>
+				Use the name of the component followed by a dictionary
+				string. For more information on dictionary expressions
+				see [[MonoRail:NVelocity]]
+
+				<programlisting lang="html"><![CDATA[#component(MyFirstComponent "%{firstParam='some value',anotherParam='other value'}")]]></programlisting>
+			</para>
+			<para>
+				You can then access the parameters from the component
+				code:
+
+				<programlisting lang="cs"><![CDATA[
+public class MyFirstComponent: ViewComponent
+{
+	public override void Render()
+	{
+		object param1 = Context.ComponentParameters["firstParam"];
+		object param2 = Context.ComponentParameters["anotherParam"];
+
+		...
+	}
+}
+]]></programlisting>
+			</para>
+		</section>
+		<section>
+			<title>Key/Value Pairs</title>
+			<para>
+				In this case you need to use the keyword
+				<literal>with</literal>
+				followed by a sequence of key/value pairs:
+
+				<programlisting lang="html"><![CDATA[#component(ComponentName with "name=john" "address=some address")]]></programlisting>
+			</para>
+			<para>
+				You're free to use interpolation as well
+
+				<programlisting lang="html"><![CDATA[#component(ComponentName with "name=${customer.name}")]]></programlisting>
+
+				You can gain access to the component parameters using
+				the
+				<literal>Context.ComponentParameters</literal>
+				too.
+			</para>
+		</section>
+		<section>
+			<title>Data Type Handling</title>
+			<para>
+				Every data type is supported. However literal values
+				will be automatically converted to text. If you want to
+				specify a different type, create a varible on NVelocity
+				or use some structure data available on the view.
+			</para>
+			<para>
+				<literal>
+					The parameter value below will be converted to
+					string
+				</literal>
+
+				<programlisting lang="html"><![CDATA[#component(ComponentName with "age=1")]]></programlisting>
+			</para>
+			<para>
+				<literal>
+					The parameter value below will remain an Int32
+				</literal>
+
+				<programlisting lang="html"><![CDATA[
+#set($age = 27)
+#component(ComponentName with "age=${age}")
+]]></programlisting>
+			</para>
+		</section>
+		<section>
+			<title>A Simple Example</title>
+			<para>
+				The view snippet:
+				<programlisting lang="html"><![CDATA[
+#blockcomponent(SecurityComponent with "role=admin")
+  this will only be rendered if the current user is in the specified role
+#end
+]]></programlisting>
+			</para>
+			<para>
+				The component code:
+
+				<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+namespace WebApp
+{
+	public class SecurityComponent : ViewComponent
+	{
+		bool shouldRender;
+	
+		public override void Initialize()
+		{
+			String role = ComponentParameter["role"] as String;
+			shouldRender = RailsContext.User.IsInRole( role );
+ 		}
+
+		public override void Render()
+		{
+			if (shouldRender) Context.RenderBody();
+ 		}
+	}
+}
+]]></programlisting>
+			</para>
+		</section>
+	</section>
+</section>

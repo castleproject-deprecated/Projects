@@ -1,0 +1,41 @@
+.programlisting, .programlisting pre
+{
+	font-size: 12px;
+	color: black;
+	font-family: "Lucida Console", "Courier New", Courier, Monospace;
+	background-color: #f0f0f0;
+	border: solid 1px gray;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	margin-left: 6px;
+	margin-right: 6px;
+	/*white-space: pre;*/
+}
+
+.programlisting pre { margin: 0em; }
+
+.programlisting .comment { color: #008000; }
+
+.programlisting .keyword, .value { color: #0000ff; }
+
+.programlisting .string { color: #006080; }
+
+.programlisting .op { color: #0000c0; }
+
+.programlisting .preproc { color: #cc6633; }
+
+.programlisting .asp { background-color: #ffff00; }
+
+.programlisting .html, .tag { color: #800000; }
+
+.programlisting .attribute { color: #ff0000; }
+
+.programlisting .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+
+.programlisting .lnum { color: #606060; }

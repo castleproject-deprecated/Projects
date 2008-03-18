@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../../toolchain/docbook-xml/docbookx.dtd">
+<section>
+	<title>Custom Session Extension</title>
+	<para>
+		The Custom Session extension allow you to plug a custom
+		implementation for the session available on
+		<literal>IRailsEngineContext</literal>
+		. This can be useful if you have requirements to implement on a
+		session that ASP.Net Session strategies can not fulfil.
+	</para>
+	<para>
+		In order to use this extension you must provide an
+		implementation of
+		<literal>ICustomSessionFactory</literal>
+		which would be responsible to create your own session
+		implementation. A really naive implementation could map some
+		cookie value to an instance of
+		<literal>Hashtable</literal>
+		, for instance.
+	</para>
+	<para>
+		Extensions were introduced to allow the framework to be extended
+		easily and extensions to be reused.
+	</para>
+	<para>
+		You need to install the extension using the extensions node, as
+		usual, and also provide the attribute
+		<literal>customsession</literal>
+		to inform the type that implements
+		<literal>ICustomSessionFactory</literal>
+		as follows:
+	</para>
+	<programlisting lang="html"><![CDATA[
+
+<monorail customsession="Type name that implements ICustomSessionFactory">
+	<extensions>
+		<extension 
+			type="Castle.MonoRail.Framework.Extensions.Session.CustomSessionExtension, Castle.MonoRail.Framework" />
+	</extensions>
+</monorail>
+]]></programlisting>
+</section>

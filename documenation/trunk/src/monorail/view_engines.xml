@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd"
+[
+	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2001/XInclude'">
+]>
+<chapter>
+	<title>View Engines</title>
+	<section>
+		<title>Introduction</title>
+		<para>
+			View engines are responsible for rendering the contents back
+			to the browser. You can create your view engine by simply
+			implementing the interface
+			<literal>IViewEngine</literal>
+			. For example, you can create an XML/XSL view engine, or
+			WML, or whatever you can think of. Notice, however, that the
+			view should be responsible for displaying logic and nothing
+			more, nothing less.
+		</para>
+		<para>
+			The view engine implementation is also supposed to invoke a
+			few hooks on the controller instance, namely
+			<literal>PreSendView</literal>
+			and
+			<literal>PostSendView</literal>
+			.
+		</para>
+		<para>
+			Below is the declaration of the
+			<literal>IViewEngine</literal>
+			interface.
+		</para>
+		<programlisting lang="cs"><![CDATA[
+/// <summary>
+/// Depicts the contract used by the engine
+/// to process views, in an independent manner.
+/// </summary>
+public interface IViewEngine
+{
+	/// <summary>
+	/// Evaluates whether the specified template exists.
+	/// </summary>
+	/// <returns><c>true</c> if it exists</returns>
+	bool HasTemplate(String templateName);
+
+	/// <summary>
+	/// Processes the view - using the templateName 
+	/// to obtain the correct template,
+	/// and using the context to output the result.
+	/// </summary>
+	void Process(IRailsEngineContext context, Controller controller, String templateName);
+
+	///<summary>
+	/// Processes the view - using the templateName 
+	/// to obtain the correct template
+	/// and writes the results to the System.TextWriter. 
+	/// No layout is applied!
+	/// </summary>
+	void Process(TextWriter output, IRailsEngineContext context, Controller controller, String templateName);
+
+	/// <summary>
+	/// Wraps the specified content in the layout using 
+	/// the context to output the result.
+	/// </summary>
+	void ProcessContents(IRailsEngineContext context, Controller controller, String contents);
+}
+]]></programlisting>
+		<para>
+			By default the view engines will return pages with the MIME
+			type
+			<literal>text/html</literal>
+			. If you would like to use
+			<literal>application/xml+xhtml</literal>
+			you can set this in your web.config file:
+		</para>
+		<programlisting lang="html"><![CDATA[
+<viewEngine 
+  viewPathRoot="views"
+  xhtmlRendering="true"
+  customEngine="Castle.MonoRail.Framework.Views.NVelocity.NVelocityViewEngine, 
+Castle.MonoRail.Framework.Views.NVelocity" />
+]]></programlisting>
+		<para>
+			If this attribute is set to
+			<literal>true</literal>
+			, and the user agent says it will accept
+			<literal>application/xml+xhtml</literal>
+			then the page will be returned using that MIME type instead.
+			For browsers such as IE which do not understand the new MIME
+			type,
+			<literal>text/html</literal>
+			will still be used.
+		</para>
+	</section>
+	<section>
+		<title>View Engine Comparison</title>
+		<para>
+			<informaltable>
+				<tgroup cols="5">
+					<colspec colnum="1" colname="col1" />
+					<colspec colnum="2" colname="col2" />
+					<colspec colnum="3" colname="col3" />
+					<colspec colnum="4" colname="col4" />
+					<colspec colnum="5" colname="col5" />
+					<thead>
+						<row>
+							<entry>Engine</entry>
+							<entry>Language</entry>
+							<entry>Compiled</entry>
+							<entry>Helpers</entry>
+							<entry>ViewComponents</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>WebForms</entry>
+							<entry>Any .net language</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>No</entry>
+						</row>
+						<row>
+							<entry>NVelocity</entry>
+							<entry>Velocity</entry>
+							<entry>No</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+						</row>
+						<row>
+							<entry>Brail</entry>
+							<entry>boo</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</para>
+	</section>
+
+	<xi:include href="view_engines/nvelocity.xml" />
+	<xi:include href="view_engines/webforms.xml" />
+	<xi:include href="view_engines/brail.xml" />
+	<xi:include href="view_engines/composite.xml" />
+
+	<section>
+		<title>Working With Multiple View Engines</title>
+
+		<para></para>
+	</section>
+</chapter>

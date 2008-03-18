@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../../toolchain/docbook-xml/docbookx.dtd">
+<section>
+	<title>FormHelper</title>
+	<para>
+		The
+		<literal>FormHelper</literal>
+		allows you to output Html Input elements using the conventions
+		necessary to use the DataBinder on the server side. It also
+		queries the objects available on the context to automatically
+		populate values correctly, saving you the burden of filling
+		inputs, selects, checkboxes and radios.
+	</para>
+	<note>
+		<para>
+			A sample demonstrating the concepts in the section can be
+			downloaded from
+			!download/monorail/trunk/MonoRail.FormHelperSample.zip
+		</para>
+	</note>
+	<para>
+		The helper is inspired on two exquisite works: the Ruby on
+		Rails' FormHelper and the Apache Jakarta Taglibs. The idea is to
+		generate html form elements while:
+	</para>
+	<para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					Using the same naming convention used by the
+					<literal>DataBinder</literal>
+					on the controller side
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Collect the value from an instance in the context
+					(if available) and populate the html element with
+					the value or selection
+				</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+	<para>
+		When using the
+		<literal>FormHelper</literal>
+		you specify a target through a string. The target is evaluated
+		and if the object is available in the context then the
+		evaluation result is used to provide the correct output. For a
+		simple text input element, the evaluated value will be the value
+		of the textbox.
+	</para>
+	<section>
+		<title>Getting Started</title>
+		<para>
+			Using the
+			<literal>FormHelper</literal>
+			is easy and in a few minutes you will understand how it
+			works. Just remember that it requires that the controller
+			and the view work together.
+		</para>
+		<para>
+			The goal is to generate proper Html elements that can be
+			easily databound on the controller side. The most trivial
+			case is binding single values. For example, you can have a
+			view like the following (using NVelocity View Engine):
+		</para>
+		<programlisting lang="html"><![CDATA[
+<form action="Index.rails" method="post">
+$FormHelper.TextField("name")
+$FormHelper.TextField("address")
+</form>
+]]></programlisting>
+		<para>
+			Whenever this view is rendered, the
+			<literal>FormHelper</literal>
+			's
+			<literal>TextField</literal>
+			method will be invoked. The first thing it does is extract
+			the root target. In the case above the targets are not
+			chained, so the roots will be
+			<literal>name</literal>
+			and
+			<literal>address</literal>
+			.
+		</para>
+		<para>
+			After that it will search in the context dictionaries for
+			the roots, in the following order:
+		</para>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<literal>PropertyBag</literal>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<literal>Flash</literal>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<literal>Session</literal>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<literal>Request.Params</literal>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<literal>HttpContext.Items</literal>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			If it finds the entry, it will extract the value and use it.
+			If it doesn't find the entry, no value will be set on the
+			html element.
+		</para>
+		<para>
+			Suppose the action using the view above (the form
+			definition) is the following:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+public void Index()
+{
+}
+]]></programlisting>
+		<para>For this case, the html output will be:</para>
+		<programlisting lang="html"><![CDATA[
+<form action="Index.rails" method="post">
+	<input type="text" id="name" name="name" value="" />
+	<input type="text" id="address" name="address" value="" />
+</form>
+]]></programlisting>
+		<para>
+			Note the "value" property of both input elements is blank.
+		</para>
+		<para>However, if the action was:</para>
+		<programlisting lang="cs"><![CDATA[
+public void Index()
+{
+    PropertyBag.Add("name", "hammett");
+    PropertyBag.Add("address", "pereira leite, 44");
+}
+]]></programlisting>
+		<para>
+			Then the
+			<literal>FormHelper</literal>
+			would have the values filled:
+		</para>
+		<programlisting lang="html"><![CDATA[
+<form action="Index.rails" method="post">
+	<input type="text" id="name" name="name" value="hammett" />
+	<input type="text" id="address" name="address" value="pereira leite, 44" />
+</form>
+]]></programlisting>
+		<para>
+			The support for autmatically populating Html elements goes
+			beyond input fields. See below for more information on the
+			<literal>FormHelper</literal>
+			.
+		</para>
+	</section>
+	<section>
+		<title>Complex Objects</title>
+		<para>Consider a different action code now:</para>
+		<programlisting lang="cs"><![CDATA[
+public void Index()
+{
+    PropertyBag.Add("contact", new Contact("john", "some address", "phone number") );
+}
+]]></programlisting>
+		<para>A view for this</para>
+		<programlisting lang="html"><![CDATA[
+<form action="Index.rails" method="post">
+	$FormHelper.TextField("contact.name")
+	$FormHelper.TextField("contact.address")
+	$FormHelper.TextField("contact.phone")
+</form>
+]]></programlisting>
+		<para>
+			The
+			<literal>FormHelper</literal>
+			will find the
+			<literal>contact</literal>
+			entry in the
+			<literal>PropertyBag</literal>
+			, and then find the properties
+			<literal>name</literal>
+			,
+			<literal>address</literal>
+			and
+			<literal>phone</literal>
+			. It will extract the values from the item in the
+			<literal>PropertyBag</literal>
+			and render the view accordingly:
+		</para>
+		<programlisting lang="html"><![CDATA[
+<form action="Index.rails" method="post">
+	<input type="text" id="contact_name" name="contact.name" value="john" />
+	<input type="text" id="contact_address" name="contact.address" value="some address" />
+	<input type="text" id="contact_phone" name="contact.phone" value="phone number" />
+</form>
+]]></programlisting>
+	</section>
+	<section>
+		<title>Arrays</title>
+		<para>
+			Arrays are also supported. Suppose you have the following
+			action code:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+public void Index()
+{
+	PropertyBag.Add("list", new string[] 
+	{
+		"value 1", "value 2"
+	} );
+
+    PropertyBag.Add("contacts", new Contact[] 
+	{ 
+		new Contact("john", "address 1", "phone number 1"),
+		new Contact("mary", "address 2", "phone number 2")
+	} );
+}
+]]></programlisting>
+		<para>
+			In this case you have to use the indexed name convention as
+			the target so FormHelper can know from which index it should
+			extract the value:
+		</para>
+		<programlisting lang="html"><![CDATA[
+<form action="Index.rails" method="post">
+
+$FormHelper.TextField("list[0]")
+$FormHelper.TextField("list[1]")
+
+$FormHelper.TextField("contacts[0].name")
+$FormHelper.TextField("contacts[0].address")
+$FormHelper.TextField("contacts[0].phone")
+
+$FormHelper.TextField("contacts[1].name")
+$FormHelper.TextField("contacts[1].address")
+$FormHelper.TextField("contacts[1].phone")
+
+</form>
+]]></programlisting>
+		<para>
+			The
+			<literal>FormHelper</literal>
+			will use the index value to find the correct entry. It will
+			generate something like the following:
+		</para>
+		<programlisting lang="html"><![CDATA[
+<form action="Index.rails" method="post">
+
+<input type="text" id="list_0_" name="list[0]" value="value 1" />
+<input type="text" id="list_1_" name="list[1]" value="value 2" />
+
+<input type="text" id="contact_0_name" name="contact[0].name" value="john" />
+<input type="text" id="contact_0_address" name="contact[0].address" value="address 1" />
+<input type="text" id="contact_0_phone" name="contact[0].phone" value="phone number 1" />
+
+<input type="text" id="contact_1_name" name="contact[1].name" value="mary" />
+<input type="text" id="contact_1_address" name="contact[1].address" value="address 2" />
+<input type="text" id="contact_1_phone" name="contact[1].phone" value="phone number 2" />
+
+</form>
+]]></programlisting>
+	</section>
+	<section>
+		<title>Working with Sets</title>
+		<para>
+			FormHelper supports a broad range of scenarios when dealing
+			with sets. Sets are used when
+			<literal>Select</literal>
+			and
+			<literal>CheckboxList</literal>
+			are generated. It is adamant that you know how it works when
+			dealing with sets.
+		</para>
+		<para>
+			For
+			<literal>Select</literal>
+			and
+			<literal>CheckboxList</literal>
+			generation, the common
+			<literal>target</literal>
+			is considered the
+			<emphasis>initial selection set</emphasis>
+			. The value supplied as the
+			<emphasis>data source</emphasis>
+			is treated as the complete set. The initial selection must
+			be
+			<emphasis>a subset</emphasis>
+			of the data source set.
+		</para>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/formhelper_sets.png" />
+			</imageobject>
+		</mediaobject>
+		<para>
+			This is very obvious and works nicely when both sets are
+			composed of primites and both sets have same types. But not
+			every application has this scenario to work with.
+		</para>
+		<para>
+			The FormHelper makes a few verifications which help it to
+			decide on an approach based on the sets available. See the
+			image below.
+		</para>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/formhelper_sets2.png" />
+			</imageobject>
+		</mediaobject>
+		<para>
+			If the types are not primitive types, it is up to the
+			programmer to inform the property the element has that
+			identifies the instance, using the
+			<literal>value</literal>
+			parameter. The programmer can also specify the
+			<literal>text</literal>
+			parameter which is used to identify the property that
+			returns a descriptive text about the element instance.
+		</para>
+		<para>
+			The
+			<literal>sourceProperty</literal>
+			parameter is used to identity the property that should be
+			used on the html element. This is only helpful when the
+			types are different and the identification property on the
+			data source element is different from the identification
+			property on the initial selection elements.
+		</para>
+		<para>
+			The
+			<literal>suffix</literal>
+			parameter is used to override the suffix used on the
+			generate element names. FormHelper will always try to use
+			the value specified for the
+			<literal>value</literal>
+			parameter which is right for almost all situations, but one:
+			when you are dealing with different types on the sets but
+			the initial set is null and the FormHelper won't be able to
+			identify that. So if you have different types and you know
+			in advance that the initial set can be empty or null,
+			specify the
+			<literal>suffix</literal>
+			parameter.
+		</para>
+	</section>
+	<section>
+		<title>Generating Selects</title>
+		<para>
+			FormHelper is able to generate single and multi-value
+			selects. Make sure you have read the
+			<ulink url="sets.html">
+				How FormHelper works with sets
+			</ulink>
+			document.
+		</para>
+		<section>
+			<title>Single Value Selects</title>
+			<para>
+				To create a select just specify the target and the data
+				source which would be a set of all elements so it can
+				create options for.
+			</para>
+			<para>Consider the following action code:</para>
+			<programlisting lang="cs"><![CDATA[
+public void Index()
+{
+	// data source
+	PropertyBag["primenumbers"] = new int[] { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47 };
+	
+	// initial selection
+	PropertyBag["oneprime"] = 3;
+}
+]]></programlisting>
+			<para>The code on the view to use it would be:</para>
+			<programlisting lang="html"><![CDATA[
+$FormHelper.Select("oneprime", $primenumbers) 
+]]></programlisting>
+			<para>
+				With complex objects you must care to specify the value
+				and text parameters so the FormHelper can generate
+				proper html elements.
+			</para>
+			<para>Consider the following action code:</para>
+			<programlisting lang="cs"><![CDATA[
+public void Index()
+{
+	// data source
+	IList authors = new Author[] 
+	{ 
+		new Author(1, "hammett"), 
+		new Author(2, "john doe"), 
+		new Author(3, "someone else")
+	};
+	PropertyBag["authors"] = authors;
+	
+	// initial selection
+	Blog blog = new Blog();
+	blog.Author = new Author(1, "hammett");
+	PropertyBag["blog"] = blog;
+}
+]]></programlisting>
+			<para>
+				The
+				<literal>Author</literal>
+				class above has an
+				<literal>Id</literal>
+				property and
+				<literal>Name</literal>
+				property. So here is how the view would use it:
+			</para>
+			<programlisting lang="html"><![CDATA[
+$FormHelper.Select("blog.author.id", $authors, "%{value='id', text='Name', firstoption='Please select'}")
+]]></programlisting>
+			<para>
+				Note the use of
+				<literal>firstoption</literal>
+				parameter. It includes the specified content as the
+				first available option on the select.
+			</para>
+		</section>
+		<section>
+			<title>Multi-Value Selects</title>
+			<para>
+				Multi-value selects are not very different from what we
+				have seen so far. The initial selection however will be
+				a set.
+			</para>
+			<para>Consider the following action code:</para>
+			<programlisting lang="cs"><![CDATA[
+public void Index()
+{
+	// data source
+	PropertyBag["primenumbers"] = new int[] { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47 };
+	
+	// initial selection
+	PropertyBag["multipleprimes"] = new int[] { 3, 5, 7 };
+}
+]]></programlisting>
+			<para>Here is how the view would use it:</para>
+			<programlisting lang="html"><![CDATA[
+$FormHelper.Select("multipleprimes", $primenumbers, "%{multiple='true', style='width: 110px; height: 90px;'}")  
+]]></programlisting>
+			<para>
+				Note that the
+				<literal>multiple</literal>
+				parameter is required to generate a html element
+				prepared for multiple selection.
+			</para>
+		</section>
+	</section>
+	<section>
+		<title>Creating Checkbox Lists</title>
+		<para>
+			FormHelper allows you to generate a list of checkboxes
+			associated with a data source. It is also able to pre-check
+			the checkboxes based on the initial selection set. Make sure
+			you have read the
+			<ulink url="sets.html">
+				How FormHelper works with sets
+			</ulink>
+			document.
+		</para>
+		<para>
+			Listing checkboxes requires a state object. To create it you
+			invoke
+			<literal>CreateCheckboxList</literal>
+			which returns a
+			<literal>CheckboxList</literal>
+			instance. A
+			<literal>CheckboxList</literal>
+			is enumerable and exposes an
+			<literal>Item</literal>
+			and a
+			<literal>LabelFor</literal>
+			method. You must enumerate the elements and while doing it
+			invoke
+			<literal>Item</literal>
+			which returns the checkbox element.
+			<literal>LabelFor</literal>
+			adds a label-tag to the caption that allows the user to
+			click the caption as well as the checkbox itself.
+		</para>
+		<para>Consider the following action code:</para>
+		<programlisting lang="cs"><![CDATA[
+public void Index()
+{
+	// data source
+	PropertyBag["primenumbers"] = new int[] { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47 };
+	
+	// initial selection
+	PropertyBag["selectedPrimes"] = new int[] { 11, 19, 29 };
+}
+]]></programlisting>
+		<para>The code on the view to use it would be:</para>
+		<programlisting lang="html"><![CDATA[
+<p>
+#set($items = $FormHelper.CreateCheckboxList("selectedPrimes", $primenumbers))
+
+#foreach($elem in $items)
+  $items.Item() $items.LabelFor($elem) <br/>
+#end
+</p>
+]]></programlisting>
+		<para>
+			With complex objects you must care to specify the value
+			parameter so the FormHelper can generate proper html
+			elements.
+		</para>
+		<para>Consider the following action code:</para>
+		<programlisting lang="cs"><![CDATA[
+public void Index()
+{
+	// data source
+	Category[] categories = new Category[] 
+	{ 
+		new Category(1, "Music"), 
+		new Category(2, "Humor"), 
+		new Category(3, "Politics")  
+	};
+	PropertyBag["categories"] = categories;
+	
+	// initial selection
+	Blog blog = new Blog();
+	blog.Categories = new Category[] { new Category(2, "Humor") };
+	PropertyBag["blog"] = blog;
+}
+]]></programlisting>
+		<para>
+			The
+			<literal>Category</literal>
+			class above has an
+			<literal>Id</literal>
+			property and
+			<literal>Name</literal>
+			property. So here is how the view would use it:
+		</para>
+		<programlisting lang="html"><![CDATA[
+<p>
+#set($items = $FormHelper.CreateCheckboxList("blog.categories", $categories, "%{value='Id'}"))
+
+#foreach($elem in $items)
+  $items.Item()  $elem.Name   <br/>
+#end
+</p>
+]]></programlisting>
+	</section>
+</section>

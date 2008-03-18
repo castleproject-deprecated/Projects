@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../../toolchain/docbook-xml/docbookx.dtd">
+<section>
+	<title>Exception Chaining Extension</title>
+	<para>
+		The Exception Chaining extension allow you to execute one or
+		more steps in response to an exception threw by an action. The
+		steps are called Exception Handlers and must implement
+		<literal>IExceptionHandler</literal>
+		(or
+		<literal>IConfigurableHandler</literal>
+		if they need external configuration).
+	</para>
+	<para>
+		The
+		<literal>IExceptionHandler</literal>
+		interface is very straighforward, it simply dictates the
+		contract for processing the exception information. As they are
+		chained you must be good and check if there's a next handler
+		available and if so, delegate the invocation to it. It would be
+		also a good behavior if your handler implementation doesn't
+		throw exceptions at all.
+	</para>
+	<para>
+		It is also important to note that you can use the
+		<literal>AbstractExceptionHandler</literal>
+		to save you some few types.
+	</para>
+	<para>
+		The
+		<literal>IConfigurableHandler</literal>
+		is just an increment the the previous interface for those
+		handlers that require configuration information. The Configure
+		method is invoked as soon as the handler is instantiated and its
+		node on the configuration is passed.
+	</para>
+
+	<para>
+		The extension does not do much more than delegating the
+		execution to the installed handlers. You can create handlers to
+		provide actions and even introduce new semantics. As the
+		handlers are chained together, you can even implement a handler
+		that decides if the execution chain should continue or stop
+		right there. For example, suppose you want that only exceptions
+		that extends
+		<literal>SqlException</literal>
+		be e-mailed to you. In this case you could write this simple
+		handler:
+	</para>
+	<programlisting lang="cs"><![CDATA[
+public class MyFilterHandler : AbstractExceptionHandler
+{
+	public override void Process(IRailsEngineContext context, IServiceProvider serviceProvider)
+	{
+		if (context.LastException is SqlException)
+		{
+			InvokeNext(context, serviceProvider);
+		}
+	}
+}
+]]></programlisting>
+	<para>And of course, register this handler before others.</para>
+	<section>
+		<title>The EmailHandler</title>
+		<para>
+			MonoRail comes with just one exception handler:
+			<literal>EmailHandler</literal>
+			. This handler e-mails the exception details and the
+			environment details to a specified e-mail address.
+		</para>
+		<para>
+			This handler requires the attribute mailto and you can
+			optionaly inform the mailfrom as well. Also, you must
+			provide the smtpHost in the configuration -- see
+			<ulink url="../manual/configurationref.html">
+				MonoRail Configuration Reference
+			</ulink>
+			for more details on this one.
+		</para>
+		<programlisting lang="html"><![CDATA[
+<monorail smtpHost="my.smtp.server">
+	<extensions>
+		<extension 
+		type="Castle.MonoRail.Framework.Extensions.ExceptionChaining.ExceptionChainingExtension, Castle.MonoRail.Framework" />
+	</extensions>
+	<exception>
+		<exceptionHandler 
+			mailTo="lazydeveloper@mycompany.com" mailFrom="angry.client@client.com" 
+			type="Castle.MonoRail.Framework.Extensions.ExceptionChaining.EmailHandler, Castle.MonoRail.Framework" />
+	</exception>
+</monorail>
+]]></programlisting>
+		<para>
+			You need to install the extension using the extensions node,
+			as usual, and also provide the node
+			<literal>exception</literal>
+			to list the handlers you want to install. Please note that
+			they will be installed and chained in the same order they
+			were declared.
+		</para>
+		<programlisting><![CDATA[
+<monorail customsession="Type name that implements ICustomSessionFactory">
+	<extensions>
+		<extension 
+			type="Castle.MonoRail.Framework.Extensions.ExceptionChaining.ExceptionChainingExtension, Castle.MonoRail.Framework" />
+	</extensions>
+	<exception>
+		<exceptionHandler type="type that implements IExceptionHandler" />
+	</exception>
+</monorail>
+]]></programlisting>
+	</section>
+</section>

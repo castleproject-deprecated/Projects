@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd">
+<chapter>
+	<title>Layouts</title>
+	<section>
+		<title>Introduction</title>
+		<para>
+			Layouts allow you to template your site by specifying common
+			html and controls, such as structural html and navigation
+			controls, in one place that are available for any view to
+			use.
+		</para>
+		<para>
+			Layouts are just standard views, but they need to be created
+			in a folder named
+			<literal>layouts</literal>
+			, notice that it is plural. The
+			<literal>layouts</literal>
+			folder needs to be directly under your views root directory.
+		</para>
+		<note>
+			<para>
+				Note that the extension for the layout files need to
+				match whatever view engine you are using, such as
+				<literal>.aspx</literal>
+				. ASP.NET users that are tempted to use the master page
+				model and use .master will be sadly dissappointed with a
+				'resource cannot be found' error.
+			</para>
+		</note>
+	</section>
+	<section>
+		<title>Using Layouts</title>
+		<para>
+			You can associate a layout with a controller or with an
+			action using the
+			<literal>LayoutAttribute</literal>
+			. For example:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+[Layout("application")]
+public class CustomerController : Controller
+{
+	public void Index()
+	{
+	}
+}
+]]></programlisting>
+		<para>
+			In some scenarios you might want to turn off the layout
+			processing. To do so use
+			<literal>CancelLayout</literal>
+			method. There are other cases where you want to render a
+			specific view and turn off layout at the same time. The
+			<literal>RenderView</literal>
+			and
+			<literal>RenderSharedView</literal>
+			have overloads to allow you to do that.
+		</para>
+		<para>
+			<informaltable>
+				<tgroup cols="1">
+					<colspec colnum="1" colname="col1" />
+					<thead>
+						<row>
+							<entry>Method</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>
+								<literal>
+									RenderView(String name, bool
+									skipLayout)
+								</literal>
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>
+									RenderView(String controller, String
+									name, bool skipLayout)
+								</literal>
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>
+									RenderSharedView(String name, bool
+									skipLayout)
+								</literal>
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</para>
+		<para>For example:</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+[Layout("application")]
+public class CustomerController : Controller
+{
+	public void Index()
+	{
+		RenderView("welcome", true);
+	}
+}
+]]></programlisting>
+		<para>
+			Each view engine uses a specific approach to have layouts
+			working. We will instruct on how to deal with layouts on the
+			view engines documents.
+		</para>
+	</section>
+</chapter>

@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd">
+<chapter>
+	<title>Views</title>
+	<section>
+		<title>Introduction</title>
+		<para>
+			From the MonoRail perspective the view is in charge of
+			presenting the data supplied by the controller. The
+			controller is not aware of how the view is implemented, nor
+			the underlying view engine you chose. This is intentional
+			and is what separation of concerns is all about.
+		</para>
+	</section>
+	<section>
+		<title>Folder Structure Convention</title>
+		<para>
+			There must be a folder for the views. Each subfolder should
+			be named after the controller's name. If the controller is
+			associated with an area, that must be reflected on the
+			structure as well.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/views_folder.gif" />
+				</imageobject>
+			</mediaobject>
+		</para>
+	</section>
+	<section>
+		<title>Selecting a View to Render</title>
+		<para>
+			When an action is invoked, MonoRail pre-selects the action
+			name as the view to be rendered. For example:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class CustomerController : Controller
+{
+	public void Index()
+	{
+	}
+}
+]]></programlisting>
+		<para>
+			If the action
+			<literal>Index</literal>
+			is invoked (from a client's browser) the
+			<literal>views\customer\index</literal>
+			view file will be preselected.
+		</para>
+		<note>
+			<para>
+				MonoRail will never use file extensions on the
+				controller to define the view to be rendered. Every View
+				Engine uses a different file extension, but that is not
+				reflected on the controller's code.
+			</para>
+		</note>
+		<para>
+			If instead of sending the
+			<literal>views\customer\index</literal>
+			the programmer wanted to send a different view, she could
+			use the
+			<literal>RenderView</literal>
+			method which selects a different view.
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class CustomerController : Controller
+{
+	public void Index()
+	{
+		RenderView("welcome");
+	}
+}
+]]></programlisting>
+		<para>
+			The code above will select a view file located at
+			<literal>views\customer\welcome</literal>
+			.
+		</para>
+		<warning>
+			<para>
+				The view is not processed when
+				<literal>RenderView</literal>
+				is invoked. It just selects the view. The view process
+				happens after the action method returns.
+			</para>
+		</warning>
+	</section>
+	<section>
+		<title>Passing Values to a View</title>
+
+		<para></para>
+		<section>
+			<title>The PropertyBag</title>
+			<para>
+				You would probably want to supply data to the view so it
+				can generate dynamic content. This should be done using
+				the
+				<literal>PropertyBag</literal>
+				. For example:
+			</para>
+			<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class TestController : Controller
+{
+	public void ShowTime()
+	{
+		PropertyBag["now"] = DateTime.Now;
+	}
+}
+]]></programlisting>
+			<para>
+				The
+				<literal>PropertyBag</literal>
+				is an dictionary. Every View Engine uses an approach to
+				make the data available to the view. Using NVelocity
+				View Engine as an example, the data will be present as a
+				context variable. The following is a small NVelocity
+				template example:
+			</para>
+			<programlisting lang="cs"><![CDATA[
+<html>
+Hello, the time now is $now
+</html>
+]]></programlisting>
+			<para>
+				For further examples of how to access the PropertyBag
+				from other view engines see the View Engines section.
+			</para>
+		</section>
+		<section>
+			<title>Flash</title>
+			<para>
+				<literal>Flash</literal>
+				is a way to persist a transient value between requests.
+				It is useful when you perform some process and issue a
+				redirect. On the redirect target you can check the
+				<literal>Flash</literal>
+				for a status code, error message or something
+				equivalent. For example:
+			</para>
+			<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class AdminController : Controller
+{
+	public void PasswordManagement()
+	{
+	}
+
+	public void ChangePassword()
+	{
+		String passwd = Params["password"];
+	
+		if (passwd.Length < 6)
+		{
+			Flash["error"] = "Password too weak, operation aborted";
+		}
+		else
+		{
+			// Change password
+		}
+	
+		RedirectToAction("PasswordManagement");
+	}
+}
+]]></programlisting>
+			<para>
+				The flow might be not clear in the example above. So,
+				let's see what exactly happens:
+				<orderedlist>
+					<listitem>
+						<para>
+							The user access the action
+							<literal>PasswordManagement</literal>
+							.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							A page with some action appears, including a
+							change password form that posts to the
+							<literal>ChangePassword</literal>
+							action.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							On the
+							<literal>ChangePassword</literal>
+							action we perform a naive check and, in the
+							event of failure, add an entry to the Flash.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							We send the user back to the
+							<literal>PasswordManagement</literal>
+							action sending a redirect.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							The view for the
+							<literal>PasswordManagement</literal>
+							needs to check the flash entry error and
+							show a meaningful error message accordingly.
+						</para>
+					</listitem>
+				</orderedlist>
+			</para>
+		</section>
+	</section>
+	<section>
+		<title>Shared Views</title>
+		<para>
+			Some views could be shared among controllers, or you might
+			want to render a view from another controller. For those
+			cases, use
+			<literal>RenderSharedView</literal>
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class CustomerController : Controller
+{
+	public void Index()
+	{
+		RenderSharedView("common/welcome");
+	}
+}
+]]></programlisting>
+		<para>
+			The code above will select a view file located at
+			<literal>views\common\welcome</literal>
+			.
+		</para>
+	</section>
+	<section>
+		<title>Cancelling a View</title>
+		<para>
+			Although it might sound strange, there are situation were
+			you do not want any view processing to take place. For those
+			cases, use the
+			<literal>CancelView</literal>
+			method.
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class CustomerController : Controller
+{
+	public void Index()
+	{
+		CancelView();
+	}
+}
+]]></programlisting>
+
+	</section>
+	<section>
+		<title>Accessing Values Passed by the Controller</title>
+		<para>
+			Each view engine accesses the values in the PropertyBag and
+			Flash differently. See the ViewEngines section for further
+			information.
+		</para>
+	</section>
+
+	<section>
+		<title>Javascript and Ajax</title>
+		<para>
+			We did not reinvent the wheel. We use the awesome
+			<ulink url="">prototype js library</ulink>
+			.
+		</para>
+		<para>
+			There are other Javascript libraries that can be used with
+			MonoRail:
+		</para>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="???">script.aculo.us</ulink>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://ripcord.co.nz/behaviour/">
+							Behaviour
+						</ulink>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="???">
+							The Fade Anything Technique
+						</ulink>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="???">fValidate</ulink>
+					</para>
+				</listitem>
+			</itemizedlist>
+			When passing parameters to an action you need to use the
+			<code>with</code>
+			parameter used by the
+			<code>AjaxUpdater/AjaxRequest</code>
+			. For example in your view you would add:
+		</para>
+		<programlisting><![CDATA[
+$AjaxHelper.LinkToRemote("Some action", "ProcessItem.rails", "%{update='resultdiv', with='productid=10'}")
+]]></programlisting>
+		<para>
+			And the Action on the controller that handles the Ajax
+			request:
+		</para>
+		<programlisting><![CDATA[public void ProcessItem(int productid) { ... }]]></programlisting>
+		<section>
+			<title>Javascript Generation</title>
+
+			<para></para>
+		</section>
+		<section>
+			<title>JSON</title>
+
+			<para></para>
+		</section>
+		<section>
+			<title>The JSON Binder</title>
+
+			<para></para>
+		</section>
+
+	</section>
+</chapter>

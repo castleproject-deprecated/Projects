@@ -1,0 +1,956 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../../toolchain/docbook-xml/docbookx.dtd">
+<section>
+	<title>AjaxHelper</title>
+	<para>
+		MonoRail supports
+		<ulink
+			url="http://www.adaptivepath.com/publications/essays/archives/000385.php">
+			Ajax
+		</ulink>
+		by using the
+		<ulink url="http://prototype.conio.net/">prototype jslib</ulink>
+		.
+	</para>
+	<para>
+		First of all, to use Ajax support you must make the javascript
+		code available to your view:
+	</para>
+	<programlisting lang="html"><![CDATA[
+$AjaxHelper.GetJavascriptFunctions()
+]]></programlisting>
+
+	<para>Which will render:</para>
+	<programlisting><![CDATA[
+<script type="text/javascript" src="/MonoRail/Files/AjaxScripts.rails"></script>
+]]></programlisting>
+	<para>
+		This helper also exposes the Behaviour js library. To use it,
+		invoke
+		<literal>GetBehaviourFunctions</literal>
+		:
+	</para>
+	<programlisting lang="html"><![CDATA[
+$AjaxHelper.GetBehaviourFunctions()
+]]></programlisting>
+	<section>
+		<title>Common Parameters</title>
+		<para>
+			The more you know about the prototype library, the better.
+			We recommend the
+			<ulink
+				url="http://www.sergiopereira.com/articles/prototype.js.html">
+				Developer Notes for prototype.js
+			</ulink>
+			although it is a little outdated.
+		</para>
+		<para>
+			The prototype library has two main classes to perform remote
+			requests:
+			<itemizedlist>
+				<listitem>
+					<para>
+						<literal>Ajax.Request</literal>
+						: performs a remote invocation and allow you to
+						work on the results with callbacks
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<literal>Ajax.Updater</literal>
+						: extends the
+						<literal>Ajax.Request</literal>
+						and updates a html element with the invocation
+						result.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			The following parameters can be used on both
+			<literal>Ajax.Request</literal>
+			and
+			<literal>Ajax.Updater</literal>
+			:
+		</para>
+		<para>
+			<informaltable>
+				<tgroup cols="2">
+					<colspec colnum="1" colname="col1" />
+					<colspec colnum="2" colname="col2" />
+					<thead>
+						<row>
+							<entry>Parameter</entry>
+							<entry>Description</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>
+								<literal>url</literal>
+							</entry>
+							<entry>
+								The url to be invoked. You cannot
+								specify parameters (like url?key=value).
+								If you need to pass parameters, use the
+								<literal>with</literal>
+								parameter.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>method</literal>
+							</entry>
+							<entry>
+								Http method to be used on the
+								invocation. Defaults to 'post'.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>with</literal>
+							</entry>
+							<entry>
+								Defines the parameters to be send with
+								the request. For example
+								<literal>
+									name=hammett&amp;age=27&amp;iscustomer=true
+								</literal>
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>form</literal>
+							</entry>
+							<entry>
+								If you omit the
+								<literal>with</literal>
+								parameter but include the
+								<literal>form</literal>
+								then it will generate code to serialize
+								the current form. Equivalent to use
+								<literal>
+									with=Form.serialize(this)
+								</literal>
+								.
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</para>
+		<para>
+			When you specify the parameter
+			<literal>update</literal>
+			or
+			<literal>success</literal>
+			or
+			<literal>failure</literal>
+			, the
+			<literal>AjaxHelper</literal>
+			will generate an
+			<literal>Ajax.Updater</literal>
+			call. The following parameters applies to it:
+		</para>
+		<para>
+			<informaltable>
+				<tgroup cols="2">
+					<colspec colnum="1" colname="col1" />
+					<colspec colnum="2" colname="col2" />
+					<thead>
+						<row>
+							<entry>Parameter</entry>
+							<entry>Description</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>
+								<literal>update</literal>
+							</entry>
+							<entry>
+								Defines the name of the html element
+								that will be updated with the return xml
+								of the request. Usually a
+								<literal>div</literal>
+								is used.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>success</literal>
+								/
+								<literal>failure</literal>
+							</entry>
+							<entry>
+								Defines the name of the html element
+								that will be updated conditionally with
+								the return xml of the request. If the
+								request is successful, the elemented
+								pointed by
+								<literal>success</literal>
+								will be updated, otherwise it will use
+								the elemented pointed by
+								<literal>failure</literal>
+								.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>evalScripts</literal>
+							</entry>
+							<entry>
+								Defines whether the returned xml should
+								have its javascript content evaluated.
+								Defaults to
+								<literal>true</literal>
+								.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>position</literal>
+							</entry>
+							<entry>
+								Defines a strategy to insert the
+								resulting xml on the DOM. The supported
+								values are
+								<literal>Before</literal>
+								,
+								<literal>Top</literal>
+								,
+								<literal>Bottom</literal>
+								and
+								<literal>After</literal>
+								.
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</para>
+		<para>
+			Callbacks can also be used. The prototype will invoke the
+			specified javascript functions during different steps in the
+			remote invocation.
+		</para>
+		<para>
+			<informaltable>
+				<tgroup cols="2">
+					<colspec colnum="1" colname="col1" />
+					<colspec colnum="2" colname="col2" />
+					<thead>
+						<row>
+							<entry>Parameter</entry>
+							<entry>Description</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>
+								<literal>Loading</literal>
+							</entry>
+							<entry>
+								Called when the remote document is being
+								loaded with data by the browser.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>Loaded</literal>
+							</entry>
+							<entry>
+								Called when the browser has finished
+								loading the remote document.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>Interactive</literal>
+							</entry>
+							<entry>
+								Called when the user can interact with
+								the remote document, even though it has
+								not finished loading.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>Complete</literal>
+							</entry>
+							<entry>
+								Called when the XMLHttpRequest has
+								completed.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>OnSuccess</literal>
+							</entry>
+							<entry>
+								Called when the request was successfully
+								(Status code &lt; 500)
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>OnFailure</literal>
+							</entry>
+							<entry>
+								Called when the request was not
+								successfully (Status code &gt;= 500)
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</para>
+		<para>
+			You can also specify that a function must be executed
+			before, after or define it as a condition to the Ajax
+			request be issue.
+		</para>
+		<para>
+			<informaltable>
+				<tgroup cols="2">
+					<colspec colnum="1" colname="col1" />
+					<colspec colnum="2" colname="col2" />
+					<thead>
+						<row>
+							<entry>Parameter</entry>
+							<entry>Description</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>
+								<literal>before</literal>
+							</entry>
+							<entry>
+								Defines that the specified javascript
+								function must run before the Ajax
+								request is sent.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>after</literal>
+							</entry>
+							<entry>
+								Defines that the specified javascript
+								function must run right after the Ajax
+								request is sent.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>condition</literal>
+							</entry>
+							<entry>
+								Defines that the specified function must
+								return
+								<literal>true</literal>
+								to allow the Ajax request to take place.
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</para>
+		<para>
+			Note that the
+			<literal>OnSuccess</literal>
+			and
+			<literal>OnFailure</literal>
+			callbacks will include a parameter called
+			<literal>request</literal>
+			which is the original XmlHttpRequest object. Your callback
+			function will need to have a parameter called
+			<literal>request</literal>
+			to operate properly.
+		</para>
+	</section>
+	<section>
+		<title>Using It</title>
+		<para>
+			The best and easiest way to use the AjaxHelper is to check
+			the API documentation to identify the method you want. Check
+			its signature. Most of them will have an
+			<literal>IDictionary</literal>
+			parameter. This is an approach to make the ajax usage on
+			views more self-documented.
+		</para>
+		<para>
+			The method API documentation should highlight required
+			parameters or special meanings that a parameter might have.
+			Note that the common parameters discussed above applies to
+			most of the methods on AjaxHelper.
+		</para>
+		<para>
+			The following snippets shows the AjaxHelper in action.
+		</para>
+		<programlisting lang="html"><![CDATA[
+$AjaxHelper.LinkToRemote("Show server time", "showtime.rails", "%{update='maindiv', OnSuccess='showSuccessMessage(request)'}") 
+]]></programlisting>
+	</section>
+	<section>
+		<title>Using the Behavior Library</title>
+		<para>
+			The
+			<ulink url="http://bennolan.com/behaviour/">
+				Behaviour javascript library
+			</ulink>
+			allow you to use CSS selectors to bind object's events to
+			javascript functions.
+		</para>
+		<para>
+			The
+			<literal>AjaxHelper</literal>
+			exposes a few methods related to Behaviour.
+		</para>
+		<para>
+			If you change your document object model dynamically you can
+			reapply the rules defined within Behavior. In this case use
+			<literal>ReApply</literal>
+			which renders a script block invoking
+			<literal>Behavior.apply()</literal>
+			.
+		</para>
+		<para>
+			Behavior binds itself to the
+			<literal>window.onload</literal>
+			event. In the case you want to use it as well, invoke
+			<literal>AddLoadEvent(String loadFunctionName)</literal>
+			.
+		</para>
+		<section>
+			<title>Registering Rules</title>
+			<para>
+				The following is an example of how to associate
+				javascript functions to events using Behaviour:
+			</para>
+			<programlisting lang="js"><![CDATA[
+var myrules = {
+	'b.someclass' : function(element){
+		element.onclick = function(){
+			alert(this.innerHTML);
+		}
+	},
+	'#someid u' : function(element){
+		element.onmouseover = function(){
+			this.innerHTML = "BLAH!";
+		}
+	}
+};
+]]></programlisting>
+			<para>
+				If you would prefer to use the helper to generate the
+				source, you can do something like the following:
+			</para>
+			<programlisting lang="html"><![CDATA[
+$AjaxHelper.StartBehaviourRegister()
+$AjaxHelper.Register("b.someclass", "onclick", "functionName")
+$AjaxHelper.Register("#someid u", "onmouseover", "function(){ this.innerHTML = 'BLAH!'; }")
+$AjaxHelper.EndBehaviourRegister()
+]]></programlisting>
+
+			<para>
+				You may also consult the
+				<ulink url="Generated_AjaxHelper.html">
+					API documentation for the AjaxHelper
+				</ulink>
+				.
+			</para>
+		</section>
+	</section>
+	<section>
+		<title>Javascript Action Proxies</title>
+		<para>
+			MonoRail includes the ability to generate a proxy object in
+			javascript to invoke actions on controllers. For example,
+			suppose you have the following controller:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class AdminController : SmartDispatcherController
+{
+	public void Index()
+	{
+	}
+
+	[AjaxAction]
+	public void DisableUser(int userId)
+	{
+		// Do something important here
+		RenderText("Done");
+	}
+
+	[AjaxAction]
+	public void ChangeUserPassword(int userId, String newPassword)
+	{
+		// Do something important here
+		RenderText("Done");
+	}
+}
+]]></programlisting>
+		<para>
+			The methods you want to generate proxies for need to be
+			marked with the attribute
+			<literal>AjaxActionAttribute</literal>
+			.
+		</para>
+		<para>
+			On the view side, you can use the following methods to
+			generate a javascript block that uses
+			<literal>AjaxRequest</literal>
+			class to invoke the actions.
+		</para>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<literal>
+							AjaxHelper.GenerateJSProxy(string proxyName)
+						</literal>
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<literal>
+							AjaxHelper.GenerateJSProxy(string proxyName,
+							string controller)
+						</literal>
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<literal>
+							AjaxHelper.GenerateJSProxy(string proxyName,
+							string area, string controller)
+						</literal>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			In the view for the
+			<literal>Index</literal>
+			action of
+			<literal>AdminController</literal>
+			we can generate a proxy:
+		</para>
+		<programlisting lang="html"><![CDATA[
+$AjaxHelper.GetJavascriptFunctions()
+$AjaxHelper.GenerateJSProxy("myproxy")
+]]></programlisting>
+		<para>
+			The
+			<literal>GenerateJSProxy</literal>
+			call will generate a js block that uses
+			<literal>Ajax.Request</literal>
+			to make a remote invocation:
+		</para>
+		<programlisting lang="js"><![CDATA[
+<script type="text/javascript" src="/MonoRail/Files/AjaxScripts.rails"></script>
+<script type="text/javascript">var myproxy =
+{ 
+
+	DisableUser:
+	function(userId, callback)
+	{
+		var r=new Ajax.Request('/admin/DisableUser.rails',
+		{
+			parameters: '_=x26userid=' + userId,
+			asynchronous: !!callback,
+			onComplete: callback
+		});
+		if(!callback) return r.transport.responseText;
+	}
+,
+	ChangeUserPassword:
+	function(userId, newPassword, callback)
+	{
+		var r=new Ajax.Request('/admin/ChangeUserPassword.rails',
+		{
+			parameters: '_=&userId=' + userId + '&newPassword=' + newPassword,
+			asynchronous: !!callback,
+			onComplete: callback
+		});
+		if(!callback) return r.transport.responseText;
+	}
+}
+</script>
+]]></programlisting>
+		<para>
+			As you see it supports synchronous and asynchronous calls.
+			If you specify a callback function it will be asynch,
+			otherwise synchronous. The use of the remote method becomes
+			natural js code:
+		</para>
+		<programlisting lang="html"><![CDATA[
+<input type="button" onclick="javascript:myproxy.DisableUser($('userid'));" />
+]]></programlisting>
+		<para>
+			You may also consult the
+			<ulink url="Generated_AjaxHelper.html">
+				API documentation for the AjaxHelper
+			</ulink>
+			.
+		</para>
+	</section>
+	<section>
+		<title>LinkToFunction and ButtonToFunction</title>
+		<para>
+			The
+			<literal>LinkToFunction</literal>
+			and
+			<literal>ButtonToFunction</literal>
+			methods allow the generation of Html elements that once
+			clicked invoke a javascript function. It is very simple and
+			has nothing to do with remote invocations.
+		</para>
+		<para>
+			You may also consult the
+			<ulink url="Generated_AjaxHelper.html">
+				API documentation for the AjaxHelper
+			</ulink>
+			.
+		</para>
+	</section>
+	<section>
+		<title>LinkToRemote and ButtonToRemote</title>
+		<para>
+			The LinkToRemote and ButtonToRemote generates html elements
+			that once clicked invokes a remote action (usually a
+			controller's action).
+		</para>
+		<para>
+
+			The following overloads are supported:
+
+			<itemizedlist>
+				<listitem>
+					<para>
+						<literal>
+							ButtonToRemote(String innerContent, String
+							url, IDictionary options)
+						</literal>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<literal>
+							ButtonToRemote(String innerContent, String
+							url, IDictionary options, IDictionary
+							htmloptions)
+						</literal>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<literal>
+							LinkToRemote(String name, String url,
+							IDictionary options)
+						</literal>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<literal>
+							LinkToRemote(String name, String url,
+							IDictionary options, IDictionary
+							htmloptions)
+						</literal>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</section>
+	<section>
+		<title>Remote Form</title>
+		<para>
+			The BuildFormRemoteTag generates a form element that instead
+			of sending the content in the normal way, it uses Ajax to
+			send the data.
+		</para>
+		<para>
+
+			The following overloads are supported:
+
+			<itemizedlist>
+				<listitem>
+					<para>
+						<literal>
+							BuildFormRemoteTag(String url, IDictionary
+							options)
+						</literal>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<literal>
+							BuildFormRemoteTag(IDictionary options)
+						</literal>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</section>
+	<section>
+		<title>Observers</title>
+		<para>
+			The observers can be associated with form elements or with
+			the whole form. An ajax invocation is sent when a change is
+			detected.
+		</para>
+		<para>
+			The following overloads are supported:
+
+			<itemizedlist>
+				<listitem>
+					<para>
+						<literal>
+							ObserveField(String fieldId, int frequency,
+							String url, String idOfElementToBeUpdated,
+							String with)
+						</literal>
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<literal>
+							ObserveField(String fieldId, int frequency,
+							String url, IDictionary options)
+						</literal>
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<literal>
+							ObserveField(IDictionary options)
+						</literal>
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<literal>
+							ObserveForm(String formId, int frequency,
+							String url, String idOfElementToBeUpdated,
+							String with)
+						</literal>
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<literal>
+							ObserveForm(String formId, IDictionary
+							options)
+						</literal>
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<literal>
+							ObserveForm(IDictionary options)
+						</literal>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			You may also consult the
+			<ulink url="Generated_AjaxHelper.html">
+				API documentation for the AjaxHelper
+			</ulink>
+			.
+		</para>
+	</section>
+	<section>
+		<title>Periodical Updates</title>
+		<para>
+			The PeriodicallyCallRemote makes remote invocations with a
+			specified frequency.
+		</para>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<literal>
+							PeriodicallyCallRemote(IDictionary options)
+						</literal>
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<literal>
+							PeriodicallyCallRemote(String url,
+							IDictionary options)
+						</literal>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</section>
+	<section>
+		<title>Autocompletion</title>
+		<para>
+			The AutoComplete enables a google style search where partial
+			searches are emitted as you type.
+		</para>
+		<para>
+			It is higly advisable to carefully read the script.aculo.us
+			<ulink
+				url="http://wiki.script.aculo.us/scriptaculous/show/Ajax.Autocompleter">
+				documentation
+			</ulink>
+			for the AutoCompleter to know about the possible
+			completionOptions.
+		</para>
+		<para>
+			AjaxHelper offers the following methods for providing
+			AutoCompletion:
+			<itemizedlist>
+				<listitem>
+					<para>
+						<literal>
+							InputTextWithAutoCompletion(IDictionary
+							parameters, IDictionary tagAttributes)
+						</literal>
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<literal>
+							InputTextWithAutoCompletion(String
+							inputName, String url, IDictionary
+							tagAttributes, IDictionary
+							completionOptions)
+						</literal>
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<literal>
+							AutoCompleteInputText( String elementId,
+							String url, IDictionary options )
+						</literal>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			FormHelper also offers a combination of a input field with
+			databinding behaviour and Ajax Autocomplete behaviour.
+			<itemizedlist>
+				<listitem>
+					<para>
+						<literal>
+							FormHelper.TextFieldAutoComplete(string
+							target, string url, IDictionary
+							tagAttributes, IDictionary
+							completionOptions)
+						</literal>
+					</para>
+				</listitem>
+			</itemizedlist>
+			This field is created analogous to
+			<literal>InputTextWithAutoCompletion</literal>
+			, but instead of an inputName, the target object's property
+			path is specified (i.e.
+			<literal>user.Role</literal>
+			).
+		</para>
+		<section>
+			<title>Usage</title>
+			<para>Ok, let me directly start with the code:</para>
+			<programlisting lang="html"><![CDATA[
+#set ($ajaxOpt = "%{parameters='{user:\'$user.Id\'}', paramName='\'search\''}")
+#set ($inputOpt = "%{class='txt'}")
+<p>Enter your favorite programming frameworks:</p>
+
+<form action="$UrlHelper.For("%{action='EnterDataResults'}")" method="post">
+	<input type="hidden" name="user" value="$user.Id" />
+	<table class="blind">
+		<tr>
+			<td>IoC-Framework</td>
+			<td>$FormHelper.TextFieldAutoComplete("preference.ioc", UrlHelper.For("%{action='LookupIoc'}"), inputOpt, ajaxOpt)</td>
+		</tr>
+		<tr>
+			<td>OR/M-Framework</td>
+			<td>$FormHelper.TextFieldAutoComplete("preference.orm", Url.ForHelper("%{action='LookupOrm'}"), inputOpt, ajaxOpt)</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="submit" value="Save Data" /></td>
+		</tr>
+	</table>	
+</form>
+]]></programlisting>
+			<para>Now to the explanation.</para>
+			<para>
+				The variable
+				<literal>ajaxOpt</literal>
+				shows how to specify options for the Scriptaculous
+				AutoCompleter. The AutoCompleter wants
+				<literal>JSON</literal>
+				, so you need to make sure that string literals are
+				enclosed in quotation marks both in Brail/NVelocity and
+				in the value itself.
+			</para>
+			<para>
+				In this example, the completion options are used to add
+				a custom parameter to the query, which will be used by
+				the controller called by the AutoCompleter. Additionally
+				the name of the parameter is changed. If it is left
+				unchanged, AutoCompleter would use the name attribute of
+				the input element, in this case
+				<literal>preference.ioc</literal>
+				or
+				<literal>preference.orm</literal>
+				, which is normally unwanted due to databinding that
+				should not occur at this point.
+			</para>
+			<para>
+				<literal>inputOpt</literal>
+				simply defines options for the input tag and should be
+				straightforward.
+			</para>
+			<para>
+				The last thing to do on the calling page is to call the
+				helper method.
+			</para>
+			<para>Next is the AJAX controller:</para>
+			<programlisting lang="cs"><![CDATA[
+public void LookupIoc([ARFetch("user")]User user, string search)
+{
+	// perform search and put results into PropertyBag
+}
+]]></programlisting>
+			<para>And the associated view</para>
+			<programlisting lang="html"><![CDATA[
+<ul>
+#foreach ($ioc in $frameworks)
+	<li>$ioc.Name</li>
+#end
+</ul>
+]]></programlisting>
+			<para>
+				This is straight-forward. Format the results as an
+				unordered list. The AutoCompleter uses this list to
+				build the contents of the completion widget.
+			</para>
+		</section>
+	</section>
+</section>

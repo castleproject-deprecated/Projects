@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd"
+[
+	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2001/XInclude'">
+]>
+<chapter>
+	<title>Integrations</title>
+	<section>
+		<title>Introduction</title>
+		<para>
+			Integrations are components that provide integration to
+			other services in the Castle stack.
+		</para>
+	</section>
+	<xi:include href="integrations/activerecord.xml" />
+	<xi:include href="integrations/activerecord_scaffolding.xml" />
+	<xi:include href="integrations/windsor_container.xml" />
+</chapter>

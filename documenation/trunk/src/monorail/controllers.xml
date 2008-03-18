@@ -1,0 +1,2370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"../../toolchain/docbook-xml/docbookx.dtd">
+<chapter>
+	<title>Controllers</title>
+	<section>
+		<title>Introduction</title>
+		<para>
+			Controllers are extremely important as they are the
+			intelligent piece of the application that orchestrate the
+			application flow. The Getting started section depicted the
+			basic usage of controllers.
+		</para>
+	</section>
+	<section>
+		<title>Naming Convention</title>
+
+		<para>
+			The class name is used by default as the controller
+			identification. If your controller's name ends with
+			<emphasis>Controller</emphasis>
+			, it will be stripped from the name. You can also use the
+			<literal>ControllerDetails</literal>
+			attribute to associate a different name to your controller
+			class.
+		</para>
+
+		<para>
+			It is advisable that controller classes follow the Name +
+			Controller suffix convention. When the controller is
+			registered, MonoRail strips the suffix and uses the name as
+			the key. The controller name is used on the URL to access
+			it.
+		</para>
+
+		<para>
+			The attribute
+			<literal>ControllerDetailsAttribute</literal>
+			can be used to force the definition of a name to the
+			controller. For example:
+		</para>
+
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+[ControllerDetails("cust")] 
+public class Customer : Controller 
+{
+
+}
+]]></programlisting>
+
+		<para>
+			The controller defined above will be accessible using
+			<literal>cust</literal>
+			on the url.
+		</para>
+	</section>
+
+	<section>
+		<title>Areas</title>
+
+		<para>
+			MonoRail supports the concept of areas, which are logic
+			groups of controllers. All controllers belongs to an area.
+			The default area is an empty (unnamed) one.
+		</para>
+
+		<para>
+			You can think of a tree of controllers. Each node is an
+			area, each leaf is a controller.
+		</para>
+
+		<para>
+			To define an area, use the
+			<literal>ControllerDetailsAttribute</literal>
+			attribute:
+		</para>
+
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+[ControllerDetails(Area="admin")] 
+public class UsersController : Controller 
+{
+	public void Index() 
+	{ 
+	} 
+}
+]]></programlisting>
+
+		<para>
+			This controller now is accessible using the following url
+			path:
+		</para>
+
+		<para>
+			<literal>/admin/users/index.rails</literal>
+		</para>
+
+		<para>You can also define more than one level:</para>
+
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+[ControllerDetails(Area="admin/users")] 
+public class PasswordMngController : Controller 
+{ 
+	public void Index() 
+	{ 
+	}
+}
+]]></programlisting>
+
+		<para>
+			This controller now is accessible using the following url
+			path:
+		</para>
+
+		<para>
+			<literal>/admin/users/passwordmng/index.rails</literal>
+		</para>
+	</section>
+
+	<section>
+		<title>Actions</title>
+
+		<para>
+			We refer to action the procedures that can be invoked on
+			your controller. Basically it translates to any public
+			instance method your controller exposes.
+		</para>
+
+		<note>
+			<para>
+				If you do not want that a specific method be
+				"invocable", it cannot be public.
+			</para>
+		</note>
+
+		<section>
+			<title>Default Action</title>
+
+			<para>
+				The
+				<literal>DefaultActionAttribute</literal>
+				attribute provides a way to associate a default action
+				method that will be called if a matching action method
+				can not be found. One possible use is so that a web
+				designer can add views without the need for a developer
+				to add new action methods. To associate a default action
+				with your controller, use the
+				<literal>DefaultActionAttribute</literal>
+				attribute. This attribute can only be applied at the
+				class level.
+			</para>
+
+			<para>
+				Unless you specify which action should be invoked if
+				none is matched,
+				<literal>DefaultAction</literal>
+				will be used.
+			</para>
+
+			<programlisting lang="cs"><![CDATA[
+[DefaultAction] 
+public class HomeController : Controller
+{
+	public void Index() 
+	{
+	}
+
+	public void DefaultAction() 
+	{ 
+		string template = "notfound";
+
+		if (HasTemplate("home/" + Action)) 
+		{ 
+			template = Action;
+		}
+
+		RenderView(template); 
+	} 
+}
+]]></programlisting>
+
+			<para>
+				In the following example, the code specifies the action
+				to be invoked
+			</para>
+
+			<programlisting lang="cs"><![CDATA[[
+DefaultAction("Foo")] 
+public class HomeController : Controller 
+{ 
+	public void Index() 
+	{ 
+	}
+
+	public void Foo() 
+	{ 
+		RenderText(Action + " was not found"); 
+	}
+}
+]]></programlisting>
+		</section>
+	</section>
+
+	<section>
+		<title>Redirecting</title>
+
+		<para>
+			The
+			<literal>Controller</literal>
+			offers a handful of
+			<literal>Redirect</literal>
+			overloads. Some of them allow you to pass along query string
+			parameters.
+		</para>
+
+		<para>The following table list some of the overloads:</para>
+
+		<para>
+			<informaltable>
+				<tgroup cols="2">
+					<colspec colname="col1" colnum="1" />
+
+					<colspec colname="col2" colnum="2" />
+
+					<thead>
+						<row>
+							<entry>Name</entry>
+
+							<entry>Description</entry>
+						</row>
+					</thead>
+
+					<tbody>
+						<row>
+							<entry>
+								<literal>
+									RedirectToAction(string action)
+								</literal>
+							</entry>
+
+							<entry>
+								Redirects to another action in the same
+								controller.
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>
+									RedirectToAction(String action,
+									params String[]
+									queryStringParameters)
+								</literal>
+							</entry>
+
+							<entry>
+								Redirects to another action in the same
+								controller specifying query string
+								entries.
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>
+									RedirectToAction(String action,
+									IDictionary parameters)
+								</literal>
+							</entry>
+
+							<entry>
+								Redirects to another action in the same
+								controller specifying query string
+								entries.
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>Redirect(String url)</literal>
+							</entry>
+
+							<entry>
+								Redirects to the specified URL.
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>
+									Redirect(String url, IDictionary
+									parameters)
+								</literal>
+							</entry>
+
+							<entry>
+								Redirects to the specified URL
+								specifying query string entries.
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>
+									Redirect(String controller, String
+									action)
+								</literal>
+							</entry>
+
+							<entry>
+								Redirects to another controller and
+								action.
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>
+									Redirect(String area, String
+									controller, String action)
+								</literal>
+							</entry>
+
+							<entry>
+								Redirects to another controller and
+								action (within an area).
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</para>
+	</section>
+
+	<section>
+		<title>Other Useful Properties</title>
+
+		<para>Request/Response</para>
+
+		<para>
+			<informaltable>
+				<tgroup cols="3">
+					<colspec colname="col1" colnum="1" />
+
+					<colspec colname="col2" colnum="2" />
+
+					<colspec colname="col3" colnum="3" />
+
+					<thead>
+						<row>
+							<entry>Property</entry>
+
+							<entry>Type</entry>
+
+							<entry>Description</entry>
+						</row>
+					</thead>
+
+					<tbody>
+						<row>
+							<entry>
+								<literal>Context</literal>
+							</entry>
+
+							<entry>
+								<literal>
+									Castle.MonoRail.Framework.IRailsEngineContext
+								</literal>
+							</entry>
+
+							<entry>
+								Gets the context of this request
+								execution.
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>Session</literal>
+							</entry>
+
+							<entry>
+								<literal>IDictionary</literal>
+							</entry>
+
+							<entry>Gets the Session dictionary.</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>Flash</literal>
+							</entry>
+
+							<entry>
+								<literal>
+									Castle.MonoRail.Framework.Flash
+								</literal>
+							</entry>
+
+							<entry>
+								Gets a dictionary of volative items.
+								Ideal for showing success and failures
+								messages.
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>HttpContext</literal>
+							</entry>
+
+							<entry>
+								<literal>
+									System.Web.HttpContext
+								</literal>
+							</entry>
+
+							<entry>
+								Gets the web context of ASP.NET API.
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>Request</literal>
+							</entry>
+
+							<entry>
+								<literal>
+									Castle.MonoRail.Framework.IRequest
+								</literal>
+							</entry>
+
+							<entry>Gets the request object.</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>Response</literal>
+							</entry>
+
+							<entry>
+								<literal>
+									Castle.MonoRail.Framework.IResponse
+								</literal>
+							</entry>
+
+							<entry>Gets the response object.</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>Params</literal>
+							</entry>
+
+							<entry>
+								<literal>NameValueCollection</literal>
+							</entry>
+
+							<entry>
+								Shortcut to
+								<literal>IRequest.Params</literal>
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>Form</literal>
+							</entry>
+
+							<entry>
+								<literal>NameValueCollection</literal>
+							</entry>
+
+							<entry>
+								Shortcut to
+								<literal>IRequest.Form</literal>
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>Query</literal>
+							</entry>
+
+							<entry>
+								<literal>NameValueCollection</literal>
+							</entry>
+
+							<entry>
+								Shortcut to
+								<literal>IRequest.QueryString</literal>
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>IsClientConnected</literal>
+							</entry>
+
+							<entry>
+								<literal>bool</literal>
+							</entry>
+
+							<entry>
+								Shortcut to
+								<literal>
+									IResponse.IsClientConnected
+								</literal>
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</para>
+
+		<para>Controller information</para>
+
+		<para>
+			<informaltable>
+				<tgroup cols="3">
+					<colspec colname="col1" colnum="1" />
+
+					<colspec colname="col2" colnum="2" />
+
+					<colspec colname="col3" colnum="3" />
+
+					<thead>
+						<row>
+							<entry>Property</entry>
+
+							<entry>Type</entry>
+
+							<entry>Description</entry>
+						</row>
+					</thead>
+
+					<tbody>
+						<row>
+							<entry>
+								<literal>Name</literal>
+							</entry>
+
+							<entry>
+								<literal>string</literal>
+							</entry>
+
+							<entry>
+								Gets the controller's name (as MonoRail
+								knows it)
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>AreaName</literal>
+							</entry>
+
+							<entry>
+								<literal>string</literal>
+							</entry>
+
+							<entry>
+								Gets the controller's area name.
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>LayoutName</literal>
+							</entry>
+
+							<entry>
+								<literal>string</literal>
+							</entry>
+
+							<entry>
+								Gets or set the layout being used.
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>Action</literal>
+							</entry>
+
+							<entry>
+								<literal>string</literal>
+							</entry>
+
+							<entry>
+								Gets the name of the action being
+								processed.
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>SelectedViewName</literal>
+							</entry>
+
+							<entry>
+								<literal>string</literal>
+							</entry>
+
+							<entry>
+								Gets or sets the view which will be
+								rendered by this action. We encourage
+								you to use
+								<literal>RenderView</literal>
+								or
+								<literal>RenderSharedView</literal>
+								instead of setting this property.
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</para>
+
+		<para>Others</para>
+
+		<para>
+			<informaltable>
+				<tgroup cols="3">
+					<colspec colname="col1" colnum="1" />
+
+					<colspec colname="col2" colnum="2" />
+
+					<colspec colname="col3" colnum="3" />
+
+					<thead>
+						<row>
+							<entry>Property</entry>
+
+							<entry>Type</entry>
+
+							<entry>Description</entry>
+						</row>
+					</thead>
+
+					<tbody>
+						<row>
+							<entry>
+								<literal>Logger</literal>
+							</entry>
+
+							<entry>
+								<literal>
+									Castle.Core.Logging.ILogger
+								</literal>
+							</entry>
+
+							<entry>
+								Logger for the controller (you must
+								enable logging first)
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<literal>IsPostBack</literal>
+							</entry>
+
+							<entry>
+								<literal>bool</literal>
+							</entry>
+
+							<entry>
+								Determines if the current Action
+								resulted from an ASP.NET PostBack. As a
+								result, this property is only relavent
+								when using WebForms views. It is placed
+								on the base Controller for convenience
+								only to avoid the need to extend the
+								Controller or provide additional helper
+								classes.
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</para>
+	</section>
+
+	<section>
+		<title>Data Binding</title>
+
+		<para>
+			The
+			<literal>SmartDispatcherController</literal>
+			extends
+			<literal>Controller</literal>
+			class adding support for parameter binding. This allow you
+			to bind parameters from form elements to your action
+			arguments. Overloads are also supported. MonoRail will
+			invoke the action that it can supply more parameters.
+		</para>
+
+		<para>
+			MonoRail is able to bind simple values and complex objects.
+			Both approaches are described in the sections below.
+		</para>
+
+		<section>
+			<title>The SmartDispatchController</title>
+
+			<para></para>
+		</section>
+
+		<section>
+			<title>Simple Parameter Binding</title>
+
+			<note>
+				<para>
+					A sample demonstrating the concepts in the section
+					can be downloaded from
+					!download/monorail/trunk/MonoRail.SimpleBindingSample.zip
+				</para>
+			</note>
+
+			<para>Consider the following html form:</para>
+
+			<programlisting lang="html"><![CDATA[
+<form action="/User/Search.rails" method="post">
+	Name: <input type="text" name="name" /> 
+	Email: <input type="text" name="email" /> 
+	Country: 
+	<select name="country"> 
+		<option	value="44">England</option> 
+		<option	value="55">Brazil</option> 
+	</select>
+	<input type="submit" value="Search" />
+</form>
+]]></programlisting>
+
+			<para>
+				When this form is submitted, the following entries will
+				be present on the
+				<literal>Form</literal>
+				dictionary:
+				<itemizedlist>
+					<listitem>
+						<para>
+							<literal>name</literal>
+						</para>
+					</listitem>
+
+					<listitem>
+						<para>
+							<literal>email</literal>
+						</para>
+					</listitem>
+
+					<listitem>
+						<para>
+							<literal>country</literal>
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+
+			<para>
+				The standard way of getting those values on the
+				controller is to use one of the dictionaries:
+				<itemizedlist>
+					<listitem>
+						<para>
+							<literal>Params</literal>
+							: Has query string, form and environment
+							entries
+						</para>
+					</listitem>
+
+					<listitem>
+						<para>
+							<literal>Form</literal>
+							: Has only form entries (method post)
+						</para>
+					</listitem>
+
+					<listitem>
+						<para>
+							<literal>Query</literal>
+							: Has only query string entries
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+
+			<para>
+				Having said that your action code could be the
+				following:
+			</para>
+
+			<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class UserController : Controller 
+{ 
+	public void	Search() 
+	{ 
+		String name = Form["name"]; 
+		String email = Form["email"]; 
+		String country = Form["country"];
+
+			// Perform search ... 
+	} 
+}
+]]></programlisting>
+
+			<para>
+				Now if you switch to
+				<literal>SmartDispatcherController</literal>
+				you would be able to use the following simpler code
+				instead:
+			</para>
+
+			<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class UserController : SmartDispatcherController
+{ 
+	public void Search(string name, string email, string country) 
+	{ 
+		// Perform search ... 
+	}
+}
+]]></programlisting>
+
+			<para>
+				The
+				<literal>SmartDispatcherController</literal>
+				is able to perform conversions (more on that below). In
+				this case if the value is not present (ie. it was not
+				submitted), the argument will assume a default value.
+				However, if the value was submitted, but could not be
+				converted, an exception will be thrown and the action
+				will not be invoked.
+			</para>
+
+			<note>
+				<para>
+					Since the RC2 release empty strings are converted to
+					<literal>null</literal>
+					strings.
+				</para>
+			</note>
+
+			<section>
+				<title>DateTime Properties</title>
+
+				<para>
+					To bind DateTime fields you can pass a single value
+					or multiple values. Each of them will be a part of
+					the DateTime struct. For example, using a single
+					value:
+				</para>
+
+				<programlisting lang="html"><![CDATA[
+<form action="SaveValues.rails" method="post">
+	<input type="text" name="dob" value="1/1/2000"/> 
+</form>
+]]></programlisting>
+
+				<para>Using multiple values:</para>
+
+				<programlisting lang="html"><![CDATA[
+<form action="SaveValues.rails" method="post">
+	<input type="text" name="dobday" value="16" />
+	<input type="text" name="dobmonth" value="7"/> 
+	<input type="text" name="dobyear" value="1979" />
+	<input type="text"name="dobhour" value="4" /> 
+	<input type="text" name="dobminute" value="0" /> 
+	<input type="text" name="dobsecond" value="0" />
+</form>
+]]></programlisting>
+
+				<para>
+					Regardless of the form approach, the controller
+					action parameter will be the same:
+				</para>
+
+				<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class UserController : SmartDispatcherController 
+{ 
+	public void SaveValues(DateTime dob) 
+	{ 
+		... 
+	} 
+}
+]]></programlisting>
+			</section>
+
+			<section>
+				<title>Nullable Support</title>
+
+				<para>
+					Nullables data types are also supported. They will
+					only be populated if the values are present on the
+					form and in non-empty fields.
+				</para>
+			</section>
+
+			<section>
+				<title>Array Support</title>
+
+				<para>
+					Arrays are also supported on the controller side.
+					You can use two naming approaches on the form
+					elements to make it work.
+				</para>
+
+				<para>
+					The first approach is to repeat the element name.
+					For example:
+				</para>
+
+				<programlisting lang="html"><![CDATA[
+<form action="SaveValues.rails" method="post">
+	<input type="text" name="name" value="1" />
+	<input type="text" name="name" value="2" />
+	<input type="text" name="name" value="3" />
+	<input type="text" name="name" value="4" />
+	<input type="text" name="name" value="5" />
+</form>
+]]></programlisting>
+
+				<para>
+					The second approach is to use the indexed value
+					notation. The index value is meaningless to
+					MonoRail, but it must be unique per element name.
+					For example:
+				</para>
+
+				<programlisting lang="html"><![CDATA[
+<form action="SaveValues.rails" method="post">
+	<input type="text" name="name[0]" value="1" />
+	<input type="text" name="name[1]" value="2" />
+	<input type="text" name="name[2]" value="3" />
+	<input type="text" name="name[3]" value="4" />
+	<input type="text" name="name[4]" value="5" />
+</form>
+]]></programlisting>
+
+				<para>
+					On the controller side, the parameter will be the
+					same independently of the approach in use. All you
+					need to do is to use an array type:
+				</para>
+
+				<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class UserController : SmartDispatcherController 
+{ 
+	public void SaveValues(string[] name) 
+	{
+		 ... 
+	} 
+}
+]]></programlisting>
+			</section>
+		</section>
+
+		<section>
+			<title>Custom Binding</title>
+
+			<para></para>
+
+			<section>
+				<title>The DataBind Attribute</title>
+
+				<note>
+					<para>
+						A sample demonstrating the concepts in the
+						section can be downloaded from
+						!download/monorail/trunk/MonoRail.SimpleBindingSample.zip
+					</para>
+				</note>
+
+				<para>
+					If instead of working with flat values you want to
+					populate an object, this is also possible using the
+					<literal>DataBindAttribute</literal>
+					.
+				</para>
+
+				<para>
+					The
+					<literal>DataBindAttribute</literal>
+					used the
+					<literal>Castle.Component.Binder</literal>
+					to instantiate and populate the target type. Simple
+					values, nested objects and arrays are supported. As
+					with simple binding, a name convention must be used
+					on the form elements, so the binder can do its work.
+				</para>
+
+				<para>
+					First of all you must use a prefix which is required
+					to avoid name clashing. It is as giving the form
+					elements a name space. The form below uses
+					<literal>product</literal>
+					as a prefix:
+				</para>
+
+				<programlisting lang="html"><![CDATA[
+<form method="post" action="create.rails">
+	<input type="text" name="product.id" />
+	<input type="text" name="product.name" />
+	<input type="checkbox" name="product.inStock" id="" value="true" /> 
+</form>
+]]></programlisting>
+
+				<para>
+					On the controller action you must specify the prefix
+					as the argument to the
+					<literal>DataBindAttribute</literal>
+					:
+				</para>
+
+				<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class ProductController : SmartDispatcherController 
+{ 
+	public void Create([DataBind("product")] Product prod) 
+	{
+	} 
+}
+]]></programlisting>
+
+				<note>
+					<para>
+						The parameter name (in the case above
+						<literal>prod</literal>
+						) is not used by the binder and have no relation
+						with the prefix.
+					</para>
+				</note>
+
+				<para>
+					The binding of values happens with writable
+					properties only. Fields are never used. The
+					<literal>Product</literal>
+					class used on the example above would be:
+				</para>
+
+				<programlisting lang="cs"><![CDATA[
+public class Product 
+{ 
+	private int id; 
+	private String name; 
+	private bool inStock;
+
+	public int Id 
+	{ 
+		get { return id; } 
+		set { id = value;}
+	}
+
+	public string Name 
+	{ 
+		get { return name; } 
+		set { name = value; } 
+	}
+
+	public bool InStock 
+	{ 
+		get { return inStock; } 
+		set { inStock = value; } 
+	} 
+}
+]]></programlisting>
+
+				<note>
+					<para>
+						Your class must have a default parameterless
+						constructor.
+					</para>
+				</note>
+			</section>
+
+			<section>
+				<title>Nested Objects</title>
+
+				<para>
+					Nested objects are supported with
+					<emphasis>no</emphasis>
+					deep limit. Suppose the
+					<literal>Product</literal>
+					class above included a
+					<literal>SupplierInfo</literal>
+					:
+				</para>
+
+				<programlisting lang="cs"><![CDATA[
+public class Product 
+{ 
+	private SupplierInfo supplierInfo;
+
+	// others fields omitted
+
+	public SupplierInfo SupplierInfo 
+	{ 
+		get { return supplierInfo; } 
+		set { supplierInfo = value; } 
+	}
+
+	// others properties omitted 
+}
+]]></programlisting>
+
+				<para>
+					The declaration of
+					<literal>SupplierInfo</literal>
+					follow. Note that it uses different types, including
+					an enumerator.
+				</para>
+
+				<programlisting lang="cs"><![CDATA[
+public enum WeightUnit 
+{ 
+	Kilos, 
+	Pounds 
+}
+
+public class SupplierInfo 
+{ 
+	private String brand;
+	private float weight; 
+	private WeightUnit weightUnit;
+	private int warrantyInMonths;
+
+	public string Brand 
+	{ 
+		get { return brand; } 
+		set { brand = value; } 
+	}
+
+	public float Weight 
+	{
+		get { return weight; } 
+		set { weight = value; } 
+	}
+
+	public WeightUnit WeightUnit 
+	{ 
+		get { return weightUnit; } 
+		set { weightUnit = value; } 
+	}
+
+	public int WarrantyInMonths 
+	{ 
+		get { return warrantyInMonths; } 
+		set { warrantyInMonths = value; } 
+	} 
+}
+]]></programlisting>
+
+				<para>
+					When adding elements on the form, all you have to
+					care is to include the property name. For the case
+					above it would be:
+				</para>
+
+				<programlisting lang="html"><![CDATA[
+<form method="post" action="create.rails">
+	<input type="text" name="product.id" />
+	<input type="text" name="product.name" />
+	<input type="checkbox" name="product.inStock" id="" value="true" />
+
+	<input type="text" name="product.supplierinfo.brand" /> 
+	<input type="text" name="product.supplierinfo.Weight" />
+
+	<select name="product.supplierinfo.WeightUnit">
+		<option value="Kilos">In Kg</option>
+		<option value="Pounds">In Pounds</option> 
+	</select>
+
+	<input type="text" name="product.supplierinfo.WarrantyInMonths" />
+
+</form>
+]]></programlisting>
+
+				<para>
+					The rule is
+					<literal>
+						prefixname.propertyname1.propertyname2...
+					</literal>
+					. The binder is not case sensitive.
+				</para>
+			</section>
+
+			<section>
+				<title>Array Support</title>
+
+				<para>
+					There are two situations for array support. First,
+					suppose instead of populating a single
+					<literal>Product</literal>
+					you would want to populate a sequence of them. This
+					demands two changes in the example we have seen so
+					far.
+				</para>
+
+				<para>
+					First the form elements must use the indexed
+					notation discussed earlier:
+				</para>
+
+				<programlisting lang="html"><![CDATA[
+<form method="post" action="create.rails">
+	<input type="text" name="product[0].id" />
+	<input type="text" name="product[0].name" />
+	<input type="checkbox" name="product[0].inStock" id="" value="true" />
+
+	<input type="text" name="product[1].id" />
+	<input type="text" name="product[1].name" />
+	<input type="checkbox" name="product[1].inStock" id="" value="true" /> 
+</form>
+]]></programlisting>
+
+				<para>
+					Second, on the controller you must declare the
+					parameter as an array of
+					<literal>Product</literal>
+					s:
+				</para>
+
+				<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class ProductController : SmartDispatcherController 
+{ 
+	public void Create([DataBind("product")] Product[] prods) 
+	{
+	} 
+}
+]]></programlisting>
+
+				<para>
+					The rule is
+					<literal>
+						prefixname[uniqueindex].propertyname1.propertyname2...
+					</literal>
+					. The index must be a number, and the same number
+					identifies the same instance.
+				</para>
+
+				<para>
+					Another situation is when one or more properties of
+					the binding target are arrays. This case is also
+					supported and not different from what we have seen.
+				</para>
+
+				<para>
+					Being practical, suppose the
+					<literal>Product</literal>
+					class in the example above included a
+					<literal>Category</literal>
+					array.
+				</para>
+
+				<programlisting lang="cs"><![CDATA[
+public class Product 
+{ 
+	private Category[] categories;
+
+	// others fields omitted
+
+	public Category[] Categories 
+	{ 
+		get { return categories; } 
+		set { categories = value; } 
+	}
+
+	// others properties omitted 
+}
+]]></programlisting>
+
+				<para>
+					It could also be an array of simple values like
+					<literal>String</literal>
+					s or
+					<literal>int</literal>
+					s and the solution would be the same. The
+					declaration of the
+					<literal>Category</literal>
+					follows:
+				</para>
+
+				<programlisting lang="cs"><![CDATA[
+public class Category 
+{
+	private String name;
+
+	public string Name 
+	{ 
+		get { return name; } 
+		set { name = value; } 
+	} 
+}
+]]></programlisting>
+
+				<para>
+					One more time the solution lies on the element names
+					on the form. The property name must be used in the
+					indexed notation:
+				</para>
+
+				<programlisting lang="html"><![CDATA[
+<form method="post" action="create.rails">
+	<input type="text" name="product.id" />
+	<input type="text" name="product.name" />
+	<input type="checkbox" name="product.inStock" id="" value="true" />
+
+	<input type="checkbox" name="product.categories[0].name" value="Kitchen"/> 
+	<input type="checkbox" name="product.categories[1].name" value="Bedroom"/> 
+	<input type="checkbox" name="product.categories[2].name" value="Living-room" /> 
+</form>
+]]></programlisting>
+
+				<para>
+					The rule is this case would be
+					<literal>
+						prefixname.propertyname1[uniqueindex].propertyname2...
+					</literal>
+					.
+				</para>
+			</section>
+
+			<section>
+				<title>Generic Lists</title>
+
+				<para>
+					Generic Lists are supported and the behavior is the
+					same of the arrays, expect the property declaration
+					of course.
+				</para>
+
+				<programlisting lang="cs"><![CDATA[
+public class Product 
+{ 
+	private List<Category> categories;
+
+	// others fields omitted
+
+	public List<Category> Categories 
+	{ 
+		get { return categories; } 
+		set { categories = value; } 
+	}
+
+	// others properties omitted 
+}
+]]></programlisting>
+			</section>
+
+			<section>
+				<title>Setting the Binding Source</title>
+
+				<para>
+					By default the binder will use the
+					<literal>Params</literal>
+					collection as source of information to bind data.
+					You can define that it should use the QueryString or
+					Form post data instead. To do that use the
+					<literal>From</literal>
+					property exposed by the
+					<literal>DataBindAttribute</literal>
+					.
+				</para>
+
+				<para>
+					This is a recommend practice for performance and to
+					prevent people from easily override form parameters.
+					For example:
+				</para>
+
+				<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class ProductController : SmartDispatcherController 
+{ 
+	public void Create([DataBind("product", From=ParamStore.Form)] Product product) 
+	{ 
+		... 
+	} 
+}
+]]></programlisting>
+			</section>
+
+			<section>
+				<title>Defining Accessible Properties</title>
+
+				<para>
+					As the
+					<literal>DataBindAttribute</literal>
+					usually act on domain model classes, you might not
+					want that all properties be "bindable". Suppose you
+					are binding an
+					<literal>User</literal>
+					class. Sensitive properties might allow overriding
+					the password, roles, access levels or audit
+					information. For these cases you can use
+					<literal>Allow</literal>
+					and
+					<literal>Exclude</literal>
+					properties of
+					<literal>DataBindAttribute</literal>
+					.
+				</para>
+
+				<para>
+					The values for these properties are a comma
+					separated list of property names, including the
+					prefix. For example:
+				</para>
+
+				<programlisting lang="cs"><![CDATA[
+public class AccountController : SmartDispatcherController 
+{ 
+	public void CreateAccount([DataBind("account", Allow="account.Name, account.Email, account.Password")] Account account) 
+	{ 
+		... 
+	} 
+}
+]]></programlisting>
+
+				<para>
+					This indicates that you only want to allow the
+					<literal>Name</literal>
+					,
+					<literal>Email</literal>
+					and
+					<literal>Password</literal>
+					properties to bound with the values from the
+					request. All other properties will be ignored.
+				</para>
+
+				<para>
+					The
+					<literal>Exclude</literal>
+					property is the inverse. It prevents the properties
+					indicated from being used, and allow all others.
+				</para>
+
+				<para>
+					There is no depth limit. You should be able to allow
+					or exclude properties in any level of the object
+					graph. For example:
+				</para>
+
+				<programlisting lang="cs"><![CDATA[
+public class AccountController : SmartDispatcherController 
+{ 
+	public void CreateAccount([DataBind("account", Allow="account.Name, account.Address, account.Address.Street")] Account account) 
+	{ 
+		... 
+	} 
+}
+]]></programlisting>
+			</section>
+
+			<section>
+				<title>Binding Errors</title>
+
+				<para>
+					Binding errors might ocur, like invalid dates or
+					problems in data conversion. When using simple
+					binding, an exception will be thrown. When using the
+					<literal>DataBindAttribute</literal>
+					, however, no exception will be thrown.
+				</para>
+
+				<para>
+					To access the error information, use the
+					<literal>GetDataBindErrors</literal>
+					method:
+				</para>
+
+				<programlisting lang="cs"><![CDATA[
+public class AccountController : SmartDispatcherController 
+{ 
+	public void CreateAccount([DataBind("account")] Account account)
+	{ 
+		ErrorList errors = GetDataBindErrors(account);
+		... 
+	} 
+}
+]]></programlisting>
+
+				<para>
+					The
+					<literal>ErrorList</literal>
+					implements the
+					<literal>ICollection</literal>
+					so you can enumerate the problems. You can also
+					check if some specific property could not be
+					converted. For example:
+				</para>
+
+				<programlisting lang="cs"><![CDATA[
+public class AccountController : SmartDispatcherController 
+{
+	public void CreateAccount([DataBind("account")] Account account) 
+	{ 
+		ErrorList errors = GetDataBindErrors(account);
+
+		if (errors.Contains("DateOfBirth")) 
+		{ 
+			Flash["error"]= errors["DateOfBirth"].ToString(); // Or Exception
+			RedirectToAction("New", Params); 
+		}
+
+		... 
+	} 
+}
+]]></programlisting>
+			</section>
+
+			<section>
+				<title>BindObject and BindObjectInstance</title>
+
+				<para>
+					You do not need to always use parameters to have an
+					object bound. The methods
+					<literal>BindObject</literal>
+					and
+					<literal>BindObjectInstance</literal>
+					, exposed by the
+					<literal>SmartDispatcherController</literal>
+					, allow you to have the same functionality. The
+					benefit is that not under every case you want to
+					perform the bindings. For example:
+				</para>
+
+				<programlisting lang="cs"><![CDATA[
+public class AccountController : SmartDispatcherController 
+{ 
+	public void CreateAccount(bool acceptedConditions) 
+	{ 
+		if(acceptedConditions) 
+		{ 
+			Account account = (Account)BindObject(ParamStore.Form, typeof(Account),"account");
+			... 
+		}
+
+		... 
+	} 
+}
+]]></programlisting>
+			</section>
+
+			<section>
+				<title>Supported Types</title>
+
+				<para>
+					The following types are natively supported by the
+					<literal>DataBinder</literal>
+					component:
+				</para>
+
+				<para>
+					<informaltable>
+						<tgroup cols="2">
+							<colspec colname="col1" colnum="1" />
+
+							<colspec colname="col2" colnum="2" />
+
+							<thead>
+								<row>
+									<entry>Type name</entry>
+
+									<entry>Note</entry>
+								</row>
+							</thead>
+
+							<tbody>
+								<row>
+									<entry>String</entry>
+
+									<entry>
+										Empty fields are converted to
+										null strings
+									</entry>
+								</row>
+
+								<row>
+									<entry>
+										All types where
+										<literal>IsPrimitive</literal>
+										returns true
+									</entry>
+
+									<entry>-</entry>
+								</row>
+
+								<row>
+									<entry>Enum</entry>
+
+									<entry>
+										It is converted using the name
+										or value. Flags are also
+										supported
+									</entry>
+								</row>
+
+								<row>
+									<entry>Decimal</entry>
+
+									<entry>-</entry>
+								</row>
+
+								<row>
+									<entry>Guid</entry>
+
+									<entry>-</entry>
+								</row>
+
+								<row>
+									<entry>DateTime</entry>
+
+									<entry>
+										The implementation checks for
+										the key plus
+										<literal>day</literal>
+										,
+										<literal>month</literal>
+										,
+										<literal>year</literal>
+										,
+										<literal>hour</literal>
+										,
+										<literal>minute</literal>
+										and
+										<literal>second</literal>
+										. If none elements is found, it
+										falls back to use
+										<literal>
+											DateTime.Parse
+										</literal>
+										on the value associated with the
+										key.
+									</entry>
+								</row>
+
+								<row>
+									<entry>Array</entry>
+
+									<entry>-</entry>
+								</row>
+
+								<row>
+									<entry>Generic Lists</entry>
+
+									<entry>-</entry>
+								</row>
+
+								<row>
+									<entry>HttpPostedFile</entry>
+
+									<entry>-</entry>
+								</row>
+
+								<row>
+									<entry>TypeConverter</entry>
+
+									<entry>
+										If the type is not within the
+										range above, the converter
+										checks for a TypeConverter
+										associated with it that is able
+										to convert from a string.
+									</entry>
+								</row>
+							</tbody>
+						</tgroup>
+					</informaltable>
+				</para>
+			</section>
+
+			<section>
+				<title>FormHelper</title>
+
+				<para>
+					The
+					<literal>FormHelper</literal>
+					was created to act together with the binder. It is
+					able to create form elements with the right names
+					and to obtain the existing value (if possible)
+					saving you from populating the elements manually.
+				</para>
+
+				<para>
+					For more on the FormHelper visit the Helpers
+					documentation pages.
+				</para>
+			</section>
+		</section>
+	</section>
+
+	<section>
+		<title>Wizards</title>
+
+		<para>
+			You can use wizards to present smaller chunks of information
+			to the user, with more immediate feedback. For example,
+			during a registration process or cart check-out you could
+			save their objects into session at each step, and then
+			persist to the database, at the end, when it is all valid
+			and confirmed, instead of having to either save intermediary
+			objects that are not in an acceptable state, or make one
+			massive form.
+		</para>
+
+		<para>
+			MonoRail has built in support to create wizards like chained
+			pages.
+		</para>
+
+		<note>
+			<para>
+				A sample demonstrating the concepts in the section can
+				be downloaded from
+				!download/monorail/trunk/MonoRail.WizardSample.zip
+			</para>
+		</note>
+
+		<para>
+			Wizard can be created easily on MonoRail, but first you must
+			understand what entities are involved and what role they
+			play.
+		</para>
+
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>The wizard controller</para>
+
+					<para>
+						A controller must be a wizard parent. You can
+						have as many wizards on a web site as you want.
+						All you need to do is using the
+						<literal>WizardActionProvider</literal>
+						and implement the interface
+						<literal>IWizardController</literal>
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<literal>WizardActionProvider</literal>
+					</para>
+
+					<para>
+						This is a built in action provider that manages
+						the wizard flow per user. It takes care of
+						starting the wizard, initialize the steps and
+						delegating the execution to the active step
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>Steps</para>
+
+					<para>
+						Each wizard is composed of at least one step.
+						Each step is a controller that extends from
+						<literal>WizardStepPage</literal>
+						.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+
+		<para>Check the flow on the image below:</para>
+
+		<para>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Wizard-doc-1.png" />
+				</imageobject>
+			</mediaobject>
+		</para>
+
+		<section>
+			<title>Wizard Controllers</title>
+
+			<para>
+				The wizard controller is just an ordinary controller
+				that might extend
+				<literal>Controller</literal>
+				or
+				<literal>SmartDispatcherController</literal>
+				or any other you might have in your controller
+				hierarchy. The only two important things you must do is:
+				<itemizedlist>
+					<listitem>
+						<para>
+							Bind the controller to the
+							<literal>WizardActionProvider</literal>
+						</para>
+					</listitem>
+
+					<listitem>
+						<para>
+							Implement the interface
+							<literal>IWizardController</literal>
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+
+			<para>
+				At this point you may be wondering why we have decided
+				to expose wizard support through an interface and a
+				dynamic action provider. The answer lie on the same
+				reason why Dynamic action were created, we should not
+				mess up with your controller hierarchy. If you're just
+				playing with MonoRail for now you might not be able to
+				foresee the problems that might arise if we introduce
+				and force you to extend a specific controller class. In
+				the end of the day we didnt want to copy &amp; paste the
+				use of filters, layouts and resources from our base
+				controller to the wizard controller.
+			</para>
+
+			<para>
+				This architectural decision allow you to reuse
+				(vertically) your controller hierarchy, thus not being
+				intrusive to your controller object model.
+			</para>
+
+			<para>
+				To bind your controller to an action provider, use the
+				attribute
+				<literal>DynamicActionProviderAttribute</literal>
+				:
+			</para>
+
+			<programlisting lang="cs"><![CDATA[
+[DynamicActionProvider(typeof(WizardActionProvider))]
+public class MyWizardController : Controller, IWizardController 
+{ 
+	...
+]]></programlisting>
+
+			<para>
+				This action provider, when executed by the framework,
+				will check whether the controller is implementing the
+				interface
+				<literal>IWizardController</literal>
+				. So the next logical step is to properly implement it.
+			</para>
+
+			<para>
+				To do so, you must at least provide empty bodies for the
+				following
+				<literal>IWizardController</literal>
+				's methods:
+				<itemizedlist>
+					<listitem>
+						<para>
+							<literal>void OnWizardStart()</literal>
+						</para>
+					</listitem>
+
+					<listitem>
+						<para>
+							<literal>
+								bool OnBeforeStep(string wizardName,
+								string stepName, WizardStepPage step)
+							</literal>
+						</para>
+
+						<para>
+							return
+							<literal>true</literal>
+							if you don't want to block any step from
+							being executed
+						</para>
+					</listitem>
+
+					<listitem>
+						<para>
+							<literal>
+								void OnAfterStep(string wizardName,
+								string stepName, WizardStepPage step)
+							</literal>
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+
+			<para>
+				But you must implement the method
+				<literal>GetSteps</literal>
+				which is the heart of the wizard feature:
+			</para>
+
+			<programlisting lang="cs"><![CDATA[
+public WizardStepPage[] GetSteps(IRailsEngineContext context) 
+{ 
+	return new WizardStepPage[] { 
+		new IntroductionStep(), 
+		new MainInfoStep(), 
+		new SubscribeStep(), 
+		new ConfirmationStep(), 
+		new ResultStep() 
+	}; 
+}
+]]></programlisting>
+
+			<para>
+				Each step is a class that extends
+				<literal>WizardStepPage</literal>
+				. The order that you create the array and return it from
+				<literal>GetSteps</literal>
+				is the order on which the steps will be presented to the
+				user.
+			</para>
+		</section>
+
+		<section>
+			<title>Wizard Action Provider</title>
+
+			<para>
+				The
+				<literal>WizardActionProvider</literal>
+				is reponsible for:
+			</para>
+
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>Make the step's actions available</para>
+					</listitem>
+
+					<listitem>
+						<para>
+							Using the session to store the current
+							wizard step
+						</para>
+					</listitem>
+
+					<listitem>
+						<para>
+							Delegating execution to nested actions
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+
+			<para>
+				First, when this dynamic action is invoked by MonoRail
+				the action
+				<literal>start</literal>
+				is added to the wizard controller, so you can point your
+				browse to
+			</para>
+
+			<para>
+				<ulink url="#">
+					http://yourhost/mywizard/start.rails
+				</ulink>
+			</para>
+
+			<para>
+				to start the wizard. This is not required, though but it
+				is a good way to ensure the state is cleaned. If you
+				direct the browser to any specific step, the wizard will
+				start itself correctly if it does not find the proper
+				entries in the session.
+			</para>
+		</section>
+
+		<section>
+			<title>Steps</title>
+
+			<para>
+				The
+				<literal>GetSteps</literal>
+				method returns an array of
+				<literal>WizardStepPage</literal>
+				which you should exted to create your own steps. For
+				example, a very simple wizard step would be
+			</para>
+
+			<programlisting lang="cs"><![CDATA[
+public class IntroductionStep : WizardStepPage 
+{ 
+}
+]]></programlisting>
+
+			<para>
+				Not surprisingly this will rely on defaults to work. So
+				when this step is invoked it will just render the view
+				named IntroductionStep (IntroductionStep.vm, or
+				IntroductionStep.aspx or IntroductionStep.boo depending
+				on the view engine you're using) which '''must be on the
+				view folder for the MyWizard controller'''.
+			</para>
+
+			<para>
+				However
+				<literal>WizardStepPage</literal>
+				provide a few lifecycle methods that can be overriden:
+			</para>
+
+			<para>
+				<informaltable>
+					<tgroup cols="2">
+						<colspec colname="col1" colnum="1" />
+
+						<colspec colname="col2" colnum="2" />
+
+						<thead>
+							<row>
+								<entry>Method</entry>
+
+								<entry>Description</entry>
+							</row>
+						</thead>
+
+						<tbody>
+							<row>
+								<entry>
+									<literal>
+										void Initialize(Controller
+										wizardController)
+									</literal>
+								</entry>
+
+								<entry>
+									This can be overriden but it's
+									important to invoke the base
+									implementation
+								</entry>
+							</row>
+
+							<row>
+								<entry>
+									<literal>void Reset()</literal>
+								</entry>
+
+								<entry>
+									Invoked when the wizard is being
+									access from the start action.
+									Implementors should perform session
+									clean up (if they actually use the
+									session) to avoid stale data on
+									forms
+								</entry>
+							</row>
+
+							<row>
+								<entry>
+									<literal>
+										String ActionName { get; }
+									</literal>
+								</entry>
+
+								<entry>
+									If you want to customize the step
+									name. Defaults to the step's class
+									name
+								</entry>
+							</row>
+
+							<row>
+								<entry>
+									<literal>
+										void RenderWizardView()
+									</literal>
+								</entry>
+
+								<entry>
+									Used to decide on which view to
+									render
+								</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</informaltable>
+			</para>
+
+			<para>
+				And the good news: the
+				<literal>WizardStepPage</literal>
+				is nothing but a class extending
+				<literal>SmartDispatcherController</literal>
+				, so you can (and should) create your own methods to
+				perform the step work.
+			</para>
+
+			<para>
+				To access a step you should direct your browser to
+			</para>
+
+			<para>
+				<ulink url="#">
+					http://yourhost/mywizard/stepname.rails
+				</ulink>
+			</para>
+
+			<para>
+				Where
+				<literal>stepname</literal>
+				stands for the value returned by the property
+				<literal>ActionName</literal>
+				defaulting to the class name. So if you want to access
+				the
+				<emphasis>IntroductionStep</emphasis>
+				we just mentioned, you should use
+			</para>
+
+			<para>
+				<ulink url="#">
+					http://yourhost/mywizard/introductionstep.rails
+				</ulink>
+			</para>
+		</section>
+
+		<section>
+			<title>Nested Actions</title>
+
+			<para>
+				What we have seen so far is not enough to create a
+				decent wizard. If you want to use ajax on a step for
+				example, what do to? How to save a form from a step?
+			</para>
+
+			<para>
+				To solve these problems nested actions were introduced.
+				Nested actions are handled by the
+				<literal>WizardActionProvider</literal>
+				and we're basically talking about accessing a step and
+				then an action it holds.
+			</para>
+
+			<para>
+				Being a bit more concrete, suppose you have coded the
+				following step:
+			</para>
+
+			<programlisting lang="cs"><![CDATA[	public class AccountInfoStep : WizardStepPage { }]]></programlisting>
+
+			<para>
+				And on the view side you present a form gathering
+				information from the user. You can create an action just
+				like you would on any controller:
+			</para>
+
+			<programlisting lang="cs"><![CDATA[
+public class AccountInfoStep : WizardStepPage 
+{
+	public void Save( ... ) 
+	{ 
+	} 
+}
+]]></programlisting>
+
+			<para>
+				Now the trick part. To access a nested action you must
+				use
+			</para>
+
+			<para>
+				<literal>stepname</literal>
+				-
+				<literal>actioname</literal>
+			</para>
+
+			<para>
+				So you have to change the form action on the view to
+			</para>
+
+			<programlisting lang="html"><![CDATA[<form action="AccountInfo-Save.rails" method="post"> ...]]></programlisting>
+
+			<para>
+				Please note that the action is just like a regular
+				action, so you must redirect the user at the end or
+				provide a view to be rendered after it's execution.
+			</para>
+		</section>
+
+		<section>
+			<title>DoNavigate</title>
+
+			<para>
+				Using the same Save example, suppose that you want to
+				direct the user to the next wizard step (if the data is
+				OK). In this case you should invoke the method
+				<literal>WizardActionProvider.DoNavigate()</literal>
+				:
+			</para>
+
+			<programlisting lang="cs"><![CDATA[
+public class AccountInfoStep : WizardStepPage 
+{ 
+	public void Save( ... ) 
+	{ 
+		try 
+		{ 
+			// validates the data and if it's not ok, throw an exception .. work work work ..
+
+			DoNavigate(); 
+		} 
+		catch(Exception ex) 
+		{ 
+			Flash["error"] = ex;
+			RedirectToAction(ActionName); 
+		} 
+	} 
+}
+]]></programlisting>
+
+			<para>
+				<literal>DoNavigate</literal>
+				is a black box method, but it's easy to understand it.
+				For most of the times you use it, it would be just like
+				you were invoking the method
+				<literal>RedirectToNextStep</literal>
+				, however you can use a form field named
+				<literal>navigate.to</literal>
+				to customize where it should go:
+			</para>
+
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							If
+							<literal>navigate.to</literal>
+							is
+							<literal>previous</literal>
+							,
+							<literal>DoNavigate</literal>
+							will invoke
+							<literal>RedirectToPreviousStep</literal>
+						</para>
+					</listitem>
+
+					<listitem>
+						<para>
+							If
+							<literal>navigate.to</literal>
+							is
+							<literal>first</literal>
+							,
+							<literal>DoNavigate</literal>
+							will invoke
+							<literal>RedirectToFirstStep</literal>
+						</para>
+					</listitem>
+
+					<listitem>
+						<para>
+							If
+							<literal>navigate.to</literal>
+							is empty or not specified,
+							<literal>DoNavigate</literal>
+							will invoke
+							<literal>RedirectToNextStep</literal>
+						</para>
+					</listitem>
+
+					<listitem>
+						<para>
+							If
+							<literal>navigate.to</literal>
+							starts with
+							<literal>uri:</literal>
+							,
+							<literal>DoNavigate</literal>
+							will invoke
+							<literal>Redirect</literal>
+							with the specified URL
+						</para>
+					</listitem>
+
+					<listitem>
+						<para>
+							Otherwise
+							<literal>DoNavigate</literal>
+							will assume that the specified text on
+							<literal>navigate.to</literal>
+							is a step name and will invoke
+							<literal>InternalRedirectToStep</literal>
+							with the specified value
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</section>
+
+		<section>
+			<title>Conditional Steps</title>
+
+			<para>
+				You can associate conditions with steps TODO more on
+				this
+			</para>
+		</section>
+
+		<section>
+			<title>The WizardHelper</title>
+
+			<para>
+				The
+				<literal>WizardHelper</literal>
+				is automatically added to the wizard controller and the
+				steps. You can use it to create links to previous and
+				next steps and to query whether there's a previous or
+				next step.
+			</para>
+
+			<para>TODO More on [[MonoRail:WizardHelper]]</para>
+		</section>
+
+		<section>
+			<title>Windsor Integration</title>
+
+			<para>
+				If you are using Windsor Integration, then it's up to
+				you to make the steps components or not.
+			</para>
+
+			<para>
+				To use the steps as components, register them within the
+				container (configuration file or via code) and code your
+				wizard controller like this:
+			</para>
+
+			<programlisting lang="cs"><![CDATA[[
+DynamicActionProvider( typeof(WizardActionProvider) )]
+public class MyWizardController : Controller, IWizardController 
+{ 
+	private readonly IKernel kernel;
+
+	public MyWizardController(IKernel kernel) 
+	{
+		this.kernel = kernel; 
+	}
+
+	public WizardStepPage[] GetSteps(IRailsEngineContext context) 
+	{ 
+		return new WizardStepPage[] {
+			(WizardStepPage) kernel[ typeof(IntroductionStep) ],
+			(WizardStepPage) kernel[ typeof(MainInfoStep) ],
+			(WizardStepPage) kernel[ typeof(SubscribeStep) ],
+			(WizardStepPage) kernel[ typeof(ConfirmationStep) ],
+			(WizardStepPage) kernel[ typeof(ResultStep) ] 
+		}; 
+	}
+	...
+]]></programlisting>
+		</section>
+	</section>
+</chapter>

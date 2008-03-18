@@ -1,0 +1,13 @@
+<?xml version='1.0'?>
+
+<xslthl-config>
+	<highlighter id='java'   file='../../toolchain/docbook-xsl/highlighting/java-hl.xml'  />
+	<highlighter id='delphi' file='../../toolchain/docbook-xsl/highlighting/delphi-hl.xml'/>
+	<highlighter id='ini'    file='../../toolchain/docbook-xsl/highlighting/ini-hl.xml'   />
+	<highlighter id='php'    file='../../toolchain/docbook-xsl/highlighting/php-hl.xml'   />
+	<highlighter id='myxml'  file='../../toolchain/docbook-xsl/highlighting/myxml-hl.xml' />
+	<highlighter id='m2'     file='../../toolchain/docbook-xsl/highlighting/m2-hl.xml'    />
+	<highlighter id='c'      file='../../toolchain/docbook-xsl/highlighting/c-hl.xml'    />
+	<highlighter id='cs' file='./cs-hl.xml'/>
+	<namespace prefix="xslthl" uri="http://xslthl.sf.net" />
+</xslthl-config>

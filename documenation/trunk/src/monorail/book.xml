@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd"
+[
+	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2001/XInclude'">
+]>
+<book xmlns:xi="http://www.w3.org/2001/XInclude">
+	<title>MonoRail</title>
+
+	<xi:include href="introduction.xml" />
+	<xi:include href="getting_started.xml" />
+	<xi:include href="installation.xml" />
+	<xi:include href="configuration.xml" />
+	<xi:include href="controllers.xml" />
+	<xi:include href="views.xml" />
+	<xi:include href="view_components.xml" />
+	<xi:include href="view_engines.xml" />
+	<xi:include href="filters.xml" />
+	<xi:include href="layouts.xml" />
+	<xi:include href="rescues.xml" />
+	<xi:include href="authentication_authorization.xml" />
+	<xi:include href="helpers.xml" />
+	<xi:include href="resources_localization.xml" />
+	<xi:include href="validation_support.xml" />
+	<xi:include href="sending_email.xml" />
+	<xi:include href="unit_testing.xml" />
+	<xi:include href="integrations.xml" />
+	<xi:include href="advanced_topics.xml" />
+
+</book>

@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd"
+[
+	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2001/XInclude'">
+]>
+<chapter>
+	<title>View Components</title>
+	<section>
+	<title>Introduction</title>
+	<para>
+		It is very common to have a portion of UI content that is reused
+		amongst pages. When the content is more than simple static
+		content you can rely on the
+		<literal>ViewComponent</literal>
+		infrastructure.
+	</para>
+	<para>
+		A
+		<literal>ViewComponent</literal>
+		is a class that resembles the controller functionality. It might
+		use views and send data to the view. It also support inner
+		sections and parameters.
+	</para>
+	<note>
+		<para>
+			A sample demonstrating the concepts in the section can be
+			downloaded from
+			!download/monorail/trunk/MonoRail.ViewComponentSample.zip
+		</para>
+	</note>
+	</section>
+	<section>
+		<title>Creating a View Component</title>
+		<para>
+			A ViewComponent is a class that extends
+			<literal>ViewComponent</literal>
+			abstract class. Three methods can be optionally overriden to
+			customize its behavior:
+		</para>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<literal>Render</literal>
+						: selects the view or uses another approach to
+						render the component content
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<literal>Initialize</literal>
+						: used to intialize the state of your view
+						component, usually by examining supplied
+						parameters
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<literal>SupportsSection</literal>
+						: invoked by the view engine to check if the
+						component supports the section supplied on the
+						view
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			Note that starting with v1RC3, much of the work normally
+			handled in the Initialize and SupportsSection methods is now
+			done using attributes, so it should be rare to need those
+			methods.
+		</para>
+		<para>
+			A very minimal ViewComponent could be the following:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class HeaderComponent : ViewComponent
+{
+}
+]]></programlisting>
+		<para>
+			The ViewComponent above will fallback to the default
+			behavior as nothing was customized. The default behavior is
+			to render the view associated with the component, which
+			should lie on the folder
+			<literal>components/headercomponent/default</literal>
+			. For example, if you were using NVelocity view engine it
+			would be
+			<literal>
+				$siteRoot/Views/components/headercomponent/default.vm
+			</literal>
+			.
+		</para>
+		<para>
+			Just like controllers, you can select different views. For
+			example:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class HeaderComponent : ViewComponent
+{
+	public override void Render()
+	{
+		RenderView("otherview");
+	}
+}
+]]></programlisting>
+		<para>
+			For the case above the selected view would be
+			<literal>components/headercomponent/otherview.vm</literal>
+			(in the case of NVelocity view engine).
+		</para>
+		<para>
+			Similarly, if all the HTML rendering is handled in code,
+			then you can choose to use no view at all:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class HeaderComponent : ViewComponent
+{
+  public override void Render()
+  {
+     /* .... */
+     CancelView();
+  }
+}
+]]></programlisting>
+	</section>
+	<section>
+		<title>Using View Components</title>
+		<para>
+			A ViewComponent has no relation with controller, only with
+			the views selected by the controllers.
+		</para>
+		<para>
+			When it comes to usage, ViewComponents can be used with a
+			block (nested content) or without (inline). The name of the
+			component (class name) is used to identify the ViewComponent
+			you want to render. Usage varies depending on the View
+			Engine implementation.
+		</para>
+		<programlisting lang="html"><![CDATA[#component(HeaderComponent)]]></programlisting>
+		<para>
+			ViewComponents that use the nested content usually use a
+			different syntax:
+		</para>
+		<programlisting lang="html"><![CDATA[
+#blockcomponent(NewsComponent)
+<ul>
+#foreach($new in $news)
+  <li>$news.Date $news.Title</li>
+#end
+</ul>
+#end
+]]></programlisting>
+	</section>
+	<section>
+		<title>Passing Parameters</title>
+		<para>
+			The programmer can supply parameters to the ViewComponent.
+		</para>
+		<para>
+			On the view side, parameters are supplied in different ways,
+			depending on your view engine of choice:
+		</para>
+
+		<programlisting lang="html"><![CDATA[
+#blockcomponent(TableComponent with "elements=$items" "border=0" "style=border: 1px solid black;" "cellpadding=0" "cellspacing=2")
+...
+#end
+]]></programlisting>
+		<para>
+			In the ViewComponent's code, parameters can be accessed
+			using the property
+			<literal>ComponentParams</literal>
+			. For example:
+		</para>
+
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class TableComponent : ViewComponent
+{
+	private ICollection elements;
+	
+	private object border;
+	private string style;
+	private object cellpadding;
+	private object cellspacing;
+
+	public override void Initialize()
+	{
+		elements = (ICollection) ComponentParams["elements"];
+		
+		border = ComponentParams["border"];
+		style = (String) ComponentParams["style"];
+		cellpadding = ComponentParams["cellpadding"];
+		cellspacing = ComponentParams["cellspacing"];
+		
+		base.Initialize();
+	}
+	
+	...
+]]></programlisting>
+		<para>
+			<literal>ViewComponentParamAttribute</literal>
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class TableComponent : ViewComponent
+{
+	[ViewComponentParam("elements", Required=true)]
+	public ICollection elements {get; set;}
+	
+	[ViewComponentParam]
+	public object border  {get; set;}
+	
+	[ViewComponentParam]
+	public string style  {get; set;}
+	
+	[ViewComponentParam]
+	public object cellpadding  {get; set;}
+	
+	[ViewComponentParam]
+	public object cellspacing  {get; set;}
+	
+	public override void Initialize()
+	{
+	    base.Initialize();
+	}
+
+	...
+]]></programlisting>
+		<para>
+			The
+			<literal>ViewComponentParamAttribute</literal>
+			will automatically bind the parameter to the property. The
+			attribute will only bind to
+			<emphasis>public properties</emphasis>
+			. (Note that the C# v3/VS2008 syntax is used above for the
+			properties. For VS2005 and earlier, the getters and setters
+			would need fully implemented bodies.)
+		</para>
+		<para>
+			<literal>ViewComponentParamAttribute</literal>
+			binds the parameter with the given name to the property. If
+			no name is given in the
+			<literal>ViewComponentParamAttribute</literal>
+			, then it binds the parameter with the same name as the
+			property.
+		</para>
+	</section>
+	<section>
+		<title>Block and Nested Sections</title>
+		<para>
+			The inner content block is the content that is enclosed by a
+			ViewComponent used as a block. For example:
+		</para>
+		<programlisting lang="html"><![CDATA[
+#blockcomponent(RepeatComponent)
+
+This is the inner content
+$counter
+
+#end
+]]></programlisting>
+		<para>
+			The ViewComponent has control over the nested content and
+			can renders it how many times it wants to. The following
+			component renders the inner content five times:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class RepeatComponent : ViewComponent
+{
+	public override void Render()
+	{
+		for(int i=0; i < 5; i++)
+		{
+			PropertyBag["counter"] = i;
+			Context.RenderBody();
+		}
+	}
+}
+]]></programlisting>
+		<para>
+			Often this is not enough to create a reusable ViewComponent.
+			For these cases you can have inner sections with your view
+			component. The ViewComponent's code can have a more
+			elaborated logic to render the section contents. For
+			example:
+		</para>
+		<programlisting lang="html"><![CDATA[
+#blockcomponent(TableComponent with "elements=$items")
+#colheaders
+<tr>
+	<th>&nbsp;</th>
+	<th>Element</th>
+</tr>
+#end
+
+#item
+<tr>
+	<td>$index</td>
+	<td>$item</td>
+</tr>
+#end
+
+#altitem
+<tr>
+	<td align="center">$index</td>
+	<td>$item</td>
+</tr>
+#end
+#end
+]]></programlisting>
+		<para>
+			In the example above there are three distinct inner
+			sections:
+			<literal>colheaders</literal>
+			,
+			<literal>item</literal>
+			and
+			<literal>altitem</literal>
+			. The
+			<literal>TableComponent</literal>
+			renders a simple table and is defined in the following code:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+[ViewComponentDetails("Table"), Sections="colheaders,item,altitem")]
+public class TableComponent : ViewComponent
+{
+	[ViewComponentParam("elements", Required=true)]
+	public ICollection elements {get; set;}
+	
+	[ViewComponentParam]
+	public object border  {get; set;}
+	
+	[ViewComponentParam]
+	public string style  {get; set;}
+	
+	[ViewComponentParam]
+	public object cellpadding  {get; set;}
+	
+	[ViewComponentParam]
+	public object cellspacing  {get; set;}
+
+	public override void Render()
+	{
+		RenderText(
+			String.Format("<table border=\"{0}\" style=\"{1}\" cellpadding=\"{2}\" cellspacing=\"{3}\">", 
+			  	border, style, cellpadding, cellspacing));
+	
+		if (Context.HasSection("colheaders"))
+		{
+			Context.RenderSection("colheaders");
+		}
+		
+		if (elements != null)
+		{
+			int index = 0;
+			
+			foreach(object item in elements)
+			{
+				PropertyBag["index"] = ++index;
+				PropertyBag["item"] = item;
+				
+				if (Context.HasSection("altitem") && index % 2 != 0)
+				{
+					Context.RenderSection("altitem");
+				}
+				else
+				{
+					Context.RenderSection("item");
+				}
+			}
+		}
+	
+		RenderText("</table>");
+	}
+}
+]]></programlisting>
+		<para>
+			<literal>ViewComponentDetailsAttribute</literal>
+			provides an name for the component (the default is the name
+			of the class with "ViewComponent" removed), and specified
+			the names of the allowed sections. The list of sections
+			names must be comma separated with no extra spaces, but is
+			not case-sensitive. Any section within the block with a name
+			outside those listed will cause a
+			<literal>ViewComponentException</literal>
+			to be thrown.
+		</para>
+		<para>
+			<literal>ViewComponentDetailsAttribute</literal>
+			is only availabe in v1RC3 and later. When using an eariler
+			version of the framework or for more complex allowed name
+			rules, this can be handled explicitly in code, by
+			implementing the
+			<literal>SupportsSection</literal>
+			virtual method.
+		</para>
+		<programlisting lang="cs"><![CDATA[
+public override bool SupportsSection(string name)
+{
+    return name == "colheaders" || name == "item" || name == "altitem";
+}
+]]></programlisting>
+		<para>
+			The following is a screenshot of three view components in
+			use:
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject>
+					<imagedata
+						fileref="images/viewcomponents_ss.png" />
+				</imageobject>
+			</mediaobject>
+		</para>
+	</section>
+	<section>
+		<title>Built In View Components</title>
+		<para>
+			MonoRail comes with a few ViewComponents for specific tasks.
+			The documents on this area depicts their usage.
+		</para>
+		
+		<xi:include href="view_components/capturefor.xml" />
+		<xi:include href="view_components/securitycomponent.xml" />
+		<xi:include href="view_components/diggstylepaginationcomponent.xml" />
+		<xi:include href="view_components/columnrenderer.xml" />
+		<xi:include href="view_components/authenticatedcontent.xml" />
+		<xi:include href="view_components/childcontentcomponent.xml" />
+		<xi:include href="view_components/updatepage_updatepagetag.xml" />
+		
+	</section>
+</chapter>

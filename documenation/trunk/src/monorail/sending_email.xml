@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd">
+<chapter>
+	<title>Sending Email</title>
+	<para>
+		It is easy to send emails using MonoRail combining templates as
+		you do with the views. Layouts are not applied to e-mail
+		template, though.
+	</para>
+	<note>
+		<para>
+			A sample demonstrating the concepts in the section can be
+			downloaded from
+			!download/monorail/trunk/MonoRail.SendingEmailSample.zip
+		</para>
+	</note>
+	<para>
+		First you have to configure the smtp host address. See TODO
+		[[MonoRail Configuration Reference#Formal_reference|Formal
+		reference topic]]
+	</para>
+	<para>
+		The most manual way to send an email is to configure a
+		<literal>Castle.Components.Common.EmailSender.Message</literal>
+		instance and invoke
+		<literal>DeliverEmail</literal>
+		which is exposed by the
+		<literal>Controller</literal>
+		class.
+	</para>
+	<para>
+		A better way is to externalize the configuration of the
+		<literal>Message</literal>
+		. You can do that by creating view templates on the
+		<literal>mail</literal>
+		folder under your views directory. You can even add headers like
+		from, to and subject to the template. They will be used to
+		properly set up the
+		<literal>Message</literal>
+		instance. The rest of the view template will be considered the
+		e-mail body. If the body starts with an
+		<literal>&lt;html&gt;</literal>
+		tag, the
+		<literal>Message</literal>
+		format will be changed to Html.
+	</para>
+	<para>
+		The method
+		<literal>RenderMailMessage</literal>
+		can be used to create a configured
+		<literal>Message</literal>
+		instance based on the specified template. It gives you a chance
+		to modify the message before sending it with
+		<literal>DeliverEmail</literal>
+		.
+	</para>
+	<para>
+		The method
+		<literal>RenderEmailAndSend</literal>
+		is a combination of the methods above. It creates the
+		<literal>Message</literal>
+		instance and sends it.
+	</para>
+</chapter>

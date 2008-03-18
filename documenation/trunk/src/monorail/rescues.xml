@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd">
+<chapter>
+	<title>Rescues</title>
+	<section>
+	<title>Introduction</title>
+	<para>
+		A rescue is an association of a special view that will only be
+		rendered if an exception happens. The view file must be present
+		in a
+		<literal>rescues</literal>
+		folder directly under your views folder.
+	</para>
+	<note>
+		<para>
+			A sample demonstrating the concepts in the section can be
+			downloaded from
+			!download/monorail/trunk/MonoRail.SendingEmailSample.zip
+		</para>
+	</note>
+	</section>
+	<section>
+	<title>Using Rescues</title>
+	<para>
+		A rescue can be associated with a controller or per action. You
+		can also bound a rescue with an exception. If the action throws
+		an exception (the action cannot swallon the exception), MonoRail
+		will match the rescue definition that is closely related to the
+		exception type and use the specified view.
+	</para>
+	<para>
+		To create an association you must use the
+		<literal>RescueAttribute</literal>
+		. For example:
+	</para>
+	<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+[Rescue("dberror", typeof(System.Data.SqlException))]
+public class ProductController : Controller
+{
+	[Rescue("commonerror")]
+	public void Index()
+	{
+		throw new System.Data.SqlException("fake error");
+	}
+
+	[Rescue("dumbprogrammer", typeof(DivideByZeroException))]
+	public void List()
+	{
+		int val = 0;
+		int x = 10 / val;
+	}
+
+	public void Search()
+	{
+	}
+}
+]]></programlisting>
+	<para>
+		The usage of the
+		<literal>RescueAttribute</literal>
+		in the example above define the following rules:
+		<itemizedlist>
+			<listitem>
+				<para>
+					If any action throws a
+					<literal>SqlException</literal>
+					, the view
+					<literal>view/rescues/dberror</literal>
+					will be selected
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					If the action
+					<literal>Index</literal>
+					throws any kind of exception (including
+					<literal>SqlException</literal>
+					), the view
+					<literal>view/rescues/commonerror</literal>
+					will be selected. This overrides the definition in
+					the controller level.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					If the action
+					<literal>List</literal>
+					throws a
+					<literal>DivideByZeroException</literal>
+					, the view
+					<literal>view/rescues/dumbprogrammer</literal>
+					will be selected.
+				</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+	<para>
+		Whenever an exception happens, the MonoRail context (which is
+		per request) will populate the property
+		<literal>LastException</literal>
+		so your view can show the exception details.
+	</para>
+	</section>
+</chapter>

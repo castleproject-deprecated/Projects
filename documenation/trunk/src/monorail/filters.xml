@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd">
+<chapter>
+	<title>Filters</title>
+	<section>
+		<title>Introduction</title>
+		<para>
+			Filters are executed before and|or after your actions. It is
+			useful for security, dynamic content and to keep away
+			repetitive code.
+		</para>
+	</section>
+	<section>
+		<title>Creating a Filter</title>
+		<para>
+			To create a filter, create a class that implements the
+			<literal>IFilter</literal>
+			interface, then associate the filter with your controller.
+		</para>
+		<note>
+			<para>
+				You can always create an abstract controller class and
+				associate a filter with it and make your controllers
+				extend it.
+			</para>
+		</note>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class AuthenticationFilter : IFilter
+{
+	public bool Perform(ExecuteEnum exec, IRailsEngineContext context, Controller controller)
+	{
+		if (context.Session.Contains("user"))
+		{
+			return true;
+		}
+		else
+		{
+			context.Response.Redirect("account", "login");
+		}
+
+		return false;
+	}
+}
+]]></programlisting>
+		<para>
+			The
+			<literal>Perform</literal>
+			return value indicates to the framework if the process
+			should be ended. If you return
+			<literal>false</literal>
+			no further process will happen for the current request. It
+			is important that you take some action before, like in the
+			example above, issuing a redirect.
+		</para>
+		<para>
+			The
+			<literal>ExecuteEnum</literal>
+			parameter says to the filter what is the context of the
+			invocation. It is also used on the
+			<literal>FilterAttribute</literal>
+			to define when you want to have the filter executed. The
+			possible values are listed on the table below.
+		</para>
+		<para>
+			<informaltable>
+				<tgroup cols="2">
+					<colspec colnum="1" colname="col1" />
+					<colspec colnum="2" colname="col2" />
+					<thead>
+						<row>
+							<entry>
+								<literal>ExecuteEnum</literal>
+								fields
+							</entry>
+							<entry>Description</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>
+								<literal>BeforeAction</literal>
+							</entry>
+							<entry>
+								The filter is invoked before the action.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>AfterAction</literal>
+							</entry>
+							<entry>
+								The filter is invoked after the action.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>AfterRendering</literal>
+							</entry>
+							<entry>
+								The filter is invoked after the
+								rendering.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>Always</literal>
+							</entry>
+							<entry>
+								The filter is invoked around all steps.
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</para>
+		<para>
+			To associate the filter with the controller, use the
+			<literal>FilterAttribute</literal>
+			:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+[FilterAttribute(ExecuteEnum.BeforeAction, typeof(AuthenticationFilter))]
+public class AdminController : Controller
+{
+	public void Index()
+	{
+	}
+}
+]]></programlisting>
+	</section>
+	<section>
+		<title>Ordering</title>
+		<para>
+			You can always associate more than one filter with a
+			controller. However the order of execution cannot be
+			guaranted. If the order of execution is important, use the
+			<literal>ExecutionOrder</literal>
+			property. The lower the value, the higher is the priority.
+			For example:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+[FilterAttribute(ExecuteEnum.BeforeAction, typeof(AuthenticationFilter), ExecutionOrder=0)]
+[FilterAttribute(ExecuteEnum.BeforeAction, typeof(LocalizationFilter), ExecutionOrder=1)]
+public class AdminController : Controller
+{
+	public void Index()
+	{
+	}
+}
+]]></programlisting>
+		<para>
+			For the example above,
+			<literal>AuthenticationFilter</literal>
+			runs before the
+			<literal>LocalizationFilter</literal>
+			.
+		</para>
+	</section>
+	<section>
+		<title>Skipping Filters</title>
+		<para>
+			For some situation you may not want to execute a filter, or
+			all filter, for one or more actions. Use the
+			<literal>SkipFilterAttribute</literal>
+			for those cases. For example:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+[FilterAttribute(ExecuteEnum.BeforeAction, typeof(AuthenticationFilter), ExecutionOrder=0)]
+[FilterAttribute(ExecuteEnum.BeforeAction, typeof(LocalizationFilter), ExecutionOrder=1)]
+public class AdminController : Controller
+{
+	[SkipFilter]
+	public void Index()
+	{
+	}
+
+	[SkipFilter(typeof(LocalizationFilter))]
+	public void Create()
+	{
+	}
+
+	public void Update()
+	{
+	}
+}
+]]></programlisting>
+		<para>
+			For the example above we have defined that:
+			<itemizedlist>
+				<listitem>
+					<para>
+						No filters will be executed on the
+						<literal>Index</literal>
+						action
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						The
+						<literal>LocalizationFilter</literal>
+						will not be executed on the
+						<literal>Create</literal>
+						action
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						All filters will run on the
+						<literal>Update</literal>
+						action
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</section>
+	<section>
+		<title>Passing Parameters</title>
+		<para>
+			More advanced scenarios might arise where you parameterize a
+			filter. For example, you can create a filter that is able to
+			load text files and add each line of text to the
+			<literal>PropertyBag</literal>
+			. The file name is not fixed.
+		</para>
+		<para>
+			The first thing to do is to create a new attribute that
+			extends
+			<literal>FilterAttribute</literal>
+			:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+[AttributeUsage(AttributeTargets.Class, AllowMultiple=false, Inherited=true), Serializable]
+public class MyCoolFilterAttribute : FilterAttribute
+{
+	private readonly string fileName;
+
+	public MyCoolFilterAttribute(String fileName) : base(ExecuteEnum.BeforeAction, typeof(CoolFilterImpl))
+	{
+		this.fileName = fileName;
+	}
+	
+	public string FileName
+	{
+		get { return fileName; }
+	}
+}
+]]></programlisting>
+		<para>
+			As you can see, the custom attribute inherits from
+			<literal>FilterAttribute</literal>
+			and configures the filter on the user's behalf.
+		</para>
+		<para>
+			Now we just need to implement the filter itselt. We also
+			need to signalize to the framework that we are interested in
+			gaining access to the attribute instance as we will extract
+			information from it. This is done using the
+			<literal>IFilterAttributeAware</literal>
+			interface.
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+public class CoolFilterImpl : IFilter, IFilterAttributeAware
+{
+	private MyCoolFilterAttribute attribute;
+
+	// Implementation of IFilterAttributeAware
+	public FilterAttribute Filter 
+	{ 
+		set { attribute = (MyCoolFilterAttribute) value; } 
+	}
+	
+	// Implementation of IFilter
+	public bool Perform(ExecuteEnum exec, IRailsEngineContext context, Controller controller)
+	{
+		// Now you can access the parameters:
+		String fileName = attribute.FileName; 
+		
+		// Work
+		
+		// Allow the process to go on
+		return true;
+	}
+}
+]]></programlisting>
+		<para>Now using the filter is very simple:</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+[MyCoolFilterAttribute("customer_messages.txt")]
+public class CustomerController : Controller
+{
+	public void Index()
+	{
+	}
+}
+]]></programlisting>
+	</section>
+</chapter>

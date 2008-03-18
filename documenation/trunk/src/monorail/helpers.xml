@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd"
+[
+	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2001/XInclude'">
+]>
+<chapter>
+	<title>Helpers</title>
+	<section>
+		<title>Introduction</title>
+		<para>
+			Helpers are associated with a controller and made available
+			to be used on the view. They are usually used to reuse some
+			generation code.
+		</para>
+	</section>
+	<section>
+		<title>Creating Customer Helpers</title>
+		<para>
+			A helper is just an ordinary class. It might optionally
+			extend
+			<literal>AbstractHelper</literal>
+			in order to have access to the controller instance and some
+			utility methods. For example:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+public class MyHelper
+{
+	public String BuildUserLink(User user)
+	{
+		return String.Format("<a href='/users/showuser.rails?id={0}'>{1}</a>", 
+			user.Id, user.Name);  
+	}
+}
+]]></programlisting>
+		<para>
+			The helper must be associate with the controller whose views
+			might use it. This is done using the
+			<literal>HelperAttribute</literal>
+			:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+[Helper(typeof(MyHelper))]
+public class MemberController : Controller
+{
+	public void List()
+	{
+		PropertyBag.Add("users", ObtainUsers());
+	}
+}
+]]></programlisting>
+		<para>
+			Now it is just a matter of using the helper by its name:
+		</para>
+		<programlisting lang="html"><![CDATA[
+#foreach ($user in $users)
+	$MyHelper.BuildUserLink(${user})
+#end
+]]></programlisting>
+	</section>
+	<section>
+		<title>Built In Helpers</title>
+
+		<para></para>
+
+		<xi:include href="helpers/formhelper.xml" />
+		<xi:include href="helpers/urlhelper.xml" />
+		<xi:include href="helpers/ajaxhelper.xml" />
+		<xi:include href="helpers/behaviorhelper.xml" />
+		<xi:include href="helpers/scriptaculoushelper.xml" />
+		<xi:include href="helpers/paginationhelper.xml" />
+		<xi:include href="helpers/wizardhelper.xml" />
+		<xi:include href="helpers/texthelper.xml" />
+		<xi:include href="helpers/effects2helper.xml" />
+		<xi:include href="helpers/dateformathelper.xml" />
+	</section>
+</chapter>

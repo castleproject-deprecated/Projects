@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<project 
+	name="docs" 
+	default="build" 
+	xmlns="http://nant.sf.net/release/0.85-rc3/nant.xsd"
+>
+
+	<target name="clean" description="Cleans all build files">
+		<nant target="clean">
+		    <buildfiles>
+		        <include name="*.build" />
+		        <!-- avoid recursive execution of current build file -->
+		        <exclude name="${project::get-buildfile-path()}" />
+		    </buildfiles>
+		</nant>
+	</target>
+	
+	<target name="build" description="Builds all books">
+		<nant target="build">
+		    <buildfiles>
+		        <include name="*.build" />
+		        <!-- avoid recursive execution of current build file -->
+		        <exclude name="${project::get-buildfile-path()}" />
+		    </buildfiles>
+		</nant>
+	</target>
+	
+	
+</project>
+

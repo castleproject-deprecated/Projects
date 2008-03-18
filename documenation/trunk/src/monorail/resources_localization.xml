@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd">
+<chapter>
+	<title>Resources and Localization</title>
+	<section>
+		<title>Introduction</title>
+		<para>
+			You can associate one or more assembly resources with a
+			controller. The resource entries will be available to your
+			view as an dictionary. This is a good way to externalize
+			static content.
+		</para>
+		<para>
+			In addition you can also use the
+			<literal>LocalizationFilter</literal>
+			to set up the
+			<literal>CurrentCulture</literal>
+			and
+			<literal>CurrentUICulture</literal>
+			on the thread. This makes .Net select the correct resource
+			to load accordingly to the language set. It also defines how
+			it should format numbers and dates.
+		</para>
+		<note>
+			<para>
+				A sample demonstrating the concepts in the section can
+				be downloaded from
+				!download/monorail/trunk/MonoRail.LocalizationSample.zip
+			</para>
+		</note>
+	</section>
+	<section>
+		<title>Using Resources</title>
+		<para>
+			Resources can be associate with a controller using the
+			<literal>ResourceAttribute</literal>
+			. For example:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+[Resource("text", "LocalizationSample.Resources.Home")]
+public class HomeController : SmartDispatcherController
+{
+	...
+]]></programlisting>
+		<para>
+			The first parameter defines the key that you can use from
+			your view. The second is the resource full name.
+		</para>
+		<note>
+			<para>
+				There is a bug on Visual Studio that causes changes on
+				the resource files to no be detected. If this happens,
+				force a rebuild.
+			</para>
+		</note>
+		<para>
+			The entries can be accessed from the view as a regular
+			dictionary:
+		</para>
+		<programlisting lang="html"><![CDATA[
+<h2> $text.welcome </h2>
+
+<p>
+$text.intro
+</p>
+]]></programlisting>
+		<para>
+			You can optionally set up the
+			<literal>CultureName</literal>
+			and the
+			<literal>AssemblyName</literal>
+			on the
+			<literal>ResourceAttribute</literal>
+			.
+		</para>
+	</section>
+	<section>
+		<title>Setting Up the Current Culure</title>
+		<para>
+			The
+			<literal>LocalizationFilter</literal>
+			allows you to define a strategy to extract the language code
+			and sets up the
+			<literal>CurrentCulture</literal>
+			and
+			<literal>CurrentUICulture</literal>
+			for the request thread.
+		</para>
+		<para>
+			For example, it can extracts the locale from the headers the
+			browser sends it, and allow overriding the locale using a
+			cookie entry, or an entry in the session. For example:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+
+[LocalizationFilter(RequestStore.Cookie, "locale")]
+public class HomeController : SmartDispatcherController
+{
+	...
+]]></programlisting>
+		<para>
+			The usage above defines that it should look for a cookie
+			named
+			<literal>locale</literal>
+			and in the case it cannot be found fallback to the browser
+			locale.
+		</para>
+	</section>
+	<section>
+		<title>Localization</title>
+		<para>
+			Localization support is provided as a combination of both
+			approaches.
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using Castle.MonoRail.Framework;
+using Castle.MonoRail.Framework.Filters;
+
+[Resource("text", "LocalizationSample.Resources.Home")]
+[LocalizationFilter(RequestStore.Cookie, "locale")]
+public class HomeController : SmartDispatcherController
+{
+	public void Index()
+	{
+	}
+	
+	public void SetLanguage(String langCode)
+	{
+		Response.CreateCookie("locale", langCode);
+		
+		RedirectToAction("index");
+	}
+}
+]]></programlisting>
+		<para>
+			It is up to .net to load the correct resource or fallback to
+			the default language if the resource for the specified
+			locale cannot be found.
+		</para>
+		<para>
+			The
+			<literal>SetLanguage</literal>
+			action is an example of how to override the locale.
+		</para>
+	</section>
+</chapter>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../../toolchain/docbook-xml/docbookx.dtd">
+<section>
+	<title>TextHelper</title>
+	<para>
+		The
+		<literal>TextHelper</literal>
+		provides methods for working with strings and grammar.
+	</para>
+</section>

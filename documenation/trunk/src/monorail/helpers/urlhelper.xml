@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../../toolchain/docbook-xml/docbookx.dtd">
+<section>
+	<title>UrlHelper</title>
+	<para>
+		The
+		<literal>UrlHelper</literal>
+		exposes methods to easily build URL's and HTML anchors in your
+		views. The
+		<literal>UrlHelper</literal>
+		uses context-sensitive information (such as the currently
+		configured Monorail extension) to build proper URLs.
+	</para>
+	<section>
+		<title>Generating URLs</title>
+		<para>
+			The
+			<literal>For</literal>
+			method generates a URL from the specified parameters. For
+			example:
+			<programlisting lang="cs"><![CDATA[
+$UrlHelper.For("%{action='Save'}")
+]]></programlisting>
+			This generates a complete URL for a controller and and
+			action. With no controller specified, the controller from
+			the current context is used. The action was defined in the
+			parameter list as "Save".
+		</para>
+		<para>
+			All of the
+			<literal>UrlHelper</literal>
+			methods accept a set of parameters to control the building
+			of the URL. The list of possible parameters are defined
+			below.
+			<informaltable>
+				<tgroup cols="2">
+					<colspec colnum="1" colname="col1" />
+					<colspec colnum="2" colname="col2" />
+					<thead>
+						<row>
+							<entry>Parameter</entry>
+							<entry>Definition</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>
+								<literal>area</literal>
+							</entry>
+							<entry>
+								The area of the controller. The default
+								is the current area.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>controller</literal>
+							</entry>
+							<entry>
+								The controller for the URL. The default
+								is the current controller.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>action</literal>
+							</entry>
+							<entry>The controller's action.</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>protocol</literal>
+							</entry>
+							<entry>The protocol to use.</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>port</literal>
+							</entry>
+							<entry>The port number to use.</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>domain</literal>
+							</entry>
+							<entry>The domain of the URL.</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>subdomain</literal>
+							</entry>
+							<entry>The subdomain.</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>appVirtualDir</literal>
+							</entry>
+							<entry>The virtual directory.</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>extension</literal>
+							</entry>
+							<entry>
+								The extension for the URL. If not
+								specified, the configured Monorail
+								extension is used.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>absolutePath</literal>
+							</entry>
+							<entry>
+								If set to true, define an absolute path.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>applySubdomain</literal>
+							</entry>
+							<entry>
+								If set to true, use the subdomain.
+							</entry>
+						</row>
+						<row>
+							<entry>
+								<literal>suffix</literal>
+							</entry>
+							<entry>The suffix.</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</para>
+	</section>
+	<section>
+		<title>Generating Links</title>
+		<para>
+			Use the
+			<literal>Link</literal>
+			method to generate a complete HTML link.
+		</para>
+		<programlisting lang="cs"><![CDATA[
+$UrlHelper.Link("Edit Trainer", "%{action='Edit', 'querystring='id=$trainer.id'}")
+]]></programlisting>
+		<para>
+			The above produces a link that would look like this
+			(assuming the current controller is called "Trainer":
+			<programlisting lang="html"><![CDATA[
+<a href="/virtualdir/Trainer/Edit.castle?id=45">Edit Trainer</a>
+]]></programlisting>
+			In the example above, the extension ".castle" is pulled from
+			the current Monorail configuration.
+		</para>
+		<para>
+			You may also add a second set of parameters used to add
+			atributes to the generated anchor:
+			<programlisting lang="cs"><![CDATA[
+$UrlHelper.Link("Edit Trainer", "%{action='Edit', 'querystring='id=$trainer.id'}", "%{target='_new'}")
+]]></programlisting>
+			Produces:
+			<programlisting lang="html"><![CDATA[
+<a href="/virtualdir/Trainer/Edit.castle?id=45" target="_new">Edit Trainer</a>
+]]></programlisting>
+		</para>
+	</section>
+	<section>
+		<title>Generating Button Links</title>
+		<para>
+			The
+			<literal>$UrlHelper.ButtonLink</literal>
+			method works the same way as the
+			<literal>$UrlHelper.Link</literal>
+			method, except an HTML button is generated with some
+			javascript to handle the onclick event to navigate to the
+			URL.
+		</para>
+	</section>
+</section>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../../toolchain/docbook-xml/docbookx.dtd">
+<section>
+	<title>SecurityComponent</title>
+	<para>
+		The SecurityComponent ViewComponent allows you to render the
+		inner content only if the current
+		<literal>IPrincipal</literal>
+		has the role specified.
+	</para>
+
+	<para>
+		Suppose a link can only be seen by users that have the
+		<literal>Administrator</literal>
+		role:
+	</para>
+	<programlisting lang="html"><![CDATA[
+#blockcomponent(SecurityComponent with "role=Administrator")
+
+  important link here
+
+#end
+
+	... rest of the view
+]]></programlisting>
+	<warning>
+		<para>
+			Do not base your security on hiding links and buttons.
+			Instead combine this with action and resource protection.
+			Please refer to
+			<ulink url="../usersguide/authentication.html">
+				Authentication/Authorization
+			</ulink>
+			document for more information.
+		</para>
+	</warning>
+</section>

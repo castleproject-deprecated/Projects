@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd">
+<chapter>
+	<title>Configuration</title>
+	<section>
+		<title>Introduction</title>
+		<para>
+			MonoRail requires a small configuration on your
+			<literal>web.config</literal>
+			. This document should help you to understand the whole
+			configuration schema in details.
+		</para>
+		<para>
+			The following is a standard minimal configuration required
+			to get MonoRail working with all defaults. Unfortunatelly
+			the project assembly name must be informed (we cannot infer
+			it).
+		</para>
+		<programlisting lang="html"><![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <configSections>
+        <section 
+			name="monorail" 
+			type="Castle.MonoRail.Framework.Configuration.MonoRailSectionHandler, Castle.MonoRail.Framework" />
+    </configSections>
+    
+    <monorail>
+        <controllers>
+            <assembly>ProjectAssembly</assembly>
+        </controllers>
+    </monorail>
+    
+    <system.web>
+        <httpHandlers>
+            <add 
+				verb="*" 
+				path="*.rails" 
+				type="Castle.MonoRail.Framework.MonoRailHttpHandlerFactory, Castle.MonoRail.Framework" />
+        </httpHandlers>
+        <httpModules>
+            <add 
+				name="monorail" 
+				type="Castle.MonoRail.Framework.EngineContextModule, Castle.MonoRail.Framework" />
+        </httpModules>
+    </system.web>
+</configuration>
+]]></programlisting>
+		<para>
+			This configuration defaults to use the WebForms view engine
+			and uses the
+			<literal>ProjectAssembly</literal>
+			as the source of controllers and ViewComponents.
+		</para>
+		<note>
+			<para>
+				The section
+				<literal>monorail</literal>
+				must be declared on the
+				<literal>configSections</literal>
+				.
+			</para>
+		</note>
+	</section>
+	<section>
+		<title>Formal Definition</title>
+		<para>
+			The following exposes all available nodes. It can be used to
+			extend and change the default MonoRail behavior by supplying
+			custom implementation of services.
+		</para>
+		<programlisting lang="html"><![CDATA[
+<monorail 
+	useWindsorIntegration="true|false"
+	checkClientIsConnected="true|false"
+	smtpHost="" smtpPort="" 
+	smtpUsername="" smtpPassword="" 
+	>
+	
+	<!-- 
+	  Custom Factories should be configured on the services node. 
+	  The following is supported to be backward compatible
+	-->
+	
+	<customControllerFactory type="type name that implements IControllerFactory" />
+	<customComponentFactory type="type name that implements IComponentFactory" />
+	<customFilterFactory type="type name that implements IFilterFactory" />
+
+	<controllers>
+		<assembly>AssemblyName1</assembly>
+		<assembly>AssemblyName2</assembly>
+	</controllers>
+	
+	<viewcomponents>
+		<assembly>AssemblyName1</assembly>
+		<assembly>AssemblyName2</assembly>
+	</viewcomponents>
+	
+	<viewEngine 
+		viewPathRoot="views" 
+		customEngine="ViewEngine.Type.Name, Assembly">
+		
+		<additionalSources>
+			<assembly name="" namespace="" />
+			<assembly name="" namespace="" />
+		</additionalSources>
+		
+	</viewEngine>
+
+	<!-- List of services ids:
+
+			Custom
+			ControllerFactory
+			ViewEngine
+			ViewSourceLoader
+			ViewComponentFactory
+			FilterFactory
+			ResourceFactory
+			EmailSender
+			ControllerDescriptorProvider
+			ResourceDescriptorProvider
+			RescueDescriptorProvider
+			LayoutDescriptorProvider
+			HelperDescriptorProvider
+			FilterDescriptorProvider
+			EmailTemplateService
+			ControllerTree
+			CacheProvider
+			ScaffoldingSupport
+			ExecutorFactory
+			TransformFilterDescriptorProvider
+			TransformationFilterFactory
+			ViewEngineManager
+			UrlBuilder
+			UrlTokenizer
+			ServerUtility
+			ValidatorRegistry
+			AjaxProxyGenerator
+	-->
+	
+	<services>
+		<service 
+			id="[see list above]" 
+			type="Service.Type.Name, Assembly"
+			interface="optional" />
+	</services>
+	
+	<extensions>
+		<extension type="Extension.Type.Name, Assembly" />
+		<extension type="Extension.Type.Name, Assembly" />
+	</extensions>
+
+	<routing>
+		<rule>
+			<pattern>(/blog/posts/)(\d+)/(\d+)/(.)*$</pattern>
+			<replace><![CDATA[ /blog/view.rails?year=$2&amp;month=$3 ]]]]]]><![CDATA[></replace>
+		</rule>
+		<rule>
+			<pattern>(/news/)(\d+)/(\d+)/(.)*$</pattern>
+			<replace><![CDATA[ /news/view.rails?year=$2&amp;month=$3 ]]]]]]><![CDATA[></replace>
+		</rule>
+	</routing>
+	
+</monorail>
+]]></programlisting>
+
+		<section>
+			<title>
+				The
+				<literal>monorail</literal>
+				Node
+			</title>
+			<para>
+				<informaltable>
+					<tgroup cols="2">
+						<colspec colnum="1" colname="col1" />
+						<colspec colnum="2" colname="col2" />
+						<thead>
+							<row>
+								<entry>Attribute</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>
+									<literal>
+										useWindsorIntegration
+									</literal>
+								</entry>
+								<entry>
+									Enables Windsor Container
+									integration
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<literal>
+										checkClientIsConnected
+									</literal>
+								</entry>
+								<entry>
+									Enables checks for client connection
+									that stops the process if the client
+									has disconnected
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<literal>smtpHost</literal>
+								</entry>
+								<entry>
+									The smtp host, if there is intention
+									to use MonoRail e-mail features
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<literal>smtpPort</literal>
+								</entry>
+								<entry>
+									The smtp port, if it is not using
+									the default port
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<literal>smtpUsername</literal>
+								</entry>
+								<entry>
+									The smtp username (if it requires
+									authentication)
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<literal>smtpPassword</literal>
+								</entry>
+								<entry>
+									The password (if it requires
+									authentication)
+								</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</informaltable>
+			</para>
+		</section>
+		<section>
+			<title>
+				The
+				<literal>controllers</literal>
+				Node
+			</title>
+			<para>
+				The controller node takes one or more
+				<literal>assembly</literal>
+				nodes. The assembly names are used during initialization
+				as MonoRail will inspect them for controllers to
+				construct a tree.
+			</para>
+			<note>
+				<para>
+					This node is only used by the default controller
+					factory. It may be ignored by different factories.
+					For example, if Windsor Container integration is
+					enabled, the node will be ignored.
+				</para>
+			</note>
+		</section>
+		<section>
+			<title>
+				The
+				<literal>viewcomponents</literal>
+				Node
+			</title>
+			<para>
+				The viewcomponents node takes one or more
+				<literal>assembly</literal>
+				nodes. The assembly names are used during initialization
+				as MonoRail will inspect them for ViewComponents to
+				initialize a dictionary.
+			</para>
+			<note>
+				<para>
+					This node is only used by the default controller
+					factory. It may be ignored by different factories.
+					For example, if Windsor Container integration is
+					enabled, the node will be ignored.
+				</para>
+			</note>
+		</section>
+		<section>
+			<title>
+				The
+				<literal>viewEngine</literal>
+				Node
+			</title>
+			<para>
+				The viewEngine node informs MonoRail of the views folder
+				(which may be a relative or an absolute path) and allows
+				the programmer to specify a custom implementation of
+				<literal>IViewEngine</literal>
+				.
+			</para>
+			<para>
+				<informaltable>
+					<tgroup cols="2">
+						<colspec colnum="1" colname="col1" />
+						<colspec colnum="2" colname="col2" />
+						<thead>
+							<row>
+								<entry>Attribute</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>
+									<literal>viewPathRoot</literal>
+								</entry>
+								<entry>
+									The folder that contains the views
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<literal>customEngine</literal>
+								</entry>
+								<entry>
+									Full .net type name of a type that
+									implements
+									<literal>IViewEngine</literal>
+								</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</informaltable>
+			</para>
+			<section>
+				<title>
+					The
+					<literal>additionalSources</literal>
+					Node
+				</title>
+				<para>
+					Some view engines implementation allow you to use
+					assemblies resources to store views, beside the file
+					system. This is a good approach to reuse controllers
+					among projects.
+				</para>
+				<para>
+					<informaltable>
+						<tgroup cols="2">
+							<colspec colnum="1" colname="col1" />
+							<colspec colnum="2" colname="col2" />
+							<thead>
+								<row>
+									<entry>Attribute</entry>
+									<entry>Description</entry>
+								</row>
+							</thead>
+							<tbody>
+								<row>
+									<entry>
+										<literal>name</literal>
+									</entry>
+									<entry>
+										The assembly name (without
+										extension)
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<literal>namespace</literal>
+									</entry>
+									<entry>
+										Resources can have a namespace
+										in their names. The namespace
+										must be informed so it can be
+										stripped to allow MonoRail to
+										find the view content as it was
+										in the file system.
+									</entry>
+								</row>
+							</tbody>
+						</tgroup>
+					</informaltable>
+				</para>
+			</section>
+		</section>
+		<section>
+			<title>
+				The
+				<literal>services</literal>
+				Node
+			</title>
+			<para>
+				MonoRail is composed of a few services. They can be
+				replaced by custom implementations.
+			</para>
+			<para>
+				<informaltable>
+					<tgroup cols="2">
+						<colspec colnum="1" colname="col1" />
+						<colspec colnum="2" colname="col2" />
+						<thead>
+							<row>
+								<entry>Attribute</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>
+									<literal>id</literal>
+								</entry>
+								<entry>
+									The service id used internally by
+									MonoRail
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<literal>type</literal>
+								</entry>
+								<entry>
+									The implementation type name
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<literal>interface</literal>
+								</entry>
+								<entry>
+									If the service is defined by an
+									interface contract, it should be
+									specified on this attribute.
+								</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</informaltable>
+			</para>
+		</section>
+		<section>
+			<title>
+				The
+				<literal>extensions</literal>
+				Node
+			</title>
+			<para>
+				Extensions can be added. They hook some events exposed
+				by MonoRail to act on them augmenting its functionality.
+			</para>
+			<para>
+				An extension must implement the
+				<literal>IMonoRailExtension</literal>
+				interface.
+			</para>
+		</section>
+		<section>
+			<title>
+				The
+				<literal>routing</literal>
+				Node
+			</title>
+			<para>
+				Routes can be added to define rewrite rules for the
+				urls. This allow nicer urls but can only be used under
+				some conditions.
+			</para>
+		</section>
+	</section>
+</chapter>

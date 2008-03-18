@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd">
+<chapter>
+	<title>Authentication and Authorization</title>
+	<section>
+		<title>Introduction</title>
+		<para>
+			MonoRail does not provide a standard way to accomplish
+			authentication not authorization. This is intentional as
+			MonoRail runs on top of Asp.Net infrastructure which
+			provides standard way to handle both, like the
+			<literal>FormsAuthentication</literal>
+			and the &lt;authorization&gt; configuration element.
+		</para>
+		<para>
+			That being said, you can also use
+			<ulink url="filters.html">Filters</ulink>
+			to implement authentication if you want. All you have to do
+			is associate an authentication filter with the controllers
+			that can only be accessed by authenticated users.
+		</para>
+	</section>
+	<section>
+		<title>Forms Authentication</title>
+		<note>
+			<para>
+				A sample demonstrating the concepts in the section can
+				be downloaded from
+				!download/monorail/trunk/MonoRail.AuthenticationUsingForms.zip
+			</para>
+		</note>
+		<para>
+			When you use FormsAuthentication you leverage to Asp.Net to
+			handle the authentication, or the cookie and principal
+			implementation or both.
+		</para>
+		<para>
+			If you want to use it, first thing to do is say which
+			resources can only be accessed by authenticated users. Note
+			that from Asp.Net point of view, a controller is also a
+			resource.
+		</para>
+		<para>
+			To configure that use &lt;authorization&gt; configuration
+			element on the web.config (we are using it on web.config on
+			the root folder).
+		</para>
+		<programlisting lang="html"><![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+
+	<location path="home">
+		<system.web>
+			<authorization>
+				<deny users="?"/>
+			</authorization>
+		</system.web>
+	</location>
+
+	...
+]]></programlisting>
+		<para>
+			With the configuration above we are saying that the
+			controller
+			<literal>Home</literal>
+			cannot be reached by anonymous users.
+		</para>
+		<para>
+			Now that the resources are protected we can configure the
+			<literal>FormsAuthentication</literal>
+			support. In order to be really simple, we even manage the
+			usernames and passwords allowed on the configuration file
+			too:
+		</para>
+		<programlisting lang="html"><![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+	
+	...
+
+    <system.web>
+		<authentication mode="Forms">
+			<forms name="auth" loginUrl="login/index.rails">
+				<credentials passwordFormat="Clear">
+					<user name="admin" password="admin" />
+					<user name="user" password="user" />
+				</credentials>
+			</forms>
+		</authentication>
+
+		...
+]]></programlisting>
+		<para>
+			The configuration defines that in the event of
+			authentication needed, Asp.Net should redirect the user to
+			<literal>login/index.rails</literal>
+			which is our
+			<literal>LoginController</literal>
+			, action
+			<literal>index</literal>
+			. There we present our login form:
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/auth_login.png" />
+				</imageobject>
+			</mediaobject>
+		</para>
+		<para>
+			The authentication code relies on the
+			<literal>FormsAuthentication</literal>
+			:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using System.Web.Security;
+
+using Castle.MonoRail.Framework;
+
+[Layout("default")]
+public class LoginController : SmartDispatcherController
+{
+	public void Index()
+	{
+	}
+	
+	public void LogIn(String username, String password, bool rememberme, string ReturnUrl)
+	{
+		if (FormsAuthentication.Authenticate(username, password))
+		{
+			CancelView();
+			
+			FormsAuthentication.RedirectFromLoginPage(
+				username, rememberme, Context.ApplicationPath);
+		}
+		else
+		{
+			// If we got here then something 
+			// is wrong with the supplied username/password
+			
+			Flash["error"] = "Invalid user name or password. Try again.";
+			RedirectToAction("Index", "ReturnUrl=" + ReturnUrl);
+		}
+	}
+}
+]]></programlisting>
+		<para>
+			Once authenticated, we can navigate to the protected
+			resource:
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/auth_logged.png" />
+				</imageobject>
+			</mediaobject>
+		</para>
+	</section>
+	<section>
+		<title>Filters</title>
+		<note>
+			<para>
+				A sample demonstrating the concepts in the section can
+				be downloaded from
+				!download/monorail/trunk/MonoRail.AuthenticationUsingFilters.zip
+			</para>
+		</note>
+		<para>
+			When using filters the options are wide. You can rely on the
+			session, you can rely on cookies; you may want to provide an
+			implementation of
+			<literal>IPrincipal</literal>
+			and supply the roles yourself to have a more fine-grained
+			permission control.
+		</para>
+		<para>
+			The approach demonstrated here uses a custom implementation
+			of
+			<literal>IPrincipal</literal>
+			on the
+			<literal>User</literal>
+			class and uses the session to persist the authentication
+			among requests. Implementing a "remember me" feature would
+			require a cookie. It was not implemented to keep the example
+			as simple as possible.
+		</para>
+		<para>
+			Authentication control with filter is just a matter of
+			associating an authentication filter with the controllers
+			you do not want to be accessed by anonymous users. This only
+			restrict access to controller's actions. If you want to
+			protect files, you might use a mix of filters and
+			<literal>FormsAuthentication</literal>
+			or implemeting the
+			<literal>Authenticate_Request</literal>
+			event.
+		</para>
+		<para>
+			In our example we want to prevent access to the
+			<literal>HomeController</literal>
+			. So we associate a
+			<literal>BeforeAction</literal>
+			filter with it:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using AuthenticationUsingFilters.Filters;
+using Castle.MonoRail.Framework;
+
+[Layout("default")]
+[Filter(ExecuteEnum.BeforeAction, typeof(AuthenticationFilter))]
+public class HomeController : SmartDispatcherController
+{
+	public void Index()
+	{
+	}
+}
+]]></programlisting>
+		<para>
+			The filter implementation can do a number of things to check
+			if the current user is authenticated. We decided to check if
+			an existing object exists in the session. The object
+			implements
+			<literal>IPrincipal</literal>
+			but this is not required. The implementation will vary
+			depending on the requirements and how you plan to handle
+			authorization.
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using System.Collections.Specialized;
+using AuthenticationUsingFilters.Model;
+using Castle.MonoRail.Framework;
+
+public class AuthenticationFilter : IFilter
+{
+	public bool Perform(ExecuteEnum exec, IRailsEngineContext context, Controller controller)
+	{
+		// Read previous authenticated principal from session 
+		// (could be from cookie although with more work)
+		
+		User user = (User) context.Session["user"];
+		
+		// Sets the principal as the current user
+		context.CurrentUser = user;
+		
+		// Checks if it is OK
+		if (context.CurrentUser == null || 
+			!context.CurrentUser.Identity.IsAuthenticated)
+		{
+			// Not authenticated, redirect to login
+			NameValueCollection parameters = new NameValueCollection();
+			parameters.Add("ReturnUrl", context.Url);
+			controller.Redirect("login", "index", parameters);
+			
+			// Prevent request from continue
+			return false;
+		}
+		
+		// Everything is ok
+		return true;
+	}
+}
+]]></programlisting>
+		<para>
+			The
+			<literal>LoginController</literal>
+			will not be much different from the previous example:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using AuthenticationUsingFilters.Model;
+using Castle.MonoRail.Framework;
+
+[Layout("default")]
+public class LoginController : SmartDispatcherController
+{
+	public void Index()
+	{
+	}
+	
+	public void LogIn(String username, String password, bool rememberme, string ReturnUrl)
+	{
+		// We should authenticate against a database table or something similar
+		// but here, everything is ok as long as the 
+		// password and username are non-empty
+		
+		if (IsValid(username, password))
+		{
+			CancelView();
+			
+			// Ideally we would look up an user from the database
+			// The domain model that represents the user
+			// could implement IPrincipal or we could use an adapter
+			
+			User user = new User(username, new string[0]);
+			
+			Session["user"] = user;
+			
+			Redirect(ReturnUrl);
+		}
+		else
+		{
+			// If we got here then something is wrong 
+			// with the supplied username/password
+		
+			Flash["error"] = "Invalid user name or password. Try again.";
+			RedirectToAction("Index", "ReturnUrl=" + ReturnUrl);
+		}
+	}
+
+	private bool IsValid(string username, string password)
+	{
+		return username != null && password != null;
+	}
+}
+]]></programlisting>
+		<para>
+			If the authentication passes we just create the
+			<literal>User</literal>
+			and add it to the session, allowing the filter to get it for
+			the subsequent requests.
+		</para>
+		<para>
+			The
+			<literal>User</literal>
+			class is just a simple implementation of
+			<literal>IPrincipal</literal>
+			. Real application will use an adapter or change an existing
+			class that represents a logged user, or system user to
+			implement it as well.
+		</para>
+		<programlisting lang="cs"><![CDATA[
+public class User : IPrincipal
+{
+	private string[] roles;
+	private IIdentity identity;
+
+	public User(String name, String[] roles)
+	{
+		identity = new GenericIdentity(name, "Custom MonoRail authentication");
+		this.roles = roles;
+	}
+
+	public bool IsInRole(string role)
+	{
+		return Array.IndexOf(roles, role) >= 0;
+	}
+
+	public IIdentity Identity
+	{
+		get { return identity; }
+	}
+}
+]]></programlisting>
+		<para>
+			Compared with the previous example, the data outputted is a
+			little bit different:
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/auth_logged2.png" />
+				</imageobject>
+			</mediaobject>
+		</para>
+	</section>
+	<section>
+		<title>Using PrincipalPermission</title>
+		<para>
+			If you have a custom implementation of
+			<literal>IPrincipal</literal>
+			or even if you use the
+			<literal>GenericPrincipal</literal>
+			but supply the roles, you would be able to use
+			<literal>PrincipalPermission</literal>
+			to prevent users from invoking methods or code branches.
+		</para>
+		<note>
+			<para>
+				In addition to set the principal implementation on the
+				<literal>HttpRequest</literal>
+				(which is what
+				<literal>context.CurrentUser</literal>
+				does) you must also se the principal on the current
+				thread by using
+				<literal>
+					System.Threading.Thread.CurrentPrincipal
+				</literal>
+				.
+			</para>
+		</note>
+		<para>
+			The
+			<literal>PrincipalPermission</literal>
+			and
+			<literal>PrincipalPermissionAttribute</literal>
+			belongs to the .Net security infrastructure and demands that
+			the executing principal have a specific role. This can be
+			used as the last resource to secure your application.
+		</para>
+		<para>
+			For example, suppose your application is clever enough to
+			not offer to user button or links to resources/actions the
+			users do not have access to. However, this is commonly
+			refered to as security by obscurity, as an user that knows
+			how to get to the resource will be able to access them. To
+			secure the application from this kind of access you might
+			use the
+			<literal>PrincipalPermission</literal>
+			. For example:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+using System.Security;
+using Castle.MonoRail.Framework;
+
+public class OrderController : SmartDispatcherController
+{
+	[PrincipalPermission(SecurityAction.Demand, Role="Administrator")]
+	public void DeleteOrder(int orderid)
+	{
+		...
+	}
+}
+]]></programlisting>
+		<para>
+			If the current user does not have the role
+			<literal>Administrator</literal>
+			a
+			<literal>SecurityException</literal>
+			will be thrown.
+		</para>
+	</section>
+	<section>
+		<title>The SecurityView Component</title>
+		<para>
+			MonoRail comes with a ViewComponent called
+			<literal>SecurityComponent</literal>
+			which can be used on views to prevent rendering a content
+			based on the roles the current user (principal) has. For
+			example:
+		</para>
+		<programlisting lang="html"><![CDATA[
+#blockcomponent(SecurityComponent with "role=Administrator")
+
+This content can only be seen by administrators
+
+#end
+]]></programlisting>
+		<para>
+			For more information on ViewComponents see the
+			<ulink url="viewcomponents.html">
+				Reusing UI portions (ViewComponents)
+			</ulink>
+			document.
+		</para>
+	</section>
+</chapter>

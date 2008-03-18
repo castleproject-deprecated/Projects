@@ -1,0 +1,883 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd"
+[
+	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2001/XInclude'">
+]>
+<chapter>
+	<title>Advanced Topics</title>
+	<section>
+		<title>Introduction</title>
+		<para>This chapter covers a series of advanced topics.</para>
+	</section>
+	<section>
+		<title>Routing</title>
+		<para>
+			MonoRail supports simple URL rewrites based on regular
+			expressions. However, to use it for nicer URLs you must
+			allow the ASP.NET ISAPI to handle all file extensions, which
+			has a performance penalty.
+		</para>
+		<para>
+			Another approach is to use an ISAPI filter that is able to
+			rewrite URLs based on pattern matching.
+			<ulink url="http://www.iismods.com">Mod_Rewrite</ulink>
+			is one example of an ISAPI filter which performs URL
+			rewriting. By using a ISAPI filter to rewrite URLs no
+			wildcard mapping needs to be configured to direct all
+			requests to the ASP.NET ISAPI. Even though the ASP.NET ISAPI
+			will process requests for static files this is not ideal for
+			a production site because of the performance penalty.
+		</para>
+		<para>
+			Other URL rewriting solutions are available by different
+			companies, some of them are free.
+			<ulink url="http://www.isapirewrite.com/">
+				ISAPI_Rewrite Lite
+			</ulink>
+			is one example.
+		</para>
+		<section>
+			<title>Configuration</title>
+			<para>
+				1 - Depending on how you intend to use routing will
+				determine how it needs to be configured. If you will
+				always be using filenames you only need map the specific
+				extensions you want to work with (such as .aspx, .rails,
+				.content, .article, etc). However, if you intend on
+				routing directories (such as
+				http://localhost/myapp/somedir/) then you will need to
+				map everything (*.*) in IIS to aspnet_isapi.dll which
+				causes IIS to redirect every request to the ASP.NET
+				ISAPI (be aware of the consequences).
+			</para>
+			<para>
+				2 - Create a
+				<literal>routing</literal>
+				element under the
+				<literal>monorail</literal>
+				element in your web.config as shown below. Routing rules
+				will be evaluated in a top-down order until a match is
+				found. If there are no matches the request will continue
+				as normal with the requested URL.
+			</para>
+			<programlisting lang="html"><![CDATA[
+<monorail>
+	<routing>
+		<rule>
+			<pattern>(/blog/posts/)(\d+)/(\d+)/(.)*$</pattern>
+			<replace><![CDATA[ /blog/view.rails?year=$2&month=$3 ]]]]]]><![CDATA[></replace>
+		</rule>
+		<rule>
+			<pattern>(/news/)(\d+)/(\d+)/(.)*$</pattern>
+			<replace><![CDATA[ /news/view.rails?year=$2&month=$3 ]]]]]]><![CDATA[></replace>
+		</rule>
+	</routing>
+</monorail>
+]]></programlisting>
+			<para>
+				3 - Add the routing module to the
+				<literal>httpModules</literal>
+				element of
+				<literal>system.web</literal>
+				in your web.config. Ensure that the routing module is
+				listed before the monorail module as shown below.
+			</para>
+			<programlisting lang="html"><![CDATA[
+	<system.web>
+		<httpHandlers>
+			<add verb="*" path="*.rails"
+			  type="Castle.MonoRail.Engine.MonoRailHttpHandlerFactory, Castle.MonoRail.Engine" />
+		</httpHandlers>
+		
+		<httpModules>
+			<!-- NOTE: Routing MUST come before the monorail module -->
+			<add name="routing" type="Castle.MonoRail.Framework.RoutingModule, Castle.MonoRail.Framework" />
+			<add name="monorail" type="Castle.MonoRail.Framework.EngineContextModule, Castle.MonoRail.Framework" />
+		</httpModules>
+	</system.web>
+]]></programlisting>
+			<para>
+				The regular expressions are compiled, therefore
+				performance should be acceptable. If no matches are
+				found then the request is processed as it would be
+				without routing.
+			</para>
+			<para>
+				This example routing rule defines that a request for the
+				URL
+				<literal>/blog/posts/2000/11/anything</literal>
+				will be processed as if it was
+				<literal>
+					/blog/view.rails?year=2000&amp;month=11
+				</literal>
+				:
+			</para>
+			<programlisting lang="html"><![CDATA[
+<pattern>(/blog/posts/)(\d+)/(\d+)/(.)*$</pattern>
+<replace><![CDATA[ /blog/view.rails?year=$2&month=$3 ]]]]><![CDATA[></replace>
+]]></programlisting>
+		</section>
+		<section>
+			<title>Root Directory Mapping Workaround</title>
+			<para>
+				If you do not want to setup a wildcard mapping just to
+				get a default document for your root directory you can
+				use these steps:
+			</para>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							Create an empty file in your root directory
+							that is mapped to aspnet_isapi.dll and is a
+							configured as a default document in IIS. For
+							example, create a file named index.rails or
+							default.aspx depending on your
+							configuration.
+						</para>
+					</listitem>
+
+					<listitem>
+						<para>
+							Then create a new routing rule in your
+							web.config as shown below.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+			<programlisting lang="html"><![CDATA[
+	<monorail>
+		<routing>
+			<rule>
+				<pattern>^(/index.rails)(.)*$</pattern>
+				<replace><![CDATA[ /Controller/Action.rails?$2 ]]]]><![CDATA[></replace>
+			</rule>
+		</routing>
+	</monorail>
+]]></programlisting>
+			<note>
+				<para>
+					This work around is only feasible for root
+					directories because the default document file must
+					be created in each directory which is not practical
+					for URLs that contain dynamic strings.
+				</para>
+			</note>
+		</section>
+		<section>
+			<title>Another Approach</title>
+			<para>
+				David Moore has sent an interesting approach he uses:
+			</para>
+			<para>
+				"I really like mod_rewrite, but as you can see it
+				requires 3rd party components also.
+			</para>
+			<para>
+				The easiest thing is to use what you already have at
+				your fingertips with IIS, ASP.NET and MonoRail itself,
+				and route all requests through ASP.NET. Then, you can
+				use the MonoRail URL rewriting features within
+				web.config.
+			</para>
+			<para>
+				Now performance-wise, you don't want to route requests
+				through the ASP.NET/MonoRail stack for things such as
+				.css files, image resources etc. What I do for this is
+				that I map the URLs for all static resources to another
+				virtual directory which is purely IIS serving up these
+				files.
+			</para>
+			<para>
+				I.e. I make the $static variable available in all my
+				NVelocity templates, and if I insert an image it looks
+				like this: &lt;img src="$static/images/image.gif"/&gt;
+				as a simple example.
+			</para>
+			<para>
+				This currently resolves to
+				http://localhost/static/images/image.gif, with /static
+				being a virtual directory, and within there all my
+				static content (css, javascript, images etc).
+			</para>
+			<para>
+				This is very scalable in that in a production
+				environment, we can change our $static to point to
+				http://static.ourdomain.com and have light and fast web
+				servers such as lighttpd or just a vanilla IIS serving
+				up our static content fast, easing the load on a
+				dedicated application server.
+			</para>
+			<para>
+				So in summary, I evaluated mod_rewrite-style
+				alternatives and went with the simple solution built
+				into MonoRail, and implemented a good practice of having
+				a separate URL for static content which is going to make
+				our application more scalable in the future anyway."
+			</para>
+		</section>
+		<section>
+			<title>Additional Information</title>
+			<para>
+				Josh wrote a very interesting post about MonoRail and
+				<ulink
+					url="http://joshrobb.com/blog/2007/04/26/monorail-url-rewriting/">
+					Url rewriting
+				</ulink>
+				.
+			</para>
+			<para>
+				Colin Ramsay wrote about
+				<ulink
+					url="http://colinramsay.co.uk/2007/04/17/url-rewriting-options-on-iis/">
+					rewriting options for IIS
+				</ulink>
+				.
+			</para>
+		</section>
+	</section>
+	<section>
+		<title>Caching Support</title>
+
+		<para></para>
+	</section>
+	<section>
+		<title>Transformation Filters</title>
+		<para>
+			Transformation Filters allow you to manipulate the stream of
+			data that defines a generated page before it is sent to the
+			client.
+		</para>
+		<para>
+			Right before a generated page is streamed to the client, you
+			can use a Transformation Filter to manipulate the stream.
+			The Transformation Filter is applied
+			<emphasis>after</emphasis>
+			the view engine has built the page. Your view engine is not
+			used with a Transformation Filter.
+		</para>
+		<para>
+			To assign a Transformation Filter to an action, use the
+			TransformationFilter attribute.
+		</para>
+		<programlisting lang="cs"><![CDATA[
+public class UserController : Controller
+{
+	[TransformationFilter(typeof(UpperCaseTransformationFilter))]
+    public void View()
+    {
+    }
+}
+]]></programlisting>
+		<para>
+			In the example above, the entire page generated by the View
+			action will be converted to upper case text.
+		</para>
+		<para>
+			You may apply multiple Transformation Filters to an action.
+			To control their order of execution, use the ExecutionOrder
+			property.
+		</para>
+		<programlisting lang="cs"><![CDATA[
+public class UserController : Controller
+{
+	[TransformFilter(typeof(WikiTransformFilter), ExecutionOrder=1), TransformFilter(typeof(UpperCaseTransformFilter), ExecutionOrder=2)]
+	public void View()
+    {
+    }
+}
+]]></programlisting>
+		<para>
+			In the example above, the page generated by the View action
+			will first be transformed using the WikiTransformFilter and
+			then the result of that will be transformed to upper case
+			text.
+		</para>
+		<para>
+			You can create your own Transformation Filters by inheriting
+			from the TransformFilter abstract base class.
+		</para>
+	</section>
+	<section>
+		<title>Dynamic Actions</title>
+		<para>
+			Dynamic actions and action providers are a way to create
+			custom and dynamic functionality.
+		</para>
+		<note>
+			<para>
+				A sample demonstrating the concepts in the section can
+				be downloaded from
+				!download/monorail/trunk/MonoRail.DynActProvSample.zip
+			</para>
+		</note>
+		<para>
+			MonoRail considers every public instance method of a
+			controller an action, for certain situations this is not
+			enough. For example, you want to decide on the name for a
+			section in the URL at runtime when the data is available; or
+			a set of controllers that inherit from a distinct common
+			super class need the same action which can be defined in the
+			super class.
+		</para>
+		<para>
+			Dynamic Actions are a way to associate code with a name in
+			runtime.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Dyn-action.png" />
+				</imageobject>
+			</mediaobject>
+		</para>
+		<para>
+			A dynamic action is nothing more than an implementation of
+			the interface
+			<literal>IDynamicAction</literal>
+			:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+public interface IDynamicAction
+{
+    /// <summary>
+    /// Implementors should perform the action 
+    /// upon this invocation
+    /// </summary>
+    void Execute(Controller controller);
+}
+]]></programlisting>
+		<para>
+			You can associate a dynamic action with a controller using
+			the
+			<literal>DynamicActions</literal>
+			property:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+public class MyController : Controller
+{
+    public MyController
+    {
+        DynamicActions["index"] = new IndexDynamicAction();
+    }
+}
+]]></programlisting>
+		<section>
+			<title>Dynamic Action Providers</title>
+			<para>
+				Dynamic Action Providers are in charge of adding dynamic
+				actions to controllers. They can be associated with
+				controllers using the
+				<literal>DynamicActionAttribute</literal>
+				:
+			</para>
+			<programlisting lang="cs"><![CDATA[
+[DynamicAction(typeof(MyDynActionProvider))]
+public class MyController : Controller
+{
+    public MyController
+    {
+    }
+}
+]]></programlisting>
+			<para>
+				The implementation of the provider can be something
+				static (ie. always add the same set of actions) or can
+				"read" something from the controller or the logged user;
+				and add the actions accordingly:
+			</para>
+			<programlisting lang="cs"><![CDATA[
+public class MyDynActionProvider : IDynamicActionProvider
+{
+    public void IncludeActions(Controller controller)
+    {
+        controller.DynamicActions["index"] = new IndexDynamicAction();
+    }
+}
+]]></programlisting>
+		</section>
+	</section>
+	<section>
+		<title>Scaffolding</title>
+		<para>
+			Scaffolding is a idea borrowed from
+			<ulink
+				url="http://wiki.rubyonrails.org/rails/pages/Scaffold">
+				Ruby on Rails
+			</ulink>
+			. It refers to the ability to create pages with a simple
+			interface to data in a database with very little effort.
+		</para>
+		<para>
+			As every project under the Castle Project umbrella does not
+			obligate you to embrace it all, scaffolding is implemented
+			with the
+			<literal>IScaffoldingSupport</literal>
+			interface.
+		</para>
+		<para>
+			MonoRail will instantiate the implementation specificed if
+			it discovers a controller with one or more
+			<literal>ScaffoldingAttribute</literal>
+			:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+[Scaffolding(typeof(Blog))]
+public class BlogsController : Controller
+{
+    public BlogsController()
+    {
+    }
+}
+]]></programlisting>
+		<para>
+			The scaffolding implementor should register actions as a
+			dynamic action provider.
+		</para>
+		<para>
+			The default implementation of scaffolding support relies on
+			Castle ActiveRecord and is discussed in the
+			<ulink url="../integration/arscaffold.html">
+				integrations documentation section
+			</ulink>
+			.
+		</para>
+	</section>
+	<section>
+		<title>Extensions</title>
+		<para>
+			From MonoRail beta 5 you can use the new Extensions support
+			which allow you to plug existing extensions or develop your
+			own extensions. This document should clarify why extensions
+			were introduced, a list of out-of-box extensions and how to
+			create your own extensions.
+		</para>
+		<para>
+			The user and development community on MonoRail is quite
+			active, and consequently we receive lots of suggestion about
+			new interesting features. Some of the features are
+			unarguably helpful for the almost every user, however most
+			of them are only useful to some specific users/scenarios. So
+			implementing the new feature directly into the core
+			framework would not make much sense as they usually increase
+			the request flow overhead and the users that are not using
+			the feature would be penalized.
+		</para>
+		<para>
+			Extensions were introduced to allow the framework to be
+			extended easily and extensions to be reused.
+		</para>
+		<section>
+			<title>Creating Custom Extensions</title>
+			<para>
+				Creating an extension is a fairly simple task. Just
+				create a new public class and implement the
+				IMonoRailExtension or extend from
+				AbstractMonoRailExtension. The latter is simpler.
+			</para>
+			<para>
+				After that you can override the methods you want.
+				Usually your extension will read some custom
+				configuration from the MonoRailConfiguration to
+				configure itself if necessary and then perform some
+				action when one of the hook methods is invoked.
+			</para>
+			<para>
+				MonoRail must be told that an extension exists. You can
+				do that by using the extensions node in the
+				configuration file. For more on that, check the
+				<ulink url="../manual/configurationref.html">
+					MonoRail Configuration Reference
+				</ulink>
+				document.
+			</para>
+		</section>
+		<section>
+			<title>Built In Extensions</title>
+			<para>
+				With the beta 5 version we shipped two extensions. As
+				they can be helpful for some scenarios, they were also
+				developed to serve as sample extensions, so the code is
+				very simple.
+			</para>
+			<xi:include href="extensions/custom_session.xml" />
+			<xi:include href="extensions/exception_chaining.xml" />
+		</section>
+	</section>
+	<section>
+		<title>Service Architecture</title>
+		<para>
+			It's impossible to come up with a sophisticated software
+			where the default behavior pleases everyone and integrates
+			with everything. The usual solution is making the software
+			rely on contracts and having the core code as just a
+			coordination of invocations on the contracts implementation.
+			An user is thus capable of replacing one or more contract
+			implementation.
+		</para>
+		<para>
+			The challenging is implementing an architecture where the
+			parts are easily replaced, configurable and can rely
+			(depend) on other parts.
+		</para>
+		<para>
+			MonoRail uses a set of services to handle specific tasks.
+			The framework is responsible for defining the default
+			implementations, instantiate, start and configure them. The
+			services are made available through a combination of
+			lifecycle interfaces and an implementation of
+			<literal>IServiceProvider</literal>
+		</para>
+		<para>
+			The most usual solution to this problem is to use an
+			Inversion of Control container. However, things have to be
+			balanced. For MonoRail, an IoC container would introduce
+			dependencies on assemblies and an longer initialization. In
+			the end, we wouldn't benefit from all IoC container
+			features, so it could be considered too much for our
+			problem.
+		</para>
+		<para>
+			Instead, we combined what is already on the .Net library and
+			some creative solution.
+		</para>
+		<para>
+			Basically we create two levels of services registries, per
+			application and per request, and a simple interfaces that
+			defines lifecycles that services optionally implement. This
+			allow the service to start its work when it is supposed to
+			and to gather reference to other services.
+		</para>
+		<section>
+			<title>How It Works</title>
+
+			<para>
+				When the web application is started, the ASP.Net modules
+				are initialized. MonoRail has a
+				<literal>EngineContextModule</literal>
+				which is in charge of
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>Read the configuration</para>
+				</listitem>
+				<listitem>
+					<para>Initialize the services</para>
+				</listitem>
+				<listitem>
+					<para>
+						Subscribe to ASP.Net application and request
+						level events
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Create a request context (which we'll not cover
+						here)
+					</para>
+				</listitem>
+			</itemizedlist>
+			<para>
+				Services implementation can be defined in the
+				configuration section. After reading the configuration
+				section MonoRail checks for missing definition and
+				register the missing services using the default
+				implementation.
+			</para>
+			<para>
+				After that it instantiates every service and runs the
+				lifecycle. If everything went well, the framework is
+				properly initialized. All services are registered in the
+				application level container, which happens to be
+				implemented by the
+				<literal>EngineContextModule</literal>
+				class. We call this the parent container.
+			</para>
+			<para>
+				When a request starts, MonoRail creates a
+				<literal>DefaultRailsEngineContext</literal>
+				instance, which also is a container for services.
+				MonoRail sets the parent container on it. This allow the
+				user to override services per request, and resolution of
+				services in the parent.
+			</para>
+			<para>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="" />
+					</imageobject>
+				</mediaobject>
+			</para>
+			<para>
+				<orderedlist>
+					<listitem>
+						<para>
+							The configuration is read into the
+							<literal>MonoRailConfiguration</literal>
+							. It's also registered as a service
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							The services collected are instantiated and
+							registered
+						</para>
+					</listitem>
+					<listitem>
+						<para>The lifecycle is executed</para>
+					</listitem>
+				</orderedlist>
+			</para>
+		</section>
+		<section>
+			<title>Lifecycle Interfaces</title>
+			<para>
+				A service might implement a few interfaces to expose to
+				MonoRail that it behaves in a specific way or that it
+				needs something from the framework.
+			</para>
+			<para>
+				<emphasis>
+					ISupportInitialize (from System.ComponentModel)
+				</emphasis>
+			</para>
+			<para>
+				This interface can be implemented if a service wants
+				performs some initialization.
+			</para>
+			<para>
+				<emphasis>IInitializable (from Castle.Core)</emphasis>
+			</para>
+			<para>
+				This interface can be implemented if a service wants
+				performs some initialization.
+			</para>
+			<para>
+				<emphasis>
+					IServiceEnabledComponent (from Castle.Core)
+				</emphasis>
+			</para>
+			<para>
+				This interface can be implemented if a service uses
+				other services.
+			</para>
+			<para>
+				<literal>IServiceEnabledComponent</literal>
+				is the first one to be invoked. This gives a chance to
+				services gather all services references it wants. Then
+				the initialization interface's methods are invoked.
+			</para>
+			<para>
+				For service that uses
+				<literal>IServiceEnabledComponent</literal>
+				lifecycle, the implementor should keep in mind that the
+				initialization lifecycle has not run for all services,
+				so it might not be safe to use other services as they
+				might not be properly initialized at the moment.
+			</para>
+			<para>
+				The order of service registration and instantiation is
+				not guaranted. So the implementor should not make any
+				assumption regarding it.
+			</para>
+		</section>
+		<section>
+			<title>Registering Services</title>
+			<para>
+				You have to use the
+				<literal>monorail</literal>
+				configuration node to override or add services to
+				MonoRail.
+			</para>
+		</section>
+		<section>
+			<title>Built-In Services</title>
+			<para>
+				The following is a succint list of services and their
+				roles. You can refer to this list to learn more about
+				MonoRail inner workings or to use them when developing
+				extensions and new services.
+			</para>
+			<section>
+				<title><literal>MonoRailConfiguration</literal></title>
+				<para>Exposes the MonoRail configuration</para>
+			</section>
+			<section>
+				<title><literal>ExtensionManager</literal></title>
+				<para>
+					Manages registered extensions dispatching events
+					from Asp.Net infrastructure and from MonoRail
+					services
+				</para>
+			</section>
+			<section>
+				<title><literal>IViewSourceLoader</literal></title>
+				<para>
+					Sits in front of the file system and from assembly
+					resources. It is used by view engines to obtain view
+					streams
+				</para>
+			</section>
+			<section>
+				<title><literal>IViewEngine</literal></title>
+				<para>Process view templates</para>
+			</section>
+			<section>
+				<title><literal>IScaffoldingSupport</literal></title>
+				<para>Adds scaffold support to a controller</para>
+			</section>
+			<section>
+				<title><literal>IControllerFactory</literal></title>
+				<para>Creates the controller instances</para>
+			</section>
+			<section>
+				<title><literal>IViewComponentFactory</literal></title>
+				<para>
+					Manages registered ViewComponents and creates their
+					instances
+				</para>
+			</section>
+			<section>
+				<title><literal>IFilterFactory</literal></title>
+				<para>
+					Manages registered filters and creates their
+					instances
+				</para>
+			</section>
+			<section>
+				<title><literal>IResourceFactory</literal></title>
+				<para>Create resources</para>
+			</section>
+			<section>
+				<title><literal>IEmailSender</literal></title>
+				<para>Sends e-mail</para>
+			</section>
+			<section>
+				<title><literal>IEmailTemplateService</literal></title>
+				<para>
+					Process e-mail templates using the MonoRail
+					infrastructure
+				</para>
+			</section>
+			<section>
+				<title><literal>IControllerDescriptorProvider</literal></title>
+				<para>
+					Inspects Controller types building a descriptor of
+					what has been defined using attributes
+				</para>
+			</section>
+			<section>
+				<title><literal>IResourceDescriptorProvider</literal></title>
+				<para>
+					Creates descriptors for resources declared on
+					controllers
+				</para>
+			</section>
+			<section>
+				<title><literal>IRescueDescriptorProvider</literal></title>
+				<para>
+					Creates descriptors for rescues declared on
+					controllers
+				</para>
+			</section>
+			<section>
+				<title><literal>ILayoutDescriptorProvider</literal></title>
+				<para>
+					Creates descriptors for layouts declared on
+					controllers
+				</para>
+			</section>
+			<section>
+				<title><literal>IHelperDescriptorProvider</literal></title>
+				<para>
+					Creates descriptors for helpers declared on
+					controllers
+				</para>
+			</section>
+			<section>
+				<title><literal>IFilterDescriptorProvider</literal></title>
+				<para>
+					Creates descriptors for filters declared on
+					controllers
+				</para>
+			</section>
+			<section>
+				<title><literal>IControllerTree</literal></title>
+				<para>
+					Manages a binary tree of controllers registered
+				</para>
+			</section>
+			<section>
+				<title><literal>ICacheProvider</literal></title>
+				<para>Manages the cache</para>
+			</section>
+		</section>
+	</section>
+
+	<section>
+		<title>Custom Bindable Parameters</title>
+		<para>
+			When an action is invoked on a controller that extends
+			<literal>SmartDispatcherController</literal>
+			, it inspects the parameters for attributes that implement
+			<literal>IParameterBinder</literal>
+			. The
+			<literal>DataBindAttribute</literal>
+			for exemple is one of these attributes.
+		</para>
+		<para>
+			This allow you to create binding logic, or add validation or
+			anything that you want. You just need to create an attribute
+			that applies to method arguments and implements the
+			<literal>IParameterBinder</literal>
+		</para>
+	</section>
+	<section>
+		<title>Using Resources to Store Views</title>
+		<para>
+			Aside from the file system you can have views on the
+			resource assemblies. This feature was introduced due to a
+			necessity to reuse controllers, filters and views among
+			projects, for example an user administration module.
+		</para>
+		<para>
+			To configure the assemblies that have views, use the
+			<literal>additionalSources</literal>
+			configuration node. See
+			<ulink url="../manual/configurationref.html">
+				MonoRail Configuration Reference
+			</ulink>
+			document.
+		</para>
+	</section>
+	<section>
+		<title>Enabling Logging</title>
+		<para>
+			You can supply an implementation of
+			<literal>ILoggingFactory</literal>
+			so MonoRail can use logger for its internal pieces and allow
+			you to use the
+			<literal>Controller.Logger</literal>
+			.
+		</para>
+		<para>
+			Use the services node with the key
+			<literal>Custom</literal>
+			. The example below uses log4net. Make sure you have a
+			<literal>log4net.config</literal>
+			on the root directory that configures log4net.
+		</para>
+		<programlisting lang="html"><![CDATA[
+<monorail>
+	
+	<services>
+		<service 
+			id="Custom" 
+			interface="Castle.Core.Logging.ILoggerFactory, Castle.Core"
+			type="Castle.Services.Logging.Log4netIntegration.Log4netFactory, Castle.Services.Logging.Log4netIntegration" />
+	</services>
+	
+	...
+]]></programlisting>
+	</section>
+</chapter>

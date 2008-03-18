@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../../toolchain/docbook-xml/docbookx.dtd">
+<section>
+	<title>ActiveRecord Scaffolding</title>
+	<para>
+		This support still on its early stages and has been refactored
+		twice. Nevertheless it's quite good to create prototype
+		applications in no time. Its implementation allow you to
+		override the views if you want, so the scaffolding will handle
+		only the CRUD.
+	</para>
+	<para>
+		The scaffolding support basically relies on Dynamic Actions to
+		do its magic. It adds dynamic actions to your controller based
+		on the name of the target ActiveRecord class. Some of the
+		virtual actions might use a view, and if so you are allowed to
+		provide your own views instead of letting it generate the html
+		for you.
+	</para>
+	<para>
+		Here is a list of the actions added dynamically:
+		<itemizedlist>
+			<listitem>
+				<para>
+					new: Presents a form to the user fill in order to
+					create the item on the database
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					create: Takes the information submited by the
+					newAccount and creates the item
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					edit: Presents a form to the user fill in order to
+					update the item on the database
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					update: Takes the information submited by the
+					editAccount and changes the item
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					list: Presents a paginated list of items saved
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					confirm: Asks the user if he/she confirms the
+					removal of the item
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					remove: Attempt to remove the item and presents the
+					results
+				</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+	<para>
+		If more than one
+		<literal>ScaffoldingAttribute</literal>
+		is associate with a controller, then the actions will have the
+		entity name:
+		<itemizedlist>
+			<listitem>
+				<para>
+					new&lt;typename&gt;: Presents a form to the user
+					fill in order to create the item on the database
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					create&lt;typename&gt;: Takes the information
+					submited by the newAccount and creates the item
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					edit&lt;typename&gt;: Presents a form to the user
+					fill in order to update the item on the database
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					update&lt;typename&gt;: Takes the information
+					submited by the editAccount and changes the item
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					list&lt;typename&gt;: Presents a paginated list of
+					items saved
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					confirm&lt;typename&gt;: Asks the user if he/she
+					confirms the removal of the item
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					remove&lt;typename&gt;: Attempt to remove the item
+					and presents the results
+				</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+	<section>
+		<title>Required Assemblies</title>
+		<para>
+			The required assemblies are:
+			<itemizedlist>
+				<listitem>
+					<para>Castle.Components.Common.TemplateEngine</para>
+				</listitem>
+				<listitem>
+					<para>
+						Castle.Components.Common.TemplateEngine.NVelocityTemplateEngine
+					</para>
+				</listitem>
+				<listitem>
+					<para>Castle.MonoRail.ActiveRecordScaffold</para>
+				</listitem>
+				<listitem>
+					<para>Castle.MonoRail.ActiveRecordSupport</para>
+				</listitem>
+				<listitem>
+					<para>NVelocity</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			And the ActiveRecord assemblies:
+			<itemizedlist>
+				<listitem>
+					<para>Castle.ActiveRecord</para>
+				</listitem>
+				<listitem>
+					<para>Iesi.Collections</para>
+				</listitem>
+				<listitem>
+					<para>NHibernate</para>
+				</listitem>
+				<listitem>
+					<para>log4net</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			There is no configuration beyond that of ActiveRecord
+			required. For further information on configuring
+			ActiveRecord see the ActiveRecord documentation.
+		</para>
+	</section>
+	<section>
+		<title>ScaffoldingAttribute</title>
+		<para>
+			Now you can create a controller (or use an existing one) and
+			add the
+			<literal>ScaffoldingAttribute</literal>
+			pointing to the an ActiveRecord class. Suppose you have the
+			following an ActiveRecord class:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+[ActiveRecord("Blogs")]
+public class Blog : ActiveRecordValidationBase
+{
+    private int _id;
+    private String _name;
+    private String _author;
+
+    [PrimaryKey(PrimaryKeyType.Native)]
+    public int Id
+    {
+        get { return _id; }
+        set { _id = value; }
+    }
+
+    [Property, ValidateNotEmptyAttribute]
+    public String Name
+    {
+        get { return _name; }
+        set { _name = value; }
+    }
+
+    [Property, ValidateNotEmptyAttribute]
+    public String Author
+    {
+        get { return _author; }
+        set { _author = value; }
+    }
+
+    public static void DeleteAll()
+    {
+        ActiveRecordBase.DeleteAll( typeof(Blog) );
+    }
+
+    public static Blog[] FindAll()
+    {
+        return (Blog[]) ActiveRecordBase.FindAll( typeof(Blog) );
+    }
+
+    public static Blog Find(int id)
+    {
+        return (Blog) ActiveRecordBase.FindByPrimaryKey( typeof(Blog), id );
+    }
+}
+]]></programlisting>
+		<para>You can then create a BlogsController like this:</para>
+		<programlisting lang="cs"><![CDATA[
+[Scaffolding( typeof(Blog) )]
+public class BlogsController : Controller
+{
+}
+]]></programlisting>
+		<para>
+			Now point your browser to your controller, and to an action
+			called
+			<literal>list.rails</literal>
+			like
+		</para>
+		<para>
+			<literal>http://localhost/blogs/list.rails</literal>
+		</para>
+	</section>
+
+	<section>
+		<title>List</title>
+		<para>
+			The image below is the default list rendered if you have
+			used the stylesheet and layout mentioned before:
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject>
+					<imagedata
+						fileref="images/Scaffolding-list.gif" />
+				</imageobject>
+			</mediaobject>
+		</para>
+		<para>
+			If you want to supply your own view, add a file name
+			list&lt;typename&gt;.vm on the view folder for the
+			controller. The following data will be available to your
+			view on the
+			<literal>PropertyBag</literal>
+			:
+			<itemizedlist>
+				<listitem>
+					<para>items: a paginated list of items</para>
+				</listitem>
+				<listitem>
+					<para>
+						model: The
+						<literal>ActiveRecordModel</literal>
+						instance for the target type
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						keyprop: A
+						<literal>PropertyInfo</literal>
+						of the property that is the primary key
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						properties: A list of
+						<literal>PropertyInfo</literal>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</section>
+	<section>
+		<title>Add</title>
+		<para>
+			The image below is the default new entry page rendered if
+			you have used the stylesheet and layout mentioned before:
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject>
+					<imagedata
+						fileref="images/Scaffolding-new.gif" />
+				</imageobject>
+			</mediaobject>
+		</para>
+		<para>
+			If you want to supply your own view, add a file name
+			new&lt;typename&gt;.vm on the view folder for the
+			controller. The following data will be available to your
+			view on the
+			<literal>PropertyBag</literal>
+			:
+			<itemizedlist>
+				<listitem>
+					<para>
+						instance: A newly created instance of the target
+						type
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						armodel: The
+						<literal>ActiveRecordModel</literal>
+						instance for the target type
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</section>
+	<section>
+		<title>Edit</title>
+		<para>
+			The image below is the default edit entry page rendered if
+			you have used the stylesheet and layout mentioned before:
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject>
+					<imagedata
+						fileref="images/Scaffolding-edit.gif" />
+				</imageobject>
+			</mediaobject>
+		</para>
+		<para>
+			If you want to supply your own view, add a file name
+			edit&lt;typename&gt;.vm on the view folder for the
+			controller. The following data will be available to your
+			view on the
+			<literal>PropertyBag</literal>
+			:
+		</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					instance: A newly created instance of the target
+					type
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					armodel: The
+					<literal>ActiveRecordModel</literal>
+					instance for the target type
+				</para>
+			</listitem>
+		</itemizedlist>
+	</section>
+	<section>
+		<title>Remove</title>
+		<para>
+			The default rendered page will ask for confirmation on the
+			removal. If you want to supply your own view, add a file
+			name confirm&lt;typename&gt;.vm on the view folder for the
+			controller. The following data will be available to your
+			view on the
+			<literal>PropertyBag</literal>
+			:
+			<itemizedlist>
+				<listitem>
+					<para>
+						instance: A newly created instance of the target
+						type
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						armodel: The
+						<literal>ActiveRecordModel</literal>
+						instance for the target type
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						id: The value of the primary key that identifies
+						the record
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</section>
+	<section>
+		<title>Complex Models</title>
+		<para>
+			Complex models should be supported. For example, the
+			following is a page rendered for a Person type that uses
+			inheritance and nested types (what NHIbernate calls
+			Components)
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject>
+					<imagedata
+						fileref="images/Scaffolding-complex.gif" />
+				</imageobject>
+			</mediaobject>
+		</para>
+	</section>
+</section>

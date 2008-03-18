@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd">
+<chapter>
+	<title>Introduction</title>
+	<section>
+		<title>Overview</title>
+		<para> MonoRail is a MVC Web Framework inspired by <ulink url="http://api.rubyonrails.org/">Action Pack</ulink>. MonoRail differs from
+			the standard WebForms way of development as it enforces separation of concerns;
+			controllers just handle application flow, models represent the data, and the
+			view is just concerned about presentation logic. Consequently, you write less
+			code and end up with a more maintainable application. </para>
+		
+		<para> Although the project name is MonoRail, we do not have any affiliation with the
+			Mono project. MonoRail runs on Microsoft .Net 1.1, 2.0 and Mono. </para>
+	</section>
+	<section>
+		<title>Background</title>
+		<para>
+		</para>
+		<section>
+			<title>What is MVC</title>
+			<para>
+			</para>
+		</section>
+		<section>
+			<title>Convention Over Configuration</title>
+			<para>
+			</para>
+		</section>
+	</section>
+	<section>
+		<title>Why Use MonoRail</title>
+		<para> MonoRail differs from the standard
+			<ulink url="http://msdn.microsoft.com/asp.net/learning/default.aspx">
+				WebForms</ulink> way of development as it enforces separation of concerns;
+			controllers just handle application flow, models represent the data, and the
+			view is just concerned about presentation logic. Consequently, you write less
+			code and end up with a more maintainable application. </para>
+		<para> Although MonoRail can use WebForms as a view engine, it does not work as
+			smoothly as others engines. If your project depends too much on third party Web
+			controls or if you IT team skill set is totally centered around WebForms,
+			MonoRail would not be a good choice. Because MonoRail does not provide
+			abstractions over the page processing like WebForms, there is an additional
+			learning curve for developers that were introduced to web development using
+			pure WebForms without knowledge of the HTTP protocol. </para>
+	</section>
+	
+	<section>
+		<title>How It Works</title>
+		
+		<para> MonoRail can be view as another implementation of
+			<interfacename>IHttpHandler</interfacename>. It basically extracts information from
+			the Url and searches for a controller in a binary tree. If found, the controller is
+			created and from that point on, the controller handles the request. </para>
+		
+		<para>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/mr_flow.png"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</para>
+		
+		<para> The controller is able to select the action (method) to invoke, process the
+			arguments (in the case of
+			<classname>SmartDispatcherController</classname>) and delegate the execution
+			to it. </para>
+		
+		<para> When the action returns, the controller checks if a view was selected (and no
+			redirect was issued). If so the ViewEngine is invoked to process the selected
+			view, which renders the content directly to the client's browser. </para>
+		
+		<para> As MonoRail runs on top of Asp.Net infrastructure (not to be confused with
+			WebForms) it takes advantage of all features like Session management,
+			Application/Request level events and security. </para>
+	</section>
+	<section>
+		<title>Licence Information</title>
+		<para></para>
+	</section>
+	<section>
+		<title>Support</title>
+		<para></para>
+	</section>
+</chapter>

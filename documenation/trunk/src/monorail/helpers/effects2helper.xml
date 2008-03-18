@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../../toolchain/docbook-xml/docbookx.dtd">
+<section>
+	<title>Effects2Helper</title>
+	<para>
+		The
+		<literal>Effects2Helper</literal>
+		exposes the
+		<ulink url="http://script.aculo.us">script.aculo.us</ulink>
+		script features.
+	</para>
+</section>

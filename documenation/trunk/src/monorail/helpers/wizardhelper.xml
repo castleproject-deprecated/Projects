@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../../toolchain/docbook-xml/docbookx.dtd">
+<section>
+	<title>WizardHelper</title>
+	<para>
+		The
+		<literal>WizardHelper</literal>
+		is used in combination with MonoRail's Wizard support. It
+		exposes useful methods to create dynamic wizard navigation.
+	</para>
+</section>

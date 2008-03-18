@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../../toolchain/docbook-xml/docbookx.dtd">
+<section>
+	<title>Windsor Container</title>
+	<para>
+		By enabling Windsor Container integration, your controllers,
+		filters and ViewComponents might request dependencies or
+		configurations that can be satisfied by the container, thus
+		leading your design to a loosely coupled state.
+	</para>
+	<warning>
+		<para>
+			Once the integration is set you must register controllers
+			and ViewComponents as ordinary container components. Filters
+			can optionally be registered. To look up a ViewComponent on
+			the view you must use the key used to register the component
+			on the container instead of the ViewComponent name.
+		</para>
+	</warning>
+	<section>
+		<title>Benefits</title>
+		<para>
+			Once the integration is set you can take advantage of all
+			the benefits offered by an Inversion of control container.
+		</para>
+		<para>
+			Suppose you have a controller that receives files uploads.
+			Where should it store the files? Make it configurable.
+		</para>
+		<para>On the controller:</para>
+		<programlisting lang="cs"><![CDATA[
+public class ImageGalleryController : Controller
+{
+	...
+
+	public ImageGalleryController(String imageDirectory)
+	{
+		this.imageDirectory = imageDirectory;
+	}
+
+	...
+}
+]]></programlisting>
+		<para>
+			Let's assume that this controller was registered on the
+			container with the key imagegallery.controller. On the
+			configuration section:
+		</para>
+		<programlisting lang="html"><![CDATA[
+<castle>
+
+  <components>
+
+	<component id="imagegallery.controller">
+	  <parameters>
+		<imageDirectory>C:\mytempdir\safedir</imageDirectory>
+	  </parameters>
+	</component>
+
+  <components>
+
+</castle>
+]]></programlisting>
+		<para>
+			Your controller could assume a default directory and allow
+			it to be overriden as well:
+		</para>
+		<programlisting lang="cs"><![CDATA[
+public class ImageGalleryController : Controller
+{
+	private String imageDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+	public ImageGalleryController()
+	{
+	}
+
+	public string ImageDirectory
+	{
+		get { return imageDirectory; }
+		set { imageDirectory = value; }
+	}
+
+	...
+}
+]]></programlisting>
+		<para>
+			The previous configuration for the component still valid.
+			But now it is optional as the controller can live without
+			it.
+		</para>
+	</section>
+	<section>
+		<title>Required Assemblies</title>
+		<para>
+			Make your web project reference the following assemblies:
+
+			<itemizedlist>
+				<listitem>
+					<para>Castle.DynamicProxy.dll</para>
+				</listitem>
+				<listitem>
+					<para>Castle.Model.dll</para>
+				</listitem>
+				<listitem>
+					<para>Castle.MicroKernel.dll</para>
+				</listitem>
+				<listitem>
+					<para>Castle.Windsor.dll</para>
+				</listitem>
+				<listitem>
+					<para>Castle.MonoRail.WindsorExtension.dll</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</section>
+	<section>
+		<title>Configuration</title>
+		<para>Use the useWindsorIntegration attribute:</para>
+		<programlisting lang="html"><![CDATA[
+<?xml version="1.0" ?> 
+<configuration>
+
+    <configSections>
+        <section name="monorail"
+                 type="Castle.MonoRail.Engine.Configuration.MonoRailSectionHandler, Castle.MonoRail.Engine" />
+        <section name="castle"
+                 type="Castle.Windsor.Configuration.AppDomain.CastleSectionHandler, Castle.Windsor" />
+    </configSections>
+
+    <monorail useWindsorIntegration="true">
+		<viewEngine 
+			viewPathRoot="views" 
+			customEngine="Castle.MonoRail.Framework.Views.NVelocity.NVelocityViewEngine, Castle.MonoRail.Framework.Views.NVelocity" />
+    </monorail>
+
+    <castle>
+
+      <!-- component and facilities configuration goes here -->
+
+    </castle>
+
+</configuration>
+]]></programlisting>
+	</section>
+	<section>
+		<title>Exposing the Container</title>
+		<para>
+			You must make your container available to the web
+			application. The best place for it is the global.asax:
+		</para>
+		<programlisting lang="html"><![CDATA[
+<%@ Application Inherits="YourApp.Web.MyGlobalApplication"  %>
+]]></programlisting>
+		<para>MyGlobalApplication.cs:</para>
+		<programlisting lang="cs"><![CDATA[
+namespace YourApp.Web
+{
+    using System;
+    using System.Web;
+
+    using Castle.Windsor;
+    using Castle.ActiveRecord;
+
+
+    public class MyGlobalApplication : HttpApplication, IContainerAccessor
+    {
+        private static WebAppContainer container;
+
+        public void Application_OnStart()
+        {
+            container = new WebAppContainer();
+        }
+
+        public void Application_OnEnd() 
+        {
+            container.Dispose();
+        }
+
+        public IWindsorContainer Container
+        {
+            get { return container; }
+        }
+    }
+}
+]]></programlisting>
+	</section>
+	<section>
+		<title>Initializing</title>
+		<para>
+			You must register a facility named RailsFacility. It ensures
+			that the lifestyle of each controller is set to Transient -
+			as using the default, singleton, would be a terrible mistake
+			- and register each component/controller on the
+			<literal>ControllerTree</literal>
+			.
+		</para>
+		<note>
+			<para>
+				Also note that from now on, your controllers, view
+				components and optionally the filters are standard
+				components, and they need to be registered on the
+				container.
+			</para>
+		</note>
+		<programlisting lang="cs"><![CDATA[
+namespace YourApp.Web
+{
+	using System;
+
+	using YourApp.Web.Controllers;
+
+	using Castle.Model.Resource;
+	using Castle.Windsor.Configuration.Interpreters;
+	using Castle.MonoRail.WindsorExtension;
+
+	public class WebAppContainer : WindsorContainer
+	{
+		public WebAppContainer() : base(new XmlInterpreter( new ConfigResource() ))
+		{
+			RegisterFacilities();
+			RegisterComponents();
+		}
+
+		protected void RegisterFacilities()
+		{
+			AddFacility( "rails", new RailsFacility() );
+		}
+
+		protected void RegisterComponents()
+		{
+			AddComponent( "home.controller", typeof(HomeController) );
+		}
+	}
+}
+]]></programlisting>
+		<para>
+			Obviously you can decide to register the facility and the
+			components directly on the configuration file. The approach
+			above is just a suggestion.
+		</para>
+	</section>
+</section>
