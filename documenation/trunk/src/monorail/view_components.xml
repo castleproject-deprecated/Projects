@@ -443,6 +443,7 @@ public override bool SupportsSection(string name)
 		<xi:include href="view_components/authenticatedcontent.xml" />
 		<xi:include href="view_components/childcontentcomponent.xml" />
 		<xi:include href="view_components/updatepage_updatepagetag.xml" />
+		<xi:include href="view_components/validator.xml" />
 		
 	</section>
 </chapter>
