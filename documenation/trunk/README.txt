@@ -6,6 +6,8 @@ To build all documentation for all Castle frameworks and tools simple execute de
 
 A Java runtime must be installed to execute the transformations, or alternately IKVM.NET can be used by changing the NAnt tasks running Java to instead run ikvm.exe.
 
+To build the CHM documentation you will also need to install the hhc.exe HTML Help compiler.
+
 Other tools required to build the documentation are available in the tools directory under this folder.
 
 NOTE: At the moment the output will not appear in the build folder in the event that there are any spaces in the path.  Hopefully this will be addressed shortly.

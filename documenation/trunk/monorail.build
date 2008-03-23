@@ -47,7 +47,7 @@
 		</copy>
 		
 		<!-- Generate single page HTML output -->
-		<exec program="java" useruntimeengine="true" verbose="true">
+		<exec program="java" useruntimeengine="true">
 			<arg value="-cp" />
 			<arg>
 				<path>
@@ -69,7 +69,7 @@
 		</exec>
 		
 		<!-- Generate multi-page HTML output -->
-		<exec program="java" useruntimeengine="true" verbose="true">
+		<exec program="java" useruntimeengine="true">
 			<arg value="-cp" />
 			<arg>
 				<path>
@@ -112,7 +112,7 @@
 		</copy>
 
 		<!-- make the htmlhelp version of the helpfile -->
-		<exec program="java" useruntimeengine="true" verbose="true">
+		<exec program="java" useruntimeengine="true">
 			<arg value="-cp" />
 			<arg>
 				<path>
@@ -162,7 +162,7 @@
 		</copy>
 
 		<!-- make the htmlhelp version of the helpfile -->
-		<exec program="java" useruntimeengine="true" verbose="true">
+		<exec program="java" useruntimeengine="true">
 			<arg value="-cp" />
 			<arg>
 				<path>

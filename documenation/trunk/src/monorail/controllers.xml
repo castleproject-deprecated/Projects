@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
 "../../toolchain/docbook-xml/docbookx.dtd">
-<chapter>
-	<title>Controllers</title>
+<chapter id="controllers">
+	<title id="controllers.title">Controllers</title>
 	<section>
 		<title>Introduction</title>
 		<para>
@@ -688,8 +688,8 @@ public class HomeController : Controller
 		</para>
 	</section>
 
-	<section>
-		<title>Data Binding</title>
+	<section id="controllers.databinding">
+		<title id="controllers.databinding.title">Data Binding</title>
 
 		<para>
 			The

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd">
-<chapter>
-	<title>Configuration</title>
+<chapter id="configuration">
+	<title id="configuration.title">Configuration</title>
 	<section>
 		<title>Introduction</title>
 		<para>

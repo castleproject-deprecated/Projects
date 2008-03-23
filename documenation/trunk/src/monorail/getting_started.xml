@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "../../toolchain/docbook-xml/docbookx.dtd">
-<chapter>
-	<title>Getting Started</title>
+<chapter id="getting_started">
+	<title id="getting_started.title">Getting Started</title>
 	<section>
 		<title>Introduction</title>
 		<para>
 			<emphasis>Castle MonoRail</emphasis>
-			greatly simplifies web development. This Getting Started is
-			going to show you how common tasks are handled and how
-			MonoRail performs most of the repetitive work on your
-			behalf.
+			greatly simplifies web development. The Getting Started
+			chapter is going to show you how common tasks are handled
+			and how MonoRail performs most of the repetitive work in web
+			development on your behalf.
 		</para>
 		<para>
 			Among other things you will learn
 			<itemizedlist>
 				<listitem>
 					<para>
-						What is a controller and a view, and their
-						relation
+						About
+						<emphasis>controllers</emphasis>
+						and
+						<emphasis>views</emphasis>
+						and how they relate to each other
 					</para>
 				</listitem>
 				<listitem>
-					<para>How to use layouts and rescues</para>
+					<para>
+						How to use
+						<emphasis>layouts</emphasis>
+						and
+						<emphasis>rescues</emphasis>
+					</para>
 				</listitem>
 				<listitem>
 					<para>
@@ -42,23 +50,24 @@
 			</itemizedlist>
 		</para>
 		<para>
-			Although it should go without saying, you are not obligated
-			to use ActiveRecord as your primary data access approach
-			with MonoRail. You can use whatever data access approach you
-			like. That being said if you do use ActiveRecord, there are
-			some developed integrations that might save you some time.
-			You can develop similar integration for your data access
-			approach of choice as well.
+			Although it should go without saying, you are not obliged to
+			use ActiveRecord as your primary data access framework with
+			MonoRail - you can use whatever approach to performing data
+			access you like. That being said if you do use ActiveRecord,
+			there are some provided integrations that might save you
+			some time. Regardless, the framework provided allows you to
+			develop similar integration for your preferred data access
+			approach should you choose to do so.
 		</para>
 		<para>
 			You can also download the complete example:
 
 			<note>
 				<para>
-					A sample demonstrating the concepts in the section
-					can be downloaded from
+					You can also download the complete example
+					demonstrating the concepts from
 					<ulink
-						url="/download/monorail/v1rc2/MonoRail.GettingStartedSampleVS2005.zip">
+						url="/samples/MonoRail.GettingStartedSampleVS2005.zip">
 						here.
 					</ulink>
 				</para>
@@ -68,32 +77,38 @@
 	<section>
 		<title>Requirements</title>
 		<para>
-			We assume that you have Castle Project assemblies on your
-			local machine. If you don't, we encourage you to download
-			the
-			<ulink url="../../castle/download.html">
+			For the purposes of this chapter we will assume that you
+			have Castle Project assemblies present on your local
+			machine. If you don't, we encourage you to download the
+			<ulink
+				url="http://www.castleproject.org/castle/download.html">
 				MSI installer distribution
 			</ulink>
-			, as it makes the assemblies visible to Visual Studio.
+			as it automatically installs all the required assemblies in
+			the Global Assembly Cache, making them visible to Visual
+			Studio.
 		</para>
 		<para>
-			The initial project skeleton will use the
-			<ulink url="../../castle/vsintegration.html">
-				Castle MonoRail project wizard
-			</ulink>
-			. But you can also create the same skeleton manually.
-		</para>
-		<para>
-			This Getting started will use a database at some point, and
-			we assume that you are using MSSQL Server 2000, but any
-			other database supported by NHibernate will do.
+			During the course of this chapter will be using a database.
+			For simplicity's sake all discussion surrounding database
+			configuration will refer ot MSSQL Server 2000 however if you
+			prefer to use another database you can select any other
+			database supported by NHibernate and will find very little
+			deviation from the text in this chapter.
 		</para>
 	</section>
 	<section>
 		<title>Creating the Project Skeleton</title>
 		<para>
-			We encourage you to use the following project structure, as
-			a convention:
+			As mentioned in the
+			<link
+				linkend="introduction.convention_over_configuration">
+				Introduction
+			</link>
+			MonoRail tends to favour convention over configuration and
+			when creating a project structure we encourage you to use a
+			project structure similar to the following to remain in line
+			with these conventions.
 		</para>
 
 		<mediaobject>
@@ -102,191 +117,263 @@
 			</imageobject>
 		</mediaobject>
 
+		<!-- TODO: Further explanation as to *why* would be nice here. -->
+
 		<para>
 			The following sections show you how to create this structure
-			manually or by using the MonoRail project wizard.
+			manually or by using the MonoRail project wizard and will
+			further explain the reasoning behind its use.
 		</para>
 		<section>
 			<title>Using the MonoRail Project Wizard</title>
 			<para>
 				If you have installed Castle Project using the MSI
 				installer you are likely to have the Visual Studio
-				Integration installed as well. If so, create a new
-				MonoRail project using the Wizard.
+				Integration installed as well. Should that be the case
+				the easiest way to create a new MonoRail project is the
+				use the Castle MonoRail Project Wizard.
 			</para>
 			<warning>
 				<para>
-					Visual Studio 2005 users must download and install
+					The Castle MonoRail Project template described below
+					requires that your Visual Studio installation has
+					Web Project support installed. Visual Studio 2005
+					does not come with Web Project support out of the
+					box, however there are two options for adding Web
+					Project support to Visual Studio; you can install
 					the
 					<ulink
 						url="http://msdn2.microsoft.com/en-us/asp.net/aa336618.aspx">
 						Web Project support
 					</ulink>
-					for Visual Studio, otherwise the wizard will not
-					work.
+					add in or alternately you can ensure your Visual
+					Studio installation is upgraded to
+					<ulink
+						url="http://msdn2.microsoft.com/en-us/vstudio/bb265237.aspx">
+						Visual Studio 2005 Service Pack 1
+					</ulink>
+					or later.
 				</para>
 			</warning>
 			<para>
-				<orderedlist>
-					<listitem>
-						<para>
-							Open Visual Studio and go to
-							<menuchoice>
-								<guimenu>New</guimenu>
-								<guimenuitem>Project</guimenuitem>
-							</menuchoice>
-							With Visual Studio.Net 2005:
-							<mediaobject>
-								<imageobject>
-									<imagedata
-										fileref="images/gs_wizard2005.png" />
-								</imageobject>
-							</mediaobject>
-						</para>
-					</listitem>
-
-					<listitem>
-						<para>
-							Enter
-							<userinput>GettingStartedSample</userinput>
-							as the project name
-						</para>
-					</listitem>
-
-					<listitem>
-						<para>
-							The Wizard starts, select
-							<option>NVelocity View Engine</option>
-							and click
-							<guibutton>Next</guibutton>
-						</para>
-						<para>
-							<mediaobject>
-								<imageobject>
-									<imagedata
-										fileref="images/gs_wizard2005_1.png" />
-								</imageobject>
-							</mediaobject>
-						</para>
-					</listitem>
-
-					<listitem>
-						<para>
-							Check the option to create a test project
-							and click
-							<guibutton>Finish</guibutton>
-							. The Wizard will create the solution and
-							the projects and configure everything for
-							you. This might take a few seconds.
-						</para>
-					</listitem>
-
-				</orderedlist>
+				To create a MonoRail project using the wizard just
+				perform the following simple steps:
 			</para>
+			<orderedlist>
+				<listitem>
+					<para>
+						Open Visual Studio and go to
+						<menuchoice>
+							<guimenu>New</guimenu>
+							<guimenuitem>Project</guimenuitem>
+						</menuchoice>
+					</para>
+					<para>
+						Under Visual Studio 2005 you will see the
+						following dialog:
+					</para>
+					<mediaobject>
+						<imageobject>
+							<imagedata
+								fileref="images/gs_wizard2005.png" />
+						</imageobject>
+					</mediaobject>
+				</listitem>
+				<listitem>
+					<para>
+						Select the
+						<emphasis>Castle MonoRail Project</emphasis>
+						template, enter
+						<userinput>GettingStartedSample</userinput>
+						as the name for your new project then click the
+						<guibutton>OK</guibutton>
+						button.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						When the wizard starts select the
+						<option>NVelocity View Engine</option>
+						from the list of View Engines and click the
+						<guibutton>Next</guibutton>
+						button.
+					</para>
+					<para>
+						<mediaobject>
+							<imageobject>
+								<imagedata
+									fileref="images/gs_wizard2005_1.png" />
+							</imageobject>
+						</mediaobject>
+					</para>
+					<note>
+						<para>
+							Do not enable Windsor Integration or Routing
+							at this stage.
+						</para>
+					</note>
+				</listitem>
+				<listitem>
+					<para>
+						The next step in the wizard will offer the
+						option to create a Test project where unit tests
+						for your new MonoRail application can be
+						created. Ensure the checkbox to create the test
+						project is checked then click the
+						<guibutton>Finish</guibutton>
+						button.
+					</para>
+				</listitem>
+			</orderedlist>
 			<para>
-				At this point you should have a project ready to run.
+				Once all of the above steps have been completed the
+				wizard will create the solution, the web project and the
+				test project and will set up all the basic configuration
+				required for MonoRail to run.
 			</para>
 		</section>
 		<section>
 			<title>Creating the Project Manually</title>
 			<para>
-				If you haven't installed the VS integration or don't
-				want to use the project wizard, you can create the
-				project structure manually.
+				If you haven't installed the Visual Studio integration
+				or would prefer not to use the project wizard and
+				instead would rather set up the project structure by
+				hand you can follow the steps outlined below.
 			</para>
 			<section>
 				<title>Create the Project</title>
 				<para>
 					Create an
-					<option>ASP.Net project</option>
-					on Visual Studio (or a
-					<option>Class Library</option>
-					if the
-					<option>ASP.Net Project</option>
-					is not available on your Visual Studio
-					installation).
+					<emphasis>ASP.Net Web Application</emphasis>
+					project in Visual Studio 2005. If the
+					<emphasis>ASP.Net Web Application</emphasis>
+					template is not present in your Visual Studio
+					installation you can create a
+					<emphasis>Class Library</emphasis>
+					project instead.
+				</para>
+				<para>
+					Name the new project
+					<userinput>GettingStartedSample</userinput>
+					then click the
+					<guibutton>OK</guibutton>
+					button.
 				</para>
 			</section>
 			<section>
-				<title>
-					Add References to the MonoRail Asssemblies
-				</title>
+				<title>Reference the MonoRail Assemblies</title>
 				<para>
-					Add references to the following assemblies:
-					<itemizedlist>
-						<listitem>
-							<para>
-								<literal>
-									Castle.MonoRail.Framework.dll
-								</literal>
-								: The MonoRail framework
-							</para>
-						</listitem>
-						<listitem>
-							<para>
-								<literal>
-									Castle.MonoRail.Framework.Views.NVelocity.dll
-								</literal>
-								: The view engine we are going to use
-							</para>
-						</listitem>
-						<listitem>
-							<para>
-								<literal>
-									Castle.Components.Validator.dll
-								</literal>
-								: Our lightweight validation
-								infrastructure
-							</para>
-						</listitem>
-						<listitem>
-							<para>
-								<literal>
-									Castle.Components.Binder.dll
-								</literal>
-								: The binder implementation
-							</para>
-						</listitem>
-						<listitem>
-							<para>
-								<literal>
-									Castle.Components.Common.EmailSender.dll
-								</literal>
-								: The email service contracts
-							</para>
-						</listitem>
-						<listitem>
-							<para>
-								<literal>
-									Castle.Components.Common.EmailSender.SmtpEmailSender.dll
-								</literal>
-								: The email service implementation
-							</para>
-						</listitem>
-						<listitem>
-							<para>
-								<literal>Castle.Core.dll</literal>
-								: Core functionalities shared by
-								projects
-							</para>
-						</listitem>
-						<listitem>
-							<para>
-								<literal>NVelocity.dll</literal>
-								: The template engine
-							</para>
-						</listitem>
-					</itemizedlist>
+					To make the new project into a MonoRail application
+					you will need to add references to the MonoRail
+					assemblies. For the purposes of our sample
+					application the assemblies listed below will be
+					required.
+				</para>
+				<para>
+					<informaltable>
+						<tgroup cols='2' align='left' colsep='1'
+							rowsep='1'>
+							<colspec colname='c1' />
+							<colspec colname='c2' />
+							<thead>
+								<row>
+									<entry>Assembly</entry>
+									<entry>Description</entry>
+								</row>
+							</thead>
+							<tbody>
+								<row>
+									<entry>
+										Castle.MonoRail.Framework.dll
+									</entry>
+									<entry>
+										Contains the classes that make
+										up the core of the MonoRail
+										framework.
+									</entry>
+								</row>
+								<row>
+									<entry>
+										Castle.MonoRail.Framework.Views.NVelocity.dll
+									</entry>
+									<entry>
+										Defines an NVelocity view engine
+										plugin that will be used for
+										handling views. This will in
+										turn use the NVelocity rendering
+										engine.
+									</entry>
+								</row>
+								<row>
+									<entry>
+										Castle.Components.Validator.dll
+									</entry>
+									<entry>
+										Provides a lightweight
+										validation infrastructure
+										created by Castle.
+									</entry>
+								</row>
+								<row>
+									<entry>
+										Castle.Components.Binder.dll
+									</entry>
+									<entry>
+										Contains the logic for the
+										databinding that is used in
+										MonoRail.
+									</entry>
+								</row>
+								<row>
+									<entry>
+										Castle.Components.Common.EmailSender.dll
+									</entry>
+									<entry>
+										Defines the interface for
+										components that send email.
+									</entry>
+								</row>
+								<row>
+									<entry>
+										Castle.Components.Common.EmailSender.SmtpEmailSender.dll
+									</entry>
+									<entry>
+										Provides an SMTP implementation
+										of the EmailSender that will be
+										responsible for sending email.
+									</entry>
+								</row>
+								<row>
+									<entry>Castle.Core.dll</entry>
+									<entry>
+										Core Castle class library
+										containing functionality used by
+										many projects, including
+										MonoRail.
+									</entry>
+								</row>
+								<row>
+									<entry>NVelocity.dll</entry>
+									<entry>
+										The NVelocity template engine
+										used for rendering NVelocity
+										templates.
+									</entry>
+								</row>
+							</tbody>
+						</tgroup>
+					</informaltable>
 				</para>
 			</section>
 			<section>
 				<title>Create the Project Folders</title>
 				<para>
-					Create the following folders on the project. Again,
-					this is just a convention we encourage you to
-					follow. You may come up with a more suitable
-					convention for your projects after you get used to
-					the framework.
+					The next step is to create the following folders on
+					the project. Again, this is just a convention we
+					encourage you to follow - you may come up with a
+					more suitable convention for your projects after you
+					get used to the framework so this is no way
+					mandatory.
 				</para>
 				<para>
 					<mediaobject>
@@ -298,14 +385,18 @@
 			</section>
 			<section>
 				<title>Configuration</title>
-
 				<para>
-					Finally configure the
+					To configure the application to use MonoRail
+					additional information needs to be added to the
 					<filename>web.config</filename>
-					file. You must register a handler, an http module
-					and the MonoRail configuration section.
+					file; you must register the MonoRail configuration
+					handler, the MonoRail configuration section, an HTTP
+					handler and an HTTP module. Each of these will be
+					discussed further below.
 				</para>
-				<para>Add the MonoRail configuration section:</para>
+				<para>
+					First, add the MonoRail configuration handler:
+				</para>
 
 				<programlisting language="xml"><![CDATA[
 <configuration>
@@ -314,7 +405,17 @@
 			name="monorail" 
 			type="Castle.MonoRail.Framework.Configuration.MonoRailSectionHandler, Castle.MonoRail.Framework" />
 	</configSections>
-
+	
+	...
+]]></programlisting>
+				<para>
+					Next add the
+					<code><![CDATA[<monorail>]]></code>
+					configuration section.
+				</para>
+				<programlisting language="xml"><![CDATA[
+	...
+	
 	<monorail>
 		<controllers>
 			<assembly>GettingStartedSample</assembly>
@@ -327,43 +428,114 @@
 	
 	...
 ]]></programlisting>
-
 				<para>
-					To use an extension like
-					<literal>castle</literal>
-					or
-					<literal>rails</literal>
-					, register the handler:
+					This is the section that will contain all the
+					configuration that controls setting up and
+					customizing the behavior of MonoRail itself. The
+					elements included for our sample above are the
+					<literal><![CDATA[<controllers>]]></literal>
+					node that defines the list of assemblies that
+					contain the controllers for the application and the
+					<literal><![CDATA[<viewEngines>]]></literal>
+					node the specifies the view engine that will handle
+					rendering the view templates in the application.
+					There are more configuration options available in
+					the
+					<link linkend="configuration"
+						endterm="configuration.title" />
+					chapter, however the elements above are sufficient
+					for our sample application.
+				</para>
+				<para>
+					It should be noted at this point that we have chosen
+					the NVelocity view engine for rendering the views in
+					our application.
+					<application>NVelocity</application>
+					is a very simple template engine that supports
+					conditional statements, assignments, array creation,
+					and iteration over collections that provides all the
+					functionality you will generally need during the
+					rendering of a view. You can learn more about
+					<application>NVelocity</application>
+					(and how we have improved it) on
+					<ulink url="../../others/nvelocity/index.html">
+						its page
+					</ulink>
+					.
+				</para>
+				<para>
+					Next we will add a couple of HTTP Handlers under the
+					<literal><![CDATA[<httpHandlers>]]></literal>
+					node in the
+					<literal><![CDATA[<system.web>]]></literal>
+					section of the
+					<filename>web.config</filename>
+					.
 				</para>
 				<programlisting language="xml"><![CDATA[
 ...
 	
 	<system.web>
 		<httpHandlers>
+		
 			<add 
 				verb="*" 
 				path="*.castle" 
 				type="Castle.MonoRail.Framework.MonoRailHttpHandlerFactory, Castle.MonoRail.Framework" />
+			
+			<add 
+				verb="*" 
+				path="*.vm" 
+				type="System.Web.HttpForbiddenHandler"/>
+				
 		</httpHandlers>
-	</system.web>
-	
-</configuration>
+		
+		...
+-
 ]]></programlisting>
-
-
-
-				<para>Finally register the http module:</para>
-
+				<para>
+					The first HTTP Handler is responsible for routing
+					incoming requests to MonoRail based on their
+					extension. The example above indicates that incoming
+					requests ending in
+					<literal>.castle</literal>
+					should be handled by MonoRail. If you prefer another
+					extension such as
+					<literal>.rails</literal>
+					you can simply change the value of the
+					<literal>path</literal>
+					attribute to your preferred value.
+				</para>
+				<para>
+					The second handler is present as a security
+					consideration. It is important to to be aware that
+					if a file in a web folder is accessed from the
+					outside world its contents will normally be sent
+					directly to the calling browser. To prevent the
+					source for your view files from being visible to the
+					outside world an
+					<classname>HttpForbiddenHandler</classname>
+					needs to be configured for the file extension of any
+					files you don't want want to be directly accessible.
+					In this case, because we chose to use the NVelocity
+					view engine and our view templates use the
+					<literal>.vm</literal>
+					extension this is the extension we have associated
+					with the
+					<classname>HttpForbiddenHandler</classname>
+					.
+				</para>
+				<para>
+					Finally you need to register the MonoRail HTTP
+					module that handles incoming requests into the
+					<literal><![CDATA[<httpModules>]]></literal>
+					node, which is also found in the
+					<literal><![CDATA[<system.web>]]></literal>
+					section.
+				</para>
 				<programlisting language="xml"><![CDATA[
-...
-	
-	<system.web>
-		<httpHandlers>
-			<add 
-				verb="*" 
-				path="*.castle" 
-				type="Castle.MonoRail.Framework.MonoRailHttpHandlerFactory, Castle.MonoRail.Framework" />
-		</httpHandlers>
+		...
+		
 		<httpModules>
 			<add 
 				name="monorail" 
@@ -374,56 +546,77 @@
 </configuration>
 ]]></programlisting>
 			</section>
-			<section>
-				<title>Security</title>
-				<para>
-					There are a few security related issues you should
-					consider when configuring your MonoRail application.
-				</para>
-				<para>
-					First if your view directory is on the web folder
-					then clients can potentially see the source code of
-					the views, which is not good. To prevent this,
-					associate the view extension with an
-					<interfacename>IHttpHandler</interfacename>
-					that comes with ASP.Net.
-				</para>
-				<para>
-					Second, if you use the DataBinder to populate
-					classes, you might want to provide an Exclude or
-					Allow list to prevent people from populating
-					properties that are not on the form. Check the
-					DataBind documentation for more information.
-				</para>
-			</section>
 		</section>
 	</section>
 	<section>
-		<title>Controllers and Views</title>
-
-		<para></para>
+		<title>Controllers, Actions and Views</title>
+		<para>
+			For all MonoRail MVC applications the entry point for each
+			request is the controller - this is the single largest
+			deviation from the approach taken in Web Forms development
+			where the entry point is the page itself. With MonoRail the
+			controller is executed in response to a request where an
+			action decides whether or not it should render a view and,
+			if so, which one to render. As a result the controller has
+			control over the application flow rather than the
+			pages/views. This returns views back to their original role:
+			to present information - nothing more and nothing less.
+		</para>
+		<para>
+			It is important at this point to understand the relationship
+			between the structure of the URL specified to access a
+			resource and the controller. A common URL to a MonoRail web
+			page might look like the following:
+		</para>
+		<para>
+			<screen><![CDATA[
+http://www.some-server.net/home/index.castle
+|                         |    |     |      | 
++-------------------------+----+-----+------+
+          ^                 ^     ^     ^
+          |                 |     |     |
+        Server              |     |     |
+                            |     |     |
+                      Controller  |     |
+                                  |     |
+                               Action   |
+                                        |
+                                    Extension
+]]></screen>
+		</para>
+		<para>
+			In the diagram above the extension
+			<literal>.castle</literal>
+			indicates that MonoRail should handle the request,
+			<literal>home</literal>
+			specifies the controller to use and
+			<literal>index</literal>
+			indicates that the
+			<methodname>Index</methodname>
+			method on the controller should be executed. Since MonoRail
+			prefers convention over configuration the default behaviour
+			is, by default, for the controller's class name to be the
+			name of the controller found on the URL with the word
+			<emphasis>Controller</emphasis>
+			appended to the end, so if the controller name
+			<literal>home</literal>
+			is found in the URL the controller class used in response to
+			this request will be the
+			<classname>HomeController</classname>
+			class.
+		</para>
 		<section>
-			<title>Your First Controller and View</title>
+			<title>Your First Controller</title>
 			<para>
-				For any MonoRail application, the entry point is the
-				controller. That is the biggest difference from WebForms
-				development where the entry point is the page itself.
-				With MonoRail the controller is executed and decides
-				whether it should render a view and, if so, which view.
-				As a result the controller has control over the
-				application flow rather than the pages/views. This
-				reduces the views to their original role: to present
-				information, nothing more and nothing less.
-			</para>
-			<para>
-				It is time to create your first controller. If you have
-				used the wizard to create the project, the controller is
-				already there. Regardless, for our example the
-				controller class should be named
+				It is now time to create your first controller. If you
+				have used the wizard to create the project, a
 				<classname>HomeController</classname>
-				and should exist under the
+				class will already have been created for you. If it is
+				not already present you should create a new class named
+				<classname>HomeController</classname>
+				in the
 				<filename>Controllers</filename>
-				folder:
+				folder of your project.
 			</para>
 			<para>
 				<mediaobject>
@@ -432,7 +625,13 @@
 					</imageobject>
 				</mediaobject>
 			</para>
-			<para>Here is the controller code:</para>
+			<para>
+				Inside the
+				<classname>HomeController</classname>
+				class the following code should be present. If you have
+				just created the class file yourself you should add the
+				code now.
+			</para>
 			<programlisting language="cs"><![CDATA[
 namespace GettingStartedSample.Controllers
 {
@@ -449,98 +648,59 @@ namespace GettingStartedSample.Controllers
 	}
 }
 ]]></programlisting>
-			<para>
-				The controller name is, by default, grabbed from the
-				type name simply by dropping the text "Controller" from
-				the name of the type. In this case the controller name
-				from MonoRail's point-of-view is simply
-				<literal>Home</literal>
-				.
-			</para>
-			<para>
-				Actions are public non-static methods exposed by the
-				controller class. This controller exposes just one
-				action:
-				<literal>Index</literal>
-				and although the action code block is empty, there is a
-				behavior implied. When this action is executed, it will
-				render a view named
-				<literal>Index</literal>
-				. Yes - the action name is used, by convention, to
-				decide the view to render. The action can override this
-				and select a different view using the
-				<methodname>RenderView</methodname>
-				method.
-			</para>
-			<para>
-				Before digging into this, let's create the view.
-			</para>
 		</section>
 		<section>
-			<title>Setting the Layout and Resuce</title>
+			<title>The Index Action and View</title>
 			<para>
-				You, as the careful reader we know you are, will have
-				noticed the attributes used on the controller class:
-			</para>
-			<programlisting language="cs"><![CDATA[
-[Layout("default"), Rescue("generalerror")]
-public class HomeController : SmartDispatcherController
-]]></programlisting>
-			<para>
-				These define the following:
-				<itemizedlist>
-					<listitem>
-						<para>
-							For each view rendered, use the layout named
-							<literal>default</literal>
-							which resides in the
-							<filename>layouts</filename>
-							folder
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							If any unhandled exception is thrown by the
-							action, render the special rescue view
-							<literal>generalerror</literal>
-							which resides in the
-							<filename>rescues</filename>
-							folder
-						</para>
-					</listitem>
-				</itemizedlist>
+				An
+				<emphasis>action</emphasis>
+				is a public non-static method exposed by a controller
+				class. The controller shown in the previous section
+				exposes just one action,
+				<literal>Index</literal>
+				which is empty, however due to MonoRail's convention
+				over configuration approach the controller will render a
+				specific view template by default.
 			</para>
 			<para>
-				As stated before, we are using the
-				<application>NVelocity</application>
-				view engine.
-				<application>NVelocity</application>
-				is a very simple template engine that supports
-				conditional statements, assignments, array creation, and
-				iteratation over collections. That is definitely all you
-				generally need when all you want to do is render a view.
-				You can learn more about
-				<application>NVelocity</application>
-				(and how we have improved it) on
-				<ulink url="../../others/nvelocity/index.html">
-					its page
-				</ulink>
-				.
+				The view template chosen by MonoRail is affected by the
+				view engine we chose during the configuration phase of
+				the project. Since we chose to use the NVelocity view
+				engine all of our view templates will end with the
+				<literal>.vm</literal>
+				extension.
 			</para>
-		</section>
-		<section>
-			<title>Creating the Index View and Action</title>
 			<para>
-				The views are bound to a controller. In our case we are
-				dealing with the
-				<literal>Home</literal>
-				controller, so on the
-				<filename>Views</filename>
-				folder, create a (or use the existing)
-				<filename>home</filename>
-				folder and create an
+				By default, the specific view template file chosen for
+				rendering is based on the name of the action being
+				executed and the folder in which the view template is
+				located is based on the name of the controller handling
+				the request.
+			</para>
+			<para>
+				As a result the default view template chosen by the
+				<methodname>Index</methodname>
+				action on the
+				<classname>HomeController</classname>
+				will be
+				<literal>index.vm</literal>
+				located under the
+				<filename>/views/home</filename>
+				folder in the project.
+			</para>
+			<note>
+				<para>
+					This behavior can be overridden in several ways that
+					are covered later in this guide.
+				</para>
+				<!-- TODO: Is it? -->
+			</note>
+			<para>
+				If the view template
 				<filename>index.vm</filename>
-				file there:
+				does not yet exist in the
+				<filename>/views/home</filename>
+				folder of your project create it now.
 			</para>
 			<para>
 				<mediaobject>
@@ -550,9 +710,12 @@ public class HomeController : SmartDispatcherController
 				</mediaobject>
 			</para>
 			<para>
-				Below are the contents of the
+				To illustrate a point we will make the content of the
 				<literal>home.vm</literal>
-				file:
+				file nice and simple to start with. If the
+				<literal>home.vm</literal>
+				file does not contain the content below just copy and
+				paste it in there.
 			</para>
 			<programlisting language="xml"><![CDATA[
 <p>
@@ -563,7 +726,7 @@ Hello world from my first action.
 ]]></programlisting>
 			<note>
 				<para>
-					You can make Visual Studio use the Html editor for
+					You can make Visual Studio use the HTML editor for
 					<literal>.vm</literal>
 					files. Use the
 					<guimenuitem>Open With...</guimenuitem>
@@ -571,8 +734,62 @@ Hello world from my first action.
 				</para>
 			</note>
 			<para>
-				This is a fairly simple view. Note that we did not use the html or
-				body tags. We will leave those to the layout to render.
+				This is a fairly simple view. Note that in the view
+				template we did not include the html or body tags. We
+				will leave those to the
+				<emphasis>layout</emphasis>
+				to render, which we will cover next.
+			</para>
+		</section>
+		<section>
+			<title>Setting the Layout and Rescue</title>
+			<para>
+				When we created the
+				<classname>HomeController</classname>
+				you may have noticed the
+				<classname>Layout</classname>
+				and
+				<classname>Rescue</classname>
+				attributes were specified on the class.
+			</para>
+			<programlisting language="cs"><![CDATA[
+[Layout("default"), Rescue("generalerror")]
+public class HomeController : SmartDispatcherController
+]]></programlisting>
+			<para>
+				These define the following:
+				<itemizedlist>
+					<listitem>
+						<para>
+							The
+							<classname>Layout</classname>
+							attribute indicates that every view rendered
+							by this controller to should be wrapped in
+							the content from the
+							<filename>default.vm</filename>
+							template in the
+							<filename>/layouts</filename>
+							folder of the project.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							The
+							<classname>Rescue</classname>
+							attribute tells MonoRail that if any
+							unhandled exception is thrown by the an
+							action on the
+							<classname>HomeController</classname>
+							a special
+							<emphasis>rescue</emphasis>
+							view template called
+							<literal>generalerror.vm</literal>
+							in the
+							<filename>/rescues</filename>
+							folder of the project should be rendered.
+						</para>
+					</listitem>
+				</itemizedlist>
 			</para>
 		</section>
 		<section>
@@ -580,17 +797,18 @@ Hello world from my first action.
 			<para>
 				A
 				<emphasis>layout</emphasis>
-				defines the outer content of a rendered view. You can
-				have multiple layouts on a project, and they should
-				reside in the
-				<filename>layouts</filename>
-				folder.
+				defines the outer content of a rendered view and has
+				some similarities to a master page. Your project can
+				have as many layouts as you like - the layout files
+				simply need to be placed into the
+				<filename>/layouts</filename>
+				folder of the project.
 			</para>
 			<para>
 				Our first layout is very simple, and should be saved as
 				<filename>default.vm</filename>
 				on the
-				<filename>layouts</filename>
+				<filename>/layouts</filename>
 				folder.
 			</para>
 			<programlisting language="xml"><![CDATA[
@@ -609,25 +827,25 @@ Hello world from my first action.
 </html>
 ]]></programlisting>
 			<para>
-				The
-				<varname>$childContent</varname>
-				variable defines where the view content should be
-				included on the layout.
-
-				The
-				<varname>$siteRoot</varname>
-				variable will represent the root of the application. If
-				the web application is using a virtual dir for example,
-				it will be the virtual dir name. Otherwise it would
-				evaluate to a simple
-				<literal>/</literal>
-				.
+				At this point some explanation of the template above is
+				in order.
 			</para>
 			<para>
-				Remember that our controller used the
-				<literal>[Layout("default")]</literal>
-				attribute? That will make every view rendered from our
-				controller to use this layout.
+				The
+				<varname>$childContent</varname>
+				variable defines where the content of the view being
+				rendered will be included on the layout.
+			</para>
+			<para>
+				The
+				<varname>$siteRoot</varname>
+				variable will represent the root of the application. If,
+				for example, the web application is using a virtual
+				directory it will be the name of the virtual directory.
+				Under normal circumstances, however, it will evaluate to
+				a simple
+				<literal>/</literal>
+				.
 			</para>
 		</section>
 		<section>
@@ -640,18 +858,16 @@ Hello world from my first action.
 				</menuchoice>
 				or
 				<keysym>F5</keysym>
-				. In Visual Studio 2003, Cassini will run. In VS 2005
-				the internal web server will run. Both allow debug.
+				.
 			</para>
 			<para>
-				On the browser, go to the application url and enter the
+				On the browser, go to the application URL and enter the
 				controller name and the action name plus the extension
-				you have selected. For example:
-			</para>
-			<para>
+				you have selected, eg.
 				<literal>
 					http://localhost:8081/home/index.castle
 				</literal>
+				.
 			</para>
 			<para>
 				The browser should render the view content with the
@@ -665,37 +881,51 @@ Hello world from my first action.
 				</mediaobject>
 			</para>
 			<para>
-				Now view the page source code. You should see a well
-				formed xhtml content, as the layout was used.
+				If you view the source of the page in your browser you
+				should see well formed XHTML content that includes the
+				content defined in the layout as well as the content
+				rendered by the view.
 			</para>
-			<para>
-				If you want to run the application using Microsoft
-				Internet Information Services, you must associate the
-				extension you selected (ie
-				<literal>rails</literal>
-				or
-				<literal>castle</literal>
-				) with the ASP.Net ISAPI. For more information on this
-				check the
-				<ulink
-					url="../documentation/trunk/usersguide/installing.html">
-					Installing
-				</ulink>
-				document on the User's Guide.
-			</para>
+			<note>
+				<para>
+					Should you wish to run the application using
+					Microsoft Internet Information Services, you must
+					associate the extension you selected (i.e.
+					<literal>.castle</literal>
+					) with the ASP.Net ISAPI. For more information on
+					this please see the chapter entitled
+					<link linkend="installation"
+						endterm="installation.title" />
+					.
+				</para>
+			</note>
 		</section>
 		<section>
-			<title>Passing Values to the View</title>
+			<title>Passing Values to a View</title>
 			<para>
-				Views are pretty useless unless you pass parameters and
-				data to it. Each view engine will treat parameters
-				differently. With NVelocity the parameters will turn
-				into variables.
+				As shown by the excessively simple view example used
+				earlier, views are pretty useless unless you can pass
+				custom values to them for rendering at runtime. The main
+				mechanism for transferring values from the controller to
+				the view is the
+				<property>PropertyBag</property>
+				.Values placed in the
+				<property>PropertyBag</property>
+				will be made available to the view template, however
+				each view engine will provide access to these values
+				differently. Since we're using the NVelocity view engine
+				the values in the
+				<property>PropertyBag</property>
+				will be exposed as NVelocity variables which begin with
+				a
+				<literal>$</literal>
+				symbol in the NVelocity view template.
 			</para>
 			<para>
-				Let's create another action on our
-				<literal>HomeController</literal>
-				:
+				To demonstrate this principle let's create another
+				action on our
+				<classname>HomeController</classname>
+				.
 			</para>
 			<programlisting language="cs"><![CDATA[
 [Layout("default"), Rescue("generalerror")]
@@ -715,49 +945,57 @@ public class HomeController : SmartDispatcherController
 }
 ]]></programlisting>
 			<para>
-				The
-				<literal>DataToTheView</literal>
+				The new
+				<methodname>DataToTheView</methodname>
 				action uses the
-				<literal>PropertyBag</literal>
-				to pass data to the view. It then invokes
-				<literal>RenderView</literal>
-				to customize the view to render. If we haven't invoked
-				this one, the view name would be
-				<literal>datatotheview</literal>
-				.
+				<property>PropertyBag</property>
+				to pass data to the view. It then invokes the built-in
+				<methodname>RenderView</methodname>
+				method on the controller to specify that the
+				<filename>/views/home/data.vm</filename>
+				view template should be rendered instead of the default
+				<filename>/views/home/datatotheview.vm</filename>
+				template.
 			</para>
 			<para>
-				Now lets create the
+				Now let's create the
 				<literal>data.vm</literal>
-				which should lie on the
-				<literal>views\home</literal>
-				folder:
+				template in the
+				<literal>\views\home</literal>
+				folder.
 			</para>
-			<programlisting language="xml"><![CDATA[
+			<programlisting language="nv"><![CDATA[
 <h3> Hello $name! </h3>
 
 <h4> Today is $today.ToShortDateString() </h4>
 ]]></programlisting>
 			<para>
-				Run the application and go to the
+				To see the result of the change run the application and
+				visit
 				<literal>home/datatotheview.castle</literal>
-				to test your work.
+				in your browser.
 			</para>
 		</section>
 		<section>
 			<title>Creating a Rescue</title>
 			<para>
-				Our controller also uses a rescue. Lets create the
-				rescue view to report errors nicely.
+				In an earlier step we specified that our controller uses
+				a
+				<emphasis>rescue</emphasis>
+				. A rescue is a special purpose view template that will
+				be rendered only in the event that an exception is
+				thrown while executing an action on a controller.Lets
+				create the rescue view to report errors nicely and see
+				how it works.
 			</para>
 			<para>
-				Create a
+				First, create a view template named
 				<literal>generalerror.vm</literal>
-				on the
-				<literal>views\rescues</literal>
-				folder:
+				in the
+				<literal>\views\rescues</literal>
+				folder with the following content.
 			</para>
-			<programlisting language="xml"><![CDATA[
+			<programlisting language="nv"><![CDATA[
 #macro(showexception $exc)
 <b>$exc.GetType().Name</b>
 
@@ -786,8 +1024,8 @@ $exc.StackTrace
 </pre>
 ]]></programlisting>
 			<para>
-				Now lets force an exception on a new action just to see
-				the rescue working.
+				Now lets create a new action that will throw an
+				exception so we can see the rescue template in action.
 			</para>
 			<programlisting language="cs"><![CDATA[
 [Layout("default"), Rescue("generalerror")]
@@ -799,7 +1037,7 @@ public class HomeController : SmartDispatcherController
 	
 	public void ErroneousAction()
 	{
-		throw new Exception("I'm a bad bad action");
+		throw new Exception("I'm a bad bad action.");
 	}
 	
 	public void DataToTheView()
@@ -812,29 +1050,35 @@ public class HomeController : SmartDispatcherController
 }
 ]]></programlisting>
 			<para>
-				Run the application and go to the
+				Run the application and go to
 				<literal>home/erroneousaction.castle</literal>
-				.
+				in your browser to trigger the exception and see the
+				result.
 			</para>
 		</section>
-
 	</section>
 	<section>
 		<title>Data Binding</title>
 		<para>
-			Although our controller extends from
+			Although the controller we've been using so far in our
+			sample application extends from
 			<classname>SmartDispatcherController</classname>
-			we haven't used any of its capabilities. The
+			we haven't yet used any of its capabilities. The
 			<classname>SmartDispatcherController</classname>
-			, as the name implies, implements a smart way to invoke
-			actions. Query string entries, form entries and even cookies
-			can be bound actions parameters.
+			base class, as the name implies, provides some "smart"
+			functionality, including binding query string entries, form
+			entries and even cookies to parameters of action methods
+			when they are invoked.
 		</para>
 		<section>
 			<title>Simple Parameters</title>
 			<para>
-				For example, suppose you have the following form on a
-				view:
+				Simple types can be bound to parameters on with no
+				special configuration other than to ensure your
+				controller is derived from the
+				<classname>SmartDispatchController</classname>
+				class. For example, suppose you have the following form
+				on a view:
 			</para>
 			<programlisting language="xml"><![CDATA[
 <form action="/home/saveinformation.castle" method="post" >
@@ -847,7 +1091,8 @@ public class HomeController : SmartDispatcherController
 			<para>
 				You can create the
 				<methodname>SaveInformation</methodname>
-				action in a way that it will expect the form values as parameters:
+				action in such a way that it will expect the values from
+				the submitted HTML form as parameters to the method:
 			</para>
 			<programlisting language="cs"><![CDATA[
 public class HomeController : SmartDispatcherController
@@ -866,12 +1111,18 @@ public class HomeController : SmartDispatcherController
 }
 ]]></programlisting>
 			<para>
-				The code above saves you the hassle of using the
-				<literal>Params</literal>
+				Using this automatic databinding feature reduces the
+				work you need to do to access the values submitted by
+				the view. You could still access the values from the
+				HTML form without data binding through use of the
+				<property>Params</property>
 				or
-				<literal>Form</literal>
-				name-value collections. It is basically equivalent to
-				the following code but much cleaner and simpler:
+				<property>Form</property>
+				name-value collections exposed by the controller,
+				however data binding is cleaner and simpler. The code
+				sample below provides the same functionality as the
+				sample above - we will leave it to you to decide which
+				is clearer to use.
 			</para>
 			<programlisting language="cs"><![CDATA[
 public class HomeController : SmartDispatcherController
@@ -894,12 +1145,17 @@ public class HomeController : SmartDispatcherController
 }
 ]]></programlisting>
 			<para>
-				The <classname>SmartDispatchController</classname> is capable of handling a
-				diversity of types. For more on this check the
-				<ulink url="">
-					SmartDispatcher reference documentation
-				</ulink>
-				.
+				The
+				<classname>SmartDispatchController</classname>
+				is capable of handling a wide range of types. For
+				further details on the types supported refer to the
+				documentation on
+				<link linkend="controllers.databinding">
+					Data Binding
+				</link>
+				in the
+				<link linkend="controllers">Controllers</link>
+				chapter.
 			</para>
 		</section>
 		<section>
@@ -907,9 +1163,10 @@ public class HomeController : SmartDispatcherController
 			<para>
 				You can also use the
 				<classname>SmartDispatcherController</classname>
-				to populate entire objects. To exemplify that lets
-				create a contact form so the user can contact some
-				department from our ficticious company.
+				to populate custom and arbitrarily complex objects. To
+				illustrate how this can be achieved we will create a new controller that presents a
+				contact form designed to allow a user to contact a department
+				in a fictitious company.
 			</para>
 			<para>
 				<orderedlist>
@@ -1146,19 +1403,37 @@ get back to your shortly.
 
 							<itemizedlist>
 								<listitem>
-									<para><literal>Castle.ActiveRecord.dll</literal></para>
+									<para>
+										<literal>
+											Castle.ActiveRecord.dll
+										</literal>
+									</para>
 								</listitem>
 								<listitem>
-									<para><literal>Castle.DynamicProxy.dll</literal></para>
+									<para>
+										<literal>
+											Castle.DynamicProxy.dll
+										</literal>
+									</para>
 								</listitem>
 								<listitem>
-									<para><literal>Iesi.Collections.dll</literal></para>
+									<para>
+										<literal>
+											Iesi.Collections.dll
+										</literal>
+									</para>
 								</listitem>
 								<listitem>
-									<para><literal>log4net.dll</literal></para>
+									<para>
+										<literal>log4net.dll</literal>
+									</para>
 								</listitem>
 								<listitem>
-									<para><literal>NHibernate.dll</literal></para>
+									<para>
+										<literal>
+											NHibernate.dll
+										</literal>
+									</para>
 								</listitem>
 							</itemizedlist>
 						</para>
@@ -1422,12 +1697,16 @@ namespace GettingStartedSample
 					<itemizedlist>
 						<listitem>
 							<para>
-								<literal>Castle.MonoRail.ActiveRecordScaffold.dll</literal>
+								<literal>
+									Castle.MonoRail.ActiveRecordScaffold.dll
+								</literal>
 							</para>
 						</listitem>
 						<listitem>
 							<para>
-								<literal>Castle.MonoRail.ActiveRecordSupport.dll</literal>
+								<literal>
+									Castle.MonoRail.ActiveRecordSupport.dll
+								</literal>
 							</para>
 						</listitem>
 					</itemizedlist>
@@ -1585,13 +1864,15 @@ public void List()
 					<itemizedlist>
 						<listitem>
 							<para>
-								<methodname>New</methodname>: which will present the form
+								<methodname>New</methodname>
+								: which will present the form
 							</para>
 						</listitem>
 						<listitem>
 							<para>
-								<methodname>Create</methodname>: which uses the data supplied on
-								the form to create the Product on the
+								<methodname>Create</methodname>
+								: which uses the data supplied on the
+								form to create the Product on the
 								database
 							</para>
 						</listitem>
@@ -1712,8 +1993,9 @@ public void Update([DataBind("product")] Product prod)
 				<para>
 					We can also use a different
 					<methodname>Edit</methodname>
-					overload that will be used when the <methodname>Update</methodname> catch
-					block redirects it back to the
+					overload that will be used when the
+					<methodname>Update</methodname>
+					catch block redirects it back to the
 					<methodname>Edit</methodname>
 					:
 				</para>
