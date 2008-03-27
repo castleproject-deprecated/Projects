@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Reflection;
+
 namespace Castle.MonoRail.Rest.Binding
 {
 	using System;
@@ -54,13 +56,15 @@ namespace Castle.MonoRail.Rest.Binding
 
 		#region IParameterBinder Members
 
-		public object Bind(SmartDispatcherController controller, System.Reflection.ParameterInfo parameterInfo)
+		public object Bind(IEngineContext context, IController controller, IControllerContext controllerContext,
+		                   ParameterInfo parameterInfo)
 		{
-			var inputStream = controller.Context.UnderlyingContext.Request.InputStream;
+			var inputStream = context.Request.InputStream;
 			return CreateValueFromInputStream(parameterInfo.ParameterType, inputStream);
 		}
 
-		public int CalculateParamPoints(SmartDispatcherController controller, System.Reflection.ParameterInfo parameterInfo)
+		public int CalculateParamPoints(IEngineContext context, IController controller, IControllerContext controllerContext,
+		                                ParameterInfo parameterInfo)
 		{
 			return 10; 
 		}

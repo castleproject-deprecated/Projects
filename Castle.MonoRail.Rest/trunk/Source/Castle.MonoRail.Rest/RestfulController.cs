@@ -15,15 +15,13 @@
 namespace Castle.MonoRail.Rest
 {
 	using System;
-	using System.Linq;
-	using Castle.MonoRail.Framework;
+	using Framework;
 	using System.Collections;
+	using System.Collections.Generic;
 	using System.Reflection;
-	using Castle.Components.Binder;
-	using Castle.MonoRail.Rest.Binding;
-	using System.Xml.Linq;
-	using System.Xml;
-	using Castle.MonoRail.Rest.Mime;
+	using Components.Binder;
+	using Framework.Services;
+	using Mime;
 
 	public class RestfulController : SmartDispatcherController 
 	{
@@ -31,7 +29,7 @@ namespace Castle.MonoRail.Rest
 		private CompositeNode _paramsNode;
 		private string _controllerAction;
 
-		protected override System.Reflection.MethodInfo SelectMethod(string action, System.Collections.IDictionary actions, IRequest request, System.Collections.IDictionary actionArgs)
+		protected override MethodInfo SelectMethod(string action, IDictionary actions, IRequest request, IDictionary<string, object> actionArgs)
 		{
 			if (String.Equals("collection", action, StringComparison.InvariantCultureIgnoreCase) || String.IsNullOrEmpty(action))
 			{
@@ -76,13 +74,12 @@ namespace Castle.MonoRail.Rest
 						default:
 							//Should maybe just throw here.
 							return base.SelectMethod(action, actions, request, actionArgs);
-
 					}
-
+					
 					if (selectedMethod != null)
 					{
 						LeafNode n = new LeafNode(typeof(String), "ID", action);
-						ParamsNode.AddChildNode(n);
+						Request.ParamsNode.AddChildNode(n);
 					}
 					return selectedMethod;
 				}
@@ -93,62 +90,6 @@ namespace Castle.MonoRail.Rest
 			}
 		}
 
-		
-		protected override CompositeNode FormNode
-		{
-			get
-			{
-
-				string ct = this.Context.UnderlyingContext.Request.ContentType;
-				if (String.Equals("application/xml", ct, StringComparison.InvariantCultureIgnoreCase))
-				{
-					if (_formNode == null)
-					{
-						XmlTreeBuilder builder = new XmlTreeBuilder();                        
-						_formNode = builder.BuildNode(GetDocFromRequest());
-					}
-					return _formNode;
-				}
-				else
-				{
-					return base.FormNode;
-				}
-			}
-		}
-
-
-		protected override CompositeNode ParamsNode
-		{
-			get
-			{
-				string ct = this.Context.UnderlyingContext.Request.ContentType;
-				if (String.Equals("application/xml", ct, StringComparison.InvariantCultureIgnoreCase))
-				{
-					if (_paramsNode == null)
-					{
-						CompositeNode rootNode = base.ParamsNode;
-						XmlTreeBuilder builder = new XmlTreeBuilder();
-						builder.AddToRoot(rootNode, GetDocFromRequest());
-						_paramsNode = rootNode;
-					}
-					return _paramsNode;
-				}
-				else
-				{
-					return base.ParamsNode;
-				}
-			}
-		}
-
-		private XDocument GetDocFromRequest()
-		{
-			var inputStream = Context.UnderlyingContext.Request.InputStream;
-			inputStream.Position = 0;
-			var reader = XmlReader.Create(inputStream);
-			return XDocument.Load(reader);
-		}
-	
-	   
 		protected void RespondTo(Action<ResponseFormat> collectFormats)
 		{
 			MimeTypes registeredMimes = new MimeTypes();
@@ -163,23 +104,16 @@ namespace Castle.MonoRail.Rest
 
 			collectFormats(handler.Format);
 			handler.Respond();
-			
-		}
-
-		private bool IsFormatDefined()
-		{
-			return !String.IsNullOrEmpty(Params["format"]);
 		}
 
 		protected string UrlFor(IDictionary parameters)
 		{
-			return UrlBuilder.BuildUrl(this.Context.UrlInfo, parameters);
+			return Context.Services.UrlBuilder.BuildUrl(this.Context.UrlInfo, parameters);
 		}
 
 		protected string UrlFor(string action)
 		{
-			return UrlBuilder.BuildUrl(Context.UrlInfo, this.Name, action);
+			return Context.Services.UrlBuilder.BuildUrl(Context.UrlInfo, new UrlBuilderParameters(this.Name, action));
 		}
-	   
 	}
 }
