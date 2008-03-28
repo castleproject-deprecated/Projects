@@ -16,7 +16,7 @@ namespace Castle.Tools.CodeGenerator.Services
 		public IControllerViewReference CreateViewReference(ICodeGeneratorServices services, Type controllerType,
 		                                                    string controllerName, string areaName, string actionName)
 		{
-			return new ControllerViewReference(services, controllerType, controllerName, areaName, actionName);
+			return new ControllerViewReference(services, controllerType, areaName, controllerName, actionName);
 		}
 	}
 }
