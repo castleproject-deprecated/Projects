@@ -210,7 +210,7 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			if (string.IsNullOrEmpty(fragment))
 				return;
-			OutputWriter.Write(HttpUtility.HtmlEncode(fragment).Replace("'", "&apos;"));
+			OutputWriter.Write(HttpUtility.HtmlEncode(fragment).Replace("'", "&#39;"));
 		}
 
 		/// <summary>
