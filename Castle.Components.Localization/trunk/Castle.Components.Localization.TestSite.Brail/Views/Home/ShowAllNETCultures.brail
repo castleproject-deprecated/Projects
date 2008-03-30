@@ -1,0 +1,22 @@
+
+<table border="1">
+	<thead style="background-color:Gray">
+		<tr>
+			<td style="width:20px">Flag</td>
+			<td style="width:150px">Name</td>
+			<td style="width:300px">EnglishName</td>
+			<td style="width:300px">ISO two letters code</td>
+			<td style="width:300px">Ietf Code</td>
+		</tr>
+	</thead>
+<?brail for culture in Cultures : ?>
+	
+	<tr>
+		<td><img src="${ Resource.GetImageResourceUrl( "Flags_" + culture.Name ) }" /></td>		
+		<td>${ culture.Name }</td>
+		<td>${ culture.EnglishName }</td>
+		<td>${ culture.TwoLetterISOLanguageName }</td>
+		<td>${ culture.IetfLanguageTag }</td>
+	</tr>
+<?brail end ?>
+</table>

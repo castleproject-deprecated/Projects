@@ -1,0 +1,62 @@
+
+#region License
+
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific culture governing permissions and
+// limitations under the License.
+
+#endregion License
+
+namespace Castle.Components.Localization.MonoRail.Configuration
+{
+	#region Using Directives
+
+	using System;
+	using System.Configuration;
+	using System.Xml;
+
+	#endregion Using Directives
+
+	/// <summary>
+	/// The <see cref="IConfigurationSectionHandler"/> implementation used to retrieve the <see cref="LocalizationConfiguration"/>.
+	/// </summary>
+	public class LocalizationConfigurationSectionHandler : IConfigurationSectionHandler
+	{
+
+		#region Public Methods
+
+		public virtual object Create( object parent, object configContext, XmlNode section )
+		{
+			LocalizationConfiguration config = new LocalizationConfiguration( section );
+			this.Deserialize( section, config );
+
+			return config;
+		}
+
+		#endregion Public Methods
+
+		#region Private Methods
+
+		void Deserialize( XmlNode section, LocalizationConfiguration config )
+		{
+			config.Deserialize( section );
+		}
+
+		public void Toto()
+		{
+		}
+
+		#endregion Private Methods
+
+	}
+}

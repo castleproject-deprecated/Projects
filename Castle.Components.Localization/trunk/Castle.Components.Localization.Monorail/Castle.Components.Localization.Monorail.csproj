@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2019123E-54F9-491A-9329-5ADC4248E49A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Castle.Components.Localization.MonoRail</RootNamespace>
+    <AssemblyName>Castle.Components.Localization.MonoRail</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Components.DictionaryAdapter, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Castle.Components.DictionaryAdapter.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MicroKernel, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Castle.MicroKernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.Framework, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Castle.MonoRail.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\LocalizationConfiguration.cs" />
+    <Compile Include="Configuration\LocalizationConfigurationSectionHandler.cs" />
+    <Compile Include="Controllers\CultureController.cs" />
+    <Compile Include="GlobalApplication.cs" />
+    <Compile Include="Helpers\LocalizedFormHelper.cs" />
+    <Compile Include="Helpers\ResourceHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Date1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Date.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Flags.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Flags.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewComponents\CultureSelectorComponent.cs" />
+    <EmbeddedResource Include="Resources\Date.fr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Date.resx">
+      <Generator>ResXFileCodeGeneratorEx</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Date1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Castle.Components.Localization\Castle.Components.Localization.csproj">
+      <Project>{02D66F54-133E-4377-A7D1-4CFD3AD2A133}</Project>
+      <Name>Castle.Components.Localization</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Flags\fr.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Flags\en.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Flags\ar.gif" />
+    <EmbeddedResource Include="Resources\Flags\bg.gif" />
+    <EmbeddedResource Include="Resources\Flags\ca.gif" />
+    <EmbeddedResource Include="Resources\Flags\zh-CHS.gif" />
+    <EmbeddedResource Include="Resources\Flags\cs.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Flags\az.gif" />
+    <EmbeddedResource Include="Resources\Flags\eu.gif" />
+    <EmbeddedResource Include="Resources\Flags\fo.gif" />
+    <EmbeddedResource Include="Resources\Flags\gl.gif" />
+    <EmbeddedResource Include="Resources\Flags\hi.gif" />
+    <EmbeddedResource Include="Resources\Flags\gu.gif" />
+    <EmbeddedResource Include="Resources\Flags\dv.gif" />
+    <EmbeddedResource Include="Resources\Flags\sr.gif" />
+    <EmbeddedResource Include="Resources\Flags\syr.gif" />
+    <EmbeddedResource Include="Resources\Flags\kok.gif" />
+    <EmbeddedResource Include="Resources\Flags\mn.gif" />
+    <EmbeddedResource Include="Resources\Flags\sa.gif" />
+    <EmbeddedResource Include="Resources\Flags\kn.gif" />
+    <EmbeddedResource Include="Resources\Flags\te.gif" />
+    <EmbeddedResource Include="Resources\Flags\pa.gif" />
+    <EmbeddedResource Include="Resources\Flags\mr.gif" />
+    <EmbeddedResource Include="Resources\Flags\ka.gif" />
+    <EmbeddedResource Include="Resources\Flags\hy.gif" />
+    <EmbeddedResource Include="Resources\Flags\be.gif" />
+    <EmbeddedResource Include="Resources\Flags\et.gif" />
+    <EmbeddedResource Include="Resources\Flags\id.gif" />
+    <EmbeddedResource Include="Resources\Flags\fa.gif" />
+    <EmbeddedResource Include="Resources\Flags\ky.gif" />
+    <EmbeddedResource Include="Resources\Flags\kk.gif" />
+    <EmbeddedResource Include="Resources\Flags\ta.gif" />
+    <EmbeddedResource Include="Resources\Flags\lt.gif" />
+    <EmbeddedResource Include="Resources\Flags\lv.gif" />
+    <EmbeddedResource Include="Resources\Flags\mk.gif" />
+    <EmbeddedResource Include="Resources\Flags\ms.gif" />
+    <EmbeddedResource Include="Resources\Flags\sl.gif" />
+    <EmbeddedResource Include="Resources\Flags\sw.gif" />
+    <EmbeddedResource Include="Resources\Flags\tt.gif" />
+    <EmbeddedResource Include="Resources\Flags\uk.gif" />
+    <EmbeddedResource Include="Resources\Flags\ur.gif" />
+    <EmbeddedResource Include="Resources\Flags\sv.gif" />
+    <EmbeddedResource Include="Resources\Flags\sq.gif" />
+    <EmbeddedResource Include="Resources\Flags\da.gif" />
+    <EmbeddedResource Include="Resources\Flags\de.gif" />
+    <EmbeddedResource Include="Resources\Flags\el.gif" />
+    <EmbeddedResource Include="Resources\Flags\es.gif" />
+    <EmbeddedResource Include="Resources\Flags\fi.gif" />
+    <EmbeddedResource Include="Resources\Flags\he.gif" />
+    <EmbeddedResource Include="Resources\Flags\hr.gif" />
+    <EmbeddedResource Include="Resources\Flags\hu.gif" />
+    <EmbeddedResource Include="Resources\Flags\is.gif" />
+    <EmbeddedResource Include="Resources\Flags\it.gif" />
+    <EmbeddedResource Include="Resources\Flags\ja.gif" />
+    <EmbeddedResource Include="Resources\Flags\ko.gif" />
+    <EmbeddedResource Include="Resources\Flags\nl.gif" />
+    <EmbeddedResource Include="Resources\Flags\no.gif" />
+    <EmbeddedResource Include="Resources\Flags\pl.gif" />
+    <EmbeddedResource Include="Resources\Flags\pt.gif" />
+    <EmbeddedResource Include="Resources\Flags\ro.gif" />
+    <EmbeddedResource Include="Resources\Flags\ru.gif" />
+    <EmbeddedResource Include="Resources\Flags\sk.gif" />
+    <EmbeddedResource Include="Resources\Flags\th.gif" />
+    <EmbeddedResource Include="Resources\Flags\tr.gif" />
+    <EmbeddedResource Include="Resources\Flags\uz.gif" />
+    <EmbeddedResource Include="Resources\Flags\vi.gif" />
+    <EmbeddedResource Include="Resources\Flags\af.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Flags.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGeneratorEx</Generator>
+      <LastGenOutput>Flags.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Flags\zh-CHT.gif" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

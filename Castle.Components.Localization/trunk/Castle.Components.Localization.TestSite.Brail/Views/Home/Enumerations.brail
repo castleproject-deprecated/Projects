@@ -1,0 +1,12 @@
+﻿Here is a list of the supported cultures on this site :
+<?brail component CultureSelector ?>
+<br />
+Your culture is ${ Culture }.
+<br />
+Your UI culture is ${ UICulture }.
+<br />
+<br />
+The following SELECT element is generated from an Enumeration :
+<br />
+
+${ LocalizedForm.Select( "MyEnumerationValue", typeof( Castle.Components.Localization.TestSite.MyEnumeration ) ) }

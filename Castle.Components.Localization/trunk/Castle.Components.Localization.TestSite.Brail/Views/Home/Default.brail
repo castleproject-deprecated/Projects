@@ -1,0 +1,42 @@
+Welcome !
+
+Here is a list of the supported cultures on this site (default rendering) :
+<?brail component CultureSelector ?>
+<hr />
+The same list but the cultures are represented by their most commonly associated flag (default rendering with mode parameter set to Flags ):
+<?brail component CultureSelector, { @Mode:CultureSelectorComponent.RenderingMode.Flags } ?>
+<hr />
+The same list with a custom rendering and languages as parameters :
+<?brail 
+	component CultureSelector, { @Cultures:"en,fr-FR" } :
+		section startblock: 
+?>
+		<select>
+<?brail 
+		end
+		section culture: 
+?>
+			<option selected="${ IsCurrent.ToString().ToLower() }">
+				${ CultureCulture.DisplayName }
+			</option>
+<?brail 
+		end
+		section endblock: ?>
+		</select>
+<?brail 
+		end		
+	end 
+?>
+<hr />
+Your culture is ${ Culture }.
+<br />
+Your UI culture is ${ UICulture }.
+<hr />
+Below is an image taken from an assembly's ressource file:
+<br />
+<img src="${ Url.ResourceUrl( "GhoticPepper" ) }" />
+<hr />
+Below is the TestComponent which output its own resources (set by its Resource attribute):
+<?brail component Test : ?>
+	<p>${ TestResources.Test }</p>
+<?brail end ?>

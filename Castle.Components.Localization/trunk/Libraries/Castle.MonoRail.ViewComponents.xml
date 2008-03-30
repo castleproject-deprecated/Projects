@@ -1,0 +1,1964 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.MonoRail.ViewComponents</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.MonoRail.Framework.Filters.MobileFilter">
+            <summary>
+            Detects if controller is being accessed via a mobile device. <para/>
+            </summary>
+            <remarks>
+            Detects if controller is being accessed via a mobile device.  
+            If so, it will change the layout name by prepending <c>"mobile-"</c> to the name, and by defining
+            a PropertyBag value <c>"_IsMobileDevice"</c>.<para/>
+            
+            This assumes that for the most part, the layout contain a lot of extreneous 
+            elements (fly-out menus, images) as well as the CSS include.  By changing the 
+            layout (and including a different CSS) the same view template can be reformated
+            to be presentable on a mobile device.<para/>
+            
+            This will detect any mobile device that has a *.browser file defined either for the system 
+            (in C:\Windows\Microsoft.NET\Framework\v2.0.50727\CONFIG\Browsers) or locally (in ~\App_Browsers).
+            Since these tend to be out of date, it also triggers on "Windows CE" or "Smartphone" in the 
+            user-agent.<para/>
+            
+            TODO: An explicit test for iPhones should probably be added.<para/>
+            </remarks>
+            <example><code>
+             [Layout("default"), Rescue("generalerror")]
+             [Filter(ExecuteEnum.BeforeAction,typeof(MobileFilter))]
+             public class ShowController : SmartDispatcherController
+            </code>
+            If viewed from a mobile device, the layout will be changed to "mobile-default".
+            </example>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Filters.MobileFilter.Perform(Castle.MonoRail.Framework.ExecuteWhen,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
+            <summary>
+            Called by Framework.
+            </summary>
+            <param name="exec">When this filter is being invoked. Must be BeforeAction</param>
+            <param name="context">Current context</param>
+            <param name="controller">The controller instance</param>
+            <param name="controllerContext">The controller context.</param>
+            <returns><c>true</c> Always</returns>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.ViewComponentEx">
+            <summary>
+            Helper class to provide a some convenient methods for viewcomponents.
+            </summary>
+            <remarks>May one day be incorporated into base class.</remarks>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.ViewComponentEx.RenderTextFormat(System.String,System.Object[])">
+            <summary>
+            Renders the text, formatted.
+            </summary>
+            <param name="format">The format.</param>
+            <param name="args">The args.</param>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.ViewComponentEx.RenderOptionalSection(System.String,System.String)">
+            <summary>
+            Renders the optional section, or the default text, if section not present.
+            </summary>
+            <param name="section">The section.</param>
+            <param name="defaultText">The default text.</param>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.ViewComponentEx.RenderOptionalSection(System.String)">
+            <summary>
+            Renders the optional section.
+            </summary>
+            <param name="section">The section.</param>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.ViewComponentEx.GetSectionText(System.String)">
+            <summary>
+            Gets the section text.
+            </summary>
+            <param name="section">The section.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.ViewComponentEx.ConfirmSectionPresent(System.String)">
+            <summary>
+            Confirms a section is present.
+            </summary>
+            <remarks>Throws an exception if the given section is not present.
+            </remarks>
+            <param name="section">The section.</param>
+            <exception cref="T:Castle.MonoRail.Framework.ViewComponentException">If specified section is not present.</exception>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.ViewComponentEx.GetBoolParamValue(System.String,System.Boolean)">
+            <summary>
+            Gets a boolean parameter value.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="defaultValue">The value used if there is no parameter named key.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.ViewComponentEx.MakeUniqueId(System.String)">
+            <summary>
+            Makes an unique id.
+            </summary>
+            <remarks>The given prefix is prepended to the generated number.
+            The ID isn't actual guarenteed to be unique (which would require
+            using all 32 digits of the guid). But this produce ids sufficently
+            distinctive to generate multiple controls on a page.
+            </remarks>
+            <param name="prefix">The prefix.</param>
+            <returns>A string usable as a Html element Id</returns>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.JSsegments">
+            <summary>
+            Used internally at run-time by the JavascriptComponent system to hold details of 
+            scripts to include.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.JSsegments.#ctor">
+            <summary>
+            Initializes a new instance of the JSsegments class.
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.versionDirection">
+            <summary>
+            Speicifies how the version field of a <see cref="T:Castle.MonoRail.ViewComponents.BrowserSpec"/> object is interpreted.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.ViewComponents.versionDirection.Exact">
+            <summary>
+            Only the exact browswr version matches.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.ViewComponents.versionDirection.andLower">
+            <summary>
+            The browser version cited and all earlier versions of that browser.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.ViewComponents.versionDirection.andHigher">
+            <summary>
+            The browser version cited and all newer versions of that browser.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.BrowserSpec.#ctor">
+            <summary>
+            Initializes a new instance of the BrowserSpec class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.BrowserSpec.#ctor(System.String,System.Int32,Castle.MonoRail.ViewComponents.versionDirection)">
+            <summary>
+            Initializes a new instance of the BrowserSpec class.
+            </summary>
+            <param name="browser"></param>
+            <param name="version"></param>
+            <param name="direction"></param>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.JavascriptComponent">
+            <summary>
+            ViewComponent for inserting Javascript.
+            </summary>
+            <remarks>A block component for including Javascript files and script.  Code included using this component 
+            is gathered together, and inserted at the location of the <see cref="T:Castle.MonoRail.ViewComponents.InsertJavascriptComponent"/>.  Blocks can 
+            be conditionally included based on the browser being used.
+            <para/>
+            JavascriptComponent can be used as either a block or line component.  It takes two parameters, either of 
+            which may be optional depending on the context.
+            <list type="table">
+            <listheader>
+            <term>Parameter</term>
+            <description>Description</description>
+            </listheader>
+            <item>
+            <term>       id        </term>
+            <description>The string that uniquely identifies the script block. Blocks with 
+            the same id as rendered only once. <para/>
+            <b>Required</b> when used as a block component. 
+            (Pointless, when used as a line component)</description>
+            </item>
+            <item>
+            <term>       Std      </term>
+            <description>A comma or space seaparated list of the standard Javascript files to include. 
+            Will automatically include needed requestisits. 
+            It can include any of the following.
+            </description>
+            </item>
+            </list>
+            <list type="table">
+            <listheader>
+            <term>Keyword</term>
+            <description>Script</description>
+            </listheader>
+            <item>
+            <term>           ajax              </term>
+            <description>    prototype.js      </description>
+            </item>
+            <item>
+            <term>           behavior           <br/>
+               or <br/>
+                             behaviour          <br/>
+            </term>
+            <description>    behaviour.js       </description>
+            </item>
+            <item>
+            <term>           scriptaculous      <br/> 
+            or <br/> 
+                             effects2           </term>
+            <description>    Script.aculo.us    </description>
+            </item>
+            <item>
+            <term>           effectsfat</term>
+            <description>effectsfat.js</description>
+            <term>Keyword</term>
+            </item>
+            <item>
+            <term>validate</term>
+            <description>Validate.Config <br/>
+            Validate.Core <br/>
+            Validate.Validators <br/>
+            Validate.Lang <br/>
+            </description>
+            </item>
+            </list>
+            <para/>
+            JavascriptComponent allows a number of subsections, to allow
+            customizing the included Javascript to the requesting browser.
+            <para/>
+            <list type="table">
+            <listheader>
+            <term>Section</term>
+            <description>Description</description>
+            </listheader>
+            <item>
+            <term>            all                </term>
+            <description>Block is always rendered. 
+            Rendered at the site of InsertJavascriptComponent.</description></item>
+            <item>
+            <term>            other             </term>
+            <description>Block is rendered if no browser specific block is rendered.  
+            Rendered at the site of InsertJavascriptComponent.</description></item>
+            <item>
+            <term>            noscript             </term>
+            <description>Always rendered, within &lt;noscript&gt; tags.  
+            Rendered at the site of JavascriptComponent.</description></item>
+            <item>
+            <term>            inline             </term>
+            <description>Always rendered.
+            Rendered at the site of JavascriptComponent.</description></item>
+            <item>
+            <term>            <i>Browser Spec</i>  </term>
+            <description>Rendered if the requesting browser matches the given 
+            browsers specification. Rendered at the site of InsertJavascriptComponent.</description></item>
+            </list>
+            <para/>
+            <i>Browser Spec</i> is in the following form:<para/>
+            <c>    #{Browser name}[{version #}[U|D]]       </c><para/>
+            where: <para/>
+            <i>browser</i> is  <c>"ie", "netscape", "firefox", "opera", "safari" or "wince"</c> <para/>
+            <i>Version </i> is an optional integer version number. <para/>
+            and <i><c>D or U</c></i> indicates that version and lower, or that version and higher. <para/>
+            For example:  <para/>
+            <list type="table">
+            <listheader>
+            <term>Example</term>
+            <description>Meaning</description>
+            </listheader>
+            <item>
+            <term>               #safari                 </term>
+            <description>Any version of Safari.</description>
+            </item>
+            <item>
+            <term>               #firefox2           </term>
+            <description>Version 2 of FireFox.</description>
+            </item>
+            <item>
+            <term>               #netscape5d         </term>
+            <description>Version 5 or eariler of Netscape.</description>
+            </item>
+            <item>
+            <term>                #ie6u               </term>
+            <description>Version 6 or later of Internet Explorer.</description>
+            </item>
+            </list>
+            <para/>
+            Note: It is assumed that the InsertJavascriptComponent will appear once in the layout template,
+            while one or more JavascriptComponents will appear in the view.  This will cause all blocks 
+            included in the view to be inserted in the layout.  However, assuming the InsertJavascriptComponent is 
+            in the HTML &lt;HEAD&gt; section, any JavascriptComponent used in the layout will be rendered after
+            the InsertJavascriptComponent.  In this case, the new javascript code will be rendered in-place.
+            
+            </remarks>
+            <example>
+            Given the following code:
+            <code> <![CDATA[
+            <html><head>
+            #component (InsertJavascript with "Std=Behavior, Scriptolous")
+            </head>
+            <body>
+            #blockcomponent (Javascript with "id=MyCode" "Std=Effects2, EffectsFat")
+            #ie6D
+            function Showit()   { alert("This is IE 6 or lower");
+            #end
+            #ie7
+            function Showit()   { alert("This is IE 7");
+            #end
+            #foxfire
+            function Showit()   { alert("This is Foxfire");
+            #end
+            #inline
+            ShowIt();
+            #end
+            #noscript
+            <DIV id="IfNoScript">Javascript not enabled.</DIV>
+            #end
+            </body></html>
+            ]]></code>
+            Would generate the following code when requested by an IE5 browser
+            <code><![CDATA[
+            <html><head>
+            <script type="text/javascript" src="/web/MonoRail/Files/AjaxScripts.rails?RC3_0006"></script>
+            <script type="text/javascript" src="/web/MonoRail/Files/BehaviourScripts.rails?RC3_0006"></script>
+            <script type="text/javascript" src="/web/MonoRail/Files/Effects2.rails?RC3_0006"></script>
+            <script type="text/javascript" src="/web/MonoRail/Files/EffectsFat.rails?RC3_0006"></script>
+            <script type="text/javascript">
+            function Showit()   { alert("This is IE 6 or lower");
+            </script>
+            </head>
+            <body>
+            <script type="text/javascript">
+            ShowIt();
+            </script>
+            <noscript>
+            <DIV id="IfNoScript">Javascript not enabled.</DIV>
+            </noscript>
+            </body></html>
+             
+            ]]></code>
+            </example>
+            <seealso cref="T:Castle.MonoRail.ViewComponents.JavascriptHelper"/> <seealso cref="T:Castle.MonoRail.ViewComponents.InsertJavascriptComponent"/>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.JavascriptComponent.#ctor">
+            <summary>
+            Initializes a new instance of the JavascriptComponent class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.JavascriptComponent.Initialize">
+            <summary>
+            Called by the framework once the component instance
+            is initialized
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.JavascriptComponent.Render">
+            <summary>
+            Called by the framework so the component can
+            render its content
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.JavascriptComponent.SupportsSection(System.String)">
+            <summary>
+            Implementor should return true only if the
+            <c>name</c> is a known section the view component
+            supports.
+            </summary>
+            <remarks>This is a hack.  Beside assessing if a section label is valid, 
+            it also makes a list of the section labels used.</remarks>
+            <param name="tag">section being added</param>
+            <returns>
+            	<see langword="true"/> if section is supported
+            </returns>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.InsertJavascriptComponent">
+            <summary>
+            ViewComponent to insert the Javascript segments that 
+            were build using <see cref="T:Castle.MonoRail.ViewComponents.JavascriptComponent"/> and
+            <see cref="T:Castle.MonoRail.ViewComponents.JavascriptHelper"/>.  The set is intended to be an
+            enhanced version of "capturefor(javascript)
+            <remarks>
+            </remarks>InsertJavascriptComponent is a companion component to JavascriptHelper 
+            and JavascriptComponent, and is of little use unless used with one or both of those. 
+            <para/>
+            
+            It is a line component which can take one optional parameter. 
+            <list type="table">
+            <listheader>
+            <term>Parameter</term>
+            <description>Description</description>
+            </listheader>
+            <item>
+            <term>       Std      </term>
+            <description>A comma or space seaparated list of the standard Javascript files to include. 
+            Will automatically include needed requestisits. 
+            It can include any of the following.
+            </description>
+            </item>
+            </list>
+            <list type="table">
+            <listheader>
+            <term>Keyword</term>
+            <description>Script</description>
+            </listheader>
+            <item>
+            <term>           ajax              </term>
+            <description>    prototype.js      </description>
+            </item>
+            <item>
+            <term>           behavior           <br/>
+               or <br/>
+                             behaviour          <br/>
+            </term>
+            <description>    behaviour.js       </description>
+            </item>
+            <item>
+            <term>           scriptaculous      <br/> 
+            or <br/> 
+                             effects2           </term>
+            <description>    Script.aculo.us    </description>
+            </item>
+            <item>
+            <term>           effectsfat</term>
+            <description>effectsfat.js</description>
+            <term>Keyword</term>
+            </item>
+            <item>
+            <term>validate</term>
+            <description>Validate.Config <br/>
+            Validate.Core <br/>
+            Validate.Validators <br/>
+            Validate.Lang <br/>
+            </description>
+            </item>
+            </list>
+            </summary>
+            <example>
+            See <see cref="T:Castle.MonoRail.ViewComponents.JavascriptComponent"/> for an example of usage.
+            </example>
+            <seealso cref="T:Castle.MonoRail.ViewComponents.JavascriptHelper"/> <seealso cref="T:Castle.MonoRail.ViewComponents.JavascriptComponent"/>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.InsertJavascriptComponent.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.ViewComponents.InsertJavascriptComponent"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.InsertJavascriptComponent.Initialize">
+            <summary>
+            Called by the framework once the component instance
+            is initialized
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.InsertJavascriptComponent.SupportsSection(System.String)">
+            <summary>
+            Implementor should return true only if the
+            <c>name</c> is a known section the view component
+            supports.
+            </summary>
+            <param name="name">section being added</param>
+            <returns>
+            	<see langword="true"/> if section is supported
+            </returns>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.InsertJavascriptComponent.Render">
+            <summary>
+            Called by the framework so the component can
+            render its contents.
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.JavascriptHelper">
+            <summary>
+            Helper class for building Javascript blocks that will be 
+            inserted by <see cref="T:Castle.MonoRail.ViewComponents.InsertJavascriptComponent"/>.
+            </summary>
+            <seealso cref="T:Castle.MonoRail.ViewComponents.InsertJavascriptComponent"/> <seealso cref="T:Castle.MonoRail.ViewComponents.JavascriptComponent"/>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.JavascriptHelper.#ctor(Castle.MonoRail.Framework.IViewComponentContext,System.Web.HttpContext,Castle.MonoRail.Framework.Flash,System.String)">
+            <summary>
+            Initializes a new instance of the JavascriptHelper class.
+            </summary>
+            <remarks>Different instances of JavascriptHelper created with the same key are render only once.
+            </remarks>
+            <example><code>
+            JavascriptHelper helper = new JavascriptHelper(viewcomp.Context, viewcomp.HttpContext, "MyScript");
+            </code></example>
+            <param name="context">The context.</param>
+            <param name="httpcontext">The httpcontext.</param>
+            <param name="flash">The viewComponent's Flash collection.</param>
+            <param name="key">The string that uniquely identifies the script block.</param>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.JavascriptHelper.#ctor(Castle.MonoRail.Framework.IViewComponentContext,Castle.MonoRail.Framework.IEngineContext,System.String)">
+            <summary>
+            Initializes a new instance of the JavascriptHelper class.
+            </summary>
+            <remarks>Different instances of JavascriptHelper created with the same key are render only once.
+            </remarks>
+            <example><code>
+            JavascriptHelper helper = new JavascriptHelper(viewcomp.Context, viewcomp.EngineContext, "MyScript");
+            </code></example>
+            <param name="context">The context.</param>
+            <param name="engine">The engine.</param>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.JavascriptHelper.IncludeScriptText(System.String,System.Int32,Castle.MonoRail.ViewComponents.versionDirection,System.String)">
+            <summary>
+            Includes the script text for the given browser in the given version range.
+            </summary>
+            <remarks>Script blocks are only include in the output is the browser specified matches the
+            browser making the request.  <paramref name="browser"/> can be the name of a browser defined in the BrowserCaps 
+            (<c>"ie", "firefox", "netscape"</c>, et al, including all defined in the *.browser files installed), 
+            <c>"all", "other", "inline" </c>or <c> "noscript"</c>.
+            "all" block are always included. "other" blocks are include only if a more specific block has
+            not already included. <para/>
+            "inline" and "noscript" blocks are rendered in place with the rest of the viewcomponent.
+            Other blocks are gathered together, and rendered at the location of the <see cref="T:Castle.MonoRail.ViewComponents.InsertJavascriptComponent"/>.
+            </remarks>
+            <param name="browser">The name of the browser which this script is specific to.</param>
+            <param name="baseversion">The baseversion.</param>
+            <param name="direction">The direction versionDirection.andUp or .andDown.</param>
+            <param name="script">The script.</param>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.JavascriptHelper.IncludeScriptText(System.String,System.Int32,System.String)">
+            <summary>
+            Includes the script text for a specific browser.  Must match the exact version.
+            For more details, see <see cref="M:Castle.MonoRail.ViewComponents.JavascriptHelper.IncludeScriptText(System.String,System.Int32,Castle.MonoRail.ViewComponents.versionDirection,System.String)"/>
+            </summary>
+            <param name="browser">The browser.</param>
+            <param name="baseversion">The baseversion.</param>
+            <param name="script">The script.</param>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.JavascriptHelper.IncludeScriptText(System.String,System.String)">
+            <summary>
+            Includes the script text for any version of the specified browser.
+            For more details, see <see cref="M:Castle.MonoRail.ViewComponents.JavascriptHelper.IncludeScriptText(System.String,System.Int32,Castle.MonoRail.ViewComponents.versionDirection,System.String)"/>
+            </summary>
+            <param name="browser">The browser.</param>
+            <param name="script">The script.</param>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.JavascriptHelper.IncludeScriptText(System.String)">
+            <summary>
+            Includes the script text for all browsers.
+            For more details, see <see cref="M:Castle.MonoRail.ViewComponents.JavascriptHelper.IncludeScriptText(System.String,System.Int32,Castle.MonoRail.ViewComponents.versionDirection,System.String)"/>
+            </summary>
+            <param name="script">The script.</param>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.JavascriptHelper.IncludeStandardScripts(System.String)">
+            <summary>
+            Includes the standard scripts.
+            </summary>
+            <param name="std">Comma or space separated list of scripts to include</param>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.JavascriptHelper.IncludeScriptFile(System.String)">
+            <summary>
+            Includes the specified Javascript file.
+            </summary>
+            <remarks>Includes the specified Javascript file. Only one download command will be render, 
+            regardless of how many times a file is included.  <br/> <br/>
+            Script download commands are gathered together
+            and rendered at the location of the <see cref="T:Castle.MonoRail.ViewComponents.InsertJavascriptComponent"/>.
+            <br/> <br/>
+            If the filename began with "http://", then it is assumed to be external, 
+            and rendered as-is.  If not, it is assumed to be in a "\javascript" folder
+            off of the site root.
+            </remarks>
+            <param name="file">The filename.</param>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.CaptchaImage">
+            <summary>
+            Based on: 
+            http://www.codeproject.com/aspnet/CaptchaControl.asp
+            http://www.codeproject.com/aspnet/CaptchaImage.asp
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.CaptchaImage.#ctor(System.String,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.ViewComponents.CaptchaImage"/> class.
+            </summary>
+            <param name="sequence">The sequence of characters to render.</param>
+            <param name="width">The width.</param>
+            <param name="height">The height.</param>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.CaptchaImage.Create">
+            <summary>
+            Creates the image.
+            Called by CaptchaImageHandler.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaImage.Width">
+            <summary>
+            Gets or sets the width of the image
+            </summary>
+            <value>The width.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaImage.Height">
+            <summary>
+            Gets or sets the height of the image.
+            </summary>
+            <value>The height.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaImage.Sequence">
+            <summary>
+            Gets or sets the characters to display in the image.
+            </summary>
+            <value>The sequence.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaImage.WarpDivisor">
+            <summary>
+            Gets or sets the warp divisor.
+            Automatically sets FontWarp to "Custom"
+            </summary>
+            <value>The warp divisor.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaImage.RangeModifier">
+            <summary>
+            Gets or sets the range modifier.
+            Automatically sets FontWarp to "Custom"
+            </summary>
+            <value>The range modifier.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaImage.FontSizeAdjust">
+            <summary>
+            Gets or sets the font size adjust.
+            Automatically sets FontWarp to "Custom"
+            </summary>
+            <value>The font size adjust.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaImage.ForegroundColor">
+            <summary>
+            Gets or sets the color of the foreground.
+            </summary>
+            <value>The color of the foreground.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaImage.BackgroundColor">
+            <summary>
+            Gets or sets the color of the background.
+            </summary>
+            <value>The color of the background.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaImage.BackgroundNoiseColor">
+            <summary>
+            Gets or sets the color of the background noise.
+            </summary>
+            <value>The color of the background noise.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaImage.ForegroundNoiseColor">
+            <summary>
+            Gets or sets the color of the foreground noise.
+            </summary>
+            <value>The color of the foreground noise.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaImage.NoiseDivisor">
+            <summary>
+            Gets or sets the noise divisor.
+            </summary>
+            <value>The noise divisor.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaImage.FontWarp">
+            <summary>
+            Gets or sets the font warp.
+            </summary>
+            <value>The font warp.</value>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.CaptchaImage.FontWarpFactor">
+            <summary>
+            Describe the amount of contortion added to the characters displayed.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.ViewComponents.CaptchaImage.FontWarpFactor.None">
+            <summary>
+            Characters are no distorted
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.ViewComponents.CaptchaImage.FontWarpFactor.Low">
+            <summary>
+            Characters are slightly distorted
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.ViewComponents.CaptchaImage.FontWarpFactor.Medium">
+            <summary>
+            Characters are distorted
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.ViewComponents.CaptchaImage.FontWarpFactor.High">
+            <summary>
+            Characters are very distorted
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.ViewComponents.CaptchaImage.FontWarpFactor.Extreme">
+            <summary>
+            Characters are extremely distorted
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.ViewComponents.CaptchaImage.FontWarpFactor.Custom">
+            <summary>
+            Characters are distorted based on user specified
+            WarpDivisor, RangeModifier and FontSizeAdjust.
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.DualListComponent">
+            <summary>
+            The DualListComponent is a control designed for the passing items from 
+            an available list of items to a "chosen" list of items via javascript.
+            </summary>
+            <remarks>
+            <list type="table">
+            <listheader><term>Parameter</term><description>Description</description>
+            </listheader>
+            <item>
+            <term>                   SourceColumns                        </term>
+            <description>  An IEnumerable&lt;string> which is the list of available
+                           names for the source listbox.
+            </description>
+            </item>
+            <item>
+            <term>                   SourceColumnsType                        </term>
+            <description>  Type field which builds a list of available fields 
+                           based off of the Public Properties of the Type.  <br/>
+                                              <i>or</i>                            <br/>
+                           An enum, which builds a list of available fields
+                           based off the values of the enum.                <br />
+                                              <i>or</i>                            <br/>
+                           An Object, which builds a list of available fields 
+                           based off of the Public Properties of the object.
+            </description>
+            </item>
+            <item>
+            <term>                   SelectedColumns                          </term>
+            <description>  An IEnumerable&lt;string> which is the list of property 
+                           names that are to go in the already choosen fields listbox. 
+                           (<b>Required</b>)
+            </description>
+            </item>
+            <item>
+            <term>                   Id                          </term>
+            <description>  String, used to form Html element ids.  Optional, random Ids used 
+                           if not specified.
+            </description>
+            </item>    /// </list>
+            
+            Either SourceColumns or SourceColumnsType must be specified.
+            <br/>
+            <br/>
+            <list type="table">
+            <listheader><term>Section</term><description>Description</description>
+            </listheader>
+            <item>
+            <term>                   preList                                  </term>
+            <description>  The start of the view. Default is table tr
+            </description>
+            </item>
+            <item>
+            <term>                   preListBox1                                  </term>
+            <description>   Before the first list box. Default is td
+            </description>
+            </item>
+            <item>
+            <term>                   postListBox1                                  </term>
+            <description>   After the first list box. Default is /td
+            </description>
+            </item>
+            <item>
+            <term>                   center                                  </term>
+            <description>   The code between the listboxes 
+            </description>
+            </item>
+            <item>
+            <term>                   preListBox2                                  </term>
+            <description>Before the second list box. Default is td
+            </description>
+            </item>
+            <item>
+            <term>                   postListBox2                                  </term>
+            <description>After the second list box. Default is /td
+            </description>
+            </item>
+            <item>
+            <term>                   postList                                  </term>
+            <description>The end of the view. Default is /tr /table
+            </description>
+            </item>
+            </list>
+            </remarks>
+            <example> Usage:
+            <code><![CDATA[
+            <?brail component DualListComponent, {@sourceColumnsType: sourceColumnsType, 
+                                                   @selectedColumns: selectedColumns, } ?>
+            ]]></code>
+            </example>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.DualListComponent.Render">
+            <summary>
+            Called by the framework so the component can
+            render its content
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.DualListComponent.SelectedColumns">
+             <summary>
+             Gets or sets the selected columns.
+             </summary>
+             <remarks>
+             An IEnumerable&lt;string> which is the list of property 
+                            names that are to go in the already choosen fields listbox. 
+                            (<b>Required</b>)
+            </remarks>
+             <value>The selected columns.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.DualListComponent.SourceColumns">
+             <summary>
+             Gets or sets the source columns.
+             </summary>
+             <remarks>An IEnumerable&lt;string> which is the list of available
+                            names for the source listbox.
+            </remarks>
+             <value>The source columns.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.DualListComponent.Id">
+            <summary>
+            Gets or sets the id.
+            </summary>
+            <value>The id.</value>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.CollapsiblePanelComponent">
+            <summary>
+            A ViewComponent that renders a collapsible panel.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.CollapsiblePanelComponent.Initialize">
+            <summary>
+            Initializes this instance.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.CollapsiblePanelComponent.Render">
+            <summary>
+            Renders this instance.
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.MoreLessTextComponent">
+            <summary>
+            ViewComponent to section text into a lede that is always display, with the remainder 
+            in a hidden block which is revealed by clicking a link.
+            </summary>
+            <remarks>
+            The component uses methods from the prototype javascript library which it automatically
+            loads, and adds it's own javascript method, using the <see cref="T:Castle.MonoRail.ViewComponents.JavascriptComponent"/>.
+            It requires that the <see cref="T:Castle.MonoRail.ViewComponents.InsertJavascriptComponent"/> be included in the HEAD section 
+            of the HTML page (probably best placed in the layout).
+            <para/>
+            The Html generated has the following features:  <ul>
+             <li>Full HTML formating available to all portions of the text.</li>
+             <li>Full text available in the body of the page (not just in a tooltip)</li>
+             <li>Full text visible when Javascript unavailable/disabled.</li>
+              <li>Minimal disurption when CSS unavailable/disabled.</li>
+              </ul>
+            <list type="table">
+            <listheader>
+            <term>Parameter</term>
+            <description>Description</description>
+            </listheader>
+            <item>
+            <term>       Text        </term>
+            <description>The string to be displayed. <para/>
+            <b>Required</b> </description>
+            </item>
+            <item>
+            <term>       MaxLength      </term>
+            <description>Integer value which gives the maximum number of characters of <see cref="P:Castle.MonoRail.ViewComponents.MoreLessTextComponent.Text"/> that will always 
+            be displayed. <para/>
+            <b>Required</b>
+            </description>
+            </item>
+            <item>
+            <term>       MoreText        </term>
+            <description>The string to be displayed. <para/>
+            <b>Optional</b>, defaults to "(more)" </description>
+            </item>
+            <item>
+            <term>       LessText        </term>
+            <description>The string to be displayed. <para/>
+            <b>Optional</b>, defaults to "(less)" </description>
+            </item>
+            </list>
+            </remarks>
+            <example>
+            Given the following code:
+            <code> <![CDATA[
+             #set ($text="Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof; or abridging the freedom of speech, or of the press; or the right of the people peaceably to assemble, and to petition the Government for a redress of grievances.")
+            
+            #component (MoreLessText with "Text=$text" "MaxLength=100")
+            ]]></code>
+            Would generate code similar to this
+            <code><![CDATA[
+            Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise&nbsp;
+            <span id="extraText:2548fd60"> thereof; or abridging the freedom of speech, or of the press; or the right of the people 
+            peaceably to assemble, and to petition the Government for a redress of grievances.
+            <a href="#" onclick="moreless('2548fd60');">(less)</a></span>
+            <span id="more:2548fd60" style="display:none">
+            <a href="#" onclick="moreless('2548fd60');">(more)</a>
+            </span>
+            <script type="text/javascript">moreless('2548fd60');</script>
+            ]]></code>
+            </example>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.MoreLessTextComponent.Render">
+            <summary>
+            Called by the framework so the component can
+            render its content
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.MoreLessTextComponent.MaxLength">
+            <summary>
+            Gets or sets the max length the text can be before spliting.
+            </summary>
+            <value>The length of the max.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.MoreLessTextComponent.Text">
+            <summary>
+            Gets or sets the text to be sectioned.
+            </summary>
+            <value>The text.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.MoreLessTextComponent.MoreText">
+            <summary>
+            Gets or sets the text used for the link which displays the hidden text.
+            Defaults to "(more)"
+            </summary>
+            <value>The text.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.MoreLessTextComponent.LessText">
+            <summary>
+            Gets or sets the text used for the link which hids (again)  the revealed text.
+            Defaults to "(less)"
+            </summary>
+            <value>The text.</value>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.ChartProperties">
+            <summary>
+            Contains the properties used be ColumnChart view component
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.ChartProperties.#ctor(System.Collections.Generic.IList{Castle.MonoRail.ViewComponents.ChartDataItem})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="data">The data to display on the chart</param>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.ChartProperties.#ctor(System.Collections.Generic.IDictionary{System.Object,System.Decimal})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="data">The data to display on the chart</param>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartProperties.Data">
+            <summary>
+            The data to display on the chart (read only)
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartProperties.Title">
+            <summary>
+            The title of the chart
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartProperties.LabelFormat">
+            <summary>
+            The format used to display the 'X' axis labels.  Uses 
+            standard .NET formatting notation.  Default is no formatting
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartProperties.EmptyMessage">
+            <summary>
+            The text of the message to show if the chart contains no data.
+            Defaults is 'No chart data to display'
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartProperties.BarWidthPixels">
+            <summary>
+            The width of each bar in pixels.  Default is 30
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartProperties.ShowDataLabels">
+            <summary>
+            Indicates whether to show data labels.  Default is FALSE
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartProperties.DataFormat">
+            <summary>
+            Format applied to data labels and 'Y' axis labels.  Uses 
+            standard .NET formatting notation
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartProperties.PlotHeightPixels">
+            <summary>
+            The height of the plot area of the chart in pixels.  
+            Default is 300
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartProperties.GridUnit">
+            <summary>
+            Determines at what interval gridlines are shown from 
+            the 'Y' axis.  Defaut is 10
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartProperties.XUnitLabel">
+            <summary>
+            Text indicating the unit that is represented by 
+            'X' axis.  Applies only if the chart does not contain
+            a XUnitLabel section
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartProperties.YUnitLabel">
+            <summary>
+            Text indicating the unit that is represented by 
+            'Y' axis.  Applies only if the chart does not contain
+            a YUnitLabel section.
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartProperties.BarSpacingPixels">
+            <summary>
+            The number of pixels padded on the left and right of each bar
+            and also added the sides of the plot area.  To 'spread out' 
+            the bars more, increase this value.  Default is 5
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartProperties.ItemCount">
+            <summary>
+            The number of items in the chart data (read only)
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartProperties.CssClass">
+            <summary>
+            CSS class applied to the chart container.  Default is 
+            "chart".  Applies only if the chart does not contain
+            a title section
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartProperties.ShowGridlines">
+            <summary>
+            Indicates whether to show gridlines. Default
+            is TRUE
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartProperties.LabelInterval">
+            <summary>
+            Interval at which to display 'X' axis labels. Default
+            is 1
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.CaptchaImageHandler">
+            <summary>
+            HttpHandler to be used with <see cref="T:Castle.MonoRail.ViewComponents.CaptchaComponent"/> ViewComponent.
+            See <see cref="T:Castle.MonoRail.ViewComponents.CaptchaComponent"/> for usage details and example.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.CaptchaImageHandler.ProcessRequest(System.Web.HttpContext)">
+            <summary>
+            Enables processing of HTTP Web requests by a custom HttpHandler that implements the <see cref="T:System.Web.IHttpHandler"/> interface.
+            </summary>
+            <param name="context">An <see cref="T:System.Web.HttpContext"/> object that provides references to the intrinsic server objects (for example, Request, Response, Session, and Server) used to service HTTP requests.</param>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaImageHandler.IsReusable">
+            <summary>
+            Gets a value indicating whether another request can use the <see cref="T:System.Web.IHttpHandler"/> instance.
+            </summary>
+            <value></value>
+            <returns>true if the <see cref="T:System.Web.IHttpHandler"/> instance is reusable; otherwise, false.</returns>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.GridComponent">
+            <summary>
+            The grid component is simple component, similar to the WebForms Repeater in style.
+            It can take an IEnumerable data source and render it on the view. 
+            The Grid Component is intentionally very simple and bare bones components, 
+            it has very few capabilities, but it is very flexible.                                                     <para/>
+            It handles rendering of sections, alternate lines, and pagination (using IPaginatedPage) 
+            automatically, but it leaves all the markup generation to the user.             <para/>
+            
+            Full documentation and examples at:
+            http://using.castleproject.org/display/Contrib/Grid+Component
+            
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.GridComponent.Render">
+            <summary>
+            Renders this instance.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.GridComponent.ShowRows(System.Collections.IEnumerable)">
+            <summary>
+            Render the rows from the source, return true if there are rows to render,
+            false otherwise.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.GridComponent.ShowHeader(System.Collections.IEnumerable)">
+            <summary>
+            Shows the header.
+            </summary>
+            <param name="source">The source.</param>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.MaskedTextboxComponent">
+            <summary>
+            ViewComponent which allows a user to more easily enter fixed width 
+            input where you would like them to enter the data in a certain format
+            (dates, phone numbers, etc). 
+            </summary>
+            <remarks>
+            It has been tested on Internet Explorer 6/7,
+            Firefox 1.5/2, Safari, and Opera.                              <para />
+            
+             A mask is defined by a format made up of mask and placeholder characters. 
+             Any character not in the placeholder character list below is considered 
+             a mask character. Mask characters will be automatically entered for the 
+             user as they type and will not be able to be removed by the user.
+             
+             The following placeholder characters are predefined:
+            <list type="bullet">
+            <item>
+            <description>       a - Represents an alpha character (A-Z,a-z)     </description>
+            </item>
+            <item>
+            <description>       9 - Represents a numeric character (0-9)     </description>
+            </item>
+            <item>
+            <description>       * - Represents an alphanumeric character (A-Z, a-z, 0-9)     </description>
+            </item>
+            </list>
+            
+            <list type="table">
+            <listheader>
+            <term>Sections</term>
+            <description>Description</description>
+            </listheader>
+            <item>
+            <term>label</term>
+            <description>defaults to <c>&lt;label for='{id}' style='padding-left:0.4em; padding-right:1em;'>{Label parameter}&lt;/label></c></description>
+            </item>
+            <item>
+            <term>preTextbox</term>
+            <description>Text render between label and text box</description>
+            </item>
+            <item>
+            <term>insideTextbox</term>
+            <description>attributes to be added in text box tag.</description>
+            </item>
+            <item>
+            <term>postTextbox</term>
+            <description></description>
+            </item>
+            <item>
+            <term>validateError</term>
+            <description></description>
+            </item>
+            
+            </list><para/>
+            
+            Requires the <c>MaskTextbox.js</c> javascript file, which it expects in the ~\Javascript
+            folder.                                                   <para/>
+            
+            Based on "Masked Input Plugin" by Josh Bush.
+            http://digitalbush.com/projects/masked-input-plugin
+            
+            Adapted by Shawn Carr.
+            </remarks>
+            <example>
+            Usage of MaskedTextbox (in brail): 
+            <code><![CDATA[
+            <?brail component MaskedTextbox, { 
+                 @Mask : "999-99-9999", @Id : "SSN", @Label : "SSN" } ?> 
+            <br/> 
+            ]]></code>
+            </example>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.MaskedTextboxComponent.Render">
+            <summary>
+            Called by the framework so the component can
+            render its content
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.MaskedTextboxComponent.Mask">
+            <summary>
+            Gets or sets the mask.
+            </summary>
+            <value>The mask.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.MaskedTextboxComponent.Id">
+            <summary>
+            Gets or sets the id of the text box element.
+            </summary>
+            <value>The id.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.MaskedTextboxComponent.Label">
+            <summary>
+            Gets or sets the text for the label for the text element.
+            </summary>
+            <value>The label.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.MaskedTextboxComponent.AllowedCharacters">
+            <summary>
+            Gets or sets the allowed characters.
+            </summary>
+            <value>The allowed characters.</value>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.ColumnChartComponent">
+            <summary>
+            ColumnChartComponent is a view component that renders column charts 
+            (i.e., vertically oriented bars) with a single data series. It takes 
+            only one parameter, "properties" of type 
+            <see cref="T:Castle.MonoRail.ViewComponents.ChartProperties"/>. 
+            ChartProperties holds the chart's data source along with various settings
+            that control how the chart is rendered. The data source can be of type 
+            IDictionary&lt;object, decimal&gt; or IList&lt;<see cref="T:Castle.MonoRail.ViewComponents.ChartDataItem"/> &gt;. 
+            The appearance of the chart is controlled using a combination of ChartProperties, 
+            CSS classes and view component sections.
+            
+            Full documentation and examples at:
+            http://using.castleproject.org/display/Contrib/Column+Chart+Component
+            
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.ColumnChartComponent.Render">
+            <summary>
+            Called by the framework so the component can
+            render its content
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.CaptchaComponent">
+             <summary>
+             ViewComponent to create a CAPTCHA ("<i>Completely Automated Public 
+             Turing test to tell Computers and Humans Apart</i>") HTML form.
+             </summary>
+             <remarks>Can be used as a line component (create a asimple form) 
+             or as a block component where the layout of the form is specified. <para/>
+             
+             Requires <see cref="T:Castle.MonoRail.ViewComponents.CaptchaImageHandler"/> to be installed as a httpHandler. (see examples) <para/>
+             Based on the techniques described in these articles:                          <para/>
+             <i>CAPTCHA Image</i> By "BrainJar"                                                   <para/>
+             http://www.codeproject.com/aspnet/CaptchaControl.asp                          <para/>
+             and                                                                           <para/>
+             <i>A CAPTCHA Server Control for ASP.NET</i> By "wumpus1" (aka Jeff Atwood, www.codinghorror.com) <para/>
+             http://www.codeproject.com/aspnet/CaptchaImage.asp                            <para/>
+             
+             <list type="table">
+             <listheader>
+                 <term>Component property</term>
+                 <description>Description</description>
+             </listheader>
+             <item>
+             <term>               Id                   </term>
+             <description>string, id used to create data id and text field id, defaults to "captcha" </description>
+             </item>
+             <item>
+             <term>              ForegroundColor      </term>
+             <description>string, defaults to "#000000" (black)</description>
+             </item>
+             <item>
+             <term>              BackgroundColor      </term>
+             <description>string, defaults to "#FFFFFF" (white)</description>
+             </item>
+             <item>
+             <term>              ForegroundNoiseColor      </term>
+             <description>string, defaults to "#CCCCCC" (a light grey) </description>
+             </item>
+             <item>
+             <term>              BackgroundNoiseColor      </term>
+             <description>string defaults to "#666666" (a darker greenish grey)</description>
+             </item>
+             <item>
+             <term>              Width      </term>
+             <description>int, defaults to 256</description>
+             </item>
+             <item>
+             <term>              Height      </term>
+             <description>int, defaults to 64</description>
+             </item>
+             <item>
+             <term>              Length      </term>
+             <description>int, the number of characters in the image. defaults to 4.</description>
+             </item>
+             <item>
+             <term>              FontWarp      </term>
+             <description>(int 0 - 4), defaults to 1</description>
+             </item>
+             <item>
+             <term>              Url      </term>
+             <description>string, defaults to "captchaimage.ashx?d={0}"</description>
+             </item>
+             <item>
+             <term>              Letters      </term>
+             <description>string, Characters used to create the image. defaults to A-Z and 0-9</description>
+             </item>
+             <item>
+             <term>              ValidFor      </term>
+             <description>int, Minutes that the image is valid for, defaults to 15</description>
+             </item>
+             </list>
+             <list type="table">
+             <listheader><term>View Variable</term><description>Description</description>
+             </listheader>
+             <item>
+             <term>               DataId                   </term>
+             <description>id of data field</description>
+             </item>
+             <item>
+             <term>               FieldId                   </term>
+             <description>id of text field</description>
+             </item>
+             <item>
+             <term>               width                   </term>
+             <description> </description>
+             </item>
+             <item>
+             <term>               height                   </term>
+             <description> </description>
+             </item>
+             <item>
+             <term>               data                   </term>
+             <description>encrypted data for validation</description>
+             </item>
+             <item>
+             <term>               url                   </term>
+             <description>url to image</description>
+             </item>
+             </list>
+             </remarks>
+             <example>
+             Add to httpHandlers section of Web.config
+             <code><![CDATA[
+             <add verb="*" path="captchaimage.aspx" 
+                 type="Castle.MonoRail.ViewComponents.CaptchaImageHandler, Castle.MonoRail.ViewcComponents"/> 
+             ]]></code>
+             
+             From your view (short version, brail): 
+             <code><![CDATA[
+             <% component CaptchaComponent, { } %> 
+             ]]></code>
+             From your controller (to validate - short version): 
+             <code><![CDATA[
+             CaptchaComponent.IsValid() 
+             ]]></code>
+            
+             From your view (longer version): 
+             <code><![CDATA[
+             <% component CaptchaComponent, { 'id' : 'two', 'foregroundColor' : '#00FF00', 'fontWarp' : 3 }: %> 
+             <% section template: %> 
+                ${FormHelper.HiddenField(dataId, data)} 
+                <img src="${url}" alt="captcha" width="${width}" height="${height}" /> 
+                ${FormHelper.TextField(fieldId)} 
+             <% end %> 
+             <% end %> 
+             ]]></code>
+            
+             From your controller (to validate - longer version): 
+             <code><![CDATA[
+               CaptchaComponent.IsValid("two") 
+             ]]></code>
+             
+             </example>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.CaptchaComponent.Render">
+            <summary>
+            Renders this instance.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.CaptchaComponent.PackParameters(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Packs the parameters.
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.CaptchaComponent.UnpackParameters(System.String)">
+            <summary>
+            Unpacks the parameters.
+            </summary>
+            <param name="text">The text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.CaptchaComponent.IsValid(Castle.MonoRail.Framework.Controller)">
+            <summary>
+            Determines whether the Captcha response is correct.
+            </summary>
+            <returns>
+            	<c>true</c> if this instance is valid; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.CaptchaComponent.IsValid(Castle.MonoRail.Framework.Controller,System.String)">
+            <summary>
+            Determines whether the Captcha response for the specified id is valid.
+            </summary>
+            <param name="controller">The controller.</param>
+            <param name="id">The id.</param>
+            <returns>
+            	<c>true</c> if the specified id is valid; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.CaptchaComponent.IsValid(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Determines whether the Captcha response for the specified controller is valid.
+            </summary>
+            <param name="context">The context.</param>
+            <returns>
+            	<c>true</c> if the specified controller is valid; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.CaptchaComponent.IsValid(Castle.MonoRail.Framework.IEngineContext,System.String)">
+            <summary>
+            Determines whether the Captcha response for the 
+            specified id in the specified controller is valid.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="id">The id.</param>
+            <returns>
+            	<c>true</c> if the specified controller is valid; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaComponent.Id">
+            <summary>
+            Gets or sets id used to create data id and text field id, defaults to "captcha"
+            </summary>
+            <value>The id.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaComponent.DataId">
+            <summary>
+            Gets the id of data field.
+            </summary>
+            <value>The data id.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaComponent.Letters">
+            <summary>
+            Gets or sets the Characters used to create the image. defaults to A-Z and 0-9.
+            </summary>
+            <value>The letters.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaComponent.Width">
+            <summary>
+            Gets or sets the width.
+            </summary>
+            <value>The width.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaComponent.Height">
+            <summary>
+            Gets or sets the height.
+            </summary>
+            <value>The height.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaComponent.Length">
+            <summary>
+            Gets or sets the number of characters in the image..
+            </summary>
+            <value>The length.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaComponent.Url">
+            <summary>
+            Gets or sets the URL. defaults to "captchaimage.ashx?d={0}"
+            </summary>
+            <value>The URL.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaComponent.Data">
+            <summary>
+            Gets or sets the encrypted data for validation.
+            </summary>
+            <value>The data.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaComponent.ForegroundColor">
+            <summary>
+            Gets or sets the color of the foreground. defaults to "#000000"
+            </summary>
+            <value>The color of the foreground.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaComponent.BackgroundColor">
+            <summary>
+            Gets or sets the color of the background, defaults to "#FFFFFF" 
+            </summary>
+            <value>The color of the background.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaComponent.BackgroundNoiseColor">
+            <summary>
+            Gets or sets the color of the background noise. defaults to "#666666" (a darker greenish grey)
+            </summary>
+            <value>The color of the background noise.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaComponent.ForegroundNoiseColor">
+            <summary>
+            Gets or sets the color of the foreground noise, defaults to "#CCCCCC" (a light grey)
+            </summary>
+            <value>The color of the foreground noise.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaComponent.FontWarp">
+            <summary>
+            Gets or sets the font warp. (int 0 - 4), defaults to 1
+            </summary>
+            <value>The font warp.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.CaptchaComponent.ValidFor">
+            <summary>
+            Gets or sets the Minutes that the image is valid for, defaults to 15.
+            </summary>
+            <value>The valid for.</value>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.CaptchaComponent.EncryptionHelper">
+            <summary>
+            Handles Encrypting &amp; Decrypting text.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.CaptchaComponent.EncryptionHelper.Encrypt(System.String)">
+            <summary>
+            Encrypts the specified plain text.
+            </summary>
+            <param name="plain">The plain text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.CaptchaComponent.EncryptionHelper.Decrypt(System.String)">
+            <summary>
+            Decrypts the specified cypher  text.
+            </summary>
+            <param name="cypher">The cypher.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.SmartGridComponent">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.SmartGridComponent.SupportsSection(System.String)">
+            <summary>
+            Implementor should return true only if the
+            <c>name</c> is a known section the view component
+            supports.
+            </summary>
+            <param name="name">section being added</param>
+            <returns>
+            	<see langword="true"/> always, as any column can be a section.
+            </returns>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.SmartGridComponent.ShowRows(System.Collections.IEnumerable)">
+            <summary>
+            Render the rows from the source, return true if there are rows to render,
+            false otherwise.
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.SmartGridComponent.ShowHeader(System.Collections.IEnumerable)">
+            <summary>
+            Shows the header.
+            </summary>
+            <param name="source">The source.</param>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.SmartGridComponent.SplitPascalCase(System.String)">
+            <summary>
+            Split a PascalCase string into Pascal Case words.
+            Note that if the string contains spaces, we assume it is already formatted
+            http://weblogs.asp.net/jgalloway/archive/2005/09/27/426087.aspx
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.ChartDataItem">
+            <summary>
+            Represents a data item in a single data series chart
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.ChartDataItem.#ctor(System.Object,System.Decimal)">
+            <summary>
+            Contructor
+            </summary>
+            <param name="label">The label for the data item, usually shown on the 'X' axis</param>
+            <param name="value">The value of the data item</param>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartDataItem.Label">
+            <summary>
+            The label for the data item, usually shown on the 'X' axis
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.ViewComponents.ChartDataItem.Value">
+            <summary>
+            The value of the data item
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.CheckboxListComponent">
+            <summary>
+            CheckboxListComponent is a Monorail view component that renders 
+            a checkbox list. Two parameters are required: source and target. 
+            "source" contains the data to populate the checkbox list items. 
+            "target" is the name of the object that contains the selected values. 
+            The data source may consist of primitives such as enums or can be 
+            objects of a complex type. The list can be be displayed in a vertical 
+            or horizontal orientation, and in multiple columns. 
+            By default CheckboxListComponent splits label values that are 
+            "Pascal Case." For example "InProcess" will be displayed as "In Process".    <para/>
+            
+            Full documentation and examples at:
+            http://using.castleproject.org/display/Contrib/Checkbox+List+Component
+            
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.CheckboxListComponent.Render">
+            <summary>
+            Called by the framework so the component can
+            render its content
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.CheckboxListComponent.PascalCaseToPhrase(System.String)">
+            <summary>
+            Converts pascal case string into a phrase,  Treats consecutive capital 
+            letters as a word.  For example, 'HasABCDAcronym' would be tranformed to
+            'Has ABCD Acronym'
+            </summary>
+            <param name="input">A string containing pascal case words</param>
+            <returns>string</returns>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.WhitespaceTransformFilter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.ViewComponents.WhitespaceTransformFilter._betweenTags">
+            New simplified Regex found at http://blog.madskristensen.dk/post/Remove-whitespace-from-your-pages.aspx
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.WhitespaceTransformFilter.#ctor(System.IO.Stream)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.ViewComponents.WhitespaceTransformFilter"/> class.
+            </summary>
+            <param name="baseStream">The stream to write to after filtering.</param>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.WhitespaceTransformFilter.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            When overridden in a derived class, writes a sequence of bytes to the current stream and advances the current position within this stream by the number of bytes written.
+            </summary>
+            <param name="buffer">An array of bytes. This method copies count bytes from buffer to the current stream.</param>
+            <param name="offset">The zero-based byte offset in buffer at which to begin copying bytes to the current stream.</param>
+            <param name="count">The number of bytes to be written to the current stream.</param>
+            <exception cref="T:System.IO.IOException">An I/O error occurs. </exception>
+            <exception cref="T:System.NotSupportedException">The stream does not support writing. </exception>
+            <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed. </exception>
+            <exception cref="T:System.ArgumentNullException">buffer is null. </exception>
+            <exception cref="T:System.ArgumentException">The sum of offset and count is greater than the buffer length. </exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">offset or count is negative. </exception>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.FaqItemComponent">
+             <summary>
+             ViewComponent to build one item of a Frequently Asked Questions list. 
+             The generated markup displays the question, and using DHTML, displays &amp; hides 
+             the answer when the question text is clicked.
+             </summary>
+             <remarks><para>
+             FaqItemComponent is one of two different components for creating FAQ pages.
+             </para><para>
+             It is intended for it format FAQ entries where the text in hard-coded in the view.
+             To format FAQ entries where the text is comes from an external data source, see <seealso cref="T:Castle.MonoRail.ViewComponents.FaqListComponent"/>.
+             </para><para>
+             FaqItem is a block component which has two required sections, 
+             <c>"question"</c> and <c>"answer"</c>, and four optional parameters.
+             </para>
+             <list type="table">
+             <listheader>
+             <term>Section</term>
+             <description>Description</description>
+             </listheader>
+             <item>
+             <term>        #question          </term>
+             <description>
+             
+             Contains the text of a Frequently asked question.  The text is 
+             always displayed on the page.  Clicking this text will display the answer.
+             
+             
+             </description>
+             </item>
+             <item>
+             <term>        #answer             </term>
+             <description>
+             
+             Contains the text of the answer to the FAQ.  The text is initially hidden,
+             and only displayed when the question is clicked.
+             
+             </description>
+             </item>
+             </list>
+             <list type="table">
+             <listheader>
+             <term>Parameter</term>
+             <description>Description</description>
+             </listheader>
+             <item>
+             <term>       QuestionCssClass      </term>
+             <description>
+             
+             CSS Class used for the DIV block holding the question.
+             (Default: <b>Question</b>)
+             
+             </description>
+             </item>
+             <item>
+             <term>       AnswerCssClass        </term>
+             <description>
+             
+             CSS Class used for the DIV block holding the answer. 
+             (Default: <b>Answer</b>)</description>
+             
+             </item>
+             <item>
+             <term>       WrapItems             </term>
+             <description>
+             
+             If set to "true", each question/answer block will be wrapped in a LI tags, 
+             so that a series of FaqItemComponents can be made a ordered (OL) or unordered (UL) list. 
+             (Default:<b>False</b>)
+             
+             </description>
+             </item>
+             <item>
+             <term>       Sticky                 </term>
+             <description>
+             
+             If set to "True", the values given for the other parameters will be used for all
+             subsequent FaqItemComponents on this page. If <i>explicitly</i> set to "False", 
+             previously save values are forgotten.(Default:<b>False</b>)</description>
+             
+             </item>
+             </list>
+             
+             <b>NOTE:</b> This ViewComponent makes use of the prototype.js javascript librar by way of the JavascriptHelper object
+             requires the following line appears in either the view which FaqItemComponent is used, or the layout 
+             template used by that view:
+             <code>
+             $AjaxHelper.GetJavascriptFunctions()
+             </code>
+             
+             Copyright © 2007, James M. Curran  <br/>
+             Licensed under the Apache License, Version 2.0
+             </remarks>
+             <example>
+             <code><![CDATA[
+             #blockcomponent (FaqItemComponent) 
+             #question 
+              Is MonoRail stable? Why it's not 1.0? 
+             #end 
+            
+             #answer 
+                 Yes, very stable, albeit there's always room for improvements. 
+                 Check our issue tracker. 
+             
+                  We are not 1.0 because there are important features not 
+                  implemented yet, like Caching and Logging support.
+             #end
+             #end
+             ]]></code>
+             will generate the following markup:
+             <code><![CDATA[
+             <div id="Faq_Q1" onclick="Element.toggle('Faq_A1')" class="Question">
+             Is MonoRail stable? Why it's not 1.0?  
+             </div>
+             <div id="Faq_A1" style="display:none" class="Answer">
+                  <br/>
+                 Yes, very stable, albeit there's always room for improvements. 
+                 Check our issue tracker. 
+             
+                  We are not 1.0 because there are important features not 
+                  implemented yet, like Caching and Logging support. 
+             <hr/>
+             </div>
+             ]]></code>
+             
+             </example>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.FaqItemComponent.#ctor">
+            <summary>
+            Initializes a new instance of the FaqItemComponent class.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.FaqItemComponent.Initialize">
+            <summary>
+            Initializes this instance.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.FaqItemComponent.Render">
+            <summary>
+            Renders this instance.
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.QnA">
+            <summary>
+            Simple class to hold a Question &amp; Answer pair.
+            </summary>
+            <remarks>
+            <list type="table">
+            <listheader>
+            <term>Section</term>
+            <description>Description</description>
+            </listheader>
+            <item>
+            <term>        Question          </term>
+            <description>
+            
+            Contains the text of a Frequently asked question.  The text is 
+            always displayed on the page.  Clicking this text will display the answer.
+            
+            
+            </description>
+            </item>
+            <item>
+            <term>        Answer             </term>
+            <description>
+            
+            Contains the text of the answer to the FAQ.  The text is initially hidden,
+            and only displayed when the question is clicked.
+            
+            </description>
+            </item>
+            </list> 
+            </remarks>
+        </member>
+        <member name="F:Castle.MonoRail.ViewComponents.QnA.Question">
+            <summary>
+            Holds the text of the Question.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.ViewComponents.QnA.Answer">
+            <summary>
+            Holds the text of the Answer.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.QnA.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the QnA class.
+            </summary>
+            <param name="question">Text of the Question</param>
+            <param name="answer">Text of the Answer</param>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.QnA.#ctor">
+            <summary>
+            Initializes a new instance of the QnA class.
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.FaqListComponent">
+            <summary>
+            ViewComponent to build a list of Frequently Asked Questions.
+            The generated markup displays the question, and using DHTML, displays &amp; hides 
+            the answer when the question text is clicked.
+            </summary>
+            <remarks><para>
+            FaqItemComponent is one of two different components for creating FAQ pages.
+            </para><para>
+            It is intended to format FAQ entries where the text is comes from an external data source. <br/>
+            To format FAQ entries where the text in hard-coded in the view, see <seealso cref="T:Castle.MonoRail.ViewComponents.FaqItemComponent"/>.
+            </para><para>
+            FaqItem is a line component which has no subsections, one required and three optional parameters.
+            </para>
+            <list type="table">
+            <listheader>
+            <term>Parameter</term>
+            <description>Description</description>
+            </listheader>
+            <item>
+            <term>       Elements      </term>
+            <description>
+            
+            An IEnumerable collection of <see cref="T:Castle.MonoRail.ViewComponents.QnA"/> objects, holding the
+            text of the FAQs to display.  (Required, no default)
+            
+            </description>
+            </item>
+            <item>
+            <term>       QuestionCssClass      </term>
+            <description>
+            
+            CSS Class used for the DIV block holding the question.
+            (Default: <b>Question</b>)
+            
+            </description>
+            </item>
+            <item>
+            <term>       AnswerCssClass        </term>
+            <description>
+            
+            CSS Class used for the DIV block holding the answer. 
+            (Default: <b>Answer</b>)</description>
+            
+            </item>
+            <item>
+            <term>       ListType             </term>
+            <description>
+            Indicates how the items should be formatted into alist.  
+            Must be one of values in the table below. (Default: <b>None</b>)
+            
+            </description>
+            </item>
+            </list>
+            
+            <list type="table">
+            <listheader>
+            <term>ListType</term>
+            <description>Description</description>
+            </listheader>
+            <item>
+            <term>        None                 </term>
+            <description>
+            
+            Items are rendered without any form of list structure.
+            
+            </description>
+            </item>
+            <item>
+            <term>        Ordered             </term>
+            <description>
+            
+            Items are numbered.  ("OL" and "Numbered" are acceptable alternatives)
+            
+            </description>
+            </item>
+            <item>
+            <term>        Unordered            </term>
+            <description>
+            
+            Items are bulleted.   ("UL" and "bullet" are acceptable alternatives)
+            
+            </description>
+            </item>
+            </list>
+            <b>NOTE:</b> This ViewComponent makes use of the prototype.js javascript library, and therefore
+            requires the following line appears in either the view which FaqItemComponent is used, or the layout 
+            template used by that view:
+            <code>
+            $AjaxHelper.GetJavascriptFunctions()
+            </code>
+            
+            Copyright © 2007, James M. Curran  <br/>
+            Licensed under the Apache License, Version 2.0
+            </remarks>
+            <example><code><![CDATA[
+            #component (FaqListComponent with "Elements=$faqItems")
+            ]]></code>
+            See <see cref="T:Castle.MonoRail.ViewComponents.FaqItemComponent"/> for example of markup generated.
+            </example>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.FaqListComponent.Initialize">
+            <summary>
+            Called by the framework once the component instance
+            is initialized
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.FaqListComponent.Render">
+            <summary>
+            Called by the framework so the component can
+            render its content
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.FaqParameters">
+            <summary>
+            Private class used to pass around parameter easily.
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.ViewComponents.FaqItemHelper">
+            <summary>
+            Private class to do the really work of FaqItemComponent &amp; FaqListComponent.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.ViewComponents.FaqItemHelper.BuildItem(System.String,System.String,Castle.MonoRail.ViewComponents.FaqParameters)">
+            <summary>
+            Builds the item.
+            </summary>
+            <remarks> This attempts to always "do the right thing", hence, if javascript is enabled,
+            the answer is hidden, and clicking the question reveals it.  However, if Javascript is disabled,
+            that won't work, so the answer must always be display. But, at rendering time, we have no way of knowing
+            if Javascript is enabled or not, and, when displayed in the browser, we cannot define a "no scripting" 
+            contingency option in Javascript, since it won't be run.
+            To solve this, the answer is initially displayed,
+            and then immediately hidden (via Javascript). If JS is enabled, the text is hidden before it is displayed, 
+            so the user never sees it.
+            </remarks>
+            <param name="question">The question.</param>
+            <param name="answer">The answer.</param>
+            <param name="param">The param.</param>
+            <returns>The Html generated for this FAQ item.</returns>
+        </member>
+    </members>
+</doc>

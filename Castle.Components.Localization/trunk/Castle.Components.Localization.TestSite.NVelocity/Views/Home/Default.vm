@@ -1,0 +1,40 @@
+Welcome !
+
+Here is a list of the supported cultures on this site (default rendering) :
+#component( CultureSelector ) 
+<hr />
+
+The same list but the cultures are represented by their most commonly associated flag (default rendering with mode parameter set to Flags ):
+#component( CultureSelector with "Mode=Flags" )
+<hr />
+
+The same list with a custom rendering and languages as parameters :
+#blockcomponent( CultureSelector with "Cultures=en,fr-FR" )
+	#startblock
+		<div>
+	#end
+	#culture
+			<div>
+				<a href="$SelectionUrl">
+					<img src="$FlagImageUrl" />
+					&nbsp;$CultureCulture.DisplayName</a>
+				</div>
+	#end
+	#endblock
+		</div>
+	#end		
+#end 
+<hr />
+
+Your culture is $Culture.
+<br />
+Your UI culture is $UICulture.
+<hr />
+Below is an image taken from an assembly's ressource file:
+<br />
+<img src="$Url.ResourceUrl( "GhoticPepper" )" />
+<hr />
+Below is the TestComponent which output its own resources (set by its Resource attribute):
+#blockcomponent( Test )
+	<p>$TestResources.Test</p>
+#end
