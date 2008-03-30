@@ -29,8 +29,9 @@ namespace Castle.MonoRail.Rest
 		private CompositeNode _paramsNode;
 		private string _controllerAction;
 
-		protected override MethodInfo SelectMethod(string action, IDictionary actions, IRequest request, IDictionary<string, object> actionArgs)
-		{
+	    protected override MethodInfo SelectMethod(string action, IDictionary actions, IRequest request,
+	                                               IDictionary<string, object> actionArgs, ActionType actionType)
+	    {
 			if (String.Equals("collection", action, StringComparison.InvariantCultureIgnoreCase) || String.IsNullOrEmpty(action))
 			{
 				switch (request.HttpMethod.ToUpper())
@@ -42,7 +43,7 @@ namespace Castle.MonoRail.Rest
 						_controllerAction = "Create";
 						return (MethodInfo)actions["Create"];
 					default:
-						return base.SelectMethod(action, actions, request, actionArgs);
+						return base.SelectMethod(action, actions, request, actionArgs, actionType);
 				}
 			}
 			else
@@ -73,7 +74,7 @@ namespace Castle.MonoRail.Rest
 							break;
 						default:
 							//Should maybe just throw here.
-							return base.SelectMethod(action, actions, request, actionArgs);
+							return base.SelectMethod(action, actions, request, actionArgs, actionType);
 					}
 					
 					if (selectedMethod != null)
@@ -85,7 +86,7 @@ namespace Castle.MonoRail.Rest
 				}
 				else
 				{
-					return base.SelectMethod(action, actions, request, actionArgs);
+					return base.SelectMethod(action, actions, request, actionArgs, actionType);
 				}
 			}
 		}
