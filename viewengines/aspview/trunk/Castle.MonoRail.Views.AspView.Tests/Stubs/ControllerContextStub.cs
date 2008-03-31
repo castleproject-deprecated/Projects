@@ -37,6 +37,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Stubs
 		Framework.Routing.RouteMatch routeMatch;
 		string selectedViewName = "Action";
 		string viewFolder = "Area/Stub";
+		AsyncInvocationInformation asyncInvocationInformation = new AsyncInvocationInformation();
 
 		#region IControllerContext Members
 
@@ -102,6 +103,12 @@ namespace Castle.MonoRail.Views.AspView.Tests.Stubs
 		{
 			get { return routeMatch; }
 			set { routeMatch = value; }
+		}
+
+		public AsyncInvocationInformation Async
+		{
+			get { return asyncInvocationInformation; }
+			set { asyncInvocationInformation = value; }
 		}
 
 		public string SelectedViewName

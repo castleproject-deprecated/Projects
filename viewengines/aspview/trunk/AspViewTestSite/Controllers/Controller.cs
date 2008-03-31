@@ -30,7 +30,7 @@ namespace AspViewTestSite.Controllers
 			}
 		}
 
-		protected override void Initialize()
+		public override void Initialize()
 		{
 			base.Initialize();
 			dictionaryAdapterFactory = new DictionaryAdapterFactory();
