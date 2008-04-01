@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<activeRecordMapping dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" isCompleteView="false" name="GeneratedCodeVirtualPropertyTestModel">
+  <modelMoniker Id="8fa48f3f-caf2-4794-ba01-366fe315ec7e" />
+  <nestedChildShapes>
+    <classShape Id="e89ccfec-3952-4022-87d8-6c95b38c933c" absoluteBounds="0.5, 1.375, 1.5, 0.95169108072916675">
+      <modelClassMoniker name="/8fa48f3f-caf2-4794-ba01-366fe315ec7e/VirtualPropertyTestClass" />
+      <nestedChildShapes>
+        <elementListCompartment Id="32a5b97a-1fc8-4c69-8237-eb0e1530bdb6" absoluteBounds="0.515, 1.7850000000000001, 1.4700000000000002, 0.44169108072916663" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</activeRecordMapping>

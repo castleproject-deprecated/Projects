@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<model dslVersion="1.0.0.0" Id="8ddba27c-80c3-48bc-9295-5f8a94949a89" useNullables="Native" useBaseClass="false" useGeneratedCodeAttribute="true" target="NHibernate" assemblyPath="D:\Projects\CastleContrib\activewriter\trunk\assemblies" useVirtualProperties="false" namespace="Debugging.Tests" xmlns="http://schemas.microsoft.com/dsltools/ActiveWriter">
+  <additionalImports>AAEAAAD/////AQAAAAAAAAAMAgAAAF1BbHRpbm9yZW4uQWN0aXZlV3JpdGVyLkRzbCwgVmVyc2lvbj0xLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTkwNTE0MTM5NmRkYjA3OTkEAQAAAKEBU3lzdGVtLkNvbGxlY3Rpb25zLkdlbmVyaWMuTGlzdGAxW1tBbHRpbm9yZW4uQWN0aXZlV3JpdGVyLkltcG9ydCwgQWx0aW5vcmVuLkFjdGl2ZVdyaXRlci5Ec2wsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj05MDUxNDEzOTZkZGIwNzk5XV0DAAAABl9pdGVtcwVfc2l6ZQhfdmVyc2lvbgQAAB9BbHRpbm9yZW4uQWN0aXZlV3JpdGVyLkltcG9ydFtdAgAAAAgICQMAAAAAAAAAAAAAAAcDAAAAAAEAAAAAAAAABB1BbHRpbm9yZW4uQWN0aXZlV3JpdGVyLkltcG9ydAIAAAAL</additionalImports>
+  <classes>
+    <modelClass name="NHBlog" schema="dbo">
+      <properties>
+        <modelProperty Id="86b8ed91-5b6e-424f-a9b7-b4c1f943fd74" name="blog_name" column="blog_name" length="0" debuggerDisplay="true" />
+        <modelProperty Id="0d1900bc-bde9-446d-9d20-3c83cee4b371" name="blog_id" column="blog_id" columnType="Int32" length="0" notNull="true" keyType="PrimaryKey" />
+      </properties>
+    </modelClass>
+    <modelClass name="NHPost" schema="dbo">
+      <targets>
+        <manyToOneRelation Id="16f467a4-960b-403d-a9e9-2bdc434bd1e5" targetColumnKey="post_blogid" targetTable="Posts" targetPropertyName="Posts" sourceColumn="post_blogid">
+          <modelClassMoniker name="/8ddba27c-80c3-48bc-9295-5f8a94949a89/NHBlog" />
+        </manyToOneRelation>
+      </targets>
+      <properties>
+        <modelProperty Id="c9e2a555-d0de-4c49-8b1e-30ddaa3df074" name="post_title" column="post_title" length="0" />
+        <modelProperty Id="dcabc066-ec73-494a-9b11-a6061536ce0d" name="post_contents" column="post_contents" columnType="StringClob" length="0" />
+        <modelProperty Id="5f56a01e-3ee7-441c-8639-f28a252d10c0" name="post_category" column="post_category" length="0" />
+        <modelProperty Id="3285100a-ef01-4c34-a5c4-4422a6ca24c2" name="post_created" column="post_created" columnType="Timestamp" length="0" />
+        <modelProperty Id="7726be0c-5f39-41a8-85cb-fbffab28cbaf" name="post_published" column="post_published" columnType="Boolean" length="0" />
+        <modelProperty Id="0efcadeb-0a9f-4a6e-ada2-78ae18ac95f3" name="post_id" column="post_id" columnType="Int32" length="0" notNull="true" keyType="PrimaryKey" />
+      </properties>
+    </modelClass>
+  </classes>
+</model>
