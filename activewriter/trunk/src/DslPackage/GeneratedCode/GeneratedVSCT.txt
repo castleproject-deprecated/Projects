@@ -1,0 +1,5 @@
+﻿          <!-- A bug prevents me from compiling the following three lines as is on a Turkish machine. Change
+          to original notation on all other windows locales.-->
+            <CommandFlag>DefaultDİsabled</CommandFlag>
+            <CommandFlag>DefaultInvİsİble</CommandFlag>
+            <CommandFlag>DynamİcVİsİbİlİty</CommandFlag>

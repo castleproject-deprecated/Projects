@@ -1,17 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3F8B4AE5-C668-487A-B744-0B1E2960D704}</ProjectGuid>
+    <ProjectGuid>{4BC76225-34A0-435A-9382-759300313F51}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <OutputName>ActiveWriter</OutputName>
     <LocalizedStringFile>Strings.wxl</LocalizedStringFile>
     <SuppressAssemblies>True</SuppressAssemblies>
     <VerboseOutput>True</VerboseOutput>
-    <SetupIniFile>settings.ini</SetupIniFile>
     <OutputType>Library</OutputType>
     <StartupObject>
     </StartupObject>
@@ -35,7 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\DSLTools\v2.0\wix.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\DSLTools\v2.1\wix.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -47,7 +46,7 @@
     <None Include="Files\EULA.rtf" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomTool.wxs" />
+    <None Include="CustomTool.wxs" />
     <None Include="Files.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Files.wxs</LastGenOutput>
@@ -73,7 +72,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Registry.wxs</LastGenOutput>
     </None>
-    <SetupFiles Include="settings.ini" />
     <None Include="Main.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Main.wxs</LastGenOutput>

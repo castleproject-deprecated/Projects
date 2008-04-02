@@ -21,6 +21,7 @@ using System.Runtime.ConstrainedExecution;
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: System.Resources.NeutralResourcesLanguage("en")]
 
 //
 // Version information for an assembly consists of the following four values:

@@ -18,12 +18,18 @@ namespace Altinoren.ActiveWriter
 	/// <summary>
 	/// This class implements the VS package that integrates this DSL into Visual Studio.
 	/// </summary>
-	[VSShell::DefaultRegistryRoot("Software\\Microsoft\\VisualStudio\\8.0")]
+	[VSShell::DefaultRegistryRoot("Software\\Microsoft\\VisualStudio\\9.0")]
 	[VSShell::PackageRegistration(RegisterUsing = VSShell::RegistrationMethod.Assembly, UseManagedResourcesOnly = true)]
 	[VSShell::ProvideToolWindow(typeof(ActiveWriterExplorerToolWindow), MultiInstances = false, Style = VSShell::VsDockStyle.Tabbed, Orientation = VSShell::ToolWindowOrientation.Right, Window = "{3AE79031-E1BC-11D0-8F78-00A0C9110057}")]
 	[VSShell::ProvideToolWindowVisibility(typeof(ActiveWriterExplorerToolWindow), Constants.ActiveWriterEditorFactoryId)]
 	[VSShell::ProvideEditorFactory(typeof(ActiveWriterEditorFactory), 103, TrustLevel = VSShellInterop::__VSEDITORTRUSTLEVEL.ETL_AlwaysTrusted)]
 	[VSShell::ProvideEditorExtension(typeof(ActiveWriterEditorFactory), "." + Constants.DesignerFileExtension, 32)]
+	[DslShell::ProvideRelatedFile("." + Constants.DesignerFileExtension, Constants.DefaultDiagramExtension,
+		ProjectSystem = DslShell::ProvideRelatedFileAttribute.CSharpProjectGuid,
+		FileOptions = DslShell::RelatedFileType.FileName)]
+	[DslShell::ProvideRelatedFile("." + Constants.DesignerFileExtension, Constants.DefaultDiagramExtension,
+		ProjectSystem = DslShell::ProvideRelatedFileAttribute.VisualBasicProjectGuid,
+		FileOptions = DslShell::RelatedFileType.FileName)]
 	[DslShell::RegisterAsDslToolsEditor]
 	[global::System.Runtime.InteropServices.ComVisible(true)]
 	internal abstract partial class ActiveWriterPackageBase : DslShell::ModelingPackage
@@ -78,19 +84,20 @@ namespace Altinoren.ActiveWriter
 //
 namespace Altinoren.ActiveWriter
 {
-	using System;
 	using CustomTool;
 	using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.TextTemplating.VSHost;
-    using Microsoft.VisualStudio.Shell.Interop;
 
+	/// <summary>
+	/// Double-derived class to allow easier code customization.
+	/// </summary>
 	[ProvideToolWindow(typeof(Altinoren.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow), MultiInstances = false, Style = VSShell::VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Bottom)]
 	[ProvideToolWindowVisibility(typeof(Altinoren.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow), Constants.ActiveWriterEditorFactoryId )]
 	[InstalledProductRegistration(false, "#101", "#110", "1.0", IconResourceID = 201)]
     [ProvideLoadKey("Standard", "1.0", Constants.ProductName, Constants.CompanyName, 1)]
     [ProvideCodeGenerator(typeof(ActiveWriterTemplatedCodeGenerator), "ActiveWriterCodeGenerator", "Altinoren ActiveWriter code generator for .actiw files", true, ProjectSystem = ProvideCodeGeneratorAttribute.CSharpProjectGuid)]
     [ProvideCodeGenerator(typeof(ActiveWriterTemplatedCodeGenerator), "ActiveWriterCodeGenerator", "Altinoren ActiveWriter code generator for .actiw files", true, ProjectSystem = ProvideCodeGeneratorAttribute.VisualBasicProjectGuid)]
-	[VSShell::ProvideMenuResource(1000, 14)]
+	[VSShell::ProvideMenuResource("1000.ctmenu", 4)]
 	[VSShell::ProvideToolboxItems(1)]
 	[VSTextTemplatingHost::ProvideDirectiveProcessor(typeof(global::Altinoren.ActiveWriter.ActiveWriterDirectiveProcessor), global::Altinoren.ActiveWriter.ActiveWriterDirectiveProcessor.ActiveWriterDirectiveProcessorName, "A directive processor that provides access to ActiveWriter files")]
 	[global::System.Runtime.InteropServices.Guid(Constants.ActiveWriterPackageId)]
@@ -101,20 +108,6 @@ namespace Altinoren.ActiveWriter
 			base.Initialize();
 			
 			this.AddToolWindow(typeof(Altinoren.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow));
-		}
-		
-		internal string GetResourceString(string resourceName)
-		{
-			string resourceValue;
-			IVsResourceManager resourceManager = (IVsResourceManager)GetService(typeof(SVsResourceManager));
-			if (resourceManager == null)
-			{
-				throw new InvalidOperationException("Could not get SVsResourceManager service. Make sure the package is Sited before calling this method");
-			}
-			Guid packageGuid = this.GetType().GUID;
-			int hr = resourceManager.LoadResourceString(ref packageGuid, -1, resourceName, out resourceValue);
-			Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(hr);
-			return resourceValue;
 		}
 	}
 }

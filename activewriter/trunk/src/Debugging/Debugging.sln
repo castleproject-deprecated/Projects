@@ -1,23 +1,22 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Debugging", "Debugging.csproj", "{0B062523-D69B-40CA-872F-2D085C3AAD2D}"
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Debugging", "Debugging.csproj", "{E7FBB08D-74D9-4DF8-9E18-D3CDB8BCC5AA}"
 EndProject
 Global
-	GlobalSection(TextTemplating) = postSolution
-		TextTemplating = 1
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0B062523-D69B-40CA-872F-2D085C3AAD2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B062523-D69B-40CA-872F-2D085C3AAD2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B062523-D69B-40CA-872F-2D085C3AAD2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B062523-D69B-40CA-872F-2D085C3AAD2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7FBB08D-74D9-4DF8-9E18-D3CDB8BCC5AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7FBB08D-74D9-4DF8-9E18-D3CDB8BCC5AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7FBB08D-74D9-4DF8-9E18-D3CDB8BCC5AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TextTemplating) = postSolution
+		TextTemplating = 1
 	EndGlobalSection
 EndGlobal

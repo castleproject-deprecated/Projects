@@ -41,7 +41,7 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
             IRunningObjectTable prot;
             IEnumMoniker pMonkEnum;
 
-            string progID = "!VisualStudio.DTE.8.0:" + processID;
+            string progID = Common.vsProgIdBase + processID;
 
             GetRunningObjectTable(0, out prot);
             prot.EnumRunning(out pMonkEnum);

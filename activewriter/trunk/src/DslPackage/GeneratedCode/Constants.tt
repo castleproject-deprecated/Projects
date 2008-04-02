@@ -27,7 +27,6 @@ namespace <#= CodeGenerationUtilities.GetPackageNamespace(this.Dsl) #>
 		// Menu identifier
 		public const string <#= dslName #>CommandSetId = "9928a048-76e7-4f47-8055-2b7da11b6f58";
 		public const string ActiveWriterClassDetailsToolWindowId = "1a0d2807-900b-4092-9ac9-1829dd34ce6f";
-		
-		public static readonly global::System.ComponentModel.Design.CommandID ViewClassDetailsCommand = new global::System.ComponentModel.Design.CommandID(new global::System.Guid(<#= dslName #>CommandSetId), 0x805);
+		public static readonly global::System.ComponentModel.Design.CommandID ViewClassDetailsCommand = new global::System.ComponentModel.Design.CommandID(new global::System.Guid(<#= dslName #>CommandSetId), 0x10002);
 	}
 }

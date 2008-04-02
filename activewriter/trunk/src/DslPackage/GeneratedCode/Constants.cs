@@ -33,6 +33,8 @@ namespace Altinoren.ActiveWriter
 		// Editor factory identifier
 		public const string ActiveWriterEditorFactoryId = "afa967d1-99df-4330-a1d6-a96343c24786";
 		
+		public const string DefaultDiagramExtension = ".diagram";
+		
 		// Model explorer tool window identifier
 		public const string ActiveWriterModelExplorerToolWindowId = "762a1a9f-b314-4480-8df1-227a3166ee9c";
 	}
@@ -47,7 +49,6 @@ namespace Altinoren.ActiveWriter
 		// Menu identifier
 		public const string ActiveWriterCommandSetId = "9928a048-76e7-4f47-8055-2b7da11b6f58";
 		public const string ActiveWriterClassDetailsToolWindowId = "1a0d2807-900b-4092-9ac9-1829dd34ce6f";
-		
-		public static readonly global::System.ComponentModel.Design.CommandID ViewClassDetailsCommand = new global::System.ComponentModel.Design.CommandID(new global::System.Guid(ActiveWriterCommandSetId), 0x805);
+		public static readonly global::System.ComponentModel.Design.CommandID ViewClassDetailsCommand = new global::System.ComponentModel.Design.CommandID(new global::System.Guid(ActiveWriterCommandSetId), 0x10002);
 	}
 }

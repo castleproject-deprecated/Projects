@@ -1,0 +1,16 @@
+﻿<!--DSL Tools Language Template-->
+<VSTemplate Version="2.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<TemplateData>
+		<Name Package="{9f4f10d0-81ad-4308-a398-ba7741f3f7e2}" ID="103"/>
+		<Description Package="{9f4f10d0-81ad-4308-a398-ba7741f3f7e2}" ID="102"/>
+		<Icon Package="{9f4f10d0-81ad-4308-a398-ba7741f3f7e2}" ID="201" />
+		<ProjectType>VisualBasic</ProjectType>
+		<SortOrder>360</SortOrder>
+		<DefaultName>ActiveWriter.actiw</DefaultName>
+	</TemplateData>
+	<TemplateContent>
+		<ProjectItem TargetFileName="$fileinputname$.actiw">actiw.actiw</ProjectItem>
+		<ProjectItem TargetFileName="$fileinputname$.actiw.diagram">actiw.diagram</ProjectItem>
+	</TemplateContent>
+</VSTemplate>
+

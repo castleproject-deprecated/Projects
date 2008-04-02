@@ -690,7 +690,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// This method deserializes all child model elements.
 		/// </summary>
-	        /// <remarks>
+		/// <remarks>
 		/// The caller will position the reader at the open tag of the first child XML element to deserialized.
 		/// This method will read as many child elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the 
@@ -910,7 +910,7 @@ namespace Altinoren.ActiveWriter
 			try
 			{
 				global::System.Guid id;
-				if (idStr == null)
+				if (string.IsNullOrEmpty(idStr))
 				{	// Create a default Id.
 					id = global::System.Guid.NewGuid();
 					ActiveWriterSerializationBehaviorSerializationMessages.MissingId(serializationContext, reader, id);
@@ -1054,7 +1054,7 @@ namespace Altinoren.ActiveWriter
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
 			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
-			if (monikerString == null)
+			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
 				return null;
@@ -1173,7 +1173,6 @@ namespace Altinoren.ActiveWriter
 		/// This should only be passed for root-level elements. Null should be passed for rest elements (and ideally call the Write() method 
 		/// without this parameter).
 		/// </param>
-		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Parameter 'rootElementSettings' can be null, so no need to validate.")]
 		public override void Write(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer, DslModeling::RootElementSettings rootElementSettings)
 		{
 			#region Check Parameters
@@ -1217,7 +1216,7 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">Model instance to be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>	
+		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
@@ -1589,8 +1588,8 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">Model instance to be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>	
-		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]	
+		/// <param name="writer">XmlWriter to write serialized data to.</param>
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		private static void WritePropertiesAsElements(DslModeling::SerializationContext serializationContext, Model element, global::System.Xml.XmlWriter writer)
 		{
 			// AdditionalImports
@@ -1612,6 +1611,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">Model instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]		
 		private static void WriteChildElements(DslModeling::SerializationContext serializationContext, Model element, global::System.Xml.XmlWriter writer)
 		{
 			// ModelHasClass
@@ -2253,7 +2253,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// This method deserializes all child model elements.
 		/// </summary>
-	        /// <remarks>
+		/// <remarks>
 		/// The caller will position the reader at the open tag of the first child XML element to deserialized.
 		/// This method will read as many child elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the 
@@ -2708,7 +2708,7 @@ namespace Altinoren.ActiveWriter
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
 			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
-			if (monikerString == null)
+			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
 				return null;
@@ -2814,7 +2814,6 @@ namespace Altinoren.ActiveWriter
 		/// This should only be passed for root-level elements. Null should be passed for rest elements (and ideally call the Write() method 
 		/// without this parameter).
 		/// </param>
-		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Parameter 'rootElementSettings' can be null, so no need to validate.")]
 		public override void Write(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer, DslModeling::RootElementSettings rootElementSettings)
 		{
 			#region Check Parameters
@@ -2855,7 +2854,7 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">ModelClass instance to be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>	
+		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
@@ -3150,6 +3149,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">ModelClass instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]		
 		private static void WriteChildElements(DslModeling::SerializationContext serializationContext, ModelClass element, global::System.Xml.XmlWriter writer)
 		{
 			// ManyToOneRelation
@@ -3932,7 +3932,7 @@ namespace Altinoren.ActiveWriter
 			try
 			{
 				global::System.Guid id;
-				if (idStr == null)
+				if (string.IsNullOrEmpty(idStr))
 				{	// Create a default Id.
 					id = global::System.Guid.NewGuid();
 					ActiveWriterSerializationBehaviorSerializationMessages.MissingId(serializationContext, reader, id);
@@ -4076,7 +4076,7 @@ namespace Altinoren.ActiveWriter
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
 			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
-			if (monikerString == null)
+			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
 				return null;
@@ -4182,7 +4182,6 @@ namespace Altinoren.ActiveWriter
 		/// This should only be passed for root-level elements. Null should be passed for rest elements (and ideally call the Write() method 
 		/// without this parameter).
 		/// </param>
-		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Parameter 'rootElementSettings' can be null, so no need to validate.")]
 		public override void Write(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer, DslModeling::RootElementSettings rootElementSettings)
 		{
 			#region Check Parameters
@@ -4226,7 +4225,7 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">ModelProperty instance to be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>	
+		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
@@ -4905,7 +4904,7 @@ namespace Altinoren.ActiveWriter
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
 			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
-			if (monikerString == null)
+			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
 				return null;
@@ -5000,7 +4999,7 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">ModelElementWithAccess instance to be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>	
+		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
@@ -5433,7 +5432,7 @@ namespace Altinoren.ActiveWriter
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
 			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
-			if (monikerString == null)
+			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
 				return null;
@@ -5528,7 +5527,7 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">NamedElement instance to be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>	
+		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
@@ -5822,7 +5821,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// This method deserializes all child model elements.
 		/// </summary>
-	        /// <remarks>
+		/// <remarks>
 		/// The caller will position the reader at the open tag of the first child XML element to deserialized.
 		/// This method will read as many child elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the 
@@ -6154,7 +6153,7 @@ namespace Altinoren.ActiveWriter
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
 			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
-			if (monikerString == null)
+			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
 				return null;
@@ -6260,7 +6259,6 @@ namespace Altinoren.ActiveWriter
 		/// This should only be passed for root-level elements. Null should be passed for rest elements (and ideally call the Write() method 
 		/// without this parameter).
 		/// </param>
-		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Parameter 'rootElementSettings' can be null, so no need to validate.")]
 		public override void Write(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer, DslModeling::RootElementSettings rootElementSettings)
 		{
 			#region Check Parameters
@@ -6301,7 +6299,7 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">NestedClass instance to be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>	
+		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
@@ -6350,6 +6348,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">NestedClass instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]		
 		private static void WriteChildElements(DslModeling::SerializationContext serializationContext, NestedClass element, global::System.Xml.XmlWriter writer)
 		{
 			// NestedClassHasProperties
@@ -7004,7 +7003,7 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">ModelHasClass instance to be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>	
+		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
@@ -8017,7 +8016,7 @@ namespace Altinoren.ActiveWriter
 			try
 			{
 				global::System.Guid id;
-				if (idStr == null)
+				if (string.IsNullOrEmpty(idStr))
 				{	// Create a default Id.
 					id = global::System.Guid.NewGuid();
 					ActiveWriterSerializationBehaviorSerializationMessages.MissingId(serializationContext, reader, id);
@@ -8171,7 +8170,7 @@ namespace Altinoren.ActiveWriter
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
 			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
-			if (monikerString == null)
+			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
 				return null;
@@ -8290,7 +8289,6 @@ namespace Altinoren.ActiveWriter
 		/// This should only be passed for root-level elements. Null should be passed for rest elements (and ideally call the Write() method 
 		/// without this parameter).
 		/// </param>
-		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Parameter 'rootElementSettings' can be null, so no need to validate.")]
 		public override void Write(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer, DslModeling::RootElementSettings rootElementSettings)
 		{
 			#region Check Parameters
@@ -8343,7 +8341,7 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">ManyToOneRelation instance to be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>	
+		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
@@ -9437,7 +9435,7 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">ClassHasProperty instance to be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>	
+		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
@@ -10450,7 +10448,7 @@ namespace Altinoren.ActiveWriter
 			try
 			{
 				global::System.Guid id;
-				if (idStr == null)
+				if (string.IsNullOrEmpty(idStr))
 				{	// Create a default Id.
 					id = global::System.Guid.NewGuid();
 					ActiveWriterSerializationBehaviorSerializationMessages.MissingId(serializationContext, reader, id);
@@ -10604,7 +10602,7 @@ namespace Altinoren.ActiveWriter
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
 			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
-			if (monikerString == null)
+			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
 				return null;
@@ -10723,7 +10721,6 @@ namespace Altinoren.ActiveWriter
 		/// This should only be passed for root-level elements. Null should be passed for rest elements (and ideally call the Write() method 
 		/// without this parameter).
 		/// </param>
-		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Parameter 'rootElementSettings' can be null, so no need to validate.")]
 		public override void Write(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer, DslModeling::RootElementSettings rootElementSettings)
 		{
 			#region Check Parameters
@@ -10776,7 +10773,7 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">ManyToManyRelation instance to be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>	
+		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
@@ -12080,7 +12077,6 @@ namespace Altinoren.ActiveWriter
 		/// This should only be passed for root-level elements. Null should be passed for rest elements (and ideally call the Write() method 
 		/// without this parameter).
 		/// </param>
-		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Parameter 'rootElementSettings' can be null, so no need to validate.")]
 		public override void Write(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer, DslModeling::RootElementSettings rootElementSettings)
 		{
 			#region Check Parameters
@@ -12130,7 +12126,7 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">OneToOneRelation instance to be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>	
+		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
@@ -13016,7 +13012,7 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">ModelHasNestedClasses instance to be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>	
+		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
@@ -13652,7 +13648,7 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">NestedClassHasProperties instance to be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>	
+		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
@@ -14380,7 +14376,6 @@ namespace Altinoren.ActiveWriter
 		/// This should only be passed for root-level elements. Null should be passed for rest elements (and ideally call the Write() method 
 		/// without this parameter).
 		/// </param>
-		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Parameter 'rootElementSettings' can be null, so no need to validate.")]
 		public override void Write(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer, DslModeling::RootElementSettings rootElementSettings)
 		{
 			#region Check Parameters
@@ -14430,7 +14425,7 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">NestedClassReferencesModelClasses instance to be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>	
+		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
@@ -14880,7 +14875,7 @@ namespace Altinoren.ActiveWriter
 			try
 			{
 				global::System.Guid id;
-				if (idStr == null)
+				if (string.IsNullOrEmpty(idStr))
 				{	// Create a default Id.
 					id = global::System.Guid.NewGuid();
 					ActiveWriterSerializationBehaviorSerializationMessages.MissingId(serializationContext, reader, id);
@@ -15024,7 +15019,7 @@ namespace Altinoren.ActiveWriter
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
 			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
-			if (monikerString == null)
+			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
 				return null;
@@ -15143,7 +15138,6 @@ namespace Altinoren.ActiveWriter
 		/// This should only be passed for root-level elements. Null should be passed for rest elements (and ideally call the Write() method 
 		/// without this parameter).
 		/// </param>
-		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Parameter 'rootElementSettings' can be null, so no need to validate.")]
 		public override void Write(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer, DslModeling::RootElementSettings rootElementSettings)
 		{
 			#region Check Parameters
@@ -15426,7 +15420,7 @@ namespace Altinoren.ActiveWriter
 			try
 			{
 				global::System.Guid id;
-				if (idStr == null)
+				if (string.IsNullOrEmpty(idStr))
 				{	// Create a default Id.
 					id = global::System.Guid.NewGuid();
 					ActiveWriterSerializationBehaviorSerializationMessages.MissingId(serializationContext, reader, id);
@@ -15570,7 +15564,7 @@ namespace Altinoren.ActiveWriter
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
 			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
-			if (monikerString == null)
+			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
 				return null;
@@ -15689,7 +15683,6 @@ namespace Altinoren.ActiveWriter
 		/// This should only be passed for root-level elements. Null should be passed for rest elements (and ideally call the Write() method 
 		/// without this parameter).
 		/// </param>
-		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Parameter 'rootElementSettings' can be null, so no need to validate.")]
 		public override void Write(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer, DslModeling::RootElementSettings rootElementSettings)
 		{
 			#region Check Parameters
@@ -16158,7 +16151,6 @@ namespace Altinoren.ActiveWriter
 		/// This should only be passed for root-level elements. Null should be passed for rest elements (and ideally call the Write() method 
 		/// without this parameter).
 		/// </param>
-		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Parameter 'rootElementSettings' can be null, so no need to validate.")]
 		public override void Write(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer, DslModeling::RootElementSettings rootElementSettings)
 		{
 			#region Check Parameters
@@ -16630,7 +16622,6 @@ namespace Altinoren.ActiveWriter
 		/// This should only be passed for root-level elements. Null should be passed for rest elements (and ideally call the Write() method 
 		/// without this parameter).
 		/// </param>
-		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Parameter 'rootElementSettings' can be null, so no need to validate.")]
 		public override void Write(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer, DslModeling::RootElementSettings rootElementSettings)
 		{
 			#region Check Parameters
@@ -17102,7 +17093,6 @@ namespace Altinoren.ActiveWriter
 		/// This should only be passed for root-level elements. Null should be passed for rest elements (and ideally call the Write() method 
 		/// without this parameter).
 		/// </param>
-		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Parameter 'rootElementSettings' can be null, so no need to validate.")]
 		public override void Write(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer, DslModeling::RootElementSettings rootElementSettings)
 		{
 			#region Check Parameters
@@ -17574,7 +17564,6 @@ namespace Altinoren.ActiveWriter
 		/// This should only be passed for root-level elements. Null should be passed for rest elements (and ideally call the Write() method 
 		/// without this parameter).
 		/// </param>
-		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Parameter 'rootElementSettings' can be null, so no need to validate.")]
 		public override void Write(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer, DslModeling::RootElementSettings rootElementSettings)
 		{
 			#region Check Parameters
@@ -18046,7 +18035,6 @@ namespace Altinoren.ActiveWriter
 		/// This should only be passed for root-level elements. Null should be passed for rest elements (and ideally call the Write() method 
 		/// without this parameter).
 		/// </param>
-		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Parameter 'rootElementSettings' can be null, so no need to validate.")]
 		public override void Write(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer, DslModeling::RootElementSettings rootElementSettings)
 		{
 			#region Check Parameters
@@ -18163,6 +18151,7 @@ namespace Altinoren.ActiveWriter
 	/// A DomainXmlSerializationBehavior implementation for defined behavior ActiveWriterSerializationBehavior.
 	/// This is the abstract base of the double-derived implementation.
 	/// </summary>
+	[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]		
 	public abstract class ActiveWriterSerializationBehaviorBase : DslModeling::DomainXmlSerializationBehavior
 	{
 		#region Member Variables
@@ -18198,6 +18187,7 @@ namespace Altinoren.ActiveWriter
 		/// This provides a mapping from DomainClass Id to DomainXmlSerializer implementation types.
 		/// </summary>
 		[global::System.Diagnostics.DebuggerBrowsable (global::System.Diagnostics.DebuggerBrowsableState.Never)]	// Will trigger creation otherwise.
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]		
 		public override global::System.Collections.ObjectModel.ReadOnlyCollection<DslModeling::DomainXmlSerializerDirectoryEntry> AllSerializers
 		{
 			get
@@ -18760,6 +18750,7 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		/// <param name="serializationContext">SerializationContext to add the error message to.</param>
 		/// <param name="domainClassName">Name of the DomainClass whose instance cannot be monikerized.</param>
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "Generated code.")]	
 		public static void CannotMonikerizeElement(DslModeling::SerializationContext serializationContext, string domainClassName)
 		{
 			#region Check Parameters

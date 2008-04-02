@@ -14,6 +14,7 @@ using DslValidation = global::Microsoft.VisualStudio.Modeling.Validation;
 using DslDiagrams = global::Microsoft.VisualStudio.Modeling.Diagrams;
 using VSShellInterop = global::Microsoft.VisualStudio.Shell.Interop;
 
+
 namespace Altinoren.ActiveWriter
 {
 	/// <summary>
@@ -33,7 +34,7 @@ namespace Altinoren.ActiveWriter
 	/// <summary>
 	/// Class which represents a ActiveWriter document in memory.
 	/// </summary>
-	internal abstract class ActiveWriterDocDataBase : DslShell::ModelingDocData, VSShellInterop::IVsRunningDocTableEvents
+	internal abstract class ActiveWriterDocDataBase : DslShell::ModelingDocData
 	{
 
 		#region Constraint ValidationController
@@ -48,15 +49,6 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		private DslShell::SubordinateDocumentLockHolder diagramDocumentLockHolder;
 
-		/// <summary>
-		/// Cookie to handle RDT events callback
-		/// </summary>
-		private uint eventsCookie;
-
-		/// <summary>
-		/// Flag to restore subordinate file to the project
-		/// </summary>
-		private bool restoreSubordinateFile;
 		/// <summary>
 		/// Constructs a new ActiveWriterDocDataBase.
 		/// </summary>
@@ -129,11 +121,6 @@ namespace Altinoren.ActiveWriter
 					this.diagramDocumentLockHolder.Dispose();
 					this.diagramDocumentLockHolder = null;
 				}
-				if (this.eventsCookie != 0)
-				{
-					DslShell::SubordinateFileHelper.UnadviseRunningDocumentTableEvents(this.ServiceProvider, this.eventsCookie);
-					this.eventsCookie = 0;
-				}
 			}
 			finally
 			{
@@ -166,38 +153,7 @@ namespace Altinoren.ActiveWriter
 			global::Altinoren.ActiveWriter.ActiveWriterDomainModel.EnableDiagramRules(this.Store);
 			string diagramFileName = fileName + this.DiagramExtension;
 			
-			// Ensure that subordinate diagram file is named properly; handles the case where a rename occurs while the designer was closed.
-			if(this.Hierarchy != null)
-			{
-				uint itemId = DslShell::SubordinateFileHelper.GetChildProjectItemId(this.Hierarchy, this.ItemId, this.DiagramExtension);
-				if(itemId != global::Microsoft.VisualStudio.VSConstants.VSITEMID_NIL)
-				{
-					global::System.Diagnostics.Debug.Assert(!this.IsLoaded);
-					// Make sure the name is right before we lock the item in the RDT.
-					DslShell::SubordinateFileHelper.EnsureChildFileName(this.ServiceProvider, this.Hierarchy, itemId, diagramFileName);
-
-					// Found the diagram file, lock it in the running documents table.
-					this.diagramDocumentLockHolder = DslShell::SubordinateFileHelper.LockSubordinateDocument(this.ServiceProvider, this, diagramFileName, itemId);
-					if (this.diagramDocumentLockHolder == null)
-					{
-						throw new global::System.InvalidOperationException(global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("CannotOpenDocument"));
-					}
-				}
-			}
-			
-			try
-			{
-				modelRoot = global::Altinoren.ActiveWriter.ActiveWriterSerializationHelper.Instance.LoadModelAndDiagram(serializationResult, this.Store, fileName, diagramFileName, schemaResolver, null /* no load-time validation */);
-			}
-			finally
-			{
-				if (this.diagramDocumentLockHolder != null && (modelRoot == null || serializationResult.Failed))
-				{
-					// Load failed, release the document lock if we added one above.
-					this.diagramDocumentLockHolder.UnregisterSubordinateDocument();
-					this.diagramDocumentLockHolder = null;
-				}
-			}
+			modelRoot = global::Altinoren.ActiveWriter.ActiveWriterSerializationHelper.Instance.LoadModelAndDiagram(serializationResult, this.Store, fileName, diagramFileName, schemaResolver, null /* no load-time validation */);
 
 			// Report serialization messages.
 			this.SuspendErrorListRefresh();
@@ -223,21 +179,21 @@ namespace Altinoren.ActiveWriter
 				this.SetRootElement(modelRoot);
 				if (this.Hierarchy != null && global::System.IO.File.Exists(diagramFileName))
 				{
-					DslShell::SubordinateFileHelper.EnsureChildProjectItem(this.Hierarchy, this.ItemId, diagramFileName);
-
-					// Should have a subordinate diagram file now. If we didn't add a lock above, add one now.
+					// Add a lock to the subordinate diagram file.
 					if (this.diagramDocumentLockHolder == null)
 					{
 						uint itemId = DslShell::SubordinateFileHelper.GetChildProjectItemId(this.Hierarchy, this.ItemId, this.DiagramExtension);
-						this.diagramDocumentLockHolder = DslShell::SubordinateFileHelper.LockSubordinateDocument(this.ServiceProvider, this, diagramFileName, itemId);
-						if (this.diagramDocumentLockHolder == null)
+						if (itemId != global::Microsoft.VisualStudio.VSConstants.VSITEMID_NIL)
 						{
-							throw new global::System.InvalidOperationException(global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("CannotOpenDocument"));
+							this.diagramDocumentLockHolder = DslShell::SubordinateFileHelper.LockSubordinateDocument(this.ServiceProvider, this, diagramFileName, itemId);
+							if (this.diagramDocumentLockHolder == null)
+							{
+								throw new global::System.InvalidOperationException(string.Format(global::System.Globalization.CultureInfo.CurrentCulture,
+													global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("CannotCloseExistingDiagramDocument"),
+													diagramFileName));
+							}
 						}
 					}
-
-					// Connect to events on the RDT in order to allow delayed rename handling.
-					this.eventsCookie = DslShell::SubordinateFileHelper.AdviseRunningDocumentTableEvents(this.ServiceProvider, this);
 				}
 			}
 		}
@@ -292,27 +248,31 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		protected override bool CanSave(bool allowUserInterface)
 		{
-			global::System.Windows.Forms.DialogResult result = global::System.Windows.Forms.DialogResult.Yes;
-			
-			// Do not call validation in the case of a silent save, because the user cannot be prompted.
-			if (allowUserInterface)
+			// If a silent check then use a temporary ValidationController that is not connected to the error list to avoid any unwanted UI updates
+			DslShell::VsValidationController vc = allowUserInterface ? this.ValidationController : this.CreateValidationController();
+			if (vc == null)
 			{
-				// We check Load category first, because any violation in this category will cause the saved file to be unloadable, so we want to a special 
-				// error message for that. If the Load category passes, we then check the normal Save category, and give the normal warning message if 
-				// necessary.
-				bool unloadableError = false;
-				if (!this.ValidationController.Validate(this.Store, DslValidation::ValidationCategories.Load) && this.ValidationController.ErrorMessages.Count != 0)
-				{	// Check Load category
-					unloadableError = true;
-				}
-				if ((!this.ValidationController.Validate(this.Store, DslValidation::ValidationCategories.Save) && this.ValidationController.ErrorMessages.Count != 0) || unloadableError)
-				{	// Check Save category
-					string errorMsg = (unloadableError ? "UnloadableSaveValidationFailed" : "SaveValidationFailed");
-					result = DslShell::PackageUtility.ShowMessageBox(this.ServiceProvider, global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString(errorMsg), VSShellInterop::OLEMSGBUTTON.OLEMSGBUTTON_YESNO, VSShellInterop::OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_SECOND, VSShellInterop::OLEMSGICON.OLEMSGICON_WARNING);
-				}
+				return true;
 			}
 
-			return (result == global::System.Windows.Forms.DialogResult.Yes);
+			// We check Load category first, because any violation in this category will cause the saved file to be unloadable justifying a special 
+			// error message. If the Load category passes, we then check the normal Save category, and give the normal warning message if necessary.
+			bool unloadableError = !vc.Validate(this.Store, DslValidation::ValidationCategories.Load) && vc.ErrorMessages.Count != 0;
+			
+			// Prompt user for confirmation if there are validation errors and this is not a silent save
+			if (allowUserInterface)
+			{
+				vc.Validate(this.Store, DslValidation::ValidationCategories.Save);
+
+				if (vc.ErrorMessages.Count != 0)
+				{
+					string errorMsg = (unloadableError ? "UnloadableSaveValidationFailed" : "SaveValidationFailed");
+					global::System.Windows.Forms.DialogResult result = DslShell::PackageUtility.ShowMessageBox(this.ServiceProvider, global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString(errorMsg), VSShellInterop::OLEMSGBUTTON.OLEMSGBUTTON_YESNO, VSShellInterop::OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_SECOND, VSShellInterop::OLEMSGICON.OLEMSGICON_WARNING);
+					return (result == global::System.Windows.Forms.DialogResult.Yes);
+				}
+			}
+			
+			return !unloadableError;
 		}
 
 			
@@ -320,17 +280,23 @@ namespace Altinoren.ActiveWriter
 		/// Handle when document has been saved
 		/// </summary>
 		/// <param name="e"></param>
-		protected override void OnDocumentSaved(System.EventArgs e)
+		protected override void OnDocumentSaved(global::System.EventArgs e)
 		{
 			base.OnDocumentSaved(e);
 
 			// Notify the Running Document Table that the subordinate has been saved
-			if (this.ServiceProvider != null)
+			// If this was a SaveAs, then let the subordinate document do this notification itself.
+			// Otherwise VS will never ask the subordinate to save itself.
+			DslShell::DocumentSavedEventArgs savedEventArgs = e as DslShell::DocumentSavedEventArgs;
+			if (savedEventArgs != null && this.ServiceProvider != null)
 			{
-				VSShellInterop::IVsRunningDocumentTable rdt = (VSShellInterop.IVsRunningDocumentTable)this.ServiceProvider.GetService(typeof(VSShellInterop::IVsRunningDocumentTable));
-				if (rdt != null && this.diagramDocumentLockHolder != null && this.diagramDocumentLockHolder.SubordinateDocData != null)
+				if ( global::System.StringComparer.OrdinalIgnoreCase.Compare(savedEventArgs.OldFileName, savedEventArgs.NewFileName) == 0)
 				{
-					global::Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(rdt.NotifyOnAfterSave(this.diagramDocumentLockHolder.SubordinateDocData.Cookie));
+					VSShellInterop::IVsRunningDocumentTable rdt = (VSShellInterop.IVsRunningDocumentTable)this.ServiceProvider.GetService(typeof(VSShellInterop::IVsRunningDocumentTable));
+					if (rdt != null && this.diagramDocumentLockHolder != null && this.diagramDocumentLockHolder.SubordinateDocData != null)
+					{
+						global::Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(rdt.NotifyOnAfterSave(this.diagramDocumentLockHolder.SubordinateDocData.Cookie));
+					}
 				}
 			}
 		}
@@ -344,27 +310,25 @@ namespace Altinoren.ActiveWriter
 			global::Altinoren.ActiveWriter.Model modelRoot = (global::Altinoren.ActiveWriter.Model)this.RootElement;
 
 			
+			// Only save the diagrams if
+			// a) There are any to save
+			// b) This is NOT a SaveAs operation.  SaveAs should allow the subordinate document to control the save of its data as it is writing a new file.
+			//    Except DO save the diagram on SaveAs if there isn't currently a diagram as there won't be a subordinate document yet to save it.
+
+			bool saveAs = global::System.StringComparer.OrdinalIgnoreCase.Compare(fileName, this.FileName) != 0;
+
 			global::System.Collections.Generic.IList<DslDiagrams::PresentationElement> diagrams = DslDiagrams::PresentationViewsSubject.GetPresentation(this.RootElement);
-			if (diagrams.Count > 0)
+			if (diagrams.Count > 0 && (!saveAs || this.diagramDocumentLockHolder == null))
 			{
 				global::Altinoren.ActiveWriter.ActiveRecordMapping diagram = diagrams[0] as global::Altinoren.ActiveWriter.ActiveRecordMapping;
 				if (diagram != null)
 				{
 					string diagramFileName = fileName + this.DiagramExtension;
-					
 					try
 					{
 						this.SuspendFileChangeNotification(diagramFileName);
 						
 						global::Altinoren.ActiveWriter.ActiveWriterSerializationHelper.Instance.SaveModelAndDiagram(serializationResult, modelRoot, fileName, diagram, diagramFileName, this.Encoding, false);
-						if (!serializationResult.Failed)
-						{
-							// fileName != this.FileName is false in the case of Save As.  Allow OnFileNameChanged() below to handle this case.
-							if (global::System.StringComparer.OrdinalIgnoreCase.Compare(fileName, this.FileName) == 0 && global::System.IO.File.Exists(diagramFileName))
-							{
-								DslShell::SubordinateFileHelper.EnsureChildProjectItem(this.Hierarchy, this.ItemId, diagramFileName);
-							}
-						}
 					}
 					finally
 					{
@@ -372,7 +336,7 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
-			if (!serializationResult.Failed)
+			else
 			{
 				global::Altinoren.ActiveWriter.ActiveWriterSerializationHelper.Instance.SaveModel(serializationResult, modelRoot, fileName, this.Encoding, false);
 			}
@@ -395,11 +359,86 @@ namespace Altinoren.ActiveWriter
 				throw new global::System.InvalidOperationException(global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("CannotSaveDocument"));
 			}
 		}
+		/// <summary>
+		/// Mark that the document has changed and thus a new backup should be created
+		/// </summary>
+		/// <remarks>
+		/// Call this method when you change the document's content
+		/// </remarks>
+		public override void MarkDocumentChangedForBackup()
+		{
+			base.MarkDocumentChangedForBackup();
 
+			// Also mark the subordinate document as changed
+			if (this.diagramDocumentLockHolder != null &&
+				this.diagramDocumentLockHolder.SubordinateDocData != null)
+			{
+				this.diagramDocumentLockHolder.SubordinateDocData.MarkDocumentChangedForBackup();
+			}
+		}
+		
 		#region Diagram file management
 		
-		private const string DefaultDiagramExtension = ".diagram";
-		
+		/// <summary>
+		/// Save the given document that is subordinate to this document.
+		/// </summary>
+		/// <param name="subordinateDocument"></param>
+		/// <param name="fileName"></param>
+		protected override void SaveSubordinateFile(DslShell::DocData subordinateDocument, string fileName)
+		{
+			// In this case, the only subordinate is the diagram.
+			DslModeling::SerializationResult serializationResult = new DslModeling::SerializationResult();
+
+			global::System.Collections.Generic.IList<DslDiagrams::PresentationElement> diagrams = DslDiagrams::PresentationViewsSubject.GetPresentation(this.RootElement);
+			if (diagrams.Count > 0)
+			{
+				global::Altinoren.ActiveWriter.ActiveRecordMapping diagram = diagrams[0] as global::Altinoren.ActiveWriter.ActiveRecordMapping;
+				if (diagram != null)
+				{
+					try
+					{
+						this.SuspendFileChangeNotification(fileName);
+						
+						global::Altinoren.ActiveWriter.ActiveWriterSerializationHelper.Instance.SaveDiagram(serializationResult, diagram, fileName, this.Encoding, false);
+					}
+					finally
+					{
+						this.ResumeFileChangeNotification(fileName);
+					}
+				}
+			}
+			// Report serialization messages.
+			this.SuspendErrorListRefresh();
+			try
+			{
+				foreach (DslModeling::SerializationMessage serializationMessage in serializationResult)
+				{
+					this.AddErrorListItem(new DslShell::SerializationErrorListItem(this.ServiceProvider, serializationMessage));
+				}
+			}
+			finally
+			{
+				this.ResumeErrorListRefresh();
+			}
+			
+			if (!serializationResult.Failed)
+			{
+				// Notify the Running Document Table that the subordinate has been saved
+				if (this.ServiceProvider != null)
+				{
+					VSShellInterop::IVsRunningDocumentTable rdt = (VSShellInterop.IVsRunningDocumentTable)this.ServiceProvider.GetService(typeof(VSShellInterop::IVsRunningDocumentTable));
+					if (rdt != null && this.diagramDocumentLockHolder != null && this.diagramDocumentLockHolder.SubordinateDocData != null)
+					{
+						global::Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(rdt.NotifyOnAfterSave(this.diagramDocumentLockHolder.SubordinateDocData.Cookie));
+					}
+				}
+			}
+			else
+			{	
+				// Save failed.
+				throw new global::System.InvalidOperationException(global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("CannotSaveDocument"));
+			}						
+		}
 		
 		/// <summary>
 		/// Provide a suffix for the diagram file
@@ -408,139 +447,28 @@ namespace Altinoren.ActiveWriter
 		{
 			get
 			{
-				return DefaultDiagramExtension;
-			}
-		}
-		
-		/// <summary>
-		/// Propagates file name changes to the diagram file.
-		/// </summary>
-		protected override void OnFileNameChanged(global::System.EventArgs e)
-		{
-			base.OnFileNameChanged(e);
-
-			if (this.IsLoaded && this.Hierarchy != null)
-			{
-				uint childId = DslShell::SubordinateFileHelper.GetChildProjectItemId(this.Hierarchy, this.ItemId, this.DiagramExtension);
-				if (childId != global::Microsoft.VisualStudio.VSConstants.VSITEMID_NIL)
-				{
-					// If the file is loaded, then we should remove the subordinate file's lock and restore it after the rename.
-					this.diagramDocumentLockHolder.UnregisterSubordinateDocument();
-					this.diagramDocumentLockHolder = null;
-
-					// Perform the rename
-					DslShell::SubordinateFileHelper.EnsureChildFileName(this.ServiceProvider, this.Hierarchy, childId, this.FileName + this.DiagramExtension);
-
-					// Because we've removed the file from the project and dropped our lock, make a note to put them back later via an event.
-					// We don't do this here, as the SaveAs code in Visual Studio will query overwriting these files if they are in the project here.
-					// We dont retake the lock here as Visual Studio will close the parent docdata if we delete from the project a locked item.
-					this.restoreSubordinateFile = true;
-				}
+				return Constants.DefaultDiagramExtension;
 			}
 		}
 		#endregion
-
-		#region IVsRunningDocTableEvents Members
+		
+		#region Base virtual overrides
+		
 		/// <summary>
-		/// Replace the subordinate file in the project and create a new lock.
+		/// Return the model in XML format
 		/// </summary>
-		private void RestoreSubordinateFile()
+		protected override string SerializedModel
 		{
-			// The subordinate file may have been temporarily removed from the project.
-			// Put it back if we were asked to.
-			if (this.restoreSubordinateFile)
+			get
 			{
-				// Put the file back in the project
-				DslShell::SubordinateFileHelper.EnsureChildProjectItem(this.Hierarchy, this.ItemId, this.FileName + this.DiagramExtension);
-
-				// Get the new ChildId
-				uint childId = DslShell::SubordinateFileHelper.GetChildProjectItemId(this.Hierarchy, this.ItemId, this.DiagramExtension);
-
-				// Make a new lock
-				this.diagramDocumentLockHolder = DslShell::SubordinateFileHelper.LockSubordinateDocument(this.ServiceProvider, this, childId);
-
-				this.restoreSubordinateFile = false;
+				global::Altinoren.ActiveWriter.Model modelRoot = this.RootElement as global::Altinoren.ActiveWriter.Model;
+				string modelFile = string.Empty;
+				if (modelRoot != null)
+				{
+					modelFile = global::Altinoren.ActiveWriter.ActiveWriterSerializationHelper.Instance.GetSerializedModelString(modelRoot, this.Encoding);
+				}
+				return modelFile;
 			}
-		}
-
-		/// <summary>
-		/// Restore subordinate file if necessary after rename.
-		/// </summary>
-		/// <param name="docCookie"></param>
-		/// <param name="grfAttribs"></param>
-		/// <returns></returns>
-		public int OnAfterAttributeChange(uint docCookie, uint grfAttribs)
-		{
-			// The subordinate file may have been temporarily removed from the project.
-			// Put it back if we were asked to.
-			this.RestoreSubordinateFile();
-			return global::Microsoft.VisualStudio.VSConstants.S_OK;
-		}
-
-		/// <summary>
-		/// OnAfterDocumentWindowHide
-		/// </summary>
-		/// <param name="docCookie"></param>
-		/// <param name="pFrame"></param>
-		/// <returns></returns>
-		public int OnAfterDocumentWindowHide(uint docCookie, VSShellInterop::IVsWindowFrame pFrame)
-		{
-			// Do Nothing
-			return global::Microsoft.VisualStudio.VSConstants.S_OK;
-		}
-
-		/// <summary>
-		/// OnAfterFirstDocumentLock
-		/// </summary>
-		/// <param name="docCookie"></param>
-		/// <param name="dwRDTLockType"></param>
-		/// <param name="dwReadLocksRemaining"></param>
-		/// <param name="dwEditLocksRemaining"></param>
-		/// <returns></returns>
-		public int OnAfterFirstDocumentLock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining, uint dwEditLocksRemaining)
-		{
-			// Do Nothing
-			return global::Microsoft.VisualStudio.VSConstants.S_OK;
-		}
-
-		/// <summary>
-		/// Restore subordinate file if necessary after SaveAs.
-		/// </summary>
-		/// <param name="docCookie"></param>
-		/// <returns></returns>
-		public int OnAfterSave(uint docCookie)
-		{
-			// The subordinate file may have been temporarily removed from the project.
-			// Put it back if we were asked to.
-			this.RestoreSubordinateFile();
-			return global::Microsoft.VisualStudio.VSConstants.S_OK;
-		}
-
-		/// <summary>
-		/// OnBeforeDocumentWindowShow
-		/// </summary>
-		/// <param name="docCookie"></param>
-		/// <param name="fFirstShow"></param>
-		/// <param name="pFrame"></param>
-		/// <returns></returns>
-		public int OnBeforeDocumentWindowShow(uint docCookie, int fFirstShow, VSShellInterop::IVsWindowFrame pFrame)
-		{
-			// Do Nothing
-			return global::Microsoft.VisualStudio.VSConstants.S_OK;
-		}
-
-		/// <summary>
-		/// OnBeforeLastDocumentUnlock
-		/// </summary>
-		/// <param name="docCookie"></param>
-		/// <param name="dwRDTLockType"></param>
-		/// <param name="dwReadLocksRemaining"></param>
-		/// <param name="dwEditLocksRemaining"></param>
-		/// <returns></returns>
-		public int OnBeforeLastDocumentUnlock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining, uint dwEditLocksRemaining)
-		{
-			// Do Nothing
-			return global::Microsoft.VisualStudio.VSConstants.S_OK;
 		}
 		#endregion
 	}

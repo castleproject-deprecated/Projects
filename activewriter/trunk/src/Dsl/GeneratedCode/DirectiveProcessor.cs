@@ -102,7 +102,7 @@ namespace Altinoren.ActiveWriter
 		/// <returns></returns>
 		public override bool IsDirectiveSupported(string directiveName)
 		{
-			return (global::System.StringComparer.InvariantCultureIgnoreCase.Compare(directiveName, supportedDirectiveName) == 0);
+			return (global::System.StringComparer.OrdinalIgnoreCase.Compare(directiveName, supportedDirectiveName) == 0);
 		}
 	
 		/// <summary>
@@ -125,7 +125,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="requiresDictionary"></param>
 		protected override void InitializeRequiresDictionary(string directiveName, global::System.Collections.Generic.IDictionary<string, string> requiresDictionary)
 		{
-			if ((global::System.StringComparer.InvariantCultureIgnoreCase.Compare(directiveName, supportedDirectiveName) == 0))
+			if ((global::System.StringComparer.OrdinalIgnoreCase.Compare(directiveName, supportedDirectiveName) == 0))
 			{
 				requiresDictionary[requiresFileParameter] = null;
 				requiresDictionary[requiresValidationParameter] = "";
@@ -139,7 +139,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="providesDictionary"></param>
 		protected override void InitializeProvidesDictionary(string directiveName, global::System.Collections.Generic.IDictionary<string, string> providesDictionary)
 		{
-			if ((global::System.StringComparer.InvariantCultureIgnoreCase.Compare(directiveName, supportedDirectiveName) == 0))
+			if ((global::System.StringComparer.OrdinalIgnoreCase.Compare(directiveName, supportedDirectiveName) == 0))
 			{
 				providesDictionary[providesModelParameter] = defaultProvidesModelParameter;
 			}
@@ -154,9 +154,10 @@ namespace Altinoren.ActiveWriter
 		/// <param name="requiresArguments"></param>
 		/// <param name="providesArguments"></param>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "Generated code is not meant for normalization purpose.")]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]
 		protected override void GenerateTransformCode(string directiveName, global::System.Text.StringBuilder codeBuffer, global::System.CodeDom.Compiler.CodeDomProvider languageProvider, global::System.Collections.Generic.IDictionary<string, string> requiresArguments, global::System.Collections.Generic.IDictionary<string, string> providesArguments)
 		{
-			if ((global::System.StringComparer.InvariantCultureIgnoreCase.Compare(directiveName, supportedDirectiveName) == 0))
+			if ((global::System.StringComparer.OrdinalIgnoreCase.Compare(directiveName, supportedDirectiveName) == 0))
 			{
 				if (languageProvider != null)
 				{
@@ -230,7 +231,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="providesArguments"></param>
 		protected override void GeneratePreInitializationCode(string directiveName, global::System.Text.StringBuilder codeBuffer, global::System.CodeDom.Compiler.CodeDomProvider languageProvider, global::System.Collections.Generic.IDictionary<string, string> requiresArguments, global::System.Collections.Generic.IDictionary<string, string> providesArguments)
 		{
-			if ((global::System.StringComparer.InvariantCultureIgnoreCase.Compare(directiveName, supportedDirectiveName) == 0))
+			if ((global::System.StringComparer.OrdinalIgnoreCase.Compare(directiveName, supportedDirectiveName) == 0))
 			{
 				if (languageProvider != null)
 				{
@@ -281,9 +282,10 @@ namespace Altinoren.ActiveWriter
 		/// <param name="requiresArguments"></param>
 		/// <param name="providesArguments"></param>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "Generated code is not meant for normalization purpose.")]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]
 		protected override void GeneratePostInitializationCode(string directiveName, global::System.Text.StringBuilder codeBuffer, global::System.CodeDom.Compiler.CodeDomProvider languageProvider, global::System.Collections.Generic.IDictionary<string, string> requiresArguments, global::System.Collections.Generic.IDictionary<string, string> providesArguments)
 		{
-			if ((global::System.StringComparer.InvariantCultureIgnoreCase.Compare(directiveName, supportedDirectiveName) == 0))
+			if ((global::System.StringComparer.OrdinalIgnoreCase.Compare(directiveName, supportedDirectiveName) == 0))
 			{
 				// We check the encoding of the model file, and ask the host to use that
 				// encoding to write the output. This is to make sure we use the correct encoding
@@ -383,7 +385,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="providesArguments"></param>
 		protected override void PostProcessArguments(string directiveName, global::System.Collections.Generic.IDictionary<string, string> requiresArguments, global::System.Collections.Generic.IDictionary<string, string> providesArguments)
 		{
-			if ((global::System.StringComparer.InvariantCultureIgnoreCase.Compare(directiveName, supportedDirectiveName) == 0))
+			if ((global::System.StringComparer.OrdinalIgnoreCase.Compare(directiveName, supportedDirectiveName) == 0))
 			{
 				// Give the host a chance to resolve the fileName
 				requiresArguments[requiresFileParameter] = this.Host.ResolvePath(requiresArguments[requiresFileParameter]);

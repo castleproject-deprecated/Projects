@@ -163,7 +163,7 @@ namespace Altinoren.ActiveWriter
 			field1.DefaultAutoSize = true;
 			field1.AnchoringBehavior.MinimumHeightInLines = 1;
 			field1.AnchoringBehavior.MinimumWidthInCharacters = 1;
-			field1.DefaultAccessibleState = System.Windows.Forms.AccessibleStates.Invisible;
+			field1.DefaultAccessibleState = global::System.Windows.Forms.AccessibleStates.Invisible;
 			DslDiagrams::Decorator decorator1 = new DslDiagrams::ConnectorDecorator(field1, DslDiagrams::ConnectorDecoratorPosition.TargetTop, DslDiagrams::PointD.Empty);
 			decorators.Add(decorator1);
 				
@@ -173,7 +173,7 @@ namespace Altinoren.ActiveWriter
 			field2.DefaultAutoSize = true;
 			field2.AnchoringBehavior.MinimumHeightInLines = 1;
 			field2.AnchoringBehavior.MinimumWidthInCharacters = 1;
-			field2.DefaultAccessibleState = System.Windows.Forms.AccessibleStates.Invisible;
+			field2.DefaultAccessibleState = global::System.Windows.Forms.AccessibleStates.Invisible;
 			DslDiagrams::Decorator decorator2 = new DslDiagrams::ConnectorDecorator(field2, DslDiagrams::ConnectorDecoratorPosition.SourceTop, DslDiagrams::PointD.Empty);
 			decorators.Add(decorator2);
 				
@@ -361,7 +361,7 @@ namespace Altinoren.ActiveWriter
 			field1.DefaultAutoSize = true;
 			field1.AnchoringBehavior.MinimumHeightInLines = 1;
 			field1.AnchoringBehavior.MinimumWidthInCharacters = 1;
-			field1.DefaultAccessibleState = System.Windows.Forms.AccessibleStates.Invisible;
+			field1.DefaultAccessibleState = global::System.Windows.Forms.AccessibleStates.Invisible;
 			DslDiagrams::Decorator decorator1 = new DslDiagrams::ConnectorDecorator(field1, DslDiagrams::ConnectorDecoratorPosition.SourceTop, DslDiagrams::PointD.Empty);
 			decorators.Add(decorator1);
 				
@@ -371,7 +371,7 @@ namespace Altinoren.ActiveWriter
 			field2.DefaultAutoSize = true;
 			field2.AnchoringBehavior.MinimumHeightInLines = 1;
 			field2.AnchoringBehavior.MinimumWidthInCharacters = 1;
-			field2.DefaultAccessibleState = System.Windows.Forms.AccessibleStates.Invisible;
+			field2.DefaultAccessibleState = global::System.Windows.Forms.AccessibleStates.Invisible;
 			DslDiagrams::Decorator decorator2 = new DslDiagrams::ConnectorDecorator(field2, DslDiagrams::ConnectorDecoratorPosition.TargetTop, DslDiagrams::PointD.Empty);
 			decorators.Add(decorator2);
 				
@@ -561,7 +561,7 @@ namespace Altinoren.ActiveWriter
 			field1.DefaultAutoSize = true;
 			field1.AnchoringBehavior.MinimumHeightInLines = 1;
 			field1.AnchoringBehavior.MinimumWidthInCharacters = 1;
-			field1.DefaultAccessibleState = System.Windows.Forms.AccessibleStates.Invisible;
+			field1.DefaultAccessibleState = global::System.Windows.Forms.AccessibleStates.Invisible;
 			DslDiagrams::Decorator decorator1 = new DslDiagrams::ConnectorDecorator(field1, DslDiagrams::ConnectorDecoratorPosition.SourceTop, DslDiagrams::PointD.Empty);
 			decorators.Add(decorator1);
 				
@@ -571,7 +571,7 @@ namespace Altinoren.ActiveWriter
 			field2.DefaultAutoSize = true;
 			field2.AnchoringBehavior.MinimumHeightInLines = 1;
 			field2.AnchoringBehavior.MinimumWidthInCharacters = 1;
-			field2.DefaultAccessibleState = System.Windows.Forms.AccessibleStates.Invisible;
+			field2.DefaultAccessibleState = global::System.Windows.Forms.AccessibleStates.Invisible;
 			DslDiagrams::Decorator decorator2 = new DslDiagrams::ConnectorDecorator(field2, DslDiagrams::ConnectorDecoratorPosition.TargetTop, DslDiagrams::PointD.Empty);
 			decorators.Add(decorator2);
 				
@@ -762,7 +762,7 @@ namespace Altinoren.ActiveWriter
 			field1.DefaultAutoSize = true;
 			field1.AnchoringBehavior.MinimumHeightInLines = 1;
 			field1.AnchoringBehavior.MinimumWidthInCharacters = 1;
-			field1.DefaultAccessibleState = System.Windows.Forms.AccessibleStates.Invisible;
+			field1.DefaultAccessibleState = global::System.Windows.Forms.AccessibleStates.Invisible;
 			DslDiagrams::Decorator decorator1 = new DslDiagrams::ConnectorDecorator(field1, DslDiagrams::ConnectorDecoratorPosition.SourceTop, DslDiagrams::PointD.Empty);
 			decorators.Add(decorator1);
 				

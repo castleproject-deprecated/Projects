@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Altinoren.ActiveWriter.ActiveWriterDomainModel.Description" xml:space="preserve">
-    <value>A Visual Studio 2005 addin to design domain models and to generate code decorated with ActiveRecord attributes based on the model.</value>
+    <value>A Visual Studio 2008 addin to design domain models and to generate code decorated with ActiveRecord attributes or supported with NHibernate configuration based on the model.</value>
     <comment>Description for DslLibrary &apos;ActiveWriter&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ActiveWriterDomainModel.DisplayName" xml:space="preserve">
@@ -3505,6 +3505,14 @@
     <value>Drag between classes to create a nested relationship</value>
     <comment>Toolbox tooltip text</comment>
   </data>
+  <data name="UnrecognizedElementType" xml:space="preserve">
+    <value>ElementType {0} is not recognized as a type of domain class which belongs to this domain model.</value>
+    <comment>Incorrect ElementType passed in to Model.CreateElement method</comment>
+  </data>
+  <data name="UnrecognizedElementLinkType" xml:space="preserve">
+    <value>ElementLinkType {0} is not recognized as a type of domain relationship which belongs to this domain model.</value>
+    <comment>Incorrect ElementLinkType passed in to Model.CreateElementLink method</comment>
+  </data>
   <data name="AmbiguousSchema" xml:space="preserve">
     <value>More than one schema found for target namespace &apos;{0}&apos;, use the first one at &apos;{1}&apos;.</value>
     <comment>Serialization Warning: AmbiguousSchema</comment>
@@ -3579,6 +3587,10 @@ A DomainClass can be serialized as a moniker only if
   <data name="VersionMismatch" xml:space="preserve">
     <value>Unsupported version &apos;{0}&apos;, can only support &apos;{1}&apos;.</value>
     <comment>Serialization Error: VersionMismatch</comment>
+  </data>
+  <data name="CannotCloseExistingDiagramDocument" xml:space="preserve">
+    <value>Diagram file &apos;{0}&apos; cannot be closed.</value>
+    <comment>User cancel closing diagram file. Hence, the DSL model file cannot be opened</comment>
   </data>
   <data name="MinimumMultiplicityMissingLink" xml:space="preserve">
     <value>{0} {1} has no {2}.</value>

@@ -16,6 +16,9 @@ limitations under the License.
 ***************************************************************************/
 #>
 <#@ Dsl processor="DslDirectiveProcessor" requires="fileName='..\..\Dsl\DslDefinition.dsl'" #>
-<#@ include file="DslPackage\GeneratedCmd.tt" #>
-
-#define guidCmdSet		{ 0x9928a048, 0x76e7, 0x4f47, { 0x80, 0x55, 0x2b, 0x7d, 0xa1, 0x1b, 0x6f, 0x58 } }
+<#
+	// CmdSet Guid must be defined before master template is included
+	// This Guid must be kept synchronized with the CommandSetId Guid in Constants.tt
+	Guid guidCmdSet = new Guid ("9928a048-76e7-4f47-8055-2b7da11b6f58");
+#>
+<#@ include file="DslPackage\GeneratedVSCT.tt" #>

@@ -5,16 +5,16 @@
     <classShape Id="0e41747a-660c-4a27-9ead-ab68ef3cea53" absoluteBounds="0.5, 2.25, 1.5, 1.3362939453125002">
       <modelClassMoniker name="/6ee7762e-54d0-4184-8b35-2c3eaea297d2/Blog" />
       <nestedChildShapes>
-        <elementListCompartment Id="2ab905d4-4aa3-4e1a-b2ef-5b2ab7577db3" absoluteBounds="0.515, 2.66, 1.4700000000000002, 0.82629394531250011" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+        <elementListCompartment Id="2ab905d4-4aa3-4e1a-b2ef-5b2ab7577db3" absoluteBounds="0.515, 2.66, 1.4700000000000002, 0.82629394531250011" name="Properties" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="3d85a368-1be7-4705-8de6-ab89496f7d5c" absoluteBounds="0.5, 1.375, 1.5, 1.5285953776041668">
+    <classShape Id="3d85a368-1be7-4705-8de6-ab89496f7d5c" absoluteBounds="3, 0.875, 1.5, 1.5285953776041668">
       <modelClassMoniker name="/6ee7762e-54d0-4184-8b35-2c3eaea297d2/Post" />
       <nestedChildShapes>
-        <elementListCompartment Id="4f4f610f-76ba-419f-afa6-c6456d8fb916" absoluteBounds="0.515, 1.7850000000000001, 1.4700000000000002, 1.0185953776041665" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+        <elementListCompartment Id="4f4f610f-76ba-419f-afa6-c6456d8fb916" absoluteBounds="3.015, 1.2850000000000001, 1.4700000000000002, 1.0185953776041665" name="Properties" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <manyToOneConnector edgePoints="[(0.5 : 2.13929768880208); (0.25 : 2.13929768880208); (0.25 : 2.91814697265625); (0.5 : 2.91814697265625)]" manuallyRouted="false" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <manyToOneConnector edgePoints="[(3 : 1.5624995); (1.25 : 1.5624995); (1.25 : 2.25)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <manyToOneRelationMoniker Id="08539dcb-0e86-4620-8516-b88119cd1cb6" />
       <relativeChildShapes />
       <nodes>

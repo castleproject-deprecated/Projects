@@ -1,19 +1,4 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!--
-Copyright 2006 Gokhan Altinören - http://altinoren.com/
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
--->
 <WixLocalization xmlns="http://schemas.microsoft.com/wix/2003/11/localization">
 	<!-- Following strings will commonly need to be edited in this file. -->
 	<String Id="Manufacturer">altinoren.com</String>
@@ -21,13 +6,13 @@ limitations under the License.
 	<String Id="FileDescription">ActiveWriter File</String>
 	
 	<!-- Following strings can generally be left as-is. -->
-	<String Id="DslRedistRequired">This setup requires the Microsoft DSL Tools Redistributable.  Please run this setup using setup.exe to install the Microsoft DSL Tools Redistributable.</String>
-	<String Id="NetFrameworkRequired">This setup requires the Microsoft .NET Framework 2.0.  Please install the .NET Framework and run this setup again.</String>
-	<String Id="VisualStudio2005Required">This setup requires Microsoft Visual Studio 2005.  Please install Microsoft Visual Studio 2005 and run this setup again.</String>
-	<String Id="CSharpRequired">This setup requires Microsoft Visual C#.  Run the Microsoft Visual Studio 2005 setup and install this feature, then run this setup again.</String>
-	<String Id="VisualBasicRequired">This setup requires Microsoft Visual Basic.  Run the Microsoft Visual Studio 2005 setup and install this feature, then run this setup again.</String>
-	<String Id="CPlusPlusRequired">This setup requires Microsoft Visual C++.  Run the Microsoft Visual Studio 2005 setup and install this feature, then run this setup again.</String>
-	<String Id="JSharpRequired">This setup requires Microsoft Visual J#.  Run the Microsoft Visual Studio 2005 setup and install this feature, then run this setup again.</String>
+	<String Id="ElevatedProcessRequired">This setup must be launched from an elevated command prompt.</String>
+	<String Id="AdminUserRequired">This setup must be run by an administrator.</String>
+	<String Id="NetFrameworkRequired">This setup requires the Microsoft .NET Framework 3.5.  Please install the .NET Framework and run this setup again.</String>
+	<String Id="VisualStudio2008Required">This setup requires Microsoft Visual Studio 2008.  Please install Microsoft Visual Studio 2008 and run this setup again.</String>
+	<String Id="CSharpRequired">This setup requires Microsoft Visual C#.  Run the Microsoft Visual Studio 2008 setup and install this feature, then run this setup again.</String>
+	<String Id="VisualBasicRequired">This setup requires Microsoft Visual Basic.  Run the Microsoft Visual Studio 2008 setup and install this feature, then run this setup again.</String>
+	<String Id="CPlusPlusRequired">This setup requires Microsoft Visual C++.  Run the Microsoft Visual Studio 2008 setup and install this feature, then run this setup again.</String>
 	<String Id="ExistingVersionInstalled">Unable to install because an existing version of this product is already installed.  You must uninstall this version before installing the product.</String>
 	<String Id="AdminOrAdvertised">This installer package does not support Admin or Advertised installations.</String>
 	<String Id="MenuLocal">Will be installed on local hard drive</String>

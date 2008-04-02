@@ -1426,6 +1426,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private Assembly GenerateARAssembly(CodeCompileUnit compileUnit, bool generateInMemory)
         {
+            List<string> addedAssemblies = new List<string>();
             CompilerParameters parameters = new CompilerParameters();
             parameters.GenerateInMemory = generateInMemory;
 
@@ -1439,12 +1440,20 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             parameters.ReferencedAssemblies.Add(nHibernate.Location);
             parameters.ReferencedAssemblies.Add("System.dll");
             parameters.ReferencedAssemblies.Add("mscorlib.dll");
+            addedAssemblies.Add("castle.activerecord.dll");
+            addedAssemblies.Add("nhibernate.dll");
+            addedAssemblies.Add("system.dll");
+            addedAssemblies.Add("mscorlib.dll");
 
             // also add references to assemblies referenced by this project
             VSProject proj = (VSProject)_projectItem.ContainingProject.Object;
             foreach (Reference reference in proj.References)
             {
-                parameters.ReferencedAssemblies.Add(reference.Path);
+                if (!addedAssemblies.Contains(Path.GetFileName(reference.Path).ToLowerInvariant()))
+                {
+                    parameters.ReferencedAssemblies.Add(reference.Path);
+                    addedAssemblies.Add(Path.GetFileName(reference.Path).ToLowerInvariant());
+                }
             }
 
             CompilerResults results = _provider.CompileAssemblyFromDom(parameters, compileUnit);

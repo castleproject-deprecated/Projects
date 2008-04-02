@@ -186,7 +186,7 @@ namespace Altinoren.ActiveWriter
 			field1.DefaultAutoSize = true;
 			field1.AnchoringBehavior.MinimumHeightInLines = 1;
 			field1.AnchoringBehavior.MinimumWidthInCharacters = 1;
-			field1.DefaultAccessibleState = System.Windows.Forms.AccessibleStates.Invisible;
+			field1.DefaultAccessibleState = global::System.Windows.Forms.AccessibleStates.Invisible;
 			shapeFields.Add(field1);
 			
 			DslDiagrams::ChevronButtonField field2 = new DslDiagrams::ChevronButtonField("ExpandCollapse");
@@ -251,7 +251,7 @@ namespace Altinoren.ActiveWriter
 			}
 		}
 		#endregion
-		#region ComparmentShape code
+		#region CompartmentShape code
 		/// <summary>
 		/// Returns a value indicating whether compartment header should be visible if there is only one of them.
 		/// </summary>
@@ -289,11 +289,12 @@ namespace Altinoren.ActiveWriter
 				}
 				{
 					string title = global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("ClassShapePropertiesTitle");
-					compartmentDescriptions[localCompartmentsOffset+0] = new DslDiagrams::ElementListCompartmentDescription("Properties", title, 
+					DslDiagrams::ElementListCompartmentDescription descriptor = new DslDiagrams::ElementListCompartmentDescription("Properties", title, 
 						global::System.Drawing.Color.FromKnownColor(global::System.Drawing.KnownColor.LightGray), false, 
 						global::System.Drawing.Color.FromKnownColor(global::System.Drawing.KnownColor.White), false,
 						null, null,
 						false);
+					compartmentDescriptions[localCompartmentsOffset+0] = descriptor;
 				}
 			}
 			
@@ -602,7 +603,7 @@ namespace Altinoren.ActiveWriter
 			field1.DefaultAutoSize = true;
 			field1.AnchoringBehavior.MinimumHeightInLines = 1;
 			field1.AnchoringBehavior.MinimumWidthInCharacters = 1;
-			field1.DefaultAccessibleState = System.Windows.Forms.AccessibleStates.Invisible;
+			field1.DefaultAccessibleState = global::System.Windows.Forms.AccessibleStates.Invisible;
 			shapeFields.Add(field1);
 			
 			DslDiagrams::ChevronButtonField field2 = new DslDiagrams::ChevronButtonField("ExpandCollapse");
@@ -651,7 +652,7 @@ namespace Altinoren.ActiveWriter
 			}
 		}
 		#endregion
-		#region ComparmentShape code
+		#region CompartmentShape code
 		/// <summary>
 		/// Returns a value indicating whether compartment header should be visible if there is only one of them.
 		/// </summary>
@@ -689,11 +690,12 @@ namespace Altinoren.ActiveWriter
 				}
 				{
 					string title = global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("NestedClassShapePropertiesTitle");
-					compartmentDescriptions[localCompartmentsOffset+0] = new DslDiagrams::ElementListCompartmentDescription("Properties", title, 
+					DslDiagrams::ElementListCompartmentDescription descriptor = new DslDiagrams::ElementListCompartmentDescription("Properties", title, 
 						global::System.Drawing.Color.FromKnownColor(global::System.Drawing.KnownColor.LightGray), false, 
 						global::System.Drawing.Color.FromKnownColor(global::System.Drawing.KnownColor.White), false,
 						null, null,
 						false);
+					compartmentDescriptions[localCompartmentsOffset+0] = descriptor;
 				}
 			}
 			

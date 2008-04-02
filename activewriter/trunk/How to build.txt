@@ -1,4 +1,2 @@
-To open and build ActiveWriter with Visual Studio 2005, you'll need DSL Tools installed. DSL Tools is a part of Visual Studio SDK.
-The latest SDK (February 2007) can be downloaded from:
-http://www.microsoft.com/downloads/details.aspx?FamilyID=51a5c65b-c020-4e08-8ac0-3eb9c06996f4&DisplayLang=en
+To open and build ActiveWriter with Visual Studio 2008, you'll need DSL Tools installed. DSL Tools is a part of Visual Studio 2008 SDK.
 You also need C++ installed to avoid preprocessor errors during the build.

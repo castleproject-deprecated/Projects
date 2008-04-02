@@ -662,7 +662,7 @@ namespace Altinoren.ActiveWriter
  	/// <summary>
 	/// Handles interaction between the ConnectionBuilder and the corresponding ConnectionTool.
 	/// </summary>
-	public partial class ManyToOneRelationshipConnectAction : DslDiagrams::ConnectAction
+	internal partial class ManyToOneRelationshipConnectAction : DslDiagrams::ConnectAction
 	{
 		private DslDiagrams::ConnectionType[] connectionTypes;
 		
@@ -806,7 +806,7 @@ namespace Altinoren.ActiveWriter
  	/// <summary>
 	/// Handles interaction between the ConnectionBuilder and the corresponding ConnectionTool.
 	/// </summary>
-	public partial class ManyToManyRelationshipConnectAction : DslDiagrams::ConnectAction
+	internal partial class ManyToManyRelationshipConnectAction : DslDiagrams::ConnectAction
 	{
 		private DslDiagrams::ConnectionType[] connectionTypes;
 		
@@ -950,7 +950,7 @@ namespace Altinoren.ActiveWriter
  	/// <summary>
 	/// Handles interaction between the ConnectionBuilder and the corresponding ConnectionTool.
 	/// </summary>
-	public partial class OneToOneRelationshipConnectAction : DslDiagrams::ConnectAction
+	internal partial class OneToOneRelationshipConnectAction : DslDiagrams::ConnectAction
 	{
 		private DslDiagrams::ConnectionType[] connectionTypes;
 		
@@ -1094,7 +1094,7 @@ namespace Altinoren.ActiveWriter
  	/// <summary>
 	/// Handles interaction between the ConnectionBuilder and the corresponding ConnectionTool.
 	/// </summary>
-	public partial class NestedRelationshipConnectAction : DslDiagrams::ConnectAction
+	internal partial class NestedRelationshipConnectAction : DslDiagrams::ConnectAction
 	{
 		private DslDiagrams::ConnectionType[] connectionTypes;
 		

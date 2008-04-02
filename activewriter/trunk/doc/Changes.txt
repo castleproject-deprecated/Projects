@@ -1,3 +1,5 @@
+Preview 4
+
 New:
 - Added support for Flush for ManyToOneRelation
 - Added partial Oracle drag and drop support. (Patch: Yavor Shahpasov)
@@ -6,6 +8,8 @@ New:
 - Contrib-50: (Revised description) Allow user defined imports to replace generated imports. (Thanks: Michael Hawksworth)
 - Contrib-54: Integrate NHibernateQueryGenerator into ActiveWriter (Thanks: Steve Degosserie)
 - Contrib-81: Added list relation type. (Patch: Grimace of Despair)
+- Moved all to vS2008
+- Moved binaries license from "as is" to Apache v2. We don't need DSL Tools redistributables in setup package anymore.
 
 Fixed:
 - ManyToOne SourceNotNull is now working propertly

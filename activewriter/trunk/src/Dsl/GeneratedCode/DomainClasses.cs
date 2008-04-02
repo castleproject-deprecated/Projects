@@ -57,7 +57,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for UseNullables
 		/// </summary>
-		private NullableUsage useNullablesPropertyStorage = Altinoren.ActiveWriter.NullableUsage.No;
+		private NullableUsage useNullablesPropertyStorage = NullableUsage.No;
 		
 		/// <summary>
 		/// Gets or sets the value of UseNullables domain property.
@@ -66,7 +66,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/UseNullables.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/UseNullables.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/UseNullables.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.NullableUsage.No)]
+		[global::System.ComponentModel.DefaultValue(NullableUsage.No)]
 		[DslModeling::DomainObjectId("f85b9035-c755-438f-b54d-2acebc636a8c")]
 		public NullableUsage UseNullables
 		{
@@ -146,7 +146,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for CaseOfPrivateFields
 		/// </summary>
-		private FieldCase caseOfPrivateFieldsPropertyStorage = Altinoren.ActiveWriter.FieldCase.CamelcaseUnderscore;
+		private FieldCase caseOfPrivateFieldsPropertyStorage = FieldCase.CamelcaseUnderscore;
 		
 		/// <summary>
 		/// Gets or sets the value of CaseOfPrivateFields domain property.
@@ -156,7 +156,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/CaseOfPrivateFields.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/CaseOfPrivateFields.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/CaseOfPrivateFields.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.FieldCase.CamelcaseUnderscore)]
+		[global::System.ComponentModel.DefaultValue(FieldCase.CamelcaseUnderscore)]
 		[DslModeling::DomainObjectId("571d0e7c-b79b-432e-81ff-2c7665c959b1")]
 		public FieldCase CaseOfPrivateFields
 		{
@@ -1311,7 +1311,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for Target
 		/// </summary>
-		private CodeGenerationTarget targetPropertyStorage = Altinoren.ActiveWriter.CodeGenerationTarget.ActiveRecord;
+		private CodeGenerationTarget targetPropertyStorage = CodeGenerationTarget.ActiveRecord;
 		
 		/// <summary>
 		/// Gets or sets the value of Target domain property.
@@ -1320,7 +1320,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/Target.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/Target.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/Target.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.CodeGenerationTarget.ActiveRecord)]
+		[global::System.ComponentModel.DefaultValue(CodeGenerationTarget.ActiveRecord)]
 		[DslModeling::DomainObjectId("60bf3b58-876b-4d6a-8e36-21ae054e0daf")]
 		public CodeGenerationTarget Target
 		{
@@ -2118,7 +2118,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for GenerateMetaData
 		/// </summary>
-		private MetaDataGeneration generateMetaDataPropertyStorage = Altinoren.ActiveWriter.MetaDataGeneration.False;
+		private MetaDataGeneration generateMetaDataPropertyStorage = MetaDataGeneration.False;
 		
 		/// <summary>
 		/// Gets or sets the value of GenerateMetaData domain property.
@@ -2128,7 +2128,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/GenerateMetaData.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/GenerateMetaData.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/GenerateMetaData.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.MetaDataGeneration.False)]
+		[global::System.ComponentModel.DefaultValue(MetaDataGeneration.False)]
 		[DslModeling::DomainObjectId("8a850d5e-b19c-4327-b19f-09d99e976db5")]
 		public MetaDataGeneration GenerateMetaData
 		{
@@ -2837,7 +2837,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for Cache
 		/// </summary>
-		private CacheEnum cachePropertyStorage = Altinoren.ActiveWriter.CacheEnum.Undefined;
+		private CacheEnum cachePropertyStorage = CacheEnum.Undefined;
 		
 		/// <summary>
 		/// Gets or sets the value of Cache domain property.
@@ -2845,7 +2845,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelClass/Cache.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelClass/Cache.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelClass/Cache.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.CacheEnum.Undefined)]
+		[global::System.ComponentModel.DefaultValue(CacheEnum.Undefined)]
 		[DslModeling::DomainObjectId("317d9c1a-4f8a-4745-8902-44bc0540e000")]
 		public CacheEnum Cache
 		{
@@ -4119,7 +4119,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for Polymorphism
 		/// </summary>
-		private Polymorphism polymorphismPropertyStorage = Altinoren.ActiveWriter.Polymorphism.Implicit;
+		private Polymorphism polymorphismPropertyStorage = Polymorphism.Implicit;
 		
 		/// <summary>
 		/// Gets or sets the value of Polymorphism domain property.
@@ -4128,7 +4128,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelClass/Polymorphism.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelClass/Polymorphism.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelClass/Polymorphism.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.Polymorphism.Implicit)]
+		[global::System.ComponentModel.DefaultValue(Polymorphism.Implicit)]
 		[DslModeling::DomainObjectId("5e2047eb-e145-40ca-8380-ac0234e31719")]
 		public Polymorphism Polymorphism
 		{
@@ -4386,7 +4386,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for Locking
 		/// </summary>
-		private OptimisticLocking lockingPropertyStorage = Altinoren.ActiveWriter.OptimisticLocking.Version;
+		private OptimisticLocking lockingPropertyStorage = OptimisticLocking.Version;
 		
 		/// <summary>
 		/// Gets or sets the value of Locking domain property.
@@ -4395,7 +4395,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelClass/Locking.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelClass/Locking.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelClass/Locking.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.OptimisticLocking.Version)]
+		[global::System.ComponentModel.DefaultValue(OptimisticLocking.Version)]
 		[DslModeling::DomainObjectId("e4844c20-3d13-4a57-85e2-4049ed5fae88")]
 		public OptimisticLocking Locking
 		{
@@ -4655,7 +4655,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for UseGenerics
 		/// </summary>
-		private InheritableBoolean useGenericsPropertyStorage = Altinoren.ActiveWriter.InheritableBoolean.Inherit;
+		private InheritableBoolean useGenericsPropertyStorage = InheritableBoolean.Inherit;
 		
 		/// <summary>
 		/// Gets or sets the value of UseGenerics domain property.
@@ -4665,7 +4665,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelClass/UseGenerics.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelClass/UseGenerics.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelClass/UseGenerics.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.InheritableBoolean.Inherit)]
+		[global::System.ComponentModel.DefaultValue(InheritableBoolean.Inherit)]
 		[DslModeling::DomainObjectId("ca521240-6ae4-43bc-a58f-6be1b5ac1b85")]
 		public InheritableBoolean UseGenerics
 		{
@@ -4745,7 +4745,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for ImplementINotifyPropertyChanged
 		/// </summary>
-		private InheritableBoolean implementINotifyPropertyChangedPropertyStorage = Altinoren.ActiveWriter.InheritableBoolean.Inherit;
+		private InheritableBoolean implementINotifyPropertyChangedPropertyStorage = InheritableBoolean.Inherit;
 		
 		/// <summary>
 		/// Gets or sets the value of ImplementINotifyPropertyChanged domain property.
@@ -4755,7 +4755,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelClass/ImplementINotifyPropertyChanged.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelClass/ImplementINotifyPropertyChanged.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelClass/ImplementINotifyPropertyChanged.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.InheritableBoolean.Inherit)]
+		[global::System.ComponentModel.DefaultValue(InheritableBoolean.Inherit)]
 		[DslModeling::DomainObjectId("097f2266-f8b4-4079-bafd-9b16b9e8c4a3")]
 		public InheritableBoolean ImplementINotifyPropertyChanged
 		{
@@ -4835,7 +4835,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for UseGenericRelations
 		/// </summary>
-		private InheritableBoolean useGenericRelationsPropertyStorage = Altinoren.ActiveWriter.InheritableBoolean.Inherit;
+		private InheritableBoolean useGenericRelationsPropertyStorage = InheritableBoolean.Inherit;
 		
 		/// <summary>
 		/// Gets or sets the value of UseGenericRelations domain property.
@@ -4845,7 +4845,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelClass/UseGenericRelations.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelClass/UseGenericRelations.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelClass/UseGenericRelations.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.InheritableBoolean.Inherit)]
+		[global::System.ComponentModel.DefaultValue(InheritableBoolean.Inherit)]
 		[DslModeling::DomainObjectId("a176d278-b7da-4dc8-8ebb-9db22b96f07f")]
 		public InheritableBoolean UseGenericRelations
 		{
@@ -5270,7 +5270,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for ColumnType
 		/// </summary>
-		private NHibernateType columnTypePropertyStorage = Altinoren.ActiveWriter.NHibernateType.String;
+		private NHibernateType columnTypePropertyStorage = NHibernateType.String;
 		
 		/// <summary>
 		/// Gets or sets the value of ColumnType domain property.
@@ -5278,7 +5278,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelProperty/ColumnType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelProperty/ColumnType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelProperty/ColumnType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.NHibernateType.String)]
+		[global::System.ComponentModel.DefaultValue(NHibernateType.String)]
 		[DslModeling::DomainObjectId("e0dd7a3b-0ec5-4b7e-9e50-44141167b5ae")]
 		public NHibernateType ColumnType
 		{
@@ -5366,6 +5366,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelProperty/CustomColumnType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelProperty/CustomColumnType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelProperty/CustomColumnType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue("")]
 		[DslModeling::DomainObjectId("3b717093-4359-4eef-8d1f-42bfb1384af6")]
 		public global::System.String CustomColumnType
 		{
@@ -5453,6 +5454,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelProperty/CustomMemberType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelProperty/CustomMemberType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelProperty/CustomMemberType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue("")]
 		[DslModeling::DomainObjectId("b06eb038-c800-4217-bd0e-e2b00b157132")]
 		public global::System.String CustomMemberType
 		{
@@ -6143,7 +6145,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for Generator
 		/// </summary>
-		private PrimaryKeyType generatorPropertyStorage = Altinoren.ActiveWriter.PrimaryKeyType.Native;
+		private PrimaryKeyType generatorPropertyStorage = PrimaryKeyType.Native;
 		
 		/// <summary>
 		/// Gets or sets the value of Generator domain property.
@@ -6151,7 +6153,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelProperty/Generator.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelProperty/Generator.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelProperty/Generator.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.PrimaryKeyType.Native)]
+		[global::System.ComponentModel.DefaultValue(PrimaryKeyType.Native)]
 		[DslModeling::DomainObjectId("fab33357-7061-42bc-b5a5-5238cb8ae4a9")]
 		public PrimaryKeyType Generator
 		{
@@ -6231,7 +6233,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for KeyType
 		/// </summary>
-		private KeyType keyTypePropertyStorage = Altinoren.ActiveWriter.KeyType.None;
+		private KeyType keyTypePropertyStorage = KeyType.None;
 		
 		/// <summary>
 		/// Gets or sets the value of KeyType domain property.
@@ -6240,7 +6242,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelProperty/KeyType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelProperty/KeyType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelProperty/KeyType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.KeyType.None)]
+		[global::System.ComponentModel.DefaultValue(KeyType.None)]
 		[DslModeling::DomainObjectId("04023409-cb73-4f64-ae64-3e1fbbcb0ec1")]
 		public KeyType KeyType
 		{
@@ -6496,7 +6498,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for Accessor
 		/// </summary>
-		private Accessor accessorPropertyStorage = Altinoren.ActiveWriter.Accessor.Public;
+		private Accessor accessorPropertyStorage = Accessor.Public;
 		
 		/// <summary>
 		/// Gets or sets the value of Accessor domain property.
@@ -6505,7 +6507,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelProperty/Accessor.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelProperty/Accessor.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelProperty/Accessor.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.Accessor.Public)]
+		[global::System.ComponentModel.DefaultValue(Accessor.Public)]
 		[DslModeling::DomainObjectId("2f3d7c02-f986-4d98-9e1d-fadfa521dbd2")]
 		public Accessor Accessor
 		{
@@ -6673,7 +6675,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for PropertyType
 		/// </summary>
-		private PropertyType propertyTypePropertyStorage = Altinoren.ActiveWriter.PropertyType.Property;
+		private PropertyType propertyTypePropertyStorage = PropertyType.Property;
 		
 		/// <summary>
 		/// Gets or sets the value of PropertyType domain property.
@@ -6682,7 +6684,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelProperty/PropertyType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelProperty/PropertyType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelProperty/PropertyType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.PropertyType.Property)]
+		[global::System.ComponentModel.DefaultValue(PropertyType.Property)]
 		[DslModeling::DomainObjectId("4ed3c7b2-58e8-4db7-be1d-bf46273a3756")]
 		public PropertyType PropertyType
 		{
@@ -7538,7 +7540,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for Access
 		/// </summary>
-		private PropertyAccess accessPropertyStorage = Altinoren.ActiveWriter.PropertyAccess.Property;
+		private PropertyAccess accessPropertyStorage = PropertyAccess.Property;
 		
 		/// <summary>
 		/// Gets or sets the value of Access domain property.
@@ -7546,7 +7548,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelElementWithAccess/Access.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelElementWithAccess/Access.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelElementWithAccess/Access.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.PropertyAccess.Property)]
+		[global::System.ComponentModel.DefaultValue(PropertyAccess.Property)]
 		[DslModeling::DomainObjectId("64a542a8-a0ce-42cc-b9a8-1845c744cb97")]
 		public PropertyAccess Access
 		{
@@ -7872,7 +7874,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for ImplementINotifyPropertyChanged
 		/// </summary>
-		private InheritableBoolean implementINotifyPropertyChangedPropertyStorage = Altinoren.ActiveWriter.InheritableBoolean.Inherit;
+		private InheritableBoolean implementINotifyPropertyChangedPropertyStorage = InheritableBoolean.Inherit;
 		
 		/// <summary>
 		/// Gets or sets the value of ImplementINotifyPropertyChanged domain property.
@@ -7882,7 +7884,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClass/ImplementINotifyPropertyChanged.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.NestedClass/ImplementINotifyPropertyChanged.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClass/ImplementINotifyPropertyChanged.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.InheritableBoolean.Inherit)]
+		[global::System.ComponentModel.DefaultValue(InheritableBoolean.Inherit)]
 		[DslModeling::DomainObjectId("c5fefe2c-4d9f-498f-b0b1-619bfa9c215d")]
 		public InheritableBoolean ImplementINotifyPropertyChanged
 		{

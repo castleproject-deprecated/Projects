@@ -1,1 +1,1 @@
-"C:\Program Files\Microsoft Visual Studio 8\Common7\IDE\devenv.exe" /rootsuffix Exp /DesignTimeRun Debugging.sln
+"C:\Program Files\Microsoft Visual Studio 9.0\Common7\IDE\devenv.exe" /ranu /rootsuffix Exp /DesignTimeRun Debugging.sln

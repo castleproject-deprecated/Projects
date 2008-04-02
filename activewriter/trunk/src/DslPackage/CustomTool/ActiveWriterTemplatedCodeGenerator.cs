@@ -56,7 +56,7 @@ namespace Altinoren.ActiveWriter.CustomTool
                 manager.GetObject("ActiveWriterReport").ToString()
                     .Replace("%MODELFILE%", fi.Name)
                     .Replace("%MODELFILEFULLNAME%", fi.FullName)
-                    .Replace("%NAMESPACE%", FileNameSpace)
+                    .Replace("%NAMESPACE%", FileNamespace)
                     .Replace("%EXT%", fileExtension)
                     .Replace("%PID%", currentProcess.Id.ToString());
 

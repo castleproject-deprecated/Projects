@@ -10,16 +10,20 @@
 using DslModeling = global::Microsoft.VisualStudio.Modeling;
 using DslDesign = global::Microsoft.VisualStudio.Modeling.Design;
 using DslDiagrams = global::Microsoft.VisualStudio.Modeling.Diagrams;
+
+
 namespace Altinoren.ActiveWriter
 {
 	/// <summary>
 	/// DomainModel ActiveWriterDomainModel
-	/// A Visual Studio 2005 addin to design domain models and to generate code
-	/// decorated with ActiveRecord attributes based on the model.
+	/// A Visual Studio 2008 addin to design domain models and to generate code
+	/// decorated with ActiveRecord attributes or supported with NHibernate
+	/// configuration based on the model.
 	/// </summary>
 	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ActiveWriterDomainModel.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ActiveWriterDomainModel.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 	[global::System.CLSCompliant(true)]
+	[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]
 	[DslModeling::DomainObjectId("3a7d8d12-f07c-4dd1-8689-f9610e7a79e1")]
 	public partial class ActiveWriterDomainModel : DslModeling::DomainModel
 	{
@@ -46,6 +50,7 @@ namespace Altinoren.ActiveWriter
 		/// Gets the list of generated domain model types (classes, rules, relationships).
 		/// </summary>
 		/// <returns>List of types.</returns>
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]	
 		protected sealed override global::System.Type[] GetGeneratedDomainModelTypes()
 		{
 			return new global::System.Type[]
@@ -84,6 +89,7 @@ namespace Altinoren.ActiveWriter
 		/// Gets the list of generated domain properties.
 		/// </summary>
 		/// <returns>List of property data.</returns>
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]	
 		protected sealed override DomainMemberInfo[] GetGeneratedDomainProperties()
 		{
 			return new DomainMemberInfo[]
@@ -298,6 +304,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="propertyAssignments">New element property assignments.</param>
 		/// <returns>Created element.</returns>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]	
 		public sealed override DslModeling::ModelElement CreateElement(DslModeling::Partition partition, global::System.Type elementType, DslModeling::PropertyAssignment[] propertyAssignments)
 		{
 			if (elementType == null) throw new global::System.ArgumentNullException("elementType");
@@ -320,7 +327,12 @@ namespace Altinoren.ActiveWriter
 			int index;
 			if (!createElementMap.TryGetValue(elementType, out index))
 			{
-				throw new global::System.ArgumentException("elementType is not recognized as a type of domain class which belongs to this domain model.");
+				// construct exception error message		
+				string exceptionError = string.Format(
+								global::System.Globalization.CultureInfo.CurrentCulture,
+								global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("UnrecognizedElementType"),
+								elementType.Name);
+				throw new global::System.ArgumentException(exceptionError, "elementType");
 			}
 			switch (index)
 			{
@@ -352,7 +364,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
 		public sealed override DslModeling::ElementLink CreateElementLink(DslModeling::Partition partition, global::System.Type elementLinkType, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
 		{
-			if (elementLinkType == null) throw new global::System.ArgumentNullException("elementType");
+			if (elementLinkType == null) throw new global::System.ArgumentNullException("elementLinkType");
 			if (roleAssignments == null) throw new global::System.ArgumentNullException("roleAssignments");
 	
 			if (createElementLinkMap == null)
@@ -370,7 +382,13 @@ namespace Altinoren.ActiveWriter
 			int index;
 			if (!createElementLinkMap.TryGetValue(elementLinkType, out index))
 			{
-				throw new global::System.ArgumentException("elementLinkType is not recognized as a type of domain relationship which belongs to this domain model.");
+				// construct exception error message
+				string exceptionError = string.Format(
+								global::System.Globalization.CultureInfo.CurrentCulture,
+								global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("UnrecognizedElementLinkType"),
+								elementLinkType.Name);
+				throw new global::System.ArgumentException(exceptionError, "elementLinkType");
+			
 			}
 			switch (index)
 			{
@@ -550,7 +568,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// DomainRoles
 		/// </summary>
-		private global::System.Collections.Generic.Dictionary<global::System.Guid, bool> domainRoles;
+		private global::System.Collections.Specialized.HybridDictionary domainRoles;
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -585,18 +603,19 @@ namespace Altinoren.ActiveWriter
 		/// <returns></returns>
 		public virtual DslModeling::VisitorFilterResult ShouldVisitRolePlayer(DslModeling::ElementWalker walker, DslModeling::ModelElement sourceElement, DslModeling::ElementLink elementLink, DslModeling::DomainRoleInfo targetDomainRole, DslModeling::ModelElement targetRolePlayer)
 		{
-			return this.DomainRoles.ContainsKey(targetDomainRole.Id) ? DslModeling::VisitorFilterResult.Yes : DslModeling::VisitorFilterResult.DoNotCare;
+			if (targetDomainRole == null) throw new global::System.ArgumentNullException("targetDomainRole");
+			return this.DomainRoles.Contains(targetDomainRole.Id) ? DslModeling::VisitorFilterResult.Yes : DslModeling::VisitorFilterResult.DoNotCare;
 		}
 		/// <summary>
 		/// DomainRoles
 		/// </summary>
-		private global::System.Collections.Generic.Dictionary<global::System.Guid, bool> DomainRoles
+		private global::System.Collections.Specialized.HybridDictionary DomainRoles
 		{
 			get
 			{
 				if (this.domainRoles == null)
 				{
-					this.domainRoles = new global::System.Collections.Generic.Dictionary<global::System.Guid, bool>();
+					this.domainRoles = new global::System.Collections.Specialized.HybridDictionary();
 				}
 				return this.domainRoles;
 			}
@@ -624,7 +643,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// DomainRoles
 		/// </summary>
-		private global::System.Collections.Generic.Dictionary<global::System.Guid, bool> domainRoles;
+		private global::System.Collections.Specialized.HybridDictionary domainRoles;
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -645,7 +664,8 @@ namespace Altinoren.ActiveWriter
 		/// <returns>Yes if the relationship should be traversed</returns>
 		public virtual DslModeling::VisitorFilterResult ShouldVisitRelationship(DslModeling::ElementWalker walker, DslModeling::ModelElement sourceElement, DslModeling::DomainRoleInfo sourceRoleInfo, DslModeling::DomainRelationshipInfo domainRelationshipInfo, DslModeling::ElementLink targetRelationship)
 		{
-			return this.DomainRoles.ContainsKey(sourceRoleInfo.Id) ? DslModeling::VisitorFilterResult.Yes : DslModeling::VisitorFilterResult.DoNotCare;
+			if (sourceRoleInfo == null) throw new global::System.ArgumentNullException("sourceRoleInfo");
+			return this.DomainRoles.Contains(sourceRoleInfo.Id) ? DslModeling::VisitorFilterResult.Yes : DslModeling::VisitorFilterResult.DoNotCare;
 		}
 		/// <summary>
 		/// Called to ask the filter if a particular role player should be Visited during traversal
@@ -658,18 +678,19 @@ namespace Altinoren.ActiveWriter
 		/// <returns></returns>
 		public virtual DslModeling::VisitorFilterResult ShouldVisitRolePlayer(DslModeling::ElementWalker walker, DslModeling::ModelElement sourceElement, DslModeling::ElementLink elementLink, DslModeling::DomainRoleInfo targetDomainRole, DslModeling::ModelElement targetRolePlayer)
 		{
-			return this.DomainRoles.ContainsKey(targetDomainRole.Id) ? DslModeling::VisitorFilterResult.Yes : DslModeling::VisitorFilterResult.DoNotCare;
+			if (targetDomainRole == null) throw new global::System.ArgumentNullException("targetDomainRole");
+			return this.DomainRoles.Contains(targetDomainRole.Id) ? DslModeling::VisitorFilterResult.Yes : DslModeling::VisitorFilterResult.DoNotCare;
 		}
 		/// <summary>
 		/// DomainRoles
 		/// </summary>
-		private global::System.Collections.Generic.Dictionary<global::System.Guid, bool> DomainRoles
+		private global::System.Collections.Specialized.HybridDictionary DomainRoles
 		{
 			get
 			{
 				if (this.domainRoles == null)
 				{
-					this.domainRoles = new global::System.Collections.Generic.Dictionary<global::System.Guid, bool>();
+					this.domainRoles = new global::System.Collections.Specialized.HybridDictionary();
 				}
 				return this.domainRoles;
 			}

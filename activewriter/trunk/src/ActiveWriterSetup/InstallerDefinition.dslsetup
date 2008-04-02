@@ -18,7 +18,7 @@ limitations under the License.
 This file is a manifest that defines how a domain-specific language is installed. The text template files 
 (.tt) in this project use the information in this file to generate WiX files (.wxs). When the project is 
 built, these WiX files are compiled into an MSI package. To deploy this package, copy all of the files 
-from the project output directory to the target computer, and run setup.exe.
+from the project output directory to the target computer, and run the MSI file.
 
 Some values in this file are copied from the domain-specific language definition (.dsl).
 If the .dsl file could not be found, you will need to edit this manifest to correct values for some attributes.
@@ -31,11 +31,11 @@ For more specific information, see the Error List window.
   requiresCSharp="false"
   requiresVisualBasic="false"
   productCode="44cbbaaa-6860-4836-899b-e62282e165f9"
-  upgradeCode="c43851aa-77cf-44f2-9e72-7ab9cf85a0c1"
+  upgradeCode="c8b7e84a-e1d3-4af2-a7af-3417836361ce"
   localeId="1033"
   customFragmentIds="CustomToolFragment"
   >
-	<dslPackage name="ActiveWriter" project="DslPackage" assemblyPath="Altinoren.ActiveWriter.DslPackage.dll" registryRoot="Software\Microsoft\VisualStudio\8.0">
+	<dslPackage name="ActiveWriter" project="DslPackage" assemblyPath="Altinoren.ActiveWriter.DslPackage.dll" registryRoot="SOFTWARE\Microsoft\VisualStudio\9.0">
 		<fileExtensions>
 			<fileExtension name="actiw" extension="actiw" descriptionKey="FileDescription" hasIcon="true" iconId="0"/>
 		</fileExtensions>

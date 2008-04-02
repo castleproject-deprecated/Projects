@@ -411,7 +411,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetCache
 		/// </summary>
-		private CacheEnum targetCachePropertyStorage = Altinoren.ActiveWriter.CacheEnum.Undefined;
+		private CacheEnum targetCachePropertyStorage = CacheEnum.Undefined;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetCache domain property.
@@ -419,7 +419,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCache.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCache.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCache.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.CacheEnum.Undefined)]
+		[global::System.ComponentModel.DefaultValue(CacheEnum.Undefined)]
 		[DslModeling::DomainObjectId("c3ac9ce5-87b4-48ca-a243-26e0a237e7ab")]
 		public CacheEnum TargetCache
 		{
@@ -499,7 +499,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetCascade
 		/// </summary>
-		private ManyRelationCascadeEnum targetCascadePropertyStorage = Altinoren.ActiveWriter.ManyRelationCascadeEnum.None;
+		private ManyRelationCascadeEnum targetCascadePropertyStorage = ManyRelationCascadeEnum.None;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetCascade domain property.
@@ -507,7 +507,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCascade.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCascade.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCascade.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.ManyRelationCascadeEnum.None)]
+		[global::System.ComponentModel.DefaultValue(ManyRelationCascadeEnum.None)]
 		[DslModeling::DomainObjectId("55f2f2e3-3183-4b1a-b3c9-9a864fb2e4ae")]
 		public ManyRelationCascadeEnum TargetCascade
 		{
@@ -1109,7 +1109,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetRelationType
 		/// </summary>
-		private RelationType targetRelationTypePropertyStorage = Altinoren.ActiveWriter.RelationType.Guess;
+		private RelationType targetRelationTypePropertyStorage = RelationType.Guess;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetRelationType domain property.
@@ -1117,7 +1117,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetRelationType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetRelationType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetRelationType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.RelationType.Guess)]
+		[global::System.ComponentModel.DefaultValue(RelationType.Guess)]
 		[DslModeling::DomainObjectId("8c4ed47e-37dc-4975-b996-7c6521940bf2")]
 		public RelationType TargetRelationType
 		{
@@ -1811,7 +1811,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for SourceCascade
 		/// </summary>
-		private CascadeEnum sourceCascadePropertyStorage = Altinoren.ActiveWriter.CascadeEnum.None;
+		private CascadeEnum sourceCascadePropertyStorage = CascadeEnum.None;
 		
 		/// <summary>
 		/// Gets or sets the value of SourceCascade domain property.
@@ -1819,7 +1819,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceCascade.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceCascade.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceCascade.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.CascadeEnum.None)]
+		[global::System.ComponentModel.DefaultValue(CascadeEnum.None)]
 		[DslModeling::DomainObjectId("563916db-4a01-4bd6-b6b4-aab15e396f78")]
 		public CascadeEnum SourceCascade
 		{
@@ -2248,7 +2248,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for SourceOuterJoin
 		/// </summary>
-		private OuterJoinEnum sourceOuterJoinPropertyStorage = Altinoren.ActiveWriter.OuterJoinEnum.Auto;
+		private OuterJoinEnum sourceOuterJoinPropertyStorage = OuterJoinEnum.Auto;
 		
 		/// <summary>
 		/// Gets or sets the value of SourceOuterJoin domain property.
@@ -2256,7 +2256,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceOuterJoin.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceOuterJoin.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceOuterJoin.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.OuterJoinEnum.Auto)]
+		[global::System.ComponentModel.DefaultValue(OuterJoinEnum.Auto)]
 		[DslModeling::DomainObjectId("d5bd0e29-9032-4775-9711-df5b24f9914d")]
 		public OuterJoinEnum SourceOuterJoin
 		{
@@ -2686,7 +2686,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetAccess
 		/// </summary>
-		private PropertyAccess targetAccessPropertyStorage = Altinoren.ActiveWriter.PropertyAccess.Property;
+		private PropertyAccess targetAccessPropertyStorage = PropertyAccess.Property;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetAccess domain property.
@@ -2695,7 +2695,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.PropertyAccess.Property)]
+		[global::System.ComponentModel.DefaultValue(PropertyAccess.Property)]
 		[DslModeling::DomainObjectId("05776d07-5fe2-4041-84fc-8d0c1d3b21ec")]
 		public PropertyAccess TargetAccess
 		{
@@ -2863,7 +2863,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for SourceNotFoundBehaviour
 		/// </summary>
-		private NotFoundBehaviour sourceNotFoundBehaviourPropertyStorage = Altinoren.ActiveWriter.NotFoundBehaviour.Default;
+		private NotFoundBehaviour sourceNotFoundBehaviourPropertyStorage = NotFoundBehaviour.Default;
 		
 		/// <summary>
 		/// Gets or sets the value of SourceNotFoundBehaviour domain property.
@@ -2872,7 +2872,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceNotFoundBehaviour.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceNotFoundBehaviour.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceNotFoundBehaviour.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.NotFoundBehaviour.Default)]
+		[global::System.ComponentModel.DefaultValue(NotFoundBehaviour.Default)]
 		[DslModeling::DomainObjectId("e9556820-fa84-4921-97a3-c7cc3b45d539")]
 		public NotFoundBehaviour SourceNotFoundBehaviour
 		{
@@ -2952,7 +2952,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetNotFoundBehaviour
 		/// </summary>
-		private NotFoundBehaviour targetNotFoundBehaviourPropertyStorage = Altinoren.ActiveWriter.NotFoundBehaviour.Default;
+		private NotFoundBehaviour targetNotFoundBehaviourPropertyStorage = NotFoundBehaviour.Default;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetNotFoundBehaviour domain property.
@@ -2961,7 +2961,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetNotFoundBehaviour.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetNotFoundBehaviour.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetNotFoundBehaviour.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.NotFoundBehaviour.Default)]
+		[global::System.ComponentModel.DefaultValue(NotFoundBehaviour.Default)]
 		[DslModeling::DomainObjectId("91224e05-42d5-4913-9659-aa8996fb8240")]
 		public NotFoundBehaviour TargetNotFoundBehaviour
 		{
@@ -3305,7 +3305,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetFetch
 		/// </summary>
-		private FetchEnum targetFetchPropertyStorage = Altinoren.ActiveWriter.FetchEnum.Unspecified;
+		private FetchEnum targetFetchPropertyStorage = FetchEnum.Unspecified;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetFetch domain property.
@@ -3313,7 +3313,7 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetFetch.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetFetch.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.FetchEnum.Unspecified)]
+		[global::System.ComponentModel.DefaultValue(FetchEnum.Unspecified)]
 		[DslModeling::DomainObjectId("65a5cad5-daac-4487-bdd4-24ba761f92b1")]
 		public FetchEnum TargetFetch
 		{
@@ -3827,7 +3827,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for SourceCache
 		/// </summary>
-		private CacheEnum sourceCachePropertyStorage = Altinoren.ActiveWriter.CacheEnum.Undefined;
+		private CacheEnum sourceCachePropertyStorage = CacheEnum.Undefined;
 		
 		/// <summary>
 		/// Gets or sets the value of SourceCache domain property.
@@ -3835,7 +3835,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCache.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCache.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCache.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.CacheEnum.Undefined)]
+		[global::System.ComponentModel.DefaultValue(CacheEnum.Undefined)]
 		[DslModeling::DomainObjectId("0edaa292-6e4e-403e-87f5-c6e3b65d37c7")]
 		public CacheEnum SourceCache
 		{
@@ -3915,7 +3915,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for SourceCascade
 		/// </summary>
-		private ManyRelationCascadeEnum sourceCascadePropertyStorage = Altinoren.ActiveWriter.ManyRelationCascadeEnum.None;
+		private ManyRelationCascadeEnum sourceCascadePropertyStorage = ManyRelationCascadeEnum.None;
 		
 		/// <summary>
 		/// Gets or sets the value of SourceCascade domain property.
@@ -3923,7 +3923,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCascade.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCascade.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCascade.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.ManyRelationCascadeEnum.None)]
+		[global::System.ComponentModel.DefaultValue(ManyRelationCascadeEnum.None)]
 		[DslModeling::DomainObjectId("b1eb524a-89f0-407d-a7d2-fe54e92c091e")]
 		public ManyRelationCascadeEnum SourceCascade
 		{
@@ -4525,7 +4525,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for SourceRelationType
 		/// </summary>
-		private RelationType sourceRelationTypePropertyStorage = Altinoren.ActiveWriter.RelationType.Guess;
+		private RelationType sourceRelationTypePropertyStorage = RelationType.Guess;
 		
 		/// <summary>
 		/// Gets or sets the value of SourceRelationType domain property.
@@ -4533,7 +4533,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceRelationType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceRelationType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceRelationType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.RelationType.Guess)]
+		[global::System.ComponentModel.DefaultValue(RelationType.Guess)]
 		[DslModeling::DomainObjectId("1a7ce077-b01a-4e14-ba2e-81f24d1645ac")]
 		public RelationType SourceRelationType
 		{
@@ -4961,7 +4961,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetCache
 		/// </summary>
-		private CacheEnum targetCachePropertyStorage = Altinoren.ActiveWriter.CacheEnum.Undefined;
+		private CacheEnum targetCachePropertyStorage = CacheEnum.Undefined;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetCache domain property.
@@ -4969,7 +4969,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCache.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCache.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCache.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.CacheEnum.Undefined)]
+		[global::System.ComponentModel.DefaultValue(CacheEnum.Undefined)]
 		[DslModeling::DomainObjectId("e7614cb3-b408-4170-91bd-0d8fa3213be9")]
 		public CacheEnum TargetCache
 		{
@@ -5049,7 +5049,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetCascade
 		/// </summary>
-		private ManyRelationCascadeEnum targetCascadePropertyStorage = Altinoren.ActiveWriter.ManyRelationCascadeEnum.None;
+		private ManyRelationCascadeEnum targetCascadePropertyStorage = ManyRelationCascadeEnum.None;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetCascade domain property.
@@ -5057,7 +5057,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCascade.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCascade.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCascade.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.ManyRelationCascadeEnum.None)]
+		[global::System.ComponentModel.DefaultValue(ManyRelationCascadeEnum.None)]
 		[DslModeling::DomainObjectId("79db5e78-57ca-41f6-b409-f54c3692c71b")]
 		public ManyRelationCascadeEnum TargetCascade
 		{
@@ -5659,7 +5659,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetRelationType
 		/// </summary>
-		private RelationType targetRelationTypePropertyStorage = Altinoren.ActiveWriter.RelationType.Guess;
+		private RelationType targetRelationTypePropertyStorage = RelationType.Guess;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetRelationType domain property.
@@ -5667,7 +5667,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetRelationType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetRelationType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetRelationType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.RelationType.Guess)]
+		[global::System.ComponentModel.DefaultValue(RelationType.Guess)]
 		[DslModeling::DomainObjectId("913caa46-b08b-45bb-ac6f-6ef394c59938")]
 		public RelationType TargetRelationType
 		{
@@ -6097,7 +6097,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for SourceAccess
 		/// </summary>
-		private PropertyAccess sourceAccessPropertyStorage = Altinoren.ActiveWriter.PropertyAccess.Property;
+		private PropertyAccess sourceAccessPropertyStorage = PropertyAccess.Property;
 		
 		/// <summary>
 		/// Gets or sets the value of SourceAccess domain property.
@@ -6105,7 +6105,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.PropertyAccess.Property)]
+		[global::System.ComponentModel.DefaultValue(PropertyAccess.Property)]
 		[DslModeling::DomainObjectId("9e857994-04c2-40f0-99b1-d909623a6873")]
 		public PropertyAccess SourceAccess
 		{
@@ -6185,7 +6185,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetAccess
 		/// </summary>
-		private PropertyAccess targetAccessPropertyStorage = Altinoren.ActiveWriter.PropertyAccess.Property;
+		private PropertyAccess targetAccessPropertyStorage = PropertyAccess.Property;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetAccess domain property.
@@ -6193,7 +6193,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.PropertyAccess.Property)]
+		[global::System.ComponentModel.DefaultValue(PropertyAccess.Property)]
 		[DslModeling::DomainObjectId("308436c6-0b6c-4887-b5d4-e15c9174f9cc")]
 		public PropertyAccess TargetAccess
 		{
@@ -6629,7 +6629,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetNotFoundBehaviour
 		/// </summary>
-		private NotFoundBehaviour targetNotFoundBehaviourPropertyStorage = Altinoren.ActiveWriter.NotFoundBehaviour.Default;
+		private NotFoundBehaviour targetNotFoundBehaviourPropertyStorage = NotFoundBehaviour.Default;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetNotFoundBehaviour domain property.
@@ -6638,7 +6638,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetNotFoundBehaviour.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetNotFoundBehaviour.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetNotFoundBehaviour.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.NotFoundBehaviour.Default)]
+		[global::System.ComponentModel.DefaultValue(NotFoundBehaviour.Default)]
 		[DslModeling::DomainObjectId("29123760-24b6-42d1-a9b1-fb8b1d08d198")]
 		public NotFoundBehaviour TargetNotFoundBehaviour
 		{
@@ -6718,7 +6718,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for SourceNotFoundBehaviour
 		/// </summary>
-		private NotFoundBehaviour sourceNotFoundBehaviourPropertyStorage = Altinoren.ActiveWriter.NotFoundBehaviour.Default;
+		private NotFoundBehaviour sourceNotFoundBehaviourPropertyStorage = NotFoundBehaviour.Default;
 		
 		/// <summary>
 		/// Gets or sets the value of SourceNotFoundBehaviour domain property.
@@ -6727,7 +6727,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceNotFoundBehaviour.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceNotFoundBehaviour.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceNotFoundBehaviour.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.NotFoundBehaviour.Default)]
+		[global::System.ComponentModel.DefaultValue(NotFoundBehaviour.Default)]
 		[DslModeling::DomainObjectId("32c73c34-5d19-4c1c-8427-91646d05fb53")]
 		public NotFoundBehaviour SourceNotFoundBehaviour
 		{
@@ -7018,7 +7018,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for SourceAccess
 		/// </summary>
-		private PropertyAccess sourceAccessPropertyStorage = Altinoren.ActiveWriter.PropertyAccess.Property;
+		private PropertyAccess sourceAccessPropertyStorage = PropertyAccess.Property;
 		
 		/// <summary>
 		/// Gets or sets the value of SourceAccess domain property.
@@ -7026,7 +7026,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/SourceAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/SourceAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/SourceAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.PropertyAccess.Property)]
+		[global::System.ComponentModel.DefaultValue(PropertyAccess.Property)]
 		[DslModeling::DomainObjectId("6cab92a3-03e6-41fa-926d-f33afdbbbfcd")]
 		public PropertyAccess SourceAccess
 		{
@@ -7106,7 +7106,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for SourceCascade
 		/// </summary>
-		private CascadeEnum sourceCascadePropertyStorage = Altinoren.ActiveWriter.CascadeEnum.None;
+		private CascadeEnum sourceCascadePropertyStorage = CascadeEnum.None;
 		
 		/// <summary>
 		/// Gets or sets the value of SourceCascade domain property.
@@ -7114,7 +7114,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/SourceCascade.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/SourceCascade.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/SourceCascade.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.CascadeEnum.None)]
+		[global::System.ComponentModel.DefaultValue(CascadeEnum.None)]
 		[DslModeling::DomainObjectId("1d99e2db-2ed5-42dc-b869-cfb8041d97b5")]
 		public CascadeEnum SourceCascade
 		{
@@ -7368,7 +7368,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for SourceOuterJoin
 		/// </summary>
-		private OuterJoinEnum sourceOuterJoinPropertyStorage = Altinoren.ActiveWriter.OuterJoinEnum.Auto;
+		private OuterJoinEnum sourceOuterJoinPropertyStorage = OuterJoinEnum.Auto;
 		
 		/// <summary>
 		/// Gets or sets the value of SourceOuterJoin domain property.
@@ -7376,7 +7376,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/SourceOuterJoin.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/SourceOuterJoin.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/SourceOuterJoin.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.OuterJoinEnum.Auto)]
+		[global::System.ComponentModel.DefaultValue(OuterJoinEnum.Auto)]
 		[DslModeling::DomainObjectId("5d4c0adf-fbb4-41b1-b615-6e6690cc20c6")]
 		public OuterJoinEnum SourceOuterJoin
 		{
@@ -7456,7 +7456,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetAccess
 		/// </summary>
-		private PropertyAccess targetAccessPropertyStorage = Altinoren.ActiveWriter.PropertyAccess.Property;
+		private PropertyAccess targetAccessPropertyStorage = PropertyAccess.Property;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetAccess domain property.
@@ -7464,7 +7464,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/TargetAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/TargetAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/TargetAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.PropertyAccess.Property)]
+		[global::System.ComponentModel.DefaultValue(PropertyAccess.Property)]
 		[DslModeling::DomainObjectId("f51a55ef-21f7-4e22-9776-14c00caf8879")]
 		public PropertyAccess TargetAccess
 		{
@@ -7544,7 +7544,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetCascade
 		/// </summary>
-		private CascadeEnum targetCascadePropertyStorage = Altinoren.ActiveWriter.CascadeEnum.None;
+		private CascadeEnum targetCascadePropertyStorage = CascadeEnum.None;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetCascade domain property.
@@ -7552,7 +7552,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/TargetCascade.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/TargetCascade.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/TargetCascade.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.CascadeEnum.None)]
+		[global::System.ComponentModel.DefaultValue(CascadeEnum.None)]
 		[DslModeling::DomainObjectId("42102a9d-77ce-437e-abc7-3cd54e8a1061")]
 		public CascadeEnum TargetCascade
 		{
@@ -7806,7 +7806,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetOuterJoin
 		/// </summary>
-		private OuterJoinEnum targetOuterJoinPropertyStorage = Altinoren.ActiveWriter.OuterJoinEnum.Auto;
+		private OuterJoinEnum targetOuterJoinPropertyStorage = OuterJoinEnum.Auto;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetOuterJoin domain property.
@@ -7814,7 +7814,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/TargetOuterJoin.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/TargetOuterJoin.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/TargetOuterJoin.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(Altinoren.ActiveWriter.OuterJoinEnum.Auto)]
+		[global::System.ComponentModel.DefaultValue(OuterJoinEnum.Auto)]
 		[DslModeling::DomainObjectId("51177b34-f743-4cb8-860f-d0d7b6b00ba6")]
 		public OuterJoinEnum TargetOuterJoin
 		{

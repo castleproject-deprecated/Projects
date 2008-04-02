@@ -606,7 +606,7 @@ namespace Altinoren.ActiveWriter
 				}
 			}
 		}
-		
+	
 		/// <summary>
 		/// Saves the given model root as a in-memory stream.
 		/// This is a helper used by SaveModel() and SaveModelAndDiagram(). When saving the model and the diagram together, we want to make sure that 
@@ -619,7 +619,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="writeOptionalPropertiesWithDefaultValue">Whether optional properties with default value will be saved.</param>
 		/// <returns>In-memory stream containing the serialized Model instance.</returns>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
-		protected virtual global::System.IO.MemoryStream InternalSaveModel(DslModeling::SerializationResult serializationResult, Model modelRoot, string fileName, global::System.Text.Encoding encoding, bool writeOptionalPropertiesWithDefaultValue)
+		private global::System.IO.MemoryStream InternalSaveModel(DslModeling::SerializationResult serializationResult, Model modelRoot, string fileName, global::System.Text.Encoding encoding, bool writeOptionalPropertiesWithDefaultValue)
 		{
 			#region Check Parameters
 			global::System.Diagnostics.Debug.Assert(serializationResult != null);
@@ -644,6 +644,48 @@ namespace Altinoren.ActiveWriter
 					using (global::System.Xml.XmlWriter writer = global::System.Xml.XmlWriter.Create(streamWriter, settings))
 					{
 						modelRootSerializer.WriteRootElement(serializationContext, modelRoot, writer);
+					}
+				}
+			}
+			return newFileContent;
+		}
+		/// <summary>
+		/// Saves the given model root as a in-memory stream.
+		/// This is a helper used by SaveModel() and SaveModelAndDiagram(). When saving the model and the diagram together, we want to make sure that 
+		/// both can be saved without error before writing the content to disk, so we serialize the model into a in-memory stream first.
+		/// </summary>
+		/// <param name="serializationResult">Stores serialization result from the save operation.</param>
+		/// <param name="diagram">ActiveRecordMapping to be saved.</param>
+		/// <param name="diagramFileName">Name of the file in which the diagram will be saved.</param>
+		/// <param name="encoding">Encoding to use when saving the diagram.</param>
+		/// <param name="writeOptionalPropertiesWithDefaultValue">Whether optional properties with default value will be saved.</param>
+		/// <returns>In-memory stream containing the serialized ActiveRecordMapping instance.</returns>
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+		private global::System.IO.MemoryStream InternalSaveDiagram(DslModeling::SerializationResult serializationResult, ActiveRecordMapping diagram, string diagramFileName, global::System.Text.Encoding encoding, bool writeOptionalPropertiesWithDefaultValue)
+		{
+			#region Check Parameters
+			global::System.Diagnostics.Debug.Assert(serializationResult != null);
+			global::System.Diagnostics.Debug.Assert(diagram != null);
+			global::System.Diagnostics.Debug.Assert(!serializationResult.Failed);
+			#endregion
+			
+			global::System.IO.MemoryStream newFileContent = new global::System.IO.MemoryStream();
+			
+			DslModeling::DomainClassXmlSerializer diagramSerializer = this.Directory.GetSerializer(diagram.GetDomainClass().Id);
+			global::System.Diagnostics.Debug.Assert(diagramSerializer != null, "Cannot find serializer for " + diagram.GetDomainClass().Name + "!");
+			if (diagramSerializer != null)
+			{
+				DslModeling::SerializationContext serializationContext = new DslModeling::SerializationContext(this.Directory, diagramFileName, serializationResult);
+				// MonikerResolver shouldn't be required in Save operation, so not calling SetupMonikerResolver() here.
+				serializationContext.WriteOptionalPropertiesWithDefaultValue = writeOptionalPropertiesWithDefaultValue;
+				global::System.Xml.XmlWriterSettings settings = new global::System.Xml.XmlWriterSettings();
+				settings.Indent = true;
+				settings.Encoding = encoding;
+				using (global::System.IO.StreamWriter streamWriter = new global::System.IO.StreamWriter(newFileContent, encoding))
+				{
+					using (global::System.Xml.XmlWriter writer = global::System.Xml.XmlWriter.Create(streamWriter, settings))
+					{
+						diagramSerializer.WriteRootElement(serializationContext, diagram, writer);
 					}
 				}
 			}
@@ -722,6 +764,7 @@ namespace Altinoren.ActiveWriter
 		/// is passed, load-time validation will not be performed.
 		/// </param>
 		/// <returns>The loaded Model instance.</returns>
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]
 		public virtual Model LoadModelAndDiagram(DslModeling::SerializationResult serializationResult, DslModeling::Partition modelPartition, string modelFileName, DslModeling::Partition diagramPartition, string diagramFileName, DslModeling::ISchemaResolver schemaResolver, DslValidation::ValidationController validationController)
 		{
 			#region Check Parameters
@@ -917,28 +960,11 @@ namespace Altinoren.ActiveWriter
 				if (serializationResult.Failed)
 					return;
 	
-				using (global::System.IO.MemoryStream diagramFileContent = new global::System.IO.MemoryStream())
+				using (global::System.IO.MemoryStream diagramFileContent = this.InternalSaveDiagram(serializationResult, diagram, diagramFileName, encoding, writeOptionalPropertiesWithDefaultValue))
 				{
-					DslModeling::DomainClassXmlSerializer diagramSerializer = this.Directory.GetSerializer(diagram.GetDomainClass().Id);
-					global::System.Diagnostics.Debug.Assert(diagramSerializer != null, "Cannot find serializer for " + diagram.GetDomainClass().Name + "!");
-					if (diagramSerializer != null)
-					{
-						DslModeling::SerializationContext serializationContext = new DslModeling::SerializationContext(this.Directory, diagramFileName, serializationResult);
-						// MonikerResolver shouldn't be required in Save operation, so not calling SetupMonikerResolver() here.
-						serializationContext.WriteOptionalPropertiesWithDefaultValue = writeOptionalPropertiesWithDefaultValue;
-						global::System.Xml.XmlWriterSettings settings = new global::System.Xml.XmlWriterSettings();
-						settings.Indent = true;
-						settings.Encoding = encoding;
-						using (global::System.IO.StreamWriter streamWriter = new global::System.IO.StreamWriter(diagramFileContent, encoding))
-						{
-							using (global::System.Xml.XmlWriter writer = global::System.Xml.XmlWriter.Create(streamWriter, settings))
-							{
-								diagramSerializer.WriteRootElement(serializationContext, diagram, writer);
-							}
-						}
-					}
 					if (!serializationResult.Failed)
-					{	// Only write the contents if there's no error encountered during serialization.
+					{
+						// Only write the contents if there's no error encountered during serialization.
 						if (modelFileContent != null)
 						{
 							using (global::System.IO.FileStream fileStream = new global::System.IO.FileStream(modelFileName, global::System.IO.FileMode.Create, global::System.IO.FileAccess.Write, global::System.IO.FileShare.None))
@@ -963,6 +989,110 @@ namespace Altinoren.ActiveWriter
 				}
 			}
 		}
+	
+		/// <summary>
+		/// Saves the given diagram to the given file, with default encoding (UTF-8), and optional properties with default value will not
+		/// be written out.
+		/// </summary>
+		/// <param name="serializationResult">Stores serialization result from the save operation.</param>
+		/// <param name="diagram">ActiveRecordMapping to be saved.</param>
+		/// <param name="diagramFileName">Name of the file in which the diagram will be saved.</param>
+		public virtual void SaveDiagram(DslModeling::SerializationResult serializationResult, ActiveRecordMapping diagram, string diagramFileName)
+		{
+			this.SaveDiagram(serializationResult, diagram, diagramFileName, global::System.Text.Encoding.UTF8, false);
+		}
+		
+		/// <summary>
+		/// Saves the given diagram to the given file, with default encoding (UTF-8).
+		/// </summary>
+		/// <param name="serializationResult">Stores serialization result from the save operation.</param>
+		/// <param name="diagram">ActiveRecordMapping to be saved.</param>
+		/// <param name="diagramFileName">Name of the file in which the diagram will be saved.</param>
+		/// <param name="writeOptionalPropertiesWithDefaultValue">Whether optional properties with default value will be saved.</param>
+		public virtual void SaveDiagram(DslModeling::SerializationResult serializationResult, ActiveRecordMapping diagram, string diagramFileName, bool writeOptionalPropertiesWithDefaultValue)
+		{
+			this.SaveDiagram(serializationResult, diagram, diagramFileName, global::System.Text.Encoding.UTF8, writeOptionalPropertiesWithDefaultValue);
+		}
+	
+		/// <summary>
+		/// Saves the given ActiveRecordMapping to the given file, with specified encoding.
+		/// </summary>
+		/// <param name="serializationResult">Stores serialization result from the save operation.</param>
+		/// <param name="diagram">ActiveRecordMapping to be saved.</param>
+		/// <param name="diagramFileName">Name of the file in which the diagram will be saved.</param>
+		/// <param name="encoding">Encoding to use when saving the diagram.</param>
+		/// <param name="writeOptionalPropertiesWithDefaultValue">Whether optional properties with default value will be saved.</param>
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+		public virtual void SaveDiagram(DslModeling::SerializationResult serializationResult, ActiveRecordMapping diagram, string diagramFileName, global::System.Text.Encoding encoding, bool writeOptionalPropertiesWithDefaultValue)
+		{
+			#region Check Parameters
+			if (serializationResult == null)
+				throw new global::System.ArgumentNullException("serializationResult");
+			if (diagram == null)
+				throw new global::System.ArgumentNullException("diagram");
+			if (string.IsNullOrEmpty(diagramFileName))
+				throw new global::System.ArgumentNullException("diagramFileName");
+			#endregion
+	
+			if (serializationResult.Failed)
+				return;
+	
+			using (global::System.IO.MemoryStream diagramFileContent = this.InternalSaveDiagram(serializationResult, diagram, diagramFileName, encoding, writeOptionalPropertiesWithDefaultValue))
+			{
+				if (!serializationResult.Failed)
+				{
+					// Only write the contents if there's no error encountered during serialization.
+					if (diagramFileContent != null)
+					{
+						using (global::System.IO.FileStream fileStream = new global::System.IO.FileStream(diagramFileName, global::System.IO.FileMode.Create, global::System.IO.FileAccess.Write, global::System.IO.FileShare.None))
+						{
+							using (global::System.IO.BinaryWriter writer = new global::System.IO.BinaryWriter(fileStream, encoding))
+							{
+								writer.Write(diagramFileContent.ToArray());
+							}
+						}
+					}
+				}
+			}
+		}
+	
+		/// <summary>
+		/// Return the model in XML format
+		/// </summary>
+		/// <param name="modelRoot">ExampleModel instance to be saved.</param>
+		/// <param name="encoding">Encoding to use when saving the ExampleModel instance.</param>
+		/// <returns>Model in XML form</returns>
+		public virtual string GetSerializedModelString(global::Altinoren.ActiveWriter.Model modelRoot, global::System.Text.Encoding encoding)
+		{
+			string result = string.Empty;
+			if (modelRoot == null)
+			{
+				return result;
+			}
+	
+			DslModeling::SerializationResult serializationResult = new DslModeling::SerializationResult();
+			using (global::System.IO.MemoryStream modelFileContent = this.InternalSaveModel(serializationResult, modelRoot, string.Empty, encoding, false))
+			{
+				if (!serializationResult.Failed && modelFileContent != null)
+				{
+					char[] chars = encoding.GetChars(modelFileContent.GetBuffer());
+	
+					// search the open angle bracket and trim off the Byte Of Mark.
+					result = new string( chars);
+					int indexPos = result.IndexOf('<');
+					if (indexPos > 0)
+					{
+						// strip off the leading Byte Of Mark.
+						result = result.Substring(indexPos);
+					}
+	
+					// trim off trailing 0s.
+					result = result.TrimEnd( '\0');
+				}
+			}
+			return result;
+		}
+		
 	
 		#region Private/Helper Methods/Properties
 		/// <summary>

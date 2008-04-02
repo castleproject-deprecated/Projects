@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Dsl dslVersion="1.0.0.0" Id="3a7d8d12-f07c-4dd1-8689-f9610e7a79e1" Description="A Visual Studio 2005 addin to design domain models and to generate code decorated with ActiveRecord attributes based on the model." Name="ActiveWriter" DisplayName="ActiveWriter" Namespace="Altinoren.ActiveWriter" ProductName="ActiveWriter" CompanyName="altinoren.com" PackageGuid="9f4f10d0-81ad-4308-a398-ba7741f3f7e2" PackageNamespace="Altinoren.ActiveWriter" xmlns="http://schemas.microsoft.com/VisualStudio/2005/DslTools/DslDefinitionModel">
+<Dsl dslVersion="1.0.0.0" Id="3a7d8d12-f07c-4dd1-8689-f9610e7a79e1" Description="A Visual Studio 2008 addin to design domain models and to generate code decorated with ActiveRecord attributes or supported with NHibernate configuration based on the model." Name="ActiveWriter" DisplayName="ActiveWriter" Namespace="Altinoren.ActiveWriter" ProductName="ActiveWriter" CompanyName="altinoren.com" PackageGuid="9f4f10d0-81ad-4308-a398-ba7741f3f7e2" PackageNamespace="Altinoren.ActiveWriter" xmlns="http://schemas.microsoft.com/VisualStudio/2005/DslTools/DslDefinitionModel">
   <Classes>
     <DomainClass Id="fe94e99d-28aa-4a5d-9e43-168adeb72b60" Description="Domain model" Name="Model" DisplayName="Model" Namespace="Altinoren.ActiveWriter">
       <Properties>
