@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections.Generic;
 using Castle.MonoRail.Views.AspView.Compiler;
 
 namespace Castle.MonoRail.Views.AspView
@@ -88,7 +89,17 @@ namespace Castle.MonoRail.Views.AspView
 
 		public override void Process(string templateName, string layoutName, TextWriter output, System.Collections.Generic.IDictionary<string, object> parameters)
 		{
-			throw new Exception("The method or operation is not implemented.");
+			ControllerContext controllerContext = new ControllerContext();
+			if (layoutName != null)
+			{
+				controllerContext.LayoutNames = new string[] { layoutName };
+			}
+			foreach (KeyValuePair<string, object> pair in parameters)
+			{
+				controllerContext.PropertyBag[pair.Key] = pair.Value;
+			}
+			;
+			Process(templateName, output, null, null, controllerContext);
 		}
 
 		public override void Process(string templateName, TextWriter output, IEngineContext context, IController controller, IControllerContext controllerContext)
@@ -107,9 +118,15 @@ namespace Castle.MonoRail.Views.AspView
 					view = layout;
 				}
 			}
-			controller.PreSendView(view);
+			if (controller != null)
+			{
+				controller.PreSendView(view);
+			}
 			view.Process();
-			controller.PostSendView(view);
+			if (controller != null)
+			{
+				controller.PostSendView(view);
+			}
 		}
 
 		public override void ProcessPartial(string partialName, TextWriter output, IEngineContext context, IController controller, IControllerContext controllerContext)

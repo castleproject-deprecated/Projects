@@ -354,10 +354,13 @@ namespace Castle.MonoRail.Views.AspView
 		private void InitProperties()
 		{
 			properties = new DictHelper.MonoRailDictionary();// HybridDictionary( <string, object>(CaseInsensitiveStringComparer.Default);
-			properties.Add("context", context);
-			properties.Add("request", context.Request);
-			properties.Add("response", context.Response);
-			properties.Add("session", context.Session);
+			if (context != null)
+			{
+				properties.Add("context", context);
+				properties.Add("request", context.Request);
+				properties.Add("response", context.Response);
+				properties.Add("session", context.Session);
+			}
 			properties.Add("controller", controller);
 			if (controllerContext.Resources != null)
 				foreach (string key in controllerContext.Resources.Keys)
@@ -367,22 +370,25 @@ namespace Castle.MonoRail.Views.AspView
 				foreach (string key in controllerContext.Helpers.Keys)
 					if (key != null)
 						properties[key] = controllerContext.Helpers[key];
-			if (context.Request.Params != null)
+			if (context != null && context.Request.Params != null)
 				foreach (string key in context.Request.Params.Keys)
 					if (key != null)
 						properties[key] = context.Request.Params[key];
-			if (context.Flash != null)
+			if (context != null && context.Flash != null)
 				foreach (DictionaryEntry entry in context.Flash)
 					properties[entry.Key.ToString()] = entry.Value;
 			if (controllerContext.PropertyBag != null)
 				foreach (DictionaryEntry entry in controllerContext.PropertyBag)
 					properties[entry.Key.ToString()] = entry.Value;
-			properties["siteRoot"] = context.ApplicationPath ?? string.Empty;
-			properties["fullSiteRoot"] = context.Request.Uri != null
-			                             	?
-			                             		context.Request.Uri.GetLeftPart(UriPartial.Authority) + context.ApplicationPath
-			                             	:
-			                             		string.Empty;
+			if (context != null)
+			{
+				properties["siteRoot"] = context.ApplicationPath ?? string.Empty;
+				properties["fullSiteRoot"] = context.Request.Uri != null
+												?
+													context.Request.Uri.GetLeftPart(UriPartial.Authority) + context.ApplicationPath
+												:
+													string.Empty;
+			}
 		}
 
 		/// <summary>
