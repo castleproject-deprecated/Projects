@@ -16,16 +16,28 @@
 
 namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 {
-	public class ImportStatementsStep : ChainingStep
+	using System.Web.Configuration;
+	using System.Configuration;
+
+	public class ConfigurationImportStatementsStep : IPreCompilationStep
 	{
-		public ImportStatementsStep()
-			: base(new IPreCompilationStep[]
-			{
-				new DefaultImportStatementsStep(),
-				new ExtractImportStatementsStep(),
-				new ConfigurationImportStatementsStep()
-			})
+		// TODO: remove the dependency on ConfigurationManager and write a test
+		public void Process(SourceFile file)
 		{
+			PagesSection section = ConfigurationManager.GetSection("system.web/pages") as PagesSection;
+			if (section == null)
+			{
+				return;
+			}
+
+			foreach (NamespaceInfo ni in section.Namespaces)
+			{
+				if (ni.Namespace.StartsWith("System.Web"))
+				{
+					continue;
+				}
+				file.Imports.Add(ni.Namespace);
+			}
 		}
 	}
 }
