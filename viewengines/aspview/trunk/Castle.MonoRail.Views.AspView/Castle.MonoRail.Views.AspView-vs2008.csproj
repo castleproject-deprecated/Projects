@@ -71,6 +71,7 @@
     <Compile Include="AspViewBase.cs" />
     <Compile Include="Compiler\AspViewCompiler.cs" />
     <Compile Include="Compiler\AspViewCompilerOptions.cs" />
+    <Compile Include="Compiler\PreCompilationSteps\ConfigurationImportStatementsStep.cs" />
     <Compile Include="Compiler\PreCompilationSteps\ServerSideCommentStripperStep.cs" />
     <Compile Include="Compiler\StatementProcessors\SharpStatementProcessor.cs" />
     <Compile Include="Compiler\StatementProcessors\EqualsStatementProcessor.cs" />
