@@ -164,6 +164,16 @@
             <param name="subject">The subject header.</param>
             <param name="body">The message body.</param>
         </member>
+        <member name="P:Castle.Components.Common.EmailSender.Message.Resources">
+            <summary>
+            You can add any number of inline attachments to this mail message. Inline attachments 
+            differ from normal attachments in that they can be displayed withing the email body, 
+            which makes this very handy for displaying images that can be viewed without having to 
+            access an external server. 
+            Provide an unique identifier (id) and use it with a &lt;img src="cid:my_id" /> tag from 
+            within your view code.
+            </summary>
+        </member>
         <member name="T:Castle.Components.Common.EmailSender.MessageAttachment">
             <summary>
             Represents a file attachment
@@ -182,6 +192,14 @@
             </summary>
             <param name="mediaType">Look at System.Net.Mime.MediaTypeNames for help.</param>
             <param name="stream">File stream.</param>
+        </member>
+        <member name="M:Castle.Components.Common.EmailSender.MessageAttachment.#ctor(System.String,System.String,System.IO.Stream)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Components.Common.EmailSender.MessageAttachment"/> class.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="mediaType">Type of the media.</param>
+            <param name="stream">The stream.</param>
         </member>
         <member name="P:Castle.Components.Common.EmailSender.MessageAttachment.FileName">
             <summary>
