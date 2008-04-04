@@ -112,6 +112,14 @@
             <param name="controller">The controller.</param>
             <param name="contextInitializer">The context initializer.</param>
         </member>
+        <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.PrepareController(Castle.MonoRail.Framework.Controller,System.String)">
+            <summary>
+            Prepares the controller giving it mock implementations
+            of the service it requires to function normally.
+            </summary>
+            <param name="controller">The controller.</param>
+            <param name="controllerName">Name of the controller.</param>
+        </member>
         <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.PrepareController(Castle.MonoRail.Framework.Controller,System.String,System.String)">
             <summary>
             Prepares the controller giving it mock implementations
@@ -171,7 +179,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.BuildResponse">
+        <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.BuildResponse(Castle.MonoRail.Framework.UrlInfo)">
             <summary>
             Builds the response.
             </summary>
