@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project DefaultTargets="BuildAll" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<Import Project="$(MSBuildProjectDirectory)\Common.build.xml"/>
+
+	<PropertyGroup>
+		<ProjectName>Castle.MonoRail.ViewComponents</ProjectName>
+		<ShortName>Castle.MonoRail.ViewComponents</ShortName>
+		<SolutionFile>$(MSBuildProjectDirectory)\Castle.MonoRail.ViewComponents-VS2005.sln</SolutionFile>
+		<SectionId>-2</SectionId>
+		<Version>0.1.0</Version>
+		<ExtraInfo></ExtraInfo>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<AssemblyInfo Include="Item">
+			<File>$(MSBuildProjectDirectory)\Castle.MonoRail.ViewComponents\Properties\AssemblyInfo.cs</File>
+		</AssemblyInfo>
+	</ItemGroup>
+
+</Project>

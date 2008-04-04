@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="BuildAll" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup Condition="!Exists('$(Configuration)')">
+		<SharedLibsDir>$(MSBuildProjectDirectory)\SharedLibs</SharedLibsDir>
+		<Configuration>Debug</Configuration>
+		<EnableTest>True</EnableTest>
+		<OutputDir>$(MSBuildProjectDirectory)</OutputDir>
+		<LogsDir>$(MSBuildProjectDirectory)</LogsDir>
+		<KeyFile>$(MSBuildProjectDirectory)\CastleKey.snk</KeyFile>
+		<ClsCompliant>true</ClsCompliant>
+	</PropertyGroup>
+
+	<Target Name="BuildAll"
+			DependsOnTargets="Clean;BeforeCompile;Compile;" />
+
+	<Target Name="BeforeCompile"/>
+
+	<Target Name="Clean">
+		<MSBuild Projects="$(SolutionFile)"
+				 Properties="Configuration=$(Configuration)"
+				 Targets="Clean" />
+	</Target>
+	<Target Name="GenerateAssemblyInfo">
+		<SvnVersion LocalPath=".">
+			<Output TaskParameter="Revision"
+					PropertyName="Revision" />
+		</SvnVersion>
+		<AssemblyInfo AssemblyCompany ="Castle Project"
+			AssemblyCopyright="Castle Project, original author or authors"
+			AssemblyDescription="$(ProjectName)"
+			AssemblyInformationalVersion="$(Version).$(Revision)"
+			 AssemblyTitle ="$(ProjectName)$(ExtraInfo)"
+			 CodeLanguage="CS"
+			 CLSCompliant ="$(ClsCompliant)"
+			 AssemblyVersion ="$(Version).$(Revision)"
+			 OutputFile="%(AssemblyInfo.File)"
+			 />
+	</Target>
+	
+	<Target Name="Compile" DependsOnTargets="GenerateAssemblyInfo">
+		
+		<MSBuild Projects="$(SolutionFile)"
+				 Properties="Configuration=$(Configuration)" />
+	</Target>
+
+	<Import Project="$(SharedLibsDir)\Tools\MSBuild.Community.Tasks.Targets"/>
+	<UsingTask TaskName="MbUnit.MSBuild.Tasks.MbUnit"  AssemblyFile="$(SharedLibsDir)\Tools\MbUnit\MbUnit.MSBuild.Tasks.dll" />
+</Project>

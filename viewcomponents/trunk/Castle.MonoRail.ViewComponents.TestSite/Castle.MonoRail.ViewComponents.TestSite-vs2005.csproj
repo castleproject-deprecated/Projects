@@ -85,7 +85,7 @@
     <Compile Include="ViewComponents\MyCollapsiblePanelComponent.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Castle.MonoRail.ViewComponents\Castle.MonoRail.ViewComponents.csproj">
+    <ProjectReference Include="..\Castle.MonoRail.ViewComponents\Castle.MonoRail.ViewComponents-vs2005.csproj">
       <Project>{717C688D-81BC-4C81-9487-1D5151ADF573}</Project>
       <Name>Castle.MonoRail.ViewComponents</Name>
     </ProjectReference>
