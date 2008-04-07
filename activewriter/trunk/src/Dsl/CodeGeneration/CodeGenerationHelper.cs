@@ -885,7 +885,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             string propertyName = String.IsNullOrEmpty(relationship.TargetPropertyName)
                                       ? NamingHelper.GetPlural(sourceClass.Name)
-                                      : NamingHelper.GetPlural(relationship.TargetPropertyName);
+                                      : relationship.TargetPropertyName;
             string propertyType = String.IsNullOrEmpty(relationship.TargetPropertyType)
                                       ? GenericListInterface
                                       : relationship.TargetPropertyType;
@@ -1028,7 +1028,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             string propertyName = String.IsNullOrEmpty(relationship.TargetPropertyName)
                           ? NamingHelper.GetPlural(relationship.Target.Name)
-                          : NamingHelper.GetPlural(relationship.TargetPropertyName);
+                          : relationship.TargetPropertyName;
 
             string propertyType = String.IsNullOrEmpty(relationship.SourcePropertyType)
                                       ? GenericListInterface
@@ -1044,10 +1044,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             CodeMemberProperty memberProperty;
             if (String.IsNullOrEmpty(relationship.TargetDescription))
-                memberProperty = GetMemberProperty(memberField, NamingHelper.GetPlural(propertyName), true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), null);
+                memberProperty = GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), null);
             else
                 memberProperty =
-                    GetMemberProperty(memberField, NamingHelper.GetPlural(propertyName), true, true, relationship.Source.DoesImplementINotifyPropertyChanged(),
+                    GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(),
                                       relationship.TargetDescription);
             classDeclaration.Members.Add(memberProperty);
 

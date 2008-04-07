@@ -1,3 +1,6 @@
+Fixed:
+- NamingHelper.GetPlural is called even if 'Target property Name' is set on ManyToOneConnector (Patch: Roberto Paterlini)
+
 Preview 4
 
 New:
