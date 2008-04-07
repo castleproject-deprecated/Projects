@@ -15,3 +15,8 @@ Ayende:
 - On the Northwind database, dragging the Customers table generate a PK of type System.Char
 - Another option to consider is to use the inflector to singularize the table tables when dragging from server explorer.
 
+Marcin Mikolajczak
+1. A UseIdentifierQuoting or similarly named inheritable model property that would allow one to avoid the need to manually specify table and column names to include the `` quoting characters.
+2. Class inheritance mapping using a connector instead of manually filling out all necessary properties.
+3. Importing classes from other diagrams to allow grouping classes by functionality (preferably also from referenced assemblies).
+4. Generation of static methods for use with the ObjectDataSource class in ASP.NET. I noticed a comment in the code saying that support for MonoRail will be added through plugins. Is the necessary framework anywhere near completion?
