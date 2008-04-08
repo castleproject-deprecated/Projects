@@ -8,14 +8,26 @@
 </wholehighlighter>
  
 <wholehighlighter type='regex'>
-  <pattern>(?m)(\$[A-Za-z]*)</pattern>
+  <pattern>(?m)(\$!?[A-Za-z][-A-Za-z0-9_]+)|(\$!?\{[A-Za-z][-A-Za-z0-9_]+\})</pattern>
   <style>string</style>
 </wholehighlighter>
 
+<wholehighlighter type='regex'>
+  <pattern>(?m)(\$!?[A-Za-z][-A-Za-z0-9_]+\.[A-Za-z][-A-Za-z0-9_]+)|(\$!?\{[A-Za-z][-A-Za-z0-9_]+\.[A-Za-z][-A-Za-z0-9_]+\})</pattern>
+  <style>string</style>
+</wholehighlighter>
+ 
 <highlighter type='oneline-comment'>
   ##
 </highlighter>
 
+
+<highlighter type='multiline-comment'>
+  <start>#/*</start>
+  <end>*/#</end>
+</highlighter>
+
+ 
 <highlighter type='string'>
   <string>"</string>
   <escape>\</escape>
@@ -26,7 +38,7 @@
   <escape>\</escape>
 </highlighter>
 
-<!--  
+<!-- 
 <highlighter type='keywords'>
   <keyword>true</keyword>
   <keyword>false</keyword>

@@ -12,7 +12,7 @@
 	<xsl:param name="img.src.path" select="'../'" />
   	
 	<xsl:param name="section.autolabel" select="1" />
-	<xsl:param name="section.autolabel.max.depth">3</xsl:param>
+	<xsl:param name="section.autolabel.max.depth">2</xsl:param>
 	<xsl:param name="toc.section.depth" select="3"/>
 	<xsl:param name="section.label.includes.component.label" select="1"/>
 

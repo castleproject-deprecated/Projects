@@ -148,8 +148,9 @@ td {
     font-family: Verdana, Arial, helvetica, sans-serif;
 }
 
-div.warning TD {
+div.warning {
 	text-align: justify;
+	margin-bottom: 20px;
 }
 
 h1 { 
@@ -257,11 +258,12 @@ td code {
     font-size: 110%;
 }
 
-div.note * td,
-div.tip * td,
-div.warning * td {
+div.note ,
+div.tip,
+div.warning {
 	text-align: justify;
 	font-size: 100%;
+	margin-bottom: 20px;
 }
 
 .programlisting .interfacename,

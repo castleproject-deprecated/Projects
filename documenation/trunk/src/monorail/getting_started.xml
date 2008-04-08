@@ -5,11 +5,10 @@
 	<section>
 		<title>Introduction</title>
 		<para>
-			<emphasis>Castle MonoRail</emphasis>
-			greatly simplifies web development. The Getting Started
-			chapter is going to show you how common tasks are handled
-			and how MonoRail performs most of the repetitive work in web
-			development on your behalf.
+			Castle MonoRail greatly simplifies web development. The
+			Getting Started chapter is going to show you how common
+			tasks are handled and how MonoRail performs most of the
+			repetitive work in web development on your behalf.
 		</para>
 		<para>
 			Among other things you will learn
@@ -35,7 +34,7 @@
 					<para>
 						How to use the
 						<classname>SmartDispatcherController</classname>
-						and the DataBinder
+						and the data binder
 					</para>
 				</listitem>
 				<listitem>
@@ -43,8 +42,12 @@
 				</listitem>
 				<listitem>
 					<para>
-						How Castle ActiveRecord integrates nicely with
-						MonoRail
+						How Castle
+						<ulink
+							url="http://www.castleproject.org/activerecord/index.html">
+							ActiveRecord
+						</ulink>
+						integrates nicely with MonoRail
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -59,20 +62,16 @@
 			develop similar integration for your preferred data access
 			approach should you choose to do so.
 		</para>
-		<para>
-			You can also download the complete example:
-
-			<note>
-				<para>
-					You can also download the complete example
-					demonstrating the concepts from
-					<ulink
-						url="/samples/MonoRail.GettingStartedSampleVS2005.zip">
-						here.
-					</ulink>
-				</para>
-			</note>
-		</para>
+		<tip>
+			<para>
+				You can also download the complete example demonstrating
+				the concepts from
+				<ulink
+					url="http://www.castleproject.org/download/monorail/v1rc2/MonoRail.GettingStartedSampleVS2005.zip">
+					here.
+				</ulink>
+			</para>
+		</tip>
 	</section>
 	<section>
 		<title>Requirements</title>
@@ -85,16 +84,16 @@
 				MSI installer distribution
 			</ulink>
 			as it automatically installs all the required assemblies in
-			the Global Assembly Cache, making them visible to Visual
+			the Global Assembly Cache, making them available to Visual
 			Studio.
 		</para>
 		<para>
-			During the course of this chapter will be using a database.
-			For simplicity's sake all discussion surrounding database
-			configuration will refer ot MSSQL Server 2000 however if you
-			prefer to use another database you can select any other
-			database supported by NHibernate and will find very little
-			deviation from the text in this chapter.
+			Also, during the course of this chapter will be using a
+			database. For simplicity's sake all discussion surrounding
+			database configuration will refer ot MSSQL Server 2000
+			however if you prefer to use another database you can select
+			any other database supported by NHibernate and will find
+			very little deviation from the text in this chapter.
 		</para>
 	</section>
 	<section>
@@ -120,7 +119,11 @@
 		<!-- TODO: Further explanation as to *why* would be nice here. -->
 
 		<para>
-			The following sections show you how to create this structure
+			You are by no means
+			<emphasis>required</emphasis>
+			to follow these conventions, however they will most likely
+			made development easier for you in the long run. The
+			following sections show you how to create this structure
 			manually or by using the MonoRail project wizard and will
 			further explain the reasoning behind its use.
 		</para>
@@ -146,7 +149,7 @@
 						url="http://msdn2.microsoft.com/en-us/asp.net/aa336618.aspx">
 						Web Project support
 					</ulink>
-					add in or alternately you can ensure your Visual
+					add in, or alternately you can ensure your Visual
 					Studio installation is upgraded to
 					<ulink
 						url="http://msdn2.microsoft.com/en-us/vstudio/bb265237.aspx">
@@ -167,9 +170,7 @@
 							<guimenu>New</guimenu>
 							<guimenuitem>Project</guimenuitem>
 						</menuchoice>
-					</para>
-					<para>
-						Under Visual Studio 2005 you will see the
+						. Under Visual Studio 2005 you will see the
 						following dialog:
 					</para>
 					<mediaobject>
@@ -245,20 +246,22 @@
 				<para>
 					Create an
 					<emphasis>ASP.Net Web Application</emphasis>
-					project in Visual Studio 2005. If the
-					<emphasis>ASP.Net Web Application</emphasis>
-					template is not present in your Visual Studio
-					installation you can create a
-					<emphasis>Class Library</emphasis>
-					project instead.
-				</para>
-				<para>
-					Name the new project
+					project in Visual Studio 2005. Name the new project
 					<userinput>GettingStartedSample</userinput>
 					then click the
 					<guibutton>OK</guibutton>
 					button.
 				</para>
+				<tip>
+					<para>
+						If the
+						<emphasis>ASP.Net Web Application</emphasis>
+						template is not present in your Visual Studio
+						installation you can create a
+						<emphasis>Class Library</emphasis>
+						project instead.
+					</para>
+				</tip>
 			</section>
 			<section>
 				<title>Reference the MonoRail Assemblies</title>
@@ -386,8 +389,8 @@
 			<section>
 				<title>Configuration</title>
 				<para>
-					To configure the application to use MonoRail
-					additional information needs to be added to the
+					To configure the application additional information
+					needs to be added to the
 					<filename>web.config</filename>
 					file; you must register the MonoRail configuration
 					handler, the MonoRail configuration section, an HTTP
@@ -444,7 +447,7 @@
 					<link linkend="configuration"
 						endterm="configuration.title" />
 					chapter, however the elements above are sufficient
-					for our sample application.
+					for this sample.
 				</para>
 				<para>
 					It should be noted at this point that we have chosen
@@ -458,7 +461,8 @@
 					rendering of a view. You can learn more about
 					<application>NVelocity</application>
 					(and how we have improved it) on
-					<ulink url="../../others/nvelocity/index.html">
+					<ulink
+						url="http://www.castleproject.org/others/nvelocity/index.html">
 						its page
 					</ulink>
 					.
@@ -545,6 +549,11 @@
 	
 </configuration>
 ]]></programlisting>
+				<para>
+					That's it - the configuration is now complete. Next
+					we will start exploring controllers, actions and
+					views.
+				</para>
 			</section>
 		</section>
 	</section>
@@ -559,14 +568,15 @@
 			action decides whether or not it should render a view and,
 			if so, which one to render. As a result the controller has
 			control over the application flow rather than the
-			pages/views. This returns views back to their original role:
-			to present information - nothing more and nothing less.
+			pages/views. This returns views to their original role: to
+			present information - nothing more and nothing less.
 		</para>
 		<para>
 			It is important at this point to understand the relationship
-			between the structure of the URL specified to access a
-			resource and the controller. A common URL to a MonoRail web
-			page might look like the following:
+			between the structure of the MonoRail URL and how it relates
+			to the controller and the method to execute on the
+			controller. A common URL to a MonoRail web page might look
+			like the following:
 		</para>
 		<para>
 			<screen><![CDATA[
@@ -593,12 +603,12 @@ http://www.some-server.net/home/index.castle
 			<literal>index</literal>
 			indicates that the
 			<methodname>Index</methodname>
-			method on the controller should be executed. Since MonoRail
-			prefers convention over configuration the default behaviour
-			is, by default, for the controller's class name to be the
-			name of the controller found on the URL with the word
+			action method on the controller should be executed. Since
+			MonoRail prefers convention over configuration the default
+			behaviour is for MonoRail to use the controller name in the
+			URL to locate the controller class by appending the word
 			<emphasis>Controller</emphasis>
-			appended to the end, so if the controller name
+			to the end, so in the event that the controller name
 			<literal>home</literal>
 			is found in the URL the controller class used in response to
 			this request will be the
@@ -648,6 +658,12 @@ namespace GettingStartedSample.Controllers
 	}
 }
 ]]></programlisting>
+			<para>
+				This is a pretty basic sample for the moment. Don't
+				worry if you don't understand it at this point; we'll
+				explain the code and surrounding concepts in more detail
+				in the next section.
+			</para>
 		</section>
 		<section>
 			<title>The Index Action and View</title>
@@ -664,9 +680,9 @@ namespace GettingStartedSample.Controllers
 			</para>
 			<para>
 				The view template chosen by MonoRail is affected by the
-				view engine we chose during the configuration phase of
-				the project. Since we chose to use the NVelocity view
-				engine all of our view templates will end with the
+				view engine chosen during the configuration phase of the
+				project. Since we chose to use the NVelocity view engine
+				all of our view templates will end with the
 				<literal>.vm</literal>
 				extension.
 			</para>
@@ -675,10 +691,8 @@ namespace GettingStartedSample.Controllers
 				rendering is based on the name of the action being
 				executed and the folder in which the view template is
 				located is based on the name of the controller handling
-				the request.
-			</para>
-			<para>
-				As a result the default view template chosen by the
+				the request. As a result the default view template
+				chosen by the
 				<methodname>Index</methodname>
 				action on the
 				<classname>HomeController</classname>
@@ -688,19 +702,19 @@ namespace GettingStartedSample.Controllers
 				<filename>/views/home</filename>
 				folder in the project.
 			</para>
-			<note>
+			<tip>
 				<para>
 					This behavior can be overridden in several ways that
 					are covered later in this guide.
 				</para>
 				<!-- TODO: Is it? -->
-			</note>
+			</tip>
 			<para>
 				If the view template
 				<filename>index.vm</filename>
 				does not yet exist in the
 				<filename>/views/home</filename>
-				folder of your project create it now.
+				folder of your project you should create it now.
 			</para>
 			<para>
 				<mediaobject>
@@ -724,7 +738,7 @@ Hello world from my first action.
 
 </p>
 ]]></programlisting>
-			<note>
+			<tip>
 				<para>
 					You can make Visual Studio use the HTML editor for
 					<literal>.vm</literal>
@@ -732,11 +746,11 @@ Hello world from my first action.
 					<guimenuitem>Open With...</guimenuitem>
 					option from the context menu.
 				</para>
-			</note>
+			</tip>
 			<para>
-				This is a fairly simple view. Note that in the view
-				template we did not include the html or body tags. We
-				will leave those to the
+				This is a fairly simple view; note that in the template
+				we did not include the html or body tags. This is
+				because we will leave those to the
 				<emphasis>layout</emphasis>
 				to render, which we will cover next.
 			</para>
@@ -757,7 +771,7 @@ Hello world from my first action.
 public class HomeController : SmartDispatcherController
 ]]></programlisting>
 			<para>
-				These define the following:
+				These attributes define the following:
 				<itemizedlist>
 					<listitem>
 						<para>
@@ -790,6 +804,11 @@ public class HomeController : SmartDispatcherController
 						</para>
 					</listitem>
 				</itemizedlist>
+			</para>
+			<para>
+				Layouts and rescues can minimize the amount of work you
+				do when building view templates and allow your view
+				templates to be better encapsulated.
 			</para>
 		</section>
 		<section>
@@ -842,10 +861,10 @@ public class HomeController : SmartDispatcherController
 				variable will represent the root of the application. If,
 				for example, the web application is using a virtual
 				directory it will be the name of the virtual directory.
-				Under normal circumstances, however, it will evaluate to
-				a simple
+				Under normal circumstances, however, it will simply
+				evaluate to "
 				<literal>/</literal>
-				.
+				" .
 			</para>
 		</section>
 		<section>
@@ -858,19 +877,14 @@ public class HomeController : SmartDispatcherController
 				</menuchoice>
 				or
 				<keysym>F5</keysym>
-				.
-			</para>
-			<para>
-				On the browser, go to the application URL and enter the
+				in Visual Studio to start a debug session. On the
+				browser, go to the application URL and enter the
 				controller name and the action name plus the extension
 				you have selected, eg.
 				<literal>
 					http://localhost:8081/home/index.castle
 				</literal>
-				.
-			</para>
-			<para>
-				The browser should render the view content with the
+				. The browser should render the view content with the
 				layout applied:
 			</para>
 			<para>
@@ -893,7 +907,7 @@ public class HomeController : SmartDispatcherController
 					associate the extension you selected (i.e.
 					<literal>.castle</literal>
 					) with the ASP.Net ISAPI. For more information on
-					this please see the chapter entitled
+					how to do this please see the chapter entitled
 					<link linkend="installation"
 						endterm="installation.title" />
 					.
@@ -981,12 +995,12 @@ public class HomeController : SmartDispatcherController
 			<para>
 				In an earlier step we specified that our controller uses
 				a
-				<emphasis>rescue</emphasis>
-				. A rescue is a special purpose view template that will
-				be rendered only in the event that an exception is
-				thrown while executing an action on a controller.Lets
-				create the rescue view to report errors nicely and see
-				how it works.
+				<emphasis>rescue.</emphasis>
+				A rescue is a special purpose view template that will be
+				rendered only in the event that an exception is thrown
+				while executing an action on a controller. Lets create
+				the rescue view to report errors nicely and see how it
+				works.
 			</para>
 			<para>
 				First, create a view template named
@@ -1024,7 +1038,13 @@ $exc.StackTrace
 </pre>
 ]]></programlisting>
 			<para>
-				Now lets create a new action that will throw an
+				There's quite a bit of logic in this template, but we
+				won't get into the details now. If you want to explore
+				these features in more detail see the NVelocity
+				documentation.
+			</para>
+			<para>
+				Now let's create a new action that will throw an
 				exception so we can see the rescue template in action.
 			</para>
 			<programlisting language="cs"><![CDATA[
@@ -1050,10 +1070,12 @@ public class HomeController : SmartDispatcherController
 }
 ]]></programlisting>
 			<para>
-				Run the application and go to
+				If you now run the application and go to
 				<literal>home/erroneousaction.castle</literal>
-				in your browser to trigger the exception and see the
-				result.
+				in your browser the
+				<methodname>ErroneousAction</methodname>
+				method will throw an exception as we specified and the
+				rescue will be displayed.
 			</para>
 		</section>
 	</section>
@@ -1063,22 +1085,25 @@ public class HomeController : SmartDispatcherController
 			Although the controller we've been using so far in our
 			sample application extends from
 			<classname>SmartDispatcherController</classname>
-			we haven't yet used any of its capabilities. The
+			we haven't yet used any of its more advanced capabilities.
+			The
 			<classname>SmartDispatcherController</classname>
 			base class, as the name implies, provides some "smart"
-			functionality, including binding query string entries, form
-			entries and even cookies to parameters of action methods
-			when they are invoked.
+			functionality, including binding query string values, form
+			values and even cookies to the parameters of action methods
+			when they are invoked. This includes both simple types and
+			custom, complex types as will be discussed in the following
+			sections.
 		</para>
 		<section>
 			<title>Simple Parameters</title>
 			<para>
-				Simple types can be bound to parameters on with no
+				Simple types can be bound to action parameters with no
 				special configuration other than to ensure your
 				controller is derived from the
 				<classname>SmartDispatchController</classname>
-				class. For example, suppose you have the following form
-				on a view:
+				class. For example, suppose you have the following HTML
+				form on a view:
 			</para>
 			<programlisting language="xml"><![CDATA[
 <form action="/home/saveinformation.castle" method="post" >
@@ -1089,10 +1114,13 @@ public class HomeController : SmartDispatcherController
 </form>
 ]]></programlisting>
 			<para>
-				You can create the
+				The form action directs the post to the
+				<classname>HomeController</classname>
+				class'
 				<methodname>SaveInformation</methodname>
-				action in such a way that it will expect the values from
-				the submitted HTML form as parameters to the method:
+				action method. This method can be constructed in in such
+				a way that it will expect the values from the submitted
+				HTML form as parameters:
 			</para>
 			<programlisting language="cs"><![CDATA[
 public class HomeController : SmartDispatcherController
@@ -1111,18 +1139,25 @@ public class HomeController : SmartDispatcherController
 }
 ]]></programlisting>
 			<para>
-				Using this automatic databinding feature reduces the
-				work you need to do to access the values submitted by
-				the view. You could still access the values from the
+				In the above example each of the form fields will be
+				data-bound to the method parameter of the same name on
+				the
+				<methodname>SaveInformation</methodname>
+				method.
+			</para>
+			<para>
+				Using this automatic data binding feature reduces the
+				effort required to access the values submitted by the
+				view. It is still possible to access the values from the
 				HTML form without data binding through use of the
 				<property>Params</property>
 				or
 				<property>Form</property>
 				name-value collections exposed by the controller,
-				however data binding is cleaner and simpler. The code
-				sample below provides the same functionality as the
-				sample above - we will leave it to you to decide which
-				is clearer to use.
+				however using data binding is cleaner and simpler. The
+				code sample below provides the same functionality as the
+				example above - we will leave it to you to decide which
+				is clearer and easier to use.
 			</para>
 			<programlisting language="cs"><![CDATA[
 public class HomeController : SmartDispatcherController
@@ -1147,9 +1182,9 @@ public class HomeController : SmartDispatcherController
 			<para>
 				The
 				<classname>SmartDispatchController</classname>
-				is capable of handling a wide range of types. For
-				further details on the types supported refer to the
-				documentation on
+				is capable of handling a wide range of built-in .NET
+				types. For further details on the types supported refer
+				to the documentation on
 				<link linkend="controllers.databinding">
 					Data Binding
 				</link>
@@ -1161,26 +1196,24 @@ public class HomeController : SmartDispatcherController
 		<section>
 			<title>Complex Objects</title>
 			<para>
-				You can also use the
+				Along with data binding simple value types the
 				<classname>SmartDispatcherController</classname>
-				to populate custom and arbitrarily complex objects. To
-				illustrate how this can be achieved we will create a new controller that presents a
-				contact form designed to allow a user to contact a department
-				in a fictitious company.
+				provides features to data bind custom and arbitrarily
+				complex objects. In order to illustrate how this can be
+				achieved we will create a new controller that presents a
+				contact form designed to allow a user to contact a
+				department in a fictitious company.
 			</para>
 			<para>
-				<orderedlist>
-					<listitem>
-						<para>
-							Create a new controller named
-							<classname>ContactController</classname>
-							and include two actions:
-							<methodname>ContactForm</methodname>
-							and
-							<methodname>SendContactMessage</methodname>
-							.
-						</para>
-						<programlisting language="cs"><![CDATA[
+				First, create a new controller named
+				<classname>ContactController</classname>
+				and add two empty actions;
+				<methodname>ContactForm</methodname>
+				and
+				<methodname>SendContactMessage</methodname>
+				.
+			</para>
+			<programlisting language="cs"><![CDATA[
 namespace GettingStartedSample.Controllers
 {
 	using System;
@@ -1199,14 +1232,15 @@ namespace GettingStartedSample.Controllers
 	}
 }
 ]]></programlisting>
-					</listitem>
-					<listitem>
-						<para>
-							Create a class
-							<classname>Contact</classname>
-							that represents the contact information.
-						</para>
-						<programlisting language="cs"><![CDATA[
+			<para>
+				Next, in the
+				<filename>/models</filename>
+				folder create a class named
+				<classname>Contact</classname>
+				- this class will be used to represent the contact
+				information submitted by the user.
+			</para>
+			<programlisting language="cs"><![CDATA[
 public class Contact
 {
 	private string from;
@@ -1239,26 +1273,23 @@ public class Contact
 	}
 }
 ]]></programlisting>
-
-					</listitem>
-					<listitem>
-						<para>
-							Now create the view for the
-							<methodname>ContactForm</methodname>
-							action. The view name should be
-							<literal>contactform.vm</literal>
-							and should be put on
-							<filename>Views\Contact</filename>
-							folder.
-						</para>
-						<programlisting language="xml"><![CDATA[
+			<para>
+				Now create the view to be displayed by the
+				<methodname>ContactForm</methodname>
+				action. The template file
+				<literal>contactform.vm</literal>
+				should be created in the
+				<filename>\views\contact</filename>
+				folder and must contain the following code:
+			</para>
+			<programlisting language="xml"><![CDATA[
 <h2>Contact us!</h2>
 
 <p>
 We are interested in hearing from you.
 </p>
 
-<form action="SendContactMessage.rails" method="post">
+<form action="contact/sendcontactmessage.castle" method="post">
 
 <p>
 From: $FormHelper.TextField("contact.from")
@@ -1277,7 +1308,7 @@ Message: <br/>
 $FormHelper.TextArea("contact.message", "%{cols='35', rows='6'}")
 </p>
 
-<hr />
+<br />
 
 <p>
 <input type="submit" value="Send the message" />
@@ -1285,37 +1316,85 @@ $FormHelper.TextArea("contact.message", "%{cols='35', rows='6'}")
 
 </form>
 ]]></programlisting>
-						<para>
-							Note that we used the
-							<classname>FormHelper</classname>
-							which handles generation of form elements.
-							You can (and should) learn more about
-							helpers and especially the
-							<classname>FormHelper</classname>
-							on the documentation.
-						</para>
+			<para>
+				In the code above we have made use of the
+				<classname>FormHelper</classname>
+				helper class to generate an HTML form with the following
+				source:
+			</para>
+			<programlisting language="xml"><![CDATA[
+<h2>Contact us!</h2>
 
-						<para>
-							You should also note that the each generated
-							field on the html will be prefixed with
-							<literal>contact</literal>
-							, for example
-							<literal>contact.name</literal>
-							. This is important as to use MonoRail's
-							data bind you must prefix the form elements
-							to avoid name clashes.
-						</para>
+<p>
+We are interested in hearing from you.
+</p>
 
-					</listitem>
-					<listitem>
-						<para>
-							Finally change the action to bind the form
-							data to the
-							<classname>Contact</classname>
-							class:
-						</para>
-						<programlisting language="cs"><![CDATA[
-public void SendContactMessage([DataBind("contact")] Contact contact)
+<form action="contact/sendcontactmessage.castle" method="post">
+
+<p>
+From: <input type="text" name="contact.from" />
+</p>
+
+<p>
+Area: <input type="text" name="contact.area" /> (Sales, Support)
+</p>
+
+<p>
+Subject: <input type="text" name="contact.subject" size="30" />
+</p>
+
+<p>
+Message: <br/> 
+<input type="textarea" name="contact.message" cols="35" rows="6" />
+</p>
+
+<br />
+
+<p>
+<input type="submit" value="Send the message" />
+</p>
+
+</form>
+]]></programlisting>
+			<note>
+				<para>
+					Further information on the
+					<link linkend="formhelper">
+						<classname>FormHelper</classname>
+					</link>
+					helper and on helpers in general can be found in the
+					chapter entitled
+					<link linkend="helpers" endterm="helpers.title" />
+					.
+				</para>
+			</note>
+			<para>
+				At this point it is important to note that the name of
+				each generated field on the HTML form has been prefixed
+				with the text
+				<literal>contact</literal>
+				followed by a dot and then the name of the property of
+				the form (eg.
+				<literal>contact.from</literal>
+				in the case of the "From" field in our example). This
+				indicates that each of the fields belong to a single
+				group of data that will be bound to an object by the
+				data binder.
+			</para>
+			<para>
+				Finally, change the parameters of the
+				<methodname>SendContactMessage</methodname>
+				action on the
+				<classname>ContactController</classname>
+				to indicate to the MonoRail binder that it should bind
+				the form data prefixed with
+				<literal>contact</literal>
+				to the
+				<classname>Contact</classname>
+				class created earlier.
+			</para>
+			<programlisting language="cs"><![CDATA[
+public void SendContactMessage([DataBind("contact")] Contact theContact)
 {
 	// Pretend to save the contact ...
 	
@@ -1324,33 +1403,37 @@ public void SendContactMessage([DataBind("contact")] Contact contact)
 	// Now lets add the contact to the property bag
 	// so we can render a nice message back to the user
 	
-	PropertyBag["contact"] = contact;
+	PropertyBag["contact"] = theContact;
 	
 	RenderView("confirmation");
 }
 ]]></programlisting>
-						<para>
-							We used the
-							<classname>DataBindAttribute</classname>
-							on the action parameter. Its first parameter
-							is the prefix used on the form. In our case
-							it is
-							<literal>contact</literal>
-							. When this action is invoked, MonoRail will
-							try to match the form data with the
-							properties on the
-							<classname>Contact</classname>
-							class and create an new instance populating
-							the properties.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							It would be nice to create the
-							<literal>confirmation</literal>
-							view too:
-						</para>
-						<programlisting language="xml"><![CDATA[
+			<para>
+				As you can see, a parameter named
+				<parameter>theContact</parameter>
+				has been added to the
+				<methodname>SendContactMethod</methodname>
+				action which has been decorated with the
+				<classname>DataBindAttribute</classname>
+				. The
+				<classname>DataBindAttribute</classname>
+				has been initialized with a string parameter that tells
+				the binder that it should attempt bind the form values
+				prefixed with
+				<emphasis>"contact."</emphasis>
+				to the properties of the
+				<parameter>theContact</parameter>
+				parameter that share the same name as the part of the
+				form element name that appears after the text
+				<emphasis>"contact."</emphasis>
+				.
+			</para>
+			<para>
+				While we're here we might as well create the
+				<literal>confirmation</literal>
+				view as well.
+			</para>
+			<programlisting language="nv"><![CDATA[
 <p>
 
 Thanks $!contact.from, we have received your message and will
@@ -1358,14 +1441,14 @@ get back to your shortly.
 
 </p>
 ]]></programlisting>
-					</listitem>
-				</orderedlist>
-			</para>
 			<para>
-				Now test your work by running the application and
-				accessing
-				<literal>/contact/contactform.rails</literal>
-				. Fill the form elements and submit it.
+				Now if you visit
+				<literal>/contact/contactform.castle</literal>
+				in your browser you should be able to view the results
+				of your work. Fill the form elements, submit it and you
+				should see the name you submitted in the
+				<emphasis>from</emphasis>
+				field on the form.
 			</para>
 			<para>
 				<mediaobject>
@@ -1386,77 +1469,82 @@ get back to your shortly.
 	<section>
 		<title>Integrating with ActiveRecord</title>
 		<para>
-			In order to explorer some more realistics scenarios you will
-			face in daily developments, why not use ActiveRecord as our
-			database access approach? All you have to do is reference
-			the assemblies, set up a database and configure and
-			initialize ActiveRecord.
+			In order to explore some more realistic scenarios you will
+			face during daily development lets take a look at using
+			ActiveRecord for reading and writing data stored in a
+			database. The Castle ActiveRecord project is an
+			implementation of the ActiveRecord pattern for .NET that
+			uses
+			<ulink url="http://www.hibernate.org">Nhibernate</ulink>
+			to communicate with the database.
 		</para>
+		<para>
+			To add ActiveRecord support to the sample project we will
+			reference the required assemblies, set up a database and
+			finally configure and initialize ActiveRecord.
+		</para>
+		<note>
+			<para>
+				For more information on ActiveRecord see the
+				<ulink
+					url="http://www.castleproject.org/activerecord/index.html">
+					ActiveRecord documentation
+				</ulink>
+				.
+			</para>
+		</note>
 		<section>
 			<title>Adding Assemblies</title>
 			<para>
-				<orderedlist>
-					<listitem>
-						<para>
-							First of all, add references to the
-							following assemblies:
-
-							<itemizedlist>
-								<listitem>
-									<para>
-										<literal>
-											Castle.ActiveRecord.dll
-										</literal>
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-										<literal>
-											Castle.DynamicProxy.dll
-										</literal>
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-										<literal>
-											Iesi.Collections.dll
-										</literal>
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-										<literal>log4net.dll</literal>
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-										<literal>
-											NHibernate.dll
-										</literal>
-									</para>
-								</listitem>
-							</itemizedlist>
-						</para>
-					</listitem>
-				</orderedlist>
+				First, add references to the assemblies required to use
+				ActiveRecord in your project :
 			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<literal>Castle.ActiveRecord.dll</literal>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<literal>Castle.DynamicProxy.dll</literal>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<literal>Iesi.Collections.dll</literal>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<literal>log4net.dll</literal>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<literal>NHibernate.dll</literal>
+					</para>
+				</listitem>
+			</itemizedlist>
 		</section>
 		<section>
 			<title>Configuration</title>
 			<para>
-				Now include a section on the
+				Now we need to add the ActiveRecord configuration
+				elements to the
 				<filename>web.config</filename>
-				so you can keep ActiveRecord's configuration there:
+				in the project.
 			</para>
 			<programlisting language="xml"><![CDATA[
 <configuration>
 	<configSections>
-		<section 
-			name="monorail" 
-			type="Castle.MonoRail.Framework.Configuration.MonoRailSectionHandler, Castle.MonoRail.Framework" />
+		
+		...
+		
 		<section 
 			name="activerecord"
 			type="Castle.ActiveRecord.Framework.Config.ActiveRecordSectionHandler, Castle.ActiveRecord" />
+	
 	</configSections>
 	
 	<activerecord isWeb="true">
@@ -1480,38 +1568,55 @@ get back to your shortly.
 	
 	...
 ]]></programlisting>
+			<para>
+				The configuration above defines the section handler that
+				tells ActiveRecord how to find and interpret the
+				ActiveRecord configuration information followed by the
+				configuration section itself.
+			</para>
 			<note>
 				<para>
-					The configuration above uses SQL Server 2000. If you
-					are using a different database you need to change
-					the dialect. Please refer to the
+					For our sample we've used SQL Server 2000, however
+					since ActiveRecord uses NHibernate it can support
+					any database dialect that NHibernate supports. If
+					you are using a different database you want to
+					change the dialect please refer to the ActiveRecord
 					<ulink
-						url="../documentation/trunk/manual/configurationref.html">
+						url="http://www.castleproject.org/activerecord/documentation/trunk/manual/xmlconfigref.html">
 						Xml Configuration Reference
 					</ulink>
-					document for more information.
+					for further information.
 				</para>
 			</note>
-
 			<para>
-				This configuration access a database catalog named
+				The example configuration section we've defined contains
+				information that tells ActiveRecord the type of database
+				we're using and specifies the connection string to a
+				database named
 				<literal>test</literal>
-				. Make sure it exists or change the configuration to
-				access an existing database catalog.
+				. You will need to make sure that the database exists or
+				will need to change the connection string to specify
+				another database.
 			</para>
+			<warning>
+				<para>
+					If you change the connection string to another
+					database it must already exist and the tables
+					required to support the sample project will be added
+					to it.
+				</para>
+			</warning>
 		</section>
 		<section>
 			<title>Building the Model</title>
 			<para>
-				Create two models to represent products and suppliers.
-				You can create the classes on the
-				<filename>Models</filename>
-				folder.
-			</para>
-			<para>
-				The
+				Next, we'll create two new model classes that will
+				represent products and suppliers. The classes should be
+				created in the
+				<filename>/models</filename>
+				folder of the project. First, create the
 				<filename>Supplier.cs</filename>
-				:
+				class to represent the supplier:
 			</para>
 			<programlisting language="cs"><![CDATA[
 namespace GettingStartedSample.Models
@@ -1552,9 +1657,9 @@ namespace GettingStartedSample.Models
 }
 ]]></programlisting>
 			<para>
-				The
+				Then create the
 				<filename>Product.cs</filename>
-				:
+				class to represent the product:
 			</para>
 			<programlisting language="cs"><![CDATA[
 namespace GettingStartedSample.Models
@@ -1610,31 +1715,51 @@ namespace GettingStartedSample.Models
 	}
 }
 ]]></programlisting>
+			<note>
+				<para>
+					You may notice that the classes have been decorated
+					with the
+					<literal>[ActiveRecord]</literal>
+					attribute and each of their properties have been
+					decorated with attributes such as
+					<literal>[PrimaryKey]</literal>
+					,
+					<literal>[Property]</literal>
+					and
+					<literal>[BelongsTo]</literal>
+					. These, and other elements of these classes are
+					specific to ActiveRecord; to gain a better
+					understanding of these features you should refer to
+					the
+					<ulink
+						url="http://www.castleproject.org/activerecord/index.html">
+						ActiveRecord documentation
+					</ulink>
+					.
+				</para>
+			</note>
 		</section>
 		<section>
 			<title>Initializing the Handler</title>
 			<para>
-				The last step is to initialize ActiveRecord passing the
-				configuration. The best place to do that in a web
-				application is on the global.asax related class. So
-				create a
+				The last step is to initialize ActiveRecord. Ideally in
+				MonoRail this is done in the class associated with the
 				<filename>global.asax</filename>
-				if none exists and on the related class, use the
-				<methodname>Application_OnStart</methodname>
-				event to initialize ActiveRecord:
-			</para>
-			<para>
-				The
+				file. If no
 				<filename>global.asax</filename>
-				file:
+				create it now with the following content:
 			</para>
 			<programlisting language="xml"><![CDATA[
 <%@ Application Inherits="GettingStartedSample.GlobalApplication" %>
 ]]></programlisting>
 			<para>
-				The
+				Now create the
+				<classname>GlobalApplication</classname>
+				class the
+				<filename>global.asax</filename>
+				refers to by adding a
 				<filename>GlobalApplication.cs</filename>
-				file:
+				file to the project.
 			</para>
 			<programlisting language="cs"><![CDATA[
 namespace GettingStartedSample
@@ -1668,32 +1793,53 @@ namespace GettingStartedSample
 }
 ]]></programlisting>
 			<para>
-				The next time you run the application it will create the
-				tables for you, so you can comment the line that invokes
-				<methodname>CreateSchema</methodname>
-				after that.
+				The
+				<classname>GlobalApplication</classname>
+				class inherits from
+				<classname>HttpApplication</classname>
+				and implements
+				<methodname>Application_OnStart</methodname>
+				where code to be executed before the application begins
+				for the first time will be located. Into this method we
+				have added the
+				<literal>ActiveRecordStarter.Initialize</literal>
+				method call to initialize ActiveRecord.
 			</para>
+			<warning>
+				<para>
+					In the sample above we've added a call to
+					<literal>ActiveRecordStarter.CreateSchema</literal>
+					which will create the required tables in the
+					database to match the ActiveRecord classes defined
+					earlier. After the application has been started for
+					the first time and the database schema has been
+					populated this line should be commented out.
+				</para>
+			</warning>
 		</section>
 		<section>
-			<title>ActiveRecord Sacffolding</title>
+			<title>ActiveRecord Scaffolding</title>
 			<para>
-				First lets handle inclusion the easy way. By using
-				ActiveRecord Scaffolding support we can have a crud page
-				with no effort. However Scaffolding is meant to be used
-				to prototype applications only, as you can get something
-				working really fast. During the application lifecycle
-				you should replace the scaffolded controller with a more
-				suitable crud implementation (which we will see in the
-				next page).
+				There are several ways of creating the pages that handle
+				Create, Retrieve, Update and Delete (CRUD) functionality
+				in MonoRail, the simplest of which is using ActiveRecord
+				Scaffolding, which works well for prototyping . Since
+				this application is simply to demonstrate some of the
+				features of MonoRail we will use Scaffolding to get up
+				and running quickly, however later we will look at a
+				more sophisticated solution that would be more suitable
+				for production applications.
 			</para>
 			<para>
-				Enabling ActiveRecord Scaffolding is real simple.
+				Enabling ActiveRecord only requires that we add a couple
+				of additional assemblies and create a very basic
+				controller.
 			</para>
 			<section>
 				<title>Adding Assemblies</title>
 				<para>
-					First of all, add references to the following
-					assemblies:
+					First, add references to the assemblies required for
+					ActiveRecord Scaffolding support:
 					<itemizedlist>
 						<listitem>
 							<para>
@@ -1715,7 +1861,8 @@ namespace GettingStartedSample
 			<section>
 				<title>Creating the Controller</title>
 				<para>
-					Now create a controller to manage the
+					Next, create the controller that will provide the
+					CRUD functions for the
 					<classname>Supplier</classname>
 					class:
 				</para>
@@ -1733,16 +1880,25 @@ namespace GettingStartedSample.Controllers
 }
 ]]></programlisting>
 				<para>
-					Note the usage of the
+					You may notice that the controller does not contain
+					any code at all. This is because the addition of the
 					<classname>ScaffoldingAttribute</classname>
+					decoration on the controller class tells MonoRail
+					that this is a Scaffolding controller so all the
+					additional functionality is automatically provided.
 				</para>
 			</section>
 			<section>
 				<title>Viewing the Result</title>
 				<para>
-					That is it. Now run the application and direct your
-					browser to
-					<literal>/supplier/list.rails</literal>
+					If you use Scaffolding for your CRUD functionality
+					that is it - all the features have automatically
+					been added. If you visit the url
+					<literal>/supplier/list.castle</literal>
+					you will see that the list page is automatically
+					provided along with all the navigation features and
+					links to add, remove and modify supplier data in the
+					database.
 				</para>
 				<para>
 					<mediaobject>
@@ -1750,40 +1906,41 @@ namespace GettingStartedSample.Controllers
 							<imagedata
 								fileref="images/gs_scaffold_1.png" />
 						</imageobject>
+						<caption>The supplier list</caption>
 					</mediaobject>
 					<mediaobject>
 						<imageobject>
 							<imagedata
 								fileref="images/gs_scaffold_2.png" />
 						</imageobject>
+						<caption>Adding a supplier</caption>
 					</mediaobject>
 				</para>
 			</section>
 		</section>
 		<section>
-			<title>Creating a CRUD Page Using DataBind</title>
+			<title>Creating CRUD Pages Using DataBind</title>
 			<para>
-				CRUD stands for Create, Retrieve, Update and Delete.
-				Most applications have some kind of CRUD funcionality,
-				and we can assume that every programmer had to deal with
-				CRUD at some point.
-			</para>
-			<para>
-				As you remember, we have created a
+				In the previous section we looked at the creation of
+				basic CRUD pages to access
+				<classname>Supplier</classname>
+				data using Scaffolding; now we'll look at a more
+				flexible approach. In this example we will manually
+				create the controller actions and views to provide a
+				more sophisticated solution. To keep things simple we'll
+				reuse the
 				<classname>Supplier</classname>
 				and
 				<classname>Product</classname>
-				classes. We used scaffolding to create the CRUD for the
-				<classname>Supplier</classname>
-				class. Now let's code the CRUD for the
+				model classes we created earlier and will now develop
+				the CRUD pages for the
 				<classname>Product</classname>
-				class manually. You'll see that it is also something
-				really simple.
+				class.
 			</para>
 			<para>
-				The first thing you must do is create the
+				First, create the basis of the
 				<classname>ProductController</classname>
-				:
+				class using the following code:
 			</para>
 			<programlisting language="cs"><![CDATA[
 namespace GettingStartedSample.Controllers
@@ -1798,13 +1955,20 @@ namespace GettingStartedSample.Controllers
 	}
 }
 ]]></programlisting>
-			<para>Now we are ready.</para>
+			<para>
+				Into this controller we will add the action that will
+				present the list of products along with the actions that
+				control adding, updating and deleting products.
+			</para>
 			<section>
 				<title>Presenting the List</title>
 				<para>
-					Create a
+					First, lets look at creating the the
 					<methodname>List</methodname>
-					action on the controller:
+					action on the controller. This action will present a
+					list of the
+					<classname>Product</classname>
+					data from the database.
 				</para>
 				<programlisting language="cs"><![CDATA[
 public void List()
@@ -1813,16 +1977,37 @@ public void List()
 }
 ]]></programlisting>
 				<para>
-					This code makes all products available to the view.
-					Now create the
-					<literal>list.vm</literal>
-					:
+					The call to the static
+					<methodname>FindAll</methodname>
+					method on the
+					<classname>Product</classname>
+					in the code above gets all the
+					<classname>Product</classname>
+					items from the database which are then made
+					available to the view by passing them to the
+					<property>PropertyBag</property>
+					. The
+					<methodname>FindAll</methodname>
+					method, amongst others, is exposed by the
+					<classname>ActiveRecordBase</classname>
+					class that we used as the base class for our
+					<classname>Product</classname>
+					.
+				</para>
+				<para>
+					Next, build the view to go with the
+					<methodname>List</methodname>
+					action by creating the
+					<filename>list.vm</filename>
+					file with the following content in the
+					<filename>/views/product</filename>
+					folder.
 				</para>
 				<programlisting language="xml"><![CDATA[
 <h3>Product list</h3>
 
 <p>
-<a href="new.rails">Create new Product</a>
+<a href="new.castle">Create new Product</a>
 </p>
 
 <table width="100%" border="1" cellpadding="2" cellspacing="0">
@@ -1838,16 +2023,19 @@ public void List()
 	<td align="center">$product.Name</td>
 	<td align="center">$product.Supplier.Name</td>
 	<td align="center">
-		<a href="edit.rails?id=${product.Id}">Edit</a> | 
-		<a href="delete.rails?id=${product.Id}">Delete</a>
+		<a href="edit.castle?id=${product.Id}">Edit</a> | 
+		<a href="delete.castle?id=${product.Id}">Delete</a>
 	</td>
 </tr>
 #end
 </table>
 ]]></programlisting>
 				<para>
-					Test your working accessing
-					<literal>/product/list.rails</literal>
+					At this stage you can see the results of the
+					<methodname>List</methodname>
+					action and view by visiting the
+					<literal>/product/list.castle</literal>
+					url in your browser.
 				</para>
 				<para>
 					<mediaobject>
@@ -1860,58 +2048,34 @@ public void List()
 			<section>
 				<title>Creating</title>
 				<para>
-					To insert a new product we will use two actions:
-					<itemizedlist>
-						<listitem>
-							<para>
-								<methodname>New</methodname>
-								: which will present the form
-							</para>
-						</listitem>
-						<listitem>
-							<para>
-								<methodname>Create</methodname>
-								: which uses the data supplied on the
-								form to create the Product on the
-								database
-							</para>
-						</listitem>
-					</itemizedlist>
+					To create a new product we will use two actions; one
+					that will present the form on which the user can
+					provide the information about the new product and
+					another that will store the provided data into the
+					database. First, create the
+					<methodname>New</methodname>
+					action that will present the user with the form.
 				</para>
 				<programlisting language="cs"><![CDATA[
 public void New()
 {
 	PropertyBag["suppliers"] = Supplier.FindAll();
 }
-
-public void Create([DataBind("product")] Product prod)
-{
-	try
-	{
-		prod.Create();
-	
-		RedirectToAction("list");
-	}
-	catch(Exception ex)
-	{
-		Flash["error"] = ex.Message;
-		Flash["product"] = prod;
-		
-		RedirectToAction("new");
-	}
-}
 ]]></programlisting>
 				<para>
-					The
-					<methodname>New</methodname>
-					action makes all suppliers available to the view.
-					This is required to populate a select element with
-					all suppliers available.
+					This action, apart from displaying the form to the
+					user provides all the existing suppliers available
+					to the view so it can populate a select element to
+					choose a supplier from.
 				</para>
 				<para>
-					The
+					Now add the view associated with the
+					<methodname>New</methodname>
+					action by creating the
 					<literal>new.vm</literal>
-					view follows:
+					file in the
+					<filename>/views/product</filename>
+					folder and populate it with the following content:
 				</para>
 				<programlisting language="xml"><![CDATA[
 <h3>New Product</h3>
@@ -1922,7 +2086,7 @@ public void Create([DataBind("product")] Product prod)
 </p>
 #end
 
-<form action="create.rails" method="post">
+<form action="create.castle" method="post">
 
 	<p>
 	Name: $FormHelper.TextField("product.name")
@@ -1945,8 +2109,56 @@ public void Create([DataBind("product")] Product prod)
 </form>
 ]]></programlisting>
 				<para>
-					Test your working accessing
-					<literal>/product/new.rails</literal>
+					Finally, add the
+					<methodname>Create</methodname>
+					action to handle the data submitted from the form by
+					the user.
+				</para>
+				<programlisting language="cs"><![CDATA[
+public void Create([DataBind("product")] Product prod)
+{
+	try
+	{
+		prod.Create();
+	
+		RedirectToAction("list");
+	}
+	catch(Exception ex)
+	{
+		Flash["error"] = ex.Message;
+		Flash["product"] = prod;
+		
+		RedirectToAction("new");
+	}
+}
+]]></programlisting>
+				<para>
+					This method is using data binding to bind the form
+					data into the
+					<parameter>prod</parameter>
+					parameter which then uses the
+					<methodname>Create</methodname>
+					method from the
+					<classname>ActiveRecordBase</classname>
+					base class of the
+					<classname>Product</classname>
+					class. The
+					<methodname>Create</methodname>
+					method will add the
+					<classname>Product</classname>
+					into the database. Once the
+					<classname>Product</classname>
+					has been created this action will redirect the user
+					back to the
+					<methodname>List</methodname>
+					action created earlier.
+				</para>
+				<para>
+					You can now test your work by accessing the
+					<methodname>New</methodname>
+					action using the
+					<literal>/product/new.castle</literal>
+					url.
 				</para>
 				<para>
 					<mediaobject>
@@ -1959,12 +2171,16 @@ public void Create([DataBind("product")] Product prod)
 			<section>
 				<title>Updating</title>
 				<para>
-					Updating is not very different from creating. First
-					create two actions:
-					<methodname>Edit</methodname>
-					and
-					<methodname>Update</methodname>
-					.
+					Building the update functionality is very similar to
+					the process used when building the create feature.
+					Again there will be two actions; one that presents a
+					form for editing a
+					<classname>Product</classname>
+					and another for saving the changes after the form
+					has been submitted.
+				</para>
+				<para>
+					First, create the two actions for edit and update:
 				</para>
 				<programlisting language="cs"><![CDATA[
 public void Edit(int id)
@@ -1991,13 +2207,29 @@ public void Update([DataBind("product")] Product prod)
 }
 ]]></programlisting>
 				<para>
-					We can also use a different
+					The
 					<methodname>Edit</methodname>
-					overload that will be used when the
+					action will present the form to the user and provide
+					all the relevant data to the form. The
 					<methodname>Update</methodname>
-					catch block redirects it back to the
+					action will handle saving the changes submitted by
+					the user and redirecting the ser back to the
+					<methodname>List</methodname>
+					action.
+				</para>
+				<para>
+					We can also overload the
 					<methodname>Edit</methodname>
-					:
+					action method. This overload will be used
+					specifically when an error is caught by the
+					<methodname>Update</methodname>
+					action. In the catch handler the action redirects
+					the user back to the edit page so they can correct
+					any errors. Also of note is the
+					<classname>FlashBinder</classname>
+					which allows you to bind data to parameters from the
+					<classname>Flash</classname>
+					rather than from Request or Post data.
 				</para>
 				<programlisting language="cs"><![CDATA[
 public void Edit(int id, [FlashBinder] Product product)
@@ -2006,16 +2238,13 @@ public void Edit(int id, [FlashBinder] Product product)
 }
 ]]></programlisting>
 				<para>
-					The
+					Next, we'll create the edit view. The
 					<literal>edit.vm</literal>
-					view is pratically the same as the
+					template is very similar to the
 					<literal>new.vm</literal>
-					. The
-					<classname>FormHelper</classname>
-					is clever enough to populate the fields and select
-					the correct item on the form's
-					<literal>select</literal>
-					element.
+					template created in the last section; it will be
+					responsible for displaying the form for editing the
+					product.
 				</para>
 				<programlisting language="xml"><![CDATA[
 <h3>Edit Product</h3>
@@ -2026,7 +2255,7 @@ public void Edit(int id, [FlashBinder] Product product)
 </p>
 #end
 
-<form action="update.rails" method="post">
+<form action="update.castle" method="post">
 
 $FormHelper.HiddenField("product.id")
 
@@ -2050,13 +2279,22 @@ $FormHelper.HiddenField("product.id")
 
 </form>
 ]]></programlisting>
+				<para>
+					In the code above we've used the
+					<classname>FormHelper</classname>
+					which is clever enough to populate the fields and
+					select the correct item on the form's
+					<literal>select</literal>
+					element.
+				</para>
 			</section>
 			<section>
 				<title>Deleting</title>
 				<para>
-					Deleting is the easiest one. Add the
+					The last in our CRUD series, the delete step is the
+					easiest one; simply add the
 					<methodname>Delete</methodname>
-					action:
+					action to the controller with the following code.
 				</para>
 				<programlisting language="cs"><![CDATA[
 public void Delete(int id)
@@ -2068,17 +2306,26 @@ public void Delete(int id)
 	RedirectToAction("list");
 }
 ]]></programlisting>
+				<para>
+					This action will be called when the user clicks the
+					<emphasis>delete</emphasis>
+					link on the list page. It gets the if of the product
+					using automatic data-binding, finds the product,
+					deletes it and redirects back to the list page.
+				</para>
 			</section>
 		</section>
 	</section>
 	<section>
 		<title>Final Comments</title>
 		<para>
-			Getting Started gave you a very fast introduction to what
-			MonoRail is capable of and how to use it. But there are much
-			more to learn. Explore the samples, stretch and bend it as
-			you wish, and consult the documentation which contains much
-			more in-depth information.
+			The Getting Started chapter gave you a very quick
+			introduction to many of MonoRail's features and and how to
+			use them, however there is much more to learn. To get a
+			better feel for MonoRail you can explore the samples, try
+			some experiments of your own, and consult documentation on
+			the various features covered here for much more in-depth
+			information.
 		</para>
 	</section>
 </chapter>

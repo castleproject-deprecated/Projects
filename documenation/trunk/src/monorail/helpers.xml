@@ -3,8 +3,8 @@
 [
 	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2001/XInclude'">
 ]>
-<chapter>
-	<title>Helpers</title>
+<chapter id="helpers">
+	<title id="helpers.title">Helpers</title>
 	<section>
 		<title>Introduction</title>
 		<para>
