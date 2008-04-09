@@ -1,0 +1,67 @@
+﻿
+#macro(showmessages $exc)
+<li>$exc.Message</li>
+#if($exc.InnerException)
+#set($inner = $exc.InnerException)
+#showmessages($inner)
+#end
+#end
+
+
+#foreach($event in $tracking.WorkflowEvents)
+#beforeall
+<h4>Workflow Events</h4>
+#each
+<p>
+  $event.EventOrder) ${event.eventdatetime} &bull;
+  $event.TrackingWorkflowEvent $!event.eventargs.currentactivitypath
+</p>
+
+
+#if("$event.TrackingWorkflowEvent" == "Exception")
+
+#if($event.eventargs.currentactivitypath == $event.eventargs.originalactivitypath)
+<ul>
+  #set($exception = $event.eventargs.exception)
+  #showmessages($exception)
+</ul>
+#end
+
+#elseif("$event.TrackingWorkflowEvent" == "Terminated")
+<ul>
+  #set($exception = $event.eventargs.exception)
+  #showmessages($exception)
+</ul>
+
+#else
+$!event.eventargs
+#end
+
+
+#foreach($annotation in $event.annotations)
+<p>$annotation</p>
+#end
+
+#end
+
+#foreach($event in $tracking.ActivityEvents)
+#beforeall
+<h4>Activity Events</h4>
+#each
+<p>$event.EventOrder) $event.ExecutionStatus $event.ActivityType.Name $event.QualifiedName</p>
+
+
+#foreach($eventbody in $event.body)
+#beforeall
+<ul>
+  #each
+  <li>$eventbody.FieldName : $eventbody.Data</li>
+  #afterall
+</ul>
+#foreach($annotation in $event.annotations)
+<p>$annotation</p>
+#end
+
+#end
+
+#end

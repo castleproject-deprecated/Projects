@@ -1,0 +1,52 @@
+﻿#set($title="Home")
+#set($menu_home=$Dict.N("id","menuselected"))
+
+
+
+#capturefor(capturefor_left)
+
+<h3>Commerce sample</h3>
+<p>Fill out the form with fake information and click purchase to send the transaction.</p>
+<p>The controller will create and start a workflow, and your confirmation screen will 
+let you see the status of the transaction as it processes.</p>
+<p></p>
+
+<h3>Setup</h3>
+<p>Before this demo will work on your computer, you'll need to create a database and run the Workflow Foundation
+scripts.</p>
+
+<p>In the &lt;castle&gt; configuration section of the web.config you will find the connection string 
+to point to the database. The default is using the '.\sqlexpress' server 'demo' database.</p>
+
+<p>In that same directory is a createdb.cmd file which will create the database artifacts needed for the tracking
+and persistence services. You will need to change the server and database name there as well.</p>
+
+#end
+
+
+#capturefor(capturefor_right)
+
+<h3>Send Transaction</h3>
+$Form.FormTag("%{action='purchase'}")
+
+<h4>Name:</h4>
+<p class="input">$Form.TextField("buyer.name")</p>
+
+<h4>Card:</h4>
+<p class="input">$Form.TextField("buyer.card")</p>
+
+<h4>Expires Year/Month:</h4>
+<div class="horizontal">
+<p class="input halfsize">$Form.TextField("buyer.expiresyear")</p>
+<p class="input halfsize">$Form.TextField("buyer.expiresmonth")</p>
+<div class="endhorizontal"></div>
+</div>
+
+<h4>Purchase price:</h4>
+<p class="input">$Form.TextField("price")</p>
+
+<p class="button">$Form.ButtonElement("Purchase")</p>
+
+$Form.EndFormTag()
+
+#end

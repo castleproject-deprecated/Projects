@@ -1,0 +1,30 @@
+﻿#set($title="Order Confirmation")
+
+<h2>Your order has been placed</h2>
+
+<p>
+  <script>var args = {workflowId:'$workflowId', trackingNumber:'$trackingNumber', message:'Some reason or other.'};</script>
+  $Ajax.LinkToRemote("Fire success", $Url.For("%{action='firesuccess'}"), "%{update='feedback', with='args'}") &bull;
+  $Ajax.LinkToRemote("Fire declined", $Url.For("%{action='firedeclined'}"), "%{update='feedback', with='args'}") &bull;
+  <span id="feedback">Use these to simulate a response from the provider</span>
+</p>
+
+<div id="status" style="padding:0px; margin:0px;">
+  #parse("home\\confirmed_status.vm")
+</div>
+
+<p>Thank you for shopping with Castle.</p>
+<p></p>
+
+$Ajax.PeriodicallyCallRemote($Url.For("%{action='confirmed_left'}"), "%{with='args',update='left',frequency=3}")
+$Ajax.PeriodicallyCallRemote($Url.For("%{action='confirmed_right'}"), "%{with='args',update='right',frequency=3}")
+$Ajax.PeriodicallyCallRemote($Url.For("%{action='confirmed_status'}"), "%{with='args',update='status',frequency=3}")
+
+
+#capturefor(capturefor_left)
+#parse("home\\confirmed_left.vm")
+#end
+
+#capturefor(capturefor_right)
+#parse("home\\confirmed_right.vm")
+#end

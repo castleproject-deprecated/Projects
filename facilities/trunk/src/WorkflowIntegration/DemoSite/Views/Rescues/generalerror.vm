@@ -1,0 +1,28 @@
+﻿#set($title="General Error")
+
+#macro(showexception $exc)
+<b>$exc.GetType().Name</b>
+
+Message:
+$exc.Message
+
+#if($exc.StackTrace)
+StackTrace:
+$exc.StackTrace
+#end
+
+#if($exc.InnerException)
+<b>Inner exception:</b>
+#set($inner = $exc.InnerException)
+#showexception($inner)
+#end
+#end
+
+<h2>Unexpected error</h2>
+
+<p> This is the rescue page. See the exception details below </p>
+
+<!--
+#set($exception = $context.LastException)
+#showexception($exception)
+-->

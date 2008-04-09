@@ -1,0 +1,26 @@
+﻿<p>Order $TrackingNumber was started $tracking.Initialized.</p>
+<p>
+  $price was charged by $buyerinfo.name on card $buyerinfo.card that
+  expires ${buyerinfo.expiresmonth}/${buyerinfo.expiresyear}.
+</p>
+
+#if($tracking.Status=="Completed")
+<p>The transaction has completed successfully.</p>
+#elseif($tracking.Status=="Terminated")
+<p>The transaction has failed. Please contact your financial institution.</p>
+#elseif($tracking.Status=="Running")
+<img src="$siteroot/content/ajax-loader.gif" style="float:left"/>
+<p>
+  Your transaction is being processed. Please wait
+  for confirmation. Or keep hitting refresh. Either way.
+</p>
+#else
+<p>
+  Your transaction is in an unexpected state, $tracking.Status, so if nothing
+  happens after a bit you might want to call and ask what's up.
+</p>
+#end
+
+#if($failedmessage)
+<p class="error">$failedmessage</p>
+#end

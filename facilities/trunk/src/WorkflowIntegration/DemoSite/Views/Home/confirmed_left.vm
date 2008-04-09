@@ -1,0 +1,13 @@
+﻿<h3>Workflow Details</h3>
+<p>WorkflowInstanceId: ${tracking.WorkflowInstanceId}</p>
+<p>Type: ${tracking.WorkflowType.FullName}</p>
+<p>Initialized: ${tracking.Initialized}</p>
+<p>Status: ${tracking.Status}</p>
+
+#foreach($event in $tracking.UserEvents)
+#beforeall
+<h4>User Events</h4>
+#each
+<p>$event.EventOrder) $event.UserDataKey $event.UserData</p>
+
+#end

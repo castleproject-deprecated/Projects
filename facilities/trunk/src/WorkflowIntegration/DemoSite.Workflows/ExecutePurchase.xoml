@@ -1,0 +1,56 @@
+﻿<SequentialWorkflowActivity x:Class="DemoSite.Workflows.ExecutePurchase" x:Name="ExecutePurchase" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/workflow">
+	<CodeActivity x:Name="trackArguments" ExecuteCode="trackArguments_ExecuteCode" />
+	<CompensatableSequenceActivity x:Name="compenseWithCancel">
+		<CallExternalMethodActivity x:Name="sendTrans" InterfaceType="{x:Type DemoSite.Workflows.ICreditCardProvider}" MethodName="SendTransaction">
+			<CallExternalMethodActivity.ParameterBindings>
+				<WorkflowParameterBinding ParameterName="buyer">
+					<WorkflowParameterBinding.Value>
+						<ActivityBind Name="ExecutePurchase" Path="BuyerInfo" />
+					</WorkflowParameterBinding.Value>
+				</WorkflowParameterBinding>
+				<WorkflowParameterBinding ParameterName="price">
+					<WorkflowParameterBinding.Value>
+						<ActivityBind Name="ExecutePurchase" Path="Price" />
+					</WorkflowParameterBinding.Value>
+				</WorkflowParameterBinding>
+				<WorkflowParameterBinding ParameterName="trackingNumber">
+					<WorkflowParameterBinding.Value>
+						<ActivityBind Name="ExecutePurchase" Path="TrackingNumber" />
+					</WorkflowParameterBinding.Value>
+				</WorkflowParameterBinding>
+			</CallExternalMethodActivity.ParameterBindings>
+		</CallExternalMethodActivity>
+		<CompensationHandlerActivity x:Name="compensationHandlerActivity1">
+			<CallExternalMethodActivity x:Name="cancelTrans" InterfaceType="{x:Type DemoSite.Workflows.ICreditCardProvider}" MethodName="CancelTransaction">
+				<CallExternalMethodActivity.ParameterBindings>
+					<WorkflowParameterBinding ParameterName="trackingNumber">
+						<WorkflowParameterBinding.Value>
+							<ActivityBind Name="ExecutePurchase" Path="TrackingNumber" />
+						</WorkflowParameterBinding.Value>
+					</WorkflowParameterBinding>
+				</CallExternalMethodActivity.ParameterBindings>
+			</CallExternalMethodActivity>
+		</CompensationHandlerActivity>
+	</CompensatableSequenceActivity>
+	<ListenActivity x:Name="listenForResults">
+		<EventDrivenActivity x:Name="caseSuccess">
+			<HandleExternalEventActivity x:Name="handleSuccess" EventName="TransactionCompleted" InterfaceType="{x:Type DemoSite.Workflows.ICreditCardProvider}" />
+		</EventDrivenActivity>
+		<EventDrivenActivity x:Name="caseDeclined">
+			<HandleExternalEventActivity Invoked="handleDeclined_Invoked" x:Name="handleDeclined" EventName="TransactionFailed" InterfaceType="{x:Type DemoSite.Workflows.ICreditCardProvider}">
+				<HandleExternalEventActivity.ParameterBindings>
+					<WorkflowParameterBinding ParameterName="e">
+						<WorkflowParameterBinding.Value>
+							<ActivityBind Name="ExecutePurchase" Path="DeclinedArgs" />
+						</WorkflowParameterBinding.Value>
+					</WorkflowParameterBinding>
+				</HandleExternalEventActivity.ParameterBindings>
+			</HandleExternalEventActivity>
+			<ThrowActivity x:Name="throwDeclined" />
+		</EventDrivenActivity>
+		<EventDrivenActivity x:Name="caseTimeout">
+			<DelayActivity TimeoutDuration="00:00:30" x:Name="delayTimeout" />
+			<ThrowActivity x:Name="throwTimeout" FaultType="{x:Type p8:TimeoutException}" xmlns:p8="clr-namespace:System;Assembly=mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+		</EventDrivenActivity>
+	</ListenActivity>
+</SequentialWorkflowActivity>

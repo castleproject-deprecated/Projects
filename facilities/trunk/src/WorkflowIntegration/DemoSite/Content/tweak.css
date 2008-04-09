@@ -1,0 +1,29 @@
+﻿form p.halfsize
+{
+	width: 40%;
+	float: left;
+}
+form p.halfsize input
+{
+	width: 90%;
+}
+#main
+{
+	max-width: 980px;
+}
+#panel .horizontal
+{
+	margin:0px;
+	padding:0px;
+}
+#panel .endhorizontal
+{
+	margin:0px 0px 2em 0px;
+	padding:0px;
+	height:.01em;
+}
+
+.error
+{
+	color:Red;
+}

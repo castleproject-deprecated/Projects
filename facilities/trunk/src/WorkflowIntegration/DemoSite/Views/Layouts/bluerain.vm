@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>$!title - WorkflowIntegration Demo</title>
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<meta name="author" content="Rowan Lewis" />
+		<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+		<link rel="stylesheet" title="Normal" type="text/css" media="screen" href="$siteroot/content/bluerain/styles/screen.css" />
+		<link rel="stylesheet" title="Normal" type="text/css" media="screen" href="$siteroot/content/tweak.css" />
+		
+		$Ajax.InstallScripts()
+		$Form.InstallScripts()
+				
+	</head>
+	<body>
+		<div id="main">
+			<div id="header">
+				<h1>Workflow Integration Demo</h1>
+			</div>
+			<div id="menu">
+				<ul>
+					#set($controlleraction="$controller.name$controller.action")
+					#if($controlleraction=='homeindex')#set($home_selected='class="selected"')#end
+					#if($controlleraction=='homebluerain')#set($style_selected='class="selected"')#end
+					
+					
+					<li $!home_selected>$Url.Link("Home", "%{controller='home', action='index'}")</li>
+					<li $!style_selected>$Url.Link("Style", "%{controller='home', action='bluerain'}")</li>
+				</ul>
+			</div>
+			<div id="content">
+				$!{childContent}
+			</div>
+			#if ($capturefor_left || $capturefor_right)
+			<div id="panel">
+				<div id="left" class="left">
+					$!{capturefor_left}
+				</div>
+				<div id="right" class="right">
+					$!{capturefor_right}
+				</div>
+			</div>
+			#end
+			<div id="footer">
+				<p>
+					Designed by <a href="http://www.pixelcarnage.com/">PixelCarnage</a>.<br />Released under the GNU GPL for free distributation and modification.
+				</p>
+			</div>
+		</div>
+	</body>
+</html>
