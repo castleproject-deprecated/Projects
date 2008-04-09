@@ -19,8 +19,9 @@ $exc.StackTrace
 #end
 
 <h2>Unexpected error</h2>
-
-<p> This is the rescue page. See the exception details below </p>
+<p>$!context.LastException.Message</p>
+<p>$!context.LastException.InnerExceptionMessage</p>
+<p>This is the rescue page. View source for the exception details below </p>
 
 <!--
 #set($exception = $context.LastException)

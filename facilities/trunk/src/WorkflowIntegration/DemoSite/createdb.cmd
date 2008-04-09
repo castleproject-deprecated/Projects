@@ -1,11 +1,11 @@
 ﻿echo Creating Tracking tables...
-Osql -S %COMPUTERNAME%\SQLExpress -E -n -d demo -i "%SYSTEMROOT%\Microsoft.NET\Framework\v3.0\Windows Workflow Foundation\SQL\EN\Tracking_Schema.sql"
+Osql -S (local) -E -n -d demo -i "%SYSTEMROOT%\Microsoft.NET\Framework\v3.0\Windows Workflow Foundation\SQL\EN\Tracking_Schema.sql"
 
 echo creating Tracking stored procedures...
-Osql -S %COMPUTERNAME%\SQLExpress -E -n -d demo -i "%SYSTEMROOT%\Microsoft.NET\Framework\v3.0\Windows Workflow Foundation\SQL\EN\Tracking_Logic.sql"
+Osql -S (local) -E -n -d demo -i "%SYSTEMROOT%\Microsoft.NET\Framework\v3.0\Windows Workflow Foundation\SQL\EN\Tracking_Logic.sql"
 
 echo Creating persistence tables...
-Osql -S %COMPUTERNAME%\SQLExpress -E -n -d demo -i "%SYSTEMROOT%\Microsoft.NET\Framework\v3.0\Windows Workflow Foundation\SQL\EN\SqlPersistenceService_Schema.sql"
+Osql -S (local) -E -n -d demo -i "%SYSTEMROOT%\Microsoft.NET\Framework\v3.0\Windows Workflow Foundation\SQL\EN\SqlPersistenceService_Schema.sql"
 
 echo creating persistence stored procedures...
-Osql -S %COMPUTERNAME%\SQLExpress -E -n -d demo -i "%SYSTEMROOT%\Microsoft.NET\Framework\v3.0\Windows Workflow Foundation\SQL\EN\SqlPersistenceService_Logic.sql"
+Osql -S (local) -E -n -d demo -i "%SYSTEMROOT%\Microsoft.NET\Framework\v3.0\Windows Workflow Foundation\SQL\EN\SqlPersistenceService_Logic.sql"
