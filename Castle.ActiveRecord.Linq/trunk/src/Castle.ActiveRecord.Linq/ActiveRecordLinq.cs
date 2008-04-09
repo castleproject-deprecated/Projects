@@ -41,5 +41,21 @@ namespace Castle.ActiveRecord.Linq
         {
             return (IOrderedQueryable<T>)ActiveRecordMediator.ExecuteQuery(new LinqQuery<T>());
         }
+
+        /// <summary>
+        /// Extension method to ISession which creates a source for a Linq expression.
+        /// </summary>
+        public static IOrderedQueryable<T> GetTable<T>(this ISession session)
+        {
+            return new LinqQuery<T>().Execute(session);
+        }
+
+        /// <summary>
+        /// Extension method to ISessionScope which creates a source for a Linq expression.
+        /// </summary>
+        public static IOrderedQueryable<T> GetTable<T>(this ISessionScope scope)
+        {
+            return (IOrderedQueryable<T>)ActiveRecordMediator.ExecuteQuery(new LinqQuery<T>());
+        }
     }
 }

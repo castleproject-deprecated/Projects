@@ -237,5 +237,29 @@ namespace Castle.ActiveRecord.Linq.Tests
                 Assert.AreSame(widget2, widget);
             }
         }
+
+
+        [Test]
+        public void UsingLinqViaSessionScopeVariable()
+        {
+            ActiveRecordStarter.Initialize(GetConfigSource(), typeof(Widget));
+
+            using (ISessionScope scope = new SessionScope())
+            {
+                Recreate();
+                Widget.DeleteAll();
+
+                var widgets = from w in scope.GetTable<Widget>() select w;
+                Assert.IsNotNull(widgets);
+                Assert.AreEqual(0, widgets.Count());
+
+                Widget widget = new Widget { Name = "Hello world" };
+                widget.Save();
+
+                widgets = from w in scope.GetTable<Widget>() where w.Name == "Hello World" select w;
+                Assert.IsNotNull(widgets);
+                Assert.AreEqual(1, widgets.Count());
+            }
+        }
     }
 }
