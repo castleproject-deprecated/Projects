@@ -69,17 +69,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="createdb.cmd" />
-    <None Include="Views\Home\bluerain.vm" />
-    <None Include="Views\Home\confirmed.vm" />
-    <None Include="Views\Home\confirmed_left.vm" />
-    <None Include="Views\Home\confirmed_right.vm" />
-    <None Include="Views\Home\confirmed_status.vm" />
-    <None Include="Views\Home\firedeclined.vm" />
-    <None Include="Views\Home\firesuccess.vm" />
-    <None Include="Views\Home\index.vm" />
-    <None Include="Views\Layouts\ajax.vm" />
-    <None Include="Views\Layouts\bluerain.vm" />
-    <None Include="Views\Rescues\generalerror.vm" />
+    <Content Include="Views\Home\bluerain.vm" />
+    <Content Include="Views\Home\confirmed.vm" />
+    <Content Include="Views\Home\confirmed_left.vm" />
+    <Content Include="Views\Home\confirmed_right.vm" />
+    <Content Include="Views\Home\confirmed_status.vm" />
+    <Content Include="Views\Home\firedeclined.vm" />
+    <Content Include="Views\Home\firesuccess.vm" />
+    <Content Include="Views\Home\index.vm" />
+    <Content Include="Views\Layouts\ajax.vm" />
+    <Content Include="Views\Layouts\bluerain.vm" />
+    <Content Include="Views\Rescues\generalerror.vm" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DemoSite.Workflows\DemoSite.Workflows-vs2005.csproj">
