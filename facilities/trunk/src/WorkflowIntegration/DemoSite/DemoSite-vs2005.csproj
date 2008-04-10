@@ -33,6 +33,7 @@
     <Reference Include="Castle.MicroKernel, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL" />
     <Reference Include="Castle.MonoRail.Framework, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL" />
     <Reference Include="Castle.MonoRail.Framework.Views.NVelocity, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL" />
+    <Reference Include="Castle.MonoRail.WindsorExtension, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL" />
     <Reference Include="Castle.Windsor, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -82,6 +83,10 @@
     <Content Include="Views\Rescues\generalerror.vm" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Castle.Facilities.WorkflowIntegration\Castle.Facilities.WorkflowIntegration-vs2005.csproj">
+      <Project>{3125EF77-B0F8-4E4B-97A4-1CC8E314543B}</Project>
+      <Name>Castle.Facilities.WorkflowIntegration-vs2005</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DemoSite.Workflows\DemoSite.Workflows-vs2005.csproj">
       <Project>{E6A821D1-87A2-4E76-BF45-A4A43B48BB1C}</Project>
       <Name>DemoSite.Workflows-vs2005</Name>
