@@ -34,7 +34,7 @@ namespace Castle.ActiveRecord.Linq
         /// var items = from f in Foo.Table where f.Name == theName select f;
         /// var item = Foo.Table.First(f => f.Name == theName);
         /// </summary>
-        public static IOrderedQueryable<T> Table
+        public static IOrderedQueryable<T> Queryable
         {
             get
             {

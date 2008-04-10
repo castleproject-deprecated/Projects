@@ -49,7 +49,7 @@ namespace Castle.ActiveRecord.Linq.Tests
                 Post.DeleteAll();
                 Blog.DeleteAll();
 
-                var blogs = from b in Blog.Table select b;
+                var blogs = from b in Blog.Queryable select b;
 
                 Assert.IsNotNull(blogs);
                 Assert.AreEqual(0, blogs.Count());
@@ -62,11 +62,11 @@ namespace Castle.ActiveRecord.Linq.Tests
                 blog.Save();
 
 
-                blogs = from b in Blog.Table select b;
+                blogs = from b in Blog.Queryable select b;
                 Assert.IsNotNull(blogs);
                 Assert.AreEqual(1, blogs.Count());
 
-                var retrieved = Blog.Table.First();
+                var retrieved = Blog.Queryable.First();
                 Assert.IsNotNull(retrieved);
 
                 Assert.AreEqual(blog.Name, retrieved.Name);
@@ -87,7 +87,7 @@ namespace Castle.ActiveRecord.Linq.Tests
                 Post.DeleteAll();
                 Blog.DeleteAll();
 
-                var blogs = from b in Blog.Table select b;
+                var blogs = from b in Blog.Queryable select b;
 
                 Assert.IsNotNull(blogs);
                 Assert.AreEqual(0, blogs.Count());
@@ -100,7 +100,7 @@ namespace Castle.ActiveRecord.Linq.Tests
                 blog.Save();
 
 
-                blogs = from b in Blog.Table select b;
+                blogs = from b in Blog.Queryable select b;
                 Assert.IsNotNull(blogs);
                 Assert.AreEqual(1, blogs.Count());
 
@@ -125,7 +125,7 @@ namespace Castle.ActiveRecord.Linq.Tests
                 Post.DeleteAll();
                 Blog.DeleteAll();
 
-                var blogs = Blog.Table;
+                var blogs = Blog.Queryable;
                 Assert.IsNotNull(blogs);
                 Assert.AreEqual(0, blogs.Count());
 
@@ -136,12 +136,12 @@ namespace Castle.ActiveRecord.Linq.Tests
 
                 Assert.AreEqual(1, (from
                 b in
-                Blog.Table select
+                Blog.Queryable select
                 b).
                 Count())
                 ;
 
-                blogs = Blog.Table;
+                blogs = Blog.Queryable;
                 Assert.AreEqual(blog.Name, blogs.First().Name);
                 Assert.AreEqual(blog.Author, blogs.First().Author);
 
@@ -149,9 +149,9 @@ namespace Castle.ActiveRecord.Linq.Tests
                 blog.Author = "something else2";
                 blog.Update();
 
-                blogs = Blog.Table;
+                blogs = Blog.Queryable;
                 Assert.IsNotNull(blogs);
-                Assert.AreEqual(1, Blog.Table.Count());
+                Assert.AreEqual(1, Blog.Queryable.Count());
                 Assert.AreEqual(blog.Name, blogs.First().Name);
                 Assert.AreEqual(blog.Author, blogs.First().Author);
             }
@@ -186,9 +186,9 @@ namespace Castle.ActiveRecord.Linq.Tests
 
             using (new SessionScope())
             {
-                Blog blog = (from b in Blog.Table where b.Id == blogId select b).First();
+                Blog blog = (from b in Blog.Queryable where b.Id == blogId select b).First();
 
-                Blog blog2 = Blog.Table.First(b => b.Id == blogId);
+                Blog blog2 = Blog.Queryable.First(b => b.Id == blogId);
                 Assert.AreSame(blog, blog2);
                 
                 Blog blog3 = Blog.Find(blogId);
@@ -222,15 +222,15 @@ namespace Castle.ActiveRecord.Linq.Tests
 
             using (new SessionScope())
             {
-                var widgets = from w in ActiveRecordLinq.GetTable<Widget>() select w;
+                var widgets = from w in ActiveRecordLinq.AsQueryable<Widget>() select w;
                 Assert.IsNotNull(widgets);
                 Assert.AreEqual(1, widgets.Count());
 
-                var widget = (from w in ActiveRecordLinq.GetTable<Widget>() select w).First();
+                var widget = (from w in ActiveRecordLinq.AsQueryable<Widget>() select w).First();
                 Assert.IsNotNull(widget);
                 Assert.AreEqual("Hello world", widget.Name);
 
-                var widget2 = ActiveRecordLinq.GetTable<Widget>().First(w => w.Name == "Hello World");
+                var widget2 = ActiveRecordLinq.AsQueryable<Widget>().First(w => w.Name == "Hello World");
                 Assert.IsNotNull(widget2);
                 Assert.AreEqual("Hello world", widget2.Name);
 
@@ -249,17 +249,18 @@ namespace Castle.ActiveRecord.Linq.Tests
                 Recreate();
                 Widget.DeleteAll();
 
-                var widgets = from w in scope.GetTable<Widget>() select w;
+                var widgets = from w in scope.AsQueryable<Widget>() select w;
                 Assert.IsNotNull(widgets);
                 Assert.AreEqual(0, widgets.Count());
 
                 Widget widget = new Widget { Name = "Hello world" };
-                widget.Save();
+                widget.Save();                
 
-                widgets = from w in scope.GetTable<Widget>() where w.Name == "Hello World" select w;
+                widgets = from w in scope.AsQueryable<Widget>() where w.Name == "Hello World" select w;
                 Assert.IsNotNull(widgets);
                 Assert.AreEqual(1, widgets.Count());
             }
         }
+
     }
 }

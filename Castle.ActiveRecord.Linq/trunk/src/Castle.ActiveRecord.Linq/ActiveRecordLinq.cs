@@ -28,16 +28,16 @@ namespace Castle.ActiveRecord.Linq
     public static class ActiveRecordLinq
     {
         /// <summary>
-        /// GetTable enables you to use an active record class in a Linq expression even
+        /// AsQueryable enables you to use an active record class in a Linq expression even
         /// though the base class does not provide a static Table property.
         /// 
         /// Examples include:
-        /// var items = from f in ActiveRecordLinq.GetTable&lt;foo&gt;() select f;
-        /// var item = ActiveRecordLinq.GetTable&lt;foo&gt;().First();
-        /// var items = from f in ActiveRecordLinq.GetTable&lt;foo&gt;() where f.Name == theName select f;
-        /// var item = ActiveRecordLinq.GetTable&lt;foo&gt;().First(f => f.Name == theName);
+        /// var items = from f in ActiveRecordLinq.AsQueryable&lt;foo&gt;() select f;
+        /// var item = ActiveRecordLinq.AsQueryable&lt;foo&gt;().First();
+        /// var items = from f in ActiveRecordLinq.AsQueryable&lt;foo&gt;() where f.Name == theName select f;
+        /// var item = ActiveRecordLinq.AsQueryable&lt;foo&gt;().First(f => f.Name == theName);
         /// </summary>
-        public static IOrderedQueryable<T> GetTable<T>()
+        public static IOrderedQueryable<T> AsQueryable<T>()
         {
             return (IOrderedQueryable<T>)ActiveRecordMediator.ExecuteQuery(new LinqQuery<T>());
         }
@@ -45,7 +45,7 @@ namespace Castle.ActiveRecord.Linq
         /// <summary>
         /// Extension method to ISession which creates a source for a Linq expression.
         /// </summary>
-        public static IOrderedQueryable<T> GetTable<T>(this ISession session)
+        public static IOrderedQueryable<T> AsQueryable<T>(this ISession session)
         {
             return new LinqQuery<T>().Execute(session);
         }
@@ -53,9 +53,10 @@ namespace Castle.ActiveRecord.Linq
         /// <summary>
         /// Extension method to ISessionScope which creates a source for a Linq expression.
         /// </summary>
-        public static IOrderedQueryable<T> GetTable<T>(this ISessionScope scope)
+        public static IOrderedQueryable<T> AsQueryable<T>(this ISessionScope scope)
         {
             return (IOrderedQueryable<T>)ActiveRecordMediator.ExecuteQuery(new LinqQuery<T>());
         }
+
     }
 }
