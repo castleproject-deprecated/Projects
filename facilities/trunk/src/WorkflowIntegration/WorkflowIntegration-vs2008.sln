@@ -5,9 +5,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Facilities.WorkflowI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Facilities.WorkflowIntegration.Tests-vs2008", "Castle.Facilities.WorkflowIntegration.Tests\Castle.Facilities.WorkflowIntegration.Tests-vs2008.csproj", "{E02A557B-82F9-46CA-AD1D-6B372AD318CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoSite", "DemoSite\DemoSite.csproj", "{8E8FF7C4-6896-47FD-BF7A-9C48E67EFBB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoSite-vs2008", "DemoSite\DemoSite-vs2008.csproj", "{8E8FF7C4-6896-47FD-BF7A-9C48E67EFBB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoSite.Workflows", "DemoSite.Workflows\DemoSite.Workflows.csproj", "{694E7DC6-0154-4F2B-9FE2-8D72962BDCF8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoSite.Workflows-vs2008", "DemoSite.Workflows\DemoSite.Workflows-vs2008.csproj", "{694E7DC6-0154-4F2B-9FE2-8D72962BDCF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

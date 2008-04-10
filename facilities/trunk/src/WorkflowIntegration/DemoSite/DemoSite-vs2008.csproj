@@ -110,7 +110,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="createdb.cmd" />
-    <None Include="Views\Home\about.vm" />
     <None Include="Views\Home\bluerain.vm" />
     <None Include="Views\Home\confirmed.vm" />
     <None Include="Views\Home\confirmed_left.vm" />
@@ -126,9 +125,9 @@
       <Project>{33ACBA5E-F1AE-421B-9779-AF889275E277}</Project>
       <Name>Castle.Facilities.WorkflowIntegration-vs2008</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DemoSite.Workflows\DemoSite.Workflows.csproj">
+    <ProjectReference Include="..\DemoSite.Workflows\DemoSite.Workflows-vs2008.csproj">
       <Project>{694E7DC6-0154-4F2B-9FE2-8D72962BDCF8}</Project>
-      <Name>DemoSite.Workflows</Name>
+      <Name>DemoSite.Workflows-vs2008</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
