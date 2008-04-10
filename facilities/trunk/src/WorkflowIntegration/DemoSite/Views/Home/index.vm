@@ -16,10 +16,10 @@ let you see the status of the transaction as it processes.</p>
 scripts.</p>
 
 <p>In the &lt;castle&gt; configuration section of the web.config you will find the connection string 
-to point to the database. The default is using the '.\sqlexpress' server 'demo' database.</p>
+to point to the database. The default is using the local '.' server 'demo' database.</p>
 
 <p>In that same directory is a createdb.cmd file which will create the database artifacts needed for the tracking
-and persistence services. You will need to change the server and database name there as well.</p>
+and persistence services. You may need to change the server and database name there as well.</p>
 
 #end
 
