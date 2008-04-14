@@ -1,3 +1,6 @@
+New:
+- Optionally generates classes implementing INotifyPropertyChanging.
+
 Fixed:
 - NamingHelper.GetPlural is called even if 'Target property Name' is set on ManyToOneConnector (Patch: Roberto Paterlini)
 

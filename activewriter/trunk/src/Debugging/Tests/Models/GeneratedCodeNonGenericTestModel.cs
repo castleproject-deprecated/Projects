@@ -207,7 +207,7 @@ namespace Debugging.Tests {
         
         private string _blog_id;
         
-        private IList<ManyToOne_Many> _targetProperties;
+        private IList<ManyToOne_Many> _targetProperty;
         
         [PrimaryKey(PrimaryKeyType.Native, ColumnType="String")]
         public string blog_id {
@@ -220,12 +220,12 @@ namespace Debugging.Tests {
         }
         
         [HasMany(typeof(ManyToOne_Many), Cache=CacheEnum.ReadOnly, Cascade=ManyRelationCascadeEnum.All, ColumnKey="post_blogid", CustomAccess="TargetCustomAccess", Inverse=true, Lazy=true, OrderBy="TargetOrderBy", RelationType=RelationType.Bag, Schema="TargetSchema", Table="Posts", Where="TargetWhere", NotFoundBehaviour=NotFoundBehaviour.Exception, Element="TargetElement")]
-        public IList<ManyToOne_Many> TargetProperties {
+        public IList<ManyToOne_Many> TargetProperty {
             get {
-                return this._targetProperties;
+                return this._targetProperty;
             }
             set {
-                this._targetProperties = value;
+                this._targetProperty = value;
             }
         }
     }

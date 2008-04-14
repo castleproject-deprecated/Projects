@@ -605,6 +605,23 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// ImplementINotifyPropertyChanging
+			if (!serializationContext.Result.Failed)
+			{
+				string attribImplementINotifyPropertyChanging = reader.GetAttribute("implementINotifyPropertyChanging");
+				if (attribImplementINotifyPropertyChanging != null)
+				{
+					global::System.Boolean valueOfImplementINotifyPropertyChanging;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribImplementINotifyPropertyChanging), out valueOfImplementINotifyPropertyChanging))
+					{
+						instanceOfModel.ImplementINotifyPropertyChanging = valueOfImplementINotifyPropertyChanging;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "implementINotifyPropertyChanging", typeof(global::System.Boolean), attribImplementINotifyPropertyChanging);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -1562,6 +1579,19 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// ImplementINotifyPropertyChanging
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.Boolean propValue = instanceOfModel.ImplementINotifyPropertyChanging;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Boolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("implementINotifyPropertyChanging", serializedPropValue);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -2217,6 +2247,23 @@ namespace Altinoren.ActiveWriter
 					else
 					{	// Invalid property value, ignored.
 						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "useGenericRelations", typeof(InheritableBoolean), attribUseGenericRelations);
+					}
+				}
+			}
+			// ImplementINotifyPropertyChanging
+			if (!serializationContext.Result.Failed)
+			{
+				string attribImplementINotifyPropertyChanging = reader.GetAttribute("implementINotifyPropertyChanging");
+				if (attribImplementINotifyPropertyChanging != null)
+				{
+					InheritableBoolean valueOfImplementINotifyPropertyChanging;
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritableBoolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribImplementINotifyPropertyChanging), out valueOfImplementINotifyPropertyChanging))
+					{
+						instanceOfModelClass.ImplementINotifyPropertyChanging = valueOfImplementINotifyPropertyChanging;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "implementINotifyPropertyChanging", typeof(InheritableBoolean), attribImplementINotifyPropertyChanging);
 					}
 				}
 			}
@@ -3119,6 +3166,19 @@ namespace Altinoren.ActiveWriter
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("useGenericRelations", serializedPropValue);
+					}
+				}
+			}
+			// ImplementINotifyPropertyChanging
+			if (!serializationContext.Result.Failed)
+			{
+				InheritableBoolean propValue = instanceOfModelClass.ImplementINotifyPropertyChanging;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<InheritableBoolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("implementINotifyPropertyChanging", serializedPropValue);
 					}
 				}
 			}
@@ -5788,6 +5848,23 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// ImplementINotifyPropertyChanging
+			if (!serializationContext.Result.Failed)
+			{
+				string attribImplementINotifyPropertyChanging = reader.GetAttribute("implementINotifyPropertyChanging");
+				if (attribImplementINotifyPropertyChanging != null)
+				{
+					InheritableBoolean valueOfImplementINotifyPropertyChanging;
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritableBoolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribImplementINotifyPropertyChanging), out valueOfImplementINotifyPropertyChanging))
+					{
+						instanceOfNestedClass.ImplementINotifyPropertyChanging = valueOfImplementINotifyPropertyChanging;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "implementINotifyPropertyChanging", typeof(InheritableBoolean), attribImplementINotifyPropertyChanging);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -6318,6 +6395,19 @@ namespace Altinoren.ActiveWriter
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("implementINotifyPropertyChanged", serializedPropValue);
+					}
+				}
+			}
+			// ImplementINotifyPropertyChanging
+			if (!serializationContext.Result.Failed)
+			{
+				InheritableBoolean propValue = instanceOfNestedClass.ImplementINotifyPropertyChanging;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<InheritableBoolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("implementINotifyPropertyChanging", serializedPropValue);
 					}
 				}
 			}

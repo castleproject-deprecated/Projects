@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\INotifyPropertyChangingTest.cs" />
     <Compile Include="Tests\GeneratedCodeNHibernateTest.cs" />
     <Compile Include="Tests\GeneratedCodeRuntimeTest.cs" />
     <Compile Include="Tests\GeneratedCodeTest.cs" />
@@ -80,6 +81,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeneratedCodeINotifyPropertyChangedTestModel.actiw</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Models\GeneratedCodeINotifyPropertyChangingTestModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GeneratedCodeINotifyPropertyChangingTestModel.actiw</DependentUpon>
     </Compile>
     <Compile Include="Tests\Models\GeneratedCodeNestedTestModel.cs">
       <AutoGen>True</AutoGen>
@@ -243,6 +249,13 @@
       <DependentUpon>GeneratedCodeNHQGIntegrationWithNHTestModel.actiw</DependentUpon>
     </EmbeddedResource>
     <None Include="TestMacros.vb" />
+    <None Include="Tests\Models\GeneratedCodeINotifyPropertyChangingTestModel.actiw">
+      <Generator>ActiveWriterCodeGenerator</Generator>
+      <LastGenOutput>GeneratedCodeINotifyPropertyChangingTestModel.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Models\GeneratedCodeINotifyPropertyChangingTestModel.actiw.diagram">
+      <DependentUpon>GeneratedCodeINotifyPropertyChangingTestModel.actiw</DependentUpon>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

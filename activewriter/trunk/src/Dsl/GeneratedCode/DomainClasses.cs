@@ -2643,6 +2643,95 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region ImplementINotifyPropertyChanging domain property code
+		
+		/// <summary>
+		/// ImplementINotifyPropertyChanging domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid ImplementINotifyPropertyChangingDomainPropertyId = new global::System.Guid(0x2992d717, 0xbd8a, 0x42a9, 0xa4, 0x54, 0xf5, 0xd9, 0xed, 0x76, 0x7e, 0x00);
+		
+		/// <summary>
+		/// Storage for ImplementINotifyPropertyChanging
+		/// </summary>
+		private global::System.Boolean implementINotifyPropertyChangingPropertyStorage;
+		
+		/// <summary>
+		/// Gets or sets the value of ImplementINotifyPropertyChanging domain property.
+		/// Instructs ActiveWriter to implement INotifyPropertyChanging interface in each
+		/// class generated. This setting is overridable in class level.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ImplementINotifyPropertyChanging.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/ImplementINotifyPropertyChanging.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ImplementINotifyPropertyChanging.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainObjectId("2992d717-bd8a-42a9-a454-f5d9ed767e00")]
+		public global::System.Boolean ImplementINotifyPropertyChanging
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return implementINotifyPropertyChangingPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				ImplementINotifyPropertyChangingPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.ImplementINotifyPropertyChanging domain property.
+		/// </summary>
+		internal sealed partial class ImplementINotifyPropertyChangingPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.Boolean>
+		{
+			private ImplementINotifyPropertyChangingPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.ImplementINotifyPropertyChanging domain property value handler.
+			/// </summary>
+			public static readonly ImplementINotifyPropertyChangingPropertyHandler Instance = new ImplementINotifyPropertyChangingPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.ImplementINotifyPropertyChanging domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return ImplementINotifyPropertyChangingDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.Boolean GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.implementINotifyPropertyChangingPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.Boolean newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.Boolean oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.implementINotifyPropertyChangingPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region Classes opposite domain role accessor
 		/// <summary>
 		/// Gets a list of Classes.
@@ -4909,6 +4998,96 @@ namespace Altinoren.ActiveWriter
 				{
 					ValueChanging(element, oldValue, newValue);
 					element.useGenericRelationsPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region ImplementINotifyPropertyChanging domain property code
+		
+		/// <summary>
+		/// ImplementINotifyPropertyChanging domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid ImplementINotifyPropertyChangingDomainPropertyId = new global::System.Guid(0xbf3cf44e, 0x39c6, 0x43ef, 0x90, 0x7d, 0x42, 0xc5, 0xde, 0x8e, 0x18, 0x48);
+		
+		/// <summary>
+		/// Storage for ImplementINotifyPropertyChanging
+		/// </summary>
+		private InheritableBoolean implementINotifyPropertyChangingPropertyStorage = InheritableBoolean.Inherit;
+		
+		/// <summary>
+		/// Gets or sets the value of ImplementINotifyPropertyChanging domain property.
+		/// Instructs ActiveWriter to implement INotifyPropertyChanging interface in this
+		/// class.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelClass/ImplementINotifyPropertyChanging.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelClass/ImplementINotifyPropertyChanging.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelClass/ImplementINotifyPropertyChanging.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(InheritableBoolean.Inherit)]
+		[DslModeling::DomainObjectId("bf3cf44e-39c6-43ef-907d-42c5de8e1848")]
+		public InheritableBoolean ImplementINotifyPropertyChanging
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return implementINotifyPropertyChangingPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				ImplementINotifyPropertyChangingPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the ModelClass.ImplementINotifyPropertyChanging domain property.
+		/// </summary>
+		internal sealed partial class ImplementINotifyPropertyChangingPropertyHandler : DslModeling::DomainPropertyValueHandler<ModelClass, InheritableBoolean>
+		{
+			private ImplementINotifyPropertyChangingPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the ModelClass.ImplementINotifyPropertyChanging domain property value handler.
+			/// </summary>
+			public static readonly ImplementINotifyPropertyChangingPropertyHandler Instance = new ImplementINotifyPropertyChangingPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the ModelClass.ImplementINotifyPropertyChanging domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return ImplementINotifyPropertyChangingDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed InheritableBoolean GetValue(ModelClass element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.implementINotifyPropertyChangingPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(ModelClass element, InheritableBoolean newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				InheritableBoolean oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.implementINotifyPropertyChangingPropertyStorage = newValue;
 					ValueChanged(element, oldValue, newValue);
 				}
 			}
@@ -7948,6 +8127,96 @@ namespace Altinoren.ActiveWriter
 				{
 					ValueChanging(element, oldValue, newValue);
 					element.implementINotifyPropertyChangedPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region ImplementINotifyPropertyChanging domain property code
+		
+		/// <summary>
+		/// ImplementINotifyPropertyChanging domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid ImplementINotifyPropertyChangingDomainPropertyId = new global::System.Guid(0x8853df55, 0x40d4, 0x44bc, 0xac, 0x8f, 0x3d, 0x08, 0xc9, 0x8d, 0x33, 0x22);
+		
+		/// <summary>
+		/// Storage for ImplementINotifyPropertyChanging
+		/// </summary>
+		private InheritableBoolean implementINotifyPropertyChangingPropertyStorage = InheritableBoolean.Inherit;
+		
+		/// <summary>
+		/// Gets or sets the value of ImplementINotifyPropertyChanging domain property.
+		/// Instructs ActiveWriter to implement INotifyPropertyChanging interface in this
+		/// class.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClass/ImplementINotifyPropertyChanging.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.NestedClass/ImplementINotifyPropertyChanging.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClass/ImplementINotifyPropertyChanging.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(InheritableBoolean.Inherit)]
+		[DslModeling::DomainObjectId("8853df55-40d4-44bc-ac8f-3d08c98d3322")]
+		public InheritableBoolean ImplementINotifyPropertyChanging
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return implementINotifyPropertyChangingPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				ImplementINotifyPropertyChangingPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the NestedClass.ImplementINotifyPropertyChanging domain property.
+		/// </summary>
+		internal sealed partial class ImplementINotifyPropertyChangingPropertyHandler : DslModeling::DomainPropertyValueHandler<NestedClass, InheritableBoolean>
+		{
+			private ImplementINotifyPropertyChangingPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the NestedClass.ImplementINotifyPropertyChanging domain property value handler.
+			/// </summary>
+			public static readonly ImplementINotifyPropertyChangingPropertyHandler Instance = new ImplementINotifyPropertyChangingPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the NestedClass.ImplementINotifyPropertyChanging domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return ImplementINotifyPropertyChangingDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed InheritableBoolean GetValue(NestedClass element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.implementINotifyPropertyChangingPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(NestedClass element, InheritableBoolean newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				InheritableBoolean oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.implementINotifyPropertyChangingPropertyStorage = newValue;
 					ValueChanged(element, oldValue, newValue);
 				}
 			}

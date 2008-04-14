@@ -222,6 +222,12 @@
         <xsd:documentation>Initializas private IList fields with List concrete type.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
+    <!-- Property: ImplementINotifyPropertyChanging -->
+    <xsd:attribute name="implementINotifyPropertyChanging" type="xsd:boolean" >
+      <xsd:annotation>
+        <xsd:documentation>Instructs ActiveWriter to implement INotifyPropertyChanging interface in each class generated. This setting is overridable in class level.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
   </xsd:complexType>
   
   <!-- Model Moniker -->
@@ -436,6 +442,12 @@
         <xsd:attribute name="useGenericRelations" type="InheritableBoolean" >
           <xsd:annotation>
             <xsd:documentation>If set (other than Inherit), overrides model level generic relation generation for this class.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: ImplementINotifyPropertyChanging -->
+        <xsd:attribute name="implementINotifyPropertyChanging" type="InheritableBoolean" >
+          <xsd:annotation>
+            <xsd:documentation>Instructs ActiveWriter to implement INotifyPropertyChanging interface in this class.</xsd:documentation>
           </xsd:annotation>
         </xsd:attribute>
       </xsd:extension>
@@ -685,6 +697,12 @@
         <xsd:attribute name="implementINotifyPropertyChanged" type="InheritableBoolean" >
           <xsd:annotation>
             <xsd:documentation>Instructs ActiveWriter to implement INotifyPropertyChanged interface in this class.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: ImplementINotifyPropertyChanging -->
+        <xsd:attribute name="implementINotifyPropertyChanging" type="InheritableBoolean" >
+          <xsd:annotation>
+            <xsd:documentation>Instructs ActiveWriter to implement INotifyPropertyChanging interface in this class.</xsd:documentation>
           </xsd:annotation>
         </xsd:attribute>
       </xsd:extension>

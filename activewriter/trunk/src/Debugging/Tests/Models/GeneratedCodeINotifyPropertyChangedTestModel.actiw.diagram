@@ -5,7 +5,7 @@
     <classShape Id="43626682-c9fb-4996-86d2-a4b4e50f486f" absoluteBounds="0.5, 1.375, 1.5, 1.1439925130208333">
       <modelClassMoniker name="/6afe9f7a-ca44-4e3e-a9bf-ba56316b97c8/NotifyingClass" />
       <nestedChildShapes>
-        <elementListCompartment Id="23f2bfb1-f8ed-4318-8249-9baa268e4306" absoluteBounds="0.515, 1.7850000000000001, 1.4700000000000002, 0.63399251302083315" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+        <elementListCompartment Id="23f2bfb1-f8ed-4318-8249-9baa268e4306" absoluteBounds="0.515, 1.7850000000000001, 1.4700000000000002, 0.63399251302083315" name="Properties" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

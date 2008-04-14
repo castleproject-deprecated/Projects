@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<activeRecordMapping dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="GeneratedCodeINotifyPropertyChangingTestModel">
+  <modelMoniker Id="1be3851f-a3ce-433a-8832-34c4839cb77c" />
+  <nestedChildShapes>
+    <classShape Id="790cecc0-a5bf-4703-93a1-121f0bcfde19" absoluteBounds="0.5, 1.125, 1.5, 0.95169108072916675">
+      <modelClassMoniker name="/1be3851f-a3ce-433a-8832-34c4839cb77c/NotifyChangingClass" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e86bee24-8a64-4aa7-8a31-9c0e1ee35a96" absoluteBounds="0.51500000000000012, 1.5350000000000001, 1.4700000000000002, 0.44169108072916663" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</activeRecordMapping>

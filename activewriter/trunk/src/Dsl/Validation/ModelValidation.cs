@@ -18,6 +18,7 @@ namespace Altinoren.ActiveWriter
 {
     using System.Collections.Generic;
     using Microsoft.VisualStudio.Modeling.Validation;
+    using Altinoren.ActiveWriter.ServerExplorerSupport;
 
     [ValidationState(ValidationState.Enabled)]
     public partial class Model
@@ -98,5 +99,25 @@ namespace Altinoren.ActiveWriter
 				context.LogError("Target is NHibernate but NHibernate Assembly Name is not supplied.", "AW001ValidateNHibernateAssemblyNameError", this);
             }
         }
+
+
+        // TODO: Will activate this validation when there's an option to disable it through option pages or someting like that.
+        // May get annoying otherwise.
+        //[ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
+        //private void ValidateINotifyPropertyChangingInUnsupportedFrameworkVersion(ValidationContext context)
+        //{
+        //    if (this.ImplementINotifyPropertyChanging && !string.IsNullOrEmpty(this.ModelFileFullName))
+        //    {
+        //        var dte = DTEHelper.GetDTE(this.Store);
+        //        var item = dte.Solution.FindProjectItem(this.ModelFileFullName);
+        //        if (item != null)
+        //        {
+        //            if (item.ContainingProject.Properties.Item("TargetFramework").Value.ToString() != "196613") // Is it 3.5?
+        //            {
+        //                context.LogWarning("INotifyPropertyChanging interface is only available in 3.5, 3.0 SP1 and 2.0 SP1 Frameworks. Make sure that your target platform matches the necessary service pack requirement.", "AW001ValidateINotifyPropertyChangingInUnsupportedFrameworkVersion", this);
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

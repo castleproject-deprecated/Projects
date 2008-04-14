@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<model dslVersion="1.0.0.0" Id="1be3851f-a3ce-433a-8832-34c4839cb77c" namespace="Debugging.Tests" implementINotifyPropertyChanging="true" xmlns="http://schemas.microsoft.com/dsltools/ActiveWriter">
+  <additionalImports />
+  <classes>
+    <modelClass name="NotifyChangingClass">
+      <properties>
+        <modelProperty Id="a34880bd-2ee4-4f94-bf77-be527c63fa97" name="NotifyChangingProperty" length="0" />
+      </properties>
+    </modelClass>
+  </classes>
+</model>

@@ -42,6 +42,12 @@ namespace Altinoren.ActiveWriter
                 ImplementINotifyPropertyChanged == InheritableBoolean.True;
         }
 
+        public bool DoesImplementINotifyPropertyChanging()
+        {
+            return (Model.ImplementINotifyPropertyChanging && ImplementINotifyPropertyChanging == InheritableBoolean.Inherit) ||
+                ImplementINotifyPropertyChanging == InheritableBoolean.True;
+        }
+
         public bool HasPropertyWithValidators()
         {
             return this.Properties.Find(

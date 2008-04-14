@@ -282,7 +282,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 classDeclaration.BaseTypes.Add(new CodeTypeReference(Common.INotifyPropertyChangedType));
                 AddINotifyPropertyChangedRegion(classDeclaration);
             }
-
+            if (cls.DoesImplementINotifyPropertyChanging())
+            {
+                classDeclaration.BaseTypes.Add(new CodeTypeReference(Common.INotifyPropertyChangingType));
+                AddINotifyPropertyChangingRegion(classDeclaration);
+            }
 
             if (!String.IsNullOrEmpty(cls.Description))
                 classDeclaration.Comments.AddRange(GetSummaryComment(cls.Description));
@@ -309,6 +313,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             {
                 classDeclaration.BaseTypes.Add(new CodeTypeReference(Common.INotifyPropertyChangedType));
                 AddINotifyPropertyChangedRegion(classDeclaration);
+            }
+            if (cls.DoesImplementINotifyPropertyChanging())
+            {
+                classDeclaration.BaseTypes.Add(new CodeTypeReference(Common.INotifyPropertyChangingType));
+                AddINotifyPropertyChangingRegion(classDeclaration);
             }
             if (!String.IsNullOrEmpty(cls.Description))
                 classDeclaration.Comments.AddRange(GetSummaryComment(cls.Description));
@@ -569,15 +578,15 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         #region Property
 
-        // TODO: All this property generation is a total mess. Lots of similar methods. Hard to find what you're looking for.
+        // TODO: All this property generation is a total mess. Lots of similar methods. Hard to find what you're looking for. Hard to change.
 
         private CodeTypeMember GetActiveRecordMemberCompositeKeyProperty(CodeTypeDeclaration compositeClass,
-                                                                         CodeMemberField memberField, bool implementsINotifyPropertyChanged)
+                                                                         CodeMemberField memberField, bool implementsINotifyPropertyChanged, bool implementsINotifyPropertyChanging)
         {
             // TODO: Composite key generation omits UnsavedValue property. All the properties which are parts of the composite key
             // should have the same UnsavedValue, by the way.
             CodeMemberProperty memberProperty =
-                GetMemberProperty(memberField, compositeClass.Name, true, true, implementsINotifyPropertyChanged, null);
+                GetMemberProperty(memberField, compositeClass.Name, true, true, implementsINotifyPropertyChanged, implementsINotifyPropertyChanging, null);
 
             memberProperty.CustomAttributes.Add(new CodeAttributeDeclaration("CompositeKey"));
 
@@ -588,7 +597,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                                     ModelProperty property)
         {
             CodeMemberProperty memberProperty =
-                GetMemberProperty(memberField, property.Name, property.ColumnType, null, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(), property.Description);
+                GetMemberProperty(memberField, property.Name, property.ColumnType, null, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(), property.ImplementsINotifyPropertyChanging(), property.Description);
             memberProperty.CustomAttributes.Add(property.GetKeyPropertyAttribute());
 
             return memberProperty;
@@ -604,6 +613,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                   true,
                                   true,
                                   property.ImplementsINotifyPropertyChanged(),
+                                  property.ImplementsINotifyPropertyChanging(),
                                   property.Description);
             CodeAttributeDeclaration attributeDecleration = null;
 
@@ -627,7 +637,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                                 ModelProperty property)
         {
             CodeMemberProperty memberProperty =
-                GetMemberProperty(memberField, property.Name, property.ColumnType, null, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(),
+                GetMemberProperty(memberField, property.Name, property.ColumnType, null, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(), property.ImplementsINotifyPropertyChanging(),
                                   property.Description);
             memberProperty.CustomAttributes.Add(property.GetVersionAttribute());
 
@@ -638,7 +648,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                                   ModelProperty property)
         {
             CodeMemberProperty memberProperty =
-                GetMemberProperty(memberField, property.Name, property.ColumnType, null, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(),
+                GetMemberProperty(memberField, property.Name, property.ColumnType, null, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(), property.ImplementsINotifyPropertyChanging(),
                                   property.Description);
             memberProperty.CustomAttributes.Add(property.GetTimestampAttribute());
 
@@ -646,11 +656,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         }
 
 		private CodeMemberProperty GetMemberProperty(CodeMemberField memberField, string propertyName,
-												NHibernateType propertyType, string propertyCustomMemberType, bool propertyNotNull, 
-												bool get, bool set, bool implementINotifyPropertyChanged, params string[] description)
+												NHibernateType propertyType, string propertyCustomMemberType, bool propertyNotNull,
+                                                bool get, bool set, bool implementINotifyPropertyChanged, bool implementINotifyPropertyChanging, params string[] description)
 		{
             CodeMemberProperty memberProperty =
-                GetMemberPropertyWithoutType(memberField, propertyName, get, set, implementINotifyPropertyChanged, description);
+                GetMemberPropertyWithoutType(memberField, propertyName, get, set, implementINotifyPropertyChanged, implementINotifyPropertyChanging, description);
 
 			if (_model.UseNullables != NullableUsage.No && TypeHelper.IsNullable(propertyType) && !propertyNotNull)
             {
@@ -666,10 +676,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         }
 
         private CodeMemberProperty GetMemberProperty(CodeMemberField memberField, string propertyName,
-                                                     bool get, bool set, bool implementINotifyPropertyChanged, params string[] description)
+                                                     bool get, bool set, bool implementINotifyPropertyChanged, bool implementINotifyPropertyChanging, params string[] description)
         {
             CodeMemberProperty memberProperty =
-                GetMemberPropertyWithoutType(memberField, propertyName, get, set, implementINotifyPropertyChanged, description);
+                GetMemberPropertyWithoutType(memberField, propertyName, get, set, implementINotifyPropertyChanged, implementINotifyPropertyChanging, description);
 
             memberProperty.Type = memberField.Type;
 
@@ -677,7 +687,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         }
 
         private CodeMemberProperty GetMemberPropertyWithoutType(CodeMemberField memberField, string propertyName,
-                                                                bool get, bool set, bool implementINotifyPropertyChanged, params string[] description)
+                                                                bool get, bool set, bool implementINotifyPropertyChanged, bool implementINotifyPropertyChanging, params string[] description)
         {
             CodeMemberProperty memberProperty = new CodeMemberProperty();
 
@@ -693,37 +703,52 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                          new CodeThisReferenceExpression(), memberField.Name)));
             if (set)
             {
-                if (!implementINotifyPropertyChanged)
+                var assignValue = new CodeAssignStatement(
+                                    new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), memberField.Name),
+                                    new CodeArgumentReferenceExpression("value")
+                                    );
+
+                if (!implementINotifyPropertyChanged && !implementINotifyPropertyChanging)
                 {
-                    memberProperty.SetStatements.Add(
-                        new CodeAssignStatement(
-                            new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), memberField.Name),
-                            new CodeArgumentReferenceExpression("value")
-                            )
-                        );
+                    memberProperty.SetStatements.Add(assignValue);
                 }
                 else
                 {
-                    memberProperty.SetStatements.Add(
-                        new CodeConditionStatement( // There's no ValueInequality in CodeDOM (ridiculous), so we'll use ((a == b) == false) instead.
-                            new CodeBinaryOperatorExpression(
-                                new CodeBinaryOperatorExpression(
-                                    new CodeFieldReferenceExpression(null, memberField.Name),
-                                    CodeBinaryOperatorType.ValueEquality,
-                                    new CodeArgumentReferenceExpression("value")),
-                                CodeBinaryOperatorType.ValueEquality,
-                                new CodePrimitiveExpression(false)
-                                ),
-                            new CodeAssignStatement(
-                                new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), memberField.Name),
-                                new CodeArgumentReferenceExpression("value")
-                                ), new CodeExpressionStatement(
-                                       new CodeMethodInvokeExpression(
-                                           new CodeMethodReferenceExpression(new CodeThisReferenceExpression(),
+                    // There's no ValueInequality in CodeDOM (ridiculous), so we'll use ((a == b) == false) instead.
+                    var equalityCheck = new CodeBinaryOperatorExpression(
+                                            new CodeBinaryOperatorExpression(
+                                                new CodeFieldReferenceExpression(null, memberField.Name),
+                                                CodeBinaryOperatorType.ValueEquality,
+                                                new CodeArgumentReferenceExpression("value")),
+                                            CodeBinaryOperatorType.ValueEquality,
+                                            new CodePrimitiveExpression(false)
+                                        );
+
+                    var assignment = new CodeConditionStatement(equalityCheck, assignValue);
+                    memberProperty.SetStatements.Add(assignment);
+
+                    if (implementINotifyPropertyChanged)
+                    {
+                        assignment.TrueStatements.Add(
+                            new CodeExpressionStatement(
+                                new CodeMethodInvokeExpression(
+                                    new CodeMethodReferenceExpression(new CodeThisReferenceExpression(),
                                                                              Common.PropertyChangedInternalMethod),
                                            new CodePrimitiveExpression(propertyName)
                                            ))
-                            ));
+                            );
+                    }
+                    if (implementINotifyPropertyChanging)
+                    {
+                        assignment.TrueStatements.Insert(0,
+                            new CodeExpressionStatement(
+                                new CodeMethodInvokeExpression(
+                                    new CodeMethodReferenceExpression(new CodeThisReferenceExpression(),
+                                                                             Common.PropertyChangingInternalMethod),
+                                           new CodePrimitiveExpression(propertyName)
+                                           ))
+                            );
+                    }
                 }
             }
 
@@ -912,10 +937,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             CodeMemberProperty memberProperty;
             if (String.IsNullOrEmpty(relationship.TargetDescription))
-                memberProperty = GetMemberProperty(memberField, propertyName, true, true, relationship.Target.DoesImplementINotifyPropertyChanged(), null);
+                memberProperty = GetMemberProperty(memberField, propertyName, true, true, relationship.Target.DoesImplementINotifyPropertyChanged(), relationship.Target.DoesImplementINotifyPropertyChanging(), null);
             else
                 memberProperty =
-                    GetMemberProperty(memberField, propertyName, true, true, relationship.Target.DoesImplementINotifyPropertyChanged(),
+                    GetMemberProperty(memberField, propertyName, true, true, relationship.Target.DoesImplementINotifyPropertyChanged(), relationship.Target.DoesImplementINotifyPropertyChanging(),
                                       relationship.TargetDescription);
             classDeclaration.Members.Add(memberProperty);
 
@@ -948,10 +973,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             CodeMemberProperty memberProperty;
             if (String.IsNullOrEmpty(relationship.SourceDescription))
-                memberProperty = GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), null);
+                memberProperty = GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), relationship.Source.DoesImplementINotifyPropertyChanging(), null);
             else
                 memberProperty =
-                    GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(),
+                    GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), relationship.Source.DoesImplementINotifyPropertyChanging(),
                                       relationship.SourceDescription);
             classDeclaration.Members.Add(memberProperty);
 
@@ -998,10 +1023,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             CodeMemberProperty memberProperty;
             if (String.IsNullOrEmpty(relationship.SourceDescription))
-                memberProperty = GetMemberProperty(memberField, NamingHelper.GetPlural(propertyName), true, true, relationship.Target.DoesImplementINotifyPropertyChanged(), null);
+                memberProperty = GetMemberProperty(memberField, NamingHelper.GetPlural(propertyName), true, true, relationship.Target.DoesImplementINotifyPropertyChanged(), relationship.Target.DoesImplementINotifyPropertyChanging(), null);
             else
                 memberProperty =
-                    GetMemberProperty(memberField, NamingHelper.GetPlural(propertyName), true, true, relationship.Target.DoesImplementINotifyPropertyChanged(),
+                    GetMemberProperty(memberField, NamingHelper.GetPlural(propertyName), true, true, relationship.Target.DoesImplementINotifyPropertyChanged(), relationship.Target.DoesImplementINotifyPropertyChanging(),
                                       relationship.SourceDescription);
             classDeclaration.Members.Add(memberProperty);
 
@@ -1044,10 +1069,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             CodeMemberProperty memberProperty;
             if (String.IsNullOrEmpty(relationship.TargetDescription))
-                memberProperty = GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), null);
+                memberProperty = GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), relationship.Source.DoesImplementINotifyPropertyChanging(), null);
             else
                 memberProperty =
-                    GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(),
+                    GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), relationship.Source.DoesImplementINotifyPropertyChanging(),
                                       relationship.TargetDescription);
             classDeclaration.Members.Add(memberProperty);
 
@@ -1068,10 +1093,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             CodeMemberProperty memberProperty;
             if (String.IsNullOrEmpty(relationship.SourceDescription))
-                memberProperty = GetMemberProperty(memberField, targetClass.Name, true, true, relationship.Target.DoesImplementINotifyPropertyChanged(), null);
+                memberProperty = GetMemberProperty(memberField, targetClass.Name, true, true, relationship.Target.DoesImplementINotifyPropertyChanged(), relationship.Target.DoesImplementINotifyPropertyChanging(), null);
             else
                 memberProperty =
-                    GetMemberProperty(memberField, targetClass.Name, true, true, relationship.Target.DoesImplementINotifyPropertyChanged(),
+                    GetMemberProperty(memberField, targetClass.Name, true, true, relationship.Target.DoesImplementINotifyPropertyChanged(), relationship.Target.DoesImplementINotifyPropertyChanging(),
                                       relationship.SourceDescription);
             classDeclaration.Members.Add(memberProperty);
 
@@ -1088,10 +1113,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             CodeMemberProperty memberProperty;
             if (String.IsNullOrEmpty(relationship.TargetDescription))
-                memberProperty = GetMemberProperty(memberField, sourceClass.Name, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), null);
+                memberProperty = GetMemberProperty(memberField, sourceClass.Name, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), relationship.Source.DoesImplementINotifyPropertyChanging(), null);
             else
                 memberProperty =
-                    GetMemberProperty(memberField, sourceClass.Name, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(),
+                    GetMemberProperty(memberField, sourceClass.Name, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), relationship.Source.DoesImplementINotifyPropertyChanging(),
                                       relationship.TargetDescription);
             classDeclaration.Members.Add(memberProperty);
 
@@ -1115,10 +1140,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             CodeMemberProperty memberProperty;
             if (String.IsNullOrEmpty(relationship.Description))
-                memberProperty = GetMemberProperty(memberField, propertyName, true, true, relationship.ModelClass.DoesImplementINotifyPropertyChanged(), null);
+                memberProperty = GetMemberProperty(memberField, propertyName, true, true, relationship.ModelClass.DoesImplementINotifyPropertyChanged(), relationship.ModelClass.DoesImplementINotifyPropertyChanging(), null);
             else
                 memberProperty =
-                    GetMemberProperty(memberField, propertyName, true, true, relationship.ModelClass.DoesImplementINotifyPropertyChanged(),
+                    GetMemberProperty(memberField, propertyName, true, true, relationship.ModelClass.DoesImplementINotifyPropertyChanged(), relationship.ModelClass.DoesImplementINotifyPropertyChanging(),
                                       relationship.Description);
             classDeclaration.Members.Add(memberProperty);
 
@@ -1239,7 +1264,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     CodeMemberField memberField = GetPrivateMemberFieldOfCompositeClass(compositeClass, PropertyAccess.Property);
                     classDeclaration.Members.Add(memberField);
 
-                    classDeclaration.Members.Add(GetActiveRecordMemberCompositeKeyProperty(compositeClass, memberField, cls.DoesImplementINotifyPropertyChanged()));
+                    classDeclaration.Members.Add(GetActiveRecordMemberCompositeKeyProperty(compositeClass, memberField, cls.DoesImplementINotifyPropertyChanged(), cls.DoesImplementINotifyPropertyChanging()));
                 }
 
                 //ManyToOne links where this class is the target (1-n)
@@ -1673,6 +1698,35 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                    new CodeFieldReferenceExpression(null, "information"))))
                 );
             propertyChangedMethod.Statements.Add(ifStatement);
+        }
+
+        private void AddINotifyPropertyChangingRegion(CodeTypeDeclaration declaration)
+        {
+            CodeMemberEvent memberEvent = new CodeMemberEvent();
+            declaration.Members.Add(memberEvent);
+            memberEvent.Attributes = MemberAttributes.Public;
+            memberEvent.StartDirectives.Add(new CodeRegionDirective(CodeRegionMode.Start, "INotifyPropertyChanging Members"));
+            memberEvent.Name = "PropertyChanging";
+            memberEvent.Type = new CodeTypeReference("PropertyChangingEventHandler");
+
+            CodeMemberMethod propertyChangingMethod = new CodeMemberMethod();
+            declaration.Members.Add(propertyChangingMethod);
+            propertyChangingMethod.EndDirectives.Add(new CodeRegionDirective(CodeRegionMode.End, null));
+            propertyChangingMethod.Attributes = MemberAttributes.Family;
+            propertyChangingMethod.Name = Common.PropertyChangingInternalMethod;
+            propertyChangingMethod.Parameters.Add(new CodeParameterDeclarationExpression(typeof(string), "information"));
+            CodeConditionStatement ifStatement = new CodeConditionStatement(
+                new CodeBinaryOperatorExpression(
+                    new CodeFieldReferenceExpression(null, "PropertyChanging"),
+                    CodeBinaryOperatorType.IdentityInequality, new CodePrimitiveExpression(null)
+                    ), new CodeExpressionStatement(
+                new CodeMethodInvokeExpression(null, "PropertyChanging",
+                                               new CodeThisReferenceExpression(),
+                                               new CodeObjectCreateExpression(
+                                                   "PropertyChangingEventArgs",
+                                                   new CodeFieldReferenceExpression(null, "information"))))
+                );
+            propertyChangingMethod.Statements.Add(ifStatement);
         }
 
         private void GenerateMetaData(CodeNamespace nameSpace)

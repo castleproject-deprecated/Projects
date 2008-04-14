@@ -48,6 +48,13 @@ namespace Altinoren.ActiveWriter
                         : NestedClass.DoesImplementINotifyPropertyChanged());
         }
 
+        public bool ImplementsINotifyPropertyChanging()
+        {
+            return (ModelClass != null
+                        ? ModelClass.DoesImplementINotifyPropertyChanging()
+                        : NestedClass.DoesImplementINotifyPropertyChanging());
+        }
+
         public CodeAttributeDeclaration GetPrimaryKeyAttribute()
         {
             CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("PrimaryKey");

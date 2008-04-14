@@ -19,6 +19,8 @@ namespace Altinoren.ActiveWriter
 
     public partial class Model
     {
+        public string ModelFileFullName { get; set; } // Set by DocData when the model is loaded.
+
         #region Public Code Generation Methods
 
         public List<CodeNamespaceImport> NamespaceImports
@@ -34,7 +36,7 @@ namespace Altinoren.ActiveWriter
                     imports.Add(new CodeNamespaceImport(Common.ValidatorNamespace));
                 if (UseNullables == NullableUsage.WithHelperLibrary)
                     imports.Add(new CodeNamespaceImport(Common.NullablesNamespace));
-                if (HasClassImplementsINotifyPropertyChanged())
+                if (HasClassImplementingINotifyPropertyChangedOrChanging())
                     imports.Add(new CodeNamespaceImport(Common.ComponentmodelNamespace));
                 if (AdditionalImports != null && AdditionalImports.Count > 0)
                 {
@@ -80,14 +82,10 @@ namespace Altinoren.ActiveWriter
             return hasClass || hasNestedClass;
         }
 
-        private bool HasClassImplementsINotifyPropertyChanged()
+        private bool HasClassImplementingINotifyPropertyChangedOrChanging()
         {
-            bool hasModelClass = Classes.Find(
-                                     delegate(ModelClass cls) { return cls.DoesImplementINotifyPropertyChanged(); }
-                                     ) != null;
-            bool hasNestedClass = NestedClasses.Find(
-                                      delegate(NestedClass cls) { return cls.DoesImplementINotifyPropertyChanged(); }
-                                      ) != null;
+            bool hasModelClass = Classes.Find(c => c.DoesImplementINotifyPropertyChanged() || c.DoesImplementINotifyPropertyChanging()) != null;
+            bool hasNestedClass = NestedClasses.Find(n => n.DoesImplementINotifyPropertyChanged() || n.DoesImplementINotifyPropertyChanging()) != null;
 
             return hasModelClass || hasNestedClass;
         }
