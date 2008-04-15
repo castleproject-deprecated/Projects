@@ -14,17 +14,14 @@
 
 namespace Altinoren.ActiveWriter
 {
-    using Microsoft.VisualStudio;
-    using Microsoft.VisualStudio.Shell.Interop;
-
     internal partial class ActiveWriterDocData
     {
         protected override void Load(string fileName, bool isReload)
         {
             base.Load(fileName, isReload);
 
-            if (this.RootElement != null)
-                ((global::Altinoren.ActiveWriter.Model)this.RootElement).ModelFileFullName = fileName;
+            if (RootElement != null)
+                ((Model)RootElement).ModelFileFullName = fileName;
         }
     }
 }

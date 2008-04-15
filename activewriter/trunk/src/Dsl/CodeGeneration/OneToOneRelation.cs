@@ -39,9 +39,9 @@ namespace Altinoren.ActiveWriter
 
         public CodeAttributeDeclaration GetOneToOneAttributeForTarget()
         {
-            CodeAttributeDeclaration attribute = null;
+            CodeAttributeDeclaration attribute;
 
-			if (!this.Lazy)
+			if (!Lazy)
         	{
 				attribute = new CodeAttributeDeclaration("OneToOne");
 

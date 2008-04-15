@@ -20,7 +20,7 @@ namespace Altinoren.ActiveWriter
     public delegate void ModelPropertyDeletedHandler(ElementDeletedEventArgs e);
     public delegate void ModelPropertyChangedHandler(ElementPropertyChangedEventArgs e);
     
-    public partial class Model : ModelElement
+    public partial class Model
     {
         public event ModelPropertyAddedHandler ModelPropertyAdded;
         public event ModelPropertyDeletedHandler ModelPropertyDeleted;

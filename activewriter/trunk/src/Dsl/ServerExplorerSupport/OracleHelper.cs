@@ -53,18 +53,19 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
                 {
                     Column column;
 
-                    column = list.Find(delegate(Column col) { return col.Name == reader["COLUMN_NAME"].ToString(); }
+                    column = list.Find(col => col.Name == reader["COLUMN_NAME"].ToString()
                         );
 
                     if (column == null)
                     {
-                        column = new Column();
-                        column.Name = reader["COLUMN_NAME"].ToString();
+                        column = new Column
+                                     {
+                                         Name = reader["COLUMN_NAME"].ToString(),
+                                         Schema = cls.Schema,
+                                         Table = cls.Table,
+                                         DataType = reader["DATA_TYPE"].ToString()
+                                     };
 
-                        column.Schema = cls.Schema;
-                        column.Table = cls.Table;
-
-                        column.DataType = reader["DATA_TYPE"].ToString();
                         if (column.DataType == "NUMBER")
                         {
                             string scale = reader["DATA_SCALE"].ToString();
@@ -156,22 +157,20 @@ SELECT st.column_name, om.r_owner, om.constraint_name, rm.table_name r_table_nam
             {
                 while (reader.Read())
                 {
-                    Relation relation = new Relation();
-                    relation.RelationType = RelationType.Unknown;
-                    relation.RelationName = reader["CONSTRAINT_NAME"].ToString();
-                    relation.PrimaryOwner = reader["R_OWNER"].ToString();
-                    relation.PrimaryTable = reader["R_TABLE_NAME"].ToString();
-                    relation.PrimaryColumn = reader["R_COLUMN_NAME"].ToString();
-                    relation.ForeignOwner = cls.Schema;
-                    relation.ForeignTable = cls.Table;
-                    relation.ForeignColumn = reader["COLUMN_NAME"].ToString();
-
-                    list.Add(relation);
+                    list.Add(new Relation
+                                 {
+                                     RelationType = RelationType.Unknown,
+                                     RelationName = reader["CONSTRAINT_NAME"].ToString(),
+                                     PrimaryOwner = reader["R_OWNER"].ToString(),
+                                     PrimaryTable = reader["R_TABLE_NAME"].ToString(),
+                                     PrimaryColumn = reader["R_COLUMN_NAME"].ToString(),
+                                     ForeignOwner = cls.Schema,
+                                     ForeignTable = cls.Table,
+                                     ForeignColumn = reader["COLUMN_NAME"].ToString()
+                                 });
                 }
             }
-
             return list;
-
         }
 
         public List<Relation> GetPKRelations(ModelClass cls)
@@ -201,22 +200,20 @@ SELECT st.column_name, om.r_owner, om.constraint_name, rm.table_name r_table_nam
             {
                 while (reader.Read())
                 {
-                    Relation relation = new Relation();
-                    relation.RelationType = RelationType.Unknown;
-                    relation.RelationName = reader["CONSTRAINT_NAME"].ToString();
-                    relation.PrimaryOwner = cls.Schema;
-                    relation.PrimaryTable = cls.Table;
-                    relation.PrimaryColumn = reader["R_COLUMN_NAME"].ToString();
-                    relation.ForeignOwner = reader["OWNER"].ToString();
-                    relation.ForeignTable = reader["TABLE_NAME"].ToString();
-                    relation.ForeignColumn = reader["COLUMN_NAME"].ToString();
-
-                    list.Add(relation);
+                    list.Add(new Relation
+                                 {
+                                     RelationType = RelationType.Unknown,
+                                     RelationName = reader["CONSTRAINT_NAME"].ToString(),
+                                     PrimaryOwner = cls.Schema,
+                                     PrimaryTable = cls.Table,
+                                     PrimaryColumn = reader["R_COLUMN_NAME"].ToString(),
+                                     ForeignOwner = reader["OWNER"].ToString(),
+                                     ForeignTable = reader["TABLE_NAME"].ToString(),
+                                     ForeignColumn = reader["COLUMN_NAME"].ToString()
+                                 });
                 }
             }
-
             return list;
-
         }
 
         #endregion

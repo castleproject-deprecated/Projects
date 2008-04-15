@@ -90,8 +90,7 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
 			Property property = project.Properties.Item("AssemblyName");
 			if (property != null)
 				return property.Value.ToString();
-			else
-				return Common.InMemoryCompiledAssemblyName;
+		    return Common.InMemoryCompiledAssemblyName;
 		}
     }
 }

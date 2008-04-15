@@ -15,7 +15,7 @@
 namespace Altinoren.ActiveWriter.CustomTool
 {
     using System;
-    using Altinoren.ActiveWriter.ServerExplorerSupport;
+    using ServerExplorerSupport;
     using EnvDTE;
 
     using System.IO;
@@ -29,7 +29,7 @@ namespace Altinoren.ActiveWriter.CustomTool
         protected override byte[] GenerateCode(string inputFileName, string inputFileContent)
         {
             System.Diagnostics.Process currentProcess = System.Diagnostics.Process.GetCurrentProcess();
-            string fileExtension = null;
+            string fileExtension;
 
             DTE dte = DTEHelper.GetDTE(currentProcess.Id.ToString());
 

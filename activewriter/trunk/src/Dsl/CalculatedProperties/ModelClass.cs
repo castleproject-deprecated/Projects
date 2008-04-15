@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Data.SqlClient;
-
 namespace Altinoren.ActiveWriter
 {
     public partial class ModelClass
@@ -24,7 +22,7 @@ namespace Altinoren.ActiveWriter
             if (this.Properties.Count == 0)
                 return false;
 
-            foreach (ModelProperty property in this.Properties)
+            foreach (var property in this.Properties)
             {
                 if (property.KeyType != KeyType.None)
                     return true;

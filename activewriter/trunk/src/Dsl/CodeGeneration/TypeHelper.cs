@@ -179,14 +179,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             {
                 return (typeName.IndexOf('>') >= 0);
             }
-            else if (language ==CodeLanguage.VB)
+            if (language == CodeLanguage.VB)
             {
                 return (typeName.Replace(" ", string.Empty).ToUpperInvariant().IndexOf("(OF") >= 0);
             }
-            else
-            {
-                throw new ArgumentOutOfRangeException("language", "Languages other than C# or VB.NET are not supported.");
-            }
+            
+            throw new ArgumentOutOfRangeException("language", "Languages other than C# or VB.NET are not supported.");
         }
     }
 }

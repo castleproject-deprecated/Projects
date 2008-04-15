@@ -21,7 +21,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
     public static class CodeGenerationContext
     {
-        private static bool isInitialized = false;
+        private static bool isInitialized;
         private static Dictionary<ModelClass, CodeTypeDeclaration> classDeclarations;
         private static Dictionary<NestedClass, CodeTypeDeclaration> nestedClassDeclarations;
         private static List<string> generatedClassNames;
@@ -73,12 +73,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             {
                 return classDeclarations[(ModelClass)cls];
             }
-            else if (cls.GetType() == typeof(NestedClass))
+            if (cls.GetType() == typeof(NestedClass))
             {
                 return nestedClassDeclarations[(NestedClass)cls];
             }
-            else
-                throw new ArgumentException("Only ModelClass and NestedClass entities supported", "cls");
+            
+            throw new ArgumentException("Only ModelClass and NestedClass entities supported", "cls");
         }
 
         public static bool IsClassGenerated(ModelElement cls)
@@ -92,12 +92,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             {
                 return classDeclarations.ContainsKey((ModelClass)cls);
             }
-            else if (cls.GetType() == typeof(NestedClass))
+            if (cls.GetType() == typeof(NestedClass))
             {
                 return nestedClassDeclarations.ContainsKey((NestedClass)cls);
             }
-            else
-                throw new ArgumentException("Only ModelClass and NestedClass entities supported", "cls");
+            
+            throw new ArgumentException("Only ModelClass and NestedClass entities supported", "cls");
         }
 
         public static bool IsClassWithSameNameGenerated(string name)

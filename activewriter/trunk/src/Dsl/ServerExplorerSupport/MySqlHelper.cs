@@ -157,20 +157,19 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
 			{
 				while(reader.Read())
 				{
-					Relation relation = new Relation();
-					relation.RelationType = RelationType.Unknown;
-					relation.RelationName = reader["CONSTRAINT_NAME"].ToString();
-					relation.PrimaryOwner = reader["REFERENCED_TABLE_SCHEMA"].ToString();
-					relation.PrimaryTable = reader["REFERENCED_TABLE_NAME"].ToString();
-					relation.PrimaryColumn = reader["REFERENCED_COLUMN_NAME"].ToString();
-					relation.ForeignOwner = cls.Schema;
-					relation.ForeignTable = cls.Table;
-					relation.ForeignColumn = reader["COLUMN_NAME"].ToString();
-
-					list.Add(relation);
+				    list.Add(new Relation
+				                 {
+				                     RelationType = RelationType.Unknown,
+				                     RelationName = reader["CONSTRAINT_NAME"].ToString(),
+				                     PrimaryOwner = reader["REFERENCED_TABLE_SCHEMA"].ToString(),
+				                     PrimaryTable = reader["REFERENCED_TABLE_NAME"].ToString(),
+				                     PrimaryColumn = reader["REFERENCED_COLUMN_NAME"].ToString(),
+				                     ForeignOwner = cls.Schema,
+				                     ForeignTable = cls.Table,
+				                     ForeignColumn = reader["COLUMN_NAME"].ToString()
+				                 });
 				}
 			}
-
 			return list;
 		}
 
@@ -203,20 +202,19 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
 			{
 				while(reader.Read())
 				{
-					Relation relation = new Relation();
-					relation.RelationType = RelationType.Unknown;
-					relation.RelationName = reader["CONSTRAINT_NAME"].ToString();
-					relation.PrimaryOwner = cls.Schema;
-					relation.PrimaryTable = cls.Table;
-					relation.PrimaryColumn = reader["REFERENCED_COLUMN_NAME"].ToString();
-					relation.ForeignOwner = reader["TABLE_SCHEMA"].ToString();
-					relation.ForeignTable = reader["TABLE_NAME"].ToString();
-					relation.ForeignColumn = reader["COLUMN_NAME"].ToString();
-
-					list.Add(relation);
+				    list.Add(new Relation
+				                 {
+				                     RelationType = RelationType.Unknown,
+				                     RelationName = reader["CONSTRAINT_NAME"].ToString(),
+				                     PrimaryOwner = cls.Schema,
+				                     PrimaryTable = cls.Table,
+				                     PrimaryColumn = reader["REFERENCED_COLUMN_NAME"].ToString(),
+				                     ForeignOwner = reader["TABLE_SCHEMA"].ToString(),
+				                     ForeignTable = reader["TABLE_NAME"].ToString(),
+				                     ForeignColumn = reader["COLUMN_NAME"].ToString()
+				                 });
 				}
 			}
-
 			return list;
 		}
 

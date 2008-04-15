@@ -22,34 +22,28 @@ namespace Altinoren.ActiveWriter.ToolWindow
     using System.Runtime.InteropServices;
 
     [Guid(Constants.ActiveWriterClassDetailsToolWindowId)]
-    internal partial class ActiveWriterClassDetailsToolWindow : ToolWindow
+    internal class ActiveWriterClassDetailsToolWindow : ToolWindow
     {
         private ClassDetailsControl control;
 
-        public ActiveWriterClassDetailsToolWindow(global::System.IServiceProvider serviceProvider)
+        public ActiveWriterClassDetailsToolWindow(IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
         }
 
         public override IWin32Window Window
         {
-            get { return (IWin32Window)control; }
+            get { return control; }
         }
 
         public override string WindowTitle
         {
-            get
-            {
-                return "ActiveWriter Class Details";
-            }
+            get { return "ActiveWriter Class Details"; }
         }
 
         protected override int BitmapResource
         {
-            get
-            {
-                return 104;
-            }
+            get { return 104; }
         }
 
         protected override int BitmapIndex
@@ -70,23 +64,23 @@ namespace Altinoren.ActiveWriter.ToolWindow
             ModelingDocData data1 = (oldView != null) ? oldView.DocData : null;
             if ((data1 != null) && data1 is ActiveWriterDocData)
             {
-                oldView.SelectionChanged -= new EventHandler(this.OnDocumentSelectionChanged);
+                oldView.SelectionChanged -= OnDocumentSelectionChanged;
 
                 Model model = (Model)data1.RootElement;
-                model.ModelPropertyAdded -= new ModelPropertyAddedHandler(this.OnModelPropertyAdded);
-                model.ModelPropertyDeleted -= new ModelPropertyDeletedHandler(this.OnModelPropertyDeleted);
-                model.ModelPropertyChanged -= new ModelPropertyChangedHandler(this.OnModelPropertyChanged);
+                model.ModelPropertyAdded -= OnModelPropertyAdded;
+                model.ModelPropertyDeleted -= OnModelPropertyDeleted;
+                model.ModelPropertyChanged -= OnModelPropertyChanged;
             }
 
             ModelingDocData data2 = (newView != null) ? newView.DocData : null;
             if ((data2 != null) && data2 is ActiveWriterDocData)
             {
-                newView.SelectionChanged += new EventHandler(this.OnDocumentSelectionChanged);
+                newView.SelectionChanged += OnDocumentSelectionChanged;
 
                 Model model = (Model)data2.RootElement;
-                model.ModelPropertyAdded += new ModelPropertyAddedHandler(this.OnModelPropertyAdded);
-                model.ModelPropertyDeleted += new ModelPropertyDeletedHandler(this.OnModelPropertyDeleted);
-                model.ModelPropertyChanged += new ModelPropertyChangedHandler(this.OnModelPropertyChanged);
+                model.ModelPropertyAdded += OnModelPropertyAdded;
+                model.ModelPropertyDeleted += OnModelPropertyDeleted;
+                model.ModelPropertyChanged += OnModelPropertyChanged;
             }
 
             OnDocumentSelectionChanged(data2, EventArgs.Empty);
@@ -130,7 +124,6 @@ namespace Altinoren.ActiveWriter.ToolWindow
                             if (modelClass != null)
                             {
                                 control.Display(modelClass);
-
                                 return;
                             }
                         }
@@ -139,7 +132,6 @@ namespace Altinoren.ActiveWriter.ToolWindow
                         if (property != null)
                         {
                             control.Display(property.ModelClass);
-
                             return;
                         }
                     }

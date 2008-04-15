@@ -20,7 +20,7 @@ namespace Altinoren.ActiveWriter
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using Microsoft.VisualStudio.Modeling.Validation;
-    using Altinoren.ActiveWriter.Validation;
+    using Validation;
 
     [ValidationState(ValidationState.Enabled)]
     public partial class ModelClass
@@ -179,12 +179,7 @@ namespace Altinoren.ActiveWriter
             {
                 PropertyAccess access = composits[0].Access;
 
-                if (composits.FindAll(
-                    delegate(ModelProperty property)
-                    {
-						return (property.Access != access);
-                    }
-                    ).Count > 0)
+                if (composits.FindAll(property => (property.Access != access)).Count > 0)
                     context.LogError("All composite keys must have the same Access value.",
                                      "AW001ValidateAllCompositeKeysHaveSameAccessError", this);
             }

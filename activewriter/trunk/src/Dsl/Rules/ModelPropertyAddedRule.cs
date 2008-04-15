@@ -15,7 +15,6 @@
 namespace Altinoren.ActiveWriter.Rules
 {
     using Microsoft.VisualStudio.Modeling;
-    using Microsoft.VisualStudio.Modeling.Diagrams;
 
     [RuleOn(typeof(ModelProperty), FireTime = TimeToFire.TopLevelCommit)]
     public sealed class ModelPropertyAddRule : AddRule 

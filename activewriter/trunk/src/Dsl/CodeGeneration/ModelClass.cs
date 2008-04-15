@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.CodeDom;
 using Altinoren.ActiveWriter.CodeGeneration;
 
@@ -50,12 +49,7 @@ namespace Altinoren.ActiveWriter
 
         public bool HasPropertyWithValidators()
         {
-            return this.Properties.Find(
-                delegate (ModelProperty property)
-                    {
-                        return property.IsValidatorSet();
-                    }
-                ) != null;
+            return Properties.Find(property => property.IsValidatorSet()) != null;
         }
 
         public CodeAttributeDeclaration GetActiveRecordAttribute()

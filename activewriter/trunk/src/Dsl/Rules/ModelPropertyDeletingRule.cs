@@ -35,7 +35,5 @@ namespace Altinoren.ActiveWriter.Rules
                     transaction.Context.ContextInfo.Add(property.Name, property.ModelClass.Model);
             }
         }
-
-        
     }
 }

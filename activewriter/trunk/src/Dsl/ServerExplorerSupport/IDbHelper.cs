@@ -15,7 +15,6 @@
 namespace Altinoren.ActiveWriter.ServerExplorerSupport
 {
     using System.Collections.Generic;
-    using System.Data.Common;
     using System.Data;
     
     internal interface IDbHelper

@@ -32,12 +32,7 @@ namespace Altinoren.ActiveWriter
 
         public bool HasPropertyWithValidators()
         {
-            return this.Properties.Find(
-                delegate(ModelProperty property)
-                {
-                    return property.IsValidatorSet();
-                }
-                ) != null;
+            return Properties.Find(property => property.IsValidatorSet()) != null;
         }
 
         #endregion

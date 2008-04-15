@@ -14,8 +14,6 @@ namespace Debugging.Tests {
     using System.Collections;
     using Castle.ActiveRecord;
     using Castle.Components.Validator;
-    using System.ComponentModel;
-    using System.Text;
     
     
     [ActiveRecord()]

@@ -47,8 +47,8 @@ namespace Altinoren.ActiveWriter
 			// Wireup the drag/drop support
 			Control ctrl = e.DiagramView.DiagramClientView;
 			ctrl.AllowDrop = true;
-			ctrl.DragOver += new DragEventHandler(OnDragOver);
-			ctrl.DragDrop += new DragEventHandler(OnDragDrop);
+			ctrl.DragOver += OnDragOver;
+			ctrl.DragDrop += OnDragDrop;
 		}
 
 		/// <summary>

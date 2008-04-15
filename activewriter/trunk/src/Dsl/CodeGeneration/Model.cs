@@ -46,8 +46,7 @@ namespace Altinoren.ActiveWriter
                         {
                             if (!string.IsNullOrEmpty(item.Replaces))
                             {
-                                CodeNamespaceImport import = imports.Find(delegate(CodeNamespaceImport i)
-                                                                              { return i.Namespace == item. Replaces; });
+                                CodeNamespaceImport import = imports.Find(i => i.Namespace == item.Replaces);
                                 if (import != null)
                                     imports.Remove(import);
                             }
@@ -66,18 +65,8 @@ namespace Altinoren.ActiveWriter
 
         private bool HasClassWithValidators()
         {
-            bool hasClass = this.Classes.Find(
-                                delegate(ModelClass cls)
-                                {
-                                    return cls.HasPropertyWithValidators();
-                                }
-                                ) != null;
-            bool hasNestedClass = this.NestedClasses.Find(
-                                delegate(NestedClass cls)
-                                {
-                                    return cls.HasPropertyWithValidators();
-                                }
-                                ) != null;
+            bool hasClass = this.Classes.Find(cls => cls.HasPropertyWithValidators()) != null;
+            bool hasNestedClass = this.NestedClasses.Find(cls => cls.HasPropertyWithValidators()) != null;
 
             return hasClass || hasNestedClass;
         }

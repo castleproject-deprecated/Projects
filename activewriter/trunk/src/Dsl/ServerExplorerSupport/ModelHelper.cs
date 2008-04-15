@@ -19,7 +19,6 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
 {
     internal static class ModelHelper
     {
-
         private static bool usePascalCase = true;
 
         public static string GetSafeName(string name, string propertyNameFilterExpression)
@@ -66,16 +65,13 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
                 }
                 return stringBuilder.ToString();
             }
-            else if (original.Length == 1)
+            if (original.Length == 1)
             {
                 return original.ToUpperInvariant();
             }
-            else
-            {
-                // Pascal casing of simple strings (without "_"s) should make no assumptions
-                // on the rest of the string other than the first character. 
-                return original.Substring(0, 1).ToUpperInvariant() + original.Substring(1);
-            }
+            // Pascal casing of simple strings (without "_"s) should make no assumptions
+            // on the rest of the string other than the first character. 
+            return original.Substring(0, 1).ToUpperInvariant() + original.Substring(1);
         }
     }
 }

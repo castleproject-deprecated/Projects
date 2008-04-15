@@ -46,17 +46,18 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
 				{
 					Column column;
 
-					column = list.Find(delegate(Column col) { return col.Name == reader["COLUMN_NAME"].ToString(); }
-						);
+					column = list.Find(col => col.Name == reader["COLUMN_NAME"].ToString());
 
 					if (column == null)
 					{
-						column = new Column();
-						column.Name = reader["COLUMN_NAME"].ToString();
-						column.Schema = cls.Schema;
-						column.Table = cls.Table;
-						column.DataType = reader["DATA_TYPE"].ToString();
-						if (reader["CONSTRAINT_TYPE"] != DBNull.Value)
+						column = new Column
+						             {
+						                 Name = reader["COLUMN_NAME"].ToString(),
+						                 Schema = cls.Schema,
+						                 Table = cls.Table,
+						                 DataType = reader["DATA_TYPE"].ToString()
+						             };
+					    if (reader["CONSTRAINT_TYPE"] != DBNull.Value)
 						{
 							switch(reader["CONSTRAINT_TYPE"].ToString())
 							{
@@ -154,20 +155,19 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
 			{
 				while(reader.Read())
 				{
-					Relation relation = new Relation();
-					relation.RelationType = RelationType.Unknown; // Caller will decide 
-					relation.RelationName = reader["FK_NAME"].ToString();
-					relation.PrimaryOwner = reader["PKTABLE_OWNER"].ToString();
-					relation.PrimaryTable = reader["PKTABLE_NAME"].ToString();
-					relation.PrimaryColumn = reader["PKCOLUMN_NAME"].ToString();
-					relation.ForeignOwner = cls.Schema;
-					relation.ForeignTable = cls.Table;
-					relation.ForeignColumn = reader["FKCOLUMN_NAME"].ToString();
-
-					list.Add(relation);
+				    list.Add(new Relation
+				                 {
+				                     RelationType = RelationType.Unknown,
+				                     RelationName = reader["FK_NAME"].ToString(),
+				                     PrimaryOwner = reader["PKTABLE_OWNER"].ToString(),
+				                     PrimaryTable = reader["PKTABLE_NAME"].ToString(),
+				                     PrimaryColumn = reader["PKCOLUMN_NAME"].ToString(),
+				                     ForeignOwner = cls.Schema,
+				                     ForeignTable = cls.Table,
+				                     ForeignColumn = reader["FKCOLUMN_NAME"].ToString()
+				                 });
 				}
 			}
-
 			return list;
 		}
 
@@ -180,20 +180,19 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
 			{
 				while(reader.Read())
 				{
-					Relation relation = new Relation();
-					relation.RelationType = RelationType.Unknown; // Caller will decide
-					relation.RelationName = reader["FK_NAME"].ToString();
-					relation.PrimaryOwner = cls.Schema;
-					relation.PrimaryTable = cls.Table;
-					relation.PrimaryColumn = reader["PKCOLUMN_NAME"].ToString();
-					relation.ForeignOwner = reader["FKTABLE_OWNER"].ToString();
-					relation.ForeignTable = reader["FKTABLE_NAME"].ToString();
-					relation.ForeignColumn = reader["FKCOLUMN_NAME"].ToString();
-
-					list.Add(relation);
+				    list.Add(new Relation
+				                 {
+				                     RelationType = RelationType.Unknown,
+				                     RelationName = reader["FK_NAME"].ToString(),
+				                     PrimaryOwner = cls.Schema,
+				                     PrimaryTable = cls.Table,
+				                     PrimaryColumn = reader["PKCOLUMN_NAME"].ToString(),
+				                     ForeignOwner = reader["FKTABLE_OWNER"].ToString(),
+				                     ForeignTable = reader["FKTABLE_NAME"].ToString(),
+				                     ForeignColumn = reader["FKCOLUMN_NAME"].ToString()
+				                 });
 				}
 			}
-
 			return list;
 		}
 

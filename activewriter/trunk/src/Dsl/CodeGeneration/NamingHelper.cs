@@ -18,7 +18,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
     public static class NamingHelper
     {
-        private static string[] umToA = new string[] { "agendum", "datum", "extremum", "bacterium", "erratum" };
+        private static readonly string[] umToA = new[] { "agendum", "datum", "extremum", "bacterium", "erratum" };
 
         public static string GetName(string name, PropertyAccess access, FieldCase fieldCase)
         {
@@ -68,16 +68,14 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         {
             if (value.Length > 1)
                 return value.Substring(0, 1).ToLowerInvariant() + value.Substring(1, value.Length - 1);
-            else
-                return value.ToLowerInvariant();
+            return value.ToLowerInvariant();
         }
 
         public static string MakePascal(string value)
         {
             if (value.Length > 1)
                 return value.Substring(0, 1).ToUpperInvariant() + value.Substring(1, value.Length - 1);
-            else
-                return value.ToUpperInvariant();
+            return value.ToUpperInvariant();
         }
 
         public static string GetPlural(string name)

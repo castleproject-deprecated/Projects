@@ -35,10 +35,7 @@ namespace Altinoren.ActiveWriter.UIEditors
             ElementPropertyDescriptor propertyDescriptor = context.PropertyDescriptor as ElementPropertyDescriptor;
             if (propertyDescriptor != null)
             {
-                ModelProperty underlyingModelElement = propertyDescriptor.ModelElement as ModelProperty;
-
                 ArrayList list = null;
-
                 string actualValue = value as string;
 
                 if (!string.IsNullOrEmpty(actualValue))

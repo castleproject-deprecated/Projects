@@ -16,13 +16,17 @@ namespace Altinoren.ActiveWriter
 {
     using System;
     using Microsoft.VisualStudio.Modeling;
-    using Altinoren.ActiveWriter.Rules;
+    using Rules;
     
     public partial class ActiveWriterDomainModel : DomainModel
     {
         protected override Type[] GetCustomDomainModelTypes()
         {
-            return new System.Type[] { typeof(ModelPropertyAddRule), typeof(ModelPropertyChangedRule), typeof(ModelPropertyDeletingRule), typeof(ModelPropertyDeletedRule) };
+            return new[]
+                       {
+                           typeof (ModelPropertyAddRule), typeof (ModelPropertyChangedRule),
+                           typeof (ModelPropertyDeletingRule), typeof (ModelPropertyDeletedRule)
+                       };
         }    
     }
 }

@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.VisualStudio.Modeling;
 
 namespace Altinoren.ActiveWriter.Validation
@@ -23,12 +21,7 @@ namespace Altinoren.ActiveWriter.Validation
     {
         internal static int GetPrimaryKeyCount(LinkedElementCollection<ModelProperty> properties)
         {
-            return properties.FindAll(
-                delegate(ModelProperty property)
-                {
-                    return (property.KeyType == KeyType.PrimaryKey);
-                }
-                ).Count;
+            return properties.FindAll(property => (property.KeyType == KeyType.PrimaryKey)).Count;
         }
 
         internal static int GetCompositeKeyCount(LinkedElementCollection<ModelProperty> properties)
@@ -38,32 +31,17 @@ namespace Altinoren.ActiveWriter.Validation
 
         internal static List<ModelProperty> GetCompositeKeys(LinkedElementCollection<ModelProperty> properties)
         {
-            return properties.FindAll(
-                delegate(ModelProperty property)
-                {
-                    return (property.KeyType == KeyType.CompositeKey);
-                }
-                );
+            return properties.FindAll(property => (property.KeyType == KeyType.CompositeKey));
         }
 
         internal static int GetDebuggerDisplayCount(LinkedElementCollection<ModelProperty> properties)
         {
-            return properties.FindAll(
-                delegate(ModelProperty property)
-                {
-                    return (property.DebuggerDisplay);
-                }
-                ).Count;
+            return properties.FindAll(property => (property.DebuggerDisplay)).Count;
         }
 
         internal static int GetDefaultMemberCount(LinkedElementCollection<ModelProperty> properties)
         {
-            return properties.FindAll(
-                delegate(ModelProperty property)
-                {
-                    return (property.DefaultMember);
-                }
-                ).Count;
+            return properties.FindAll(property => (property.DefaultMember)).Count;
         }
     }
 }

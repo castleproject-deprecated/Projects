@@ -16,7 +16,6 @@ namespace Altinoren.ActiveWriter.ToolWindow
 {
     using System.Windows.Forms;
     using System.ComponentModel;
-    using System.Drawing;
     using Microsoft.VisualStudio.Modeling;
     
     public partial class ClassDetailsControl : UserControl
@@ -130,15 +129,15 @@ namespace Altinoren.ActiveWriter.ToolWindow
 
             Controls.Add(propertyGrid);
 
-            propertyGrid.CellValueNeeded += new DataGridViewCellValueEventHandler(propertyGrid_CellValueNeeded);
-            propertyGrid.CellValuePushed += new DataGridViewCellValueEventHandler(propertyGrid_CellValuePushed);
+            propertyGrid.CellValueNeeded += propertyGrid_CellValueNeeded;
+            propertyGrid.CellValuePushed += propertyGrid_CellValuePushed;
             //propertyGrid.NewRowNeeded += new DataGridViewRowEventHandler(propertyGrid_NewRowNeeded);
             //propertyGrid.RowValidated += new DataGridViewCellEventHandler(propertyGrid_RowValidated);
             //propertyGrid.RowDirtyStateNeeded += new QuestionEventHandler(propertyGrid_RowDirtyStateNeeded);
             //propertyGrid.CancelRowEdit += new QuestionEventHandler(propertyGrid_CancelRowEdit);
             //propertyGrid.UserDeletingRow += new DataGridViewRowCancelEventHandler(propertyGrid_UserDeletingRow);
 
-            propertyGrid.CellBeginEdit += new DataGridViewCellCancelEventHandler(propertyGrid_CellBeginEdit);
+            propertyGrid.CellBeginEdit += propertyGrid_CellBeginEdit;
 
             ResumeLayout(false);
         }

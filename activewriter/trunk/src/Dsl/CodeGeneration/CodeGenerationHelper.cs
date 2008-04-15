@@ -32,7 +32,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
     using ServerExplorerSupport;
     using VSLangProj;
     using CodeNamespace = System.CodeDom.CodeNamespace;
-    using Process=EnvDTE.Process;
 
     public class CodeGenerationHelper
     {
@@ -462,10 +461,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             //    return ( _keyA == test.KeyA || (_keyA != null && _keyA.Equals( test.KeyA ) ) ) &&
             //      ( _keyB == test.KeyB || ( _keyB != null && _keyB.Equals( test.KeyB ) ) );
             //}
-            CodeMemberMethod equals = new CodeMemberMethod();
-            equals.Attributes = MemberAttributes.Public | MemberAttributes.Override;
-            equals.ReturnType = new CodeTypeReference(typeof(Boolean));
-            equals.Name = "Equals";
+            CodeMemberMethod equals = new CodeMemberMethod
+                                          {
+                                              Attributes = (MemberAttributes.Public | MemberAttributes.Override),
+                                              ReturnType = new CodeTypeReference(typeof (Boolean)),
+                                              Name = "Equals"
+                                          };
 
             CodeParameterDeclarationExpression param = new CodeParameterDeclarationExpression(typeof(Object), "obj");
             equals.Parameters.Add(param);
@@ -552,10 +553,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             //{
             //  return string.Join( ":", new string[] { _keyA, _keyB } );
             //}
-            CodeMemberMethod toString = new CodeMemberMethod();
-            toString.Attributes = MemberAttributes.Public | MemberAttributes.Override;
-            toString.ReturnType = new CodeTypeReference(typeof(String));
-            toString.Name = "ToString";
+            CodeMemberMethod toString = new CodeMemberMethod
+                                            {
+                                                Attributes = (MemberAttributes.Public | MemberAttributes.Override),
+                                                ReturnType = new CodeTypeReference(typeof (String)),
+                                                Name = "ToString"
+                                            };
 
             CodeExpression[] expressions = new CodeExpression[fields.Count];
             for (int i = 0; i < fields.Count; i++)
@@ -769,15 +772,15 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private CodeMemberField GetMemberFieldOfProperty(ModelProperty property, Accessor accessor)
         {
-			if (_model.UseNullables != NullableUsage.No && TypeHelper.IsNullable(property.ColumnType) && !property.NotNull)
-            {
-                if (_model.UseNullables == NullableUsage.WithHelperLibrary)
+            if (_model.UseNullables != NullableUsage.No && TypeHelper.IsNullable(property.ColumnType) && !property.NotNull)
+			{
+			    if (_model.UseNullables == NullableUsage.WithHelperLibrary)
                     return GetMemberField(property.Name, TypeHelper.GetNullableTypeReferenceForHelper(property.ColumnType), accessor, property.Access);
-                else
-                    return GetMemberField(property.Name, TypeHelper.GetNullableTypeReference(property.ColumnType), accessor, property.Access);
-            }
-            else
-                return GetMemberField(property.Name, TypeHelper.GetSystemType(property.ColumnType, property.CustomMemberType), accessor, property.Access);
+			    
+                return GetMemberField(property.Name, TypeHelper.GetNullableTypeReference(property.ColumnType), accessor, property.Access);
+			}
+
+            return GetMemberField(property.Name, TypeHelper.GetSystemType(property.ColumnType, property.CustomMemberType), accessor, property.Access);
         }
 
         private CodeMemberField GetMemberField(CodeTypeDeclaration classDeclaration, ModelProperty property)
@@ -814,15 +817,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CodeMemberField memberField = GetMemberFieldWithoutType(name, accessor, access);
 
             memberField.Type = fieldType;
-
-            return memberField;
-        }
-
-        private CodeMemberField GetMemberField(string name, Type fieldType, Accessor accessor, PropertyAccess access)
-        {
-            CodeMemberField memberField = GetMemberFieldWithoutType(name, accessor, access);
-
-            memberField.Type = new CodeTypeReference(fieldType);
 
             return memberField;
         }
@@ -1197,7 +1191,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 CodeTypeDeclaration classDeclaration = GetNestedClassDeclaration(cls, nameSpace);
 
                 // Properties and Fields
-                foreach (ModelProperty property in cls.Properties)
+                foreach (var property in cls.Properties)
                 {
                     CodeMemberField memberField = GetMemberField(classDeclaration, property);
 
@@ -1211,8 +1205,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
                 return classDeclaration;
             }
-            else
-                return CodeGenerationContext.GetTypeDeclaration(cls);
+            
+            return CodeGenerationContext.GetTypeDeclaration(cls);
         }
 
         private CodeTypeDeclaration GenerateClass(ModelClass cls, CodeNamespace nameSpace)
@@ -1321,8 +1315,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
                 return classDeclaration;
             }
-            else
-                return CodeGenerationContext.GetTypeDeclaration(cls);
+            
+            return CodeGenerationContext.GetTypeDeclaration(cls);
         }
 
         public static CodeExpression GetBooleanAnd(List<CodeExpression> expressions, int i)
@@ -1331,36 +1325,37 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 return
                     new CodeBinaryOperatorExpression(expressions[i], CodeBinaryOperatorType.BooleanAnd,
                                                      expressions[i + 1]);
-            else
-                return
-                    new CodeBinaryOperatorExpression(expressions[i], CodeBinaryOperatorType.BooleanAnd,
-                                                     GetBooleanAnd(expressions, i + 1));
+            
+            return
+                new CodeBinaryOperatorExpression(expressions[i], CodeBinaryOperatorType.BooleanAnd,
+                                                 GetBooleanAnd(expressions, i + 1));
         }
 
         public static CodeExpression GetBinaryOr(ArrayList list, int indexOfLeft)
         {
             if (indexOfLeft + 1 == list.Count)
                 return (CodeExpression)list[0];
-            else if (indexOfLeft + 2 == list.Count)
+            
+            if (indexOfLeft + 2 == list.Count)
                 return
                     new CodeBinaryOperatorExpression((CodeExpression)list[indexOfLeft],
                                                      CodeBinaryOperatorType.BitwiseOr,
                                                      (CodeExpression)list[indexOfLeft + 1]);
-            else
-                return
-                    new CodeBinaryOperatorExpression((CodeExpression)list[indexOfLeft],
-                                                     CodeBinaryOperatorType.BitwiseOr,
-                                                     GetBinaryOr(list, indexOfLeft + 1));
+            
+            return
+                new CodeBinaryOperatorExpression((CodeExpression)list[indexOfLeft],
+                                                 CodeBinaryOperatorType.BitwiseOr,
+                                                 GetBinaryOr(list, indexOfLeft + 1));
         }
 
-        private static CodeExpression GetXor(List<CodeExpression> expressions, int i)
+        private static CodeExpression GetXor(IList<CodeExpression> expressions, int i)
         {
             if (i == expressions.Count - 2)
                 return new CodeMethodInvokeExpression(null, Common.XorHelperMethod, expressions[i], expressions[i + 1]);
-            else
-                return
-                    new CodeMethodInvokeExpression(null, Common.XorHelperMethod, expressions[i],
-                                                   GetXor(expressions, i + 1));
+            
+            return
+                new CodeMethodInvokeExpression(null, Common.XorHelperMethod, expressions[i],
+                                               GetXor(expressions, i + 1));
         }
 
         private string GenerateCode(CodeCompileUnit compileUnit)
@@ -1410,7 +1405,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
                 if (nhqg.ExitCode != 0)
                 {
-                    throw new TargetException("NHQG exited with code " + nhqg.ExitCode.ToString());
+                    throw new TargetException("NHQG exited with code " + nhqg.ExitCode);
                 }
                 else
                 {
@@ -1421,7 +1416,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     }
                     else
                     {
-                        foreach (FileInfo file in tempFileFolder.GetFiles())
+                        foreach (var file in tempFileFolder.GetFiles())
                         {
                             string filePath = Path.Combine(_modelFilePath, file.Name);
                             file.CopyTo(filePath , true);
@@ -1452,12 +1447,13 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private Assembly GenerateARAssembly(CodeCompileUnit compileUnit, bool generateInMemory)
         {
             List<string> addedAssemblies = new List<string>();
-            CompilerParameters parameters = new CompilerParameters();
-            parameters.GenerateInMemory = generateInMemory;
-
             _assemblyName = Guid.NewGuid().ToString("N");
-            parameters.OutputAssembly = _assemblyName + ".dll";
-            parameters.GenerateExecutable = false;
+            CompilerParameters parameters = new CompilerParameters
+                                                {
+                                                    GenerateInMemory = generateInMemory,
+                                                    GenerateExecutable = false,
+                                                    OutputAssembly = (_assemblyName + ".dll")
+                                                };
 
             Assembly activeRecord = Assembly.Load(_model.ActiveRecordAssemblyName);
             parameters.ReferencedAssemblies.Add(activeRecord.Location);
@@ -1486,15 +1482,13 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             {
                 return results.CompiledAssembly;
             }
-            else
+            
+            ArrayList list = new ArrayList(results.Errors.Count);
+            foreach (CompilerError error in results.Errors)
             {
-                ArrayList list = new ArrayList();
-                foreach (CompilerError error in results.Errors)
-                {
-                    list.Add(new Exception(error.ErrorText));
-                }
-                throw new ExceptionCollection(list);
+                list.Add(new Exception(error.ErrorText));
             }
+            throw new ExceptionCollection(list); // TODO: Cannot be displayed in the errors window. Report errors manually.
         }
 
         // Actually: OnARModelCreated(ActiveRecordModelCollection, IConfigurationSource)
@@ -1631,10 +1625,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     List<CodeAttributeDeclaration> attributesToRemove = new List<CodeAttributeDeclaration>();
                     foreach (CodeAttributeDeclaration attribute in type.CustomAttributes)
                     {
-                        if (Array.FindIndex(Common.ARAttributes, delegate(string name)
-                                                                     {
-                                                                         return name == attribute.Name;
-                                                                     }) > -1)
+                        if (Array.FindIndex(Common.ARAttributes, name => name == attribute.Name) > -1)
                             attributesToRemove.Add(attribute);
                     }
                     foreach (CodeAttributeDeclaration declaration in attributesToRemove)
@@ -1648,10 +1639,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                         List<CodeAttributeDeclaration> memberAttributesToRemove = new List<CodeAttributeDeclaration>();
                         foreach (CodeAttributeDeclaration attribute in member.CustomAttributes)
                         {
-                            if (Array.FindIndex(Common.ARAttributes, delegate(string name)
-                                                                         {
-                                                                             return name == attribute.Name;
-                                                                         }) > -1)
+                            if (Array.FindIndex(Common.ARAttributes, name => name == attribute.Name) > -1)
                                 memberAttributesToRemove.Add(attribute);
                         }
                         foreach (CodeAttributeDeclaration declaration in memberAttributesToRemove)
@@ -1673,19 +1661,24 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private void AddINotifyPropertyChangedRegion(CodeTypeDeclaration declaration)
         {
-            CodeMemberEvent memberEvent = new CodeMemberEvent();
-            declaration.Members.Add(memberEvent);
-            memberEvent.Attributes = MemberAttributes.Public;
+            CodeMemberEvent memberEvent = new CodeMemberEvent
+                                              {
+                                                  Attributes = MemberAttributes.Public,
+                                                  Name = "PropertyChanged",
+                                                  Type = new CodeTypeReference("PropertyChangedEventHandler")
+                                              };
             memberEvent.StartDirectives.Add(new CodeRegionDirective(CodeRegionMode.Start, "INotifyPropertyChanged Members"));
-            memberEvent.Name = "PropertyChanged";
-            memberEvent.Type = new CodeTypeReference("PropertyChangedEventHandler");
+            declaration.Members.Add(memberEvent);
 
-            CodeMemberMethod propertyChangedMethod = new CodeMemberMethod();
-            declaration.Members.Add(propertyChangedMethod);
+            CodeMemberMethod propertyChangedMethod = new CodeMemberMethod
+                                                         {
+                                                             Attributes = MemberAttributes.Family,
+                                                             Name = Common.PropertyChangedInternalMethod
+                                                         };
             propertyChangedMethod.EndDirectives.Add(new CodeRegionDirective(CodeRegionMode.End, null));
-            propertyChangedMethod.Attributes = MemberAttributes.Family;
-            propertyChangedMethod.Name = Common.PropertyChangedInternalMethod;
             propertyChangedMethod.Parameters.Add(new CodeParameterDeclarationExpression(typeof (string), "information"));
+            declaration.Members.Add(propertyChangedMethod);
+
             CodeConditionStatement ifStatement = new CodeConditionStatement(
                 new CodeBinaryOperatorExpression(
                     new CodeFieldReferenceExpression(null, "PropertyChanged"),
@@ -1702,19 +1695,24 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private void AddINotifyPropertyChangingRegion(CodeTypeDeclaration declaration)
         {
-            CodeMemberEvent memberEvent = new CodeMemberEvent();
-            declaration.Members.Add(memberEvent);
-            memberEvent.Attributes = MemberAttributes.Public;
+            CodeMemberEvent memberEvent = new CodeMemberEvent
+                                              {
+                                                  Attributes = MemberAttributes.Public,
+                                                  Name = "PropertyChanging",
+                                                  Type = new CodeTypeReference("PropertyChangingEventHandler")
+                                              };
             memberEvent.StartDirectives.Add(new CodeRegionDirective(CodeRegionMode.Start, "INotifyPropertyChanging Members"));
-            memberEvent.Name = "PropertyChanging";
-            memberEvent.Type = new CodeTypeReference("PropertyChangingEventHandler");
+            declaration.Members.Add(memberEvent);
 
-            CodeMemberMethod propertyChangingMethod = new CodeMemberMethod();
-            declaration.Members.Add(propertyChangingMethod);
-            propertyChangingMethod.EndDirectives.Add(new CodeRegionDirective(CodeRegionMode.End, null));
-            propertyChangingMethod.Attributes = MemberAttributes.Family;
-            propertyChangingMethod.Name = Common.PropertyChangingInternalMethod;
+            CodeMemberMethod propertyChangingMethod = new CodeMemberMethod
+                                                          {
+                                                              Attributes = MemberAttributes.Family,
+                                                              Name = Common.PropertyChangingInternalMethod
+                                                          };
             propertyChangingMethod.Parameters.Add(new CodeParameterDeclarationExpression(typeof(string), "information"));
+            propertyChangingMethod.EndDirectives.Add(new CodeRegionDirective(CodeRegionMode.End, null));
+            declaration.Members.Add(propertyChangingMethod);
+
             CodeConditionStatement ifStatement = new CodeConditionStatement(
                 new CodeBinaryOperatorExpression(
                     new CodeFieldReferenceExpression(null, "PropertyChanging"),
@@ -1756,7 +1754,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             }
         }
 
-        private void GenerateInClassMetaData(CodeTypeDeclaration type, List<CodeTypeMember> members)
+        private void GenerateInClassMetaData(CodeTypeDeclaration type, IEnumerable<CodeTypeMember> members)
         {
             foreach (CodeTypeMember member in members)
             {
@@ -1764,10 +1762,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             }
         }
 
-        private void GenerateSubClassMetaData(CodeTypeDeclaration type, List<CodeTypeMember> members)
+        private void GenerateSubClassMetaData(CodeTypeDeclaration type, IEnumerable<CodeTypeMember> members)
         {
             CodeTypeDeclaration subClass = CreateClass("Properties");
-            foreach (CodeTypeMember member in members)
+            foreach (var member in members)
             {
                 subClass.Members.Add(GenerateMetaDataField(member, member.Name));
             }

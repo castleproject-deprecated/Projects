@@ -89,27 +89,25 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
 
         public ManyToOneRelation NewManyToOneRelation(ModelClass pkClass, ModelClass fkClass, string fkColumn)
         {
-            ManyToOneRelation relation = new ManyToOneRelation(fkClass, pkClass);
-            // TODO: Disabled to test server explorer drag drop bug of DeviceBuffer
-            /*Log(
-                String.Format("Relation: Type=ManyToOne, PKClass={0}, FKClass={1}, Column={2}", pkClass.Name,
-                              fkClass.Name, fkColumn));*/
-            relation.SourceColumn = fkColumn;
-            relation.TargetColumnKey = fkColumn;
-            relation.TargetTable = fkClass.Table;
-            relation.TargetPropertyName = NamingHelper.GetPlural(fkClass.Name);
-
+            ManyToOneRelation relation = new ManyToOneRelation(fkClass, pkClass)
+                                             {
+                                                 SourceColumn = fkColumn,
+                                                 TargetColumnKey = fkColumn,
+                                                 TargetTable = fkClass.Table,
+                                                 TargetPropertyName = NamingHelper.GetPlural(fkClass.Name)
+                                             };
             return relation;
         }
 
         public ManyToManyRelation NewManyToManyRelation(Relation source, Relation target)
         {
-            ManyToManyRelation relation = new ManyToManyRelation(source.PrimaryModelClass, target.PrimaryModelClass);
-            relation.Table = source.ForeignModelClass.Name;
-            relation.Schema = source.ForeignModelClass.Schema;
-            relation.SourceColumn = source.ForeignColumn;
-            relation.TargetColumn = target.ForeignColumn;
-
+            ManyToManyRelation relation = new ManyToManyRelation(source.PrimaryModelClass, target.PrimaryModelClass)
+                                              {
+                                                  Table = source.ForeignModelClass.Name,
+                                                  Schema = source.ForeignModelClass.Schema,
+                                                  SourceColumn = source.ForeignColumn,
+                                                  TargetColumn = target.ForeignColumn
+                                              };
             return relation;
         }
 
@@ -140,24 +138,16 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
                 if (isPrimary)
                 {
                     if (_tableList.Find(
-                            delegate(DSRefNode node)
-                                {
-                                    return
-                                        (node.Owner == relation.PrimaryOwner &&
-                                         node.Name == relation.PrimaryTable);
-                                }
+                            node => (node.Owner == relation.PrimaryOwner &&
+                                     node.Name == relation.PrimaryTable)
                             ) == null)
                         removeList.Add(relation);
                 }
                 else
                 {
                     if (_tableList.Find(
-                            delegate(DSRefNode node)
-                                {
-                                    return
-                                        (node.Owner == relation.ForeignOwner &&
-                                         node.Name == relation.ForeignTable);
-                                }
+                            node => (node.Owner == relation.ForeignOwner &&
+                                     node.Name == relation.ForeignTable)
                             ) == null)
                         removeList.Add(relation);
                 }
@@ -166,11 +156,6 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
             {
                 relations.Remove(relation);
             }
-        }
-
-        private void Log(string message)
-        {
-            _output.Write(string.Format("ActiveWriter: {0}", message));
         }
     }
 }

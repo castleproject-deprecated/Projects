@@ -28,11 +28,9 @@ namespace Altinoren.ActiveWriter
                 ppDisp = new ActiveWriterExtensibleObject((Model) this.RootElement);
                 return VSConstants.S_OK;
             }
-            else
-            {
-                ppDisp = null;
-                return VSConstants.E_INVALIDARG;
-            }
+            
+            ppDisp = null;
+            return VSConstants.E_INVALIDARG;
         }
 
         #endregion

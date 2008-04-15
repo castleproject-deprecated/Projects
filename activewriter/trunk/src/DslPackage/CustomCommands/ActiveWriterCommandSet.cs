@@ -20,7 +20,7 @@ namespace Altinoren.ActiveWriter
     using System;
     using ToolWindow;
     
-    internal partial class ActiveWriterCommandSet : ActiveWriterCommandSetBase
+    internal partial class ActiveWriterCommandSet
     {
         protected override IList<MenuCommand> GetMenuCommands()
         {
@@ -28,13 +28,12 @@ namespace Altinoren.ActiveWriter
 
             // AW Class Details ToolWindow
             MenuCommand toolWindowMenuCommand = new CommandContextBoundMenuCommand(this.ServiceProvider,
-                new EventHandler(OnMenuViewClassDetails),
+                OnMenuViewClassDetails,
                 Constants.ViewClassDetailsCommand,
                 typeof(ActiveWriterEditorFactory).GUID);
             commands.Add(toolWindowMenuCommand);
 
             return commands;
-            
         }
 
         internal void OnMenuViewClassDetails(object sender, EventArgs e)
