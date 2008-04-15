@@ -910,7 +910,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             string propertyName = String.IsNullOrEmpty(relationship.TargetPropertyName)
                                       ? NamingHelper.GetPlural(sourceClass.Name)
-                                      : relationship.TargetPropertyName;
+                                      : NamingHelper.GetPlural(relationship.TargetPropertyName);
             string propertyType = String.IsNullOrEmpty(relationship.TargetPropertyType)
                                       ? GenericListInterface
                                       : relationship.TargetPropertyType;
