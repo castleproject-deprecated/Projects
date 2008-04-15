@@ -40,9 +40,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (!isInitialized)
                 throw new ArgumentException("CodeGenerationContext must first be initialized");
             if (cls == null)
-                throw new ArgumentNullException("No class supplied", "cls");
+                throw new ArgumentNullException("cls", "No class supplied");
             if (declaration == null)
-                throw new ArgumentNullException("No CodeTypeDeclaration supplied", "declaration");
+                throw new ArgumentNullException("declaration", "No CodeTypeDeclaration supplied");
 
             if (cls.GetType() == typeof(ModelClass))
             {
@@ -67,7 +67,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (!isInitialized)
                 throw new ArgumentException("CodeGenerationContext must first be initialized");
             if (cls == null)
-                throw new ArgumentNullException("No class supplied", "cls");
+                throw new ArgumentNullException("cls", "No class supplied");
 
             if (cls.GetType() == typeof(ModelClass))
             {
@@ -86,7 +86,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (!isInitialized)
                 throw new ArgumentException("CodeGenerationContext must first be initialized");
             if (cls == null)
-                throw new ArgumentNullException("No class supplied", "cls");
+                throw new ArgumentNullException("cls", "No class supplied");
 
             if (cls.GetType() == typeof(ModelClass))
             {
@@ -105,7 +105,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (!isInitialized)
                 throw new ArgumentException("CodeGenerationContext must first be initialized");
             if (string.IsNullOrEmpty(name))
-                throw new ArgumentNullException("Name not supplied", "name");
+                throw new ArgumentNullException("name", "Name not supplied");
 
             return generatedClassNames.Contains(name);
         }

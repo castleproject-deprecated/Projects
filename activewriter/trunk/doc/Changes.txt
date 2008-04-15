@@ -2,7 +2,8 @@ New:
 - Optionally generates classes implementing INotifyPropertyChanging.
 
 Fixed:
-- NamingHelper.GetPlural is called even if 'Target property Name' is set on ManyToOneConnector (Patch: Roberto Paterlini)
+- Added "Nested" to Common.ARAttributes (Patch: Roberto Paterlini)
+- Swapped parameters in new ArgumentNullException (Patch: Roberto Paterlini)
 
 Preview 4
 

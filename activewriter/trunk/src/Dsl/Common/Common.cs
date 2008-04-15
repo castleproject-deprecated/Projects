@@ -17,7 +17,20 @@ namespace Altinoren.ActiveWriter
     public static class Common
     {
         // TODO: Tidy this class.
-      public static string[] ARAttributes = new string[] { "ActiveRecord", "Property", "Field", "PrimaryKey", "CompositeKey", "HasMany", "BelongsTo", "HasAndBelongsToMany", "OneToOne", "KeyProperty" };
+        public static string[] ARAttributes = new string[] { 
+            "ActiveRecord", 
+            "Property", 
+            "Field", 
+            "PrimaryKey", 
+            "CompositeKey", 
+            "HasMany", 
+            "BelongsTo", 
+            "HasAndBelongsToMany", 
+            "OneToOne", 
+            "KeyProperty",
+            "Nested"
+        };
+        
         public static string CompositeClassNameSuffix = "CompositeKey";
         public static string ActiveRecordNamespace = "Castle.ActiveRecord";
         public static string ValidatorNamespace = "Castle.Components.Validator";
@@ -42,6 +55,5 @@ namespace Altinoren.ActiveWriter
         public static string InMemoryCompiledAssemblyName = "AW";
         public static string ActiveRecordVersion = "1.0.0.0";
         public static string vsProgIdBase = "!VisualStudio.DTE.9.0:";
-        
     }
 }

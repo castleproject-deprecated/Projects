@@ -1181,9 +1181,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private CodeTypeDeclaration GenerateNestedClass(NestedClass cls, CodeNamespace nameSpace)
         {
             if (cls == null)
-                throw new ArgumentNullException("Nested class not supplied", "cls");
+                throw new ArgumentNullException( "cls", "Nested class not supplied");
             if (nameSpace == null)
-                throw new ArgumentNullException("Namespace not supplied", "namespace");
+                throw new ArgumentNullException("nameSpace", "Namespace not supplied");
             if (String.IsNullOrEmpty(cls.Name))
                 throw new ArgumentException("Class name cannot be blank", "cls");
 
@@ -1218,9 +1218,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private CodeTypeDeclaration GenerateClass(ModelClass cls, CodeNamespace nameSpace)
         {
             if (cls == null)
-                throw new ArgumentNullException("Class not supplied", "cls");
+                throw new ArgumentNullException("cls", "Class not supplied");
             if (nameSpace == null)
-                throw new ArgumentNullException("Namespace not supplied", "namespace");
+                throw new ArgumentNullException("nameSpace", "Namespace not supplied");
             if (String.IsNullOrEmpty(cls.Name))
                 throw new ArgumentException("Class name cannot be blank", "cls");
 
