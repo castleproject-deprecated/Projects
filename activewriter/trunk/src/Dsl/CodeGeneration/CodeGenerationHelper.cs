@@ -29,8 +29,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
     using Microsoft.VisualBasic;
     using EnvDTE;
     using System.ComponentModel.Design;
+    using Microsoft.VisualStudio.Modeling;
     using ServerExplorerSupport;
     using VSLangProj;
+    using Microsoft.VisualStudio.TextTemplating;
     using CodeNamespace = System.CodeDom.CodeNamespace;
 
     public class CodeGenerationHelper
@@ -52,6 +54,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private Hashtable _propertyBag = null;
         private DTE _dte = null;
+        private ITextTemplatingEngineHost _textTemplatingHost;
 
         private string _modelFileName = null;
         private string _modelFilePath = null;
@@ -75,6 +78,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             _dte = DTEHelper.GetDTE(_propertyBag["Generic.ProcessID"].ToString());
             _propertyBag.Add("Generic.DTE", _dte);
+
+            _textTemplatingHost = propertyBag["Generic.Host"] as ITextTemplatingEngineHost;
 
             _modelFileName = (string)_propertyBag["Generic.ModelFileFullName"];
             _modelFilePath = Path.GetDirectoryName(_modelFileName);
@@ -1483,12 +1488,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 return results.CompiledAssembly;
             }
             
-            ArrayList list = new ArrayList(results.Errors.Count);
-            foreach (CompilerError error in results.Errors)
-            {
-                list.Add(new Exception(error.ErrorText));
-            }
-            throw new ExceptionCollection(list); // TODO: Cannot be displayed in the errors window. Report errors manually.
+            _textTemplatingHost.LogErrors(results.Errors);
+            throw new ModelingException("Cannot compile in-memory ActiveRecord assembly due to errors. Please check that all the information required, such as imports, to compile the generated code in-memory is provided. An ActiveRecord assembly is generated in-memory to support NHibernate .hbm.xml generation and NHQG integration.");
         }
 
         // Actually: OnARModelCreated(ActiveRecordModelCollection, IConfigurationSource)

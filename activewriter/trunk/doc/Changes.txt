@@ -4,6 +4,7 @@ New:
 Fixed:
 - Added "Nested" to Common.ARAttributes (Patch: Roberto Paterlini)
 - Swapped parameters in new ArgumentNullException (Patch: Roberto Paterlini)
+- Changed in-memory code compilation error reporting to give full details of the internal compile process. No more ExceptionCollection's.
 
 Preview 4
 
