@@ -19,7 +19,9 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
     using EnvDTE;
     using Microsoft.VisualStudio.Modeling;
     using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes; 
+    using System.Runtime.InteropServices.ComTypes;
+    using Microsoft.VisualStudio.Modeling.Shell;
+    using Microsoft.VisualStudio.Shell;
 
     public static class DTEHelper
     {
@@ -92,5 +94,19 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
 				return property.Value.ToString();
 		    return Common.InMemoryCompiledAssemblyName;
 		}
+
+        [CLSCompliant(false)]
+        public static ActiveWriterOptions GetOptions(Store store)
+        {
+            try
+            {
+                IDialogPageProvider package = store.GetService(typeof(Microsoft.VisualStudio.Shell.Package)) as IDialogPageProvider;
+                return package.GetDialogPage<ActiveWriterOptions>() as ActiveWriterOptions;
+            }
+            catch
+            {
+                return new ActiveWriterOptions();
+            }
+        }
     }
 }

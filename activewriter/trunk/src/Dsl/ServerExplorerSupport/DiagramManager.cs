@@ -20,15 +20,16 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
     
     internal class DiagramManager
     {
-        private Store _store = null;
+        public Store Store { get; private set; }
         private Model _model = null;
         private List<DSRefNode> _tableList = null;
         private Dictionary<string, ModelClass> classes = new Dictionary<string, ModelClass>();
         private OutputWindowHelper _output;
+        private bool? sortProperties;
 
         public DiagramManager(Store store, Model model)
         {
-            _store = store;
+            Store = store;
             _model = model;
         }
 
@@ -44,9 +45,17 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
             set { _output = value; }
         }
 
+        public bool SortProperties
+        {
+            get
+            {
+                return DTEHelper.GetOptions(this.Store).SortProperties;
+            }
+        }
+
         public ModelClass NewClass(string owner, string name)
         {
-            ModelClass cls = new ModelClass(_store);
+            ModelClass cls = new ModelClass(Store);
             // TODO: Disabled to test server explorer drag drop bug of DeviceBuffer
             //Log(String.Format("Class: Name={0}, Schema={1}", name, owner));
             cls.Name = ModelHelper.GetSafeName(name, string.Empty);
@@ -59,7 +68,7 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
 
         public ModelProperty NewProperty(ModelClass cls, Column column)
         {
-            ModelProperty property = new ModelProperty(_store);
+            ModelProperty property = new ModelProperty(Store);
             property.Name = ModelHelper.GetSafeName(column.Name, _model.PropertyNameFilterExpression);
             property.Column = column.Name;
             property.NotNull = !column.Nullable;

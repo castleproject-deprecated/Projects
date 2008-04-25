@@ -56,5 +56,7 @@ namespace Altinoren.ActiveWriter
         public static string InMemoryCompiledAssemblyName = "AW";
         public static string ActiveRecordVersion = "1.0.0.0";
         public static string vsProgIdBase = "!VisualStudio.DTE.9.0:";
+        public const string OptionPageCategory = "ActiveWriter";
+        public const string OptionPageSubCategory = "General";
     }
 }

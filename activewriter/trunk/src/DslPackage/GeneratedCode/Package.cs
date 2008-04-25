@@ -97,17 +97,24 @@ namespace Altinoren.ActiveWriter
     [ProvideLoadKey("Standard", "1.0", Constants.ProductName, Constants.CompanyName, 1)]
     [ProvideCodeGenerator(typeof(ActiveWriterTemplatedCodeGenerator), "ActiveWriterCodeGenerator", "Altinoren ActiveWriter code generator for .actiw files", true, ProjectSystem = ProvideCodeGeneratorAttribute.CSharpProjectGuid)]
     [ProvideCodeGenerator(typeof(ActiveWriterTemplatedCodeGenerator), "ActiveWriterCodeGenerator", "Altinoren ActiveWriter code generator for .actiw files", true, ProjectSystem = ProvideCodeGeneratorAttribute.VisualBasicProjectGuid)]
+    [ProvideOptionPage(typeof(ActiveWriterOptions), Altinoren.ActiveWriter.Common.OptionPageCategory, Altinoren.ActiveWriter.Common.OptionPageSubCategory, 101, 120, true)]
+    [ProvideProfileAttribute(typeof(ActiveWriterOptions), Altinoren.ActiveWriter.Common.OptionPageCategory, Altinoren.ActiveWriter.Common.OptionPageSubCategory, 101, 120, true)]
 	[VSShell::ProvideMenuResource("1000.ctmenu", 4)]
 	[VSShell::ProvideToolboxItems(1)]
 	[VSTextTemplatingHost::ProvideDirectiveProcessor(typeof(global::Altinoren.ActiveWriter.ActiveWriterDirectiveProcessor), global::Altinoren.ActiveWriter.ActiveWriterDirectiveProcessor.ActiveWriterDirectiveProcessorName, "A directive processor that provides access to ActiveWriter files")]
 	[global::System.Runtime.InteropServices.Guid(Constants.ActiveWriterPackageId)]
-	internal sealed partial class ActiveWriterPackage : ActiveWriterPackageBase
+	internal sealed partial class ActiveWriterPackage : ActiveWriterPackageBase, Altinoren.ActiveWriter.IDialogPageProvider
 	{
 		protected override void Initialize()
 		{
 			base.Initialize();
 			
 			this.AddToolWindow(typeof(Altinoren.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow));
+		}
+		
+		public DialogPage GetDialogPage<T>()
+		{
+			return GetDialogPage(typeof(T));
 		}
 	}
 }

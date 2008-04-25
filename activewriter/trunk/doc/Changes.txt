@@ -1,5 +1,6 @@
 New:
 - Optionally generates classes implementing INotifyPropertyChanging.
+- Contrib-117: Database and designer column order is not in sync
 
 Fixed:
 - Added "Nested" to Common.ARAttributes (Patch: Roberto Paterlini)

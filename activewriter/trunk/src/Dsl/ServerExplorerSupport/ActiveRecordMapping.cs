@@ -216,10 +216,10 @@ namespace Altinoren.ActiveWriter
 				List<Column> columns = helper.GetProperties(cls);
 				if (columns != null && columns.Count > 0)
 				{
-					List<Column> secondPass = new List<Column>();
+					List<Column> specialColumns = new List<Column>();
+					List<Column> ordinaryColumns = new List<Column>();
 					foreach(Column column in columns)
 					{
-						// We'll handle primary and foreigns later. First, we'll create ordinary properties.
 						if (column.Primary ||
 						    (column.ForeignConstraints.Count > 0 &&
 						     (Relation.GetCountOfMatchingRelations(relationsTo, column.ForeignConstraints) > 0 ||
@@ -227,19 +227,25 @@ namespace Altinoren.ActiveWriter
 						    )
 							)
 						{
-							secondPass.Add(column);
+							specialColumns.Add(column);
 						}
 						else
 						{
-							_manager.NewProperty(cls, column).ColumnType = helper.GetNHibernateType(column.DataType);
+						    ordinaryColumns.Add(column);
 						}
 					}
 
+                    if (_manager.SortProperties)
+                    {
+                        ordinaryColumns.Sort(new ColumnComparer());
+                        specialColumns.Sort(new ColumnComparer());
+                    }
+
 					// Keys
 					List<Column> primaryKeys = null;
-					if (secondPass.Count > 0)
+					if (specialColumns.Count > 0)
 					{
-						primaryKeys = Column.FindPrimaryKeys(secondPass);
+						primaryKeys = Column.FindPrimaryKeys(specialColumns);
 						if (primaryKeys != null && primaryKeys.Count > 0)
 						{
 							// Create primary and composite keys
@@ -261,6 +267,11 @@ namespace Altinoren.ActiveWriter
 							}
 						}
 					}
+
+                    foreach (var column in ordinaryColumns)
+                    {
+                        _manager.NewProperty(cls, column).ColumnType = helper.GetNHibernateType(column.DataType);
+                    }
 
 					if (relationsTo != null && relationsTo.Count > 0)
 					{

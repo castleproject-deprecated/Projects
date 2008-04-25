@@ -14,6 +14,7 @@
 
 namespace Altinoren.ActiveWriter.ServerExplorerSupport
 {
+    using System;
     using System.Collections.Generic;
     
     public enum RelationType
@@ -60,6 +61,14 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
         public static Column FindColumn(List<Column> columns, string name)
         {
             return columns.Find(column => (column.Name == name));
+        }
+    }
+
+    internal class ColumnComparer : IComparer<Column>
+    {
+        public int Compare(Column x, Column y)
+        {
+            return x.Name.CompareTo(y.Name);
         }
     }
 
