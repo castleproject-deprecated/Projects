@@ -29,7 +29,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.StatementProcessors.Outpu
 			
 			string content = "foo";
 
-			string expected = "OutputEncoded(foo);";
+			string expected = "OutputEncoded((foo == null) ? string.Empty : foo.ToString());";
 
 			string actual = generator.GenerateFrom(content);
 

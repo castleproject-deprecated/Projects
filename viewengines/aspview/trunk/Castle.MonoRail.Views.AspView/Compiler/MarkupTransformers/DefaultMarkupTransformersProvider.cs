@@ -14,6 +14,8 @@
 // limitations under the License.
 #endregion
 
+using Castle.MonoRail.Views.AspView.Compiler.StatementProcessors.OutputMethodGenerators;
+
 namespace Castle.MonoRail.Views.AspView.Compiler.MarkupTransformers
 {
 	using System.Collections.Generic;
@@ -26,7 +28,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler.MarkupTransformers
 			{
 				new FullSiteRootMarkupTransformer(),
 				new SiteRootMarkupTransformer(),
-				new InlineOutputDirectiveMarkupTransformer()
+				new InlineOutputDirectiveMarkupTransformer(new EncodedOutputMethodGenerator())
 			};
 		}
 	}

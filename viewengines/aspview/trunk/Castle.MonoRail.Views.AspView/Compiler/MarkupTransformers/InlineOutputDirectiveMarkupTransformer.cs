@@ -14,19 +14,27 @@
 // limitations under the License.
 #endregion
 
+using Castle.MonoRail.Views.AspView.Compiler.StatementProcessors.OutputMethodGenerators;
+
 namespace Castle.MonoRail.Views.AspView.Compiler.MarkupTransformers
 {
 	using System.Text.RegularExpressions;
 
 	public class InlineOutputDirectiveMarkupTransformer : IMarkupTransformer
 	{
+		readonly IOutputMethodGenerator outputMethodGenerator;
+		public InlineOutputDirectiveMarkupTransformer(IOutputMethodGenerator outputMethodGenerator)
+		{
+			this.outputMethodGenerator = outputMethodGenerator;
+		}
 
 		public string Transform(string markup)
 		{
 			return Internal.RegularExpressions.InlineOutputDirective.Replace(markup, delegate(Match match)
 			{
 				string content = match.Groups["content"].Value;
-				return string.Format("<% OutputEncoded({0}); %>", content);
+				return string.Format("<% {0} %>", 
+					outputMethodGenerator.GenerateFrom(content));
 			});
 		}
 	}
