@@ -105,6 +105,26 @@ after
 		}
 
 		[Fact]
+		public void Process_SubViewsWithSimpleStringAndSlashAttribute_TransformsEndEscapesTheSlash()
+		{
+			string source = @"
+before
+<subView:Simple name=""Ken\Egozi""></subView:Simple>
+after
+";
+			expected = @"
+before
+<% OutputSubView(""Simple"", ""name"", ""Ken\\Egozi""); %>
+after
+";
+
+			file.RenderBody = source;
+			step.Process(file);
+
+			AssertStepOutput();
+		}
+
+		[Fact]
 		public void Process_SubViewsWithConstantAttribute_Transforms()
 		{
 			string source = @"

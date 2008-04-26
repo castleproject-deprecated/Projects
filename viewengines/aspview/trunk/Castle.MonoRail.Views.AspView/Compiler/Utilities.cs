@@ -29,9 +29,15 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 				string name = attribute.Groups["name"].Value;
 				string value = attribute.Groups["value"].Value;
 				if (value.Trim().StartsWith("<%="))
+				{
 					value = value.Trim().Substring(3, value.Length - 5).Trim();
+				}
 				else
+				{
+					// string literals should be escaped (CONTRIB-110)
+					value = value.Replace("\\", "\\\\");
 					value = string.Format("\"{0}\"", value);
+				}
 				attributesString.AppendFormat(", \"{0}\", {1}",
 					name, value);
 			}
