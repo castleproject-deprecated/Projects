@@ -60,8 +60,22 @@ namespace Altinoren.ActiveWriter.CustomTool
                     .Replace("%EXT%", fileExtension)
                     .Replace("%PID%", currentProcess.Id.ToString());
 
-            byte[] data = base.GenerateCode(inputFileName, inputFileContent);
+            // Implemenentation of the text templating creates separate AddDomin. Invoking DTE
+            // from non-default AddDomain is incorrect. As a workaround we run code generation in
+            // separate thread to have all calls to DTE be automatically marshaled by COM to the
+            // main thread and default AppDomain.
+            GenerateCodeDelegate del = BaseGenerateCode;
+            IAsyncResult async = del.BeginInvoke(inputFileName, inputFileContent, null, null);
+            async.AsyncWaitHandle.WaitOne();
+            byte[] data = del.EndInvoke(async);
             return data;
+        }
+
+        private delegate byte[] GenerateCodeDelegate(string inputFileName, string inputFileContent);
+
+        private byte[] BaseGenerateCode(string inputFileName, string inputFileContent)
+        {
+            return base.GenerateCode(inputFileName, inputFileContent);
         }
     }
 }
