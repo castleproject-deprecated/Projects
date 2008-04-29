@@ -144,7 +144,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests
 
 		protected void AssertViewOutputEqualsToExpected()
 		{
-			Assert.Equal(expected, ViewOutput, "View output differ. Output was:\r\n" + ViewOutput);
+			Assert.Equal(expected, ViewOutput);
 		}
 
 		protected virtual string ViewOutput

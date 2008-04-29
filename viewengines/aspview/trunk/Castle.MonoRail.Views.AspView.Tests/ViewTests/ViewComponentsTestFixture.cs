@@ -103,7 +103,7 @@ Parent";
 
 			InitializeView(typeof(WithComponent));
 
-			Assert.Throws(typeof(AspViewException), "This component does not have a body content to be rendered", delegate 
+			Assert.Throws(typeof(AspViewException), delegate 
 			{
 				view.Process();
 			});
