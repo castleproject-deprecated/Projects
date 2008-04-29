@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Collections.Generic;
-using Castle.MonoRail.Views.AspView.Compiler;
+using Castle.MonoRail.Views.AspView.Compiler.Adapters;
+using Castle.MonoRail.Views.AspView.Compiler.Factories;
 
 namespace Castle.MonoRail.Views.AspView
 {
@@ -24,16 +24,19 @@ namespace Castle.MonoRail.Views.AspView
 	using System.Reflection;
 	using System.Runtime.Serialization;
 	using System.Text.RegularExpressions;
+	using System.Collections.Generic;
 
+	using Compiler;
 	using Framework;
 	using Core;
 
 	public class AspViewEngine : ViewEngineBase, IInitializable, IAspViewEngineTestAccess
 	{
+		IFileSystemAdapter fileSystemAdapter;
 		static bool needsRecompiling = false;
 		static AspViewEngineOptions options;
 		string siteRoot;
-		static readonly Regex invalidClassNameCharacters = new Regex("[^a-zA-Z0-9\\-*#=/\\\\_.]", RegexOptions.Compiled); 
+		static readonly Regex invalidClassNameCharacters = new Regex("[^a-zA-Z0-9\\-*#=/\\\\_.]", RegexOptions.Compiled);
 
 		readonly Hashtable compilations = Hashtable.Synchronized(new Hashtable(StringComparer.InvariantCultureIgnoreCase));
 
@@ -47,6 +50,10 @@ namespace Castle.MonoRail.Views.AspView
 			get { return siteRoot; }
 			set { siteRoot = value; }
 		}
+		void IAspViewEngineTestAccess.SetViewSourceLoader(IViewSourceLoader viewSourceLoader)
+		{
+			ViewSourceLoader = viewSourceLoader;
+		}
 		#endregion
 
 		#region IInitializable Members
@@ -59,6 +66,8 @@ namespace Castle.MonoRail.Views.AspView
 
 		public void Initialize()
 		{
+			fileSystemAdapter = new DefaultFileSystemAdapter();
+			siteRoot = AppDomain.CurrentDomain.BaseDirectory;
 			if (options == null)
 				InitializeConfig();
 			#region TODO
@@ -204,11 +213,18 @@ namespace Castle.MonoRail.Views.AspView
 
 		protected virtual void CompileViewsInMemory()
 		{
-			options.CompilerOptions.InMemory = true;
-			AspViewCompiler compiler = new AspViewCompiler(options.CompilerOptions);
-			compiler.CompileSite();
+			ICompilationContext compilationContext = new WebCompilationContext(
+				new DirectoryInfo(siteRoot), new DirectoryInfo(options.CompilerOptions.TemporarySourceFilesDirectory));
+
+			OnlineCompiler compiler = new OnlineCompiler(
+				new CSharpCodeProviderAdapterFactory(),
+				new PreProcessor(), 
+				compilationContext,
+                options.CompilerOptions);
+
 			compilations.Clear();
-			LoadCompiledViewsFrom(compiler.Assembly);
+
+			LoadCompiledViewsFrom(compiler.Execute());
 		}
 
 		private string GetFileName(string templateName)
@@ -230,7 +246,7 @@ namespace Castle.MonoRail.Views.AspView
 			}
 			compilations.Clear();
 
-			string[] viewAssemblies = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*CompiledViews.dll", SearchOption.AllDirectories);
+			string[] viewAssemblies = Directory.GetFiles(Path.Combine(siteRoot, "bin"), "*CompiledViews.dll", SearchOption.TopDirectoryOnly);
 
 			foreach (string assembly in viewAssemblies)
 			{
@@ -238,12 +254,12 @@ namespace Castle.MonoRail.Views.AspView
 
 				try
 				{
-					precompiledViews = Assembly.LoadFile(assembly);
+					precompiledViews = Assembly.LoadFile(Path.GetFullPath(assembly));
 				}
-				catch (Exception ex)
+				catch (Exception)
 				{
-					throw new AspViewException(string.Format("Could not load views assembly [{0}]", assembly),
-						ex);
+					Logger.ErrorFormat(string.Format("Could not load views assembly [{0}]", assembly));
+					throw;
 				}
 
 				if (precompiledViews != null)
@@ -254,9 +270,24 @@ namespace Castle.MonoRail.Views.AspView
 
 		private void LoadCompiledViewsFrom(Assembly viewsAssembly)
 		{
-			if (viewsAssembly != null)
+			if (viewsAssembly == null)
+				return;
+			try
+			{
 				foreach (Type type in viewsAssembly.GetTypes())
 					CacheViewType(type);
+			}
+			catch (ReflectionTypeLoadException rtle)
+			{
+				string loaderErrors = "";
+				foreach (Exception loaderException in rtle.LoaderExceptions)
+				{
+					loaderErrors += loaderException + Environment.NewLine;
+				}
+
+				Logger.Error(loaderErrors);
+				throw;
+			}
 		}
 
 		public static string GetClassName(string fileName)
@@ -316,7 +347,7 @@ namespace Castle.MonoRail.Views.AspView
 		///</returns>
 		///
 		public override object CreateJSGenerator(JSCodeGeneratorInfo generatorInfo, IEngineContext context,
-		                                         IController controller, IControllerContext controllerContext)
+												 IController controller, IControllerContext controllerContext)
 		{
 			throw new NotImplementedException();
 		}
@@ -336,7 +367,7 @@ namespace Castle.MonoRail.Views.AspView
 		///<param name="controller">The controller.</param>
 		///<param name="controllerContext">The controller context.</param>
 		public override void GenerateJS(string templateName, TextWriter output, JSCodeGeneratorInfo generatorInfo,
-		                                IEngineContext context, IController controller, IControllerContext controllerContext)
+										IEngineContext context, IController controller, IControllerContext controllerContext)
 		{
 			throw new NotImplementedException();
 		}
@@ -349,7 +380,7 @@ namespace Castle.MonoRail.Views.AspView
 		///</summary>
 		///
 		public override void RenderStaticWithinLayout(string contents, IEngineContext context, IController controller,
-		                                              IControllerContext controllerContext)
+													  IControllerContext controllerContext)
 		{
 			throw new NotImplementedException();
 		}
@@ -359,5 +390,6 @@ namespace Castle.MonoRail.Views.AspView
 	{
 		Hashtable Compilations { get; }
 		string SiteRoot { get; set; }
+		void SetViewSourceLoader(IViewSourceLoader viewSourceLoader);
 	}
 }

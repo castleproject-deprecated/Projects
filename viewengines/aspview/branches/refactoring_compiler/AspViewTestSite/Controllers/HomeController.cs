@@ -27,17 +27,25 @@ namespace AspViewTestSite.Controllers
             strings[2] = "string no 3";
             PropertyBag["strings"] = strings;
         }
-		public void NullableValueTypesWithDefaultValue()
+
+		public void Simple()
 		{
 		}
+
+    	public void NullableValueTypesWithDefaultValue()
+		{
+		}
+
         public void Print(string theText)
         {
             CancelView();
             RenderText("hello from print(). theText='{0}'", theText);
         }
+
         public void SiteRoot()
         {
         }
+
         public void DefaultValues()
         {
         }

@@ -124,13 +124,13 @@ view content";
 		{
 			Assert.True(file.Properties.ContainsKey(propertyName), string.Format("Property [{0}] is missing.", propertyName));
 			ViewProperty actual = file.Properties[propertyName];
-			Assert.Equal(expectedProperty.Type, actual.Type, string.Format("Property [{0}] should be of type [{1}], but was of type [{2}] instead.", propertyName, expectedProperty.Type, actual.Type));
+			Assert.Equal(expectedProperty.Type, actual.Type);
 			if (expectedProperty.DefaultValue == null)
-				Assert.Null(actual.DefaultValue, string.Format("Property [{0}] should have had no default value, however a default value of [{1}] was found.", propertyName, actual.DefaultValue));
+				Assert.Null(actual.DefaultValue);
 			else
 			{
-				Assert.NotNull(actual.DefaultValue, string.Format("Property [{0}] should have had a default value, however none was found.", propertyName));
-				Assert.Equal(expectedProperty.DefaultValue, actual.DefaultValue, string.Format("Property [{0}] should have had a default value of [{1}], however [{2}] was found.", propertyName, expectedProperty.DefaultValue, actual.DefaultValue));
+				Assert.NotNull(actual.DefaultValue);
+				Assert.Equal(expectedProperty.DefaultValue, actual.DefaultValue);
 			}
 		}
 		#endregion

@@ -56,7 +56,11 @@ namespace Castle.MonoRail.AspView.VCompile
 			AspViewCompiler compiler;
 			try
 			{
-				compiler = new AspViewCompiler(options.CompilerOptions);
+				ICompilationContext compilationContext = new CompilationContext(
+					new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory),
+					new DirectoryInfo(siteRoot),
+					new DirectoryInfo(options.CompilerOptions.TemporarySourceFilesDirectory));
+				compiler = new AspViewCompiler(compilationContext, options.CompilerOptions);
 			}
 			catch
 			{
@@ -66,8 +70,11 @@ namespace Castle.MonoRail.AspView.VCompile
 
 			try
 			{
-				compiler.CompileSite(siteRoot);
-				Console.WriteLine("[" + siteRoot + "] compilation finished.");
+				PreCompilationResult result = compiler.Compile() as PreCompilationResult;
+				if (result == null)
+					throw new Exception();
+
+				Console.WriteLine("[{0}] compiled into [{1}].", siteRoot, result.Product);
 				return 0;
 			}
 			catch (Exception ex)

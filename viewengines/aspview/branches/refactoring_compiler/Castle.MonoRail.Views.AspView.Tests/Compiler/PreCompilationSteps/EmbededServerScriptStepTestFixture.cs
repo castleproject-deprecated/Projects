@@ -64,10 +64,10 @@ view content
 			step.Process(file);
 
 			// there is one embeded script
-			Assert.Equal(file.EmbededScriptBlocks.Count, 1, "Missing script block from 'file.EmbededScriptBlocks'");
+			Assert.Equal(file.EmbededScriptBlocks.Count, 1);
 
 			// script content has expected value
-			Assert.Equal(DEMO_SCRIPT, file.EmbededScriptBlocks[0], "Script block was not registered correctly");
+			Assert.Equal(DEMO_SCRIPT, file.EmbededScriptBlocks[0]);
 
 			AssertStepOutput();
 		}
@@ -103,8 +103,8 @@ int anotherVar;
 			Assert.Equal(file.EmbededScriptBlocks.Count, 2);
 
 			// script content has expected values
-			Assert.Equal(DEMO_SCRIPT, file.EmbededScriptBlocks[0], "Script block was not registered correctly");
-			Assert.Equal(DEMO_SCRIPT2, file.EmbededScriptBlocks[1], "Script block was not registered correctly");
+			Assert.Equal(DEMO_SCRIPT, file.EmbededScriptBlocks[0]);
+			Assert.Equal(DEMO_SCRIPT2, file.EmbededScriptBlocks[1]);
 
 			AssertStepOutput();
 		}
@@ -139,11 +139,11 @@ int anotherVar;
 
 			step.Process(file);
 
-			Assert.Equal(file.EmbededScriptBlocks.Count, 6, "Missing script block from 'file.EmbededScriptBlocks'");
+			Assert.Equal(file.EmbededScriptBlocks.Count, 6);
 
 			// script content has expected value
 			for (int i = 0; i <= 5; ++i)
-				Assert.Equal("script" + i, file.EmbededScriptBlocks[i], "Script block was not registered correctly");
+				Assert.Equal("script" + i, file.EmbededScriptBlocks[i]);
 
 			AssertStepOutput();
 		}

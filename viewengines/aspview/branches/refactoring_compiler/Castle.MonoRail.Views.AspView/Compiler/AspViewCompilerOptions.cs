@@ -14,9 +14,6 @@
 // limitations under the License.
 #endregion
 
-using Castle.MonoRail.Views.AspView.Compiler.MarkupTransformers;
-using Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps;
-
 namespace Castle.MonoRail.Views.AspView.Compiler
 {
 	using System;
