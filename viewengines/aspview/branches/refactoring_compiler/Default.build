@@ -76,7 +76,7 @@
 	 <Target Name="Test" DependsOnTargets="CreateBuildDir;">
 		<Message Text="Running tests ..." />
     <Exec WorkingDirectory="$(SolutionDir)\Castle.Tools.SQLQueryGenerator.Tests\bin\$(Configuration)" 
-					Command="&quot;$(SolutionDir)\SolutionItems\Lib\xunit.console.exe&quot; Castle.Tools.SQLQueryGenerator.Tests.dll /html &quot;$(BuildDir)\test-results.html&quot;"
+					Command="&quot;$(SolutionDir)\SolutionItems\Lib\xunit.console.exe&quot; Castle.Tools.SQLQueryGenerator.Tests.dll /xml &quot;$(BuildDir)\test-results.xml&quot;"
     />
 
   </Target>
@@ -84,7 +84,7 @@
   <Target Name="Test" DependsOnTargets="CreateBuildDir;">
 		<Message Text="Running tests ..." />
 		<Exec WorkingDirectory="$(SolutionDir)\Castle.MonoRail.Views.AspView.Tests\bin\$(Configuration)" 
-					Command="&quot;$(SolutionDir)\Solution Items\Tools\xunit\xunit.console.exe&quot; Castle.MonoRail.Views.AspView.Tests.dll /html &quot;$(BuildDir)\test-results.html&quot;"
+					Command="&quot;$(SolutionDir)\Solution Items\Tools\xunit\xunit.console.exe&quot; Castle.MonoRail.Views.AspView.Tests.dll /xml &quot;$(BuildDir)\test-results.xml&quot;"
     />
 	</Target>
 

@@ -15,6 +15,8 @@
 #endregion
 
 using Castle.MonoRail.Views.AspView.Compiler;
+using Castle.MonoRail.Views.AspView.Compiler.Adapters;
+using Castle.MonoRail.Views.AspView.Compiler.Factories;
 
 namespace Castle.MonoRail.AspView.VCompile
 {
@@ -53,14 +55,18 @@ namespace Castle.MonoRail.AspView.VCompile
 				return -1;
 			}
 
-			AspViewCompiler compiler;
+			OfflineCompiler compiler;
 			try
 			{
 				ICompilationContext compilationContext = new CompilationContext(
 					new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory),
 					new DirectoryInfo(siteRoot),
+					new DirectoryInfo(siteRoot),
 					new DirectoryInfo(options.CompilerOptions.TemporarySourceFilesDirectory));
-				compiler = new AspViewCompiler(compilationContext, options.CompilerOptions);
+				compiler = new OfflineCompiler(
+					new CSharpCodeProviderAdapterFactory(),
+					new PreProcessor(), 
+					compilationContext, options.CompilerOptions, new DefaultFileSystemAdapter());
 			}
 			catch
 			{
@@ -70,11 +76,9 @@ namespace Castle.MonoRail.AspView.VCompile
 
 			try
 			{
-				PreCompilationResult result = compiler.Compile() as PreCompilationResult;
-				if (result == null)
-					throw new Exception();
+				string path = compiler.Execute();
 
-				Console.WriteLine("[{0}] compiled into [{1}].", siteRoot, result.Product);
+				Console.WriteLine("[{0}] compiled into [{1}].", siteRoot, path);
 				return 0;
 			}
 			catch (Exception ex)
