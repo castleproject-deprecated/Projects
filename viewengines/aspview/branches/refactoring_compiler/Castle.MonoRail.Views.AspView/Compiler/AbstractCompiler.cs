@@ -92,7 +92,6 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 		}
 		
 
-
 		void InitialiseCompilerParameters(bool debug)
 		{
 			parameters.GenerateExecutable = false;
@@ -108,12 +107,13 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 
 			foreach (string templateExtension in TemplateExtensions)
 			{
-				FileInfo[] templateFilenames = context.ViewRootDir.GetFiles(templateExtension, SearchOption.AllDirectories);
+				FileInfo[] templateFilenames = context.ViewRootDir.GetFiles("*" + templateExtension, SearchOption.AllDirectories);
 				foreach (FileInfo fileInfo in templateFilenames)
 				{
+					string viewName = fileInfo.FullName.Replace(context.ViewRootDir.FullName, "");
 					SourceFile file = new SourceFile();
-					file.ViewName = fileInfo.FullName;
-					file.ClassName = AspViewEngine.GetClassName(file.ViewName);
+					file.ViewName = viewName;
+					file.ClassName = AspViewEngine.GetClassName(viewName);
 					file.ViewSource = File.ReadAllText(fileInfo.FullName);
 					file.RenderBody = file.ViewSource;
 					files.Add(file);
@@ -149,6 +149,16 @@ On '{0}' (class name: {1}) Line {2}, Column {3}, {4} {5}:
 				}
 				throw new Exception("Error while compiling views: " + message);
 			}
+		}
+
+		protected static string SourceFileToFileName(SourceFile file)
+		{
+			return file.FileName;
+		}
+
+		protected static string SourceFileToSource(SourceFile file)
+		{
+			return file.ConcreteClass;
 		}
 
 		///<summary>

@@ -94,7 +94,6 @@ namespace Castle.MonoRail.Views.AspView.Tests.RenderingTests
 			AspViewEngineOptions options = new AspViewEngineOptions();
 			options.CompilerOptions.AutoRecompilation = true;
 			options.CompilerOptions.KeepTemporarySourceFiles = false;
-			options.CompilerOptions.InMemory = true;
 			((IAspViewEngineTestAccess)viewEngine).SiteRoot = SiteRoot;
 			viewEngine.Initialize(options);
 			System.Console.WriteLine("init");

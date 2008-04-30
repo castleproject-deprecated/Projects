@@ -16,10 +16,10 @@
 		public void ApplyPreCompilationStepsOn(IEnumerable<SourceFile> files)
 		{
 			foreach (SourceFile sourceFile in files)
-				((PreCompilationStepDelegate) delegate(SourceFile file) {
-					ApplyPreCompilationStepsOn(file);
-				})
-					.BeginInvoke(sourceFile, null, null);
+//				((PreCompilationStepDelegate) delegate(SourceFile file) {
+				ApplyPreCompilationStepsOn(sourceFile);
+//				})
+//					.BeginInvoke(sourceFile, null, null);
 		} 
 
 		void ApplyPreCompilationStepsOn(SourceFile file)

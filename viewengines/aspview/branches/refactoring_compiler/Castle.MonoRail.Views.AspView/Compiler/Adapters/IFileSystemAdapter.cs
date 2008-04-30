@@ -21,6 +21,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler.Adapters
 	public interface IFileSystemAdapter
 	{
 		void Create(DirectoryInfo directory);
+		void Delete(string fileName);
 		bool Exists(DirectoryInfo directory);
 		void ClearSourceFilesFrom(DirectoryInfo directory);
 		void Save(string fileName, string content,  DirectoryInfo directory);

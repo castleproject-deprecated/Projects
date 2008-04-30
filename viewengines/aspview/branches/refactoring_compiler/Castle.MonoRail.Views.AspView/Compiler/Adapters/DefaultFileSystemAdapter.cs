@@ -21,6 +21,12 @@ namespace Castle.MonoRail.Views.AspView.Compiler.Adapters
 
 	public class DefaultFileSystemAdapter : IFileSystemAdapter
 	{
+		public void Delete(string fileName)
+		{
+			if (File.Exists(fileName))
+                File.Delete(fileName);
+		}
+
 		public void Create(DirectoryInfo directory)
 		{
 			directory.Create();

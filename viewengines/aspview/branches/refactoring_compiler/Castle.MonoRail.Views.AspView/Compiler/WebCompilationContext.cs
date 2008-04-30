@@ -7,7 +7,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 		public WebCompilationContext(DirectoryInfo siteRoot, DirectoryInfo temporarySourceFilesDirectory) : base(
 			siteRoot.GetDirectories("bin")[0], 
 			siteRoot, 
-			siteRoot.GetDirectories("bin")[0],
+			siteRoot.GetDirectories("views")[0],
 			temporarySourceFilesDirectory)
 		{
 		}

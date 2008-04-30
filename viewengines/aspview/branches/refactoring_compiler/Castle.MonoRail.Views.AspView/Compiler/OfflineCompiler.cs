@@ -1,3 +1,23 @@
+#region license
+
+// Copyright 2006-2008 Ken Egozi http://www.kenegozi.com/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#endregion
+
+using System.IO;
+
 namespace Castle.MonoRail.Views.AspView.Compiler
 {
 	using System.CodeDom.Compiler;
@@ -16,6 +36,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 		{
 			this.fileSystem = fileSystem;
 			parameters.GenerateInMemory = false;
+			parameters.OutputAssembly = Path.Combine(context.BinFolder.FullName, "CompiledViews.dll");
 		}
 
 		public string Execute()
@@ -31,14 +52,19 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 
 		protected override CompilerResults GetResultsFrom(List<SourceFile> files)
 		{
-			string[] sources = files.ConvertAll<string>(SourceFileToFileName).ToArray();
+			string pdbFileName = parameters.OutputAssembly.Substring(0, parameters.OutputAssembly.Length - 3) + "pdb";
+			fileSystem.Delete(parameters.OutputAssembly);
+			fileSystem.Delete(pdbFileName);
 
-			return codeProvider.CompileAssemblyFromFile(parameters, sources);
-		}
+			if (options.KeepTemporarySourceFiles)
+			{
+				string[] sourceFiles = files.ConvertAll<string>(SourceFileToFileName).ToArray();
 
-		static string SourceFileToFileName(SourceFile file)
-		{
-			return file.FileName;
+				return codeProvider.CompileAssemblyFromFile(parameters, sourceFiles);
+			}
+			string[] sources = files.ConvertAll<string>(SourceFileToSource).ToArray();
+
+			return codeProvider.CompileAssemblyFromSource(parameters, sources);
 		}
 
 		void KeepTemporarySourceFiles(List<SourceFile> files)

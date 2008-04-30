@@ -69,7 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspViewBase.cs" />
-    <Compile Include="Compiler\AbstractCompilationResult.cs" />
     <Compile Include="Compiler\AbstractCompiler.cs" />
     <Compile Include="Compiler\Adapters\DefaultCodeProviderAdapter.cs" />
     <Compile Include="Compiler\Adapters\DefaultFileSystemAdapter.cs" />
@@ -77,16 +76,12 @@
     <Compile Include="Compiler\Adapters\IFileSystemAdapter.cs" />
     <Compile Include="Compiler\AspViewCompilerOptions.cs" />
     <Compile Include="Compiler\CompilationContext.cs" />
-    <Compile Include="Compiler\CompilationResultFactory.cs" />
     <Compile Include="Compiler\Factories\CSharpCodeProviderAdapterFactory.cs" />
     <Compile Include="Compiler\Factories\ICodeProviderAdapterFactory.cs" />
     <Compile Include="Compiler\ICompilationContext.cs" />
-    <Compile Include="Compiler\ICompilationResult.cs" />
-    <Compile Include="Compiler\InMemoryCompilationResult.cs" />
     <Compile Include="Compiler\IPreProcessor.cs" />
     <Compile Include="Compiler\OfflineCompiler.cs" />
     <Compile Include="Compiler\OnlineCompiler.cs" />
-    <Compile Include="Compiler\PreCompilationResult.cs" />
     <Compile Include="Compiler\PreCompilationSteps\ConfigurationImportStatementsStep.cs" />
     <Compile Include="Compiler\PreCompilationSteps\ServerSideCommentStripperStep.cs" />
     <Compile Include="Compiler\PreProcessor.cs" />
