@@ -22,7 +22,7 @@ namespace Castle.ActiveRecord.Linq.Tests
     using System.Linq;
     using System.Threading;
     using Castle.ActiveRecord.Framework;
-    using NHibernate.Criterion;
+    using NHibernate.Expression;
     using NUnit.Framework;
 
     [TestFixture]
