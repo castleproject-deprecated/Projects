@@ -14,8 +14,6 @@
 // limitations under the License.
 #endregion
 
-using Castle.MonoRail.Views.AspView.Compiler.StatementProcessors.OutputMethodGenerators;
-
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 {
 	using Xunit;
@@ -26,7 +24,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 	{
 		protected override void CreateTransformer()
 		{
-			transformer = new InlineOutputDirectiveMarkupTransformer(new EncodedOutputMethodGenerator());
+			transformer = new InlineOutputDirectiveMarkupTransformer();
 		}
 
 		[Fact]
@@ -39,10 +37,10 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 		}
 
 		[Fact]
-		public void Transform_OnlyDirective_TransformsWithNullCheck()
+		public void Transform_OnlyDirective_Transforms()
 		{
 			input = "${someVar}";
-			expected = "<% OutputEncoded((someVar == null) ? string.Empty : someVar.ToString()); %>";
+			expected = "<% OutputEncoded(someVar); %>";
 			AssertTranfromerOutput();
 		}
 
@@ -50,7 +48,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 		public void Transform_WhenDirectiveAndRegularMarkup_Transforms()
 		{
 			input = "this is my ${name}.";
-			expected = "this is my <% OutputEncoded((name == null) ? string.Empty : name.ToString()); %>.";
+			expected = "this is my <% OutputEncoded(name); %>.";
 			AssertTranfromerOutput();
 		}
 	}
