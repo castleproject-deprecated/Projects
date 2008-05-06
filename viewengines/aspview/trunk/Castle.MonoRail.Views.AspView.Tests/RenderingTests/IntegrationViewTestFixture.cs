@@ -95,11 +95,10 @@ namespace Castle.MonoRail.Views.AspView.Tests.RenderingTests
 			AspViewEngineOptions options = new AspViewEngineOptions();
 			options.CompilerOptions.AutoRecompilation = true;
 			options.CompilerOptions.KeepTemporarySourceFiles = false;
-			string root = AppDomain.CurrentDomain.BaseDirectory;
-			root = root.Substring(0, root.LastIndexOf("Bin\\Debug", StringComparison.InvariantCultureIgnoreCase));
+			string root = GetSiteRoot();
 			ICompilationContext context = 
 				new CompilationContext(
-					new DirectoryInfo(root + @"\Bin\Debug"),
+					new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory),
 					new DirectoryInfo(root),
 					new DirectoryInfo(root + @"\RenderingTests\Views"),
 					new DirectoryInfo(root));
@@ -123,6 +122,17 @@ namespace Castle.MonoRail.Views.AspView.Tests.RenderingTests
 			viewEngine.Process(templatePath, sw, MockEngineContext, null, ControllerContext);
 			lastOutput = sw.ToString();
 			return lastOutput;
+		}
+
+		protected virtual string GetSiteRoot()
+		{
+			DirectoryInfo current = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+			while (current != null && current.Name != "Castle.MonoRail.Views.AspView.Tests")
+			{
+				current = current.Parent;
+			}
+			if (current == null) throw new Exception("Cannot resolve site root");
+			return current.FullName;
 		}
 
 		protected void AddResource(string name, string resourceName, Assembly asm)
