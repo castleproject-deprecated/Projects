@@ -22,31 +22,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler.StatementProcessors.OutputMetho
 	{
 		public string GenerateFrom(string content)
 		{
-			return "OutputEncoded(" + AddNullCheck(content) + ");";
-		}
-
-		static string AddNullCheck(string input)
-		{
-			if (string.IsNullOrEmpty(input))
-			{
-				return input;
-			}
-
-			string[] parts = input.Split('.');
-			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < parts.Length; i++)
-			{
-				string part = string.Join(".", parts, 0, i + 1);
-				if (part.EndsWith("]"))
-				{
-					// we need to add null checking on the collection
-					sb.AppendFormat("({0} == null) ? string.Empty : ", part.Substring(0, part.LastIndexOf("[")));
-				}
-				sb.AppendFormat("({0} == null) ? string.Empty : ", part);
-			}
-			sb.Append(input + ".ToString()");
-
-			return sb.ToString();
+			return "OutputEncoded(" + content + ");";
 		}
 	}
 }

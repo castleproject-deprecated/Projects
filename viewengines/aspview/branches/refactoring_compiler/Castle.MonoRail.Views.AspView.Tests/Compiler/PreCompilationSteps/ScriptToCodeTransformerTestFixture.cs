@@ -221,7 +221,7 @@ Output(@""Markup2"");
 <%# var %>Markup2";
 			string expected = @"Output(@""Markup1
 "");
-OutputEncoded((var == null) ? string.Empty : var.ToString());
+OutputEncoded(var);
 Output(@""Markup2"");
 ";
 			string transformed = scriptTransformer.Transform(source);
