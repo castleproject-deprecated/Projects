@@ -95,12 +95,14 @@ namespace Castle.MonoRail.Views.AspView.Tests.RenderingTests
 			AspViewEngineOptions options = new AspViewEngineOptions();
 			options.CompilerOptions.AutoRecompilation = true;
 			options.CompilerOptions.KeepTemporarySourceFiles = false;
+			string root = AppDomain.CurrentDomain.BaseDirectory;
+			root = root.Substring(0, root.LastIndexOf("Bin\\Debug", StringComparison.InvariantCultureIgnoreCase));
 			ICompilationContext context = 
 				new CompilationContext(
-					new DirectoryInfo(@"D:\Dev\OSS\AspView\branches\refactoring_compiler\Castle.MonoRail.Views.AspView.Tests\Bin\Debug"),
-					new DirectoryInfo(@"D:\Dev\OSS\AspView\branches\refactoring_compiler\Castle.MonoRail.Views.AspView.Tests\"),
-					new DirectoryInfo(@"D:\Dev\OSS\AspView\branches\refactoring_compiler\Castle.MonoRail.Views.AspView.Tests\RenderingTests\Views"),
-					new DirectoryInfo(@"D:\Dev\OSS\AspView\branches\refactoring_compiler\Castle.MonoRail.Views.AspView.Tests\"));
+					new DirectoryInfo(root + @"\Bin\Debug"),
+					new DirectoryInfo(root),
+					new DirectoryInfo(root + @"\RenderingTests\Views"),
+					new DirectoryInfo(root));
 			viewEngine.Initialize(context, options);
 			System.Console.WriteLine("init");
 

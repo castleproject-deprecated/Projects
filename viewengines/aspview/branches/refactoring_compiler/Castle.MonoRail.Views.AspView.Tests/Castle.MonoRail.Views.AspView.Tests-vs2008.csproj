@@ -97,6 +97,8 @@
     <Compile Include="Compiler\PreCompilationSteps\ViewFilterTagsStepTestFixture.cs" />
     <Compile Include="Compiler\PreCompilationSteps\SubViewTagsStepTestFixture.cs" />
     <Compile Include="Compiler\PreCompilationSteps\ProcessPropertiesStepTestFixture.cs" />
+    <Compile Include="RenderingTests\AbstractTests.cs" />
+    <Compile Include="RenderingTests\SubViewTests.cs" />
     <Compile Include="RenderingTests\IntegrationViewTestFixture.cs" />
     <Compile Include="RenderingTests\SanityTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -146,6 +148,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="RenderingTests\Views\Sanity\sanity.aspx">
+    </Content>
+    <Content Include="RenderingTests\Views\SubViews\view2.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="RenderingTests\Views\SubViews\view1.aspx">
+      <SubType>ASPXCodeBehind</SubType>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
