@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compiler\AspViewCompilerTests.cs" />
     <Compile Include="Compiler\MarkupTransformers\AbstractMarkupTransformerTestFixture.cs" />
     <Compile Include="Compiler\MarkupTransformers\FullSiteRootMarkupTransformerTestFixture.cs" />
     <Compile Include="Compiler\MarkupTransformers\SiteRootMarkupTransformerTestFixture.cs" />
@@ -96,6 +97,10 @@
     <Compile Include="Compiler\PreCompilationSteps\ViewFilterTagsStepTestFixture.cs" />
     <Compile Include="Compiler\PreCompilationSteps\SubViewTagsStepTestFixture.cs" />
     <Compile Include="Compiler\PreCompilationSteps\ProcessPropertiesStepTestFixture.cs" />
+    <Compile Include="RenderingTests\AbstractTests.cs" />
+    <Compile Include="RenderingTests\SubViewTests.cs" />
+    <Compile Include="RenderingTests\IntegrationViewTestFixture.cs" />
+    <Compile Include="RenderingTests\SanityTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Engine\ViewEngineTestCase.cs" />
     <Compile Include="Compiler\PreCompilationSteps\ImportStatementsStepTestFixture.cs" />
@@ -115,9 +120,9 @@
     <Compile Include="ViewTests\ViewComponents\SectionsRendererViewComponent.cs" />
     <Compile Include="ViewTests\ViewComponents\TextAndViewRendererViewComponent.cs" />
     <Compile Include="ViewTests\ViewComponents\ViewRendererViewComponent.cs" />
-		<Compile Include="ViewTests\ViewComponents\TextRendererViewComponent.cs" />
-		<Compile Include="ViewTests\ViewComponents\WithMandatoryParameterViewComponent.cs" />
-		<Compile Include="ViewTests\Views\IAmSimple.cs" />
+    <Compile Include="ViewTests\ViewComponents\TextRendererViewComponent.cs" />
+    <Compile Include="ViewTests\ViewComponents\WithMandatoryParameterViewComponent.cs" />
+    <Compile Include="ViewTests\Views\IAmSimple.cs" />
     <Compile Include="ViewTests\Views\WithTypedProperties.cs" />
     <Compile Include="ViewTests\Views\OuterLayout.cs" />
     <Compile Include="ViewTests\Views\UsingBubbledCaptureFromSubView.cs" />
@@ -125,9 +130,9 @@
     <Compile Include="ViewTests\Views\WithCaptureFor.cs" />
     <Compile Include="ViewTests\Views\WithComponentAndSections.cs" />
     <Compile Include="ViewTests\Views\WithComponentAndBody.cs" />
-		<Compile Include="ViewTests\Views\WithComponent.cs" />
-		<Compile Include="ViewTests\Views\WithComponentWithParameter.cs" />
-		<Compile Include="ViewTests\Views\LayoutWithSubView.cs" />
+    <Compile Include="ViewTests\Views\WithComponent.cs" />
+    <Compile Include="ViewTests\Views\WithComponentWithParameter.cs" />
+    <Compile Include="ViewTests\Views\LayoutWithSubView.cs" />
     <Compile Include="ViewTests\Views\WithSubViewWithParameters.cs" />
     <Compile Include="ViewTests\Views\WithPropertyAndWithSubViewWithParameters.cs" />
     <Compile Include="ViewTests\Views\WithProperty.cs" />
@@ -140,6 +145,16 @@
       <Project>{41B2C873-254B-4BC5-8514-AD33ED3B5934}</Project>
       <Name>Castle.MonoRail.Views.AspView</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="RenderingTests\Views\Sanity\sanity.aspx">
+    </Content>
+    <Content Include="RenderingTests\Views\SubViews\view2.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="RenderingTests\Views\SubViews\view1.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

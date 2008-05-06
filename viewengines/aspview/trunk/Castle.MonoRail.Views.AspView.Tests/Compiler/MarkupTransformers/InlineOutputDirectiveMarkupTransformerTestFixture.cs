@@ -14,6 +14,8 @@
 // limitations under the License.
 #endregion
 
+using Castle.MonoRail.Views.AspView.Compiler.StatementProcessors.OutputMethodGenerators;
+
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 {
 	using Xunit;
@@ -24,7 +26,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.MarkupTransformers
 	{
 		protected override void CreateTransformer()
 		{
-			transformer = new InlineOutputDirectiveMarkupTransformer();
+			transformer = new InlineOutputDirectiveMarkupTransformer(new EncodedOutputMethodGenerator());
 		}
 
 		[Fact]

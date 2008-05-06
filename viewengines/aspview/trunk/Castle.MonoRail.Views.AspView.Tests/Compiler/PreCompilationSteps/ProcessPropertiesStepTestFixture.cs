@@ -122,7 +122,7 @@ view content";
 		#region helpers
 		private void AssertViewPropertyEqual(ViewProperty expectedProperty, string propertyName)
 		{
-			Assert.True(file.Properties.ContainsKey(propertyName));
+			Assert.True(file.Properties.ContainsKey(propertyName), string.Format("Property [{0}] is missing.", propertyName));
 			ViewProperty actual = file.Properties[propertyName];
 			Assert.Equal(expectedProperty.Type, actual.Type);
 			if (expectedProperty.DefaultValue == null)

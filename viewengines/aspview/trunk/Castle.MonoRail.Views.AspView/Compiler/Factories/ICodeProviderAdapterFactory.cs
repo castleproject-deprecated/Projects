@@ -1,5 +1,5 @@
 #region license
-// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
+// Copyright 2006-2008 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,15 +14,12 @@
 // limitations under the License.
 #endregion
 
-namespace Castle.MonoRail.Views.AspView.Compiler.StatementProcessors.OutputMethodGenerators
+namespace Castle.MonoRail.Views.AspView.Compiler.Factories
 {
-	using System.Text;
+	using Adapters;
 
-	public class EncodedOutputMethodGenerator : IOutputMethodGenerator
+	public interface ICodeProviderAdapterFactory
 	{
-		public string GenerateFrom(string content)
-		{
-			return "OutputEncoded(" + content + ");";
-		}
+		ICodeProviderAdapter GetAdapter();
 	}
 }

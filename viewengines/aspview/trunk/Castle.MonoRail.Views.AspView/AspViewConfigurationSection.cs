@@ -14,15 +14,14 @@
 // limitations under the License.
 #endregion
 
-using System.Reflection;
-
 namespace Castle.MonoRail.Views.AspView
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Configuration;
+	using System.Reflection;
 	using System.Xml;
-	using Framework;
+
 	using Compiler;
 
 	public class AspViewConfigurationSection : IConfigurationSectionHandler
@@ -33,7 +32,7 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			if (section == null)
 				throw new AspViewException("AspView config section is missing or not found");
-			
+
 			IEnumerable<ReferencedAssembly> references = GetReferencesFrom(section);
 
 			IDictionary<Type, Type> providers = GetProviders(section);
@@ -49,11 +48,12 @@ namespace Castle.MonoRail.Views.AspView
 
 		private static IEnumerable<ReferencedAssembly> GetReferencesFrom(XmlNode section)
 		{
-			XmlNode referencesNode = section.SelectSingleNode("references");
-			if (referencesNode != null)
-				return GetReferencesFrom(referencesNode);
 			List<ReferencedAssembly> references = new List<ReferencedAssembly>();
-			foreach (XmlNode reference in section.SelectNodes("reference"))
+			XmlNodeList referenceNodes = section.SelectNodes("reference");
+			if (referenceNodes == null || referenceNodes.Count == 0)
+				return references;
+
+			foreach (XmlNode reference in referenceNodes)
 			{
 				ReferencedAssembly.AssemblySource source;
 				string name = null;
@@ -89,7 +89,6 @@ namespace Castle.MonoRail.Views.AspView
 		private static AspViewCompilerOptions GetCompilerOptionsFrom(XmlNode section, IEnumerable<ReferencedAssembly> references, IDictionary<Type, Type> providers)
 		{
 			bool? debug = null;
-			bool? inMemory = null;
 			bool? autoRecompilation = null;
 			bool? allowPartiallyTrustedCallers = null;
 			string temporarySourceFilesDirectory = null;
@@ -101,9 +100,6 @@ namespace Castle.MonoRail.Views.AspView
 				{
 					case "debug":
 						debug = bool.Parse(attribute.Value);
-						break;
-					case "inmemory":
-						inMemory = bool.Parse(attribute.Value);
 						break;
 					case "autorecompilation":
 						autoRecompilation = bool.Parse(attribute.Value);
@@ -123,7 +119,7 @@ namespace Castle.MonoRail.Views.AspView
 			}
 
 			return new AspViewCompilerOptions(
-				debug, inMemory, autoRecompilation, allowPartiallyTrustedCallers, temporarySourceFilesDirectory, saveFiles, references, providers);
+				debug, autoRecompilation, allowPartiallyTrustedCallers, temporarySourceFilesDirectory, saveFiles, references, providers);
 
 		}
 
@@ -136,12 +132,18 @@ namespace Castle.MonoRail.Views.AspView
 
 			IDictionary<Type, Type> providers = new Dictionary<Type, Type>();
 
-			foreach (XmlNode providerNode in providersNode.SelectNodes("provider"))
+			XmlNodeList providerNodes = providersNode.SelectNodes("provider");
+
+			if (providerNodes == null || providerNodes.Count == 0)
+				return providers;
+
+			const string serviceAssemblyName = "Castle.MonoRail.Views.AspView";
+
+			foreach (XmlNode providerNode in providerNodes)
 			{
 				string serviceName = null;
 				string typeName = null;
-				string implementationAssemblyName=null;
-				string serviceAssemblyName="Castle.MonoRail.Views.AspView";
+				string implementationAssemblyName = null;
 				foreach (XmlAttribute attribute in providerNode.Attributes)
 				{
 					switch (attribute.Name.ToLower())

@@ -1,5 +1,5 @@
 #region license
-// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
+// Copyright 2006-2008 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,9 +14,6 @@
 // limitations under the License.
 #endregion
 
-using Castle.MonoRail.Views.AspView.Compiler.MarkupTransformers;
-using Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps;
-
 namespace Castle.MonoRail.Views.AspView.Compiler
 {
 	using System;
@@ -26,7 +23,6 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 	{
 		#region members
 		private bool debug = false;
-		private bool inMemory = false;
 		private bool autoRecompilation = false;
 		private bool allowPartiallyTrustedCallers = false;
 		private bool keepTemporarySourceFiles = false;
@@ -51,7 +47,6 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 
 		public AspViewCompilerOptions(
 			bool? debug,
-			bool? inMemory,
 			bool? autoRecompilation,
 			bool? allowPartiallyTrustedCallers,
 			string temporarySourceFilesDirectory,
@@ -61,7 +56,6 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 			: this()
 		{
 			if (debug.HasValue) this.debug = debug.Value;
-			if (inMemory.HasValue) this.inMemory = inMemory.Value;
 			if (autoRecompilation.HasValue) this.autoRecompilation = autoRecompilation.Value;
 			if (allowPartiallyTrustedCallers.HasValue) this.allowPartiallyTrustedCallers = allowPartiallyTrustedCallers.Value;
 			if (keepTemporarySourceFiles.HasValue) this.keepTemporarySourceFiles = keepTemporarySourceFiles.Value;
@@ -83,14 +77,6 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 		{
 			get { return debug; }
 			set { debug = value; }
-		}
-		/// <summary>
-		/// True if the compiled assembly should only be kept in-memory
-		/// </summary>
-		public bool InMemory
-		{
-			get { return inMemory; }
-			set { inMemory = value; }
 		}
 		/// <summary>
 		/// True if the generated concrete classes should be kept on disk

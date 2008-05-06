@@ -28,6 +28,9 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 		public static void Initialize(IDictionary<Type, Type> customProviders)
 		{
 			InitializeToDefaults();
+			
+			if (customProviders == null)
+				return;
 
 			if (customProviders.ContainsKey(typeof(IPreCompilationStepsProvider)))
 				preCompilationStepsProviderType = customProviders[typeof(IPreCompilationStepsProvider)];

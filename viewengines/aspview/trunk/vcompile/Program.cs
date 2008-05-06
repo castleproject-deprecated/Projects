@@ -1,5 +1,5 @@
 #region license
-// Copyright 2006-2007 Ken Egozi http://www.kenegozi.com/
+// Copyright 2006-2008 Ken Egozi http://www.kenegozi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,14 +14,16 @@
 // limitations under the License.
 #endregion
 
-using Castle.MonoRail.Views.AspView.Compiler;
-
 namespace Castle.MonoRail.AspView.VCompile
 {
 	using System;
 	using System.IO;
-	using Views.AspView;
 	using System.Xml;
+
+	using Views.AspView;
+	using Views.AspView.Compiler;
+	using Views.AspView.Compiler.Adapters;
+	using Views.AspView.Compiler.Factories;
 
 	class vcompile
 	{
@@ -53,10 +55,19 @@ namespace Castle.MonoRail.AspView.VCompile
 				return -1;
 			}
 
-			AspViewCompiler compiler;
+			OfflineCompiler compiler;
 			try
 			{
-				compiler = new AspViewCompiler(options.CompilerOptions);
+				ICompilationContext compilationContext = new CompilationContext(
+					new DirectoryInfo(Path.Combine(siteRoot, "bin")),
+					new DirectoryInfo(siteRoot),
+					new DirectoryInfo(Path.Combine(siteRoot, "views")),
+					new DirectoryInfo(options.CompilerOptions.TemporarySourceFilesDirectory));
+
+				compiler = new OfflineCompiler(
+					new CSharpCodeProviderAdapterFactory(),
+					new PreProcessor(), 
+					compilationContext, options.CompilerOptions, new DefaultFileSystemAdapter());
 			}
 			catch
 			{
@@ -66,8 +77,9 @@ namespace Castle.MonoRail.AspView.VCompile
 
 			try
 			{
-				compiler.CompileSite(siteRoot);
-				Console.WriteLine("[" + siteRoot + "] compilation finished.");
+				string path = compiler.Execute();
+
+				Console.WriteLine("[{0}] compiled into [{1}].", siteRoot, path);
 				return 0;
 			}
 			catch (Exception ex)

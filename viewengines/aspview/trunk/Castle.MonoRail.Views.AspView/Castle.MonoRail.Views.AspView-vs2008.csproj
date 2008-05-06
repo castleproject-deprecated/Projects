@@ -69,10 +69,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspViewBase.cs" />
-    <Compile Include="Compiler\AspViewCompiler.cs" />
+    <Compile Include="Compiler\AbstractCompiler.cs" />
+    <Compile Include="Compiler\Adapters\DefaultCodeProviderAdapter.cs" />
+    <Compile Include="Compiler\Adapters\DefaultFileSystemAdapter.cs" />
+    <Compile Include="Compiler\Adapters\ICodeProviderAdapter.cs" />
+    <Compile Include="Compiler\Adapters\IFileSystemAdapter.cs" />
     <Compile Include="Compiler\AspViewCompilerOptions.cs" />
+    <Compile Include="Compiler\CompilationContext.cs" />
+    <Compile Include="Compiler\Factories\CSharpCodeProviderAdapterFactory.cs" />
+    <Compile Include="Compiler\Factories\ICodeProviderAdapterFactory.cs" />
+    <Compile Include="Compiler\ICompilationContext.cs" />
+    <Compile Include="Compiler\IPreProcessor.cs" />
+    <Compile Include="Compiler\OfflineCompiler.cs" />
+    <Compile Include="Compiler\OnlineCompiler.cs" />
     <Compile Include="Compiler\PreCompilationSteps\ConfigurationImportStatementsStep.cs" />
     <Compile Include="Compiler\PreCompilationSteps\ServerSideCommentStripperStep.cs" />
+    <Compile Include="Compiler\PreProcessor.cs" />
     <Compile Include="Compiler\StatementProcessors\SharpStatementProcessor.cs" />
     <Compile Include="Compiler\StatementProcessors\EqualsStatementProcessor.cs" />
     <Compile Include="Compiler\StatementProcessors\OutputMethodGenerators\EncodedOutputMethodGenerator.cs" />
@@ -103,6 +115,7 @@
     <Compile Include="Compiler\Utilities.cs" />
     <Compile Include="AspViewConfigurationSection.cs" />
     <Compile Include="AspViewBaseWithGenericTypedInterface.cs" />
+    <Compile Include="Compiler\WebCompilationContext.cs" />
     <Compile Include="IHelpersAccesor.cs" />
     <Compile Include="Internal\RegularExpressions.cs" />
     <Compile Include="Internal\Set.cs" />

@@ -140,7 +140,7 @@ int anotherVar;
 			step.Process(file);
 
 			Assert.Equal(file.EmbededScriptBlocks.Count, 6);
-			
+
 			// script content has expected value
 			for (int i = 0; i <= 5; ++i)
 				Assert.Equal("script" + i, file.EmbededScriptBlocks[i]);
