@@ -29,7 +29,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Engine
 		{
 			AspViewEngineOptions options = new AspViewEngineOptions(new AspViewCompilerOptions());
 			engine = new AspViewEngine();
-			engine.Initialize(options);
+			//engine.Initialize(options);
 			engineWithTestAccess = engine;
 		}
 

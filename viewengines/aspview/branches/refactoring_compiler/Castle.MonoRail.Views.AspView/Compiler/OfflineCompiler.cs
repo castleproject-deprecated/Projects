@@ -16,12 +16,11 @@
 
 #endregion
 
-using System.IO;
-
 namespace Castle.MonoRail.Views.AspView.Compiler
 {
 	using System.CodeDom.Compiler;
 	using System.Collections.Generic;
+	using System.IO;
 
 	using Adapters;
 	using Factories;
@@ -41,7 +40,11 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 
 		public string Execute()
 		{
-			return InternalExecute().PathToAssembly;
+			CompilerResults compilerResults = InternalExecute();
+			if (compilerResults == null)
+				return null;
+
+			return compilerResults.PathToAssembly;
 		}
 
 		protected override void AfterPreCompilation(List<SourceFile> files)

@@ -20904,6 +20904,14 @@
             is initialized
             </summary>
         </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.SecurityComponent.IsInRole(System.String,System.String)">
+            <summary>
+            Verify if the user is at least in one of the given role(s).
+            </summary>
+            <param name="role">string representing a role.</param>
+            <param name="roles">string (comma separated) representing an array of roles.</param>
+            <returns><c>true</c> if the user is at least in one of the roles, otherwise <c>false</c>.</returns>
+        </member>
         <member name="M:Castle.MonoRail.Framework.ViewComponents.SecurityComponent.Render">
             <summary>
             Called by the framework so the component can

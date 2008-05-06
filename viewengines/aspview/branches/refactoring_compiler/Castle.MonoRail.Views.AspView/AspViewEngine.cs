@@ -12,9 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.MonoRail.Views.AspView.Compiler.Adapters;
-using Castle.MonoRail.Views.AspView.Compiler.Factories;
-
 namespace Castle.MonoRail.Views.AspView
 {
 	using System;
@@ -27,15 +24,16 @@ namespace Castle.MonoRail.Views.AspView
 	using System.Collections.Generic;
 
 	using Compiler;
+	using Compiler.Factories;
 	using Framework;
 	using Core;
 
 	public class AspViewEngine : ViewEngineBase, IInitializable, IAspViewEngineTestAccess
 	{
-		IFileSystemAdapter fileSystemAdapter;
-		static bool needsRecompiling = false;
+		ICompilationContext compilationContext;
+		static bool needsRecompiling;
 		static AspViewEngineOptions options;
-		string siteRoot;
+		//string siteRoot;
 		static readonly Regex invalidClassNameCharacters = new Regex("[^a-zA-Z0-9\\-*#=/\\\\_.]", RegexOptions.Compiled);
 
 		readonly Hashtable compilations = Hashtable.Synchronized(new Hashtable(StringComparer.InvariantCultureIgnoreCase));
@@ -45,31 +43,37 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			get { return compilations; }
 		}
-		string IAspViewEngineTestAccess.SiteRoot
-		{
-			get { return siteRoot; }
-			set { siteRoot = value; }
-		}
 		void IAspViewEngineTestAccess.SetViewSourceLoader(IViewSourceLoader viewSourceLoader)
 		{
 			ViewSourceLoader = viewSourceLoader;
 		}
+		void IAspViewEngineTestAccess.SetCompilationContext(ICompilationContext context)
+		{
+			compilationContext = context;
+		}
+
 		#endregion
 
 		#region IInitializable Members
 
-		public void Initialize(AspViewEngineOptions newOptions)
+		public void Initialize(ICompilationContext context, AspViewEngineOptions newOptions)
 		{
 			options = newOptions;
+			compilationContext = context;
 			Initialize();
 		}
 
 		public void Initialize()
 		{
-			fileSystemAdapter = new DefaultFileSystemAdapter();
-			siteRoot = AppDomain.CurrentDomain.BaseDirectory;
 			if (options == null)
 				InitializeConfig();
+
+			if (compilationContext == null)
+			{
+				string siteRoot = AppDomain.CurrentDomain.BaseDirectory;
+				compilationContext = new WebCompilationContext(
+					new DirectoryInfo(siteRoot), new DirectoryInfo(options.CompilerOptions.TemporarySourceFilesDirectory));
+			}
 			#region TODO
 			//TODO: think about CommonScripts implementation in c#/VB.NET 
 			#endregion
@@ -96,7 +100,7 @@ namespace Castle.MonoRail.Views.AspView
 			return compilations.ContainsKey(className);
 		}
 
-		public override void Process(string templateName, string layoutName, TextWriter output, System.Collections.Generic.IDictionary<string, object> parameters)
+		public override void Process(string templateName, string layoutName, TextWriter output, IDictionary<string, object> parameters)
 		{
 			ControllerContext controllerContext = new ControllerContext();
 			if (layoutName != null)
@@ -107,7 +111,7 @@ namespace Castle.MonoRail.Views.AspView
 			{
 				controllerContext.PropertyBag[pair.Key] = pair.Value;
 			}
-			;
+			
 			Process(templateName, output, null, null, controllerContext);
 		}
 
@@ -213,9 +217,6 @@ namespace Castle.MonoRail.Views.AspView
 
 		protected virtual void CompileViewsInMemory()
 		{
-			ICompilationContext compilationContext = new WebCompilationContext(
-				new DirectoryInfo(siteRoot), new DirectoryInfo(options.CompilerOptions.TemporarySourceFilesDirectory));
-
 			OnlineCompiler compiler = new OnlineCompiler(
 				new CSharpCodeProviderAdapterFactory(),
 				new PreProcessor(), 
@@ -246,7 +247,7 @@ namespace Castle.MonoRail.Views.AspView
 			}
 			compilations.Clear();
 
-			string[] viewAssemblies = Directory.GetFiles(Path.Combine(siteRoot, "bin"), "*CompiledViews.dll", SearchOption.TopDirectoryOnly);
+			string[] viewAssemblies = Directory.GetFiles(Path.Combine(compilationContext.SiteRoot.FullName, "bin"), "*CompiledViews.dll", SearchOption.TopDirectoryOnly);
 
 			foreach (string assembly in viewAssemblies)
 			{
@@ -389,7 +390,7 @@ namespace Castle.MonoRail.Views.AspView
 	public interface IAspViewEngineTestAccess
 	{
 		Hashtable Compilations { get; }
-		string SiteRoot { get; set; }
 		void SetViewSourceLoader(IViewSourceLoader viewSourceLoader);
+		void SetCompilationContext(ICompilationContext context);
 	}
 }

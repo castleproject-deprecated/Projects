@@ -16,6 +16,8 @@
 
 #endregion
 
+using System;
+
 namespace Castle.MonoRail.Views.AspView.Tests.Compiler
 {
 	using System.CodeDom.Compiler;
@@ -41,11 +43,12 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler
 
 			ICodeProviderAdapterFactory codeProviderAdapterFactory = new MockedCodeProviderAdapterFactory();
 			IPreProcessor preProcessor = new MockedPreProcessor();
+			string basePath = AppDomain.CurrentDomain.BaseDirectory;
 			ICompilationContext context = new CompilationContext(
-				new DirectoryInfo("C:\\"), 
-				new DirectoryInfo("C:\\"), 
-				new DirectoryInfo("C:\\"), 
-				new DirectoryInfo("C:\\"));
+				new DirectoryInfo(basePath),
+				new DirectoryInfo(basePath),
+				new DirectoryInfo(basePath),
+				new DirectoryInfo(basePath));
 			AspViewCompilerOptions options = new AspViewCompilerOptions();
 
 			OnlineCompiler compiler = new OnlineCompiler(

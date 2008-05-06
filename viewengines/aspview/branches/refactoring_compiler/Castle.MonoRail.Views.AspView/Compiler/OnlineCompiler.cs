@@ -33,7 +33,11 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 
 		public Assembly Execute()
 		{
-			return InternalExecute().CompiledAssembly;
+			CompilerResults compilerResults = InternalExecute();
+			if (compilerResults == null)
+				return null;
+
+			return compilerResults.CompiledAssembly;
 		}
 
 		protected override CompilerResults GetResultsFrom(List<SourceFile> files)

@@ -34,6 +34,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.Compiler.PreCompilationSteps
 		public void SetUp()
 		{
 			provider = new DefaultPreCompilationStepsProvider();
+			Resolve.Initialize(null);
 		}
 
 		private void RunSteps(SourceFile file)

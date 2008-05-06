@@ -1,2 +1,2 @@
-﻿ן»¿I am sane
+﻿<%@Page Language="C#" %>
 I am sane
