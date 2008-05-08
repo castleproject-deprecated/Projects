@@ -72,6 +72,25 @@
             controller instances.
             </summary>
         </member>
+        <member name="M:Castle.MonoRail.WindsorExtension.WindsorDynamicActionProviderFactory.#ctor(Castle.MicroKernel.IKernel)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.WindsorExtension.WindsorDynamicActionProviderFactory"/> class.
+            </summary>
+            <param name="kernel">The kernel.</param>
+        </member>
+        <member name="M:Castle.MonoRail.WindsorExtension.WindsorDynamicActionProviderFactory.Create(System.Type)">
+            <summary>
+            Creates the specified dynamic action provider type.
+            </summary>
+            <param name="dynamicActionProviderType">Type of the dynamic action provider.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.WindsorExtension.WindsorDynamicActionProviderFactory.Release(Castle.MonoRail.Framework.IDynamicActionProvider)">
+            <summary>
+            Releases the specified dynamic action provider.
+            </summary>
+            <param name="dynamicActionProvider">The dynamic action provider.</param>
+        </member>
         <member name="T:Castle.MonoRail.WindsorExtension.WindsorFilterFactory">
             <summary>
             Custom implementation of <see cref="T:Castle.MonoRail.Framework.IFilterFactory"/>

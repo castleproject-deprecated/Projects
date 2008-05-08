@@ -74,7 +74,8 @@ namespace Castle.Components.Localization.MonoRail.Tests
 		[Test]
 		public void ReturnsResourceContentAndSetMimeType()
 		{
-			DefaultStaticResourceRegistry registry = new DefaultStaticResourceRegistry();
+			ICacheProvider cacheProvider = new MockCacheProvider();
+			DefaultStaticResourceRegistry registry = new DefaultStaticResourceRegistry( cacheProvider );
 			registry.RegisterCustomResource( "key", null, null, new StaticContentResource( "js" ), "text/javascript" );
 
 			ResourceFileHandler handler = new ResourceFileHandler( new UrlInfo( "", "controller", "key" ), registry );

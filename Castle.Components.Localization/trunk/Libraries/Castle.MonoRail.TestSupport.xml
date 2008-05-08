@@ -112,6 +112,14 @@
             <param name="controller">The controller.</param>
             <param name="contextInitializer">The context initializer.</param>
         </member>
+        <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.PrepareController(Castle.MonoRail.Framework.Controller,System.String)">
+            <summary>
+            Prepares the controller giving it mock implementations
+            of the service it requires to function normally.
+            </summary>
+            <param name="controller">The controller.</param>
+            <param name="controllerName">Name of the controller.</param>
+        </member>
         <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.PrepareController(Castle.MonoRail.Framework.Controller,System.String,System.String)">
             <summary>
             Prepares the controller giving it mock implementations
@@ -182,6 +190,12 @@
             Builds the trace.
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.AddEmailServices(Castle.MonoRail.Framework.Test.MockEngineContext)">
+            <summary>
+            Adds the default mock email services to the context.
+            </summary>
+            <param name="mockEngineContext"></param>
         </member>
         <member name="M:Castle.MonoRail.TestSupport.BaseControllerTest.BuildRailsEngineContext(Castle.MonoRail.Framework.Test.IMockRequest,Castle.MonoRail.Framework.Test.IMockResponse,Castle.MonoRail.Framework.IMonoRailServices,Castle.MonoRail.Framework.ITrace,Castle.MonoRail.Framework.UrlInfo)">
             <summary>

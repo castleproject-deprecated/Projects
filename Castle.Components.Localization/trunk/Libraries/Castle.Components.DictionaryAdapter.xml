@@ -192,6 +192,11 @@
             </summary>
             <value>The format.</value>
         </member>
+        <member name="T:Castle.Components.DictionaryAdapter.DictionaryTypeKeyPrefixAttribute">
+            <summary>
+            Assigns a prefix to the keyed properties using the interface name.
+            </summary>
+        </member>
         <member name="T:Castle.Components.DictionaryAdapter.AbstractDictionaryAdapter">
             <summary>
             Abstract adapter for the <see cref="T:System.Collections.IDictionary"/> support

@@ -345,6 +345,12 @@
             <param name="sectionName">Name of the section.</param>
             <param name="writer">The writer.</param>
         </member>
+        <member name="P:Castle.MonoRail.Views.Brail.BrailViewComponentContext.ViewComponentDescriptor">
+            <summary>
+            Gets or sets the view component descriptor.
+            </summary>
+            <value>The view component descriptor.</value>
+        </member>
         <member name="T:Castle.MonoRail.Views.Brail.ExpandDuckTypedExpressions_WorkaroundForDuplicateVirtualMethods">
             <summary>
             This is here because we need to overcome a tendecy of Dynamic Proxy to generate virtual override that

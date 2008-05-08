@@ -600,10 +600,25 @@
         </member>
         <member name="M:Castle.Windsor.IWindsorContainer.AddFacility(System.String,Castle.MicroKernel.IFacility)">
             <summary>
-            Registers a facility within the kernel.
+            Registers a facility within the container.
             </summary>
             <param name="key">The key by which the <see cref="T:Castle.MicroKernel.IFacility"/> gets indexed.</param>
             <param name="facility">The <see cref="T:Castle.MicroKernel.IFacility"/> to add to the container.</param>
+        </member>
+        <member name="M:Castle.Windsor.IWindsorContainer.AddFacility``1(System.String)">
+            <summary>
+            Creates and adds an <see cref="T:Castle.MicroKernel.IFacility"/> facility to the container.
+            </summary>
+            <typeparam name="T">The facility type.</typeparam>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.Windsor.IWindsorContainer.AddFacility``1">
+            <summary>
+            Creates and adds an <see cref="T:Castle.MicroKernel.IFacility"/> facility to the container.
+            </summary>
+            <typeparam name="T">The facility type.</typeparam>
+            <returns></returns>
         </member>
         <member name="M:Castle.Windsor.IWindsorContainer.AddComponent(System.String,System.Type)">
             <summary>
@@ -1090,6 +1105,21 @@
             </summary>
             <param name="key"></param>
             <param name="facility"></param>
+        </member>
+        <member name="M:Castle.Windsor.WindsorContainer.AddFacility``1(System.String)">
+            <summary>
+            Creates and adds an <see cref="T:Castle.MicroKernel.IFacility"/> facility to the container.
+            </summary>
+            <typeparam name="T">The facility type.</typeparam>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.Windsor.WindsorContainer.AddFacility``1">
+            <summary>
+            Creates and adds an <see cref="T:Castle.MicroKernel.IFacility"/> facility to the container.
+            </summary>
+            <typeparam name="T">The facility type.</typeparam>
+            <returns></returns>
         </member>
         <member name="M:Castle.Windsor.WindsorContainer.AddComponent(System.String,System.Type)">
             <summary>

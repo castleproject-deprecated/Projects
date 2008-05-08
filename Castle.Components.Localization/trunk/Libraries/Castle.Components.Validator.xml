@@ -4,11 +4,9 @@
         <name>Castle.Components.Validator</name>
     </assembly>
     <members>
-        <member name="T:Castle.Components.Validator.ValidateCreditCardAttribute">
+        <member name="T:Castle.Components.Validator.ValidateIsLesserAttribute">
             <summary>
-            Properties decorated with this attribute will be validated to ensure that they represent a valid
-            credit card number.
-            <see ref="CreditCardValidator"/> for more details.
+            Validate a field value is greater than another one.
             </summary>
         </member>
         <member name="T:Castle.Components.Validator.AbstractValidationAttribute">
@@ -84,6 +82,35 @@
             Gets the error message.
             </summary>
             <value>The error message.</value>
+        </member>
+        <member name="M:Castle.Components.Validator.ValidateIsLesserAttribute.#ctor(Castle.Components.Validator.IsGreaterValidationType,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Components.Validator.ValidateIsLesserAttribute"/> class.
+            </summary>
+            <param name="type"></param>
+            <param name="propertyToCompare">Target property to compare</param>
+        </member>
+        <member name="M:Castle.Components.Validator.ValidateIsLesserAttribute.#ctor(Castle.Components.Validator.IsGreaterValidationType,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Components.Validator.ValidateIsLesserAttribute"/> class.
+            </summary>
+            <param name="type"><see cref="T:Castle.Components.Validator.IsGreaterValidationType"/>type</param>
+            <param name="propertyToCompare">Target property to compare</param>
+            <param name="errorMessage">The error message.</param>
+        </member>
+        <member name="M:Castle.Components.Validator.ValidateIsLesserAttribute.Build">
+            <summary>
+            Constructs and configures an <see cref="T:Castle.Components.Validator.IValidator"/>
+            instance based on the properties set on the attribute instance.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Castle.Components.Validator.ValidateCreditCardAttribute">
+            <summary>
+            Properties decorated with this attribute will be validated to ensure that they represent a valid
+            credit card number.
+            <see ref="CreditCardValidator"/> for more details.
+            </summary>
         </member>
         <member name="M:Castle.Components.Validator.ValidateCreditCardAttribute.#ctor">
             <summary>
@@ -978,6 +1005,26 @@
             <param name="target">The target name (ie, a hint about the controller being validated)</param>
             <param name="violationMessage">The violation message.</param>
         </member>
+        <member name="M:Castle.Components.Validator.IBrowserValidationGenerator.SetAsGreaterThan(System.String,System.String,Castle.Components.Validator.IsGreaterValidationType,System.String)">
+            <summary>
+            Sets that a field's value must be greater than another field's value.
+            </summary>
+            <remarks>Not implemented by the JQuery validate plugin. Done via a custom rule.</remarks>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="comparisonFieldName">The name of the field to compare with.</param>
+            <param name="validationType">The type of data to compare.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.Components.Validator.IBrowserValidationGenerator.SetAsLesserThan(System.String,System.String,Castle.Components.Validator.IsGreaterValidationType,System.String)">
+            <summary>
+            Sets that a field's value must be lesser than another field's value.
+            </summary>
+            <remarks>Not implemented by the JQuery validate plugin. Done via a custom rule.</remarks>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="comparisonFieldName">The name of the field to compare with.</param>
+            <param name="validationType">The type of data to compare.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
         <member name="T:Castle.Components.Validator.Messages">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -1034,6 +1081,11 @@
               Looks up a localized string similar to Field has an invalid content.
             </summary>
         </member>
+        <member name="P:Castle.Components.Validator.Messages.greater_than_invalid">
+            <summary>
+              Looks up a localized string similar to This field value must be greater than the other field value..
+            </summary>
+        </member>
         <member name="P:Castle.Components.Validator.Messages.group_not_empty_invalid">
             <summary>
               Looks up a localized string similar to At least one of the values in ({0}) should not be empty.
@@ -1067,6 +1119,11 @@
         <member name="P:Castle.Components.Validator.Messages.length_tooshort">
             <summary>
               Looks up a localized string similar to Field must be at least {0} characters long.
+            </summary>
+        </member>
+        <member name="P:Castle.Components.Validator.Messages.lesser_than_invalid">
+            <summary>
+              Looks up a localized string similar to This field value must be lesser than the other field value..
             </summary>
         </member>
         <member name="P:Castle.Components.Validator.Messages.not_same_as_invalid">
@@ -1172,6 +1229,13 @@
             </summary>
             <param name="key">The key.</param>
             <returns></returns>
+        </member>
+        <member name="M:Castle.Components.Validator.CachedValidationRegistry.ResolveProperties(System.Type)">
+            <summary>
+            Resolve properties that will be inspected for registered validators
+            </summary>
+            <param name="targetType">the type to examinate properties for</param>
+            <returns>resolved properties</returns>
         </member>
         <member name="T:Castle.Components.Validator.ValidationException">
             <summary>
@@ -1342,12 +1406,48 @@
             <param name="instance">The instance.</param>
             <returns></returns>
         </member>
+        <member name="M:Castle.Components.Validator.ValidatorRunner.PerformValidation(System.Object,System.Collections.Generic.IEnumerable{Castle.Components.Validator.IValidator},Castle.Components.Validator.ErrorSummary)">
+            <summary>
+            main validation logic happens here
+            </summary>
+            <param name="objectInstance">object instance to be validated</param>
+            <param name="validators">the validators to run</param>
+            <param name="summaryToPopulate"></param>
+        </member>
+        <member name="M:Castle.Components.Validator.ValidatorRunner.SetErrorSummaryForInstance(System.Object,Castle.Components.Validator.ErrorSummary)">
+            <summary>
+            associate error summary to the object instance
+            </summary>
+            <param name="objectInstance">object instance to associate validation error summary with</param>
+            <param name="summary">error summary to be associated with object instance</param>
+        </member>
+        <member name="M:Castle.Components.Validator.ValidatorRunner.SortValidators(Castle.Components.Validator.IValidator[])">
+            <summary>
+            Sort given validators with default algorithm
+            </summary>
+            <param name="validators"></param>
+        </member>
         <member name="P:Castle.Components.Validator.ValidatorRunner.ExtendedProperties">
             <summary>
             Gets the extended properties, which allows <see cref="T:Castle.Components.Validator.IValidator"/> 
             implementation to store additional information to track state.
             </summary>
             <value>The extended properties.</value>
+        </member>
+        <member name="P:Castle.Components.Validator.ValidatorRunner.Registry">
+            <summary>
+            provide read access to validator registry
+            </summary>
+        </member>
+        <member name="T:Castle.Components.Validator.ValidatorRunner.DefaultSettings">
+            <summary>
+            Default settings value being used for constructor or method overloads
+            </summary>
+        </member>
+        <member name="F:Castle.Components.Validator.ValidatorRunner.DefaultSettings.InferValidators">
+            <summary>
+            Default setting is false: the validation runner will not infer validators based on data types
+            </summary>
         </member>
         <member name="T:Castle.Components.Validator.AbstractValidator">
             <summary>
@@ -1579,6 +1679,84 @@
             </summary>
             <value></value>
         </member>
+        <member name="T:Castle.Components.Validator.IsLesserValidationType">
+            <summary>
+            Specifies the data type the <see cref="T:Castle.Components.Validator.IsGreaterValidator"/>
+            is dealing with.
+            </summary>
+        </member>
+        <member name="F:Castle.Components.Validator.IsLesserValidationType.Integer">
+            <summary>
+            Value compare as Integer
+            </summary>
+        </member>
+        <member name="F:Castle.Components.Validator.IsLesserValidationType.Decimal">
+            <summary>
+            Value compare as Decimal
+            </summary>
+        </member>
+        <member name="F:Castle.Components.Validator.IsLesserValidationType.Date">
+            <summary>
+            Value compare as Date
+            </summary>
+        </member>
+        <member name="F:Castle.Components.Validator.IsLesserValidationType.DateTime">
+            <summary>
+            Value compare as DateTime
+            </summary>
+        </member>
+        <member name="T:Castle.Components.Validator.IsLesserValidator">
+            <summary>
+            Comparing properties value and make sure it is lesser than one another.
+            </summary>
+        </member>
+        <member name="M:Castle.Components.Validator.IsLesserValidator.#ctor(Castle.Components.Validator.IsGreaterValidationType,System.String)">
+            <summary>
+            Initializes a IsLesserValidator of the given type and target property.
+            </summary>
+            <param name="type">The type of data to compare.</param>
+            <param name="propertyToCompare">The name of the property to compare.</param>
+        </member>
+        <member name="M:Castle.Components.Validator.IsLesserValidator.IsValid(System.Object,System.Object)">
+            <summary>
+            Validate that the property value greater than the value requirements.
+            </summary>
+            <param name="instance"></param>
+            <param name="fieldValue"><c>true</c> if the field value is greater than the target property</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.Components.Validator.IsLesserValidator.ApplyBrowserValidation(Castle.Components.Validator.BrowserValidationConfiguration,Castle.Components.Validator.InputElementType,Castle.Components.Validator.IBrowserValidationGenerator,System.Collections.IDictionary,System.String)">
+            <summary>
+            Applies the browser validation by setting up one or
+            more input rules on <see cref="T:Castle.Components.Validator.IBrowserValidationGenerator"/>.
+            </summary>
+            <param name="config">The config.</param>
+            <param name="inputType">Type of the input.</param>
+            <param name="generator">The generator.</param>
+            <param name="attributes">The attributes.</param>
+            <param name="target">The target.</param>
+        </member>
+        <member name="P:Castle.Components.Validator.IsLesserValidator.PropertyToCompare">
+            <summary>
+            Target Property to compare
+            </summary>
+        </member>
+        <member name="P:Castle.Components.Validator.IsLesserValidator.ValidationType">
+            <summary>
+            Gets or sets the validation type for this validator. 
+            </summary>
+        </member>
+        <member name="P:Castle.Components.Validator.IsLesserValidator.MessageKey">
+            <summary>
+            Returns the key used to internationalize error messages
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Castle.Components.Validator.IsLesserValidator.SupportsBrowserValidation">
+            <summary>
+            Browser validation support
+            </summary>
+        </member>
         <member name="T:Castle.Components.Validator.IsGreaterValidationType">
             <summary>
             Specifies the data type the <see cref="T:Castle.Components.Validator.IsGreaterValidator"/>
@@ -1625,6 +1803,17 @@
             <param name="fieldValue"><c>true</c> if the field value is greater than the target property</param>
             <returns></returns>
         </member>
+        <member name="M:Castle.Components.Validator.IsGreaterValidator.ApplyBrowserValidation(Castle.Components.Validator.BrowserValidationConfiguration,Castle.Components.Validator.InputElementType,Castle.Components.Validator.IBrowserValidationGenerator,System.Collections.IDictionary,System.String)">
+            <summary>
+            Applies the browser validation by setting up one or
+            more input rules on <see cref="T:Castle.Components.Validator.IBrowserValidationGenerator"/>.
+            </summary>
+            <param name="config">The config.</param>
+            <param name="inputType">Type of the input.</param>
+            <param name="generator">The generator.</param>
+            <param name="attributes">The attributes.</param>
+            <param name="target">The target.</param>
+        </member>
         <member name="P:Castle.Components.Validator.IsGreaterValidator.PropertyToCompare">
             <summary>
             Target Property to compare
@@ -1634,6 +1823,12 @@
             <summary>
             Gets or sets the validation type for this validator. 
             </summary>
+        </member>
+        <member name="P:Castle.Components.Validator.IsGreaterValidator.MessageKey">
+            <summary>
+            Returns the key used to internationalize error messages
+            </summary>
+            <value></value>
         </member>
         <member name="P:Castle.Components.Validator.IsGreaterValidator.SupportsBrowserValidation">
             <summary>
