@@ -1,0 +1,16 @@
+?<h2>Default:</h2>
+<%
+component SmartGrid, {@source: users, @columns: [ @Name, @Email, @Married] } 
+%>
+
+<br />
+<h2>Custom null-text (n/a)</h2>
+<%
+component SmartGrid, {@source: users, @columns: [ @Name, @Email, @Married], @nulltext: "n/a"} 
+%>
+
+<br />
+<h2>Custom null-text (empty)</h2>
+<%
+component SmartGrid, {@source: users, @columns: [ @Name, @Email, @Married], @nulltext: string.Empty} 
+%>

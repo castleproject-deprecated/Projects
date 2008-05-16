@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Globalization;
+
 namespace Castle.MonoRail.ViewComponents
 {
     using System;
@@ -181,6 +183,7 @@ namespace Castle.MonoRail.ViewComponents
 				if (!toggleOnClickHeader)
 				{
 					return string.Format(
+                        CultureInfo.InvariantCulture,
 	@"
 function {0}(controlName, togglerName)
 {{

@@ -132,5 +132,9 @@ namespace Castle.MonoRail.ViewComponents.TestSite.Controllers
 
             RenderView("SortJSBehavior.brailjs");
         }
+
+        public void NullText() {
+            PropertyBag["users"] = User.FindAll();
+        }
 	}
 }

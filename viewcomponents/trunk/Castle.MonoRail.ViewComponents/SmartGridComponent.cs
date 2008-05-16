@@ -61,6 +61,9 @@ namespace Castle.MonoRail.ViewComponents
 
             bool isAlternate = false;
 
+            string nullText = ComponentParams["nulltext"] as string ?? "null";
+            
+
             foreach (object item in source)
             {
                 PropertyBag["item"] = item;
@@ -87,7 +90,7 @@ namespace Castle.MonoRail.ViewComponents
 					{
 						RenderOptionalSection("startCell", "<td>");
 
-						object val = property.GetValue(item, null) ?? "null";
+						object val = property.GetValue(item, null) ?? nullText;
 
 						RenderText(System.Web.HttpUtility.HtmlEncode(val.ToString()));
 						RenderOptionalSection("endCell", "</td>");
