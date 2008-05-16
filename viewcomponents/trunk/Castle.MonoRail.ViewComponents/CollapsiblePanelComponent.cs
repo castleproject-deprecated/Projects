@@ -120,6 +120,8 @@ namespace Castle.MonoRail.ViewComponents
         {
             if (Context.ContextVars[wasScriptaculousInstalledKey] as bool? != true)
             {
+				AjaxHelper ajaxHelper = new AjaxHelper(EngineContext);
+				RenderTextFormat("\r\n{0}\r\n", ajaxHelper.InstallScripts());
 				ScriptaculousHelper helper = new ScriptaculousHelper(EngineContext);
                 RenderTextFormat("\r\n{0}\r\n", helper.InstallScripts());
                 Context.ContextVars[wasScriptaculousInstalledKey] = true;
