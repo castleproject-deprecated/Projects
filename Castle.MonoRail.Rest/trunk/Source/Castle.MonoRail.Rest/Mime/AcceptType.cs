@@ -41,7 +41,7 @@ namespace Castle.MonoRail.Rest.Mime
 			{
 				var parms = splitHeaders[i].Split(';');
 				AcceptType at = new AcceptType();
-				at.Name = parms[0];
+				at.Name = parms[0].Trim();
 				at.Order = i;
 
 				at.Q = parms.Length == 2 ? Convert.ToSingle(parms[1].Substring(2)) : 1;
