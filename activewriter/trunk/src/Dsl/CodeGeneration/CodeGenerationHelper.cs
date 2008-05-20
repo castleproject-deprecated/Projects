@@ -59,7 +59,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private string _modelFileName = null;
         private string _modelFilePath = null;
         private ProjectItem _projectItem = null;
-    	private string _assemblyName = null;
 		private CodeLanguage _language = CodeLanguage.CSharp;
 
         #endregion
@@ -1379,13 +1378,21 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             System.Diagnostics.Process nhqg = new System.Diagnostics.Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
 
-            DirectoryInfo info = new DirectoryInfo(System.Environment.GetEnvironmentVariable("TEMP"));
-            string tempFileFolderName = Guid.NewGuid().ToString("N");
+            string tempFilePath = Path.Combine(DTEHelper.GetIntermediatePath(DTEHelper.GetVSProject(_projectItem)), "ActiveWriterHbmOutput");
             DirectoryInfo tempFileFolder = null;
 
             try
             {
-                tempFileFolder = info.CreateSubdirectory(tempFileFolderName);
+                if (Directory.Exists(tempFilePath))
+                {
+                    tempFileFolder = new DirectoryInfo(tempFilePath);
+                    foreach (var file in tempFileFolder.GetFiles())
+                    {
+                        file.Delete();
+                    }
+                }
+                else
+                    tempFileFolder = Directory.CreateDirectory(tempFilePath);
 
                 startInfo.FileName = _model.NHQGExecutable;
                 startInfo.WorkingDirectory = Path.GetDirectoryName(_model.NHQGExecutable);
@@ -1452,12 +1459,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private Assembly GenerateARAssembly(CodeCompileUnit compileUnit, bool generateInMemory)
         {
             List<string> addedAssemblies = new List<string>();
-            _assemblyName = Guid.NewGuid().ToString("N");
+            string assemblyName = "ActiveWriter.Temp.Assembly" + Guid.NewGuid().ToString("N") + ".dll";
             CompilerParameters parameters = new CompilerParameters
                                                 {
                                                     GenerateInMemory = generateInMemory,
-                                                    GenerateExecutable = false,
-                                                    OutputAssembly = (_assemblyName + ".dll")
+                                                    GenerateExecutable = false
                                                 };
 
             Assembly activeRecord = Assembly.Load(_model.ActiveRecordAssemblyName);
@@ -1472,7 +1478,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             addedAssemblies.Add("mscorlib.dll");
 
             // also add references to assemblies referenced by this project
-            VSProject proj = (VSProject)_projectItem.ContainingProject.Object;
+            VSProject proj = DTEHelper.GetVSProject(_projectItem);
             foreach (Reference reference in proj.References)
             {
                 if (!addedAssemblies.Contains(Path.GetFileName(reference.Path).ToLowerInvariant()))
@@ -1482,6 +1488,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 }
             }
 
+            parameters.OutputAssembly = generateInMemory
+                                            ? assemblyName
+                                            : Path.Combine(
+                                                  DTEHelper.GetIntermediatePath(proj), assemblyName);
+            
             CompilerResults results = _provider.CompileAssemblyFromDom(parameters, compileUnit);
             if (results.Errors.Count == 0)
             {

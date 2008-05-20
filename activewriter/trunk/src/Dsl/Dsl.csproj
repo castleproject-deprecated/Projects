@@ -14,7 +14,7 @@
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <SignAssembly>true</SignAssembly>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <GacTargetOutput>false</GacTargetOutput>
+    <GacTargetOutput>true</GacTargetOutput>
     <StartupObject>
     </StartupObject>
   </PropertyGroup>

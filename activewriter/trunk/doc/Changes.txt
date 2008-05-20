@@ -7,6 +7,7 @@ Fixed:
 - Swapped parameters in new ArgumentNullException (Patch: Roberto Paterlini)
 - Changed in-memory code compilation error reporting to give full details of the internal compile process. No more ExceptionCollection's.
 - Contrib-118: Activewriter errors in combination with VisualSVN (Patch: Visual SVN Team)
+- Changed the temporary file generation to use \obj folder rather than arbitrary locations on the system.
 
 Preview 4
 

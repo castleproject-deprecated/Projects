@@ -128,7 +128,7 @@
       <DependentUpon>GeneratedCodeVirtualPropertyTestModel.actiw</DependentUpon>
     </Compile>
     <Compile Include="Tests\Models\QueryBuilder.cs">
-      <DependentUpon>GeneratedCodeNHQGIntegrationWithNHTestModel.actiw</DependentUpon>
+      <DependentUpon>GeneratedCodeNHQGIntegrationWithARTestModel.actiw</DependentUpon>
     </Compile>
     <Compile Include="Tests\Models\Where.NHQGWithARMany.cs">
       <DependentUpon>GeneratedCodeNHQGIntegrationWithARTestModel.actiw</DependentUpon>

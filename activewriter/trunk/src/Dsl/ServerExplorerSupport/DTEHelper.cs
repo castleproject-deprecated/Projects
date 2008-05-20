@@ -16,12 +16,14 @@ using System;
 
 namespace Altinoren.ActiveWriter.ServerExplorerSupport
 {
+    using System.IO;
     using EnvDTE;
     using Microsoft.VisualStudio.Modeling;
     using System.Runtime.InteropServices;
     using System.Runtime.InteropServices.ComTypes;
     using Microsoft.VisualStudio.Modeling.Shell;
     using Microsoft.VisualStudio.Shell;
+    using VSLangProj;
 
     public static class DTEHelper
     {
@@ -107,6 +109,19 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
             {
                 return new ActiveWriterOptions();
             }
+        }
+
+        public static VSProject GetVSProject(ProjectItem item)
+        {
+            return (VSProject)item.ContainingProject.Object;
+        }
+
+        public static string GetIntermediatePath(VSProject project)
+        {
+            return Path.Combine(project.Project.Properties.Item(
+                                    "FullPath").Value.ToString(),
+                                project.Project.ConfigurationManager.ActiveConfiguration.Properties.Item(
+                                    "IntermediatePath").Value.ToString());
         }
     }
 }
