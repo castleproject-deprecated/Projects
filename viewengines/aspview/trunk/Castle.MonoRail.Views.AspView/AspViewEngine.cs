@@ -196,9 +196,7 @@ namespace Castle.MonoRail.Views.AspView
 			}
 			catch (Exception ex)
 			{
-				throw new AspViewException(string.Format(
-						"Cannot create view instance from '{0}'.",
-						fileName), ex);
+				throw new AspViewException(ex, "Cannot create view instance from '{0}'.", fileName);
 			}
 			if (theView == null)
 				throw new AspViewException(string.Format(
