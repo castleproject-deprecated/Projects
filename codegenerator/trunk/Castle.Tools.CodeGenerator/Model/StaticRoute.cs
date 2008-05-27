@@ -33,9 +33,8 @@ namespace Castle.Tools.CodeGenerator.Model
 			get { return routeName; }
 		}
 
-		public string CreateUrl(string hostname, string virtualPath, IDictionary parameters, out int points)
+		public string CreateUrl(string hostname, string virtualPath, IDictionary parameters)
 		{
-			points = 0;
 			if ((parameters["area"] != area) || (parameters["controller"] != controller) || (parameters["action"] != action))
 				return null;
 
@@ -50,7 +49,6 @@ namespace Castle.Tools.CodeGenerator.Model
 
 			AppendSlash(text);
 
-			points = 100;
 			return text.ToString();
 		}
 
