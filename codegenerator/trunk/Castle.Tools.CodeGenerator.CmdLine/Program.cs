@@ -127,17 +127,41 @@ namespace Castle.Tools.CodeGenerator.CmdLine
 			}
 
 			nodeIterator = GetCsprojNodeIterator(@"pr:Project/pr:PropertyGroup/pr:OutputPath");
-			nodeIterator.MoveNext();
+			List<string> outputPaths = new List<string>();
 
-			string outputPath = Path.Combine(arguments.ProjectPath, nodeIterator.Current.Value);
-
+			while(nodeIterator.MoveNext())
+			{
+				outputPaths.Add(Path.Combine(arguments.ProjectPath, nodeIterator.Current.Value));
+			}
+			
 			nodeIterator = GetCsprojNodeIterator(@"pr:Project/pr:ItemGroup/pr:ProjectReference/pr:Name");
 			
 			while (nodeIterator.MoveNext())
 			{
-				string assemblyPath = Path.Combine(outputPath, nodeIterator.Current.Value + ".dll");
-				Assembly.LoadFrom(assemblyPath);
-				loaded++;
+				string newestVersion = null;
+				DateTime? newestDate = null;
+				foreach (string outputPath in outputPaths)
+				{
+					string assemblyPath = Path.Combine(outputPath, nodeIterator.Current.Value + ".dll");  
+					// find the version of the assembly
+					if (File.Exists(assemblyPath)) {
+						DateTime editDate = File.GetLastWriteTime(assemblyPath);
+						if (!newestDate.HasValue || editDate > newestDate) 
+						{
+							newestDate = editDate;
+							newestVersion = assemblyPath;
+						}
+					}
+				}
+				if (newestVersion != null) 
+				{
+					Assembly.LoadFrom(newestVersion);
+					loaded++;
+				} 
+				else 
+				{
+					Console.Out.WriteLine("Castle.Tools.CodeGenerator: Warning - could not find a compiled version of {0}", nodeIterator.Current.Value);
+				}
 			}
 
 			Console.Out.WriteLine(string.Format("Castle.Tools.CodeGenerator: Loaded {0} references... ", loaded));
