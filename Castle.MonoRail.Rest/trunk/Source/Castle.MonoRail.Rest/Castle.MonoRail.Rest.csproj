@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionSelector.cs" />
     <Compile Include="Binding\XmlBindAttribute.cs" />
     <Compile Include="Binding\XmlTreeBuilder.cs" />
     <Compile Include="ControllerBridge.cs" />
