@@ -34,13 +34,13 @@ namespace Castle.Tools.CodeGenerator.Services
 		}
 
 		public IControllerViewReference CreateViewReference(ICodeGeneratorServices services, Type controllerType,
-		                                                    string controllerName, string areaName, string actionName)
+		                                                    string areaName, string controllerName, string actionName)
 		{
 			string key = MakeKey(areaName, controllerName, actionName);
 			if (!_views.ContainsKey(key))
 			{
 				_views[key] =
-					ReplayIfNecessary(_mocks.DynamicMock<ControllerViewReference>(services, controllerType, controllerName, areaName, actionName));
+					ReplayIfNecessary(_mocks.DynamicMock<ControllerViewReference>(services, controllerType, areaName, controllerName, actionName));
 			}
 			return _views[key];
 		}

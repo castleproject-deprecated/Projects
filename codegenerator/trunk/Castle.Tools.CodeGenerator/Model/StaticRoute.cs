@@ -33,12 +33,18 @@ namespace Castle.Tools.CodeGenerator.Model
 			get { return routeName; }
 		}
 
-		public string CreateUrl(string hostname, string virtualPath, IDictionary parameters)
+		private static string ParamToString(IDictionary parameters, string key)
 		{
-			if ((parameters["area"] != area) || (parameters["controller"] != controller) || (parameters["action"] != action))
+			object value = parameters[key];
+			return value == null ? null : value.ToString();
+		}
+
+		public string CreateUrl(IDictionary parameters)
+		{
+			if ((ParamToString(parameters, "area") != area) || (ParamToString(parameters, "controller") != controller) || (ParamToString(parameters, "action") != action))
 				return null;
 
-			StringBuilder text = new StringBuilder(virtualPath);
+			StringBuilder text = new StringBuilder();
 
 			foreach (string part in routeParts)
 			{
