@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MbUnit.Framework;
-using Castle.MonoRail.Rest.Mime;
-
-namespace Castle.MonoRail.Rest.Tests.Mime
+﻿namespace Castle.MonoRail.Rest.Tests.Mime
 {
-    [TestFixture]
+	using System.Globalization;
+	using System.Threading;
+	using MbUnit.Framework;
+	using Castle.MonoRail.Rest.Mime;
+
+	[TestFixture]
     public class AcceptTypeParsingFixture
     {
         private MimeTypes TestMimes;
-        [SetUp]
+
+		[SetUp]
         public void Setup()
         {
             TestMimes = new MimeTypes();
             TestMimes.Register("text/plain", "text");
             TestMimes.Register("text/html", "html", new[] {"application/xhtml+xml"});
             TestMimes.Register("application/xml", "xml",new[] {"text/xml"});
-            
+        	Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
         }
 
         private MimeType[] ParseHeader(string header)
