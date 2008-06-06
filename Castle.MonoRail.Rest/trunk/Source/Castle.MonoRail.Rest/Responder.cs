@@ -23,7 +23,7 @@ namespace Castle.MonoRail.Rest
 	using System.Xml.Serialization;
 	using System.Collections.Specialized;
 
-	public static class RepsonderExtensions 
+	public static class ResponderExtensions 
 	{
 		public static void Serialize(this Responder responder, Object obj)
 		{
