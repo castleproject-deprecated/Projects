@@ -77,7 +77,7 @@ namespace Castle.MonoRail.Rest
 			ResponseHandler handler = new ResponseHandler()
 			{
 				ControllerBridge = new ControllerBridge(this, _controllerAction),
-				AcceptedMimes = AcceptType.Parse(Request.Headers["Accept"], registeredMimes),
+				AcceptedMimes = AcceptType.Parse(AcceptHeader, registeredMimes),
 				Format = new ResponseFormat()
 			};
 
@@ -95,6 +95,11 @@ namespace Castle.MonoRail.Rest
 			return Context.Services.UrlBuilder.BuildUrl(Context.UrlInfo, new UrlBuilderParameters(Name, action));
 		}
 		
+		protected virtual string AcceptHeader
+		{
+			get { return Request.Headers["Accept"]; }
+		}
+
 		protected virtual string HttpMethod
 		{
 			get { return Request.HttpMethod; }
