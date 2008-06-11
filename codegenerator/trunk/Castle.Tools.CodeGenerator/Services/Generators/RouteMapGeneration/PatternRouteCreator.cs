@@ -134,6 +134,7 @@ namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration
 			CodeExpression[] expressions = base.CreateBuildUrlParameters(engineContext);
 			Array.Resize(ref expressions, expressions.Length + 1);
 
+			expressions[expressions.Length - 2] = new CodeObjectCreateExpression(typeof (Hashtable));
 			expressions[expressions.Length - 1] = new CodeVariableReferenceExpression(routeParametersFieldName);
 
 			return expressions;
