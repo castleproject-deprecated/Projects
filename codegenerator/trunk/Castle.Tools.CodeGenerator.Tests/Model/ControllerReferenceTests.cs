@@ -123,7 +123,7 @@ namespace Castle.Tools.CodeGenerator.Model
 		protected MockRepository _mocks;
 		protected IEngineContext _railsContext;
 		protected ControllerActionReference _reference;
-		protected MockResponse _response;
+		protected StubResponse _response;
 		protected IServerUtility _serverUtility;
 		protected ICodeGeneratorServices _services;
 		protected string _virtualDirectory = String.Empty;
@@ -138,15 +138,15 @@ namespace Castle.Tools.CodeGenerator.Model
 		{
 			_mocks = new MockRepository();
 			_services = _mocks.CreateMock<ICodeGeneratorServices>();
-			_response = new MockResponse();
+			_response = new StubResponse();
 			UrlInfo url =
 				new UrlInfo("eleutian.com", "www", _virtualDirectory, "http", 80,
 				            Path.Combine(Path.Combine("Area", "Controller"), "Action"), "Area", "Controller", "Action", "rails",
 				            "");
 			_railsContext =
-				new MockEngineContext(new MockRequest(), _response, new MockServices(), url);
+				new StubEngineContext(new StubRequest(), _response, new StubMonoRailServices(), url);
 
-			((MockEngineContext) _railsContext).Server = _mocks.DynamicMock<IServerUtility>();
+			((StubEngineContext)_railsContext).Server = _mocks.DynamicMock<IServerUtility>();
 			_serverUtility = _railsContext.Server;
 
 			_argumentConversionService = _mocks.CreateMock<IArgumentConversionService>();
