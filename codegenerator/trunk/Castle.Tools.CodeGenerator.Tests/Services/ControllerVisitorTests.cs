@@ -29,8 +29,8 @@ namespace Castle.Tools.CodeGenerator.Services
     {
       _mocks = new MockRepository();
       _logger = new NullLogger();
-      _typeResolver = _mocks.CreateMock<ITypeResolver>();
-      _treeService = _mocks.CreateMock<ITreeCreationService>();
+      _typeResolver = _mocks.DynamicMock<ITypeResolver>();
+      _treeService = _mocks.DynamicMock<ITreeCreationService>();
       _visitor = new ControllerVisitor(_logger, _typeResolver, _treeService);
     }
     #endregion
@@ -238,7 +238,7 @@ namespace Castle.Tools.CodeGenerator.Services
     {
       _mocks = new MockRepository();
       _typeResolver = new TypeResolver();
-      _typeResolver = _mocks.CreateMock<ITypeResolver>();
+      _typeResolver = _mocks.DynamicMock<ITypeResolver>();
       _treeService = new DefaultTreeCreationService();
       _visitor = new ControllerVisitor(new NullLogger(), _typeResolver, _treeService);
     }

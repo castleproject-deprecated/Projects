@@ -21,8 +21,8 @@ namespace Castle.Tools.CodeGenerator.Services
     public void Setup()
     {
       _mocks = new MockRepository();
-      _treeService = _mocks.CreateMock<ITreeCreationService>();
-      _naming = _mocks.CreateMock<INamingService>();
+      _treeService = _mocks.DynamicMock<ITreeCreationService>();
+      _naming = _mocks.DynamicMock<INamingService>();
       _mapper = new ViewSourceMapper(new NullLogger(), _treeService, _naming);
     }
     #endregion

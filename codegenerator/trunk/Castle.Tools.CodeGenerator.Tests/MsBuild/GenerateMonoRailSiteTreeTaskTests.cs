@@ -43,7 +43,7 @@ namespace Castle.Tools.CodeGenerator.MsBuild
         _engine.BinPath = @"C:\Program Files\MSBuild";
       }
       _project = new Project();
-      _buildEngine = _mocks.CreateMock<MockBuildEngine>(_project);
+      _buildEngine = _mocks.DynamicMock<MockBuildEngine>(_project);
       _task = new GenerateMonoRailSiteTreeTask();
     }
     #endregion
@@ -106,22 +106,22 @@ namespace Castle.Tools.CodeGenerator.MsBuild
       _engine = Engine.GlobalEngine;
       _engine.BinPath = @"C:\Program Files (x86)\MSBuild";
       _project = new Project();
-      _buildEngine = _mocks.CreateMock<MockBuildEngine>(_project);
+      _buildEngine = _mocks.DynamicMock<MockBuildEngine>(_project);
 
       _logger = new NullLogger();
-      _parserService = _mocks.CreateMock<ISiteTreeGeneratorService>();
-      _naming = _mocks.CreateMock<INamingService>();
-      _sourceStorage = _mocks.CreateMock<IParsedSourceStorageService>();
-      _source = _mocks.CreateMock<ISourceGenerator>();
-      _typeResolver = _mocks.CreateMock<ITypeResolver>();
-      _treeService = _mocks.CreateMock<ITreeCreationService>();
-      _viewSourceMapper = _mocks.CreateMock<IViewSourceMapper>();
-      _generator = _mocks.CreateMock<IGenerator>();
+      _parserService = _mocks.DynamicMock<ISiteTreeGeneratorService>();
+      _naming = _mocks.DynamicMock<INamingService>();
+      _sourceStorage = _mocks.DynamicMock<IParsedSourceStorageService>();
+      _source = _mocks.DynamicMock<ISourceGenerator>();
+      _typeResolver = _mocks.DynamicMock<ITypeResolver>();
+      _treeService = _mocks.DynamicMock<ITreeCreationService>();
+      _viewSourceMapper = _mocks.DynamicMock<IViewSourceMapper>();
+      _generator = _mocks.DynamicMock<IGenerator>();
 
       _task = new GenerateMonoRailSiteTreeTask(_logger, _parserService, _naming, _source, _sourceStorage, _typeResolver, _treeService, _viewSourceMapper, _generator);
 
-      _item = _mocks.CreateMock<ITaskItem>();
-      _parsedSource = _mocks.CreateMock<IParser>();
+      _item = _mocks.DynamicMock<ITaskItem>();
+      _parsedSource = _mocks.DynamicMock<IParser>();
     }
     #endregion
 

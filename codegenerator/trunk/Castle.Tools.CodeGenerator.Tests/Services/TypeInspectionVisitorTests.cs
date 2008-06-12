@@ -22,7 +22,7 @@ namespace Castle.Tools.CodeGenerator.Services
   	public void Setup()
   	{
   		_mocks = new MockRepository();
-      _typeResolver = _mocks.CreateMock<ITypeResolver>();
+      _typeResolver = _mocks.DynamicMock<ITypeResolver>();
       _visitor = new TypeInspectionVisitor(_typeResolver);
 
       _type = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>());

@@ -23,8 +23,8 @@ namespace Castle.Tools.CodeGenerator.MsBuild
   	public void Setup()
   	{
   		_mocks = new MockRepository();
-      _task = _mocks.CreateMock<ITask>();
-      _engine = _mocks.CreateMock<IBuildEngine>();
+      _task = _mocks.DynamicMock<ITask>();
+      _engine = _mocks.DynamicMock<IBuildEngine>();
       _logger = new MsBuildLogger(new TaskLoggingHelper(_task));
   	}
   	#endregion

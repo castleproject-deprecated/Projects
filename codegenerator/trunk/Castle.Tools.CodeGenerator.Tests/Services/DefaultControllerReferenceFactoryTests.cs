@@ -23,8 +23,8 @@ namespace Castle.Tools.CodeGenerator.Services
     public virtual void Setup()
     {
       _mocks = new MockRepository();
-      _services = _mocks.CreateMock<ICodeGeneratorServices>();
-      _controller = _mocks.CreateMock<TestController>();
+      _services = _mocks.DynamicMock<ICodeGeneratorServices>();
+      _controller = _mocks.DynamicMock<TestController>();
       _factory = new DefaultControllerReferenceFactory();
     }
     #endregion

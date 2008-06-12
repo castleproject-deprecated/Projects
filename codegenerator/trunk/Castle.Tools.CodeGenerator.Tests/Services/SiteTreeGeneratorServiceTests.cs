@@ -28,11 +28,11 @@ namespace Castle.Tools.CodeGenerator.Services
     {
       _mocks = new MockRepository();
       _logger = new NullLogger();
-      _typeResolver = _mocks.CreateMock<ITypeResolver>();
-      _visitor = _mocks.CreateMock<IAstVisitor>();
-      _sources = _mocks.CreateMock<IParsedSourceStorageService>();
-      _parserFactory = _mocks.CreateMock<IParserFactory>();
-      _parser = _mocks.CreateMock<IParser>();
+      _typeResolver = _mocks.DynamicMock<ITypeResolver>();
+      _visitor = _mocks.DynamicMock<IAstVisitor>();
+      _sources = _mocks.DynamicMock<IParsedSourceStorageService>();
+      _parserFactory = _mocks.DynamicMock<IParserFactory>();
+      _parser = _mocks.DynamicMock<IParser>();
       _service = new SiteTreeGeneratorService(_logger, _typeResolver, _sources, _parserFactory);
       _path = "~~TemporarySource.cs";
       WriteSampleSource(_path);

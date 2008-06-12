@@ -137,7 +137,7 @@ namespace Castle.Tools.CodeGenerator.Model
 		public virtual void Setup()
 		{
 			_mocks = new MockRepository();
-			_services = _mocks.CreateMock<ICodeGeneratorServices>();
+			_services = _mocks.DynamicMock<ICodeGeneratorServices>();
 			_response = new StubResponse();
 			UrlInfo url =
 				new UrlInfo("eleutian.com", "www", _virtualDirectory, "http", 80,
@@ -149,7 +149,7 @@ namespace Castle.Tools.CodeGenerator.Model
 			((StubEngineContext)_railsContext).Server = _mocks.DynamicMock<IServerUtility>();
 			_serverUtility = _railsContext.Server;
 
-			_argumentConversionService = _mocks.CreateMock<IArgumentConversionService>();
+			_argumentConversionService = _mocks.DynamicMock<IArgumentConversionService>();
 			_controller = new TestController();
 		}
 

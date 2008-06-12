@@ -36,15 +36,15 @@ namespace Castle.Tools.CodeGenerator.Services
     [Test]
     public void Add_NewSource_Works()
     {
-      _service.Add("Source.cs", _mocks.CreateMock<IParser>());
+      _service.Add("Source.cs", _mocks.DynamicMock<IParser>());
       Assert.IsNotNull(_service.GetParsedSource("Source.cs"));
     }
 
     [Test]
     public void Add_TwpSources_Works()
     {
-      _service.Add("Source1.cs", _mocks.CreateMock<IParser>());
-      _service.Add("Source2.cs", _mocks.CreateMock<IParser>());
+      _service.Add("Source1.cs", _mocks.DynamicMock<IParser>());
+      _service.Add("Source2.cs", _mocks.DynamicMock<IParser>());
       Assert.IsNotNull(_service.GetParsedSource("Source1.cs"));
       Assert.IsNotNull(_service.GetParsedSource("Source2.cs"));
     }
@@ -53,8 +53,8 @@ namespace Castle.Tools.CodeGenerator.Services
     [ExpectedException(typeof(ArgumentException))]
     public void Add_DuplicateSource_Throws()
     {
-      _service.Add("Source.cs", _mocks.CreateMock<IParser>());
-      _service.Add("Source.cs", _mocks.CreateMock<IParser>());
+      _service.Add("Source.cs", _mocks.DynamicMock<IParser>());
+      _service.Add("Source.cs", _mocks.DynamicMock<IParser>());
     }
     #endregion
   }

@@ -15,11 +15,11 @@ namespace Castle.Tools.CodeGenerator.Services
 		{
 			_controller = new TestController();
 			_mocks = new MockRepository();
-			_controllerReferenceFactory = _mocks.CreateMock<IControllerReferenceFactory>();
-			_argumentConversionService = _mocks.CreateMock<IArgumentConversionService>();
-			_runtimeInformationService = _mocks.CreateMock<IRuntimeInformationService>();
+			_controllerReferenceFactory = _mocks.DynamicMock<IControllerReferenceFactory>();
+			_argumentConversionService = _mocks.DynamicMock<IArgumentConversionService>();
+			_runtimeInformationService = _mocks.DynamicMock<IRuntimeInformationService>();
 			_services = new DefaultCodeGeneratorServices(_controllerReferenceFactory, _argumentConversionService, _runtimeInformationService);
-			_context = _mocks.CreateMock<IEngineContext>();
+			_context = _mocks.DynamicMock<IEngineContext>();
 			Assert.AreEqual(_controllerReferenceFactory, _services.ControllerReferenceFactory);
 			Assert.AreEqual(_argumentConversionService, _services.ArgumentConversionService);
 			Assert.AreEqual(_runtimeInformationService, _services.RuntimeInformationService);

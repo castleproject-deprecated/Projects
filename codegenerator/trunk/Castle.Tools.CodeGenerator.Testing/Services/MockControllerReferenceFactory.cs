@@ -16,7 +16,7 @@ namespace Castle.Tools.CodeGenerator.Services
 		public MockControllerReferenceFactory(MockRepository mocks)
 		{
 			_mocks = mocks;
-			_control = mocks.CreateMock<object>();
+			_control = mocks.DynamicMock<object>();
 		}
 
 		public IControllerActionReference CreateActionReference(ICodeGeneratorServices services, Type controllerType,

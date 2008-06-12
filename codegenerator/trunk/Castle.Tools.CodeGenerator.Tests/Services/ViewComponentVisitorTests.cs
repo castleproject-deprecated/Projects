@@ -24,8 +24,8 @@ namespace Castle.Tools.CodeGenerator.Services
     {
       _mocks = new MockRepository();
       _logger = new NullLogger();
-      _typeResolver = _mocks.CreateMock<ITypeResolver>();
-      _treeService = _mocks.CreateMock<ITreeCreationService>();
+      _typeResolver = _mocks.DynamicMock<ITypeResolver>();
+      _treeService = _mocks.DynamicMock<ITreeCreationService>();
       _visitor = new ViewComponentVisitor(_logger, _typeResolver, _treeService);
     }
     #endregion
