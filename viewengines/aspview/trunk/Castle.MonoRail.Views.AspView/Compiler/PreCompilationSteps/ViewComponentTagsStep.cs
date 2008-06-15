@@ -71,8 +71,11 @@ namespace Castle.MonoRail.Views.AspView.Compiler.PreCompilationSteps
 						string.Join(", ", pairs.ToArray()));
 
 				return string.Format(
-					@"<% InvokeViewComponent(""{0}"", {1}, {2}{3}); %>",
-					componentTypeName, bodyHandlerName ?? "null", sectionHandlersArray, parametersString);
+					@"<% InvokeViewComponent(""{0}""{1}, {2}, {3}); %>",
+					componentTypeName, 
+					parametersString,
+					bodyHandlerName ?? "null", 
+					sectionHandlersArray);
 			});
 		}
 

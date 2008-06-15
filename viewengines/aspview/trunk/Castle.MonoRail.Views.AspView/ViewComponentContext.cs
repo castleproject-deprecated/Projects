@@ -45,17 +45,6 @@ namespace Castle.MonoRail.Views.AspView
 			componentParameters = parameters;
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ViewComponentContext"/> class.
-		/// </summary>
-		/// <param name="callingView">The parent.</param>
-		/// <param name="body">The body.</param>
-		/// <param name="name">The name.</param>
-		/// <param name="arguments">The arguments.</param>
-		public ViewComponentContext(IViewBaseInternal callingView, ViewComponentSectionRendereDelegate body,
-										 string name, params object[] arguments)
-			: this(callingView, body, name, Utilities.ConvertArgumentsToParameters(arguments)) { }
-
 		public ViewComponentSectionRendereDelegate Body
 		{
 			get { return body; }

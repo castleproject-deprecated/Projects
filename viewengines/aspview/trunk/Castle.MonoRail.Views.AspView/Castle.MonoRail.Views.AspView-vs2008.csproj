@@ -132,7 +132,6 @@
     <Compile Include="Compiler\SourceFile.cs" />
     <Compile Include="IViewFilter.cs" />
     <Compile Include="ReferencedAssembly.cs" />
-    <Compile Include="Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewAtDesignTime.cs">
       <SubType>ASPXCodeBehind</SubType>

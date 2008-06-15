@@ -1,10 +1,12 @@
 namespace Castle.MonoRail.Views.AspView.Tests.ViewTests.Views
 {
+	using Framework.Helpers;
+
 	public class WithComponentWithParameter : AspViewBase
 	{
 		public override void Render()
 		{
-			InvokeViewComponent("WithMandatoryParameter", null, null, "tExt", Properties["text"]);
+			InvokeViewComponent("WithMandatoryParameter", DictHelper.CreateN("tExt", Properties["text"]));
 		}
 
 		protected override string ViewDirectory

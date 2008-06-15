@@ -94,7 +94,7 @@ after
 ";
 			expected = @"
 before
-<% OutputSubView(""Simple"", ""name"", ""Ken""); %>
+<% OutputSubView(""Simple"", N(""name"", ""Ken"")); %>
 after
 ";
 
@@ -114,7 +114,7 @@ after
 ";
 			expected = @"
 before
-<% OutputSubView(""Simple"", ""name"", ""Ken\\Egozi""); %>
+<% OutputSubView(""Simple"", N(""name"", ""Ken\\Egozi"")); %>
 after
 ";
 
@@ -134,7 +134,7 @@ after
 ";
 			expected = @"
 before
-<% OutputSubView(""Simple"", ""age"", 29); %>
+<% OutputSubView(""Simple"", N(""age"", 29)); %>
 after
 ";
 
@@ -154,7 +154,7 @@ after
 ";
 			expected = @"
 before
-<% OutputSubView(""Simple"", ""name"", ""Ken""); %>
+<% OutputSubView(""Simple"", N(""name"", ""Ken"")); %>
 after
 ";
 
@@ -174,7 +174,7 @@ after
 ";
 			expected = @"
 before
-<% OutputSubView(""Simple"", ""age"", myAge); %>
+<% OutputSubView(""Simple"", N(""age"", myAge)); %>
 after
 ";
 
@@ -194,7 +194,7 @@ after
 ";
 			expected = @"
 before
-<% OutputSubView(""Simple"", ""age"", me.Age); %>
+<% OutputSubView(""Simple"", N(""age"", me.Age)); %>
 after
 ";
 
@@ -214,7 +214,7 @@ after
 ";
 			expected = @"
 before
-<% OutputSubView(""Simple"", ""age"", people[index].GetAge(In.Years)); %>
+<% OutputSubView(""Simple"", N(""age"", people[index].GetAge(In.Years))); %>
 after
 ";
 

@@ -16,9 +16,6 @@
 
 #endregion
 
-using System.Collections.Specialized;
-using Castle.MonoRail.Framework.Helpers;
-
 namespace Castle.MonoRail.Views.AspView
 {
 	using System;
@@ -29,6 +26,7 @@ namespace Castle.MonoRail.Views.AspView
 	using System.Web;
 	using Components.DictionaryAdapter;
 	using Framework;
+	using Framework.Helpers;
 
 	public abstract class AspViewBase : IViewBaseInternal
 	{
@@ -38,7 +36,7 @@ namespace Castle.MonoRail.Views.AspView
 		private IController controller;
 		private IControllerContext controllerContext;
 		private IHelpersAccesor helpers;
-		private bool initialized = false;
+		private bool initialized;
 		private TextWriter outputWriter;
 
 		/// <summary>
@@ -72,7 +70,7 @@ namespace Castle.MonoRail.Views.AspView
 			get
 			{
 				if (helpers == null)
-					helpers = dictionaryAdapterFactory.GetAdapter<IHelpersAccesor>((IDictionary)Properties);
+					helpers = dictionaryAdapterFactory.GetAdapter<IHelpersAccesor>(Properties);
 				return helpers;
 			}
 		}
@@ -151,15 +149,50 @@ namespace Castle.MonoRail.Views.AspView
 		}
 
 		/// <summary>
-		/// Invokes a view component, and registeres section handlers
+		/// Invokes a parameterless, bodyless, sectionless view component
+		/// </summary>
+		/// <param name="componentName">The view component name</param>
+		protected void InvokeViewComponent(string componentName)
+		{
+			InvokeViewComponent(componentName, new DictHelper.MonoRailDictionary(), null, null);
+		}
+
+		/// <summary>
+		/// Invokes a bodyless, sectionless view component
+		/// </summary>
+		/// <param name="componentName">The view component name</param>
+		/// <param name="parameters">The parameters to be passed to the component</param>
+		protected void InvokeViewComponent(string componentName, IDictionary parameters)
+		{
+			InvokeViewComponent(componentName, parameters, null, null);
+		}
+
+		/// <summary>
+		/// Invokes a parameterless view component, and registeres section handlers
 		/// </summary>
 		/// <param name="componentName">The view component name</param>
 		/// <param name="bodyHandler">Delegate to render the component's body. null if the component does not have a body</param>
 		/// <param name="sectionHandlers">Delegates to render the component's sections, by the delegate names</param>
+		protected void InvokeViewComponent(
+			string componentName,
+			ViewComponentSectionRendereDelegate bodyHandler,
+			IEnumerable<KeyValuePair<string, ViewComponentSectionRendereDelegate>> sectionHandlers)
+		{
+			InvokeViewComponent(componentName, new DictHelper.MonoRailDictionary(), bodyHandler, sectionHandlers);
+		}
+	
+		/// <summary>
+		/// Invokes a view component, and registeres section handlers
+		/// </summary>
+		/// <param name="componentName">The view component name</param>
 		/// <param name="parameters">The parameters to be passed to the component</param>
-		protected void InvokeViewComponent(string componentName, ViewComponentSectionRendereDelegate bodyHandler,
-		                                   IEnumerable<KeyValuePair<string, ViewComponentSectionRendereDelegate>>
-		                                   	sectionHandlers, params object[] parameters)
+		/// <param name="bodyHandler">Delegate to render the component's body. null if the component does not have a body</param>
+		/// <param name="sectionHandlers">Delegates to render the component's sections, by the delegate names</param>
+		protected void InvokeViewComponent(
+			string componentName, 
+			IDictionary parameters,
+			ViewComponentSectionRendereDelegate bodyHandler,
+            IEnumerable<KeyValuePair<string, ViewComponentSectionRendereDelegate>> sectionHandlers)
 		{
 			ViewComponentContext viewComponentContext = new ViewComponentContext(
 				this, bodyHandler,
@@ -225,6 +258,26 @@ namespace Castle.MonoRail.Views.AspView
 		}
 
 		/// <summary>
+		/// Creates a MonoRailDictionary with a single entry
+		/// </summary>
+		/// <param name="name">The entry's name</param>
+		/// <param name="value">The entry's value</param>
+		/// <returns>The new dictionary</returns>
+		protected DictHelper.MonoRailDictionary N(string name, object value)
+		{
+			return Helpers.Dict.N(name, value);
+		}
+
+		/// <summary>
+		/// Renders another view in place
+		/// </summary>
+		/// <param name="subViewName">The sub view's name</param>
+		protected void OutputSubView(string subViewName)
+		{
+			OutputSubView(subViewName, outputWriter, new DictHelper.MonoRailDictionary());
+		}
+
+		/// <summary>
 		/// Renders another view in place
 		/// </summary>
 		/// <param name="subViewName">The sub view's name</param>
@@ -250,16 +303,6 @@ namespace Castle.MonoRail.Views.AspView
 						subView.Properties[key] = parameters[key];
 			subView.Render();
 			GatherBubblingPropertiesFrom(subView);
-		}
-
-		/// <summary>
-		/// Renders another view in place
-		/// </summary>
-		/// <param name="subViewName">The sub view's name</param>
-		/// <param name="arguments">Parameters that can be sent to the sub view's Properties container</param>
-		protected void OutputSubView(string subViewName, params object[] arguments)
-		{
-			OutputSubView(subViewName, outputWriter, arguments);
 		}
 
 		/// <summary>
@@ -304,19 +347,6 @@ namespace Castle.MonoRail.Views.AspView
 		}
 
 		/// <summary>
-		/// Renders another view in place
-		/// </summary>
-		/// <param name="subViewName">The sub view's name</param>
-		/// <param name="writer">The writer that will be used for the sub view's output</param>
-		/// <param name="arguments">Parameters that can be sent to the sub view's ordered as name, value</param>
-		internal void OutputSubView(string subViewName, TextWriter writer, params object[] arguments)
-		{
-			IDictionary parameters =
-				Utilities.ConvertArgumentsToParameters(arguments) as IDictionary;
-			OutputSubView(subViewName, writer, parameters);
-		}
-
-		/// <summary>
 		/// Sets a view's parent view. Used in layouts
 		/// </summary>
 		/// <param name="view">The view's parent</param>
@@ -347,8 +377,8 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			if (subViewName[0] == '/' || subViewName[0] == '\\')
 				return subViewName + "." + viewEngine.ViewFileExtension;
-			else
-				return Path.Combine(ViewDirectory, subViewName + "." + viewEngine.ViewFileExtension);
+
+            return Path.Combine(ViewDirectory, subViewName + "." + viewEngine.ViewFileExtension);
 		}
 
 		private void InitProperties()
@@ -463,7 +493,6 @@ namespace Castle.MonoRail.Views.AspView
 			outputWriters = new Stack<TextWriter>();
 			viewFilters = new Stack<IViewFilter>();
 		}
-
 
 		public void Process()
 		{

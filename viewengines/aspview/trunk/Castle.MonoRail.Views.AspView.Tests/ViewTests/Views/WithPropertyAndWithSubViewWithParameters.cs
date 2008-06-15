@@ -1,5 +1,7 @@
 namespace Castle.MonoRail.Views.AspView.Tests.ViewTests.Views
 {
+	using Framework.Helpers;
+
 	public class WithPropertyAndWithSubViewWithParameters : AspViewBase
 	{
 		private string prop { get { return (string)GetParameter("prop"); } }
@@ -8,7 +10,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.ViewTests.Views
 		{
 			Output(@"Parent
 ");
-			OutputSubView("SubView", "prop", "property");
+			OutputSubView("SubView", DictHelper.CreateN("prop", "property"));
 			Output(@"
 ");
 			Output(prop);

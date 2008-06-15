@@ -52,7 +52,7 @@ after
 ";
 			expected = @"
 before
-<% InvokeViewComponent(""Simple"", null, null, ""name"", ""Ken""); %>
+<% InvokeViewComponent(""Simple"", N(""name"", ""Ken""), null, null); %>
 after
 ";
 
@@ -72,7 +72,7 @@ after
 ";
 			expected = @"
 before
-<% InvokeViewComponent(""Simple"", null, null, ""name"", ""A-B-C""); %>
+<% InvokeViewComponent(""Simple"", N(""name"", ""A-B-C""), null, null); %>
 after
 ";
 
@@ -92,7 +92,7 @@ after
 ";
 			expected = @"
 before
-<% InvokeViewComponent(""Simple"", null, null, ""name"", ""A B C""); %>
+<% InvokeViewComponent(""Simple"", N(""name"", ""A B C""), null, null); %>
 after
 ";
 
@@ -112,7 +112,7 @@ after
 ";
 			expected = @"
 before
-<% InvokeViewComponent(""Simple"", null, null, ""age"", myAge); %>
+<% InvokeViewComponent(""Simple"", N(""age"", myAge), null, null); %>
 after
 ";
 
@@ -132,7 +132,7 @@ after
 ";
 			expected = @"
 before
-<% InvokeViewComponent(""Simple"", null, null, ""age"", me.Age); %>
+<% InvokeViewComponent(""Simple"", N(""age"", me.Age), null, null); %>
 after
 ";
 
@@ -152,7 +152,7 @@ after
 ";
 			 expected = @"
 before
-<% InvokeViewComponent(""Simple"", null, null, ""age"", people[index].GetAge(In.Years)); %>
+<% InvokeViewComponent(""Simple"", N(""age"", people[index].GetAge(In.Years)), null, null); %>
 after
 ";
 

@@ -16,15 +16,23 @@
 
 namespace Castle.MonoRail.Views.AspView.Compiler
 {
-	using System.Text;
+	using System.Collections.Generic;
 	using System.Text.RegularExpressions;
 
 	public static class Utilities
 	{
 		public static string GetAttributesStringFrom(string attributes)
 		{
-			StringBuilder attributesString = new StringBuilder();
-			foreach (Match attribute in Internal.RegularExpressions.Attributes.Matches(attributes))
+			MatchCollection mathces = Internal.RegularExpressions.Attributes.Matches(attributes);
+			
+			if (mathces.Count == 0)
+			{
+				return null;
+			}
+
+			List<string> pairs = new List<string>(mathces.Count);
+
+			foreach (Match attribute in mathces)
 			{
 				string name = attribute.Groups["name"].Value;
 				string value = attribute.Groups["value"].Value;
@@ -38,10 +46,9 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 					value = value.Replace("\\", "\\\\");
 					value = string.Format("\"{0}\"", value);
 				}
-				attributesString.AppendFormat(", \"{0}\", {1}",
-					name, value);
+				pairs.Add(string.Format("N(\"{0}\", {1})", name, value));
 			}
-			return attributesString.ToString();
+			return ", " + string.Join(".", pairs.ToArray());
 		}
 	}
 }

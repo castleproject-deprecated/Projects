@@ -1,12 +1,14 @@
 namespace Castle.MonoRail.Views.AspView.Tests.ViewTests.Views
 {
+	using Framework.Helpers;
+
 	public class WithCaptureFor : AspViewBase
 	{
 		public override void Render()
 		{
 			Output(@"Parent
 ");
-			InvokeViewComponent("CaptureFor", CaptureFor1_body, null, "id", "CapturedContent");
+			InvokeViewComponent("CaptureFor", DictHelper.CreateN("id", "CapturedContent"), CaptureFor1_body, null);
 			Output(@"
 Parent");
 		}

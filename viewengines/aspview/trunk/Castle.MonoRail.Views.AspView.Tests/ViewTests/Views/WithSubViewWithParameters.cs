@@ -1,12 +1,14 @@
 namespace Castle.MonoRail.Views.AspView.Tests.ViewTests.Views
 {
+	using Framework.Helpers;
+
 	public class WithSubViewWithParameters : AspViewBase
 	{
 		public override void Render()
 		{
 			Output(@"Parent
 ");
-			OutputSubView("SubView", "prop", "property");
+			OutputSubView("SubView", DictHelper.CreateN("prop", "property"));
 			Output(@"
 Parent");
 		}
