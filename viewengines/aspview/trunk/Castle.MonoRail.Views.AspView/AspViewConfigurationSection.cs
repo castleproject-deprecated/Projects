@@ -69,12 +69,12 @@ namespace Castle.MonoRail.Views.AspView
 							isFromGac = bool.Parse(attribute.Value);
 							break;
 						default:
-							throw new AspViewException("Config error: Unknown attribute [{0}] on reference node, in aspview config section", attribute.Name);
+							throw new ConfigurationErrorsException(string.Format("Config error: Unknown attribute [{0}] on reference node, in aspview config section", attribute.Name));
 					}
 				}
 
 				if (string.IsNullOrEmpty(name))
-					throw new AspViewException("Config error: reference must have an assembly name");
+					throw new ConfigurationErrorsException("Config error: reference must have an assembly name");
 
 				if (isFromGac)
 					source = ReferencedAssembly.AssemblySource.GlobalAssemblyCache;
@@ -114,7 +114,7 @@ namespace Castle.MonoRail.Views.AspView
 						saveFiles = bool.Parse(attribute.Value);
 						break;
 					default:
-						throw new AspViewException("Config error: Unknown attribute [{0}] in aspview config section", attribute.Name);
+						throw new ConfigurationErrorsException(string.Format("Config error: Unknown attribute [{0}] in aspview config section", attribute.Name));
 				}
 			}
 
@@ -158,7 +158,7 @@ namespace Castle.MonoRail.Views.AspView
 								implementationAssemblyName = typeParts[1].Trim();
 							break;
 						default:
-							throw new AspViewException("Config error: Unknown attribute [{0}] in aspview config section, provider node.\r\nExpected attributes: [name, type]", attribute.Name);
+							throw new ConfigurationErrorsException(string.Format("Config error: Unknown attribute [{0}] in aspview config section, provider node.\r\nExpected attributes: [name, type]", attribute.Name));
 					}
 				}
 				Assembly serviceAssembly;
@@ -175,7 +175,7 @@ namespace Castle.MonoRail.Views.AspView
 					string unloadedAssembly = isServiceAssemblyLoaded ?
 						implementationAssemblyName :
 						serviceAssemblyName;
-					throw new AspViewException(string.Format("Could not load assembly [{0}]", unloadedAssembly), ex);
+					throw new ConfigurationErrorsException(string.Format("Could not load assembly [{0}]", unloadedAssembly), ex);
 				}
 
 				Type service = serviceAssembly.GetType(serviceName, false);

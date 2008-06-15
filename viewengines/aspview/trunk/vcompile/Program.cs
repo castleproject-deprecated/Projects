@@ -14,6 +14,8 @@
 // limitations under the License.
 #endregion
 
+using System.Configuration;
+
 namespace Castle.MonoRail.AspView.VCompile
 {
 	using System;
@@ -27,91 +29,141 @@ namespace Castle.MonoRail.AspView.VCompile
 
 	public class vcompile
 	{
-		static AspViewEngineOptions options;
-		static string siteRoot;
-		static int Main(string[] args)
+		static Arguments arguments;
+
+		static void Main()
 		{
-			ParseArguments(args);
-			SetDefaultSiteRootIfNotAlreadySet();
-
-			Console.WriteLine("Compiling [" + siteRoot + "] ...");
-
-			InitializeConfig();
-
-			if(ValidateEnvironment() == false)
-			{
-				Console.ReadLine();
-				return -1;
-			}
-
-			OfflineCompiler compiler;
 			try
 			{
-				ICompilationContext compilationContext = CreateCompilationContext();
+				ParseCommandLineArguments();
+				SetDefaultsForArguments();
+				ValidateEnvironment();
 
-				compiler = new OfflineCompiler(
+				Console.WriteLine("Compiling [" + arguments.SiteRoot + "] ...");
+
+				AspViewEngineOptions options = InitializeConfig();
+
+				ICompilationContext compilationContext = CreateCompilationContext(options.CompilerOptions.TemporarySourceFilesDirectory);
+
+				OfflineCompiler compiler = new OfflineCompiler(
 					new CSharpCodeProviderAdapterFactory(),
-					new PreProcessor(), 
+					new PreProcessor(),
 					compilationContext, options.CompilerOptions, new DefaultFileSystemAdapter());
-			}
-			catch(Exception e)
-			{
-				PrintHelpMessage("Could not start the compiler because: " + e.Message);
-				return -2;
-			}
 
-			try
-			{
 				string path = compiler.Execute();
 
-				Console.WriteLine("[{0}] compiled into [{1}].", siteRoot, path);
-				return 0;
+				Console.WriteLine("[{0}] compiled into [{1}].", arguments.SiteRoot, path);
+			}
+			catch (ConfigurationErrorsException ce)
+			{
+				PrintHelpMessage(ce.Message);
+				Environment.Exit(-2);
+			}
+			catch (ArgumentException ae)
+			{
+				PrintHelpMessage(ae.Message);
+				Environment.Exit(-3);
+			}
+			catch (ApplicationException ae)
+			{
+				PrintHelpMessage(ae.Message);
+				Environment.Exit(-4);
 			}
 			catch (Exception ex)
 			{
 				PrintHelpMessage("Could not compile." + Environment.NewLine + ex);
-				return -3;
+				Environment.Exit(-1);
 			}
 
 		}
 
-		private static ICompilationContext CreateCompilationContext()
+		static ICompilationContext CreateCompilationContext(string temporarySourceFilesDirectory)
 		{
 			return new CompilationContext(
-				new DirectoryInfo(Path.Combine(siteRoot, "bin")),
-				new DirectoryInfo(siteRoot),
-				new DirectoryInfo(Path.Combine(siteRoot, "views")),
-				new DirectoryInfo(options.CompilerOptions.TemporarySourceFilesDirectory));
+				new DirectoryInfo(Path.Combine(arguments.SiteRoot, "bin")),
+				new DirectoryInfo(arguments.SiteRoot),
+				new DirectoryInfo(arguments.ViewPathRoot),
+				new DirectoryInfo(temporarySourceFilesDirectory));
 		}
 
-		private static bool ValidateEnvironment()
+		static void ValidateEnvironment()
 		{
-			if (!Directory.Exists(siteRoot))
+			if (Directory.Exists(arguments.SiteRoot) == false)
 			{
-				PrintHelpMessage(string.Format("The path '{0}' does not exist", siteRoot));
-				return false;
+				throw new ArgumentException(string.Format("The site root path '{0}' does not exist", arguments.SiteRoot));
 			}
-			return true;
-		}
 
-		private static void SetDefaultSiteRootIfNotAlreadySet()
-		{
-			if (siteRoot == null)
+			if (Directory.Exists(arguments.ViewPathRoot) == false)
 			{
-				string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-				siteRoot = baseDirectory.Substring(0, baseDirectory.LastIndexOf("\\bin", StringComparison.InvariantCultureIgnoreCase));
+				throw new ArgumentException(string.Format("The views folder path '{0}' does not exist", arguments.ViewPathRoot));
 			}
 		}
 
-		private static void ParseArguments(string[] args)
+		static void SetDefaultsForArguments()
 		{
-			if (args != null && args.Length == 1)
+			if (arguments.SiteRoot == null)
 			{
-				if (args[0].Equals("-w", StringComparison.InvariantCultureIgnoreCase) ||
-				    args[0].Equals("-wait", StringComparison.InvariantCultureIgnoreCase))
-					Console.ReadLine();
-				else
-					siteRoot = args[0];
+				DirectoryInfo runningDirectoryInfo = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+				DirectoryInfo siteRootDirectoryInfo = runningDirectoryInfo.Parent;
+				if (siteRootDirectoryInfo == null)
+				{
+					throw new ApplicationException("Site root was not specified and could not be guessed");
+				}
+
+				arguments.SiteRoot = siteRootDirectoryInfo.FullName;
+			}
+
+			if (arguments.ViewPathRoot == null)
+			{
+				arguments.ViewPathRoot = Path.Combine(arguments.SiteRoot, "views");
+			}
+			else if (Path.IsPathRooted(arguments.ViewPathRoot) == false)
+			{
+				arguments.ViewPathRoot = Path.Combine(arguments.SiteRoot, arguments.ViewPathRoot);
+			}
+		}
+
+		static string GetArgumentValueFrom(string[] parts)
+		{
+			string[] valueParts = new string[parts.Length - 1];
+			Array.Copy(parts, 1, valueParts, 0, valueParts.Length);
+			return string.Join(":", valueParts).Trim().Trim('"');
+		}
+
+		static void ParseCommandLineArguments()
+		{
+			arguments = new Arguments();
+
+			string[] args = Environment.GetCommandLineArgs();
+
+			if (args.Length == 1)
+				return;
+			for (int i = 1; i < args.Length; ++i)
+			{
+				string[] parts = args[i].Split(':');
+
+				switch (parts[0].ToLowerInvariant())
+				{
+					case "/w":
+					case "/wait":
+						arguments.Wait = true;
+						Console.ReadLine();
+						break;
+					case "/r":
+					case "/siteroot":
+						if (parts.Length == 1)
+							throw new ArgumentException("Missing site root - the '/r' argument was given without a value");
+						arguments.SiteRoot = Path.GetFullPath(GetArgumentValueFrom(parts));
+						break;
+					case "/v":
+					case "/viewpathroot":
+						if (parts.Length == 1)
+							throw new ArgumentException("Missing view path root - the '/v' argument was given without a value");
+						arguments.ViewPathRoot = GetArgumentValueFrom(parts);
+						break;
+					default:
+						throw new ArgumentException(string.Format("Unknown argument [{0}]", parts[0]));
+				}
 			}
 		}
 
@@ -121,37 +173,59 @@ namespace Castle.MonoRail.AspView.VCompile
 			{
 				Console.WriteLine("message from the compiler:");
 				Console.WriteLine(message);
-				Console.WriteLine();
-				Console.WriteLine();
 			}
-			Console.WriteLine("usage: vcompile [options]");
-			Console.WriteLine();
-			Console.WriteLine("valid options:");
-			Console.WriteLine("\t/r:siteRoot\t\twill compile the site at siteRoot directory");
-			Console.WriteLine();
-			Console.WriteLine("example:");
-			Console.WriteLine("\tvcompile /r:C:\\Dev\\Sites\\MySite\t\twill compile the site at 'C:\\Dev\\Sites\\MySite' directory");
-			Console.WriteLine();
+			Console.WriteLine(@"
+usage: vcompile [options]
+
+valid options:
+    /siteRoot:SITEPATH      -> will compile the site at SITEPATH directory
+                               defaults to the current directory's parent
+    /r:SITEPATH             -> same as /siteroot:SITEPATH
+
+    /viewPathRoot:VIEWSPATH -> will read views from VIEWSPATHROOT
+                               defaults to 'Views' folder under the site root
+    /v:VIEWSPATH            -> same as /viewPathRoot:VIEWSPATH    
+
+    /wait                   -> will wait for 'Enter' to give the user a chance
+                               to attach a debugger
+    /w                      -> same as /wait
+
+examples:
+    vcompile /r:C:\Dev\Sites\MySite    
+        will compile the site at 'C:\Dev\Sites\MySite' directory, reading
+        view templates from 'C:\Dev\Sites\MySite\Views'
+
+    vcompile /v:Plugins\Plugin1\Views
+        assuming current directory is 'C:\Dev\Sites\MySite\Bin',
+        will compile the site at 'C:\Dev\Sites\MySite' directory, reading
+        view templates from 'C:\Dev\Sites\MySite\Plugins\Plugin1\Views'
+
+    vcompile /r:C:\Dev\Sites\MySite /v:C:\Plugins\Plugin1\Views
+        will compile the site at 'C:\Dev\Sites\MySite' directory, reading
+        view templates from 'C:\Plugins\Plugin1\Views'
+");
+
 		}
 
-		private static void InitializeConfig()
+		private static AspViewEngineOptions InitializeConfig()
 		{
-			InitializeConfig("aspView");
-			if (options == null)
-				InitializeConfig("aspview");
-			if (options == null)
-				options = new AspViewEngineOptions();
-
+			AspViewEngineOptions options = 
+				InitializeConfig("aspView") ?? 
+				InitializeConfig("aspview") ??
+				new AspViewEngineOptions();
+			
 			Console.WriteLine(options.CompilerOptions.Debug ? "Compiling in DEBUG mode" : "");
+
+			return options;
 		}
 
-		private static void InitializeConfig(string configName)
+		private static AspViewEngineOptions InitializeConfig(string configName)
 		{
-			string path = Path.Combine(siteRoot, "web.config");
+			string path = Path.Combine(arguments.SiteRoot, "web.config");
 			if (!File.Exists(path))
 			{
 				Console.WriteLine("Cannot locate web.config" + Environment.NewLine +
-					"VCompile should run from the bin directory of the website");
+				                  "VCompile should run from the bin directory of the website");
 				Environment.Exit(1);
 			}
 			XmlNode aspViewNode;
@@ -163,12 +237,13 @@ namespace Castle.MonoRail.AspView.VCompile
 				aspViewNode = xml.SelectSingleNode("/configuration/" + configName);
 			}
 
-			if (aspViewNode != null)
+			if (aspViewNode == null)
 			{
-				AspViewConfigurationSection section = new AspViewConfigurationSection();
-				options = (AspViewEngineOptions) section.Create(null, null, aspViewNode);
+				return null;
 			}
-		}
 
+			AspViewConfigurationSection section = new AspViewConfigurationSection();
+			return (AspViewEngineOptions) section.Create(null, null, aspViewNode);
+		}
 	}
 }
