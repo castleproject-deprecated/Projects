@@ -116,6 +116,7 @@
     <Compile Include="AspViewConfigurationSection.cs" />
     <Compile Include="AspViewBaseWithGenericTypedInterface.cs" />
     <Compile Include="Compiler\WebCompilationContext.cs" />
+    <Compile Include="IAspViewEngineTestAccess.cs" />
     <Compile Include="IHelpersAccesor.cs" />
     <Compile Include="Internal\RegularExpressions.cs" />
     <Compile Include="Internal\Set.cs" />

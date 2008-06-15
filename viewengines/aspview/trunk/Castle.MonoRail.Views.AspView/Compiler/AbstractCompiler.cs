@@ -71,7 +71,7 @@ namespace Castle.MonoRail.Views.AspView.Compiler
 				string assemblyName = reference.Name;
 				if (reference.Source == ReferencedAssembly.AssemblySource.BinDirectory)
 					assemblyName = Path.Combine(context.BinFolder.FullName, assemblyName);
-				parameters.CompilerOptions += " /r:\"" + assemblyName + "\"";
+				parameters.ReferencedAssemblies.Add(assemblyName);
 			}
 
 			CompilerResults results = GetResultsFrom(files);

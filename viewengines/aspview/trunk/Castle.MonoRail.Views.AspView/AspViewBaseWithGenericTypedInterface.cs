@@ -24,7 +24,7 @@ namespace Castle.MonoRail.Views.AspView
 		public override void Initialize(AspViewEngine viewEngine, TextWriter output, IEngineContext context, IController controller, IControllerContext controllerContext)
 		{
 			base.Initialize(viewEngine, output, context, controller, controllerContext);
-			view = dictionaryAdapterFactory.GetAdapter<IView>((IDictionary)Properties);
+			view = dictionaryAdapterFactory.GetAdapter<IView>(Properties);
         }
 	}
 }

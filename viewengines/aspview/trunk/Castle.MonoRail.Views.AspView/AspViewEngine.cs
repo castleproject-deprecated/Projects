@@ -72,11 +72,9 @@ namespace Castle.MonoRail.Views.AspView
 			{
 				string siteRoot = AppDomain.CurrentDomain.BaseDirectory;
 				compilationContext = new WebCompilationContext(
-					new DirectoryInfo(siteRoot), new DirectoryInfo(options.CompilerOptions.TemporarySourceFilesDirectory));
+					new DirectoryInfo(siteRoot), 
+					new DirectoryInfo(options.CompilerOptions.TemporarySourceFilesDirectory));
 			}
-			#region TODO
-			//TODO: think about CommonScripts implementation in c#/VB.NET 
-			#endregion
 
 			LoadCompiledViews();
 			if (options.CompilerOptions.AutoRecompilation)
@@ -255,10 +253,11 @@ namespace Castle.MonoRail.Views.AspView
 				{
 					precompiledViews = Assembly.LoadFile(Path.GetFullPath(assembly));
 				}
-				catch (Exception)
+				catch (Exception e)
 				{
-					Logger.ErrorFormat(string.Format("Could not load views assembly [{0}]", assembly));
-					throw;
+					string error = string.Format("Could not load views assembly [{0}]", assembly);
+					Logger.ErrorFormat(error);
+					throw new InvalidOperationException(error, e);
 				}
 
 				if (precompiledViews != null)
@@ -285,7 +284,7 @@ namespace Castle.MonoRail.Views.AspView
 				}
 
 				Logger.Error(loaderErrors);
-				throw;
+				throw new InvalidOperationException("Could not load type from views assembly because: "+ Environment.NewLine + loaderErrors, rtle);
 			}
 		}
 
@@ -331,10 +330,8 @@ namespace Castle.MonoRail.Views.AspView
 		}
 
 		///<summary>
-		///
-		///            Implementors should return a generator instance if
-		///            the view engine supports JS generation.
-		///            
+		/// Implementors should return a generator instance if
+		/// the view engine supports JS generation.
 		///</summary>
 		///
 		///<param name="generatorInfo">The generator info.</param>
@@ -344,7 +341,6 @@ namespace Castle.MonoRail.Views.AspView
 		///<returns>
 		///A JS generator instance
 		///</returns>
-		///
 		public override object CreateJSGenerator(JSCodeGeneratorInfo generatorInfo, IEngineContext context,
 												 IController controller, IControllerContext controllerContext)
 		{
@@ -352,11 +348,9 @@ namespace Castle.MonoRail.Views.AspView
 		}
 
 		///<summary>
-		///
-		///            Processes the js generation view template - using the templateName
-		///            to obtain the correct template, and using the specified <see cref="T:System.IO.TextWriter" />
-		///            to output the result.
-		///            
+		/// Processes the js generation view template - using the templateName
+		/// to obtain the correct template, and using the specified <see cref="T:System.IO.TextWriter" />
+		/// to output the result.
 		///</summary>
 		///
 		///<param name="templateName">Name of the template.</param>
@@ -372,10 +366,8 @@ namespace Castle.MonoRail.Views.AspView
 		}
 
 		///<summary>
-		///
-		///            Wraps the specified content in the layout using the 
-		///            context to output the result.
-		///            
+		/// Wraps the specified content in the layout using the 
+		/// context to output the result.
 		///</summary>
 		///
 		public override void RenderStaticWithinLayout(string contents, IEngineContext context, IController controller,
@@ -383,12 +375,5 @@ namespace Castle.MonoRail.Views.AspView
 		{
 			throw new NotImplementedException();
 		}
-	}
-
-	public interface IAspViewEngineTestAccess
-	{
-		Hashtable Compilations { get; }
-		void SetViewSourceLoader(IViewSourceLoader viewSourceLoader);
-		void SetCompilationContext(ICompilationContext context);
 	}
 }

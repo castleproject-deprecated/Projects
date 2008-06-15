@@ -20,8 +20,8 @@ namespace Castle.MonoRail.Views.AspView
 	public class AspViewException : MonoRailException
 	{
 		public AspViewException(string message) : base(message) { }
-		public AspViewException(Exception innerException, string message) : base(message, innerException) { }
+		public AspViewException(string message, Exception innerException) : base(message, innerException) { }
 		public AspViewException(string message, params object[] arguments) : this(string.Format(message, arguments)) { }
-		public AspViewException(Exception innerException, string message, params object[] arguments) : this(innerException, string.Format(message, arguments)) { }
+		public AspViewException(Exception innerException, string message, params object[] arguments) : this(string.Format(message, arguments), innerException) { }
 	}
 }

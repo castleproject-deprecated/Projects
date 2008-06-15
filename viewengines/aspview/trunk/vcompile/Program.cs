@@ -25,32 +25,21 @@ namespace Castle.MonoRail.AspView.VCompile
 	using Views.AspView.Compiler.Adapters;
 	using Views.AspView.Compiler.Factories;
 
-	class vcompile
+	public class vcompile
 	{
 		static AspViewEngineOptions options;
 		static string siteRoot;
 		static int Main(string[] args)
 		{
-			if (args != null && args.Length == 1)
-			{
-				if (args[0].Equals("-w", StringComparison.InvariantCultureIgnoreCase) ||
-				    args[0].Equals("-wait", StringComparison.InvariantCultureIgnoreCase))
-					Console.ReadLine();
-				else
-					siteRoot = args[0];
-			}
-			if (siteRoot == null)
-			{
-				string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-				siteRoot = baseDirectory.Substring(0, baseDirectory.LastIndexOf("\\bin", StringComparison.InvariantCultureIgnoreCase));
-			}
+			ParseArguments(args);
+			SetDefaultSiteRootIfNotAlreadySet();
+
 			Console.WriteLine("Compiling [" + siteRoot + "] ...");
 
 			InitializeConfig();
 
-			if (!Directory.Exists(siteRoot))
+			if(ValidateEnvironment() == false)
 			{
-				PrintHelpMessage(string.Format("The path '{0}' does not exist", siteRoot));
 				Console.ReadLine();
 				return -1;
 			}
@@ -58,20 +47,16 @@ namespace Castle.MonoRail.AspView.VCompile
 			OfflineCompiler compiler;
 			try
 			{
-				ICompilationContext compilationContext = new CompilationContext(
-					new DirectoryInfo(Path.Combine(siteRoot, "bin")),
-					new DirectoryInfo(siteRoot),
-					new DirectoryInfo(Path.Combine(siteRoot, "views")),
-					new DirectoryInfo(options.CompilerOptions.TemporarySourceFilesDirectory));
+				ICompilationContext compilationContext = CreateCompilationContext();
 
 				compiler = new OfflineCompiler(
 					new CSharpCodeProviderAdapterFactory(),
 					new PreProcessor(), 
 					compilationContext, options.CompilerOptions, new DefaultFileSystemAdapter());
 			}
-			catch
+			catch(Exception e)
 			{
-				PrintHelpMessage("Could not start the compiler.");
+				PrintHelpMessage("Could not start the compiler because: " + e.Message);
 				return -2;
 			}
 
@@ -88,6 +73,46 @@ namespace Castle.MonoRail.AspView.VCompile
 				return -3;
 			}
 
+		}
+
+		private static ICompilationContext CreateCompilationContext()
+		{
+			return new CompilationContext(
+				new DirectoryInfo(Path.Combine(siteRoot, "bin")),
+				new DirectoryInfo(siteRoot),
+				new DirectoryInfo(Path.Combine(siteRoot, "views")),
+				new DirectoryInfo(options.CompilerOptions.TemporarySourceFilesDirectory));
+		}
+
+		private static bool ValidateEnvironment()
+		{
+			if (!Directory.Exists(siteRoot))
+			{
+				PrintHelpMessage(string.Format("The path '{0}' does not exist", siteRoot));
+				return false;
+			}
+			return true;
+		}
+
+		private static void SetDefaultSiteRootIfNotAlreadySet()
+		{
+			if (siteRoot == null)
+			{
+				string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+				siteRoot = baseDirectory.Substring(0, baseDirectory.LastIndexOf("\\bin", StringComparison.InvariantCultureIgnoreCase));
+			}
+		}
+
+		private static void ParseArguments(string[] args)
+		{
+			if (args != null && args.Length == 1)
+			{
+				if (args[0].Equals("-w", StringComparison.InvariantCultureIgnoreCase) ||
+				    args[0].Equals("-wait", StringComparison.InvariantCultureIgnoreCase))
+					Console.ReadLine();
+				else
+					siteRoot = args[0];
+			}
 		}
 
 		private static void PrintHelpMessage(string message)
