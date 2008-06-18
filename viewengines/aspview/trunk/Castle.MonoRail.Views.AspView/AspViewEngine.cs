@@ -22,7 +22,7 @@ namespace Castle.MonoRail.Views.AspView
 	using System.Runtime.Serialization;
 	using System.Text.RegularExpressions;
 	using System.Collections.Generic;
-
+	using Castle.MonoRail.Framework.Configuration;
 	using Compiler;
 	using Compiler.Factories;
 	using Framework;
@@ -31,6 +31,7 @@ namespace Castle.MonoRail.Views.AspView
 	public class AspViewEngine : ViewEngineBase, IInitializable, IAspViewEngineTestAccess
 	{
 		ICompilationContext compilationContext;
+		private IMonoRailConfiguration monoRailConfiguration;
 		static bool needsRecompiling;
 		static AspViewEngineOptions options;
 		//string siteRoot;
@@ -72,6 +73,7 @@ namespace Castle.MonoRail.Views.AspView
 			{
 				string siteRoot = AppDomain.CurrentDomain.BaseDirectory;
 				compilationContext = new WebCompilationContext(
+					monoRailConfiguration,
 					new DirectoryInfo(siteRoot), 
 					new DirectoryInfo(options.CompilerOptions.TemporarySourceFilesDirectory));
 			}
@@ -92,6 +94,13 @@ namespace Castle.MonoRail.Views.AspView
 		#endregion
 
 		#region ViewEngineBase implementation
+
+		public override void Service(IServiceProvider provider)
+		{
+			base.Service(provider);
+
+			monoRailConfiguration = (IMonoRailConfiguration) provider.GetService(typeof (IMonoRailConfiguration));
+		}
 		public override bool HasTemplate(string templateName)
 		{
 			string className = GetClassName(templateName);
