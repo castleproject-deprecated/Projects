@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NUnit.Framework.ExtensionMethods</name>
+    </assembly>
+    <members>
+        <member name="T:NUnit.Framework.ExtensionMethods.ExtensionMethods">
+            <summary>
+            Extension methods to make working with NUnit in C# 3 a little more DSL-like
+            </summary>
+        </member>
+        <member name="M:NUnit.Framework.ExtensionMethods.ExtensionMethods.Should(System.Object,NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Apply a constraint to an actual value, succeeding if the constraint is satisfied and throwing an assertion exception on failure.
+            </summary>
+            <param name="actual">The actual value to test</param>
+            <param name="constraint">A Constraint to be applied</param>
+        </member>
+        <member name="M:NUnit.Framework.ExtensionMethods.ExtensionMethods.Should(System.Object,NUnit.Framework.Constraints.Constraint,System.String)">
+            <summary>
+            Apply a constraint to an actual value, succeeding if the constraint is satisfied and throwing an assertion exception on failure.
+            </summary>
+            <param name="actual">The actual value to test</param>
+            <param name="constraint">A Constraint to be applied</param>
+            <param name="message">The message that will be displayed on failure</param>
+        </member>
+        <member name="M:NUnit.Framework.ExtensionMethods.ExtensionMethods.Should(System.Object,NUnit.Framework.Constraints.Constraint,System.String,System.Object[])">
+            <summary>
+            Apply a constraint to an actual value, succeeding if the constraint is satisfied and throwing an assertion exception on failure.
+            </summary>
+            <param name="actual">The actual value to test</param>
+            <param name="constraint">A Constraint to be applied</param>
+            <param name="message">The message that will be displayed on failure</param>
+            <param name="args">Arguments to be used in formatting the message</param>
+        </member>
+        <member name="T:NUnit.Framework.ExtensionMethods.Be">
+            <summary>
+            The Be class is a synonym for Is intended for use with the Should extension methods for more DSL-like syntax
+            </summary>
+        </member>
+        <member name="T:NUnit.Framework.ExtensionMethods.Have">
+            <summary>
+            The Have class is a synonym for Has intended for use with the Should extension methods for more DSL-like syntax
+            </summary>
+        </member>
+    </members>
+</doc>
