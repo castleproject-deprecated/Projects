@@ -75,7 +75,6 @@ namespace Castle.ActiveRecord.Linq.Tests
         }
 
         [Test]
-        [Ignore("It seems that the linq collection can't be used for iteration after it's been used for count")]
         public void SimpleOperationsShowingBug()
         {
             ActiveRecordStarter.Initialize(GetConfigSource(), typeof(Post), typeof(Blog));
