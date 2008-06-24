@@ -39,7 +39,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\castle\Castle.MonoRail.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Spark, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Spark, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\spark\Spark.dll</HintPath>
     </Reference>

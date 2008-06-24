@@ -47,6 +47,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\rhinomocks\Rhino.Mocks.dll</HintPath>
     </Reference>
+    <Reference Include="Spark, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\spark\Spark.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -73,33 +77,29 @@
       <Project>{33D786A4-C95D-473E-B96F-06EC68527F66}</Project>
       <Name>Castle.MonoRail.Views.Spark</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Spark\Spark.csproj">
-      <Project>{31929D34-1A68-4A6B-9D8A-B93037163A5A}</Project>
-      <Name>Spark</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\CodeStatements.xml">
+    <None Include="Views\Home\CodeStatements.spark">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\Home\HelperModelDictionaries.xml">
+    </None>
+    <None Include="Views\Home\HelperModelDictionaries.spark">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\Home\Index.xml">
+    </None>
+    <None Include="Views\Home\Index.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\Home\PropertyBagViewdata.xml">
+    </None>
+    <None Include="Views\Home\PropertyBagViewdata.spark">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\Home\TerseHtmlEncode.xml">
+    </None>
+    <None Include="Views\Home\TerseHtmlEncode.spark">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\Home\DiggPaginationComponent.xml">
+    </None>
+    <None Include="Views\Home\DiggPaginationComponent.spark">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\Shared\Default.xml">
+    </None>
+    <None Include="Views\Shared\Default.spark">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
