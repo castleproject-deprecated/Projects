@@ -1,3 +1,5 @@
+Preview 4.1
+
 New:
 - Optionally generates classes implementing INotifyPropertyChanging.
 - Contrib-117: Database and designer column order is not in sync
