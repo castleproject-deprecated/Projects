@@ -232,7 +232,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             {
                 //MessageBox.Show("Unparsed ParseReason: " + req.Reason);
             }
-            
+
             // Perform other operations
             if (req.Reason == ParseReason.MethodTip)
             {
@@ -256,7 +256,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             }
 
             NVelocityAuthoringScope scope = new NVelocityAuthoringScope(_templateNode, req.FileName);
-            
+
             //if (req.Sink.BraceMatching && req.Col > 30)
             //{
             //    TextSpan startBrace = new TextSpan();
@@ -315,7 +315,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             {
                 return;
             }
-            
+
             IntelliSenseProvider intelliSenseProvider = new IntelliSenseProvider(binDirectory);
 
             // Get all available helpers and add them to the template node
@@ -355,5 +355,12 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             item = _colorableItems[index - 1];
             return VSConstants.S_OK;
         }
+
+#if VS2008
+		public override string GetFormatFilterList()
+		{
+			return "Not implemented.";
+		}
+#endif
     }
 }

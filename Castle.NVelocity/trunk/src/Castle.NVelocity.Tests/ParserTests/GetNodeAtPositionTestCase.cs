@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -86,7 +86,6 @@ namespace Castle.NVelocity.Tests.ParserTests
             Parser parser = GetNewParser(scannerOptions,
                 "$Ajax.InstallScripts() text\n        text");
             //                          ^      ^
-            
             TemplateNode templateNode = parser.ParseTemplate();
 
             // XmlTextNode, it is only one text node
@@ -104,7 +103,6 @@ namespace Castle.NVelocity.Tests.ParserTests
             Parser parser = GetNewParser(scannerOptions,
                 "$Ajax.InstallScripts()\n$Form.");
             //                                 ^
-
             TemplateNode templateNode = parser.ParseTemplate();
 
             // Designator
@@ -157,14 +155,14 @@ namespace Castle.NVelocity.Tests.ParserTests
         {
             ScannerOptions scannerOptions = new ScannerOptions();
             scannerOptions.EnableIntelliSenseTriggerTokens = true;
-            Parser parser = GetNewParser(
+			Parser parser = GetNewParser(scannerOptions,
                 "$obj.Method(\"");
             //                 ^
             TemplateNode templateNode = parser.ParseTemplate();
 
             // Get node at position
             AstNode astNode = templateNode.GetNodeAt(1, 14);
-            
+
             //TODO finish
             //NVStringExpression stringExpr = (NVStringExpression)astNode;
             //Assert.AreEqual("", stringExpr.Value);
@@ -176,7 +174,7 @@ namespace Castle.NVelocity.Tests.ParserTests
         {
             ScannerOptions scannerOptions = new ScannerOptions();
             scannerOptions.EnableIntelliSenseTriggerTokens = true;
-            Parser parser = GetNewParser(
+			Parser parser = GetNewParser(scannerOptions,
                 "  <p>inside</p>  ");
             //    ^              ^
             TemplateNode templateNode = parser.ParseTemplate();
@@ -191,5 +189,69 @@ namespace Castle.NVelocity.Tests.ParserTests
             astNode = templateNode.GetNodeAt(1, 17);
             Assert.AreEqual("  ", ((XmlTextNode)astNode).Text);
         }
-    }
+
+		[Test]
+		public void AtEndOfUnclosedXmlElementWithNoAttributes()
+		{
+			ScannerOptions scannerOptions = new ScannerOptions();
+			scannerOptions.EnableIntelliSenseTriggerTokens = true;
+			Parser parser = GetNewParser(scannerOptions,
+				"<a      ");
+			//      ^
+			TemplateNode templateNode = parser.ParseTemplate();
+
+			AstNode astNode = templateNode.GetNodeAt(1, 4);
+			Assert.IsAssignableFrom(typeof(XmlElement), astNode);
+			AssertPosition(new Position(1, 1, 1, 9), astNode.Position);
+		}
+
+		[Test]
+		public void AtEndOfUnclosedXmlElementWithAtLeastOneAttribute()
+		{
+			ScannerOptions scannerOptions = new ScannerOptions();
+			scannerOptions.EnableIntelliSenseTriggerTokens = true;
+			Parser parser = GetNewParser(scannerOptions,
+				"<a name=\"\"     ");
+			//               ^
+			TemplateNode templateNode = parser.ParseTemplate();
+
+			AstNode astNode = templateNode.GetNodeAt(1, 11);
+			Assert.IsAssignableFrom(typeof(XmlElement), astNode);
+			AssertPosition(new Position(1, 1, 1, 16), astNode.Position);
+		}
+
+		[Test]
+		public void AtEndOfUnclosedXmlTagInsideXmlContent()
+		{
+			ScannerOptions scannerOptions = new ScannerOptions();
+			scannerOptions.EnableIntelliSenseTriggerTokens = true;
+			Parser parser = GetNewParser(scannerOptions,
+				"<div>\n" +
+				"    <a \n" +
+				//      ^
+				"</div>");
+			TemplateNode templateNode = parser.ParseTemplate();
+
+			AstNode astNode = templateNode.GetNodeAt(2, 7);
+			Assert.IsAssignableFrom(typeof(XmlElement), astNode);
+			AssertPosition(new Position(2, 5, 2, 8), astNode.Position);
+		}
+
+		[Test]
+		public void AtEndOfUnclosedXmlTagWithOneAttributeInsideXmlContent()
+		{
+			ScannerOptions scannerOptions = new ScannerOptions();
+			scannerOptions.EnableIntelliSenseTriggerTokens = true;
+			Parser parser = GetNewParser(scannerOptions,
+				"<div>\n" +
+				"    <a name=\"\" \n" +
+				//                ^
+				"</div>");
+			TemplateNode templateNode = parser.ParseTemplate();
+
+			AstNode astNode = templateNode.GetNodeAt(2, 16);
+			Assert.IsAssignableFrom(typeof(XmlElement), astNode);
+			AssertPosition(new Position(2, 5, 2, 16), astNode.Position);
+		}
+	}
 }

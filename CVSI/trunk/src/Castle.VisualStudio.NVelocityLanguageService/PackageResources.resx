@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ProductDetails" xml:space="preserve">
-    <value>Castle NVelocity Language Service for Castle MonoRail</value>
+    <value>Castle Visual Studio Integration</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="100" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -128,9 +128,12 @@
     <value>Castle Visual Studio Integration</value>
   </data>
   <data name="ProductVersion" xml:space="preserve">
-    <value>0.1</value>
+    <value>0.3</value>
   </data>
-  <data name="1" xml:space="preserve">
-    <value>PAHCQ9PJC3E3H9K9DAR0IZR1E8DZCQH0D9KEDZKZJ1JKI0PKRZE0D0QJRDC2E9D2IIMPCHCDPIM9E3HPA8MDRQI3JZKKZ3HAETMZCZIDHRACDID3K0PKARDDEDJ9MDPM</value>
+  <data name="2005" xml:space="preserve">
+    <value>AQJAHDEZDJR3APK0MQJEQ1APIAPTAZJ8ATDRA2C2CDJQM1MHP8C2HAI1MID2J1MRQ9C1MEE9PIHKKKEJQCAIK2DCMKE3EPQKKMHMMIEHPHHAPQIIR9M1CIEJQ8CKIZAK</value>
+  </data>
+  <data name="2008" xml:space="preserve">
+    <value>DJHTZ1PEITZ1I3KKRRKCD1RQMIE2HAMJEZMDE1KKQ3M3AEC0HZRDJ8A2D3DHETMEHAHMZJEIQPEDQJI2CQKRPEMEECIJZ9J0ITCREZIHM1IMJ1HDADI0Q0KCACMIZHQJ</value>
   </data>
 </root>

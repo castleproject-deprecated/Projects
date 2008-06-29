@@ -668,31 +668,6 @@ namespace Castle.NVelocity
                 {
                     token.Type = TokenType.XmlTagName;
 
-                    // This is commented out to disable the script element content state, script
-                    // elements will be treated just like normal XML elements
-
-                    //if (token.Image == "script")
-                    //{
-                    //    // Pop off the current tag and push on a script element content section so
-                    //    // when this tag finishes the scanner will be in the script element content.
-
-                    //    state.Pop(); // Pop XmlTag
-
-                    //    // If the scanner is already in a script element content when it gets to this
-                    //    // tag then this must be the end tag, so we can pop off the script element
-                    //    // content and push back on the XmlTag
-                    //    if (state.Peek() == ScannerState.XmlScriptElementContent)
-                    //    {
-                    //        state.Pop(); // XmlScriptElementContent
-                    //    }
-                    //    else
-                    //    {
-                    //        state.Push(ScannerState.XmlScriptElementContent);
-                    //    }
-
-                    //    state.Push(ScannerState.XmlTag); // Put it back
-                    //}
-
                     state.Push(ScannerState.XmlTagAttributes); // It is now in the attributes section
                 }
                 else
@@ -700,6 +675,18 @@ namespace Castle.NVelocity
                     token.Type = TokenType.XmlAttributeName;
                 }
             }
+			else if (ch == '<' && _options.EnableIntelliSenseTriggerTokens)
+			{
+				// The IntelliSense mode of the scanner should break out of an XML tag if a new tag is starting.
+				// This usually means that the current tag is incomplete when the user is typing.
+				if (state.Peek() == ScannerState.XmlTagAttributes)
+				{
+					state.Pop(); // Pop XmlTagAttributes
+				}
+				state.Pop(); // Pop XmlTag
+
+				token = GetToken();
+			}
             else
             {
                 switch (ch)
@@ -748,7 +735,7 @@ namespace Castle.NVelocity
             }
 
             token.SetEndPosition(lineNo, linePos);
-            
+
             return token;
         }
 
@@ -786,45 +773,46 @@ namespace Castle.NVelocity
 
             token.SetStartPosition(lineNo, linePos);
 
-            bool scanXmlText = true;
-
             if (ch == '"' && CurrentState == ScannerState.XmlTagAttributeValueDouble)
             {
                 token.Type = TokenType.XmlDoubleQuote;
                 GetCh();
                 state.Pop(); // Pop XmlTagAttributeValue
-                scanXmlText = false;
             }
             else if (ch == '\'' && CurrentState == ScannerState.XmlTagAttributeValueSingle)
             {
                 token.Type = TokenType.XmlSingleQuote;
                 GetCh();
                 state.Pop(); // Pop XmlTagAttributeValue
-                scanXmlText = false;
             }
             else if (ch == '\'')
             {
                 token.Type = TokenType.XmlSingleQuote;
                 GetCh();
                 state.Pop(); // Pop XmlTagAttributeValue
-                scanXmlText = false;
             }
             else if (ch == '#' && NVDirectiveFollows())
             {
                 token.Type = TokenType.NVDirectiveHash;
                 state.Push(ScannerState.NVPreDirective);
                 GetCh();
-                scanXmlText = false;
             }
             else if (ch == '$' && NVReferenceFollows())
             {
                 token.Type = TokenType.NVDollar;
                 state.Push(ScannerState.NVReference);
                 GetCh();
-                scanXmlText = false;
             }
+			else if (ch == '<' && _options.EnableIntelliSenseTriggerTokens)
+			{
+				// The IntelliSense mode of the scanner should break out of an XML tag if a new tag is starting.
+				// This usually means that the current tag is incomplete when the user is typing.
+				state.Pop(); // Pop XmlTagAttributes
+				state.Pop(); // Pop XmlTag
 
-            if (scanXmlText)
+				token = GetToken();
+			}
+			else
             {
                 token = ReadText(TokenType.XmlAttributeText, delegate
                 {

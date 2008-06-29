@@ -73,22 +73,24 @@ namespace Castle.NVelocity
             }
         }
 
-        /// <summary>
-        /// Returns a new instance of the current scanner token position.
-        /// </summary>
-        /// <returns>The current scanner token position.</returns>
-        private Position GetCurrentTokenPosition()
-        {
-            if (_scanner.CurrentToken != null)
-            {
-                Position pos = _scanner.CurrentToken.Position;
-                return new Position(pos.StartLine, pos.StartPos, pos.EndLine, pos.EndPos);
-            }
-            else
-            {
-                return new Position();
-            }
-        }
+    	/// <summary>
+    	/// Returns a new instance of the current scanner token position.
+    	/// </summary>
+    	/// <returns>The current scanner token position.</returns>
+    	private Position GetCurrentTokenPosition()
+    	{
+    		// Don't just use the scanner's current position because the scanner allows
+    		// lookahead reading and will report that position.
+    		if (_scanner.CurrentToken != null)
+    		{
+    			Position pos = _scanner.CurrentToken.Position;
+    			return new Position(pos.StartLine, pos.StartPos, pos.EndLine, pos.EndPos);
+    		}
+    		else
+    		{
+    			return new Position(_scanner.CurrentPos);
+    		}
+    	}
 
         public ErrorHandler Errors
         {
@@ -246,6 +248,7 @@ namespace Castle.NVelocity
                 AddError("Expected XML tag name.");
                 XmlElement emptyXmlElement = new XmlElement("");
                 emptyXmlElement.Position = startPos;
+
                 return emptyXmlElement;
             }
 
@@ -263,10 +266,13 @@ namespace Castle.NVelocity
             }
 
             // Consume TokenType.XmlAttributeMemberSelect tokens
-            while (CurrentTokenType == TokenType.XmlAttributeMemberSelect)
-            {
-                _scanner.GetToken();
-            }
+			while (CurrentTokenType == TokenType.XmlAttributeMemberSelect)
+			{
+				// Do this before getting the next token because the next token may not belong to this XML element
+				xmlElement.Position.End = GetCurrentTokenPosition().Start;
+
+				_scanner.GetToken();
+			}
 
             while (CurrentTokenType == TokenType.XmlAttributeName)
             {
@@ -284,12 +290,23 @@ namespace Castle.NVelocity
                     break;
                 }
 
+				xmlElement.Position.End = GetCurrentTokenPosition().Start;
+
                 // Consume TokenType.XmlAttributeMemberSelect tokens
                 while (CurrentTokenType == TokenType.XmlAttributeMemberSelect)
                 {
-                    _scanner.GetToken();
+					// Do this before getting the next token because the next token may not belong to this XML element
+					xmlElement.Position.End = GetCurrentTokenPosition().Start;
+
+					_scanner.GetToken();
                 }
             }
+
+			if (_scanner.EOF)
+			{
+				// Include the characters right to the end
+				xmlElement.Position.End = GetCurrentTokenPosition();
+			}
 
             ParseXmlRestElement(xmlElement);
 
@@ -310,12 +327,15 @@ namespace Castle.NVelocity
                 {
                     xmlElement.Position.End = GetCurrentTokenPosition();
                     xmlElement.IsComplete = true;
+
                     _scanner.GetToken();
                 }
             }
             else if (CurrentTokenType == TokenType.XmlTagEnd)
             {
                 MatchToken(TokenType.XmlTagEnd);
+
+				xmlElement.Position.End = GetCurrentTokenPosition();
 
                 while (!(CurrentTokenType == TokenType.XmlTagStart &&
                     _scanner.PeekToken(1) != null && _scanner.PeekToken(1).Type == TokenType.XmlForwardSlash))
@@ -348,10 +368,10 @@ namespace Castle.NVelocity
 
                 ParseXmlEndTag(xmlElement);
             }
-            else
-            {
-                AddError("Expected end of XML element");
-            }
+			else
+			{
+				AddError("Expected end of XML element");
+			}
         }
 
         private void ParseXmlEndTag(XmlElement xmlElement)
@@ -411,12 +431,12 @@ namespace Castle.NVelocity
             MatchToken(TokenType.XmlEquals);
 
             bool doubleQuotes;
-            if (_scanner.CurrentToken.Type == TokenType.XmlDoubleQuote)
+            if (_scanner.CurrentToken != null && _scanner.CurrentToken.Type == TokenType.XmlDoubleQuote)
             {
                 _scanner.GetToken();
                 doubleQuotes = true;
             }
-            else if (_scanner.CurrentToken.Type == TokenType.XmlSingleQuote)
+            else if (_scanner.CurrentToken != null && _scanner.CurrentToken.Type == TokenType.XmlSingleQuote)
             {
                 _scanner.GetToken();
                 doubleQuotes = false;

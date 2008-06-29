@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,8 +24,8 @@ namespace Castle.VisualStudio.MonoRailIntelliSenseProvider
         private const string AbstractHelperTypeName = "Castle.MonoRail.Framework.Helpers.AbstractHelper";
         private const string ViewComponentTypeName = "Castle.MonoRail.Framework.ViewComponent";
         private const string AssemblyFileNamePattern = "*.dll";
-        private const string ViewsDirectoryName = "Views";
-        private const string BinaryDirectoryName = "Bin";
+        private const string BinaryDirectoryName = "bin";
+        private const string BinaryDebugDirectoryName = "Debug";
 
         private readonly string _binaryDirectory;
 
@@ -55,32 +55,33 @@ namespace Castle.VisualStudio.MonoRailIntelliSenseProvider
 
         public static string FindBinaryDirectory(string hintViewFileName)
         {
-            string webAppRoot = Path.GetDirectoryName(hintViewFileName);
+			string webAppRoot = Path.GetDirectoryName(hintViewFileName);
 
-            while (true)
-            {
-                if (Directory.Exists(Path.Combine(webAppRoot, ViewsDirectoryName)))
-                {
-                    break;
-                }
-                else
-                {
-                    DirectoryInfo parent = Directory.GetParent(webAppRoot);
-                    if (parent == null)
-                    {
-                        return null;
-                    }
-                    webAppRoot = parent.FullName;
-                }
-            }
+			// Iterate through parent directories looking for the bin directory
+			while (true)
+			{
+				// If found the bin directory then return
+				string binDirectory = Path.Combine(webAppRoot, BinaryDirectoryName);
+				if (Directory.Exists(binDirectory))
+				{
+					// If the bin directory contains a debug directory use it instead
+					string binDebugDirectory = Path.Combine(binDirectory, BinaryDebugDirectoryName);
+					if (Directory.Exists(binDebugDirectory))
+					{
+						return binDebugDirectory;
+					}
+					return binDirectory;
+				}
 
-            string binDirectory = Path.Combine(webAppRoot, BinaryDirectoryName);
-            if (Directory.Exists(binDirectory))
-            {
-                return binDirectory;
-            }
-            return null;
-        }
+				// Otherwise move to the parent directory
+				DirectoryInfo parent = Directory.GetParent(webAppRoot);
+				if (parent == null)
+				{
+					return null;
+				}
+				webAppRoot = parent.FullName;
+			}
+		}
 
         public List<NVClassNode> GetHelpers()
         {
@@ -91,10 +92,13 @@ namespace Castle.VisualStudio.MonoRailIntelliSenseProvider
                 if (!IsIgnored(assemblyFileName))
                 {
                     AssemblyDefinition assemblyDefinition = AssemblyFactory.GetAssembly(assemblyFileName);
-                    foreach (TypeDefinition type in assemblyDefinition.MainModule.Types)
+					TypeDefinitionCollection typeDefs = assemblyDefinition.MainModule.Types;
+					foreach (TypeDefinition type in typeDefs)
                     {
-                        if (type.Name != "<Module>" && type.BaseType != null &&
-                            type.BaseType.FullName == AbstractHelperTypeName)
+                        if (type.Name != "<Module>" &&
+							!type.IsAbstract &&
+							type.BaseType != null &&
+							TypeInherits(typeDefs, type, AbstractHelperTypeName))
                         {
                             NVClassNode classNode = new NVClassNode(type.Name, type.FullName);
                             classNode.ClassPurpose = NVClassNodePurpose.Helper;
@@ -105,7 +109,7 @@ namespace Castle.VisualStudio.MonoRailIntelliSenseProvider
                                 // Properties have the special name IL flag so ignore get_ and set_ methods
                                 if ((method.Attributes & MethodAttributes.Public) == MethodAttributes.Public &&
                                     method.SemanticsAttributes != MethodSemanticsAttributes.Getter &&
-                                        method.SemanticsAttributes != MethodSemanticsAttributes.Setter)
+                                    method.SemanticsAttributes != MethodSemanticsAttributes.Setter)
                                 {
                                     NVMethodNode methodNode = new NVMethodNode(method.Name, new NVClassNode(
                                         method.ReturnType.ReturnType.Name, method.ReturnType.ReturnType.FullName));
@@ -142,10 +146,13 @@ namespace Castle.VisualStudio.MonoRailIntelliSenseProvider
                 if (!IsIgnored(assemblyFileName))
                 {
                     AssemblyDefinition assemblyDefinition = AssemblyFactory.GetAssembly(assemblyFileName);
-                    foreach (TypeDefinition type in assemblyDefinition.MainModule.Types)
+					TypeDefinitionCollection typeDefs = assemblyDefinition.MainModule.Types;
+					foreach (TypeDefinition type in typeDefs)
                     {
-                        if (type.Name != "<Module>" && type.BaseType != null &&
-                            type.BaseType.FullName == ViewComponentTypeName)
+						if (type.Name != "<Module>" &&
+							!type.IsAbstract &&
+							type.BaseType != null &&
+							TypeInherits(typeDefs, type, ViewComponentTypeName))
                         {
                             NVClassNode classNode = new NVClassNode(type.Name, type.FullName);
                             classNode.ClassPurpose = NVClassNodePurpose.ViewComponent;
@@ -158,6 +165,22 @@ namespace Castle.VisualStudio.MonoRailIntelliSenseProvider
 
             return types;
         }
+
+		private static bool TypeInherits(TypeDefinitionCollection typeDefs, TypeDefinition type, string fullTypeName)
+		{
+			TypeDefinition currentType = type;
+
+			while (currentType != null && currentType.BaseType != null)
+			{
+				if (currentType.BaseType.FullName == fullTypeName)
+				{
+					return true;
+				}
+				currentType = typeDefs[currentType.BaseType.FullName];
+			}
+
+			return false;
+		}
 
         private static bool IsIgnored(string fileName)
         {

@@ -6,13 +6,11 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Jonathon Rossi")]
 [assembly: AssemblyProduct("Castle.VisualStudio.NVelocityLanguageService.DebugWindow")]
-[assembly: AssemblyCopyright("Copyright © Jonathon Rossi 2007")]
+[assembly: AssemblyCopyright("Copyright © 2007-2008 Jonathon Rossi")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 
-[assembly: Guid("33bbb245-5039-4ece-8c71-1c6a6ee03fa7")]
-
-[assembly: AssemblyVersion("0.2.1.0")]
-[assembly: AssemblyFileVersion("0.2.1.0")]
+[assembly: AssemblyVersion("0.3.0.0")]
+[assembly: AssemblyFileVersion("0.3.0.0")]

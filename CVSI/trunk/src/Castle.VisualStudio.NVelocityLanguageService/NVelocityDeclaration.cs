@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,9 +20,9 @@ namespace Castle.VisualStudio.NVelocityLanguageService
     {
         private readonly string _name;
         private readonly NVIdNode _idNode;
-        private readonly IntelliSenseIcons _icon;
+        private readonly IntelliSenseIcon _icon;
 
-        public NVelocityDeclaration(string name, NVIdNode idNode, IntelliSenseIcons icon)
+        public NVelocityDeclaration(string name, NVIdNode idNode, IntelliSenseIcon icon)
         {
             _name = name;
             _idNode = idNode;
@@ -39,7 +39,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             get { return _idNode; }
         }
 
-        public IntelliSenseIcons Icon
+        public IntelliSenseIcon Icon
         {
             get { return _icon; }
         }

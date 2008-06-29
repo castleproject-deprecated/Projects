@@ -262,5 +262,14 @@ namespace Castle.NVelocity.Tests.ParserTests
 
             Assert.IsFalse(((XmlElement)templateNode.Content[0]).IsComplete);
         }
+
+		[Test]
+		public void XmlAttributeIsNotCompleteWhenSyntaxicallyIncomplete()
+		{
+			Parser parser = GetNewParser("<tag attr=");
+			TemplateNode templateNode = parser.ParseTemplate();
+
+			Assert.IsFalse(((XmlElement)templateNode.Content[0]).IsComplete);
+		}
     }
 }

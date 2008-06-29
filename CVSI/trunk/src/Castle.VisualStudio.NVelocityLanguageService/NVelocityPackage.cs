@@ -14,68 +14,76 @@
 
 namespace Castle.VisualStudio.NVelocityLanguageService
 {
-    using System;
-    using System.ComponentModel.Design;
-    using System.Runtime.InteropServices;
-    using Microsoft.VisualStudio;
-    using Microsoft.VisualStudio.OLE.Interop;
-    using Microsoft.VisualStudio.Shell;
-    using Microsoft.VisualStudio.Shell.Interop;
+	using System;
+	using System.ComponentModel.Design;
+	using System.Runtime.InteropServices;
+	using Microsoft.VisualStudio;
+	using Microsoft.VisualStudio.OLE.Interop;
+	using Microsoft.VisualStudio.Shell;
+	using Microsoft.VisualStudio.Shell.Interop;
 
-    /// <summary>
-    /// This is the class that implements the package exposed by this assembly.
-    ///
-    /// The minimum requirement for a class to be considered a valid package for Visual Studio
-    /// is to implement the IVsPackage interface and register itself with the shell.
-    /// This package uses the helper classes defined inside the Managed Package Framework (MPF)
-    /// to do it: it derives from the Package class that provides the implementation of the 
-    /// IVsPackage interface and uses the registration attributes defined in the framework to 
-    /// register itself and its components with the shell.
-    /// </summary>
+	/// <summary>
+	/// This is the class that implements the package exposed by this assembly.
+	///
+	/// The minimum requirement for a class to be considered a valid package for Visual Studio
+	/// is to implement the IVsPackage interface and register itself with the shell.
+	/// This package uses the helper classes defined inside the Managed Package Framework (MPF)
+	/// to do it: it derives from the Package class that provides the implementation of the
+	/// IVsPackage interface and uses the registration attributes defined in the framework to
+	/// register itself and its components with the shell.
+	/// </summary>
 
-    // This attribute tells the registration utility (regpkg.exe) that this class needs
-    // to be registered as package.
-    [PackageRegistration(UseManagedResourcesOnly = true)]
+	// This attribute tells the registration utility (regpkg.exe) that this class needs
+	// to be registered as package.
+	[PackageRegistration(UseManagedResourcesOnly = true)]
 
-    [ProvideService(typeof(NVelocityLanguage), ServiceName = "NVelocity")]
+	[ProvideService(typeof(NVelocityLanguage), ServiceName = "NVelocity")]
 
-    [ProvideLanguageService(typeof(NVelocityLanguage), "NVelocity", 100,
-        AutoOutlining = true,
-        //CodeSense = true,
-        //CodeSenseDelay = 0,
-        //DefaultToInsertSpaces = true,
-        //EnableAsyncCompletion = true,
-        //EnableCommenting = true,
-        MatchBraces = true,
-        MatchBracesAtCaret = true,
-        RequestStockColors = false
-        //ShowCompletion = true,
-        //ShowMatchingBrace = true
-        )]
+	[ProvideLanguageService(typeof(NVelocityLanguage), "NVelocity", 100,
+		AutoOutlining = true,
+		//CodeSense = true,
+		//CodeSenseDelay = 0,
+		//DefaultToInsertSpaces = true,
+		//EnableAsyncCompletion = true,
+		//EnableCommenting = true,
+		MatchBraces = true,
+		MatchBracesAtCaret = true,
+		RequestStockColors = false
+		//ShowCompletion = true,
+		//ShowMatchingBrace = true
+		)]
 
-    // This attribute is used to associate the ".vm" and ".njs" file extension with a language service
-    [ProvideLanguageExtension(typeof(NVelocityLanguage), NVelocityConstants.NVelocityFileExtension)]
-    [ProvideLanguageExtension(typeof(NVelocityLanguage), NVelocityConstants.NVelocityJSFileExtension)]
+	// This attribute is used to associate the ".vm" and ".njs" file extensions with a language service
+	[ProvideLanguageExtension(typeof(NVelocityLanguage), NVelocityConstants.NVelocityFileExtension)]
+	[ProvideLanguageExtension(typeof(NVelocityLanguage), NVelocityConstants.NVelocityJSFileExtension)]
 
-    // A Visual Studio component can be registered under different regitry roots; for instance
-    // when you debug your package you want to register it in the experimental hive. This
-    // attribute specifies the registry root to use if no one is provided to regpkg.exe with
-    // the /root switch.
-    [DefaultRegistryRoot(@"Software\Microsoft\VisualStudio\8.0")]
+	// A Visual Studio component can be registered under different regitry roots; for instance
+	// when you debug your package you want to register it in the experimental hive. This
+	// attribute specifies the registry root to use if no one is provided to regpkg.exe with
+	// the /root switch.
+#if VS2008
+	[DefaultRegistryRoot(@"Software\Microsoft\VisualStudio\9.0")]
+#else
+	[DefaultRegistryRoot(@"Software\Microsoft\VisualStudio\8.0")]
+#endif
 
-    // This attribute is used to register the informations needed to show the this package
-    // in the Help/About dialog of Visual Studio.
-    [InstalledProductRegistration(true, "#ProductName", "#ProductDetails", "0.2", IconResourceID = 100,
-        LanguageIndependentName = "Castle Visual Studio Integration")]
-    
-    // In order be loaded inside Visual Studio in a machine that does not have the VS SDK
-    // installed, the package needs to have a valid load key (it can be requested at 
-    // http://msdn.microsoft.com/vstudio/extend/). This attributes tells the shell that this 
-    // package has a load key embedded in its resources.
-    [ProvideLoadKey("Standard", "0.1", "Castle Visual Studio Integration", "Jonathon Rossi", 1)]
+	// This attribute is used to register the informations needed to show the this package
+	// in the Help/About dialog of Visual Studio.
+	[InstalledProductRegistration(true, "#ProductName", "#ProductDetails", "0.3", IconResourceID = 100,
+		LanguageIndependentName = "Castle Visual Studio Integration")]
+
+	// In order to be loaded inside Visual Studio in a machine that does not have the VS SDK
+	// installed, the package needs to have a valid load key (it can be requested at 
+	// http://msdn.microsoft.com/vstudio/extend/). This attributes tells the shell that this
+	// package has a load key embedded in its resources.
+#if VS2008
+	[ProvideLoadKey("Standard", "0.3", "Castle Visual Studio Integration", "Jonathon Rossi", 2008)]
+#else
+	[ProvideLoadKey("Standard", "0.3", "Castle Visual Studio Integration", "Jonathon Rossi", 2005)]
+#endif
 
     [Guid(NVelocityConstants.PackageGuidString)]
-    //[ProvideAutoLoad("{8fe2df1d-e0da-4ebe-9d5c-415d40e487b5}")]
+    [ProvideAutoLoad("{8fe2df1d-e0da-4ebe-9d5c-415d40e487b5}")]
     public sealed class NVelocityPackage : Package, IOleComponent, IVsInstalledProduct
     {
         private uint componentID;
@@ -124,22 +132,22 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             return null;
         }
 
-        private void RegisterForIdleTime()
-        {
-            IOleComponentManager mgr = GetService(typeof(SOleComponentManager)) as IOleComponentManager;
-            if (componentID == 0 && mgr != null)
-            {
-                OLECRINFO[] crinfo = new OLECRINFO[1];
-                crinfo[0].cbSize = (uint)Marshal.SizeOf(typeof(OLECRINFO));
-                crinfo[0].grfcrf = (uint)_OLECRF.olecrfNeedIdleTime |
-                                              (uint)_OLECRF.olecrfNeedPeriodicIdleTime;
-                crinfo[0].grfcadvf = (uint)_OLECADVF.olecadvfModal |
-                                              (uint)_OLECADVF.olecadvfRedrawOff |
-                                              (uint)_OLECADVF.olecadvfWarningsOff;
-                crinfo[0].uIdleTimeInterval = 1000;
-                /*int hr = */mgr.FRegisterComponent(this, crinfo, out componentID);
-            }
-        }
+		private void RegisterForIdleTime()
+		{
+			IOleComponentManager mgr = GetService(typeof(SOleComponentManager)) as IOleComponentManager;
+			if (componentID == 0 && mgr != null)
+			{
+				OLECRINFO[] crinfo = new OLECRINFO[1];
+				crinfo[0].cbSize = (uint)Marshal.SizeOf(typeof(OLECRINFO));
+				crinfo[0].grfcrf = (uint)_OLECRF.olecrfNeedIdleTime |
+					(uint)_OLECRF.olecrfNeedPeriodicIdleTime;
+				crinfo[0].grfcadvf = (uint)_OLECADVF.olecadvfModal |
+					(uint)_OLECADVF.olecadvfRedrawOff |
+					(uint)_OLECADVF.olecadvfWarningsOff;
+				crinfo[0].uIdleTimeInterval = 1000;
+				/*int hr = */mgr.FRegisterComponent(this, crinfo, out componentID);
+			}
+		}
 
         #region IOleComponent Members
 
@@ -150,10 +158,10 @@ namespace Castle.VisualStudio.NVelocityLanguageService
 
         public int FDoIdle(uint grfidlef)
         {
-            NVelocityLanguage pl = GetService(typeof(NVelocityLanguage)) as NVelocityLanguage;
-            if (pl != null)
+            NVelocityLanguage langService = GetService(typeof(NVelocityLanguage)) as NVelocityLanguage;
+            if (langService != null)
             {
-                pl.OnIdle((grfidlef & (uint)_OLEIDLEF.oleidlefPeriodic) != 0);
+                langService.OnIdle((grfidlef & (uint)_OLEIDLEF.oleidlefPeriodic) != 0);
             }
             return 0;
         }
@@ -240,15 +248,14 @@ namespace Castle.VisualStudio.NVelocityLanguageService
 
             IVsResourceManager resourceManager = (IVsResourceManager)GetService(typeof(SVsResourceManager));
 
-            if (resourceManager == null)
-            {
-                throw new InvalidOperationException(
-                    "Could not get SVsResourceManager service. Make sure that the package is sited before calling this method");
-            }
+			if (resourceManager == null)
+			{
+				throw new InvalidOperationException("Could not get SVsResourceManager service. Make " +
+					"sure that the package is sited before calling this method");
+			}
 
             Guid packageGuid = GetType().GUID;
-            int hr = resourceManager.LoadResourceString(
-                ref packageGuid, -1, resourceName, out resourceValue);
+            int hr = resourceManager.LoadResourceString(ref packageGuid, -1, resourceName, out resourceValue);
 
             ErrorHandler.ThrowOnFailure(hr);
 

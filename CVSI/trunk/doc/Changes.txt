@@ -2,6 +2,21 @@
 | Changes to Castle Visual Studio Integration and Castle NVelocity |
 +==================================================================+
 
+Unreleased Changes
+==================
+- n/a
+
+0.3.0 Beta (2008-06-29)
+=======================
+- Upgraded CVSI so that it works in Visual Studio 2008.
+- Created separate C# project files for VS2005 and VS2008.
+- Created a WiX/MSI setup package to install CVSI for VS2005 and VS2008.
+- Added a NAnt build script to build assemblies and the WiX setup.
+- Implemented basic XHTML IntelliSense.
+- Fixed the IntelliSense so that it finds helpers and view components that do not directly inherit
+  from the MonoRail abstract classes.
+- Fixed the IntelliSense so that it works with non-web application projects (e.g. class libraries).
+
 0.2.2 Alpha (2008-01-13)
 ========================
 - Fixed CONTRIB-41: Implement folding

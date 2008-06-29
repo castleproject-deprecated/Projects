@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,22 +14,22 @@
 
 namespace Castle.NVelocity.Tests.ParserTests
 {
-    using NUnit.Framework;
-    using Castle.NVelocity.Ast;
+	using NUnit.Framework;
+	using Castle.NVelocity.Ast;
 
-    [TestFixture]
-    public class XmlPositionTestCase : ParserTestBase
-    {
-        [Test]
-        public void XmlTextNodePosition()
-        {
-            Parser parser = GetNewParser("this is some text");
-            TemplateNode templateNode = parser.ParseTemplate();
+	[TestFixture]
+	public class XmlPositionTestCase : ParserTestBase
+	{
+		[Test]
+		public void XmlTextNodePosition()
+		{
+			Parser parser = GetNewParser("this is some text");
+			TemplateNode templateNode = parser.ParseTemplate();
 
-            // Check XmlTextNode position
-            XmlTextNode xmlTextNode = (XmlTextNode) templateNode.Content[0];
-            AssertPosition(new Position(1, 1, 1, 18), xmlTextNode.Position);
-        }
+			// Check XmlTextNode position
+			XmlTextNode xmlTextNode = (XmlTextNode)templateNode.Content[0];
+			AssertPosition(new Position(1, 1, 1, 18), xmlTextNode.Position);
+		}
 
         [Test]
         public void XmlElementSelfClosingPosition()

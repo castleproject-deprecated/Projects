@@ -6,13 +6,11 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Jonathon Rossi")]
 [assembly: AssemblyProduct("Castle.NVelocity")]
-[assembly: AssemblyCopyright("Copyright © 2007 Jonathon Rossi")]
+[assembly: AssemblyCopyright("Copyright © 2007-2008 Jonathon Rossi")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 
-[assembly: Guid("49cd34ad-a0a9-49a1-8562-3eee859f1d5d")]
-
-[assembly: AssemblyVersion("0.2.1.0")]
-[assembly: AssemblyFileVersion("0.2.1.0")]
+[assembly: AssemblyVersion("0.3.0.0")]
+[assembly: AssemblyFileVersion("0.3.0.0")]

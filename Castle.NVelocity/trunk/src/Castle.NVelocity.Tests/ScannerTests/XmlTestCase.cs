@@ -123,6 +123,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlDoubleQuote);
             AssertMatchToken(TokenType.XmlQuestionMark);
             AssertMatchToken(TokenType.XmlTagEnd);
+
             AssertEOF();
         }
 
@@ -222,6 +223,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlCDataStart, "<![CDATA[");
             AssertMatchToken(TokenType.XmlCDataSection, " text ");
             AssertMatchToken(TokenType.XmlCDataEnd, "]]>");
+
+			AssertEOF();
         }
 
         [Test]
@@ -233,6 +236,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlCDataStart, "<![CDATA[");
             AssertMatchToken(TokenType.XmlCDataSection, " <tag> ");
             AssertMatchToken(TokenType.XmlCDataEnd, "]]>");
+
+			AssertEOF();
         }
 
         [Test]
@@ -270,54 +275,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlForwardSlash);
             AssertMatchToken(TokenType.XmlTagName, "script");
             AssertMatchToken(TokenType.XmlTagEnd);
+
+			AssertEOF();
         }
-
-        //[Test]
-        //[Ignore("Script elements are now treated as normal XML elements which require CDATA sections.")]
-        //public void IgnoreElementsInScriptElement()
-        //{
-        //    _scanner.SetSource(
-        //        "<script>text<strong>text</script>");
-
-        //    AssertMatchToken(TokenType.XmlTagStart);
-        //    AssertMatchToken(TokenType.XmlTagName, "script");
-        //    AssertMatchToken(TokenType.XmlTagEnd);
-
-        //    AssertMatchToken(TokenType.XmlText, "text<strong>text");
-
-        //    AssertMatchToken(TokenType.XmlTagStart);
-        //    AssertMatchToken(TokenType.XmlForwardSlash);
-        //    AssertMatchToken(TokenType.XmlTagName, "script");
-        //    AssertMatchToken(TokenType.XmlTagEnd);
-        //}
-
-        //[Test]
-        //[Ignore("Script elements are now treated as normal XML elements which require CDATA sections.")]
-        //public void IgnoreElementsInScriptElementInAnotherElement()
-        //{
-        //    _scanner.SetSource(
-        //        "<div><script>text<strong>text</script></div>");
-
-        //    AssertMatchToken(TokenType.XmlTagStart);
-        //    AssertMatchToken(TokenType.XmlTagName, "div");
-        //    AssertMatchToken(TokenType.XmlTagEnd);
-
-        //    AssertMatchToken(TokenType.XmlTagStart);
-        //    AssertMatchToken(TokenType.XmlTagName, "script");
-        //    AssertMatchToken(TokenType.XmlTagEnd);
-
-        //    AssertMatchToken(TokenType.XmlText, "text<strong>text");
-
-        //    AssertMatchToken(TokenType.XmlTagStart);
-        //    AssertMatchToken(TokenType.XmlForwardSlash);
-        //    AssertMatchToken(TokenType.XmlTagName, "script");
-        //    AssertMatchToken(TokenType.XmlTagEnd);
-
-        //    AssertMatchToken(TokenType.XmlTagStart);
-        //    AssertMatchToken(TokenType.XmlForwardSlash);
-        //    AssertMatchToken(TokenType.XmlTagName, "div");
-        //    AssertMatchToken(TokenType.XmlTagEnd);
-        //}
 
         [Test]
         public void HashNotFollowedByTextIsXmlText()
@@ -335,6 +295,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlForwardSlash);
             AssertMatchToken(TokenType.XmlTagName, "td");
             AssertMatchToken(TokenType.XmlTagEnd);
+
+			AssertEOF();
         }
 
         [Test]
@@ -353,6 +315,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlForwardSlash);
             AssertMatchToken(TokenType.XmlTagName, "td");
             AssertMatchToken(TokenType.XmlTagEnd);
+
+			AssertEOF();
         }
 
         [Test]
@@ -370,6 +334,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlDoubleQuote);
             AssertMatchToken(TokenType.XmlForwardSlash);
             AssertMatchToken(TokenType.XmlTagEnd);
+
+			AssertEOF();
         }
 
         [Test]
@@ -387,6 +353,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlDoubleQuote);
             AssertMatchToken(TokenType.XmlForwardSlash);
             AssertMatchToken(TokenType.XmlTagEnd);
+
+			AssertEOF();
         }
 
         [Test]
@@ -396,6 +364,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
                 "$");
 
             AssertMatchToken(TokenType.XmlText, "$");
+
+			AssertEOF();
         }
 
         [Test]
@@ -405,6 +375,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
                 "I have $100.");
 
             AssertMatchToken(TokenType.XmlText, "I have $100.");
+
+			AssertEOF();
         }
 
         [Test]
@@ -422,6 +394,8 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlDoubleQuote);
             AssertMatchToken(TokenType.XmlForwardSlash);
             AssertMatchToken(TokenType.XmlTagEnd);
+
+			AssertEOF();
         }
 
         [Test]
@@ -439,6 +413,71 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlSingleQuote);
             AssertMatchToken(TokenType.XmlForwardSlash);
             AssertMatchToken(TokenType.XmlTagEnd);
+
+			AssertEOF();
         }
+
+		[Test]
+		public void IncompleteXmlTagWithNoNameInsideXmlTagBreaksOutOfXmlTagWhenInIntelliSenseMode()
+		{
+			Scanner scanner = new Scanner(new ErrorHandler());
+			ScannerOptions scannerOptions = new ScannerOptions();
+			scannerOptions.EnableIntelliSenseTriggerTokens = true;
+			scanner.Options = scannerOptions;
+
+			scanner.SetSource(
+				"<div>\n" +
+				"    < \n" +
+				"</div>");
+
+			AssertMatchToken(scanner, TokenType.XmlTagStart);
+			AssertMatchToken(scanner, TokenType.XmlTagName, "div");
+			AssertMatchToken(scanner, TokenType.XmlTagEnd);
+
+			AssertMatchToken(scanner, TokenType.XmlText, "\n    ");
+			AssertMatchToken(scanner, TokenType.XmlTagStart);
+			AssertMatchToken(scanner, TokenType.XmlAttributeMemberSelect, " ");
+			AssertMatchToken(scanner, TokenType.XmlAttributeMemberSelect, "\n");
+			// When in IntelliSense mode the scanner should drop out of a tag if it finds a '<'
+
+			AssertMatchToken(scanner, TokenType.XmlTagStart);
+			AssertMatchToken(scanner, TokenType.XmlForwardSlash);
+			AssertMatchToken(scanner, TokenType.XmlTagName, "div");
+			AssertMatchToken(scanner, TokenType.XmlTagEnd);
+
+			AssertEOF();
+		}
+
+		[Test]
+		public void IncompleteXmlTagInsideXmlTagBreaksOutOfXmlTagWhenInIntelliSenseMode()
+		{
+			Scanner scanner = new Scanner(new ErrorHandler());
+			ScannerOptions scannerOptions = new ScannerOptions();
+			scannerOptions.EnableIntelliSenseTriggerTokens = true;
+			scanner.Options = scannerOptions;
+
+			scanner.SetSource(
+				"<div>\n" +
+				"    <a \n" +
+				"</div>");
+
+			AssertMatchToken(scanner, TokenType.XmlTagStart);
+			AssertMatchToken(scanner, TokenType.XmlTagName, "div");
+			AssertMatchToken(scanner, TokenType.XmlTagEnd);
+
+			AssertMatchToken(scanner, TokenType.XmlText, "\n    ");
+			AssertMatchToken(scanner, TokenType.XmlTagStart);
+			AssertMatchToken(scanner, TokenType.XmlTagName, "a");
+			AssertMatchToken(scanner, TokenType.XmlAttributeMemberSelect, " ");
+			AssertMatchToken(scanner, TokenType.XmlAttributeMemberSelect, "\n");
+			// When in IntelliSense mode the scanner should drop out of a tag if it finds a '<'
+
+			AssertMatchToken(scanner, TokenType.XmlTagStart);
+			AssertMatchToken(scanner, TokenType.XmlForwardSlash);
+			AssertMatchToken(scanner, TokenType.XmlTagName, "div");
+			AssertMatchToken(scanner, TokenType.XmlTagEnd);
+
+			AssertEOF();
+		}
     }
 }
