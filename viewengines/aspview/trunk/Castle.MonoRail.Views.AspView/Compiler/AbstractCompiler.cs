@@ -151,9 +151,9 @@ On '{0}' (class name: {1}) Line {2}, Column {3}, {4} {5}:
 			}
 		}
 
-		protected static string SourceFileToFileName(SourceFile file)
+		protected string SourceFileToFileName(SourceFile file)
 		{
-			return file.FileName;
+			return Path.Combine(context.TemporarySourceFilesDirectory.FullName, file.FileName);
 		}
 
 		protected static string SourceFileToSource(SourceFile file)
