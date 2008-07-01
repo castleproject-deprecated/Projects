@@ -22,7 +22,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.RenderingTests
 		protected HelperDictionary Helpers;
 		private string lastOutput;
 		protected string Layout;
-		protected MockEngineContext MockEngineContext;
+		protected StubEngineContext StubEngineContext;
 		protected Hashtable PropertyBag;
 		protected string Area = null;
 		protected string ControllerName = "test_controller";
@@ -53,36 +53,36 @@ namespace Castle.MonoRail.Views.AspView.Tests.RenderingTests
 			Layout = null;
 			PropertyBag = new Hashtable(StringComparer.InvariantCultureIgnoreCase);
 			Helpers = new HelperDictionary();
-			MockServices services = new MockServices();
-			services.UrlBuilder = new DefaultUrlBuilder(new MockServerUtility(), new MockRoutingEngine());
+			StubMonoRailServices services = new StubMonoRailServices();
+			services.UrlBuilder = new DefaultUrlBuilder(new StubServerUtility(), new StubRoutingEngine());
 			services.UrlTokenizer = new DefaultUrlTokenizer();
 			UrlInfo urlInfo = new UrlInfo(
 				"example.org", "test", "/TestBrail", "http", 80,
 				"http://test.example.org/test_area/test_controller/test_action.tdd",
 				Area, ControllerName, Action, "tdd", "no.idea");
-			MockEngineContext = new MockEngineContext(new MockRequest(), new MockResponse(), services,
+			StubEngineContext = new StubEngineContext(new StubRequest(), new StubResponse(), services,
 													  urlInfo);
-			MockEngineContext.AddService<IUrlBuilder>(services.UrlBuilder);
-			MockEngineContext.AddService<IUrlTokenizer>(services.UrlTokenizer);
-			MockEngineContext.AddService<IViewComponentFactory>(ViewComponentFactory);
-			MockEngineContext.AddService<ILoggerFactory>(new ConsoleFactory());
-			MockEngineContext.AddService<IViewSourceLoader>(new FileAssemblyViewSourceLoader(viewPath));
+			StubEngineContext.AddService<IUrlBuilder>(services.UrlBuilder);
+			StubEngineContext.AddService<IUrlTokenizer>(services.UrlTokenizer);
+			StubEngineContext.AddService<IViewComponentFactory>(ViewComponentFactory);
+			StubEngineContext.AddService<ILoggerFactory>(new ConsoleFactory());
+			StubEngineContext.AddService<IViewSourceLoader>(new FileAssemblyViewSourceLoader(viewPath));
 			
 
 			ViewComponentFactory = new DefaultViewComponentFactory();
-			ViewComponentFactory.Service(MockEngineContext);
+			ViewComponentFactory.Service(StubEngineContext);
 			ViewComponentFactory.Initialize();
 
 			ControllerContext = new ControllerContext();
 			ControllerContext.Helpers = Helpers;
 			ControllerContext.PropertyBag = PropertyBag;
-			MockEngineContext.CurrentControllerContext = ControllerContext;
+			StubEngineContext.CurrentControllerContext = ControllerContext;
 
 
-			Helpers["urlhelper"] = Helpers["url"] = new UrlHelper(MockEngineContext);
-			Helpers["htmlhelper"] = Helpers["html"] = new HtmlHelper(MockEngineContext);
-			Helpers["dicthelper"] = Helpers["dict"] = new DictHelper(MockEngineContext);
-			Helpers["DateFormatHelper"] = Helpers["DateFormat"] = new DateFormatHelper(MockEngineContext);
+			Helpers["urlhelper"] = Helpers["url"] = new UrlHelper(StubEngineContext);
+			Helpers["htmlhelper"] = Helpers["html"] = new HtmlHelper(StubEngineContext);
+			Helpers["dicthelper"] = Helpers["dict"] = new DictHelper(StubEngineContext);
+			Helpers["DateFormatHelper"] = Helpers["DateFormat"] = new DateFormatHelper(StubEngineContext);
 
 
 			//FileAssemblyViewSourceLoader loader = new FileAssemblyViewSourceLoader(viewPath);
@@ -91,7 +91,7 @@ namespace Castle.MonoRail.Views.AspView.Tests.RenderingTests
 //									   "Castle.MonoRail.Views.Brail.Tests.ResourcedViews"));
 
 			viewEngine = new AspViewEngine();
-			viewEngine.Service(MockEngineContext);
+			viewEngine.Service(StubEngineContext);
 			AspViewEngineOptions options = new AspViewEngineOptions();
 			options.CompilerOptions.AutoRecompilation = true;
 			options.CompilerOptions.KeepTemporarySourceFiles = false;
@@ -118,8 +118,8 @@ namespace Castle.MonoRail.Views.AspView.Tests.RenderingTests
 			StringWriter sw = new StringWriter();
 			if (string.IsNullOrEmpty(Layout) == false)
 				ControllerContext.LayoutNames = new string[] { Layout };
-			MockEngineContext.CurrentControllerContext = ControllerContext;
-			viewEngine.Process(templatePath, sw, MockEngineContext, null, ControllerContext);
+			StubEngineContext.CurrentControllerContext = ControllerContext;
+			viewEngine.Process(templatePath, sw, StubEngineContext, null, ControllerContext);
 			lastOutput = sw.ToString();
 			return lastOutput;
 		}
@@ -155,10 +155,10 @@ namespace Castle.MonoRail.Views.AspView.Tests.RenderingTests
 		{
 			if (string.IsNullOrEmpty(Layout) == false)
 				ControllerContext.LayoutNames = new string[] { Layout, };
-			MockEngineContext.CurrentControllerContext = ControllerContext;
+			StubEngineContext.CurrentControllerContext = ControllerContext;
 
-			BooViewEngine.RenderStaticWithinLayout(staticText, MockEngineContext, null, ControllerContext);
-			lastOutput = ((StringWriter)MockEngineContext.Response.Output)
+			BooViewEngine.RenderStaticWithinLayout(staticText, StubEngineContext, null, ControllerContext);
+			lastOutput = ((StringWriter)StubEngineContext.Response.Output)
 				.GetStringBuilder().ToString();
 			return lastOutput;
 		}
