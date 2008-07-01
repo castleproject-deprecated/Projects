@@ -14,7 +14,8 @@
 
 namespace AspViewTestSite.Controllers
 {
-    using Castle.MonoRail.Framework;
+	using Castle.MonoRail.Framework;
+	using System;
 
 	public class UsingViewComponentsController : Controller
 	{
@@ -55,6 +56,11 @@ namespace AspViewTestSite.Controllers
 
 		public void UsingComponentWithDotInALiteralParameterValue()
 		{
+		}
+
+		public void PassNonStringValueToViewComponent() 
+		{
+			PropertyBag["version"] = new Version(1, 2, 3, 4);
 		}
 		
 	}

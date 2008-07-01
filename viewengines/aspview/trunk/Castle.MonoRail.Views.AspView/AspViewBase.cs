@@ -27,6 +27,7 @@ namespace Castle.MonoRail.Views.AspView
 	using Components.DictionaryAdapter;
 	using Framework;
 	using Framework.Helpers;
+	using Internal;
 
 	public abstract class AspViewBase : IViewBaseInternal
 	{
@@ -263,9 +264,9 @@ namespace Castle.MonoRail.Views.AspView
 		/// <param name="name">The entry's name</param>
 		/// <param name="value">The entry's value</param>
 		/// <returns>The new dictionary</returns>
-		protected DictHelper.MonoRailDictionary N(string name, object value)
+		protected ParametersDictionary N(string name, object value)
 		{
-			return Helpers.Dict.N(name, value);
+			return new ParametersDictionary().N(name, value);
 		}
 
 		/// <summary>

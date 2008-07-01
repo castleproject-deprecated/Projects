@@ -103,6 +103,7 @@
     <Compile Include="ViewComponents\ComponentWithDotInItsName.cs" />
     <Compile Include="ViewComponents\RepeaterComponent.cs" />
     <Compile Include="ViewComponents\Simple.cs" />
+    <Compile Include="ViewComponents\VersionComponent.cs" />
     <Compile Include="ViewFilters\SingleLineViewFilter.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -122,6 +123,7 @@
     <Content Include="Views\Home\WithTypedProperties.aspx" />
     <Content Include="Views\UsingViewComponents\NestedInCaptureFor.aspx" />
     <Content Include="Views\UsingViewComponents\Nested.aspx" />
+    <Content Include="Views\UsingViewComponents\PassNonStringValueToViewComponent.aspx" />
     <Content Include="Views\UsingViewComponents\UsingComponentWithDotInALiteralParameterValue.aspx" />
     <Content Include="Views\UsingViewComponents\UsingComponentWithDotInAParameterValue.aspx" />
     <Content Include="Views\UsingViewComponents\UsingComponentWithASingleLetterName.aspx" />
