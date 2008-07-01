@@ -73,6 +73,21 @@ view content";
 			AssertPageDirectiveHasBeenRemoved(file.RenderBody);
 		}
 
+    [Fact]
+    public void Process_WhenUsingDefaultAndGenericTypedView_SetsDefaultAndGenericView()
+    {
+      file.RenderBody = @"
+<%@ Page Language=""C#"" Inherits=""Castle.MonoRail.Views.AspView.ViewAtDesignTime<IView<Item>>"" %>
+view content";
+      step.Process(file);
+
+      Assert.Equal(DetermineBaseClassStep.DefaultBaseClassName + "<IView<Item>>", file.BaseClassName);
+      Assert.Equal("IView<Item>", file.TypedViewName);
+
+      AssertPageDirectiveHasBeenRemoved(file.RenderBody);
+    }
+
+
 		[Fact]
 		public void Process_WhenUsingClassName_SetsClassName()
 		{
@@ -100,6 +115,21 @@ view content";
 			AssertPageDirectiveHasBeenRemoved(file.RenderBody);
 		}
 
+    [Fact]
+    public void Process_WhenUsingClassNameAndGenericTypedView_SetsClassNameAndGenericView()
+    {
+      file.RenderBody = @"
+<%@ Page Language=""C#"" Inherits=""SomeClass<IView<Item>>"" %>
+view content";
+      step.Process(file);
+
+      Assert.Equal("SomeClass<IView<Item>>", file.BaseClassName);
+      Assert.Equal("IView<Item>", file.TypedViewName);
+
+      AssertPageDirectiveHasBeenRemoved(file.RenderBody);
+    }
+
+
 		[Fact]
 		public void Process_WhenUsingClassNameAtDesignTime_SetsClassName()
 		{
@@ -125,7 +155,22 @@ view content";
 			Assert.Equal("IView", file.TypedViewName);
 
 			AssertPageDirectiveHasBeenRemoved(file.RenderBody);
-		}		
+		}
+
+    [Fact]
+    public void Process_WhenUsingClassNameAtDesignTimeAndGenericTypedView_SetsClassNameAndGenericView()
+    {
+      file.RenderBody = @"
+<%@ Page Language=""C#"" Inherits=""SomeClassAtDesignTime<IView<Item>>"" %>
+view content";
+      step.Process(file);
+
+      Assert.Equal("SomeClass<IView<Item>>", file.BaseClassName);
+      Assert.Equal("IView<Item>", file.TypedViewName);
+
+      AssertPageDirectiveHasBeenRemoved(file.RenderBody);
+    }		
+
 
 	}
 }

@@ -12,9 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 namespace AspViewTestSite.Controllers
 {
-    using Castle.MonoRail.Framework;
+	using Castle.MonoRail.Framework;
+	using System;
+	using AspViewTestSite.Interfaces.UsingDictionaryAdapter;
+	using Castle.Components.DictionaryAdapter;
 
     public class HomeController : SmartDispatcherController
     {
@@ -49,5 +53,10 @@ namespace AspViewTestSite.Controllers
         public void DefaultValues()
         {
         }
-    }
+		public void WithGenericTypedProperties()
+		{
+			IWithGenericTypedView<System.Version> viewData = new DictionaryAdapterFactory().GetAdapter<IWithGenericTypedView<System.Version>>(PropertyBag);
+			viewData.Item = new Version(1, 2, 3, 4);
+		}
+		}
 }

@@ -22,8 +22,7 @@ namespace Castle.MonoRail.Views.AspView.Internal
 	public static class RegularExpressions
 	{
 		public static readonly Regex PageDirective = new Regex(
-@"<%@\s*Page\s+Language\s*=\s*""c#""(?:\s+Inherits\s*=\s*""(?<base>[\w.]+)(?:<(?<view>[\w.]+)>)?\s*"")?.*%>\s*\n", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
+@"<%@\s*Page\s+Language\s*=\s*""c#""(?:\s+Inherits\s*=\s*""(?<base>[\w.]+)(?:<(?<view>[\w.<>]+)>)?\s*"")?.*%>\s*\n", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		public static readonly Regex ImportDirective = new Regex(
 @"<%@\s*Import\s+Namespace\s*=\s*""(?<namespace>[\w.]+)""\s*%>\s*\n", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 

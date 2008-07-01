@@ -89,6 +89,7 @@
     <Compile Include="Controllers\SdController.cs" />
     <Compile Include="Controllers\WithResourceController.cs" />
     <Compile Include="Interfaces\UsingDictionaryAdapter\IStupidView.cs" />
+    <Compile Include="Interfaces\UsingDictionaryAdapter\IWithGenericTypedView.cs" />
     <Compile Include="Interfaces\UsingDictionaryAdapter\IWithTypedPropertiesView.cs" />
     <Compile Include="Interfaces\UsingDictionaryAdapter\Nested\IAlsoWithTypedPropertiesView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -110,6 +111,7 @@
     <Content Include="Views\Components\A\Default.aspx" />
     <Content Include="Views\Components\With.Dot.In.Name\Default.aspx" />
     <Content Include="Views\Helpers\Index.aspx" />
+    <Content Include="Views\Home\WithGenericTypedProperties.aspx" />
     <Content Include="Views\Home\WithProperties.aspx" />
     <Content Include="Views\Home\DefaultValues.aspx" />
     <Content Include="Views\Home\SiteRoot.aspx" />
