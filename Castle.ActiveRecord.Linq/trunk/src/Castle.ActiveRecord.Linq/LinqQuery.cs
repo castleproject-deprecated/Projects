@@ -33,7 +33,9 @@ namespace Castle.ActiveRecord.Linq
 
         public IOrderedQueryable<T> Execute(ISession session)
         {
-            return new Query<T>(new NHibernateQueryProvider(session));
+			QueryOptions options = new QueryOptions();
+
+            return new Query<T>(new NHibernateQueryProvider(session, options), options);
         }
 
         #endregion
