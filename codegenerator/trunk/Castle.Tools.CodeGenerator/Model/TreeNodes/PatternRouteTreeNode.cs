@@ -18,11 +18,9 @@ namespace Castle.Tools.CodeGenerator.Model.TreeNodes
 
 		public override string ToString()
 		{
-			string d = ", ";
-			foreach (string s in defaults)
-				d += s + ", ";
+			string d = string.Join(", ", defaults);
 
-			return String.Format("PatternRoute<{0}, {1}, {2}>", Name, Pattern, d.Remove(d.Length - 2));
+			return String.Format("PatternRoute<{0}, {1}, {2}>", Name, Pattern, d);
 		}
 	}
 }
