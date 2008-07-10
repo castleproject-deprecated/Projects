@@ -42,7 +42,7 @@ namespace Castle.MonoRail.Framework.Filters
     /// </remarks>
     /// <example><code>
     ///  [Layout("default"), Rescue("generalerror")]
-    ///  [Filter(ExecuteEnum.BeforeAction,typeof(MobileFilter))]
+    ///  [Filter(ExecuteWhen.BeforeAction,typeof(MobileFilter))]
     ///  public class ShowController : SmartDispatcherController
     /// </code>
     /// If viewed from a mobile device, the layout will be changed to "mobile-default".
@@ -64,7 +64,7 @@ namespace Castle.MonoRail.Framework.Filters
 		{
 			if (exec != ExecuteWhen.BeforeAction)
 			{
-				throw new ControllerException("MobileFilter can only be performed as a ExecuteEnum.BeforeAction");
+				throw new ControllerException("MobileFilter can only be performed as a ExecuteWhen.BeforeAction");
 			}
 
 			if (context.UnderlyingContext.Request.Browser.IsMobileDevice ||
