@@ -155,7 +155,7 @@ namespace Castle.MonoRail.Views.AspView
 		/// <param name="componentName">The view component name</param>
 		protected void InvokeViewComponent(string componentName)
 		{
-			InvokeViewComponent(componentName, new DictHelper.MonoRailDictionary(), null, null);
+			InvokeViewComponent(componentName, new ParametersDictionary(), null, null);
 		}
 
 		/// <summary>
@@ -179,7 +179,7 @@ namespace Castle.MonoRail.Views.AspView
 			ViewComponentSectionRendereDelegate bodyHandler,
 			IEnumerable<KeyValuePair<string, ViewComponentSectionRendereDelegate>> sectionHandlers)
 		{
-			InvokeViewComponent(componentName, new DictHelper.MonoRailDictionary(), bodyHandler, sectionHandlers);
+			InvokeViewComponent(componentName, new ParametersDictionary(), bodyHandler, sectionHandlers);
 		}
 	
 		/// <summary>
@@ -275,7 +275,7 @@ namespace Castle.MonoRail.Views.AspView
 		/// <param name="subViewName">The sub view's name</param>
 		protected void OutputSubView(string subViewName)
 		{
-			OutputSubView(subViewName, outputWriter, new DictHelper.MonoRailDictionary());
+			OutputSubView(subViewName, outputWriter, new ParametersDictionary());
 		}
 
 		/// <summary>
@@ -384,7 +384,7 @@ namespace Castle.MonoRail.Views.AspView
 
 		private void InitProperties()
 		{
-			properties = new DictHelper.MonoRailDictionary();// HybridDictionary( <string, object>(CaseInsensitiveStringComparer.Default);
+			properties = new ParametersDictionary();
 			if (context != null)
 			{
 				properties.Add("context", context);
