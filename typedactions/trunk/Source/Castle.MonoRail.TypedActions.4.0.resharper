@@ -1,0 +1,10 @@
+<Configuration>
+  <CodeAnnotations>
+    <Namespace>JetBrains.Annotations</Namespace>
+    <DefaultNamespace>JetBrains.Annotations</DefaultNamespace>
+  </CodeAnnotations>
+  <CodeStyleSettings>
+    <Sharing>EXTERNAL</Sharing>
+    <ExternalPath>C:\Dev\OSS\CastleContrib\typedactions\trunk\Source\ReSharper.CodingStyle.xml</ExternalPath>
+  </CodeStyleSettings>
+</Configuration>

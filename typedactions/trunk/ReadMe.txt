@@ -1,0 +1,1 @@
+http://groups.google.com/group/castle-project-devel/browse_thread/thread/910de8a636111c92?hl=en

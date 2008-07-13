@@ -1,0 +1,10 @@
+TODO:
+
+- Proper read me
+- Windsor intergration
+- Think about how to use routing (i never used it)
+
+
+DONE:
+
+- Nothing really :)

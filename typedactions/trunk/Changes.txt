@@ -1,0 +1,4 @@
+
+
+2008/07/13
+-	Added Castle.MonoRail.TypedActions to Castle Contrib
