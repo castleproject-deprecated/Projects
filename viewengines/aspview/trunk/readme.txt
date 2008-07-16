@@ -1,0 +1,1 @@
+AspView was incorporated into the MonoRail's core and is no longer available at the contrib project
