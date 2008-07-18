@@ -17,8 +17,7 @@
 
 namespace Castle.MonoRail.Framework.Filters
 {
-    using System;
-    using Castle.MonoRail.Framework;
+	using Castle.MonoRail.Framework;
 
     /// <summary>
     /// Detects if controller is being accessed via a mobile device. <para/>
