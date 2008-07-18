@@ -128,7 +128,16 @@ namespace Castle.MonoRail.ViewComponents
     /// <term>               url                   </term>
     /// <description>url to image</description>
     /// </item>
-    /// </list>
+    /// </list><p/>
+	/// <b>Note</b>
+	/// <list type="bullet">
+	/// <item><description>View variable are only defined in a template section is defined.
+	/// </description></item>
+	/// <item><description>If a Id parameter is specifically defined, it is prefixed onto the view variable names. 
+	/// i.e.  If Id is "Two", then the variable is "Two_url".  This prevents the view varaibles from conflicting with 
+	/// those defined elsewhere on the page.
+	/// </description></item>
+	/// </list>
     /// </remarks>
     /// <example>
     /// Add to httpHandlers section of Web.config
@@ -448,16 +457,19 @@ namespace Castle.MonoRail.ViewComponents
 			Data = EncryptionHelper.Encrypt(
 				sequence+"|"+ DateTime.Now.AddMinutes(ValidFor).ToString("yyyyMMddHHmmss"));
 
-			PropertyBag["fieldId"] = Id;
-			PropertyBag["dataId"] = DataId;
-			PropertyBag["data"] = Data;
-			PropertyBag["width"] = Width;
-			PropertyBag["height"] = Height;
-			PropertyBag["url"] = String.Format(Url, HttpUtility.UrlEncode(PackParameters(captchaParameters)));
-			PropertyBag[DataId] = Data;
+			Url = String.Format(Url, HttpUtility.UrlEncode(PackParameters(captchaParameters)));
 
 			if (HasSection("template"))
 			{
+				string prefix = (Id == "captcha") ? "" : Id +"_";
+				PropertyBag[prefix+"fieldId"] = Id;
+				PropertyBag[prefix + "dataId"] = DataId;
+				PropertyBag[prefix + "data"] = Data;
+				PropertyBag[prefix + "width"] = Width;
+				PropertyBag[prefix + "height"] = Height;
+				PropertyBag[prefix + "url"] = Url;
+				PropertyBag[DataId] = Data;
+
 				RenderSection("template");
 			}
 			else
@@ -510,15 +522,11 @@ namespace Castle.MonoRail.ViewComponents
 
 		private void Show()
 		{
-			FormHelper form = new FormHelper();
+			FormHelper form = new FormHelper(EngineContext);
 			
-			form.SetController(EngineContext.CurrentController, EngineContext.CurrentControllerContext);
-			form.SetContext(EngineContext);
-
 			StringBuilder output = new StringBuilder();
 			output.Append(form.HiddenField(DataId, Data));
-			output.AppendFormat("<img src=\"{0}\" width=\"{1}\" height=\"{2}\" alt=\"captcha\" />", PropertyBag["url"],
-			                    PropertyBag["width"], PropertyBag["height"]);
+			output.AppendFormat("<img src=\"{0}\" width=\"{1}\" height=\"{2}\" alt=\"captcha\" />", Url, Width, Height);
 			output.Append(form.TextField(Id));
 
 			RenderText(output.ToString());

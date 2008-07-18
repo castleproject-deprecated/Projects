@@ -14,7 +14,6 @@
 
 namespace Castle.MonoRail.ViewComponents
 {
-	using System;
 	using System.Collections;
 	using System.IO;
 	using Castle.MonoRail.Framework;
@@ -48,7 +47,12 @@ namespace Castle.MonoRail.ViewComponents
 					"The grid requires a view component parameter named 'source' which should contain 'IEnumerable' instance");
 			}
 
-            RenderOptionalSection("tablestart", "<table class='grid' cellspacing='0' cellpadding='0'>");
+			string id = ComponentParams["id"] as string ?? MakeUniqueId("");
+
+			if (! RenderOptionalSection("tablestart"))
+			{
+				RenderTextFormat("<table id='{0}' class='{1}'>", id, ComponentParams["gridCssClass"] ?? "grid" );
+			}
             ShowHeader(source);
 
 			bool hasItems = ShowRows(source);
@@ -56,7 +60,7 @@ namespace Castle.MonoRail.ViewComponents
             RenderOptionalSection("footer");
             RenderOptionalSection("tableend", "</table>");
 
-			if (hasItems == false)
+			if ( ! hasItems )
 			{
                 RenderOptionalSection("empty", "Grid has no data");
             }
@@ -78,7 +82,10 @@ namespace Castle.MonoRail.ViewComponents
 			bool hasAlternate = Context.HasSection("alternateItem");
 			bool isAlternate = false;
 			bool hasItems = false;
-			
+			string ItemCss = (ComponentParams["ItemCssClass"] as string)  ?? "ListItem";
+			string AltItemCss = (ComponentParams["AltItemCssClass"] as string) ?? ItemCss;
+
+			int seq = 0;
 			foreach(object item in source)
 			{
 				hasItems = true;
@@ -90,6 +97,7 @@ namespace Castle.MonoRail.ViewComponents
 				}
 				else
 				{
+					PropertyBag["gridItemCssClass"] = isAlternate ? AltItemCss : ItemCss;
 					Context.RenderSection("item");
 				}
 

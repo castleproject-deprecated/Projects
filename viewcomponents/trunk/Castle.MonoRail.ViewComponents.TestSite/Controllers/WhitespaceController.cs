@@ -6,6 +6,7 @@ namespace Castle.MonoRail.ViewComponents.TestSite.Controllers
     using Castle.MonoRail.ViewComponents;
     using Castle.MonoRail.Framework;
     using Castle.MonoRail.Framework.ViewComponents;
+	using Castle.MonoRail.Framework.TransformFilters;
 
     [Layout("default")]
     public class WhitespaceController : SmartDispatcherController

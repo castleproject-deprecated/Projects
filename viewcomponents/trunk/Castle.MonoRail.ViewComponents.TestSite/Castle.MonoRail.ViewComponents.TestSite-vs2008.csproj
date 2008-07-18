@@ -150,7 +150,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>52703</DevelopmentServerPort>
+          <DevelopmentServerPort>55367</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/Castle.MonoRail.ViewComponents.TestSite</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

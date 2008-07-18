@@ -16,12 +16,10 @@ using System.Globalization;
 
 namespace Castle.MonoRail.ViewComponents
 {
-    using System;
-    using Framework;
+	using Framework;
     using Framework.Helpers;
-    using ViewComponents;
 
-    /// <summary>
+	/// <summary>
     /// A ViewComponent that renders a collapsible panel.
     /// </summary>
     [ViewComponentDetails("CollapsiblePanel",Sections="body,caption")]
