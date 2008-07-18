@@ -17,17 +17,12 @@
 namespace Castle.MonoRail.ViewComponents
 {
     #region References
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Web;
 
-    using Castle.MonoRail.Framework;
-    using Castle.MonoRail.Framework.Helpers;
-    using System.IO;
-    #endregion
+	using Castle.MonoRail.Framework;
 
-    /// <summary>
+	#endregion
+
+	/// <summary>
     /// ViewComponent to section text into a lede that is always display, with the remainder 
     /// in a hidden block which is revealed by clicking a link.
     /// </summary>

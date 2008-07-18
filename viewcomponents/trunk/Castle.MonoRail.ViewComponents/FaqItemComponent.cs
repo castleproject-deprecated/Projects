@@ -20,7 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Castle.MonoRail.Framework;
-using System.IO;
+
 #endregion
 
 namespace Castle.MonoRail.ViewComponents

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace Castle.MonoRail.ViewComponents
 {
     using System;
-    using System.Collections.Generic;
-    using System.Globalization;
+	using System.Globalization;
     using Castle.MonoRail.Framework;
 
 	/// <summary>

@@ -22,7 +22,6 @@
 
 namespace Castle.MonoRail.ViewComponents
 {
-	using System;
 	using Castle.MonoRail.Framework;
 	using Castle.MonoRail.Framework.Helpers;
 
