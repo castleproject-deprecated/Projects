@@ -65,7 +65,6 @@
 		</Feature>
 
 		<!-- Sequences -->
-		<!--TODO: Find a way to display "Rebuilding Visual Studio 2005 Package Cache..." when devenv is running-->
 		<InstallExecuteSequence>
 			<FindRelatedProducts Before="LaunchConditions" />
 			<RemoveExistingProducts After="InstallValidate" />
@@ -77,11 +76,15 @@
 		</InstallUISequence>
 
 		<!-- Custom actions -->
-		<CustomAction Id="CA_DevEnv2005Setup" Property="DEVENV2005_EXE_PATH" ExeCommand="/setup"  Impersonate="no" Execute="deferred" />
-		<CustomAction Id="CA_DevEnv2008Setup" Property="DEVENV2008_EXE_PATH" ExeCommand="/setup"  Impersonate="no" Execute="deferred" />
+		<CustomAction Id="CA_DevEnv2005Setup" Property="DEVENV2005_EXE_PATH" ExeCommand="/setup" Impersonate="no" Execute="deferred" />
+		<CustomAction Id="CA_DevEnv2008Setup" Property="DEVENV2008_EXE_PATH" ExeCommand="/setup" Impersonate="no" Execute="deferred" />
 
 		<!-- User interface -->
 		<UIRef Id="WixUI_Mondo" />
+		<UI>
+			<ProgressText Action="CA_DevEnv2005Setup">Configuring Visual Studio 2005... (this may take a few minutes)</ProgressText>
+			<ProgressText Action="CA_DevEnv2008Setup">Configuring Visual Studio 2008... (this may take a few minutes)</ProgressText>
+		</UI>
 		<WixVariable Id="WixUILicenseRtf" Value="setup\Apache Software License 2.0.rtf" />
 		<WixVariable Id="WixUIDialogBmp" Value="setup\Dialog.bmp" />
 		<WixVariable Id="WixUIBannerBmp" Value="setup\Banner.bmp" />
