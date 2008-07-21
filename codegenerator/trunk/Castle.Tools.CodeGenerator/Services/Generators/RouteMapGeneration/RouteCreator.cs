@@ -89,11 +89,16 @@ namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration
 
 		protected virtual CodeStatement[] CreateRoutesMethodBody()
 		{
-			CodeFieldReferenceExpression engineContext = new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), RouteMapGenerator.engineContextFieldName);
-			CodePropertyReferenceExpression services = new CodePropertyReferenceExpression(engineContext, "Services");
-			CodePropertyReferenceExpression urlBuilder = new CodePropertyReferenceExpression(services, "UrlBuilder");
-			CodeMethodInvokeExpression buildUrl = new CodeMethodInvokeExpression(urlBuilder, "BuildUrl", CreateBuildUrlParameters(engineContext));
-			CodeMethodReturnStatement returnStatement = new CodeMethodReturnStatement(buildUrl);
+			CodeTypeReferenceExpression routes = new CodeTypeReferenceExpression(this.routeDefinitions.Name);
+			CodePropertyReferenceExpression route = new CodePropertyReferenceExpression(routes, node.Name);
+			CodeMethodInvokeExpression createUrl = new CodeMethodInvokeExpression(route, "CreateUrl", new CodePrimitiveExpression(null));
+			CodeMethodReturnStatement returnStatement = new CodeMethodReturnStatement(createUrl);
+			
+//			CodeFieldReferenceExpression engineContext = new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), RouteMapGenerator.engineContextFieldName);
+//			CodePropertyReferenceExpression services = new CodePropertyReferenceExpression(engineContext, "Services");
+//			CodePropertyReferenceExpression urlBuilder = new CodePropertyReferenceExpression(services, "UrlBuilder");
+//			CodeMethodInvokeExpression buildUrl = new CodeMethodInvokeExpression(urlBuilder, "BuildUrl", CreateBuildUrlParameters(engineContext));
+//			CodeMethodReturnStatement returnStatement = new CodeMethodReturnStatement(buildUrl);
 
 			return new CodeStatement[] { returnStatement };
 		}

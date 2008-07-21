@@ -41,9 +41,6 @@ namespace Castle.Tools.CodeGenerator.Model
 
 		public string CreateUrl(IDictionary parameters)
 		{
-			if ((ParamToString(parameters, "area") != area) || (ParamToString(parameters, "controller") != controller) || (ParamToString(parameters, "action") != action))
-				return null;
-
 			StringBuilder text = new StringBuilder();
 
 			foreach (string part in routeParts)

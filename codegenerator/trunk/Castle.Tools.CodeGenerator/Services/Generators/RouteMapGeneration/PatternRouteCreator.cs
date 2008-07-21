@@ -106,7 +106,12 @@ namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration
 					)
 				);
 			}
-
+			
+			CodeMethodReturnStatement returnStatement = (CodeMethodReturnStatement) statements[statements.Count - 1];
+			CodeMethodInvokeExpression invokeExpression = (CodeMethodInvokeExpression) returnStatement.Expression;
+			invokeExpression.Parameters.Clear();
+			invokeExpression.Parameters.Add(new CodeVariableReferenceExpression(routeParametersFieldName));
+			
 			return statements.ToArray();
 		}
 
