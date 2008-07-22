@@ -50,8 +50,8 @@ namespace Castle.Tools.CodeGenerator.Services.Visitors
 
 			foreach (ParameterDeclarationExpression parameter in methodDeclaration.Parameters)
 			{
-				string typeName = TypeResolver.Resolve(parameter.TypeReference);
-				action.AddChild(new ParameterTreeNode(parameter.ParameterName, typeName));
+				Type type = TypeResolver.Resolve(parameter.TypeReference, true);
+				action.AddChild(new ParameterTreeNode(parameter.ParameterName, type));
 			}
 
 			foreach (AttributeSection attributeSection in methodDeclaration.Attributes)

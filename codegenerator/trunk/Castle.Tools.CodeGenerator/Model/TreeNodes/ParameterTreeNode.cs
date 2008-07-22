@@ -4,9 +4,9 @@ namespace Castle.Tools.CodeGenerator.Model.TreeNodes
 {
 	public class ParameterTreeNode : TreeNode
 	{
-		private string _type;
+		private Type _type;
 
-		public string Type
+		public Type Type
 		{
 			get { return _type; }
 		}
@@ -16,7 +16,7 @@ namespace Castle.Tools.CodeGenerator.Model.TreeNodes
 		{
 		}
 
-		public ParameterTreeNode(string name, string type)
+		public ParameterTreeNode(string name, Type type)
 			: base(name)
 		{
 			_type = type;

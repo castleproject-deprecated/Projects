@@ -194,9 +194,11 @@ namespace Castle.Tools.CodeGenerator.Services
       using (_mocks.Unordered())
       {
         Expect.Call(_treeService.Peek).Return(node);
-        Expect.Call(_typeResolver.Resolve(new TypeReference("bool"))).Constraints(Is.Matching(new Predicate<TypeReference>(delegate(TypeReference reference) {
-          return reference.SystemType == "System.Boolean";
-        }))).Return("System.Boolean");
+        Expect.Call(_typeResolver.Resolve(new TypeReference("bool"), true))
+			.Constraints(
+				Is.Matching(new Predicate<TypeReference>(delegate(TypeReference reference) { return reference.SystemType == "System.Boolean"; })),
+				Is.Matching(new Predicate<bool>(delegate(bool throwOnFail) { return throwOnFail; })))
+			.Return(typeof(bool));
       }
 
       _mocks.ReplayAll();
@@ -252,9 +254,11 @@ namespace Castle.Tools.CodeGenerator.Services
       {
 	  _typeResolver.UseNamespace("SomeNamespace", true);
       	_typeResolver.UseNamespace("System");
-        Expect.Call(_typeResolver.Resolve(new TypeReference("DateTime"))).Constraints(Is.Matching(new Predicate<TypeReference>(delegate(TypeReference reference) {
-          return reference.SystemType == "DateTime";
-        }))).Return("System.DateTime[]");
+        Expect.Call(_typeResolver.Resolve(new TypeReference("DateTime"), true))
+			.Constraints(
+				Is.Matching(new Predicate<TypeReference>(delegate(TypeReference reference) { return reference.SystemType == "DateTime"; })),
+				Is.Matching(new Predicate<bool>(delegate(bool throwOnFail) { return throwOnFail; })))
+			.Return(typeof(DateTime[]));
       }
 
       _mocks.ReplayAll();

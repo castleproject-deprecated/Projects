@@ -100,7 +100,7 @@ namespace Castle.Tools.CodeGenerator.Services
     {
       ViewTreeNode node = new ViewTreeNode("Index");
       _controller.AddChild(node);
-      node.AddChild(new ParameterTreeNode("id", "System.Int32"));
+      node.AddChild(new ParameterTreeNode("id", typeof(Int32)));
 
       using (_mocks.Unordered())
       {

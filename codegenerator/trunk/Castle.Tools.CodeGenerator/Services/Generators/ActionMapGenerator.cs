@@ -45,7 +45,7 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 		public override void Visit(ActionTreeNode node)
 		{
 			CodeTypeDeclaration type = _typeStack.Peek();
-			List<string> actionArgumentTypes = new List<string>();
+			List<Type> actionArgumentTypes = new List<Type>();
 
 			CodeMemberMethod method = new CodeMemberMethod();
 			method.Name = node.Name;
@@ -81,12 +81,12 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 		}
 
 		protected CodeExpression CreateNewActionReference(ActionTreeNode node, List<CodeExpression> actionArguments,
-		                                                  List<string> actionArgumentTypes)
+		                                                  List<Type> actionArgumentTypes)
 		{
 			List<CodeExpression> actionArgumentRuntimeTypes = new List<CodeExpression>();
-			foreach (string typeName in actionArgumentTypes)
+			foreach (Type type in actionArgumentTypes)
 			{
-				actionArgumentRuntimeTypes.Add(new CodeTypeOfExpression(_source[typeName]));
+				actionArgumentRuntimeTypes.Add(new CodeTypeOfExpression(_source[type]));
 			}
 
 			CodeExpression createMethodSignature = new CodeObjectCreateExpression(
@@ -123,7 +123,7 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 		}
 
 		protected List<CodeExpression> CreateActionArgumentsAndAddParameters(CodeMemberMethod method, ActionTreeNode node,
-		                                                                     List<string> actionArgumentTypes)
+		                                                                     List<Type> actionArgumentTypes)
 		{
 			List<CodeExpression> actionArguments = new List<CodeExpression>();
 

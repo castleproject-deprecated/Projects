@@ -90,7 +90,7 @@ namespace Castle.Tools.CodeGenerator.Services
       _aliases[alias] = ns;
     }
 
-    public string Resolve(string typeName)
+  	public string Resolve(string typeName)
     {
       foreach (string ns in _usings)
       {
@@ -122,7 +122,7 @@ namespace Castle.Tools.CodeGenerator.Services
           yield return asm;
         }
       }
-    }
+	}
 
     public Type Resolve(string typeName, bool throwOnFail)
     {
@@ -170,7 +170,26 @@ namespace Castle.Tools.CodeGenerator.Services
       if (throwOnFail)
         throw new TypeLoadException(String.Format("Unable to resolve: {0}", typeName));
       return null;
-    }
+	}
+
+	public Type Resolve(TypeReference reference, bool throwOnFail)
+	{
+		if (reference.GenericTypes.Count > 0)
+		{
+			string name = reference.SystemType + "`" + reference.GenericTypes.Count + "[";
+
+			foreach (var genericType in reference.GenericTypes)
+			{
+				name += "[" + genericType.SystemType + "],";
+			}
+
+			name = name.Substring(0, name.Length - 1) + "]";
+
+			return Resolve(name, throwOnFail);
+		}
+		else
+			return Resolve(reference.SystemType, throwOnFail);
+	}
 
     public string Resolve(TypeReference reference)
     {
