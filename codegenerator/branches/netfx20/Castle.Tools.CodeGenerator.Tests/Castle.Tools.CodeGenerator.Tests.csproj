@@ -1,0 +1,129 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1FF3DD73-91A3-419D-A479-1ACE24DEFFC9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Castle.Tools.CodeGenerator</RootNamespace>
+    <AssemblyName>Castle.Tools.CodeGenerator.Tests</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Build\Debug\AnyCPU\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Build\Release\AnyCPU\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Components.Binder, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Castle.Components.Binder.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Components.Validator, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Castle.Components.Validator.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.Framework, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Castle.MonoRail.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory, Version=3.0.0.2520, Culture=neutral, PublicKeyToken=efe927acf176eea2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build.Engine" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.Build.Utilities" />
+    <Reference Include="nunit.framework, Version=2.2.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.1.0.584, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\ControllerReferenceTests.cs" />
+    <Compile Include="Model\MethodSignatureTests.cs" />
+    <Compile Include="Model\TreeNodeTests.cs" />
+    <Compile Include="MsBuild\GenerateMonoRailSiteTreeTaskTests.cs" />
+    <Compile Include="MsBuild\MsBuildLoggerTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ActionMapGeneratorTests.cs" />
+    <Compile Include="Services\CodeDomAssert.cs" />
+    <Compile Include="Services\ControllerPartialsGeneratorTests.cs" />
+    <Compile Include="Services\ControllerVisitorTests.cs" />
+    <Compile Include="Services\DefaultArgumentConversionServiceTests.cs" />
+    <Compile Include="Services\DefaultCodeGeneratorServicesTests.cs" />
+    <Compile Include="Services\DefaultControllerReferenceFactoryTests.cs" />
+    <Compile Include="Services\DefaultNamingServiceTests.cs" />
+    <Compile Include="Services\DefaultRuntimeInformationServiceTests.cs" />
+    <Compile Include="Services\DefaultSourceStorageServiceTests.cs" />
+    <Compile Include="Services\NRefactoryParserFactoryTests.cs" />
+    <Compile Include="Services\NullLoggerTests.cs" />
+    <Compile Include="Services\ControllerMapGeneratorTests.cs" />
+    <Compile Include="Services\RouteMapGeneratorTests.cs" />
+    <Compile Include="Services\SiteTreeGeneratorServiceTests.cs" />
+    <Compile Include="Services\DefaultTreeCreationServiceTests.cs" />
+    <Compile Include="Services\TypeInspectionVisitorTests.cs" />
+    <Compile Include="Services\TypeResolverTests.cs" />
+    <Compile Include="Services\TypeResolvingVisitorTests.cs" />
+    <Compile Include="Services\TypeTableEntryTests.cs" />
+    <Compile Include="Services\ViewComponentVisitorTests.cs" />
+    <Compile Include="Services\ViewMapGeneratorTests.cs" />
+    <Compile Include="Services\ViewSourceMapperTests.cs" />
+    <Compile Include="Services\WizardStepMapGeneratorTests.cs" />
+    <Compile Include="Services\WizardStepPageVisitorTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Castle.Tools.CodeGenerator.Testing\Castle.Tools.CodeGenerator.Testing.csproj">
+      <Project>{9B75CDA5-F949-46EF-9E89-4ACB920D6344}</Project>
+      <Name>Castle.Tools.CodeGenerator.Testing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Castle.Tools.CodeGenerator\Castle.Tools.CodeGenerator.csproj">
+      <Project>{AD98AAA1-00B5-4766-87E2-62C82DC09896}</Project>
+      <Name>Castle.Tools.CodeGenerator</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,165 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AD98AAA1-00B5-4766-87E2-62C82DC09896}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Castle.Tools.CodeGenerator</RootNamespace>
+    <AssemblyName>Castle.Tools.CodeGenerator</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Castle.Tools.CodeGenerator.snk</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Build\Debug\AnyCPU\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Build\Release\AnyCPU\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Castle.MonoRail.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory, Version=3.0.0.2520, Culture=neutral, PublicKeyToken=efe927acf176eea2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build.Engine" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.Build.Utilities" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\PatternRouteAttribute.cs" />
+    <Compile Include="Attributes\StaticRouteAttribute.cs" />
+    <Compile Include="CodeDom\CreateAssignStatement.cs" />
+    <Compile Include="CodeDom\CreateAttributeDeclaration.cs" />
+    <Compile Include="CodeDom\CreateConstructor.cs" />
+    <Compile Include="CodeDom\CreateMemberField.cs" />
+    <Compile Include="CodeDom\CreateMemberMethod.cs" />
+    <Compile Include="CodeDom\CreateMemberProperty.cs" />
+    <Compile Include="Model\TreeNodes\ActionTreeNode.cs" />
+    <Compile Include="Model\TreeNodes\RouteTreeNode.cs" />
+    <Compile Include="Model\TreeNodes\StaticRouteTreeNode.cs" />
+    <Compile Include="Model\TreeNodes\ParameterTreeNode.cs" />
+    <Compile Include="Model\TreeNodes\ControllerTreeNode.cs" />
+    <Compile Include="Model\TreeNodes\AreaTreeNode.cs" />
+    <Compile Include="Model\ControllerReferences.cs" />
+    <Compile Include="Model\IArgumentlessControllerActionReference.cs" />
+    <Compile Include="Model\IControllerActionReference.cs" />
+    <Compile Include="Model\IControllerViewReference.cs" />
+    <Compile Include="Model\MethodSignature.cs" />
+    <Compile Include="Attributes\RouteAttribute.cs" />
+    <Compile Include="Model\TreeNodes\PatternRouteTreeNode.cs" />
+    <Compile Include="Model\RuntimeInformation.cs" />
+    <Compile Include="Model\StaticRoute.cs" />
+    <Compile Include="Model\TreeNodes\TreeNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\TreeNodes\WizardControllerTreeNode.cs" />
+    <Compile Include="Model\TreeNodes\ViewComponentTreeNode.cs" />
+    <Compile Include="Model\TreeNodes\ViewTreeNode.cs" />
+    <Compile Include="MsBuild\Engine.cs" />
+    <Compile Include="MsBuild\GenerateMonoRailSiteTreeTask.cs" />
+    <Compile Include="MsBuild\MsBuildLogger.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Generators\AbstractGenerator.cs" />
+    <Compile Include="Services\Generators\ActionMapGenerator.cs" />
+    <Compile Include="Services\Generators\ControllerPartialsGenerator.cs" />
+    <Compile Include="Services\Generators\RouteMapGeneration\PatternRouteCreator.cs" />
+    <Compile Include="Services\Generators\RouteMapGeneration\StaticRouteCreator.cs" />
+    <Compile Include="Services\Generators\RouteMapGeneration\RouteCreator.cs" />
+    <Compile Include="Services\Generators\RouteMapGeneration\RouteParameters\GuidRouteParameterType.cs" />
+    <Compile Include="Services\Generators\RouteMapGeneration\RouteParameters\IntRouteParameterType.cs" />
+    <Compile Include="Services\Generators\RouteMapGeneration\RouteParameters\StringRouteParameterType.cs" />
+    <Compile Include="Services\Generators\RouteMapGeneration\RouteParameters\OptionalRouteParameters.cs" />
+    <Compile Include="Services\Generators\RouteMapGeneration\RouteParameters\RequiredRouteParameters.cs" />
+    <Compile Include="Services\Generators\RouteMapGeneration\RouteParameters\RouteParameters.cs" />
+    <Compile Include="Services\Generators\RouteMapGeneration\RouteParameters\IRouteParameterType.cs" />
+    <Compile Include="Services\Generators\RouteParameterDefaults.cs" />
+    <Compile Include="Services\Visitors\ControllerVisitor.cs" />
+    <Compile Include="Services\DefaultArgumentConversionService.cs" />
+    <Compile Include="Services\DefaultCodeGeneratorServices.cs" />
+    <Compile Include="Services\DefaultControllerReferenceFactory.cs" />
+    <Compile Include="Services\DefaultNamingService.cs" />
+    <Compile Include="Services\DefaultRuntimeInformationService.cs" />
+    <Compile Include="Services\Generators\DefaultSourceGenerator.cs" />
+    <Compile Include="Services\IArgumentConversionService.cs" />
+    <Compile Include="Services\ICodeGeneratorServices.cs" />
+    <Compile Include="Services\IControllerReferenceFactory.cs" />
+    <Compile Include="Services\IGenerator.cs" />
+    <Compile Include="Services\ILogger.cs" />
+    <Compile Include="Services\INamingService.cs" />
+    <Compile Include="Services\IParsedSourceStorageService.cs" />
+    <Compile Include="Services\IParserFactory.cs" />
+    <Compile Include="Services\IRuntimeInformationService.cs" />
+    <Compile Include="Services\ISiteTreeGeneratorService.cs" />
+    <Compile Include="Services\Generators\ISourceGenerator.cs" />
+    <Compile Include="Services\ITreeCreationService.cs" />
+    <Compile Include="Services\ITypeResolver.cs" />
+    <Compile Include="Services\IViewSourceMapper.cs" />
+    <Compile Include="Services\NRefactoryParserFactory.cs" />
+    <Compile Include="Services\NullLogger.cs" />
+    <Compile Include="Services\DefaultSourceStorageService.cs" />
+    <Compile Include="Services\Generators\ControllerMapGenerator.cs" />
+    <Compile Include="Services\Generators\RouteMapGenerator.cs" />
+    <Compile Include="Services\SiteTreeGeneratorService.cs" />
+    <Compile Include="Services\DefaultTreeCreationService.cs" />
+    <Compile Include="Services\TreeWalker.cs" />
+    <Compile Include="CodeDom\CreateTypeDeclaration.cs" />
+    <Compile Include="Services\Visitors\TypeInspectionVisitor.cs" />
+    <Compile Include="Services\TypeResolver.cs" />
+    <Compile Include="Services\Visitors\TypeResolvingVisitor.cs" />
+    <Compile Include="Services\TypeTableEntry.cs" />
+    <Compile Include="Services\Visitors\ViewComponentVisitor.cs" />
+    <Compile Include="Services\Generators\ViewMapGenerator.cs" />
+    <Compile Include="Services\ViewSourceMapper.cs" />
+    <Compile Include="Services\Generators\WizardStepMapGenerator.cs" />
+    <Compile Include="Services\Visitors\WizardStepPageVisitor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Castle.Tools.CodeGenerator.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  -->
+  <Target Name="AfterBuild">
+    <CreateItem Include="$(OutputPath)$(AssemblyName).dll;$(OutputPath)ICSharpCode.NRefactory.dll;$(MSBuildProjectDirectory)\..\$(AssemblyName).targets">
+      <Output ItemName="InstallFiles" TaskParameter="Include" />
+    </CreateItem>
+    <MakeDir Directories="$(MSBuildExtensionsPath)\$(AssemblyName)" />
+    <Copy SourceFiles="@(InstallFiles)" DestinationFolder="$(MSBuildExtensionsPath)\$(AssemblyName)" />
+  </Target>
+</Project>

@@ -1,0 +1,48 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <CodeGeneratorAssembly Condition="'$(CodeGeneratorAssembly)' == ''">$(MSBuildExtensionsPath)\Castle.Tools.CodeGenerator\Castle.Tools.CodeGenerator.dll</CodeGeneratorAssembly>
+    <SiteMapFileName Condition="'$(SiteMapFileName)' == ''">SiteMap.generated.cs</SiteMapFileName>
+    <SiteMapNamespace Condition="'$(SiteMapNamespace)' == ''">$(RootNamespace).SiteMap</SiteMapNamespace>
+    <BuildDependsOn>
+      GenerateMonoRailSiteTree;
+      $(BuildDependsOn)
+    </BuildDependsOn>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'@(ControllerSources)' == ''">
+    <ControllerSources Include="$(MSBuildProjectDirectory)\Controllers\**\*.cs">
+      <InProject>false</InProject>
+    </ControllerSources>
+  </ItemGroup>
+
+  <ItemGroup Condition="'@(ViewSources)' == ''">
+    <ViewSources Include="$(MSBuildProjectDirectory)\Views\**\*.brail">
+      <InProject>false</InProject>
+    </ViewSources>
+    <ViewSources Include="$(MSBuildProjectDirectory)\Views\**\*.brailjs">
+      <InProject>false</InProject>
+    </ViewSources>
+    <ViewSources Include="$(MSBuildProjectDirectory)\Views\**\*.vm">
+      <InProject>false</InProject>
+    </ViewSources>
+    <ViewSources Include="$(MSBuildProjectDirectory)\Views\**\*.njs">
+      <InProject>false</InProject>
+    </ViewSources>
+  </ItemGroup>
+
+  <UsingTask TaskName="Castle.Tools.CodeGenerator.MsBuild.GenerateMonoRailSiteTreeTask" 
+             AssemblyFile="$(CodeGeneratorAssembly)"/>
+  <Target Name="GenerateMonoRailSiteTree" DependsOnTargets="ResolveReferences">
+    <Message Text="$(OutputPath) ---------" />
+    <Message Text="MSBuild Project DIrectory: $(CodeGeneratorAssembly)" />
+    <GenerateMonoRailSiteTreeTask OutputFile="$(SiteMapFileName)"
+                                  Namespace="$(SiteMapNamespace)"
+                                  ControllerSources="@(ControllerSources)"
+                                  ViewSources="@(ViewSources)"
+                                  Sources="@(Compile)"
+                                  AssemblyReferences="@(ReferencePath);@(_ResolvedProjectREferencePaths)">
+      
+    </GenerateMonoRailSiteTreeTask>
+    
+  </Target>
+</Project>
