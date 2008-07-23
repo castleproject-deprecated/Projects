@@ -1,86 +1,94 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Castle.MonoRail.Framework;
-using Castle.Tools.CodeGenerator.Model.TreeNodes;
-using ICSharpCode.NRefactory.Ast;
-using Attribute=ICSharpCode.NRefactory.Ast.Attribute;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services.Visitors
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Reflection;
+	using MonoRail.Framework;
+	using Model.TreeNodes;
+	using ICSharpCode.NRefactory.Ast;
+	
 	public class ControllerVisitor : TypeResolvingVisitor
 	{
-		private ILogger _logger;
-		private ITreeCreationService _treeService;
+		private readonly ILogger logger;
+		private readonly ITreeCreationService treeService;
 
 		public ControllerVisitor(ILogger logger, ITypeResolver typeResolver, ITreeCreationService treeService)
 			: base(typeResolver)
 		{
-			_logger = logger;
-			_treeService = treeService;
+			this.logger = logger;
+			this.treeService = treeService;
 		}
 
 		public override object VisitMethodDeclaration(MethodDeclaration methodDeclaration, object data)
 		{
 			if ((methodDeclaration.Modifier & Modifiers.Public) != Modifiers.Public)
-			{
 				return null;
-			}
-
-			ControllerTreeNode controllerNode = (ControllerTreeNode) _treeService.Peek;
+			
+			var controllerNode = (ControllerTreeNode) treeService.Peek;
 
 			if (controllerNode is WizardControllerTreeNode)
 			{
-				Type wizardControllerInterface = typeof (IWizardController);
-
-				MethodInfo[] methodInfos = wizardControllerInterface.GetMethods(BindingFlags.Public | BindingFlags.Instance);
+				var wizardControllerInterface = typeof (IWizardController);
+				var methodInfos = wizardControllerInterface.GetMethods(BindingFlags.Public | BindingFlags.Instance);
 
 				if ((methodDeclaration.Name == "GetSteps") && (methodDeclaration.Body.Children.Count > 0))
 				{
 					(controllerNode as WizardControllerTreeNode).WizardStepPages = GetWizardStepPages(methodDeclaration.Body);
-
 					return null;
 				}
-				else if (
-					Array.Exists(methodInfos, delegate(MethodInfo methodInfo) { return methodInfo.Name == methodDeclaration.Name; }))
+				
+				if (Array.Exists(methodInfos, methodInfo => methodInfo.Name == methodDeclaration.Name))
 					return null;
 			}
 
-			ActionTreeNode action = new ActionTreeNode(methodDeclaration.Name);
+			var action = new ActionTreeNode(methodDeclaration.Name);
 
-			foreach (ParameterDeclarationExpression parameter in methodDeclaration.Parameters)
+			foreach (var parameter in methodDeclaration.Parameters)
 			{
-				Type type = TypeResolver.Resolve(parameter.TypeReference, true);
+				var type = TypeResolver.Resolve(parameter.TypeReference, true);
 				action.AddChild(new ParameterTreeNode(parameter.ParameterName, type));
 			}
 
-			foreach (AttributeSection attributeSection in methodDeclaration.Attributes)
+			foreach (var attributeSection in methodDeclaration.Attributes)
 			{
-				List<Attribute> attributes = attributeSection.Attributes.FindAll(
-					delegate(Attribute attribute) { return attribute.Name == "StaticRoute"; });
+				var attributes = attributeSection.Attributes.FindAll(attribute => attribute.Name == "StaticRoute");
 
-				foreach (Attribute attribute in attributes)
+				foreach (var attribute in attributes)
 				{
-					PrimitiveExpression name = (PrimitiveExpression) attribute.PositionalArguments[0];
-					PrimitiveExpression pattern = (PrimitiveExpression) attribute.PositionalArguments[1];
+					var name = (PrimitiveExpression) attribute.PositionalArguments[0];
+					var pattern = (PrimitiveExpression) attribute.PositionalArguments[1];
+					var routeTreeNode = new StaticRouteTreeNode((string) name.Value, (string) pattern.Value);
 
-					StaticRouteTreeNode routeTreeNode = new StaticRouteTreeNode((string) name.Value, (string) pattern.Value);
 					action.AddChild(routeTreeNode);
 				}
 
-				attributes = attributeSection.Attributes.FindAll(
-					delegate(Attribute attribute) { return attribute.Name == "PatternRoute"; });
+				attributes = attributeSection.Attributes.FindAll(attribute => attribute.Name == "PatternRoute");
 
-				foreach (Attribute attribute in attributes)
+				foreach (var attribute in attributes)
 				{
-					PrimitiveExpression name = (PrimitiveExpression)attribute.PositionalArguments[0];
-					PrimitiveExpression pattern = (PrimitiveExpression)attribute.PositionalArguments[1];
-					string[] defaults = new string[attribute.PositionalArguments.Count - 2];
+					var name = (PrimitiveExpression) attribute.PositionalArguments[0];
+					var pattern = (PrimitiveExpression) attribute.PositionalArguments[1];
+					var defaults = new string[attribute.PositionalArguments.Count - 2];
 
-					for(int i = 0; i < defaults.Length; i++)
+					for (var i = 0; i < defaults.Length; i++)
 						defaults[i] = (string) ((PrimitiveExpression) attribute.PositionalArguments[2 + i]).Value;
 
-					PatternRouteTreeNode routeTreeNode = new PatternRouteTreeNode((string)name.Value, (string)pattern.Value, defaults);
+					var routeTreeNode = new PatternRouteTreeNode((string) name.Value, (string) pattern.Value, defaults);
+					
 					action.AddChild(routeTreeNode);
 				}
 			}
@@ -98,88 +106,77 @@ namespace Castle.Tools.CodeGenerator.Services.Visitors
 				return null;
 			}
 
-			string area = GetArea(typeDeclaration);
-			string typeNamespace = GetNamespace(typeDeclaration);
+			var area = GetArea(typeDeclaration);
+			var typeNamespace = GetNamespace(typeDeclaration);
 
 			if (!String.IsNullOrEmpty(area))
 			{
-				string[] areas = area.Split('/');
-				for (int i = 0; i < areas.Length; i++)
+				var areas = area.Split('/');
+				
+				for (var i = 0; i < areas.Length; i++)
 				{
-					TreeNode areaNode = _treeService.FindNode(areas[i]);
-					if (areaNode == null)
-					{
-						areaNode = new AreaTreeNode(areas[i]);
-					}
-					_treeService.PushNode(areaNode);
+					var areaNode = treeService.FindNode(areas[i]) ?? new AreaTreeNode(areas[i]);
+
+					treeService.PushNode(areaNode);
 				}
 			}
 
-			ControllerTreeNode node = IsWizardController(typeDeclaration)
-			                          	? new WizardControllerTreeNode(typeDeclaration.Name, typeNamespace, new string[0])
-			                          	: new ControllerTreeNode(typeDeclaration.Name, typeNamespace);
+			var node = IsWizardController(typeDeclaration)
+              	? new WizardControllerTreeNode(typeDeclaration.Name, typeNamespace, new string[0])
+              	: new ControllerTreeNode(typeDeclaration.Name, typeNamespace);
 
-			_treeService.PushNode(node);
+			treeService.PushNode(node);
 
-			object r = base.VisitTypeDeclaration(typeDeclaration, data);
+			var r = base.VisitTypeDeclaration(typeDeclaration, data);
 
 			if (!String.IsNullOrEmpty(area))
 			{
-				string[] areas = area.Split('/');
-				for (int i = 0; i < areas.Length; i++)
-				{
-					_treeService.PopNode();
-				}
+				var areas = area.Split('/');
+				
+				for (var i = 0; i < areas.Length; i++)
+					treeService.PopNode();
 			}
-			_treeService.PopNode();
+
+			treeService.PopNode();
 
 			return r;
 		}
 
 		protected virtual string GetArea(TypeDeclaration typeDeclaration)
 		{
-			foreach (AttributeSection attributeSection in typeDeclaration.Attributes)
-			{
-				foreach (Attribute attribute in attributeSection.Attributes)
+			foreach (var attributeSection in typeDeclaration.Attributes)
+				foreach (var attribute in attributeSection.Attributes)
 				{
-					if (attribute.Name == "ControllerDetails")
-					{
-						foreach (NamedArgumentExpression namedArgument in attribute.NamedArguments)
-						{
-							if (namedArgument.Name == "Area")
-							{
-								return ResolvePrimitiveValue(namedArgument.Expression);
-							}
-						}
-					}
+					if (attribute.Name != "ControllerDetails") continue;
+
+					foreach (var namedArgument in attribute.NamedArguments)
+						if (namedArgument.Name == "Area")
+							return ResolvePrimitiveValue(namedArgument.Expression);
 				}
-			}
+			
 			return null;
 		}
 
 		protected virtual string[] GetWizardStepPages(BlockStatement getStepsBody)
 		{
-			ReturnStatement returnStatement = (ReturnStatement) getStepsBody.Children[getStepsBody.Children.Count - 1];
-			ArrayCreateExpression arrayCreateExpression = (ArrayCreateExpression) returnStatement.Expression;
-			List<string> types = new List<string>();
+			var returnStatement = (ReturnStatement) getStepsBody.Children[getStepsBody.Children.Count - 1];
+			var arrayCreateExpression = (ArrayCreateExpression) returnStatement.Expression;
+			var types = new List<string>();
 
-			arrayCreateExpression.ArrayInitializer.CreateExpressions.ForEach(delegate(Expression expression)
+			arrayCreateExpression.ArrayInitializer.CreateExpressions.ForEach(expression =>
 			{
 				if (expression is ObjectCreateExpression)
 				{
-					ObjectCreateExpression objectCreateExpression =
-						(ObjectCreateExpression) expression;
+					var objectCreateExpression = (ObjectCreateExpression) expression;
 
 					types.Add(objectCreateExpression.CreateType.Type);
 				}
 				else if (expression is InvocationExpression)
 				{
-					InvocationExpression invocationExpression =
-						(InvocationExpression) expression;
+					var invocationExpression = (InvocationExpression) expression;
 
 					if (invocationExpression.TypeArguments.Count == 1)
-						types.Add(
-							invocationExpression.TypeArguments[0].Type);
+						types.Add(invocationExpression.TypeArguments[0].Type);
 				}
 			});
 
@@ -188,19 +185,19 @@ namespace Castle.Tools.CodeGenerator.Services.Visitors
 
 		protected virtual bool IsController(TypeDeclaration typeDeclaration)
 		{
-			bool isController =
-				typeDeclaration.Name.EndsWith("Controller") && (typeDeclaration.Modifier & Modifiers.Partial) == Modifiers.Partial;
+			var isController = typeDeclaration.Name.EndsWith("Controller") && (typeDeclaration.Modifier & Modifiers.Partial) == Modifiers.Partial;
 
 			if (!isController)
 			{
 				if ((typeDeclaration.Modifier & Modifiers.Partial) != Modifiers.Partial)
 				{
-					_logger.LogInfo("Controller Source for " + typeDeclaration.Name +
+					logger.LogInfo("Controller Source for " + typeDeclaration.Name +
 					                " will not be included in the generated sitemap because it is not a partial type");
 				}
+				
 				if (!typeDeclaration.Name.EndsWith("Controller"))
 				{
-					_logger.LogInfo("Controller source for " + typeDeclaration.Name +
+					logger.LogInfo("Controller source for " + typeDeclaration.Name +
 					                " will not be included in the generated site map because its type name does not end with controller");
 				}
 			}
@@ -210,15 +207,12 @@ namespace Castle.Tools.CodeGenerator.Services.Visitors
 
 		protected virtual bool IsWizardController(TypeDeclaration typeDeclaration)
 		{
-			return typeDeclaration.BaseTypes.Exists(
-				delegate(TypeReference typeReference) { return typeReference.ToString() == "IWizardController"; });
+			return typeDeclaration.BaseTypes.Exists(typeReference => typeReference.ToString() == "IWizardController");
 		}
 
 		protected virtual string ResolvePrimitiveValue(Expression expression)
 		{
-			if (expression is PrimitiveExpression)
-				return ((PrimitiveExpression) expression).Value.ToString();
-			return null;
+			return expression is PrimitiveExpression ? ((PrimitiveExpression) expression).Value.ToString() : null;
 		}
 	}
 }

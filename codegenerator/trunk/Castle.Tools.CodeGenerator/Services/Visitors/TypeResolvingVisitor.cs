@@ -1,58 +1,55 @@
-using ICSharpCode.NRefactory.Ast;
-using ICSharpCode.NRefactory.Visitors;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services.Visitors
 {
+	using ICSharpCode.NRefactory.Ast;
+	using ICSharpCode.NRefactory.Visitors;
+
 	public class TypeResolvingVisitor : AbstractAstVisitor
 	{
-		private ITypeResolver _typeResolver;
-		
-		public ITypeResolver TypeResolver
-		{
-			get { return _typeResolver; }
-		}
-		
 		public TypeResolvingVisitor(ITypeResolver typeResolver)
 		{
-			_typeResolver = typeResolver;
+			TypeResolver = typeResolver;
 		}
-		
+
+		public ITypeResolver TypeResolver { get; private set; }
+
 		public override object VisitUsingDeclaration(UsingDeclaration usingDeclaration, object data)
 		{
-			foreach (Using usingLine in usingDeclaration.Usings)
-			{
+			foreach (var usingLine in usingDeclaration.Usings)
 				if (usingLine.IsAlias)
-					_typeResolver.AliasNamespace(usingLine.Name, usingLine.Alias.Type);
+					TypeResolver.AliasNamespace(usingLine.Name, usingLine.Alias.Type);
 				else
-					_typeResolver.UseNamespace(usingLine.Name);
-			}
+					TypeResolver.UseNamespace(usingLine.Name);
+			
 			return base.VisitUsingDeclaration(usingDeclaration, data);
 		}
 
 
 		public override object VisitNamespaceDeclaration(NamespaceDeclaration namespaceDeclaration, object data)
 		{
-			_typeResolver.UseNamespace(namespaceDeclaration.Name,true);
+			TypeResolver.UseNamespace(namespaceDeclaration.Name, true);
+
 			return base.VisitNamespaceDeclaration(namespaceDeclaration, data);
 		}
-		
+
 		protected static string GetNamespace(TypeDeclaration typeDeclaration)
 		{
-			/*
-		  INode iterator = typeDeclaration.Parent;
-		  while (iterator != null)
-		  {
-			NamespaceDeclaration namespaceDeclaration = iterator as NamespaceDeclaration;
-			if (namespaceDeclaration != null)
-			  return namespaceDeclaration.Name;
-			iterator = iterator.Parent;
-		  }
-		  return null;
-		  */
-			NamespaceDeclaration namespaceDeclaration = typeDeclaration.Parent as NamespaceDeclaration;
-			if (namespaceDeclaration != null)
-				return namespaceDeclaration.Name;
-			return null;
+			var namespaceDeclaration = typeDeclaration.Parent as NamespaceDeclaration;
+			
+			return namespaceDeclaration != null ? namespaceDeclaration.Name : null;
 		}
 	}
 }

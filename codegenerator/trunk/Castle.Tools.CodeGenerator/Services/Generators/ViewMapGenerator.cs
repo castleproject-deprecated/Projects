@@ -1,54 +1,65 @@
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
-
-using Castle.Tools.CodeGenerator.Model;
-using Castle.Tools.CodeGenerator.Model.TreeNodes;
-using Castle.Tools.CodeGenerator.Services.Generators;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services.Generators
 {
+	using System.CodeDom;
+	using External;
+	using Model.TreeNodes;
+	using Generators;
+
 	public class ViewMapGenerator : AbstractGenerator
 	{
-		public ViewMapGenerator(ILogger logger, ISourceGenerator source, INamingService naming, string targetNamespace, string serviceType)
+		public ViewMapGenerator(ILogger logger, ISourceGenerator source, INamingService naming, string targetNamespace,
+		                        string serviceType)
 			: base(logger, source, naming, targetNamespace, serviceType)
 		{
 		}
-		
+
 		public override void Visit(ControllerTreeNode node)
 		{
-			CodeTypeDeclaration type = GenerateTypeDeclaration(_namespace, node.PathNoSlashes + _naming.ToViewWrapperName(node.Name));
+			var type = GenerateTypeDeclaration(@namespace, node.PathNoSlashes + naming.ToViewWrapperName(node.Name));
 
-			_typeStack.Push(type);
+			typeStack.Push(type);
 			base.Visit(node);
-			_typeStack.Pop();
+			typeStack.Pop();
 		}
 
 		public override void Visit(ViewTreeNode node)
 		{
-			if (_typeStack.Count == 0) return;
+			if (typeStack.Count == 0) return;
 
-			CodeExpression[] constructionArguments = new CodeExpression[]
-				{
-					new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), _naming.ToMemberVariableName(_serviceIdentifier)),
-					new CodeTypeOfExpression(node.Controller.FullName),
-					new CodePrimitiveExpression(node.Controller.Area),
-					new CodePrimitiveExpression(_naming.ToControllerName(node.Controller.Name)),
-					new CodePrimitiveExpression(node.Name)
-				};
+			var constructionArguments = new CodeExpression[]
+			{
+				new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), naming.ToMemberVariableName(serviceIdentifier)),
+				new CodeTypeOfExpression(node.Controller.FullName),
+				new CodePrimitiveExpression(node.Controller.Area),
+				new CodePrimitiveExpression(naming.ToControllerName(node.Controller.Name)),
+				new CodePrimitiveExpression(node.Name)
+			};
 
 			CodeExpression returnExpression =
 				new CodeMethodInvokeExpression(
 					new CodeMethodReferenceExpression(
 						new CodePropertyReferenceExpression(
-							new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), _naming.ToMemberVariableName(_serviceIdentifier)),
+							new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), naming.ToMemberVariableName(serviceIdentifier)),
 							"ControllerReferenceFactory"),
 						"CreateViewReference"),
-					constructionArguments
-					);
+					constructionArguments);
 
-			CodeTypeReference propertyType = new CodeTypeReference(typeof(IControllerViewReference));
-			_typeStack.Peek().Members.Add(_source.CreateReadOnlyProperty(node.Name, propertyType, returnExpression));
+			var propertyType = new CodeTypeReference(typeof (IControllerViewReference));
+			typeStack.Peek().Members.Add(source.CreateReadOnlyProperty(node.Name, propertyType, returnExpression));
 
 			base.Visit(node);
 		}

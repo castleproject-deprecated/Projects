@@ -1,57 +1,63 @@
-using System.Collections.Generic;
-using Castle.Tools.CodeGenerator.Services.Visitors;
-using ICSharpCode.NRefactory.Ast;
-using NUnit.Framework;
-using Rhino.Mocks;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services
 {
+	using System.Collections.Generic;
+	using Visitors;
+	using ICSharpCode.NRefactory.Ast;
+	using NUnit.Framework;
+	using Rhino.Mocks;
+
 	[TestFixture]
 	public class WizardStepPageVisitorTests
 	{
-		#region Member Data
-		private MockRepository _mocks;
-		private ITreeCreationService _treeService;
-		private ILogger _logger;
-		private ITypeResolver _typeResolver;
-		private WizardStepPageVisitor _visitor;
-		#endregion
+		private MockRepository mocks;
+		private ITreeCreationService treeService;
+		private ILogger logger;
+		private ITypeResolver typeResolver;
+		private WizardStepPageVisitor visitor;
 
-		#region Test Setup and Teardown Methods
 		[SetUp]
 		public void Setup()
 		{
-			_mocks = new MockRepository();
-			_logger = new NullLogger();
-			_typeResolver = _mocks.DynamicMock<ITypeResolver>();
-			_treeService = _mocks.DynamicMock<ITreeCreationService>();
-			_visitor = new WizardStepPageVisitor(_logger, _typeResolver, _treeService);
+			mocks = new MockRepository();
+			logger = new NullLogger();
+			typeResolver = mocks.DynamicMock<ITypeResolver>();
+			treeService = mocks.DynamicMock<ITreeCreationService>();
+			visitor = new WizardStepPageVisitor(logger, typeResolver, treeService);
 		}
-		#endregion
 
-		#region Test Methods
 		[Test]
 		public void VisitTypeDeclaration_NotWizardStepPage_DoesNothing()
 		{
-			TypeDeclaration type = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>());
-			type.Name = "SomeRandomType";
+			var type = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>()) {Name = "SomeRandomType"};
 
-			_mocks.ReplayAll();
-			_visitor.VisitTypeDeclaration(type, null);
-			_mocks.VerifyAll();
+			mocks.ReplayAll();
+			visitor.VisitTypeDeclaration(type, null);
+			mocks.VerifyAll();
 		}
 
 		[Test]
 		public void VisitTypeDeclaration_AWizardStepPageNotPartial_DoesNothing()
 		{
-			TypeDeclaration type = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>());
-			type.Name = "SomeRandomWizardStepPage";
+			var type = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>()) {Name = "SomeRandomWizardStepPage"};
 			type.BaseTypes.Add(new TypeReference("WizardStepPage"));
 
-			_mocks.ReplayAll();
-			_visitor.VisitTypeDeclaration(type, null);
-			_mocks.VerifyAll();
+			mocks.ReplayAll();
+			visitor.VisitTypeDeclaration(type, null);
+			mocks.VerifyAll();
 		}
-		#endregion
 	}
 }

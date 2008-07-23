@@ -1,27 +1,37 @@
-using System;
-using System.CodeDom;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.CodeDom
 {
+	using System;
+	using System.CodeDom;
+
 	public class CreateMemberProperty
 	{
-		private readonly CodeMemberProperty codeMemberProperty;
-
 		private CreateMemberProperty(Type type)
 		{
-			codeMemberProperty = new CodeMemberProperty();
-			codeMemberProperty.Type = new CodeTypeReference(type);
+			Property = new CodeMemberProperty {Type = new CodeTypeReference(type)};
 		}
-		
+
 		private CreateMemberProperty(CodeTypeReference type)
 		{
-			codeMemberProperty = new CodeMemberProperty();
-			codeMemberProperty.Type = type;
+			Property = new CodeMemberProperty {Type = type};
 		}
 
 		public static CreateMemberProperty OfType<T>()
 		{
-			return new CreateMemberProperty(typeof(T));
+			return new CreateMemberProperty(typeof (T));
 		}
 
 		public static CreateMemberProperty OfType(CodeTypeReference type)
@@ -36,57 +46,54 @@ namespace Castle.Tools.CodeGenerator.CodeDom
 
 		public CreateMemberProperty Called(string name)
 		{
-			codeMemberProperty.Name = name;
+			Property.Name = name;
 			return this;
 		}
 
 		public CreateMemberProperty WithAttributes(MemberAttributes attributes)
 		{
-			codeMemberProperty.Attributes = attributes;
+			Property.Attributes = attributes;
 			return this;
 		}
 
 		public CreateMemberProperty WithSummaryComment(string comment)
-		{	
-			CodeCommentStatement summaryStart = new CodeCommentStatement("<summary>");
-			CodeCommentStatement summary = new CodeCommentStatement(comment);
-			CodeCommentStatement summaryEnd = new CodeCommentStatement("</summary>");
-			
+		{
+			var summaryStart = new CodeCommentStatement("<summary>");
+			var summary = new CodeCommentStatement(comment);
+			var summaryEnd = new CodeCommentStatement("</summary>");
+
 			summaryStart.Comment.DocComment = true;
 			summary.Comment.DocComment = true;
 			summaryEnd.Comment.DocComment = true;
 
-			codeMemberProperty.Comments.Add(summaryStart);
-			codeMemberProperty.Comments.Add(summary);
-			codeMemberProperty.Comments.Add(summaryEnd);
+			Property.Comments.Add(summaryStart);
+			Property.Comments.Add(summary);
+			Property.Comments.Add(summaryEnd);
 
 			return this;
 		}
 
 		public CreateMemberProperty WithCustomAttributes(params CodeAttributeDeclaration[] attributes)
 		{
-			codeMemberProperty.CustomAttributes.AddRange(attributes);
+			Property.CustomAttributes.AddRange(attributes);
 			return this;
 		}
 
 		public CreateMemberProperty WithGetter(params CodeStatement[] statements)
 		{
-			codeMemberProperty.HasGet = true;
-			codeMemberProperty.GetStatements.AddRange(statements);
-			return this;			
+			Property.HasGet = true;
+			Property.GetStatements.AddRange(statements);
+			return this;
 		}
 
 		public CreateMemberProperty WithSetter(params CodeStatement[] statements)
 		{
-			codeMemberProperty.HasSet = true;
-			codeMemberProperty.SetStatements.AddRange(statements);
+			Property.HasSet = true;
+			Property.SetStatements.AddRange(statements);
 
 			return this;
 		}
 
-		public CodeMemberProperty Property
-		{
-			get { return codeMemberProperty; }
-		}
+		public CodeMemberProperty Property { get; private set; }
 	}
 }

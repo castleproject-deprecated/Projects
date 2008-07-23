@@ -1,11 +1,26 @@
-using System;
-using System.CodeDom;
-using Castle.Tools.CodeGenerator.Model;
-using Castle.Tools.CodeGenerator.Model.TreeNodes;
-using Castle.Tools.CodeGenerator.Services.Generators;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services.Generators
 {
+	using System;
+	using System.CodeDom;
+	using External;
+	using Model;
+	using Model.TreeNodes;
+	using Generators;
+
 	public class WizardStepMapGenerator : AbstractGenerator
 	{
 		public WizardStepMapGenerator(ILogger logger, ISourceGenerator source, INamingService naming, string targetNamespace,
@@ -15,15 +30,18 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 
 		public override void Visit(WizardControllerTreeNode node)
 		{
-			CodeTypeDeclaration type = GenerateTypeDeclaration(_namespace, node.PathNoSlashes + _naming.ToWizardStepWrapperName(node.Name));
+			var type = GenerateTypeDeclaration(@namespace, node.PathNoSlashes + naming.ToWizardStepWrapperName(node.Name));
 
-			foreach (string wizardStepPage in node.WizardStepPages)
+			foreach (var wizardStepPage in node.WizardStepPages)
 			{
-				CodeMemberMethod method = new CodeMemberMethod();
-				method.Name = wizardStepPage;
-				method.ReturnType = _source[typeof(IControllerActionReference)];
-				method.Attributes = MemberAttributes.Public;
-				method.CustomAttributes.Add(_source.DebuggerAttribute);
+				var method = new CodeMemberMethod
+				{
+					Name = wizardStepPage,
+					ReturnType = source[typeof (IControllerActionReference)],
+					Attributes = MemberAttributes.Public
+				};
+
+				method.CustomAttributes.Add(source.DebuggerAttribute);
 				method.Statements.Add(new CodeMethodReturnStatement(CreateNewWizardStepReference(node, wizardStepPage)));
 				type.Members.Add(method);
 			}
@@ -34,36 +52,32 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 		protected CodeExpression CreateNewWizardStepReference(WizardControllerTreeNode node, string wizardStepPage)
 		{
 			CodeExpression createMethodSignature = new CodeObjectCreateExpression(
-				_source[typeof (MethodSignature)],
+				source[typeof (MethodSignature)],
 				new CodeExpression[]
-					{
-						new CodeTypeOfExpression(node.FullName),
-						new CodePrimitiveExpression(node.Name),
-						new CodeArrayCreateExpression(_source[typeof (Type)], 0)
-					}
-				);
-
-			CodeExpression[] constructionArguments = new CodeExpression[]
 				{
-					new CodeFieldReferenceExpression(new CodeThisReferenceExpression(),
-					                                 _naming.ToMemberVariableName(_serviceIdentifier)),
 					new CodeTypeOfExpression(node.FullName),
-					new CodePrimitiveExpression(node.Area),
-					new CodePrimitiveExpression(_naming.ToControllerName(node.Name)),
-					new CodePrimitiveExpression(wizardStepPage),
-					createMethodSignature,
-					new CodeArrayCreateExpression(_source[typeof (ActionArgument)], 0)
-				};
+					new CodePrimitiveExpression(node.Name),
+					new CodeArrayCreateExpression(source[typeof (Type)], 0)
+				});
+
+			var constructionArguments = new[]
+			{
+				new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), naming.ToMemberVariableName(serviceIdentifier)),
+				new CodeTypeOfExpression(node.FullName),
+				new CodePrimitiveExpression(node.Area),
+				new CodePrimitiveExpression(naming.ToControllerName(node.Name)),
+				new CodePrimitiveExpression(wizardStepPage),
+				createMethodSignature,
+				new CodeArrayCreateExpression(source[typeof (ActionArgument)], 0)
+			};
 
 			return new CodeMethodInvokeExpression(
 				new CodeMethodReferenceExpression(
 					new CodePropertyReferenceExpression(
-						new CodeFieldReferenceExpression(new CodeThisReferenceExpression(),
-						                                 _naming.ToMemberVariableName(_serviceIdentifier)),
+						new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), naming.ToMemberVariableName(serviceIdentifier)),
 						"ControllerReferenceFactory"),
 					"CreateActionReference"),
-				constructionArguments
-				);
+				constructionArguments);
 		}
 	}
 }

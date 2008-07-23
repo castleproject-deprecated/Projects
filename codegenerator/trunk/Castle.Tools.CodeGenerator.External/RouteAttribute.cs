@@ -12,20 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
-namespace Castle.Tools.CodeGenerator.Attributes
+namespace Castle.Tools.CodeGenerator.External
 {
+	using System;
+
 	/// <summary>
 	/// Declares a route to an action.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
 	public class RouteAttribute : Attribute
 	{
-		private readonly int order;
-		private readonly string name;
-		private readonly string pattern;
-
 		/// <summary>
 		/// Constructs a RouteAttribute, with the supplied order, name and pattern.
 		/// </summary>
@@ -34,33 +30,24 @@ namespace Castle.Tools.CodeGenerator.Attributes
 		/// <param name="pattern">The route pattern.</param>
 		public RouteAttribute(int order, string name, string pattern)
 		{
-			this.order = order;
-			this.name = name;
-			this.pattern = pattern;
+			Order = order;
+			Name = name;
+			Pattern = pattern;
 		}
 
 		/// <summary>
 		/// The order in which all routes are tested (ie. 1 means this route will be tested first).
 		/// </summary>
-		public int Order
-		{
-			get { return order; }
-		}
+		public int Order { get; private set; }
 
 		/// <summary>
 		/// The name of the route.
 		/// </summary>
-		public string Name
-		{
-			get { return name; }
-		}
+		public string Name { get; private set; }
 
 		/// <summary>
 		/// The route pattern.
 		/// </summary>
-		public string Pattern
-		{
-			get { return pattern; }
-		}
+		public string Pattern { get; private set; }
 	}
 }

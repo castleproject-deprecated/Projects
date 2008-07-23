@@ -1,26 +1,40 @@
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration.RouteParameters
 {
+	using System.Collections.Generic;
+	using System.Text.RegularExpressions;
+
 	public abstract class RouteParameters : Dictionary<string, IRouteParameterType>
 	{
-		public RouteParameters GetFrom(string pattern) 
+		public RouteParameters GetFrom(string pattern)
 		{
-			MatchCollection matches = ParameterRegex.Matches(pattern);
+			var matches = ParameterRegex.Matches(pattern);
 
 			foreach (Match match in matches)
 			{
-				string value = match.Value.Substring(1, match.Value.Length - 2);
-				string name = value;
-				IRouteParameterType type = new StringRouteParameterType();				
+				var value = match.Value.Substring(1, match.Value.Length - 2);
+				var name = value;
+				IRouteParameterType type = new StringRouteParameterType();
 
 				if (value.Contains(":"))
-				{					
-					string[] parts = value.Split(':');
+				{
+					var parts = value.Split(':');
 					name = parts[0];
 
-					switch(parts[1])
+					switch (parts[1])
 					{
 						case "int":
 							type = new IntRouteParameterType();
@@ -33,8 +47,8 @@ namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration.Rout
 							break;
 					}
 				}
-				
-				Add(name, type);				
+
+				Add(name, type);
 			}
 
 			return this;
@@ -42,10 +56,10 @@ namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration.Rout
 
 		private static string[] GetAnyOfChoices(string pattern)
 		{
-			Regex regex = new Regex(@"\(((?<choice>[\w\d]+)\|?)+\)");
-			Match match = regex.Match(pattern);
-			Group choices = match.Groups["choice"];
-			List<string> anyOfChoices = new List<string>();
+			var regex = new Regex(@"\(((?<choice>[\w\d]+)\|?)+\)");
+			var match = regex.Match(pattern);
+			var choices = match.Groups["choice"];
+			var anyOfChoices = new List<string>();
 
 			foreach (Capture capture in choices.Captures)
 				anyOfChoices.Add(capture.Value);
@@ -57,7 +71,9 @@ namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration.Rout
 		{
 			get
 			{
-				return new Regex(string.Format(@"{0}((\w+)|(\w+:(int|guid|(anyof\(([\w\d]+\|)*[\w\d]+\))))){1}", OpeningParameterDelimiter, ClosingParameterDelimiter));
+				return
+					new Regex(string.Format(@"{0}((\w+)|(\w+:(int|guid|(anyof\(([\w\d]+\|)*[\w\d]+\))))){1}", OpeningParameterDelimiter,
+					                        ClosingParameterDelimiter));
 			}
 		}
 

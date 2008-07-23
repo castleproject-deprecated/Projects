@@ -1,79 +1,85 @@
-using System.Collections.Generic;
-using Castle.Tools.CodeGenerator.Model.TreeNodes;
-using Castle.Tools.CodeGenerator.Services.Visitors;
-using ICSharpCode.NRefactory.Ast;
-using NUnit.Framework;
-using Rhino.Mocks;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services
 {
-  [TestFixture]
-  public class ViewComponentVisitorTests
-  {
-    #region Member Data
-    private MockRepository _mocks;
-    private ITreeCreationService _treeService;
-    private ILogger _logger;
-    private ITypeResolver _typeResolver;
-    private ViewComponentVisitor _visitor;
-    #endregion
+	using System.Collections.Generic;
+	using Model.TreeNodes;
+	using Visitors;
+	using ICSharpCode.NRefactory.Ast;
+	using NUnit.Framework;
+	using Rhino.Mocks;
 
-    #region Test Setup and Teardown Methods
-    [SetUp]
-    public void Setup()
-    {
-      _mocks = new MockRepository();
-      _logger = new NullLogger();
-      _typeResolver = _mocks.DynamicMock<ITypeResolver>();
-      _treeService = _mocks.DynamicMock<ITreeCreationService>();
-      _visitor = new ViewComponentVisitor(_logger, _typeResolver, _treeService);
-    }
-    #endregion
+	[TestFixture]
+	public class ViewComponentVisitorTests
+	{
+		private MockRepository mocks;
+		private ITreeCreationService treeService;
+		private ILogger logger;
+		private ITypeResolver typeResolver;
+		private ViewComponentVisitor visitor;
 
-    #region Test Methods
-    [Test]
-    public void VisitCompileUnit_Always_PushesComponentsArea()
-    {
-      CompilationUnit cu = new CompilationUnit();
+		[SetUp]
+		public void Setup()
+		{
+			mocks = new MockRepository();
+			logger = new NullLogger();
+			typeResolver = mocks.DynamicMock<ITypeResolver>();
+			treeService = mocks.DynamicMock<ITreeCreationService>();
+			visitor = new ViewComponentVisitor(logger, typeResolver, treeService);
+		}
 
-      using (_mocks.Unordered())
-      {
-        _treeService.PushArea("Components");
-        _treeService.PopNode();
-      }
+		[Test]
+		public void VisitCompileUnit_Always_PushesComponentsArea()
+		{
+			var cu = new CompilationUnit();
 
-      _mocks.ReplayAll();
-      _visitor.VisitCompilationUnit(cu, null);
-      _mocks.VerifyAll();
-    }
+			using (mocks.Unordered())
+			{
+				treeService.PushArea("Components");
+				treeService.PopNode();
+			}
 
-    [Test]
-    public void VisitTypeDeclaration_NotViewComponent_DoesNothing()
-    {
-      TypeDeclaration type = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>());
-      type.Name = "SomeRandomType";
+			mocks.ReplayAll();
+			visitor.VisitCompilationUnit(cu, null);
+			mocks.VerifyAll();
+		}
 
-      _mocks.ReplayAll();
-	  _visitor.VisitTypeDeclaration(type, null);
-      _mocks.VerifyAll();
-    }
+		[Test]
+		public void VisitTypeDeclaration_NotViewComponent_DoesNothing()
+		{
+			var type = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>()) {Name = "SomeRandomType"};
 
-    [Test]
-    public void VisitTypeDeclaration_AViewComponentNoChildren_PushesAndPops()
-    {
-      TypeDeclaration type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>());
-      type.Name = "SomeRandomComponent";
+			mocks.ReplayAll();
+			visitor.VisitTypeDeclaration(type, null);
+			mocks.VerifyAll();
+		}
 
-      using (_mocks.Unordered())
-      {
-        _treeService.PushNode(new ViewComponentTreeNode("SomeRandomComponent", "SomeNamespace"));
-        _treeService.PopNode();
-      }
+		[Test]
+		public void VisitTypeDeclaration_AViewComponentNoChildren_PushesAndPops()
+		{
+			var type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>()) {Name = "SomeRandomComponent"};
 
-      _mocks.ReplayAll();
-      _visitor.VisitTypeDeclaration(type, null);
-      _mocks.VerifyAll();
-    }
-    #endregion
-  }
+			using (mocks.Unordered())
+			{
+				treeService.PushNode(new ViewComponentTreeNode("SomeRandomComponent", "SomeNamespace"));
+				treeService.PopNode();
+			}
+
+			mocks.ReplayAll();
+			visitor.VisitTypeDeclaration(type, null);
+			mocks.VerifyAll();
+		}
+	}
 }

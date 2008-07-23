@@ -1,127 +1,129 @@
-using System.Collections.Generic;
-using Castle.Tools.CodeGenerator.Services.Visitors;
-using ICSharpCode.NRefactory.Ast;
-using NUnit.Framework;
-using Rhino.Mocks;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services
 {
-  [TestFixture]
-  public class TypeInspectionVisitorTests
-  {
-    #region Member Data
-  	private MockRepository _mocks;
-    private ITypeResolver _typeResolver;
-    private TypeInspectionVisitor _visitor;
-    private NamespaceDeclaration _namespace;
-    private TypeDeclaration _type;
-  	#endregion
-  	
-  	#region Test Setup and Teardown Methods
-  	[SetUp]
-  	public void Setup()
-  	{
-  		_mocks = new MockRepository();
-      _typeResolver = _mocks.DynamicMock<ITypeResolver>();
-      _visitor = new TypeInspectionVisitor(_typeResolver);
+	using System.Collections.Generic;
+	using Visitors;
+	using ICSharpCode.NRefactory.Ast;
+	using NUnit.Framework;
+	using Rhino.Mocks;
 
-      _type = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>());
-      _type.Name = "SomeType";
-      _namespace = new NamespaceDeclaration("SomeNamespace");
-      _namespace.AddChild(_type);
-      _type.Parent = _namespace;
-  	}
-  	#endregion
-  	
-  	#region Test Methods
-    [Test]
-    public void VisitTypeDeclaration_NoNamespace_DoesNothing()
-    {
-      _type.Parent = null;
-      _namespace.Children.Clear();
+	[TestFixture]
+	public class TypeInspectionVisitorTests
+	{
+		private MockRepository mocks;
+		private ITypeResolver typeResolver;
+		private TypeInspectionVisitor visitor;
+		private NamespaceDeclaration @namespace;
+		private TypeDeclaration type;
 
-      _mocks.ReplayAll();
-      _visitor.VisitTypeDeclaration(_type, null);
-      _mocks.VerifyAll();
-    }
+		[SetUp]
+		public void Setup()
+		{
+			mocks = new MockRepository();
+			typeResolver = mocks.DynamicMock<ITypeResolver>();
+			visitor = new TypeInspectionVisitor(typeResolver);
 
-    [Test]
-    public void VisitNamespaceDeclaration_Always_AddsToUsing()
-    {
-      _type.Parent = null;
-      _namespace.Children.Clear();
+			type = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>()) {Name = "SomeType"};
+			@namespace = new NamespaceDeclaration("SomeNamespace");
+			@namespace.AddChild(type);
+			type.Parent = @namespace;
+		}
 
-      using (_mocks.Unordered())
-      {
-        _typeResolver.UseNamespace("SomeNamespace",true);	    
-      }
+		[Test]
+		public void VisitTypeDeclaration_NoNamespace_DoesNothing()
+		{
+			type.Parent = null;
+			@namespace.Children.Clear();
 
-      _mocks.ReplayAll();
-      _visitor.VisitNamespaceDeclaration(_namespace, null);
-      _mocks.VerifyAll();
-    }
+			mocks.ReplayAll();
+			visitor.VisitTypeDeclaration(type, null);
+			mocks.VerifyAll();
+		}
 
-    [Test]
-    public void VisitTypeDeclaration_WithNamespace_AddsTableEntry()
-    {
-      using (_mocks.Unordered())
-      {
-        _typeResolver.AddTableEntry("SomeNamespace.SomeType");
-      }
+		[Test]
+		public void VisitNamespaceDeclaration_Always_AddsToUsing()
+		{
+			type.Parent = null;
+			@namespace.Children.Clear();
 
-      _mocks.ReplayAll();
-      _visitor.VisitTypeDeclaration(_type, null);
-      _mocks.VerifyAll();
-    }
+			using (mocks.Unordered())
+				typeResolver.UseNamespace("SomeNamespace", true);
+			
+			mocks.ReplayAll();
+			visitor.VisitNamespaceDeclaration(@namespace, null);
+			mocks.VerifyAll();
+		}
 
-    [Test]
-    public void VisitTypeDeclaration_NonNamespaceParent_Ignores()
-    {
-      TypeDeclaration childType = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>());
-      childType.Parent = _type;
+		[Test]
+		public void VisitTypeDeclaration_WithNamespace_AddsTableEntry()
+		{
+			using (mocks.Unordered())
+				typeResolver.AddTableEntry("SomeNamespace.SomeType");
+			
+			mocks.ReplayAll();
+			visitor.VisitTypeDeclaration(type, null);
+			mocks.VerifyAll();
+		}
 
-      using (_mocks.Unordered())
-      {
-      }
+		[Test]
+		public void VisitTypeDeclaration_NonNamespaceParent_Ignores()
+		{
+			var childType = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>()) {Parent = type};
 
-      _mocks.ReplayAll();
-      _visitor.VisitTypeDeclaration(childType, null);
-      _mocks.VerifyAll();
-    }
+			using (mocks.Unordered())
+			{
+			}
 
-    [Test]
-    public void VisitUsingDeclaration_NonAlias_AddsToUsing()
-    {
-      UsingDeclaration usings = new UsingDeclaration("System");
-      usings.Usings.Add(new Using("System.Collections.Generic"));
+			mocks.ReplayAll();
+			visitor.VisitTypeDeclaration(childType, null);
+			mocks.VerifyAll();
+		}
 
-      using (_mocks.Unordered())
-      {
-        _typeResolver.UseNamespace("System");
-        _typeResolver.UseNamespace("System.Collections.Generic");
-      }
+		[Test]
+		public void VisitUsingDeclaration_NonAlias_AddsToUsing()
+		{
+			var usings = new UsingDeclaration("System");
+			usings.Usings.Add(new Using("System.Collections.Generic"));
 
-      _mocks.ReplayAll();
-      _visitor.VisitUsingDeclaration(usings, null);
-      _mocks.VerifyAll();
-    }
+			using (mocks.Unordered())
+			{
+				typeResolver.UseNamespace("System");
+				typeResolver.UseNamespace("System.Collections.Generic");
+			}
 
-    [Test]
-    public void VisitUsingDeclaration_Alias_AddsToUsing()
-    {
-      UsingDeclaration usings = new UsingDeclaration("System");
-      usings.Usings.Add(new Using("Bob", new TypeReference("System")));
+			mocks.ReplayAll();
+			visitor.VisitUsingDeclaration(usings, null);
+			mocks.VerifyAll();
+		}
 
-      using (_mocks.Unordered())
-      {
-        _typeResolver.UseNamespace("System");
-        _typeResolver.AliasNamespace("Bob", "System");
-      }
+		[Test]
+		public void VisitUsingDeclaration_Alias_AddsToUsing()
+		{
+			var usings = new UsingDeclaration("System");
+			usings.Usings.Add(new Using("Bob", new TypeReference("System")));
 
-      _mocks.ReplayAll();
-      _visitor.VisitUsingDeclaration(usings, null);
-      _mocks.VerifyAll();
-    }
-  	#endregion	
-  }
+			using (mocks.Unordered())
+			{
+				typeResolver.UseNamespace("System");
+				typeResolver.AliasNamespace("Bob", "System");
+			}
+
+			mocks.ReplayAll();
+			visitor.VisitUsingDeclaration(usings, null);
+			mocks.VerifyAll();
+		}
+	}
 }

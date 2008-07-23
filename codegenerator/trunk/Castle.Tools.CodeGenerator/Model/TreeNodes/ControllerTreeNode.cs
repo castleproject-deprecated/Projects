@@ -1,62 +1,46 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Model.TreeNodes
 {
+	using System;
+
 	public class ControllerTreeNode : TreeNode
 	{
-		private string _namespace;
-
-		public string Namespace
+		public ControllerTreeNode(string name, string controllerNamespace) : base(name)
 		{
-			get { return _namespace; }
-		}
-
-		public string FullName
-		{
-			get { return this.Namespace + "." + this.Name; }
+			Namespace = controllerNamespace;
 		}
 
 		public string Area
 		{
-			get
-			{
-				List<string> parts = new List<string>();
-				TreeNode node = this.Parent;
-				StringBuilder sb = new StringBuilder();
-				while (node.Name != RootName)
-				{
-					parts.Add(node.Name);
-					node = node.Parent;
-				}
-				parts.Reverse();
-				foreach (string part in parts)
-				{
-					if (sb.Length != 0)
-					{
-						sb.Append("/");
-					}
-					sb.Append(part);
-				}
-				return sb.ToString();
-			}
+			get { return CalculatePath(n => n.Name == RootName); }
 		}
 
-		public ControllerTreeNode(string name, string controllerNamespace)
-			: base(name)
+		public string FullName
 		{
-			_namespace = controllerNamespace;
+			get { return Namespace + "." + Name; }
 		}
+
+		public string Namespace { get; private set; }
 
 		public override string ToString()
 		{
-			string area = this.Area;
-			if (!String.IsNullOrEmpty(area))
-			{
-				return String.Format("Controller<{0}/{1}>", area, this.Name);
-			}
-			return String.Format("Controller<{0}>", this.Name);
+			var area = Area;
+			return !String.IsNullOrEmpty(area)
+				? String.Format("Controller<{0}/{1}>", area, Name) 
+				: String.Format("Controller<{0}>", Name);
 		}
 	}
 }

@@ -1,20 +1,32 @@
-using System.CodeDom;
-using System.Collections;
-using Castle.MonoRail.Framework;
-using Castle.MonoRail.Framework.Helpers;
-using Castle.Tools.CodeGenerator.CodeDom;
-using Castle.Tools.CodeGenerator.Model.TreeNodes;
-using Castle.Tools.CodeGenerator.Services.Generators;
-using Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services.Generators
 {
+	using System.CodeDom;
+	using MonoRail.Framework;
+	using CodeDom;
+	using Model.TreeNodes;
+	using Generators;
+	using RouteMapGeneration;
+
 	public class RouteMapGenerator : AbstractGenerator
 	{
 		public const string engineContextFieldName = "engineContext";
 
-		private CodeTypeDeclaration routesType = null;
-		
+		private CodeTypeDeclaration routesType;
+
 		public RouteMapGenerator(ILogger logger, ISourceGenerator source, INamingService naming, string targetNamespace,
 		                         string serviceType) : base(logger, source, naming, targetNamespace, serviceType)
 		{
@@ -22,11 +34,11 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 
 		public override void Visit(ControllerTreeNode node)
 		{
-			CodeTypeDeclaration type = GenerateTypeDeclaration(_namespace, node.PathNoSlashes + _naming.ToRouteWrapperName(node.Name));
+			var type = GenerateTypeDeclaration(@namespace, node.PathNoSlashes + naming.ToRouteWrapperName(node.Name));
 
-			_typeStack.Push(type);
+			typeStack.Push(type);
 			base.Visit(node);
-			_typeStack.Pop();
+			typeStack.Pop();
 		}
 
 		public override void Visit(WizardControllerTreeNode node)
@@ -36,7 +48,7 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 
 		public override void Visit(StaticRouteTreeNode node)
 		{
-			StaticRouteCreator routeCreator = new StaticRouteCreator(_namespace, _source, _naming, node, RouteDefinitionsType, RoutesType);
+			var routeCreator = new StaticRouteCreator(@namespace, source, naming, node, RouteDefinitionsType, RoutesType);
 			routeCreator.Create();
 
 			base.Visit(node);
@@ -44,7 +56,7 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 
 		public override void Visit(PatternRouteTreeNode node)
 		{
-			PatternRouteCreator routeCreator = new PatternRouteCreator(_namespace, _source, _naming, node, RouteDefinitionsType, RoutesType);
+			var routeCreator = new PatternRouteCreator(@namespace, source, naming, node, RouteDefinitionsType, RoutesType);
 			routeCreator.Create();
 
 			base.Visit(node);
@@ -52,33 +64,35 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 
 		private static void CreateRoutesTypeConstructor(CodeTypeDeclaration type)
 		{
-			CodeMemberField engineContext = CreateMemberField.WithNameAndType<IEngineContext>(engineContextFieldName).WithAttributes(MemberAttributes.Family).Field;
-			type.Members.Add(engineContext);			
+			var engineContext = CreateMemberField
+				.WithNameAndType<IEngineContext>(engineContextFieldName)
+				.WithAttributes(MemberAttributes.Family).Field;
 
-			CodeConstructor constructor = CreateConstructor
-				.WithParameters(new CodeParameterDeclarationExpression(typeof(IEngineContext), engineContext.Name))
+			type.Members.Add(engineContext);
+
+			var constructor = CreateConstructor
+				.WithParameters(new CodeParameterDeclarationExpression(typeof (IEngineContext), engineContext.Name))
 				.WithAttributes(MemberAttributes.Public)
 				.WithBody(CreateAssignStatement.This(engineContext.Name).EqualsArgument(engineContext.Name).Statement)
 				.Constructor;
+			
 			type.Members.Add(constructor);
 		}
 
 		private CodeTypeDeclaration GetParentType(string name)
 		{
-			CodeNamespace ns = _source.LookupNamespace(_namespace);
+			var ns = source.LookupNamespace(@namespace);
 			CodeTypeDeclaration codeTypeDeclaration;
 
-			for (int i = 0; i < ns.Types.Count; i++)
+			for (var i = 0; i < ns.Types.Count; i++)
 			{
 				codeTypeDeclaration = ns.Types[i];
 
 				if (codeTypeDeclaration.Name == name)
-				{
 					return codeTypeDeclaration;
-				}
 			}
 
-			codeTypeDeclaration = _source.GenerateTypeDeclaration(_namespace, name);
+			codeTypeDeclaration = source.GenerateTypeDeclaration(@namespace, name);
 
 			return codeTypeDeclaration;
 		}
@@ -99,10 +113,7 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 
 		private CodeTypeDeclaration RouteDefinitionsType
 		{
-			get
-			{
-				return GetParentType("RouteDefinitions");
-			}
+			get { return GetParentType("RouteDefinitions"); }
 		}
 	}
 }

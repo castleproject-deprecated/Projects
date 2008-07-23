@@ -1,15 +1,30 @@
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using Castle.Tools.CodeGenerator.Model;
-using Castle.Tools.CodeGenerator.Model.TreeNodes;
-using Castle.Tools.CodeGenerator.Services.Generators;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services.Generators
 {
+	using System;
+	using System.CodeDom;
+	using System.Collections.Generic;
+	using External;
+	using Model;
+	using Model.TreeNodes;
+	using Generators;
+
 	public class ActionMapGenerator : AbstractGenerator
 	{
-		private Dictionary<string, short> _occurences;
+		private Dictionary<string, short> occurences;
 
 		public ActionMapGenerator(ILogger logger, ISourceGenerator source, INamingService naming, string targetNamespace,
 		                          string serviceType)
@@ -19,56 +34,58 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 
 		public override void Visit(ControllerTreeNode node)
 		{
-			CodeTypeDeclaration type =
-				GenerateTypeDeclaration(_namespace, node.PathNoSlashes + _naming.ToActionWrapperName(node.Name));
+			var type = GenerateTypeDeclaration(@namespace, node.PathNoSlashes + naming.ToActionWrapperName(node.Name));
 
-			_occurences = new Dictionary<string, short>();
+			occurences = new Dictionary<string, short>();
 
 			// We can only generate empty argument methods for actions that appear once and only once.
-			foreach (TreeNode child in node.Children)
+			foreach (var child in node.Children)
 			{
-				if (child is ActionTreeNode)
-				{
-					if (!_occurences.ContainsKey(child.Name))
-					{
-						_occurences[child.Name] = 0;
-					}
-					_occurences[child.Name]++;
-				}
+				if (!(child is ActionTreeNode)) continue;
+
+				if (!occurences.ContainsKey(child.Name))
+					occurences[child.Name] = 0;
+				
+				occurences[child.Name]++;
 			}
 
-			_typeStack.Push(type);
+			typeStack.Push(type);
 			base.Visit(node);
-			_typeStack.Pop();
+			typeStack.Pop();
 		}
 
 		public override void Visit(ActionTreeNode node)
 		{
-			CodeTypeDeclaration type = _typeStack.Peek();
-			List<Type> actionArgumentTypes = new List<Type>();
+			var type = typeStack.Peek();
+			var actionArgumentTypes = new List<Type>();
 
-			CodeMemberMethod method = new CodeMemberMethod();
-			method.Name = node.Name;
-			method.ReturnType = _source[typeof (IControllerActionReference)];
-			method.Attributes = MemberAttributes.Public;
-			method.CustomAttributes.Add(_source.DebuggerAttribute);
-			List<CodeExpression> actionArguments = CreateActionArgumentsAndAddParameters(method, node, actionArgumentTypes);
-			method.Statements.Add(
-				new CodeMethodReturnStatement(CreateNewActionReference(node, actionArguments, actionArgumentTypes)));
+			var method = new CodeMemberMethod
+			{
+				Name = node.Name,
+				ReturnType = source[typeof (IControllerActionReference)],
+				Attributes = MemberAttributes.Public
+			};
+
+			method.CustomAttributes.Add(source.DebuggerAttribute);
+			
+			var actionArguments = CreateActionArgumentsAndAddParameters(method, node, actionArgumentTypes);
+			
+			method.Statements.Add(new CodeMethodReturnStatement(CreateNewActionReference(node, actionArguments, actionArgumentTypes)));
 			type.Members.Add(method);
 
-
-			if (actionArguments.Count > 0 && _occurences[node.Name] == 1)
+			if (actionArguments.Count > 0 && occurences[node.Name] == 1)
 			{
-				method = new CodeMemberMethod();
-				method.Comments.Add(
-					new CodeCommentStatement("Empty argument Action... Not sure if we want to pass MethodInformation to these..."));
-				method.Name = node.Name;
-				method.ReturnType = _source[typeof (IArgumentlessControllerActionReference)];
-				method.Attributes = MemberAttributes.Public;
-				method.CustomAttributes.Add(_source.DebuggerAttribute);
-				method.Statements.Add(
-					new CodeMethodReturnStatement(CreateNewActionReference(node, new List<CodeExpression>(), actionArgumentTypes)));
+				method = new CodeMemberMethod
+				{
+					Name = node.Name,
+					ReturnType = source[typeof (IArgumentlessControllerActionReference)],
+					Attributes = MemberAttributes.Public
+				};
+
+				method.CustomAttributes.Add(source.DebuggerAttribute);
+				method.Comments.Add(new CodeCommentStatement("Empty argument Action... Not sure if we want to pass MethodInformation to these..."));
+				method.Statements.Add(new CodeMethodReturnStatement(CreateNewActionReference(node, new List<CodeExpression>(), actionArgumentTypes)));
+				
 				type.Members.Add(method);
 			}
 
@@ -80,75 +97,66 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 			Visit((ControllerTreeNode) node);
 		}
 
-		protected CodeExpression CreateNewActionReference(ActionTreeNode node, List<CodeExpression> actionArguments,
-		                                                  List<Type> actionArgumentTypes)
+		protected CodeExpression CreateNewActionReference(ActionTreeNode node, List<CodeExpression> actionArguments, List<Type> actionArgumentTypes)
 		{
-			List<CodeExpression> actionArgumentRuntimeTypes = new List<CodeExpression>();
-			foreach (Type type in actionArgumentTypes)
-			{
-				actionArgumentRuntimeTypes.Add(new CodeTypeOfExpression(_source[type]));
-			}
-
+			var actionArgumentRuntimeTypes = new List<CodeExpression>();
+			foreach (var type in actionArgumentTypes)
+				actionArgumentRuntimeTypes.Add(new CodeTypeOfExpression(source[type]));
+			
 			CodeExpression createMethodSignature = new CodeObjectCreateExpression(
-				_source[typeof (MethodSignature)],
+				source[typeof (MethodSignature)],
 				new CodeExpression[]
-					{
-						new CodeTypeOfExpression(node.Controller.FullName),
-						new CodePrimitiveExpression(node.Name),
-						new CodeArrayCreateExpression(_source[typeof (Type)], actionArgumentRuntimeTypes.ToArray())
-					}
-				);
-
-			CodeExpression[] constructionArguments = new CodeExpression[]
 				{
-					new CodeFieldReferenceExpression(new CodeThisReferenceExpression(),
-					                                 _naming.ToMemberVariableName(_serviceIdentifier)),
 					new CodeTypeOfExpression(node.Controller.FullName),
-					new CodePrimitiveExpression(node.Controller.Area),
-					new CodePrimitiveExpression(_naming.ToControllerName(node.Controller.Name)),
 					new CodePrimitiveExpression(node.Name),
-					createMethodSignature,
-					new CodeArrayCreateExpression(_source[typeof (ActionArgument)], actionArguments.ToArray())
-				};
+					new CodeArrayCreateExpression(source[typeof (Type)], actionArgumentRuntimeTypes.ToArray())
+				});
+
+			var constructionArguments = new[]
+			{
+				new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), naming.ToMemberVariableName(serviceIdentifier)),
+				new CodeTypeOfExpression(node.Controller.FullName),
+				new CodePrimitiveExpression(node.Controller.Area),
+				new CodePrimitiveExpression(naming.ToControllerName(node.Controller.Name)),
+				new CodePrimitiveExpression(node.Name),
+				createMethodSignature,
+				new CodeArrayCreateExpression(source[typeof (ActionArgument)], actionArguments.ToArray())
+			};
 
 			return new CodeMethodInvokeExpression(
 				new CodeMethodReferenceExpression(
 					new CodePropertyReferenceExpression(
-						new CodeFieldReferenceExpression(new CodeThisReferenceExpression(),
-						                                 _naming.ToMemberVariableName(_serviceIdentifier)),
+						new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), naming.ToMemberVariableName(serviceIdentifier)),
 						"ControllerReferenceFactory"),
 					"CreateActionReference"),
-				constructionArguments
-				);
+				constructionArguments);
 		}
 
-		protected List<CodeExpression> CreateActionArgumentsAndAddParameters(CodeMemberMethod method, ActionTreeNode node,
-		                                                                     List<Type> actionArgumentTypes)
+		protected List<CodeExpression> CreateActionArgumentsAndAddParameters(CodeMemberMethod method, ActionTreeNode node, List<Type> actionArgumentTypes)
 		{
-			List<CodeExpression> actionArguments = new List<CodeExpression>();
-
-			int index = 0;
-
-			List<TreeNode> parameters = node.Children.FindAll(delegate(TreeNode t) { return t is ParameterTreeNode; });
+			var actionArguments = new List<CodeExpression>();
+			var index = 0;
+			var parameters = node.Children.FindAll(t => t is ParameterTreeNode);
 
 			foreach (ParameterTreeNode parameterInfo in parameters)
 			{
-				CodeParameterDeclarationExpression newParameter = new CodeParameterDeclarationExpression();
-				newParameter.Name = parameterInfo.Name;
-				newParameter.Type = _source[parameterInfo.Type];
-				method.Parameters.Add(newParameter);
+				var newParameter = new CodeParameterDeclarationExpression
+				{
+					Name = parameterInfo.Name,
+					Type = source[parameterInfo.Type]
+				};
 
+				method.Parameters.Add(newParameter);
 				actionArgumentTypes.Add(parameterInfo.Type);
 
-				CodeObjectCreateExpression argumentCreate =
-					new CodeObjectCreateExpression(_source[typeof (ActionArgument)], new CodeExpression[]
-					                                                                 	{
-					                                                                 		new CodePrimitiveExpression(index++),
-					                                                                 		new CodePrimitiveExpression(parameterInfo.Name),
-					                                                                 		new CodeTypeOfExpression(newParameter.Type),
-					                                                                 		new CodeArgumentReferenceExpression(
-					                                                                 			parameterInfo.Name)
-					                                                                 	});
+				var argumentCreate =
+					new CodeObjectCreateExpression(source[typeof (ActionArgument)], new CodeExpression[]
+					{
+						new CodePrimitiveExpression(index++),
+						new CodePrimitiveExpression(parameterInfo.Name),
+						new CodeTypeOfExpression(newParameter.Type),
+						new CodeArgumentReferenceExpression(parameterInfo.Name)
+					});
 
 				actionArguments.Add(argumentCreate);
 			}
@@ -159,24 +167,24 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 		I opted to only get this information when it was necessary, but decided to check this in at least once because it might be useful. -jlewalle
 		protected string CreateMethodInformation(ActionTreeNode node, CodeTypeDeclaration type, List<string> actionArgumentTypes)
 		{
-		  string methodInfoName = _naming.ToMethodSignatureName(node.Name, actionArgumentTypes.ToArray());
-		  string memberName = _naming.ToMemberVariableName(methodInfoName);
-		  CodeMemberField field = new CodeMemberField(_source[typeof(MethodInformation)], memberName);
+		  string methodInfoName = naming.ToMethodSignatureName(node.Name, actionArgumentTypes.ToArray());
+		  string memberName = naming.ToMemberVariableName(methodInfoName);
+		  CodeMemberField field = new CodeMemberField(source[typeof(MethodInformation)], memberName);
 		  field.Attributes = MemberAttributes.Family;
 		  type.Members.Add(field);
 
 		  List<CodeExpression> actionArgumentRuntimeTypes = new List<CodeExpression>();
 		  foreach (string typeName in actionArgumentTypes)
 		  {
-			actionArgumentRuntimeTypes.Add(new CodeTypeOfExpression(_source[typeName]));
+			actionArgumentRuntimeTypes.Add(new CodeTypeOfExpression(source[typeName]));
 		  }
-		  _constructor.Statements.Add(
+		  constructor.Statements.Add(
 			new CodeAssignStatement(
 			  new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), memberName),
 			  new CodeMethodInvokeExpression(
 				new CodeMethodReferenceExpression(
 				  new CodePropertyReferenceExpression(
-					new CodeArgumentReferenceExpression(_naming.ToVariableName(_serviceIdentifier)), "RuntimeInformationService"
+					new CodeArgumentReferenceExpression(naming.ToVariableName(serviceIdentifier)), "RuntimeInformationService"
 				  ),
 				  "ResolveMethodInformation"
 				),
@@ -184,7 +192,7 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 				{
 				  new CodeTypeOfExpression(node.Controller.FullName),
 				  new CodePrimitiveExpression(node.Name),
-				  new CodeArrayCreateExpression(_source[typeof(Type)], actionArgumentRuntimeTypes.ToArray())
+				  new CodeArrayCreateExpression(source[typeof(Type)], actionArgumentRuntimeTypes.ToArray())
 				}
 			  )
 			)

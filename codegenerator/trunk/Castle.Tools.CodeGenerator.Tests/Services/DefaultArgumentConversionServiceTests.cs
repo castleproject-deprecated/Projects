@@ -1,41 +1,43 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
-using Castle.Tools.CodeGenerator.Model;
-
-using Rhino.Mocks;
-using NUnit.Framework;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services
 {
-  [TestFixture]
-  public class DefaultArgumentConversionServiceTests
-  {
-    #region Member Data
-    private MockRepository _mocks;
-    private DefaultArgumentConversionService _service;
-    #endregion
+	using System.Collections;
+	using External;
+	using NUnit.Framework;
 
-    #region Test Setup and Teardown Methods
-    [SetUp]
-    public void Setup()
-    {
-      _mocks = new MockRepository();
-      _service = new DefaultArgumentConversionService();
-    }
-    #endregion
+	[TestFixture]
+	public class DefaultArgumentConversionServiceTests
+	{
+		private DefaultArgumentConversionService service;
 
-    #region Test Methods
-    [Test]
-    public void ConvertValue_Always_ReturnsSameValue()
-    {
-      string value = "Hello, World!";
-      ActionArgument argument = new ActionArgument(0, "name", value);
-      IDictionary parameters = new Hashtable();
-      Assert.IsTrue(_service.ConvertArgument(null, argument, parameters));
-      Assert.AreEqual(value, parameters["name"]);
-    }
-    #endregion	
-  }
+		[SetUp]
+		public void Setup()
+		{
+			service = new DefaultArgumentConversionService();
+		}
+
+		[Test]
+		public void ConvertValue_Always_ReturnsSameValue()
+		{
+			var value = "Hello, World!";
+			var argument = new ActionArgument(0, "name", value);
+			var parameters = new Hashtable();
+
+			Assert.IsTrue(service.ConvertArgument(null, argument, parameters));
+			Assert.AreEqual(value, parameters["name"]);
+		}
+	}
 }

@@ -1,79 +1,68 @@
-using System;
-using System.Collections.Generic;
-using Castle.Tools.CodeGenerator.Model.TreeNodes;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services
 {
-  public class DefaultTreeCreationService : ITreeCreationService
-  {
-    #region Member Data
-    private Stack<TreeNode> _nodes = new Stack<TreeNode>();
-    private TreeNode _root;
-    #endregion
+	using System;
+	using System.Collections.Generic;
+	using Model.TreeNodes;
 
-    #region Properties
-    public TreeNode Root
-    {
-      get { return _root; }
-    }
+	public class DefaultTreeCreationService : ITreeCreationService
+	{
+		private readonly Stack<TreeNode> nodes = new Stack<TreeNode>();
 
-    public TreeNode Peek
-    {
-      get { return _nodes.Peek(); }
-    }
-    #endregion
+		public DefaultTreeCreationService()
+		{
+			Root = new AreaTreeNode("Root");
+			nodes.Push(Root);
+		}
 
-    #region DefaultTreeCreationService()
-    public DefaultTreeCreationService()
-    {
-      _root = new AreaTreeNode("Root");
-      _nodes.Push(_root);
-    }
-    #endregion
+		public TreeNode Peek { get { return nodes.Peek(); } }
+		public TreeNode Root { get; private set; }
+		
+		public void PushNode(TreeNode node)
+		{
+			nodes.Peek().AddChild(node);
+			nodes.Push(node);
+		}
 
-    #region Methods
-    public void PushNode(TreeNode node)
-    {
-      _nodes.Peek().AddChild(node);
-      _nodes.Push(node);
-    }
+		public TreeNode FindNode(string name)
+		{
+			foreach (var node in nodes.Peek().Children)
+				if (string.Compare(node.Name, name, true) == 0)
+					return node;
+			
+			return null;
+		}
 
-    public TreeNode FindNode(string name)
-    {
-      foreach (TreeNode node in _nodes.Peek().Children)
-      {
-        if (string.Compare(node.Name, name, true) == 0)
-        {
-          return node;
-        }
-      }
-      return null;
-    }
+		public void PopNode()
+		{
+			if (nodes.Count == 1)
+				throw new InvalidOperationException();
 
-    public void PopNode()
-    {
-      if (_nodes.Count == 1)
-        throw new InvalidOperationException();
-      _nodes.Pop();
-    }
+			nodes.Pop();
+		}
 
-    public void PopToRoot()
-    {
-      while (_nodes.Count > 1)
-      {
-        _nodes.Pop();
-      }
-    }
+		public void PopToRoot()
+		{
+			while (nodes.Count > 1)
+				nodes.Pop();
+		}
 
-    public void PushArea(string name)
-    {
-      TreeNode node = FindNode(name);
-      if (node == null)
-      {
-        node = new AreaTreeNode(name);
-      }
-      PushNode(node);
-    }
-    #endregion
-  }
+		public void PushArea(string name)
+		{
+			PushNode(FindNode(name) ?? new AreaTreeNode(name));
+		}
+	}
 }

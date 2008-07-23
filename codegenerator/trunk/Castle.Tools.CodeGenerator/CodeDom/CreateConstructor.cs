@@ -1,45 +1,52 @@
-using System.CodeDom;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.CodeDom
 {
+	using System.CodeDom;
+
 	public class CreateConstructor
 	{
-		private readonly CodeConstructor codeConstructor;
-
 		private CreateConstructor(CodeParameterDeclarationExpression[] parameters)
 		{
-			codeConstructor = new CodeConstructor();
-			codeConstructor.Parameters.AddRange(parameters);
+			Constructor = new CodeConstructor();
+			Constructor.Parameters.AddRange(parameters);
 		}
 
 		public static CreateConstructor WithParameters(params CodeParameterDeclarationExpression[] parameters)
 		{
-			CreateConstructor createConstructor = new CreateConstructor(parameters);
-
-			return createConstructor;
+			return new CreateConstructor(parameters);
 		}
 
 		public CreateConstructor WithAttributes(MemberAttributes attributes)
 		{
-			codeConstructor.Attributes = attributes;
+			Constructor.Attributes = attributes;
 			return this;
 		}
 
 		public CreateConstructor WithBaseConstructorArgs(params CodeExpression[] parameters)
 		{
-			codeConstructor.BaseConstructorArgs.AddRange(parameters);
+			Constructor.BaseConstructorArgs.AddRange(parameters);
 			return this;
 		}
 
 		public CreateConstructor WithBody(params CodeStatement[] statements)
 		{
-			codeConstructor.Statements.AddRange(statements);
+			Constructor.Statements.AddRange(statements);
 			return this;
 		}
 
-		public CodeConstructor Constructor
-		{
-			get { return codeConstructor; }
-		}
+		public CodeConstructor Constructor { get; private set; }
 	}
 }

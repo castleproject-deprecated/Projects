@@ -1,42 +1,47 @@
-using System;
-using System.IO;
-using ICSharpCode.NRefactory;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services
 {
-  public class SiteTreeGeneratorService : ISiteTreeGeneratorService
-  {
-    #region Member Data
-    private ITypeResolver _typeResolver;
-    private IParsedSourceStorageService _cache;
-    private ILogger _logger;
-    private IParserFactory _parserFactory;
-    #endregion
+	using System.IO;
+	using ICSharpCode.NRefactory;
 
-    #region SiteTreeGeneratorService()
-    public SiteTreeGeneratorService(ILogger logger, ITypeResolver typeResolver, IParsedSourceStorageService cache,  IParserFactory parserFactory)
-    {
-      _logger = logger;
-      _typeResolver = typeResolver;
-      _cache = cache;
-      _parserFactory = parserFactory;
-    }
-    #endregion
+	public class SiteTreeGeneratorService : ISiteTreeGeneratorService
+	{
+		private readonly ITypeResolver typeResolver;
+		private readonly IParsedSourceStorageService cache;
+		private readonly IParserFactory parserFactory;
 
-    #region Methods
-	public void Parse(IAstVisitor visitor, string path)
-    {
-      using (TextReader reader = File.OpenText(path))
-      {
-        IParser parser = _parserFactory.CreateCSharpParser(reader);
-        parser.ParseMethodBodies = true;
-        parser.Parse();
+		public SiteTreeGeneratorService(ILogger logger, ITypeResolver typeResolver, IParsedSourceStorageService cache, IParserFactory parserFactory)
+		{
+			this.typeResolver = typeResolver;
+			this.cache = cache;
+			this.parserFactory = parserFactory;
+		}
 
-        _typeResolver.Clear();
-        visitor.VisitCompilationUnit(parser.CompilationUnit, null);
-        _cache.Add(path, parser);
-      }
-    }
-    #endregion
-  }
+		public void Parse(IAstVisitor visitor, string path)
+		{
+			using (TextReader reader = File.OpenText(path))
+			{
+				var parser = parserFactory.CreateCSharpParser(reader);
+				parser.ParseMethodBodies = true;
+				parser.Parse();
+
+				typeResolver.Clear();
+				visitor.VisitCompilationUnit(parser.CompilationUnit, null);
+				cache.Add(path, parser);
+			}
+		}
+	}
 }

@@ -1,54 +1,66 @@
-using Castle.MonoRail.Framework;
-using Castle.Tools.CodeGenerator.Model;
-using NUnit.Framework;
-using Rhino.Mocks;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services
 {
+	using MonoRail.Framework;
+	using Model;
+	using NUnit.Framework;
+	using Rhino.Mocks;
+	using External;
+
 	[TestFixture]
 	public class DefaultCodeGeneratorServicesTests
 	{
-		#region Setup/Teardown
+		private MockRepository mocks;
+		private DefaultCodeGeneratorServices services;
+		private IControllerReferenceFactory controllerReferenceFactory;
+		private IArgumentConversionService argumentConversionService;
+		private IEngineContext context;
+		private IRuntimeInformationService runtimeInformationService;
+		private TestController controller;
 
 		[SetUp]
 		public void Setup()
 		{
-			_controller = new TestController();
-			_mocks = new MockRepository();
-			_controllerReferenceFactory = _mocks.DynamicMock<IControllerReferenceFactory>();
-			_argumentConversionService = _mocks.DynamicMock<IArgumentConversionService>();
-			_runtimeInformationService = _mocks.DynamicMock<IRuntimeInformationService>();
-			_services = new DefaultCodeGeneratorServices(_controllerReferenceFactory, _argumentConversionService, _runtimeInformationService);
-			_context = _mocks.DynamicMock<IEngineContext>();
-			Assert.AreEqual(_controllerReferenceFactory, _services.ControllerReferenceFactory);
-			Assert.AreEqual(_argumentConversionService, _services.ArgumentConversionService);
-			Assert.AreEqual(_runtimeInformationService, _services.RuntimeInformationService);
+			controller = new TestController();
+			mocks = new MockRepository();
+			controllerReferenceFactory = mocks.DynamicMock<IControllerReferenceFactory>();
+			argumentConversionService = mocks.DynamicMock<IArgumentConversionService>();
+			runtimeInformationService = mocks.DynamicMock<IRuntimeInformationService>();
+			services = new DefaultCodeGeneratorServices(controllerReferenceFactory, argumentConversionService, runtimeInformationService);
+			context = mocks.DynamicMock<IEngineContext>();
+
+			Assert.AreEqual(controllerReferenceFactory, services.ControllerReferenceFactory);
+			Assert.AreEqual(argumentConversionService, services.ArgumentConversionService);
+			Assert.AreEqual(runtimeInformationService, services.RuntimeInformationService);
 		}
-
-		#endregion
-
-		private MockRepository _mocks;
-		private DefaultCodeGeneratorServices _services;
-		private IControllerReferenceFactory _controllerReferenceFactory;
-		private IArgumentConversionService _argumentConversionService;
-		private IEngineContext _context;
-		private IRuntimeInformationService _runtimeInformationService;
-		private TestController _controller;
 
 		[Test]
 		public void GetAndSetController_Always_Work()
 		{
-			Assert.IsNull(_services.Controller);
-			_services.Controller = _controller;
-			Assert.AreEqual(_controller, _services.Controller);
+			Assert.IsNull(services.Controller);
+			services.Controller = controller;
+			Assert.AreEqual(controller, services.Controller);
 		}
 
 		[Test]
 		public void GetAndSetRailsContext_Always_Works()
 		{
-			Assert.IsNull(_services.RailsContext);
-			_services.RailsContext = _context;
-			Assert.AreEqual(_context, _services.RailsContext);
+			Assert.IsNull(services.RailsContext);
+			services.RailsContext = context;
+			Assert.AreEqual(context, services.RailsContext);
 		}
 	}
 }

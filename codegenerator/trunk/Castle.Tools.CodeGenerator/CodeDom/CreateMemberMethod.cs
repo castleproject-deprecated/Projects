@@ -1,15 +1,26 @@
-using System.CodeDom;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.CodeDom
 {
+	using System.CodeDom;
+
 	public class CreateMemberMethod
 	{
-		private readonly CodeMemberMethod codeMemberMethod;
-
 		public CreateMemberMethod(string name)
 		{
-			codeMemberMethod = new CodeMemberMethod();
-			codeMemberMethod.Name = name;
+			Method = new CodeMemberMethod {Name = name};
 		}
 
 		public static CreateMemberMethod Called(string name)
@@ -19,7 +30,7 @@ namespace Castle.Tools.CodeGenerator.CodeDom
 
 		public CreateMemberMethod Returning(CodeTypeReference type)
 		{
-			codeMemberMethod.ReturnType = type;
+			Method.ReturnType = type;
 			return this;
 		}
 
@@ -30,48 +41,45 @@ namespace Castle.Tools.CodeGenerator.CodeDom
 
 		public CreateMemberMethod WithAttributes(MemberAttributes attributes)
 		{
-			codeMemberMethod.Attributes = attributes;
+			Method.Attributes = attributes;
 			return this;
 		}
 
 		public CreateMemberMethod WithCustomAttributes(params CodeAttributeDeclaration[] attributes)
 		{
-			codeMemberMethod.CustomAttributes.AddRange(attributes);
+			Method.CustomAttributes.AddRange(attributes);
 			return this;
 		}
 
 		public CreateMemberMethod WithBody(params CodeStatement[] statements)
 		{
-			codeMemberMethod.Statements.AddRange(statements);
+			Method.Statements.AddRange(statements);
 			return this;
 		}
 
 		public CreateMemberMethod WithParameters(params CodeParameterDeclarationExpression[] parameters)
 		{
-			codeMemberMethod.Parameters.AddRange(parameters);
+			Method.Parameters.AddRange(parameters);
 			return this;
 		}
 
 		public CreateMemberMethod WithSummaryComment(string comment)
 		{
-			CodeCommentStatement summaryStart = new CodeCommentStatement("<summary>");
-			CodeCommentStatement summary = new CodeCommentStatement(comment);
-			CodeCommentStatement summaryEnd = new CodeCommentStatement("</summary>");
-			
+			var summaryStart = new CodeCommentStatement("<summary>");
+			var summary = new CodeCommentStatement(comment);
+			var summaryEnd = new CodeCommentStatement("</summary>");
+
 			summaryStart.Comment.DocComment = true;
 			summary.Comment.DocComment = true;
 			summaryEnd.Comment.DocComment = true;
 
-			codeMemberMethod.Comments.Add(summaryStart);
-			codeMemberMethod.Comments.Add(summary);
-			codeMemberMethod.Comments.Add(summaryEnd);
+			Method.Comments.Add(summaryStart);
+			Method.Comments.Add(summary);
+			Method.Comments.Add(summaryEnd);
 
 			return this;
 		}
 
-		public CodeMemberMethod Method
-		{
-			get { return codeMemberMethod; }
-		}
+		public CodeMemberMethod Method { get; private set; }
 	}
 }

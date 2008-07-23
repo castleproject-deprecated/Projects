@@ -1,49 +1,37 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services
 {
-  public class TypeTableEntry
-  {
-    #region Member Data
-    private string _fullName;
-    private Type _type;
-    #endregion
+	using System;
 
-    #region Properties
-    public string FullName
-    {
-      get { return _fullName; }
-    }
+	public class TypeTableEntry
+	{
+		public TypeTableEntry(string fullName)
+		{
+			FullName = fullName;
+		}
 
-    public string Name
-    {
-      get { return _fullName.Substring(_fullName.LastIndexOf('.') + 1); }
-    }
+		public TypeTableEntry(string fullName, Type type)
+		{
+			FullName = fullName;
+			CompiledType = type;
+		}
 
-    public Type CompiledType
-    {
-      get { return _type; }
-    }
-
-    public bool HasCompiledType
-    {
-      get { return _type != null; }
-    }
-    #endregion
-
-    #region TypeTableEntry()
-    public TypeTableEntry(string fullName, Type type)
-    {
-      _fullName = fullName;
-      _type = type;
-    }
-
-    public TypeTableEntry(string fullName)
-    {
-      _fullName = fullName;
-    }
-    #endregion
-  }
+		public Type CompiledType { get; private set; }
+		public string FullName { get; private set; }
+		public string Name { get { return FullName.Substring(FullName.LastIndexOf('.') + 1); } }
+		public bool HasCompiledType { get { return CompiledType != null; } }
+	}
 }

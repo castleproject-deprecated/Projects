@@ -1,23 +1,37 @@
-using System.CodeDom;
-using System.Web;
-using Castle.MonoRail.Framework.Helpers;
-using Castle.MonoRail.Framework.Services;
-using Castle.Tools.CodeGenerator.CodeDom;
-using Castle.Tools.CodeGenerator.Model.TreeNodes;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration
 {
+	using System.CodeDom;
+	using System.Web;
+	using MonoRail.Framework.Services;
+	using CodeDom;
+	using Model.TreeNodes;
+
 	public abstract class RouteCreator<T> where T : RouteTreeNode
 	{
 		protected string @namespace;
 		protected INamingService namingService;
 		protected ISourceGenerator sourceGenerator;
-		protected T node;		
+		protected T node;
 		protected CodeTypeDeclaration routeDefinitions;
 		protected CodeTypeDeclaration routeDefinition;
 		protected CodeTypeDeclaration routes;
 
-		protected RouteCreator(string @namespace, ISourceGenerator sourceGenerator, INamingService namingService, T node, CodeTypeDeclaration routeDefinitions, CodeTypeDeclaration routes)
+		protected RouteCreator(string @namespace, ISourceGenerator sourceGenerator, INamingService namingService, T node,
+		                       CodeTypeDeclaration routeDefinitions, CodeTypeDeclaration routes)
 		{
 			this.@namespace = @namespace;
 			this.sourceGenerator = sourceGenerator;
@@ -48,7 +62,7 @@ namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration
 
 		protected void CreateRouteDefinitionsProperty()
 		{
-			CodeMemberProperty property = CreateMemberProperty
+			var property = CreateMemberProperty
 				.OfType(routeDefinition.Name)
 				.Called(node.Name)
 				.WithSummaryComment(HttpUtility.HtmlEncode(node.Pattern))
@@ -75,9 +89,9 @@ namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration
 
 		private void CreateRoutesMethod()
 		{
-			CodeParameterDeclarationExpression[] parameters = GetRoutesMethodParameters();
-			
-			CodeMemberMethod method = CreateMemberMethod.Called(node.Name)
+			var parameters = GetRoutesMethodParameters();
+
+			var method = CreateMemberMethod.Called(node.Name)
 				.WithSummaryComment(HttpUtility.HtmlEncode(node.Pattern))
 				.WithParameters(parameters)
 				.WithAttributes(MemberAttributes.Public)
@@ -89,39 +103,29 @@ namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration
 
 		protected virtual CodeStatement[] CreateRoutesMethodBody()
 		{
-			CodeTypeReferenceExpression routes = new CodeTypeReferenceExpression(this.routeDefinitions.Name);
-			CodePropertyReferenceExpression route = new CodePropertyReferenceExpression(routes, node.Name);
-			CodeMethodInvokeExpression createUrl = new CodeMethodInvokeExpression(route, "CreateUrl", new CodePrimitiveExpression(null));
-			CodeMethodReturnStatement returnStatement = new CodeMethodReturnStatement(createUrl);
-			
-//			CodeFieldReferenceExpression engineContext = new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), RouteMapGenerator.engineContextFieldName);
-//			CodePropertyReferenceExpression services = new CodePropertyReferenceExpression(engineContext, "Services");
-//			CodePropertyReferenceExpression urlBuilder = new CodePropertyReferenceExpression(services, "UrlBuilder");
-//			CodeMethodInvokeExpression buildUrl = new CodeMethodInvokeExpression(urlBuilder, "BuildUrl", CreateBuildUrlParameters(engineContext));
-//			CodeMethodReturnStatement returnStatement = new CodeMethodReturnStatement(buildUrl);
+			var routes = new CodeTypeReferenceExpression(routeDefinitions.Name);
+			var route = new CodePropertyReferenceExpression(routes, node.Name);
+			var createUrl = new CodeMethodInvokeExpression(route, "CreateUrl", new CodePrimitiveExpression(null));
+			var returnStatement = new CodeMethodReturnStatement(createUrl);
 
-			return new CodeStatement[] { returnStatement };
+			return new CodeStatement[] {returnStatement};
 		}
 
 		protected virtual CodeExpression[] CreateBuildUrlParameters(CodeFieldReferenceExpression engineContext)
 		{
-			CodePropertyReferenceExpression urlInfo = new CodePropertyReferenceExpression(engineContext, "UrlInfo");
+			var urlInfo = new CodePropertyReferenceExpression(engineContext, "UrlInfo");
 
-			CodeObjectCreateExpression urlBuilderParameters = new CodeObjectCreateExpression(
-				typeof(UrlBuilderParameters),
+			var urlBuilderParameters = new CodeObjectCreateExpression(
+				typeof (UrlBuilderParameters),
 				new CodePrimitiveExpression(node.Action.Controller.Area),
 				new CodePrimitiveExpression(namingService.ToControllerName(node.Action.Controller.Name)),
 				new CodePrimitiveExpression(node.Action.Name));
 
-			return new CodeExpression[]
-			{
-				urlInfo,
-				urlBuilderParameters
-			};
+			return new CodeExpression[] { urlInfo, urlBuilderParameters };
 		}
 
 		protected abstract void AddRouteDefinitionBaseType();
-		protected abstract CodeExpression CreateRouteDefinitionsPropertyGetter();		
+		protected abstract CodeExpression CreateRouteDefinitionsPropertyGetter();
 		protected abstract string RouteDefinitionPattern { get; }
 	}
 }

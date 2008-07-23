@@ -1,29 +1,35 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
-using ILogger=Castle.Tools.CodeGenerator.Services.ILogger;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.MsBuild
 {
-  public class MsBuildLogger : ILogger
-  {
-    #region Member Data
-    private TaskLoggingHelper _helper;
-    #endregion
+	using Microsoft.Build.Framework;
+	using Microsoft.Build.Utilities;
+	using ILogger = Services.ILogger;
 
-    #region MsBuildLogger()
-    public MsBuildLogger(TaskLoggingHelper helper)
-    {
-      _helper = helper;
-    }
-    #endregion
+	public class MsBuildLogger : ILogger
+	{
+		private readonly TaskLoggingHelper helper;
 
-    #region ILogger Members
-    public void LogInfo(string message, params object[] args)
-    {
-      _helper.LogMessage(MessageImportance.High, message, args);
-    }
-    #endregion
-  }
+		public MsBuildLogger(TaskLoggingHelper helper)
+		{
+			this.helper = helper;
+		}
+
+		public void LogInfo(string message, params object[] args)
+		{
+			helper.LogMessage(MessageImportance.High, message, args);
+		}
+	}
 }

@@ -1,9 +1,23 @@
-using System.CodeDom;
-using Castle.Tools.CodeGenerator.Model.TreeNodes;
-using Castle.Tools.CodeGenerator.Services.Generators;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services.Generators
 {
+	using System.CodeDom;
+	using Model.TreeNodes;
+	using Generators;
+
 	public class ControllerMapGenerator : AbstractGenerator
 	{
 		public ControllerMapGenerator(ILogger logger, ISourceGenerator source, INamingService naming, string targetNamespace,
@@ -14,77 +28,63 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 
 		public override void Visit(AreaTreeNode node)
 		{
-			CodeTypeDeclaration type =
-				GenerateTypeDeclaration(_namespace, node.PathNoSlashes + _naming.ToAreaWrapperName(node.Name));
+			var type = GenerateTypeDeclaration(@namespace, node.PathNoSlashes + naming.ToAreaWrapperName(node.Name));
 
-			if (_typeStack.Count > 0)
+			if (typeStack.Count > 0)
 			{
-				CodeTypeDeclaration parent = _typeStack.Peek();
-				_source.AddFieldPropertyConstructorInitialize(parent, node.Name.Replace("/", ""), type.Name);
+				var parent = typeStack.Peek();
+				source.AddFieldPropertyConstructorInitialize(parent, node.Name.Replace("/", ""), type.Name);
 			}
 
-			_typeStack.Push(type);
+			typeStack.Push(type);
 			base.Visit(node);
-			_typeStack.Pop();
+			typeStack.Pop();
 		}
 
 		public override void Visit(ControllerTreeNode node)
 		{
-			// CodeTypeDeclaration type = GenerateTypeDeclaration(_namespace, _naming.ToControllerWrapperName(node.Name));
-			CodeTypeDeclaration type =
-				_source.GenerateTypeDeclaration(_namespace, node.PathNoSlashes + _naming.ToControllerWrapperName(node.Name));
-			CodeConstructor constructor = CreateServicesConstructor();
-			constructor.BaseConstructorArgs.Add(new CodeArgumentReferenceExpression(_naming.ToVariableName(_serviceIdentifier)));
-			type.BaseTypes.Add(_source[node.PathNoSlashes + _naming.ToActionWrapperName(node.Name)]);
+			var type = source.GenerateTypeDeclaration(@namespace, node.PathNoSlashes + naming.ToControllerWrapperName(node.Name));
+			var constructor = CreateServicesConstructor();
+			constructor.BaseConstructorArgs.Add(new CodeArgumentReferenceExpression(naming.ToVariableName(serviceIdentifier)));
+			
+			type.BaseTypes.Add(source[node.PathNoSlashes + naming.ToActionWrapperName(node.Name)]);
 			type.Members.Add(constructor);
 
-			CodeTypeDeclaration parent = _typeStack.Peek();
-
-			_source.AddFieldPropertyConstructorInitialize(parent, _naming.ToControllerName(node.Name), type.Name);
+			var parent = typeStack.Peek();
+			source.AddFieldPropertyConstructorInitialize(parent, naming.ToControllerName(node.Name), type.Name);
 
 			type.Members.Add(
-				_source.CreateReadOnlyProperty("Views",
-				                               new CodeTypeReference(node.PathNoSlashes + _naming.ToViewWrapperName(node.Name)),
-				                               new CodeObjectCreateExpression(
-				                               	new CodeTypeReference(node.PathNoSlashes + _naming.ToViewWrapperName(node.Name)),
-				                               	new CodeFieldReferenceExpression(_source.This, _naming.ToMemberVariableName(_serviceIdentifier)))));
-			/*
-			  type.Members.Add(
-				_source.CreateReadOnlyProperty("Actions", new CodeTypeReference(node.PathNoSlashes + _naming.ToActionWrapperName(node.Name)),
-									   new CodeObjectCreateExpression(
-										 new CodeTypeReference( _naming.ToActionWrapperName(node.Name)),
-										 new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), _naming.ToMemberVariableName(_serviceIdentifier)))));
-			*/
-
-			type.Members.Add(_source.CreateReadOnlyProperty("Actions", 
-			                                                new CodeTypeReference(node.PathNoSlashes + _naming.ToActionWrapperName(node.Name)), _source.This));
-
-			//type.Members.Add(_source.CreateReadOnlyProperty("Routes",
-			//    new CodeTypeReference(node.PathNoSlashes + _naming.ToRouteWrapperName(node.Name)), 
-			//    new CodeObjectCreateExpression(
-			//        new CodeTypeReference(node.PathNoSlashes + _naming.ToRouteWrapperName(node.Name)),
-			//        new CodeFieldReferenceExpression(_source.This, _naming.ToMemberVariableName( _serviceIdentifier)))));
+				source.CreateReadOnlyProperty(
+					"Views",
+					new CodeTypeReference(node.PathNoSlashes + naming.ToViewWrapperName(node.Name)),
+					new CodeObjectCreateExpression(
+						new CodeTypeReference(node.PathNoSlashes + naming.ToViewWrapperName(node.Name)),
+						new CodeFieldReferenceExpression(source.This, naming.ToMemberVariableName(serviceIdentifier)))));
+			
+			type.Members.Add(
+				source.CreateReadOnlyProperty("Actions", 
+												new CodeTypeReference(node.PathNoSlashes + naming.ToActionWrapperName(node.Name)), source.This));
 		}
 
 		public override void Visit(WizardControllerTreeNode node)
 		{
 			Visit((ControllerTreeNode) node);
 
-			CodeNamespace codeNamespace = _source.LookupNamespace(_namespace);
+			var codeNamespace = source.LookupNamespace(@namespace);
 
 			foreach (CodeTypeDeclaration type in codeNamespace.Types)
 			{
-				if (type.Name == (node.PathNoSlashes + _naming.ToControllerWrapperName(node.Name)))
-				{
-					type.Members.Add(
-						_source.CreateReadOnlyProperty("Steps",
-						                               new CodeTypeReference(node.PathNoSlashes + _naming.ToWizardStepWrapperName(node.Name)),
-						                               new CodeObjectCreateExpression(
-						                               	new CodeTypeReference(node.PathNoSlashes + _naming.ToWizardStepWrapperName(node.Name)),
-						                               	new CodeFieldReferenceExpression(_source.This, _naming.ToMemberVariableName(_serviceIdentifier)))));
+				if (type.Name != (node.PathNoSlashes + naming.ToControllerWrapperName(node.Name))) continue;
 
-					break;
-				}
+				type.Members.Add(
+					source.CreateReadOnlyProperty(
+						"Steps",
+						new CodeTypeReference(node.PathNoSlashes + naming.ToWizardStepWrapperName(node.Name)),
+						new CodeObjectCreateExpression(
+							new CodeTypeReference(node.PathNoSlashes + naming.ToWizardStepWrapperName(node.Name)),
+							new CodeFieldReferenceExpression(source.This, naming.ToMemberVariableName(serviceIdentifier)))));
+
+				break;
 			}
 		}
 	}

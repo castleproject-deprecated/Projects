@@ -1,24 +1,31 @@
-using System;
-using Castle.Tools.CodeGenerator.Model.TreeNodes;
-using Castle.Tools.CodeGenerator.Services.Generators;
-using NUnit.Framework;
-using Rhino.Mocks;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services
 {
+	using System;
+	using Generators;
+	using NUnit.Framework;
+	using Rhino.Mocks;
+
 	public class RouteMapGeneratorTests
 	{
-		#region Member Data
-
 		protected MockRepository mocks;
 		protected ILogger logging;
 		protected INamingService naming;
 		protected ISourceGenerator source;
 		protected RouteMapGenerator generator;
-
-		#endregion
-
-		#region Test Setup and Teardown Methods
 
 		[SetUp]
 		public virtual void Setup()
@@ -29,91 +36,5 @@ namespace Castle.Tools.CodeGenerator.Services
 			logging = new NullLogger();
 			generator = new RouteMapGenerator(logging, source, naming, "TargetNamespace", typeof (IServiceProvider).FullName);
 		}
-
-		#endregion
-	}
-
-	[TestFixture]
-	public class RouteMapGeneratorControllerTests : RouteMapGeneratorTests
-	{
-		#region Test Methods
-
-		[Test]
-		public void VisitControllerNode_Always_CreatesType()
-		{
-			ControllerTreeNode node = new ControllerTreeNode("HomeController", "ControllerNamespace");
-
-			mocks.ReplayAll();
-			generator.Visit(node);
-			mocks.VerifyAll();
-
-			CodeDomAssert.AssertHasField(source.Ccu.Namespaces[0].Types[0], "_services");
-		}
-
-		#endregion
-	}
-
-	[TestFixture]
-	public class RouteMapGeneratorActionTests : RouteMapGeneratorTests
-	{
-		#region Member Data
-
-		private AreaTreeNode root;
-		private ControllerTreeNode controller;
-
-		#endregion
-
-		#region Test Setup and Teardown Methods
-
-		public override void Setup()
-		{
-			base.Setup();
-			root = new AreaTreeNode("Root");
-			controller = new ControllerTreeNode("HomeController", "ControllerNamespace");
-			root.AddChild(controller);
-		}
-
-		#endregion
-
-		#region Test Methods
-
-		[Test]
-		public void VisitRouteNode_NoParameters_CreatesMethod()
-		{
-			RouteTreeNode node = new StaticRouteTreeNode("Index", "index");
-			ActionTreeNode actionTreeNode = new ActionTreeNode("action");
-			actionTreeNode.AddChild(node);
-			controller.AddChild(actionTreeNode);
-
-			mocks.ReplayAll();
-			generator.Visit(controller);
-			mocks.VerifyAll();
-
-			CodeDomAssert.AssertHasField(source.Ccu.Namespaces[0].Types[0], "_services");
-			CodeDomAssert.AssertHasMethod(source.Ccu.Namespaces[0].Types[2], "Index");
-		}
-
-		[Test]
-		public void VisitRouteNode_OneParameters_CreatesMethod()
-		{
-			RouteTreeNode node = new StaticRouteTreeNode("AuthenticateLogIn", "login/authenticate/<userName:string>/<password:string>");
-			ActionTreeNode actionTreeNode = new ActionTreeNode("action");
-			actionTreeNode.AddChild(node);
-			controller.AddChild(actionTreeNode);
-			node.AddChild(new ParameterTreeNode("userName", typeof(string)));
-
-			using (mocks.Unordered())
-			{
-			}
-
-			mocks.ReplayAll();
-			generator.Visit(controller);
-			mocks.VerifyAll();
-
-			CodeDomAssert.AssertHasField(source.Ccu.Namespaces[0].Types[0], "_services");
-			CodeDomAssert.AssertHasMethod(source.Ccu.Namespaces[0].Types[2], "AuthenticateLogIn");
-		}
-
-		#endregion
 	}
 }

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4634D14A-15E7-4AA6-8F9E-E1A3341C6AAC}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -14,6 +14,7 @@
     <OldToolsVersion>2.0</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,6 +39,9 @@
       <HintPath>..\Libraries\ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -48,6 +52,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Castle.Tools.CodeGenerator.External\Castle.Tools.CodeGenerator.External.csproj">
+      <Project>{6B33B990-8184-43F7-96B0-EF7496C34A1E}</Project>
+      <Name>Castle.Tools.CodeGenerator.External</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Castle.Tools.CodeGenerator\Castle.Tools.CodeGenerator.csproj">
       <Project>{AD98AAA1-00B5-4766-87E2-62C82DC09896}</Project>
       <Name>Castle.Tools.CodeGenerator</Name>

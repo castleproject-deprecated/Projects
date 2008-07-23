@@ -1,84 +1,90 @@
-using System.IO;
-using ICSharpCode.NRefactory;
-using ICSharpCode.NRefactory.Ast;
-using NUnit.Framework;
-using Rhino.Mocks;
-using Rhino.Mocks.Constraints;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services
 {
-  [TestFixture]
-  public class SiteTreeGeneratorServiceTests
-  {
-    #region Member Data
-    private MockRepository _mocks;
-    private SiteTreeGeneratorService _service;
-    private ILogger _logger;
-    private ITypeResolver _typeResolver;
-    private IAstVisitor _visitor;
-    private IParser _parser;
-    private IParserFactory _parserFactory;
-    private string _path;
-    private IParsedSourceStorageService _sources;
-    #endregion
+	using System.IO;
+	using ICSharpCode.NRefactory;
+	using ICSharpCode.NRefactory.Ast;
+	using NUnit.Framework;
+	using Rhino.Mocks;
+	using Rhino.Mocks.Constraints;
 
-    #region Test Setup and Teardown Methods
-    [SetUp]
-    public void Setup()
-    {
-      _mocks = new MockRepository();
-      _logger = new NullLogger();
-      _typeResolver = _mocks.DynamicMock<ITypeResolver>();
-      _visitor = _mocks.DynamicMock<IAstVisitor>();
-      _sources = _mocks.DynamicMock<IParsedSourceStorageService>();
-      _parserFactory = _mocks.DynamicMock<IParserFactory>();
-      _parser = _mocks.DynamicMock<IParser>();
-      _service = new SiteTreeGeneratorService(_logger, _typeResolver, _sources, _parserFactory);
-      _path = "~~TemporarySource.cs";
-      WriteSampleSource(_path);
-    }
+	[TestFixture]
+	public class SiteTreeGeneratorServiceTests
+	{
+		private MockRepository mocks;
+		private SiteTreeGeneratorService service;
+		private ILogger logger;
+		private ITypeResolver typeResolver;
+		private IAstVisitor visitor;
+		private IParser parser;
+		private IParserFactory parserFactory;
+		private string path;
+		private IParsedSourceStorageService sources;
 
-    [TearDown]
-    public void Teardown()
-    {
-      File.Delete(_path);
-    }
-    #endregion
+		[SetUp]
+		public void Setup()
+		{
+			mocks = new MockRepository();
+			logger = new NullLogger();
+			typeResolver = mocks.DynamicMock<ITypeResolver>();
+			visitor = mocks.DynamicMock<IAstVisitor>();
+			sources = mocks.DynamicMock<IParsedSourceStorageService>();
+			parserFactory = mocks.DynamicMock<IParserFactory>();
+			parser = mocks.DynamicMock<IParser>();
+			service = new SiteTreeGeneratorService(logger, typeResolver, sources, parserFactory);
+			path = "~~TemporarySource.cs";
+			WriteSampleSource(path);
+		}
 
-    #region Test Methods
-    [Test]
-    public void Parse()
-    {
-      CompilationUnit unit = new CompilationUnit();
+		[TearDown]
+		public void Teardown()
+		{
+			File.Delete(path);
+		}
 
-      using (_mocks.Unordered())
-      {
-        Expect.Call(_parserFactory.CreateCSharpParser(null)).Constraints(Is.NotNull()).Return(_parser);
-        _parser.ParseMethodBodies = true;
-        _parser.Parse();
-        _typeResolver.Clear();
-        Expect.Call(_parser.CompilationUnit).Return(unit);
-        Expect.Call(_visitor.VisitCompilationUnit(unit, null)).Return(null);
-        _sources.Add(_path, _parser);
-      }
+		[Test]
+		public void Parse()
+		{
+			var unit = new CompilationUnit();
 
-      _mocks.ReplayAll();
-      _service.Parse(_visitor, _path);
-      _mocks.VerifyAll();
-    }
-    #endregion
+			using (mocks.Unordered())
+			{
+				Expect.Call(parserFactory.CreateCSharpParser(null)).Constraints(Is.NotNull()).Return(parser);
+				parser.ParseMethodBodies = true;
+				parser.Parse();
+				typeResolver.Clear();
+				Expect.Call(parser.CompilationUnit).Return(unit);
+				Expect.Call(visitor.VisitCompilationUnit(unit, null)).Return(null);
+				sources.Add(path, parser);
+			}
 
-    #region Methods
-    protected static void WriteSampleSource(string path)
-    {
-      using (StreamWriter writer = File.CreateText(path))
-      {
-        writer.WriteLine("using System;");
-        writer.WriteLine("public class Program {");
-        writer.WriteLine("public static void Main(string[] args) { }");
-        writer.WriteLine("}");
-      }
-    }
-    #endregion
-  }
+			mocks.ReplayAll();
+			service.Parse(visitor, path);
+			mocks.VerifyAll();
+		}
+
+		protected static void WriteSampleSource(string path)
+		{
+			using (var writer = File.CreateText(path))
+			{
+				writer.WriteLine("using System;");
+				writer.WriteLine("public class Program {");
+				writer.WriteLine("public static void Main(string[] args) { }");
+				writer.WriteLine("}");
+			}
+		}
+	}
 }

@@ -1,66 +1,45 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Model.TreeNodes
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Text;
+
 	public class TreeNode
 	{
 		public static readonly string RootName = "Root";
 
-		private List<TreeNode> _children = new List<TreeNode>();
-		private TreeNode _parent;
-		private string _name;
-
-		public TreeNode Parent
+		public TreeNode(string name)
 		{
-			get { return _parent; }
-			protected set { _parent = value; }
+			Name = name;
+			Children = new List<TreeNode>();
 		}
 
-		public List<TreeNode> Children
-		{
-			get { return _children; }
-		}
-
-		public string Name
-		{
-			get { return _name; }
-		}
+		public List<TreeNode> Children { get; private set; }
+		public string Name { get; private set; }
+		public TreeNode Parent { get; protected set; }
 
 		public string Path
 		{
-			get
-			{
-				List<string> parts = new List<string>();
-				TreeNode node = this.Parent;
-				StringBuilder sb = new StringBuilder();
-				while (node != null)
-				{
-					parts.Add(node.Name);
-					node = node.Parent;
-				}
-				parts.Reverse();
-				foreach (string part in parts)
-				{
-					if (sb.Length != 0)
-					{
-						sb.Append("/");
-					}
-					sb.Append(part);
-				}
-				return sb.ToString();
-			}
+			get { return CalculatePath(n => n == null); }
 		}
 
 		public string PathNoSlashes
 		{
-			get { return this.Path.Replace("/", ""); }
-		}
-
-		public TreeNode(string name)
-		{
-			_name = name;
+			get { return Path.Replace("/", ""); }
 		}
 
 		public void AddChild(TreeNode node)
@@ -70,32 +49,59 @@ namespace Castle.Tools.CodeGenerator.Model.TreeNodes
 
 		public void AddChild(TreeNode node, bool force)
 		{
-			if (!force && _children.Contains(node))
-			{
+			if (!force && Children.Contains(node))
 				return;
-			}
+			
 			node.Parent = this;
-			_children.Add(node);
+			Children.Add(node);
 		}
 
 		public override int GetHashCode()
 		{
-			return this.Name.GetHashCode();
+			return Name.GetHashCode();
 		}
 
 		public override bool Equals(object obj)
 		{
-			TreeNode node = obj as TreeNode;
+			var node = obj as TreeNode;
+			
 			if (node == null)
 				return base.Equals(obj);
+			
 			if (node.GetType() != GetType())
 				return base.Equals(obj);
-			return node.Name.Equals(this.Name);
+			
+			return node.Name.Equals(Name);
 		}
 
 		public override string ToString()
 		{
-			return String.Format("Node<{0}>", this.Name);
+			return String.Format("Node<{0}>", Name);
+		}
+
+		protected string CalculatePath(Func<TreeNode, bool> nodeIteratorStopCondition)
+		{
+			var parts = new List<string>();
+			var node = Parent;
+			var sb = new StringBuilder();
+
+			while (!nodeIteratorStopCondition(node))
+			{
+				parts.Add(node.Name);
+				node = node.Parent;
+			}
+
+			parts.Reverse();
+
+			foreach (var part in parts)
+			{
+				if (sb.Length != 0)
+					sb.Append("/");
+
+				sb.Append(part);
+			}
+
+			return sb.ToString();
 		}
 	}
 }

@@ -31,7 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Rhino.Mocks, Version=3.4.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+    <Reference Include="Rhino.Mocks, Version=3.5.0.2, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\Rhino.Mocks.dll</HintPath>
     </Reference>
@@ -44,6 +44,10 @@
     <Compile Include="Services\MockControllerReferenceFactory.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Castle.Tools.CodeGenerator.External\Castle.Tools.CodeGenerator.External.csproj">
+      <Project>{6B33B990-8184-43F7-96B0-EF7496C34A1E}</Project>
+      <Name>Castle.Tools.CodeGenerator.External</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Castle.Tools.CodeGenerator\Castle.Tools.CodeGenerator.csproj">
       <Project>{AD98AAA1-00B5-4766-87E2-62C82DC09896}</Project>
       <Name>Castle.Tools.CodeGenerator</Name>

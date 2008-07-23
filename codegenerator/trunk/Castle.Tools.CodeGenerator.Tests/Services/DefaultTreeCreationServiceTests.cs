@@ -1,105 +1,109 @@
-using System;
-using System.Collections.Generic;
-using Castle.Tools.CodeGenerator.Model.TreeNodes;
-using Rhino.Mocks;
-using NUnit.Framework;
+// Copyright 2004-2007 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 namespace Castle.Tools.CodeGenerator.Services
 {
-  [TestFixture]
-  public class DefaultTreeCreationServiceTests
-  {
-    #region Member Data
-  	private MockRepository _mocks;
-    private DefaultTreeCreationService _service;
-  	#endregion
-  	
-  	#region Test Setup and Teardown Methods
-  	[SetUp]
-  	public void Setup()
-  	{
-  		_mocks = new MockRepository();
-      _service = new DefaultTreeCreationService();
-  	}
-  	#endregion
-  	
-  	#region Test Methods
-    [Test]
-    public void Constructor_Always_CreatesRoot()
-    {
-      Assert.AreEqual("Root", _service.Root.Name);
-      Assert.AreEqual(_service.Root, _service.Peek);
-    }
+	using System;
+	using Model.TreeNodes;
+	using NUnit.Framework;
 
-    [Test]
-    public void PushNode_Always_AddsChildAndSetsCurrent()
-    {
-      TreeNode node = new TreeNode("AnotherNode");
-      _service.PushNode(node);
-      Assert.Contains(node, _service.Root.Children);
-      Assert.AreEqual(_service.Root, node.Parent);
-      Assert.AreEqual(node, _service.Peek);
-    }
+	[TestFixture]
+	public class DefaultTreeCreationServiceTests
+	{
+		private DefaultTreeCreationService service;
 
-    [Test]
-    public void PopNode_NotUnderRoot_PopsTopNode()
-    {
-      TreeNode node = new TreeNode("AnotherNode");
-      _service.PushNode(node);
-      Assert.AreEqual(node, _service.Peek);
-      _service.PopNode();
-      Assert.AreNotEqual(node, _service.Peek);
-    }
+		[SetUp]
+		public void Setup()
+		{
+			service = new DefaultTreeCreationService();
+		}
 
-    [Test]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void PopNode_UnderRoot_Throws()
-    {
-      _service.PopNode();
-    }
+		[Test]
+		public void Constructor_Always_CreatesRoot()
+		{
+			Assert.AreEqual("Root", service.Root.Name);
+			Assert.AreEqual(service.Root, service.Peek);
+		}
 
-    [Test]
-    public void FindNode_NodeNotThere_ReturnsNull()
-    {
-      _service.PushNode(new TreeNode("NotTheNode"));
-      Assert.IsNull(_service.FindNode("AnotherNode"));
-    }
+		[Test]
+		public void PushNode_Always_AddsChildAndSetsCurrent()
+		{
+			var node = new TreeNode("AnotherNode");
+			service.PushNode(node);
+			Assert.Contains(node, service.Root.Children);
+			Assert.AreEqual(service.Root, node.Parent);
+			Assert.AreEqual(node, service.Peek);
+		}
 
-    [Test]
-    public void FindNode_NodeThere_ReturnsTheNode()
-    {
-      TreeNode node = new TreeNode("AnotherNode");
-      _service.PushNode(node);
-      _service.PopNode();
-      Assert.AreEqual(node, _service.FindNode("AnotherNode"));
-    }
+		[Test]
+		public void PopNode_NotUnderRoot_PopsTopNode()
+		{
+			var node = new TreeNode("AnotherNode");
+			service.PushNode(node);
+			Assert.AreEqual(node, service.Peek);
+			service.PopNode();
+			Assert.AreNotEqual(node, service.Peek);
+		}
 
-    [Test]
-    public void PushArea_FirstTime_PushesNewNode()
-    {
-      _service.PushArea("Area");
-      Assert.AreEqual("Area", _service.Peek.Name);
-    }
+		[Test]
+		[ExpectedException(typeof (InvalidOperationException))]
+		public void PopNode_UnderRoot_Throws()
+		{
+			service.PopNode();
+		}
 
-    [Test]
-    public void PushArea_SecondTime_PushesLastNode()
-    {
-      _service.PushArea("Area");
-      TreeNode node = _service.Peek;
-      _service.PopNode();
-      _service.PushArea("Area");
-      Assert.AreEqual(node, _service.Peek);
-    }
+		[Test]
+		public void FindNode_NodeNotThere_ReturnsNull()
+		{
+			service.PushNode(new TreeNode("NotTheNode"));
+			Assert.IsNull(service.FindNode("AnotherNode"));
+		}
 
-    [Test]
-    public void PopToRoot_Always_PopsUntilRootCurrent()
-    {
-      _service.PushArea("Area");
-      _service.PushArea("SubArea");
-      _service.PushArea("SubSubArea");
-      _service.PopToRoot();
-      Assert.AreEqual(_service.Root, _service.Peek);
-    }
-  	#endregion	
-  }
+		[Test]
+		public void FindNode_NodeThere_ReturnsTheNode()
+		{
+			var node = new TreeNode("AnotherNode");
+			service.PushNode(node);
+			service.PopNode();
+			Assert.AreEqual(node, service.FindNode("AnotherNode"));
+		}
+
+		[Test]
+		public void PushArea_FirstTime_PushesNewNode()
+		{
+			service.PushArea("Area");
+			Assert.AreEqual("Area", service.Peek.Name);
+		}
+
+		[Test]
+		public void PushArea_SecondTime_PushesLastNode()
+		{
+			service.PushArea("Area");
+			var node = service.Peek;
+			service.PopNode();
+			service.PushArea("Area");
+			Assert.AreEqual(node, service.Peek);
+		}
+
+		[Test]
+		public void PopToRoot_Always_PopsUntilRootCurrent()
+		{
+			service.PushArea("Area");
+			service.PushArea("SubArea");
+			service.PushArea("SubSubArea");
+			service.PopToRoot();
+			Assert.AreEqual(service.Root, service.Peek);
+		}
+	}
 }
