@@ -37,6 +37,19 @@ namespace Castle.Tools.CodeGenerator.Services
 		}
 
 		[Test]
+		public void Resolve_ShorthandNullableInteger_Works()
+		{
+			Assert.AreEqual(typeof(int?), typeResolver.Resolve("int?", true));
+		}
+
+		[Test]
+		public void Resolve_NullableInteger_Works()
+		{
+			typeResolver.UseNamespace("System");
+			Assert.AreEqual(typeof(int?), typeResolver.Resolve("Nullable`1[[System.Int32]]", true));
+		}
+
+		[Test]
 		public void Resolve_Long_Works()
 		{
 			Assert.AreEqual(typeof (long), typeResolver.Resolve("long", true));

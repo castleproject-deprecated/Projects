@@ -59,7 +59,7 @@ namespace Castle.Tools.CodeGenerator.Services.Visitors
 
 			foreach (var parameter in methodDeclaration.Parameters)
 			{
-				var type = TypeResolver.Resolve(parameter.TypeReference, true);
+				var type = TypeResolver.Resolve(parameter.TypeReference);
 				action.AddChild(new ParameterTreeNode(parameter.ParameterName, type));
 			}
 

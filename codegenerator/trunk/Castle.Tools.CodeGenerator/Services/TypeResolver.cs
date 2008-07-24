@@ -175,20 +175,20 @@ namespace Castle.Tools.CodeGenerator.Services
 			return null;
 		}
 
-		public Type Resolve(TypeReference reference, bool throwOnFail)
-		{
-			if (reference.GenericTypes.Count == 0)
-				return Resolve(reference.SystemType, throwOnFail);
+		//public Type Resolve(TypeReference reference, bool throwOnFail)
+		//{
+		//    if (reference.GenericTypes.Count == 0)
+		//        return Resolve(reference.SystemType, throwOnFail);
 			
-			var name = reference.SystemType + "`" + reference.GenericTypes.Count + "[";
+		//    var name = reference.SystemType + "`" + reference.GenericTypes.Count + "[";
 
-			foreach (var genericType in reference.GenericTypes)
-				name += "[" + genericType.SystemType + "],";
+		//    foreach (var genericType in reference.GenericTypes)
+		//        name += "[" + genericType.SystemType + "],";
 			
-			name = name.Substring(0, name.Length - 1) + "]";
+		//    name = name.Substring(0, name.Length - 1) + "]";
 
-			return Resolve(name, throwOnFail);
-		}
+		//    return Resolve(name, throwOnFail);
+		//}
 
 		public string Resolve(TypeReference reference)
 		{

@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Text.RegularExpressions;
+using System.Linq;
+
 namespace Castle.Tools.CodeGenerator.Services.Generators
 {
 	using System;
@@ -233,7 +236,23 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 			get
 			{
 				if (!typeReferences.ContainsKey(name))
-					typeReferences[name] = new CodeTypeReference(name);
+				{
+					var regex = new Regex(@"\<(.+)\>");
+					var match = regex.Match(name);
+					
+					if (match.Captures.Count > 0)
+					{
+						var args = match.Captures[0].Value.Trim('<', '>').Split(',');
+						var codeTypeReferences = args.Aggregate(
+							new List<CodeTypeReference>(), 
+							(l, a) => { l.Add(new CodeTypeReference(a)); return l; });
+						var genericTypeReference = new CodeTypeReference(name.Substring(0, name.IndexOf("<")));
+						genericTypeReference.TypeArguments.AddRange(codeTypeReferences.ToArray());
+						typeReferences[name] = genericTypeReference;
+					}
+					else
+						typeReferences[name] = new CodeTypeReference(name);
+				}
 				
 				return typeReferences[name];
 			}

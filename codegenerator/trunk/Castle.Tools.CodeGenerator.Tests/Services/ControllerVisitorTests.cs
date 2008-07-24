@@ -190,11 +190,9 @@ namespace Castle.Tools.CodeGenerator.Services
 			using (mocks.Unordered())
 			{
 				Expect.Call(treeService.Peek).Return(node);
-				Expect.Call(typeResolver.Resolve(new TypeReference("bool"), true))
-					.Constraints(
-						Is.Matching((TypeReference reference) => reference.SystemType == "System.Boolean"),
-						Is.Matching((bool throwOnFail) => throwOnFail))
-					.Return(typeof (bool));
+				Expect.Call(typeResolver.Resolve(new TypeReference("bool")))
+					.Constraints(Is.Matching((TypeReference reference) => reference.SystemType == "System.Boolean"))
+					.Return("System.Boolean");
 			}
 
 			mocks.ReplayAll();

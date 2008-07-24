@@ -22,12 +22,12 @@ namespace Castle.Tools.CodeGenerator.Model.TreeNodes
 		{
 		}
 
-		public ParameterTreeNode(string name, Type type) : base(name)
+		public ParameterTreeNode(string name, string type) : base(name)
 		{
 			Type = type;
 		}
 
-		public Type Type { get; private set; }
+		public string Type { get; private set; }
 
 		public override string ToString()
 		{

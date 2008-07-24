@@ -54,7 +54,7 @@ namespace Castle.Tools.CodeGenerator.Services
 			var actionTreeNode = new ActionTreeNode("action");
 			actionTreeNode.AddChild(node);
 			controller.AddChild(actionTreeNode);
-			node.AddChild(new ParameterTreeNode("userName", typeof (string)));
+			node.AddChild(new ParameterTreeNode("userName", "System.String"));
 
 			using (mocks.Unordered())
 			{

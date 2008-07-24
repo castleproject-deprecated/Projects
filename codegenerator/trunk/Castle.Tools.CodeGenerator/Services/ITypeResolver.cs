@@ -25,7 +25,6 @@ namespace Castle.Tools.CodeGenerator.Services
 		void UseNamespace(string ns, bool includeParents);
 		void AliasNamespace(string alias, string ns);
 		Type Resolve(string typeName, bool throwOnFail);
-		Type Resolve(TypeReference reference, bool throwOnFail);
 		string Resolve(string typeName);
 		string Resolve(TypeReference reference);
 	}

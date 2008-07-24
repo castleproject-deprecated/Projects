@@ -57,7 +57,7 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 		public override void Visit(ActionTreeNode node)
 		{
 			var type = typeStack.Peek();
-			var actionArgumentTypes = new List<Type>();
+			var actionArgumentTypes = new List<string>();
 
 			var method = new CodeMemberMethod
 			{
@@ -97,7 +97,7 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 			Visit((ControllerTreeNode) node);
 		}
 
-		protected CodeExpression CreateNewActionReference(ActionTreeNode node, List<CodeExpression> actionArguments, List<Type> actionArgumentTypes)
+		protected CodeExpression CreateNewActionReference(ActionTreeNode node, List<CodeExpression> actionArguments, List<string> actionArgumentTypes)
 		{
 			var actionArgumentRuntimeTypes = new List<CodeExpression>();
 			foreach (var type in actionArgumentTypes)
@@ -132,7 +132,7 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 				constructionArguments);
 		}
 
-		protected List<CodeExpression> CreateActionArgumentsAndAddParameters(CodeMemberMethod method, ActionTreeNode node, List<Type> actionArgumentTypes)
+		protected List<CodeExpression> CreateActionArgumentsAndAddParameters(CodeMemberMethod method, ActionTreeNode node, List<string> actionArgumentTypes)
 		{
 			var actionArguments = new List<CodeExpression>();
 			var index = 0;

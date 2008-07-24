@@ -51,7 +51,7 @@ namespace Castle.Tools.CodeGenerator.Services
 		{
 			var node = new ActionTreeNode("Index");
 			controller.AddChild(node);
-			node.AddChild(new ParameterTreeNode("id", typeof (Int32)));
+			node.AddChild(new ParameterTreeNode("id", "System.Int32"));
 
 			using (mocks.Unordered())
 			{

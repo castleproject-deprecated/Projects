@@ -48,11 +48,9 @@ namespace Castle.Tools.CodeGenerator.Services
 			{
 				typeResolver.UseNamespace("SomeNamespace", true);
 				typeResolver.UseNamespace("System");
-				Expect.Call(typeResolver.Resolve(new TypeReference("DateTime"), true))
-					.Constraints(
-					Is.Matching((TypeReference reference) => reference.SystemType == "DateTime"),
-					Is.Matching((bool throwOnFail) => throwOnFail))
-					.Return(typeof (DateTime[]));
+				Expect.Call(typeResolver.Resolve(new TypeReference("DateTime")))
+					.Constraints(Is.Matching((TypeReference reference) => reference.SystemType == "DateTime"))
+					.Return("System.DateTime[]");
 			}
 
 			mocks.ReplayAll();
