@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Tools.CodeGenerator.Services
+namespace Castle.Tools.CodeGenerator.External
 {
 	using System;
-	using Model;
 	using External;
 
 	public class DefaultControllerReferenceFactory : IControllerReferenceFactory

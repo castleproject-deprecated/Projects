@@ -52,6 +52,7 @@
     <Compile Include="CustomAttributesContainer.cs" />
     <Compile Include="DefaultArgumentConversionService.cs" />
     <Compile Include="DefaultCodeGeneratorServices.cs" />
+    <Compile Include="DefaultControllerReferenceFactory.cs" />
     <Compile Include="DefaultRuntimeInformationService.cs" />
     <Compile Include="IArgumentConversionService.cs" />
     <Compile Include="IArgumentlessControllerActionReference.cs" />

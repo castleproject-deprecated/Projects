@@ -98,7 +98,6 @@
     <Compile Include="Services\Generators\RouteMapGeneration\RouteParameters\IRouteParameterType.cs" />
     <Compile Include="Services\Generators\RouteParameterDefaults.cs" />
     <Compile Include="Services\Visitors\ControllerVisitor.cs" />
-    <Compile Include="Services\DefaultControllerReferenceFactory.cs" />
     <Compile Include="Services\DefaultNamingService.cs" />
     <Compile Include="Services\Generators\DefaultSourceGenerator.cs" />
     <Compile Include="Services\IGenerator.cs" />
