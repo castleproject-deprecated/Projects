@@ -140,6 +140,10 @@
       <Project>{6B33B990-8184-43F7-96B0-EF7496C34A1E}</Project>
       <Name>Castle.Tools.CodeGenerator.External</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Castle.Tools.CodeGenerator.RestfulRouting\Castle.Tools.CodeGenerator.RestfulRouting.csproj">
+      <Project>{5A8C007F-2C89-4A9A-BABA-4BDE3B077093}</Project>
+      <Name>Castle.Tools.CodeGenerator.RestfulRouting</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
