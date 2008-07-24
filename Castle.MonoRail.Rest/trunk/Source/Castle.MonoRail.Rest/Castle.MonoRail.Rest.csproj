@@ -31,15 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Components.Binder, Version=0.0.1.1, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+    <Reference Include="Castle.Components.Binder, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Castle.Components.Binder.dll</HintPath>
+      <HintPath>..\..\..\..\..\musicglue\lib\Castle.Components.Binder.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Castle.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\musicglue\lib\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.MonoRail.Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+    <Reference Include="Castle.MonoRail.Framework, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Castle.MonoRail.Framework.dll</HintPath>
     </Reference>
@@ -59,9 +59,11 @@
     <Compile Include="Binding\XmlBindAttribute.cs" />
     <Compile Include="Binding\XmlTreeBuilder.cs" />
     <Compile Include="ControllerBridge.cs" />
+    <Compile Include="DefaultRestVerbResolver.cs" />
     <Compile Include="DefaultUrlProvider.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="IControllerBridge.cs" />
+    <Compile Include="IRestVerbResolver.cs" />
     <Compile Include="Mime\AcceptType.cs" />
     <Compile Include="Mime\MimeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="RestfulController.cs" />
     <Compile Include="RestfulEngineContextFactory.cs" />
     <Compile Include="RestfulRequestAdapter.cs" />
+    <Compile Include="RestfulRoute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
