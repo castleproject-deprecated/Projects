@@ -16,6 +16,7 @@ namespace Castle.Tools.CodeGenerator.Services
 {
 	using System;
 	using System.CodeDom;
+	using System.Linq;
 	using NUnit.Framework;
 
 	public static class CodeDomAssert
@@ -57,6 +58,11 @@ namespace Castle.Tools.CodeGenerator.Services
 		public static void AssertNotHasMethod(CodeTypeDeclaration typeDeclaration, string name)
 		{
 			Assert.IsFalse(HasMemberOfTypeAndName(typeDeclaration, typeof (CodeMemberMethod), name), "Unexpected method: " + name);
+		}
+
+		public static void AssertHasParameter(CodeMemberMethod methodDeclaration, string name)
+		{
+			Assert.IsTrue(methodDeclaration.Parameters.OfType<CodeParameterDeclarationExpression>().Any(p => p.Name == name));
 		}
 
 		public static CodeTypeDeclaration AssertHasType(CodeCompileUnit ccu, string name)

@@ -14,6 +14,8 @@
 
 namespace Castle.Tools.CodeGenerator.Services
 {
+	using System.CodeDom;
+	using System.Linq;
 	using Model.TreeNodes;
 	using NUnit.Framework;
 
@@ -54,6 +56,28 @@ namespace Castle.Tools.CodeGenerator.Services
 
 			CodeDomAssert.AssertHasField(source.Ccu.Namespaces[0].Types[0], "_services");
 			CodeDomAssert.AssertHasMethod(source.Ccu.Namespaces[0].Types[0], "Index");
+		}
+
+		[Test]
+		public void VisitActionNode_NullableParameter_CreatesMethod()
+		{
+			var node = new ActionTreeNode("Index");
+			controller.AddChild(node);
+			node.AddChild(new ParameterTreeNode("id", "System.Nullable<System.Int32>"));
+
+			generator.Visit(controller);
+
+			var type = source.Ccu.Namespaces[0].Types[0];
+			CodeDomAssert.AssertHasField(type, "_services");
+			CodeDomAssert.AssertHasMethod(type, "Index");
+
+			var method = type.Members.OfType<CodeMemberMethod>().First(m => m.Name == "Index");
+			CodeDomAssert.AssertHasParameter(method, "id");
+
+			var parameter = method.Parameters.OfType<CodeParameterDeclarationExpression>().First(p => p.Name == "id");
+			Assert.AreEqual("System.Nullable`1", parameter.Type.BaseType);
+			Assert.AreEqual(1, parameter.Type.TypeArguments.Count);
+			Assert.AreEqual("System.Int32", parameter.Type.TypeArguments[0].BaseType);
 		}
 	}
 }
