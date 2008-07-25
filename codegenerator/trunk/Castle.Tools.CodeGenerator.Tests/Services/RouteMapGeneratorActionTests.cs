@@ -39,9 +39,7 @@ namespace Castle.Tools.CodeGenerator.Services
 			actionTreeNode.AddChild(node);
 			controller.AddChild(actionTreeNode);
 
-			mocks.ReplayAll();
 			generator.Visit(controller);
-			mocks.VerifyAll();
 
 			CodeDomAssert.AssertHasField(source.Ccu.Namespaces[0].Types[0], "_services");
 			CodeDomAssert.AssertHasMethod(source.Ccu.Namespaces[0].Types[2], "Index");
@@ -56,13 +54,7 @@ namespace Castle.Tools.CodeGenerator.Services
 			controller.AddChild(actionTreeNode);
 			node.AddChild(new ParameterTreeNode("userName", "System.String"));
 
-			using (mocks.Unordered())
-			{
-			}
-
-			mocks.ReplayAll();
 			generator.Visit(controller);
-			mocks.VerifyAll();
 
 			CodeDomAssert.AssertHasField(source.Ccu.Namespaces[0].Types[0], "_services");
 			CodeDomAssert.AssertHasMethod(source.Ccu.Namespaces[0].Types[2], "AuthenticateLogIn");

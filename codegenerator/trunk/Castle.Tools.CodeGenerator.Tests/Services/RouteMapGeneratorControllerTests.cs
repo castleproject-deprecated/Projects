@@ -25,9 +25,7 @@ namespace Castle.Tools.CodeGenerator.Services
 		{
 			var node = new ControllerTreeNode("HomeController", "ControllerNamespace");
 
-			mocks.ReplayAll();
 			generator.Visit(node);
-			mocks.VerifyAll();
 
 			CodeDomAssert.AssertHasField(source.Ccu.Namespaces[0].Types[0], "_services");
 		}

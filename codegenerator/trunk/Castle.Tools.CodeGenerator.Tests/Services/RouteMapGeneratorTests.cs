@@ -17,11 +17,9 @@ namespace Castle.Tools.CodeGenerator.Services
 	using System;
 	using Generators;
 	using NUnit.Framework;
-	using Rhino.Mocks;
 
 	public class RouteMapGeneratorTests
 	{
-		protected MockRepository mocks;
 		protected ILogger logging;
 		protected INamingService naming;
 		protected ISourceGenerator source;
@@ -30,7 +28,6 @@ namespace Castle.Tools.CodeGenerator.Services
 		[SetUp]
 		public virtual void Setup()
 		{
-			mocks = new MockRepository();
 			naming = new DefaultNamingService();
 			source = new DefaultSourceGenerator();
 			logging = new NullLogger();
