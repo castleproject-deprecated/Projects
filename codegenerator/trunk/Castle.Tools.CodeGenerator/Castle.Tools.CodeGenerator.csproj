@@ -44,6 +44,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\Castle.MonoRail.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.MonoRail.Rest, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Castle.MonoRail.Rest.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.NRefactory, Version=3.0.0.2520, Culture=neutral, PublicKeyToken=efe927acf176eea2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\ICSharpCode.NRefactory.dll</HintPath>
@@ -67,6 +71,8 @@
     <Compile Include="CodeDom\CreateMemberMethod.cs" />
     <Compile Include="CodeDom\CreateMemberProperty.cs" />
     <Compile Include="Model\TreeNodes\ActionTreeNode.cs" />
+    <Compile Include="Model\TreeNodes\RestRoutesDescriptor.cs" />
+    <Compile Include="Model\TreeNodes\RestRouteTreeNode.cs" />
     <Compile Include="Model\TreeNodes\RouteTreeNode.cs" />
     <Compile Include="Model\TreeNodes\StaticRouteTreeNode.cs" />
     <Compile Include="Model\TreeNodes\ParameterTreeNode.cs" />
@@ -87,6 +93,7 @@
     <Compile Include="Services\Generators\ActionMapGenerator.cs" />
     <Compile Include="Services\Generators\ControllerPartialsGenerator.cs" />
     <Compile Include="Services\Generators\RouteMapGeneration\PatternRouteCreator.cs" />
+    <Compile Include="Services\Generators\RouteMapGeneration\RestRouteCreator.cs" />
     <Compile Include="Services\Generators\RouteMapGeneration\StaticRouteCreator.cs" />
     <Compile Include="Services\Generators\RouteMapGeneration\RouteCreator.cs" />
     <Compile Include="Services\Generators\RouteMapGeneration\RouteParameters\GuidRouteParameterType.cs" />

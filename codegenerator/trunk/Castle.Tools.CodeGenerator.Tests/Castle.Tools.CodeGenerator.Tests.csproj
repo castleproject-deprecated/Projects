@@ -50,6 +50,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\Castle.MonoRail.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.MonoRail.Rest, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Castle.MonoRail.Rest.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.NRefactory, Version=3.0.0.2520, Culture=neutral, PublicKeyToken=efe927acf176eea2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\ICSharpCode.NRefactory.dll</HintPath>
@@ -126,6 +130,10 @@
     <ProjectReference Include="..\Castle.Tools.CodeGenerator.External\Castle.Tools.CodeGenerator.External.csproj">
       <Project>{6B33B990-8184-43F7-96B0-EF7496C34A1E}</Project>
       <Name>Castle.Tools.CodeGenerator.External</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Castle.Tools.CodeGenerator.RestfulRouting\Castle.Tools.CodeGenerator.RestfulRouting.csproj">
+      <Project>{5A8C007F-2C89-4A9A-BABA-4BDE3B077093}</Project>
+      <Name>Castle.Tools.CodeGenerator.RestfulRouting</Name>
     </ProjectReference>
     <ProjectReference Include="..\Castle.Tools.CodeGenerator.Testing\Castle.Tools.CodeGenerator.Testing.csproj">
       <Project>{9B75CDA5-F949-46EF-9E89-4ACB920D6344}</Project>

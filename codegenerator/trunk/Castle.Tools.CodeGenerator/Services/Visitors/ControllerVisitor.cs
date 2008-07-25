@@ -16,6 +16,7 @@ namespace Castle.Tools.CodeGenerator.Services.Visitors
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Linq;
 	using System.Reflection;
 	using MonoRail.Framework;
 	using Model.TreeNodes;
@@ -23,6 +24,10 @@ namespace Castle.Tools.CodeGenerator.Services.Visitors
 	
 	public class ControllerVisitor : TypeResolvingVisitor
 	{
+		private static readonly string[] RestActions = new[] { "Index", "Create", "Show", "Update", "Destroy" };
+		private static readonly string[] RestVerbs = new[] { "GET", "POST", "GET", "PUT", "DELETE" };
+		private static readonly string[] CollectionRestActions = new[] { "Index", "Create" };
+
 		private readonly ILogger logger;
 		private readonly ITreeCreationService treeService;
 
@@ -93,6 +98,26 @@ namespace Castle.Tools.CodeGenerator.Services.Visitors
 				}
 			}
 
+			if ((controllerNode.RestRoutesDescriptor != null) && (RestActions.Contains(methodDeclaration.Name)))
+			{
+				var name = controllerNode.RestRoutesDescriptor.Name + "_" + methodDeclaration.Name;
+				
+				if (!action.Children.Any(c => c.Name == name))
+				{
+					var pattern = CollectionRestActions.Contains(methodDeclaration.Name)
+						? controllerNode.RestRoutesDescriptor.Collection
+						: controllerNode.RestRoutesDescriptor.Collection + controllerNode.RestRoutesDescriptor.Identifier;
+
+					var node = new RestRouteTreeNode(
+						name, 
+						pattern, 
+						RestVerbs[Array.IndexOf(RestActions, methodDeclaration.Name)], 
+						controllerNode.RestRoutesDescriptor.RestVerbResolverType);
+
+					action.AddChild(node);
+				}
+			}
+
 			controllerNode.AddChild(action, true);
 
 			return base.VisitMethodDeclaration(methodDeclaration, data);
@@ -125,6 +150,8 @@ namespace Castle.Tools.CodeGenerator.Services.Visitors
               	? new WizardControllerTreeNode(typeDeclaration.Name, typeNamespace, new string[0])
               	: new ControllerTreeNode(typeDeclaration.Name, typeNamespace);
 
+			node.RestRoutesDescriptor = GetRestRoutesDescriptor(typeDeclaration);
+			
 			treeService.PushNode(node);
 
 			var r = base.VisitTypeDeclaration(typeDeclaration, data);
@@ -140,6 +167,27 @@ namespace Castle.Tools.CodeGenerator.Services.Visitors
 			treeService.PopNode();
 
 			return r;
+		}
+
+		private RestRoutesDescriptor GetRestRoutesDescriptor(TypeDeclaration typeDeclaration)
+		{
+			foreach (var attributeSection in typeDeclaration.Attributes)
+				foreach (var attribute in attributeSection.Attributes.Where(a => a.Name == "RestRoutes"))
+				{
+					var restRoutesDescriptor = new RestRoutesDescriptor
+					{
+						Name = ResolvePrimitiveValue(attribute.PositionalArguments[0]), 
+						Collection = ResolvePrimitiveValue(attribute.PositionalArguments[1]), 
+						Identifier = ResolvePrimitiveValue(attribute.PositionalArguments[2])
+					};
+
+					if (attribute.PositionalArguments.Count > 3)
+						restRoutesDescriptor.RestVerbResolverType = ResolveTypeOfValue(attribute.PositionalArguments[3]);
+
+					return restRoutesDescriptor;
+				}
+
+			return null;
 		}
 
 		protected virtual string GetArea(TypeDeclaration typeDeclaration)
@@ -213,6 +261,11 @@ namespace Castle.Tools.CodeGenerator.Services.Visitors
 		protected virtual string ResolvePrimitiveValue(Expression expression)
 		{
 			return expression is PrimitiveExpression ? ((PrimitiveExpression) expression).Value.ToString() : null;
+		}
+
+		protected virtual string ResolveTypeOfValue(Expression expression)
+		{			
+			return expression is TypeOfExpression ? TypeResolver.Resolve(((TypeOfExpression) expression).TypeReference) : null;
 		}
 	}
 }

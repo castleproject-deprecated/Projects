@@ -24,7 +24,7 @@ namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration
 	using Model.TreeNodes;
 	using RouteParameters;
 
-	public class PatternRouteCreator : RouteCreator<PatternRouteTreeNode>
+	public class PatternRouteCreator<T> : RouteCreator<T> where T : PatternRouteTreeNode
 	{
 		public const string routeParametersFieldName = "routeParameters";
 
@@ -33,7 +33,7 @@ namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration
 		private readonly RouteParameterDefaults routeParameterDefaults;
 
 		public PatternRouteCreator(string @namespace, ISourceGenerator sourceGenerator, INamingService namingService,
-		                           PatternRouteTreeNode node, CodeTypeDeclaration routeDefinitions, CodeTypeDeclaration routes)
+		                           T node, CodeTypeDeclaration routeDefinitions, CodeTypeDeclaration routes)
 			: base(@namespace, sourceGenerator, namingService, node, routeDefinitions, routes)
 		{
 			requiredRouteParameters = new RequiredRouteParameters().GetFrom(node.Pattern);

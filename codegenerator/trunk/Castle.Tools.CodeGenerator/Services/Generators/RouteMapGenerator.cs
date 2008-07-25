@@ -56,7 +56,18 @@ namespace Castle.Tools.CodeGenerator.Services.Generators
 
 		public override void Visit(PatternRouteTreeNode node)
 		{
-			var routeCreator = new PatternRouteCreator(@namespace, source, naming, node, RouteDefinitionsType, RoutesType);
+			if (!(node is RestRouteTreeNode))
+			{
+				var routeCreator = new PatternRouteCreator<PatternRouteTreeNode>(@namespace, source, naming, node, RouteDefinitionsType, RoutesType);
+				routeCreator.Create();	
+			}
+
+			base.Visit(node);
+		}
+
+		public override void Visit(RestRouteTreeNode node)
+		{
+			var routeCreator = new RestRouteCreator(@namespace, source, naming, node, RouteDefinitionsType, RoutesType);
 			routeCreator.Create();
 
 			base.Visit(node);

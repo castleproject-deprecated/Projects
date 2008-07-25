@@ -14,34 +14,11 @@
 
 namespace Castle.Tools.CodeGenerator.Model.TreeNodes
 {
-	using System;
-
-	public class ControllerTreeNode : TreeNode
+	public class RestRoutesDescriptor
 	{
-		public ControllerTreeNode(string name, string controllerNamespace) : base(name)
-		{
-			Namespace = controllerNamespace;
-		}
-
-		public string Area
-		{
-			get { return CalculatePath(n => n.Name == RootName); }
-		}
-
-		public string FullName
-		{
-			get { return Namespace + "." + Name; }
-		}
-
-		public string Namespace { get; private set; }
-		public RestRoutesDescriptor RestRoutesDescriptor { get; set;}
-
-		public override string ToString()
-		{
-			var area = Area;
-			return !String.IsNullOrEmpty(area)
-				? String.Format("Controller<{0}/{1}>", area, Name) 
-				: String.Format("Controller<{0}>", Name);
-		}
+		public string Name { get; set; }
+		public string Collection { get; set; }
+		public string Identifier { get; set; }
+		public string RestVerbResolverType { get; set; }
 	}
 }

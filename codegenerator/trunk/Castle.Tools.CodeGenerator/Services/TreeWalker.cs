@@ -59,6 +59,11 @@ namespace Castle.Tools.CodeGenerator.Services
 			Accept(node.Children);
 		}
 
+		public virtual void Visit(RestRouteTreeNode node)
+		{
+			Accept(node.Children);
+		}
+
 		public virtual void Visit(ViewComponentTreeNode node)
 		{
 			Accept(node.Children);

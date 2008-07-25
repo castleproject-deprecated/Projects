@@ -16,32 +16,30 @@ namespace Castle.Tools.CodeGenerator.Model.TreeNodes
 {
 	using System;
 
-	public class ControllerTreeNode : TreeNode
+	public class RestRouteTreeNode : PatternRouteTreeNode
 	{
-		public ControllerTreeNode(string name, string controllerNamespace) : base(name)
+		private readonly string requiredVerb;
+		private readonly string restVerbResolver;
+
+		public RestRouteTreeNode(string name, string pattern, string requiredVerb, string restVerbResolver) : base(name, pattern, new string[0])
 		{
-			Namespace = controllerNamespace;
+			this.requiredVerb = requiredVerb;
+			this.restVerbResolver = restVerbResolver;
 		}
 
-		public string Area
+		public string RequiredVerb
 		{
-			get { return CalculatePath(n => n.Name == RootName); }
+			get { return requiredVerb; }
 		}
 
-		public string FullName
+		public string RestVerbResolver
 		{
-			get { return Namespace + "." + Name; }
+			get { return restVerbResolver; }
 		}
-
-		public string Namespace { get; private set; }
-		public RestRoutesDescriptor RestRoutesDescriptor { get; set;}
 
 		public override string ToString()
 		{
-			var area = Area;
-			return !String.IsNullOrEmpty(area)
-				? String.Format("Controller<{0}/{1}>", area, Name) 
-				: String.Format("Controller<{0}>", Name);
+			return String.Format("RestRouteRoute<{0}, {1}, {2}, {3}>", Name, Pattern, RequiredVerb, RestVerbResolver);
 		}
 	}
 }

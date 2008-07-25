@@ -21,6 +21,8 @@ namespace Castle.Tools.CodeGenerator.Services
 	using NUnit.Framework;
 	using Rhino.Mocks;
 	using Attribute = ICSharpCode.NRefactory.Ast.Attribute;
+	using MonoRail.Framework;
+	using MonoRail.Rest;
 
 	[TestFixture]
 	public class ControllerVisitorTests
@@ -75,7 +77,7 @@ namespace Castle.Tools.CodeGenerator.Services
 		{
 			
 			var type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>()) { Name = ControllerName };
-			type.Attributes.Add(CreateAreaAttributeCode("ControllerDetails", "Area", new PrimitiveExpression(ControllerArea, ControllerArea)));
+			type.Attributes.Add(CreateControllerAttributeCode("ControllerDetails", "Area", new PrimitiveExpression(ControllerArea, ControllerArea)));
 
 			treeService.Expect(s => s.FindNode(ControllerArea)).Return(null);
 
@@ -90,7 +92,7 @@ namespace Castle.Tools.CodeGenerator.Services
 		public void VisitTypeDeclaration_AControllerNoChildrenTrickyAreaValue_IgnoresAreaAttribute()
 		{
 			var type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>()) { Name = ControllerName };
-			type.Attributes.Add(CreateAreaAttributeCode("ControllerDetails", "Area", new AddressOfExpression(new PrimitiveExpression("ThisNeverHappens", "Ok?"))));
+			type.Attributes.Add(CreateControllerAttributeCode("ControllerDetails", "Area", new AddressOfExpression(new PrimitiveExpression("ThisNeverHappens", "Ok?"))));
 
 			visitor.VisitTypeDeclaration(type, null);
 
@@ -102,11 +104,46 @@ namespace Castle.Tools.CodeGenerator.Services
 		public void VisitTypeDeclaration_AControllerTrickyAttribute_IgnoresAttribute()
 		{
 			var type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>()) { Name = ControllerName };
-			type.Attributes.Add(CreateAreaAttributeCode("NotControllerDetails", "NotArea", new PrimitiveExpression("NotAnArea", "NotAnArea")));
+			type.Attributes.Add(CreateControllerAttributeCode("NotControllerDetails", "NotArea", new PrimitiveExpression("NotAnArea", "NotAnArea")));
 
 			visitor.VisitTypeDeclaration(type, null);
 
 			treeService.AssertWasCalled(s => s.PushNode(Arg<ControllerTreeNode>.Matches(n => n.Name == ControllerName)));
+			treeService.AssertWasCalled(s => s.PopNode());
+		}
+
+		[Test]
+		public void VisitTypeDeclaration_AControllerWithRestRoutesAttribute_ExtractsRestRoutesData()
+		{
+			var routeName = "restController";
+			var routeCollection = "/part1/<key>/part2";
+			var routeIdentifier = "<id>";
+			var routeRestVerbResolverType = typeof(CustomRestVerbResolver).FullName;
+
+			var type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>()) { Name = ControllerName };
+			var attribute = new Attribute("RestRoutes", new List<Expression>(), new List<NamedArgumentExpression>());
+			attribute.PositionalArguments.AddRange(new Expression[]
+			{
+				new PrimitiveExpression("restController", "restController"),
+				new PrimitiveExpression("/part1/<key>/part2", "/part1/<key>/part2"),
+				new PrimitiveExpression("<id>", "<id>"),
+				new TypeOfExpression(new TypeReference(routeRestVerbResolverType))
+			});
+
+			type.Attributes.Add(new AttributeSection(ControllerName, new List<Attribute> { attribute }));
+
+			typeResolver.Expect(r => r.Resolve(Arg<TypeReference>.Matches(t => t.Type == routeRestVerbResolverType))).Return(
+				routeRestVerbResolverType);
+
+			visitor.VisitTypeDeclaration(type, null);
+
+			treeService.AssertWasCalled(
+				s => s.PushNode(Arg<ControllerTreeNode>.Matches(
+					n => n.Name == ControllerName && 
+						 n.RestRoutesDescriptor.Name == routeName &&
+						 n.RestRoutesDescriptor.Collection == routeCollection &&
+						 n.RestRoutesDescriptor.Identifier == routeIdentifier &&
+						 n.RestRoutesDescriptor.RestVerbResolverType == routeRestVerbResolverType)));
 			treeService.AssertWasCalled(s => s.PopNode());
 		}
 
@@ -162,8 +199,7 @@ namespace Castle.Tools.CodeGenerator.Services
 			Assert.AreEqual("parameter", node.Children[0].Children[0].Name);
 		}
 
-		private static AttributeSection CreateAreaAttributeCode(string attributeName, string argumentName,
-		                                                        Expression valueExpression)
+		private static AttributeSection CreateControllerAttributeCode(string attributeName, string argumentName, Expression valueExpression)
 		{
 			var argument = new NamedArgumentExpression(argumentName, valueExpression);
 			
@@ -174,6 +210,14 @@ namespace Castle.Tools.CodeGenerator.Services
 			attributeSection.Attributes.Add(attribute);
 			
 			return attributeSection;
+		}
+
+		private class CustomRestVerbResolver : IRestVerbResolver
+		{
+			public string Resolve(IRequest request)
+			{
+				return "GET";
+			}
 		}
 	}
 }
