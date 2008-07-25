@@ -20,13 +20,15 @@ namespace Castle.Tools.CodeGenerator.Services
 	using ICSharpCode.NRefactory.Ast;
 	using NUnit.Framework;
 	using Rhino.Mocks;
-	using Rhino.Mocks.Constraints;
 	using Attribute = ICSharpCode.NRefactory.Ast.Attribute;
 
 	[TestFixture]
 	public class ControllerVisitorTests
 	{
-		private MockRepository mocks;
+		private const string ControllerArea = "AnArea";
+		private const string ControllerName = "SomeRandomController";
+		private const string ControllerNamespace = "SomeNamespace";
+
 		private ITreeCreationService treeService;
 		private ILogger logger;
 		private ITypeResolver typeResolver;
@@ -35,10 +37,9 @@ namespace Castle.Tools.CodeGenerator.Services
 		[SetUp]
 		public void Setup()
 		{
-			mocks = new MockRepository();
 			logger = new NullLogger();
-			typeResolver = mocks.DynamicMock<ITypeResolver>();
-			treeService = mocks.DynamicMock<ITreeCreationService>();
+			typeResolver = MockRepository.GenerateMock<ITypeResolver>();
+			treeService = MockRepository.GenerateMock<ITreeCreationService>();
 			visitor = new ControllerVisitor(logger, typeResolver, treeService);
 		}
 
@@ -47,89 +48,66 @@ namespace Castle.Tools.CodeGenerator.Services
 		{
 			var type = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>()) { Name = "SomeRandomType" };
 
-			mocks.ReplayAll();
 			visitor.VisitTypeDeclaration(type, null);
-			mocks.VerifyAll();
 		}
 
 		[Test]
 		public void VisitTypeDeclaration_AControllerNotPartial_DoesNothing()
 		{
-			var type = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>()) { Name = "SomeRandomController" };
+			var type = new TypeDeclaration(Modifiers.Public, new List<AttributeSection>()) { Name = ControllerName };
 
-			mocks.ReplayAll();
 			visitor.VisitTypeDeclaration(type, null);
-			mocks.VerifyAll();
 		}
 
 		[Test]
 		public void VisitTypeDeclaration_AControllerNoChildren_PushesAndPops()
 		{
-			var type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>()) { Name = "SomeRandomController" };
+			var type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>()) { Name = ControllerName };
 
-			using (mocks.Unordered())
-			{
-				treeService.PushNode(new ControllerTreeNode("SomeRandomController", "SomeNamespace"));
-				treeService.PopNode();
-			}
-
-			mocks.ReplayAll();
 			visitor.VisitTypeDeclaration(type, null);
-			mocks.VerifyAll();
+
+			treeService.AssertWasCalled(s => s.PushNode(Arg<ControllerTreeNode>.Matches(n => n.Name == ControllerName)));
+			treeService.AssertWasCalled(s => s.PopNode());
 		}
 
 		[Test]
 		public void VisitTypeDeclaration_AControllerNoChildrenWithArea_PushesAndPops()
 		{
-			var type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>()) { Name = "SomeRandomController" };
-			type.Attributes.Add(CreateAreaAttributeCode("ControllerDetails", "Area", new PrimitiveExpression("AnArea", "AnArea")));
+			
+			var type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>()) { Name = ControllerName };
+			type.Attributes.Add(CreateAreaAttributeCode("ControllerDetails", "Area", new PrimitiveExpression(ControllerArea, ControllerArea)));
 
-			using (mocks.Unordered())
-			{
-				Expect.Call(treeService.FindNode("AnArea")).Return(null);
-				treeService.PushNode(new AreaTreeNode("AnArea"));
-				treeService.PushNode(new ControllerTreeNode("SomeRandomController", "SomeNamespace"));
-				treeService.PopNode();
-				treeService.PopNode();
-			}
+			treeService.Expect(s => s.FindNode(ControllerArea)).Return(null);
 
-			mocks.ReplayAll();
 			visitor.VisitTypeDeclaration(type, null);
-			mocks.VerifyAll();
+
+			treeService.AssertWasCalled(s => s.PushNode(Arg<TreeNode>.Matches(n => n is AreaTreeNode && n.Name == ControllerArea)));
+			treeService.AssertWasCalled(s => s.PushNode(Arg<TreeNode>.Matches(n => n is ControllerTreeNode && n.Name == ControllerName)));
+			treeService.AssertWasCalled(s => s.PopNode(), o => o.Repeat.Twice());
 		}
 
 		[Test]
 		public void VisitTypeDeclaration_AControllerNoChildrenTrickyAreaValue_IgnoresAreaAttribute()
 		{
-			var type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>()) { Name = "SomeRandomController" };
+			var type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>()) { Name = ControllerName };
 			type.Attributes.Add(CreateAreaAttributeCode("ControllerDetails", "Area", new AddressOfExpression(new PrimitiveExpression("ThisNeverHappens", "Ok?"))));
 
-			using (mocks.Unordered())
-			{
-				treeService.PushNode(new ControllerTreeNode("SomeRandomController", "SomeNamespace"));
-				treeService.PopNode();
-			}
-
-			mocks.ReplayAll();
 			visitor.VisitTypeDeclaration(type, null);
-			mocks.VerifyAll();
+
+			treeService.AssertWasCalled(s => s.PushNode(Arg<ControllerTreeNode>.Matches(n => n.Name == ControllerName)));
+			treeService.AssertWasCalled(s => s.PopNode());
 		}
 
 		[Test]
 		public void VisitTypeDeclaration_AControllerTrickyAttribute_IgnoresAttribute()
 		{
-			var type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>()) { Name = "SomeRandomController" };
+			var type = new TypeDeclaration(Modifiers.Public | Modifiers.Partial, new List<AttributeSection>()) { Name = ControllerName };
 			type.Attributes.Add(CreateAreaAttributeCode("NotControllerDetails", "NotArea", new PrimitiveExpression("NotAnArea", "NotAnArea")));
 
-			using (mocks.Unordered())
-			{
-				treeService.PushNode(new ControllerTreeNode("SomeRandomController", "SomeNamespace"));
-				treeService.PopNode();
-			}
-
-			mocks.ReplayAll();
 			visitor.VisitTypeDeclaration(type, null);
-			mocks.VerifyAll();
+
+			treeService.AssertWasCalled(s => s.PushNode(Arg<ControllerTreeNode>.Matches(n => n.Name == ControllerName)));
+			treeService.AssertWasCalled(s => s.PopNode());
 		}
 
 		[Test]
@@ -137,28 +115,19 @@ namespace Castle.Tools.CodeGenerator.Services
 		{
 			var method = new MethodDeclaration("Action", Modifiers.Protected, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
 
-			using (mocks.Unordered())
-			{
-			}
-
-			mocks.ReplayAll();
 			visitor.VisitMethodDeclaration(method, null);
-			mocks.VerifyAll();
 		}
 
 		[Test]
 		public void VisitMethodDeclaration_ActionMemberNoArguments_CreatesEntryInNode()
 		{
 			var method = new MethodDeclaration("Action", Modifiers.Public, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
-			var node = new ControllerTreeNode("SomeController", "SomeNamespace");
+			var node = new ControllerTreeNode(ControllerName, ControllerNamespace);
 
-			using (mocks.Unordered())
-				Expect.Call(treeService.Peek).Return(node);
-			
-			mocks.ReplayAll();
+			treeService.Expect(s => s.Peek).Return(node);
+
 			visitor.VisitMethodDeclaration(method, null);
-			mocks.VerifyAll();
-
+			
 			Assert.AreEqual("Action", node.Children[0].Name);
 			Assert.AreEqual(0, node.Children[0].Children.Count);
 		}
@@ -167,15 +136,12 @@ namespace Castle.Tools.CodeGenerator.Services
 		public void VisitMethodDeclaration_ActionMemberNoArgumentsIsVirtual_CreatesEntryInNode()
 		{
 			var method = new MethodDeclaration("Action", Modifiers.Public | Modifiers.Virtual, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
-			var node = new ControllerTreeNode("SomeController", "SomeNamespace");
+			var node = new ControllerTreeNode(ControllerName, ControllerNamespace);
 
-			using (mocks.Unordered())
-				Expect.Call(treeService.Peek).Return(node);
-			
-			mocks.ReplayAll();
+			treeService.Expect(s => s.Peek).Return(node);
+
 			visitor.VisitMethodDeclaration(method, null);
-			mocks.VerifyAll();
-
+			
 			Assert.AreEqual("Action", node.Children[0].Name);
 			Assert.AreEqual(0, node.Children[0].Children.Count);
 		}
@@ -185,19 +151,12 @@ namespace Castle.Tools.CodeGenerator.Services
 		{
 			var method = new MethodDeclaration("Action", Modifiers.Public, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
 			method.Parameters.Add(new ParameterDeclarationExpression(new TypeReference("bool"), "parameter"));
-			var node = new ControllerTreeNode("SomeController", "SomeNamespace");
+			var node = new ControllerTreeNode(ControllerName, ControllerNamespace);
 
-			using (mocks.Unordered())
-			{
-				Expect.Call(treeService.Peek).Return(node);
-				Expect.Call(typeResolver.Resolve(new TypeReference("bool")))
-					.Constraints(Is.Matching((TypeReference reference) => reference.SystemType == "System.Boolean"))
-					.Return("System.Boolean");
-			}
+			treeService.Expect(s => s.Peek).Return(node);
+			typeResolver.Expect(r => r.Resolve(Arg<TypeReference>.Matches(t => t.SystemType == "System.Boolean"))).Return("System.Boolean");
 
-			mocks.ReplayAll();
 			visitor.VisitMethodDeclaration(method, null);
-			mocks.VerifyAll();
 
 			Assert.AreEqual("Action", node.Children[0].Name);
 			Assert.AreEqual("parameter", node.Children[0].Children[0].Name);
