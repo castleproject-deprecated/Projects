@@ -14,7 +14,6 @@
 
 namespace Castle.Tools.CodeGenerator.Services
 {
-	using System;
 	using Model.TreeNodes;
 	using NUnit.Framework;
 
@@ -38,9 +37,7 @@ namespace Castle.Tools.CodeGenerator.Services
 			var node = new ActionTreeNode("Index");
 			controller.AddChild(node);
 
-			mocks.ReplayAll();
 			generator.Visit(controller);
-			mocks.VerifyAll();
 
 			CodeDomAssert.AssertHasField(source.Ccu.Namespaces[0].Types[0], "_services");
 			CodeDomAssert.AssertHasMethod(source.Ccu.Namespaces[0].Types[0], "Index");
@@ -53,13 +50,7 @@ namespace Castle.Tools.CodeGenerator.Services
 			controller.AddChild(node);
 			node.AddChild(new ParameterTreeNode("id", "System.Int32"));
 
-			using (mocks.Unordered())
-			{
-			}
-
-			mocks.ReplayAll();
 			generator.Visit(controller);
-			mocks.VerifyAll();
 
 			CodeDomAssert.AssertHasField(source.Ccu.Namespaces[0].Types[0], "_services");
 			CodeDomAssert.AssertHasMethod(source.Ccu.Namespaces[0].Types[0], "Index");

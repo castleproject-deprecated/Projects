@@ -16,12 +16,10 @@ namespace Castle.Tools.CodeGenerator.Services
 {
 	using System;
 	using Generators;
-	using Rhino.Mocks;
 	using NUnit.Framework;
 
 	public class ActionMapGeneratorTests
 	{
-		protected MockRepository mocks;
 		protected ILogger logging;
 		protected INamingService naming;
 		protected ISourceGenerator source;
@@ -30,7 +28,6 @@ namespace Castle.Tools.CodeGenerator.Services
 		[SetUp]
 		public virtual void Setup()
 		{
-			mocks = new MockRepository();
 			naming = new DefaultNamingService();
 			source = new DefaultSourceGenerator(); // I found a more integration style of testing was better, I started off
 			// mocking calls to ISourceGenerator, and that was just stupid, we want the classes and types and members.
