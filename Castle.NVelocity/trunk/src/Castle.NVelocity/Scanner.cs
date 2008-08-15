@@ -904,6 +904,15 @@ namespace Castle.NVelocity
 
         private Token ScanTokenNVPreDirective()
         {
+            // If a directive is being started but is followed by another directive this directive is not finished
+            if (Options.EnableIntelliSenseTriggerTokens && (char.IsWhiteSpace(ch) || NextCharAfterSingleLineWhiteSpace() == '#'))
+            {
+                // Exit from this directive
+                state.Pop(); // Pop NVPreDirective
+
+                return GetNextToken();
+            }
+
             Token token = new Token();
 
             token.SetStartPosition(lineNo, linePos);
@@ -979,6 +988,19 @@ namespace Castle.NVelocity
             Token token = new Token();
 
             ConsumeSingleLineWhiteSpace();
+
+            // If a new directive starts in the directive params and the scanner is running in IntelliSense mode,
+            // break out of the directive params
+            if (ch == '#' && Options.EnableIntelliSenseTriggerTokens)
+            {
+                AddError("Incomplete directive.");
+
+                state.Pop(); // Pop NVDirectiveParams
+                state.Pop(); // Pop NVDirective
+
+                // Return the directive hash
+                return GetToken();
+            }
 
             if (ch == ')')
             {

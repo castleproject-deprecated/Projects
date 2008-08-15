@@ -73,9 +73,13 @@ namespace Castle.NVelocity.Tests.ParserTests
             // Assert there are no errors
             if (parser.Errors.Count > 0)
             {
-                Assert.AreEqual(0, parser.Errors.Count, string.Format(
-                    "There are parsing errors.\nFirst Error: \"{0}\" at {1}",
-                    parser.Errors[0].Description, parser.Errors[0].Position));
+                string message = "There are parsing errors.";
+                for (int i = 0; i < parser.Errors.Count; i++)
+                {
+                    message += string.Format("\nError {0}: \"{1}\" at {2}", i, parser.Errors[0].Description, parser.Errors[0].Position);
+                }
+
+                Assert.AreEqual(0, parser.Errors.Count, message);
             }
         }
     }

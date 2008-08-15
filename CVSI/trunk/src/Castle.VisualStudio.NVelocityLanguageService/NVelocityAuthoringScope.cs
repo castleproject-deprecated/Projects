@@ -103,11 +103,11 @@ namespace Castle.VisualStudio.NVelocityLanguageService
                 {
                     if (typeNode == null)
                     {
-                        declarations.Add(new NVelocityDeclaration("_TypeNode_Is_Null", null, IntelliSenseIcon.Error));
+                        declarations.Add(new NVelocityDeclaration("Error: TypeNode is null", null, IntelliSenseIcon.Error));
                     }
                     else
                     {
-                        declarations.Add(new NVelocityDeclaration("_Unsupported_Type_For_NVSelector_" + typeNode.GetType().Name,
+                        declarations.Add(new NVelocityDeclaration("Error: Unsupported type for NVSelector " + typeNode.GetType().Name,
                             null, IntelliSenseIcon.Error));
                     }
                 }
@@ -201,7 +201,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             }
             else
             {
-                declarations.Add(new NVelocityDeclaration("Context_Unknown_Type_Is_" + astNode.GetType().Name,
+                declarations.Add(new NVelocityDeclaration("Error: Context unknown, type is " + astNode.GetType().Name,
                     null, IntelliSenseIcon.Error));
             }
 

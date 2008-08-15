@@ -143,11 +143,33 @@ namespace Castle.NVelocity.Tests.ParserTests
             // Check template
             NVDirective nvDirective = (NVDirective)templateNode.Content[0];
             Assert.AreEqual("component", nvDirective.Name);
-            
+
             // Get node at position
             AstNode astNode = templateNode.GetNodeAt(1, 12);
             Assert.AreEqual(typeof(NVDirective), astNode.GetType());
             AssertPosition(new Position(1, 1, 1, 12), astNode.Position);
+        }
+
+        [Test]
+        public void InsideBodyOfComponentAtEndOfStartedDirective()
+        {
+            ScannerOptions scannerOptions = new ScannerOptions();
+            scannerOptions.EnableIntelliSenseTriggerTokens = true;
+            Parser parser = GetNewParser(scannerOptions,
+                "#foreach($item in $items)\n" +
+                "    #\n" +
+                //    ^
+                "#end");
+            TemplateNode templateNode = parser.ParseTemplate();
+
+            // Check the inner directive
+            NVDirective nvDirective = (NVDirective)((NVForeachDirective)templateNode.Content[0]).Content[1];
+            Assert.AreEqual("", nvDirective.Name);
+
+            // Get the node at the location and check its position
+            AstNode astNode = templateNode.GetNodeAt(2, 6);
+            Assert.IsInstanceOfType(typeof(NVDirective), astNode);
+            AssertPosition(new Position(2, 5, 3, 1), astNode.Position);
         }
 
         [Test]

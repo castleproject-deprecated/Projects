@@ -111,7 +111,7 @@
 		<exec program="tools\WiX\bin\light.exe">
 			<!-- Set the output MSI -->
 			<arg value="-out" />
-			<arg dir="build\setup\CVSI-0.3.0.msi" />
+			<arg dir="build\setup\CVSI-0.3.1.msi" />
 			<!-- Add WiX extension -->
 			<arg value="-ext" />
 			<arg file="tools\WiX\bin\WixUIExtension.dll" />

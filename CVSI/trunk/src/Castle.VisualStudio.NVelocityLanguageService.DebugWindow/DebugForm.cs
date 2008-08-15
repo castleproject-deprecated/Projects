@@ -36,7 +36,9 @@ namespace Castle.VisualStudio.NVelocityLanguageService.DebugWindow
         {
             InitializeComponent();
 
-            _updateUIDelegate = this.UpdateUIInUIThread;
+            Height = Screen.PrimaryScreen.WorkingArea.Height;
+
+            _updateUIDelegate = UpdateUIInUIThread;
         }
 
         public void UpdateUI(int cursorLine, int cursorCol, TemplateNode templateNode)
