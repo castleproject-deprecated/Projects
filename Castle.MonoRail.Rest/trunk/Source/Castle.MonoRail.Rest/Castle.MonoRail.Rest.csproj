@@ -33,11 +33,11 @@
   <ItemGroup>
     <Reference Include="Castle.Components.Binder, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\musicglue\lib\Castle.Components.Binder.dll</HintPath>
+      <HintPath>..\..\lib\Castle.Components.Binder.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\musicglue\lib\Castle.Core.dll</HintPath>
+      <HintPath>..\..\lib\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.MonoRail.Framework, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
