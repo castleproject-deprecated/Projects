@@ -24,9 +24,9 @@ namespace Castle.Tools.CodeGenerator.Services.Visitors
 	
 	public class ControllerVisitor : TypeResolvingVisitor
 	{
-		private static readonly string[] RestActions = new[] { "Index", "Create", "Show", "Update", "Destroy" };
+		private static readonly string[] RestActions = new[] { "index", "create", "show", "update", "destroy" };
 		private static readonly string[] RestVerbs = new[] { "GET", "POST", "GET", "PUT", "DELETE" };
-		private static readonly string[] CollectionRestActions = new[] { "Index", "Create" };
+		private static readonly string[] CollectionRestActions = new[] { "index", "create" };
 
 		private readonly ILogger logger;
 		private readonly ITreeCreationService treeService;
@@ -98,20 +98,20 @@ namespace Castle.Tools.CodeGenerator.Services.Visitors
 				}
 			}
 
-			if ((controllerNode.RestRoutesDescriptor != null) && (RestActions.Contains(methodDeclaration.Name)))
+			if ((controllerNode.RestRoutesDescriptor != null) && (RestActions.Contains(methodDeclaration.Name.ToLower())))
 			{
 				var name = controllerNode.RestRoutesDescriptor.Name + "_" + methodDeclaration.Name;
 				
 				if (!action.Children.Any(c => c.Name == name))
 				{
-					var pattern = CollectionRestActions.Contains(methodDeclaration.Name)
+					var pattern = CollectionRestActions.Contains(methodDeclaration.Name.ToLower())
 						? controllerNode.RestRoutesDescriptor.Collection
 						: controllerNode.RestRoutesDescriptor.Collection + controllerNode.RestRoutesDescriptor.Identifier;
 
 					var node = new RestRouteTreeNode(
 						name, 
 						pattern, 
-						RestVerbs[Array.IndexOf(RestActions, methodDeclaration.Name)], 
+						RestVerbs[Array.IndexOf(RestActions, methodDeclaration.Name.ToLower())], 
 						controllerNode.RestRoutesDescriptor.RestVerbResolverType);
 
 					action.AddChild(node);
@@ -223,8 +223,13 @@ namespace Castle.Tools.CodeGenerator.Services.Visitors
 				{
 					var invocationExpression = (InvocationExpression) expression;
 
-					if (invocationExpression.TypeArguments.Count == 1)
-						types.Add(invocationExpression.TypeArguments[0].Type);
+					if (invocationExpression.TargetObject is MemberReferenceExpression)
+					{
+						var memberReferenceExpression = invocationExpression.TargetObject as MemberReferenceExpression;
+
+						if (memberReferenceExpression.TypeArguments.Count == 1)
+							types.Add(memberReferenceExpression.TypeArguments[0].Type);
+					}
 				}
 			});
 

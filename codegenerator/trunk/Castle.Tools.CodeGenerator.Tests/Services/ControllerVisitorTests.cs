@@ -130,7 +130,9 @@ namespace Castle.Tools.CodeGenerator.Services
 				new TypeOfExpression(new TypeReference(routeRestVerbResolverType))
 			});
 
-			type.Attributes.Add(new AttributeSection(ControllerName, new List<Attribute> { attribute }));
+			var section = new AttributeSection();
+			section.Attributes.Add(attribute);
+			type.Attributes.Add(section);
 
 			typeResolver.Expect(r => r.Resolve(Arg<TypeReference>.Matches(t => t.Type == routeRestVerbResolverType))).Return(
 				routeRestVerbResolverType);
@@ -150,7 +152,7 @@ namespace Castle.Tools.CodeGenerator.Services
 		[Test]
 		public void VisitMethodDeclaration_ProtectedMember_DoesNothing()
 		{
-			var method = new MethodDeclaration("Action", Modifiers.Protected, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
+			var method = new MethodDeclaration {Name = "Action", Modifier = Modifiers.Protected};
 
 			visitor.VisitMethodDeclaration(method, null);
 		}
@@ -158,7 +160,7 @@ namespace Castle.Tools.CodeGenerator.Services
 		[Test]
 		public void VisitMethodDeclaration_ActionMemberNoArguments_CreatesEntryInNode()
 		{
-			var method = new MethodDeclaration("Action", Modifiers.Public, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
+			var method = new MethodDeclaration { Name = "Action", Modifier = Modifiers.Public };
 			var node = new ControllerTreeNode(ControllerName, ControllerNamespace);
 
 			treeService.Expect(s => s.Peek).Return(node);
@@ -172,7 +174,7 @@ namespace Castle.Tools.CodeGenerator.Services
 		[Test]
 		public void VisitMethodDeclaration_ActionMemberNoArgumentsIsVirtual_CreatesEntryInNode()
 		{
-			var method = new MethodDeclaration("Action", Modifiers.Public | Modifiers.Virtual, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
+			var method = new MethodDeclaration { Name = "Action", Modifier = Modifiers.Public | Modifiers.Virtual };
 			var node = new ControllerTreeNode(ControllerName, ControllerNamespace);
 
 			treeService.Expect(s => s.Peek).Return(node);
@@ -186,7 +188,7 @@ namespace Castle.Tools.CodeGenerator.Services
 		[Test]
 		public void VisitMethodDeclaration_ActionMemberStandardArgument_CreatesEntryInNode()
 		{
-			var method = new MethodDeclaration("Action", Modifiers.Public, null, new List<ParameterDeclarationExpression>(), new List<AttributeSection>());
+			var method = new MethodDeclaration { Name = "Action", Modifier = Modifiers.Public };
 			method.Parameters.Add(new ParameterDeclarationExpression(new TypeReference("bool"), "parameter"));
 			var node = new ControllerTreeNode(ControllerName, ControllerNamespace);
 
@@ -206,7 +208,7 @@ namespace Castle.Tools.CodeGenerator.Services
 			var attribute = new Attribute(attributeName, new List<Expression>(), new List<NamedArgumentExpression>());
 			attribute.NamedArguments.Add(argument);
 			
-			var attributeSection = new AttributeSection("IDontKnow", new List<Attribute>());
+			var attributeSection = new AttributeSection();
 			attributeSection.Attributes.Add(attribute);
 			
 			return attributeSection;
