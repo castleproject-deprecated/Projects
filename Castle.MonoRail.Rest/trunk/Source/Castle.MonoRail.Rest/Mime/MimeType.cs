@@ -32,12 +32,8 @@ namespace Castle.MonoRail.Rest.Mime
 
 	public class MimeTypes : System.Collections.Generic.List<MimeType>
 	{
-		
-
 		public MimeTypes(): base(15)
 		{
-		
-			
 		}
 
 		public void RegisterBuiltinTypes()
@@ -87,6 +83,14 @@ namespace Castle.MonoRail.Rest.Mime
 					Synonyms = synList, 
 					ExtensionSynonyms = extentionList }
 				);                           
+		}
+
+		public MimeType GetMimeTypeForExtension(string extension)
+		{
+			return this.Where(m => 
+				string.Compare(m.Symbol, extension, true) == 0 || 
+				m.ExtensionSynonyms.Exists(s => string.Compare(s, extension, true) == 0)
+			).FirstOrDefault();
 		}
 	}
 }

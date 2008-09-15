@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Linq;
+
 namespace Castle.MonoRail.Rest
 {
 	using System;
@@ -77,7 +79,7 @@ namespace Castle.MonoRail.Rest
 			ResponseHandler handler = new ResponseHandler()
 			{
 				ControllerBridge = new ControllerBridge(this, _controllerAction),
-				AcceptedMimes = AcceptType.Parse(AcceptHeader, registeredMimes),
+				AcceptedMimes = GetAcceptedTypes(registeredMimes),
 				Format = new ResponseFormat()
 			};
 
@@ -103,6 +105,26 @@ namespace Castle.MonoRail.Rest
 		protected virtual string HttpMethod
 		{
 			get { return Request.HttpMethod; }
+		}
+
+		private MimeType[] GetAcceptedTypes(MimeTypes registeredMimes)
+		{
+			var mimeTypes = new List<MimeType>();
+			var originalUrl = Request.Uri.GetLeftPart(UriPartial.Authority) + Request.Url;
+			var lastSegment = new Uri(originalUrl).Segments.Last();
+			
+			if (lastSegment.Contains(".") && (lastSegment.LastIndexOf(".") < lastSegment.Length - 1))
+			{
+				var extension = lastSegment.Substring(lastSegment.LastIndexOf(".") + 1);
+				var mimeType = registeredMimes.GetMimeTypeForExtension(extension);
+
+				if (mimeType != null)
+					mimeTypes.Add(mimeType);
+			}
+
+			mimeTypes.AddRange(AcceptType.Parse(AcceptHeader, registeredMimes));			
+			
+			return mimeTypes.Distinct().ToArray();
 		}
 	}
 }
