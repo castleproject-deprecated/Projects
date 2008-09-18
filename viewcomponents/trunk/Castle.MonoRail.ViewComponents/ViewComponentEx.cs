@@ -22,15 +22,31 @@ using System.IO;
 
 namespace Castle.MonoRail.ViewComponents
 {
-	using Castle.MonoRail.Framework;
 	using System.Collections;
+	using Castle.MonoRail.Framework;
 	using Castle.MonoRail.Framework.Helpers;
+using Castle.Core.Logging;
 	/// <summary>
 	/// Helper class to provide a some convenient methods for viewcomponents.
 	/// </summary>
 	/// <remarks>May one day be incorporated into base class.</remarks>
 	public class ViewComponentEx : ViewComponent
 	{
+		private ILogger logger;
+
+		public ILogger Logger
+		{
+			get
+			{
+				if (logger == null) logger = NullLogger.Instance;
+				return logger;
+			}
+
+			set
+			{
+				logger = value;
+			}
+		}
 		/// <summary>
 		/// Renders the text, formatted.
 		/// </summary>
@@ -164,7 +180,7 @@ namespace Castle.MonoRail.ViewComponents
 		/// <summary>
 		/// Renders the component.
 		/// </summary>
-		/// <remarks>For full details, <see cref="RenderComponent{VC}(IDictionary componentParams)" />
+		/// <remarks>For full details, <see cref="RenderComponent(VC)(IDictionary componentParams)" />
 		/// </remarks>
 		/// <example><code><![CDATA[
 		///  RenderComponent<LinkSubmitButtonComponent>(DictHelper.N("linkText","Search").N("formToSubmit", searchFormName);
@@ -176,17 +192,18 @@ namespace Castle.MonoRail.ViewComponents
 			ViewComponentEx component = new VC();
 			RenderComponent(component, DictHelper.Create(componentParams));
 		}
+
 		/// <summary>
 		/// Renders the component.
 		/// </summary>
-		/// <remarks>For full details, <see cref="RenderComponent{VC}(IDictionary componentParams)" />
+		/// <param name="component">The component.</param>
+		/// <param name="componentParams">The component params.</param>
+		/// <remarks>For full details, <see cref="RenderComponent{VC}(IDictionary componentParams)"/>
 		/// </remarks>
 		/// <example><code><![CDATA[
-		///  RenderComponent( new LinkSubmitButtonComponent(), "linkText=Search",
-		///              string.Format("formToSubmit={0}", searchFormName));
+		/// RenderComponent( new LinkSubmitButtonComponent(), "linkText=Search",
+		/// string.Format("formToSubmit={0}", searchFormName));
 		/// ]]></code></example>
-		/// <typeparam name="VC">The type of the C.</typeparam>
-		/// <param name="componentParams">The component params.</param>
 		public void RenderComponent(ViewComponentEx component, params string[] componentParams)
 		{
 			RenderComponent(component, DictHelper.Create(componentParams));
@@ -195,13 +212,13 @@ namespace Castle.MonoRail.ViewComponents
 		/// <summary>
 		/// Renders the component.
 		/// </summary>
-		/// <remarks>For full details, <see cref="RenderComponent{VC}(IDictionary componentParams)" />
+		/// <param name="component">The component.</param>
+		/// <param name="componentParams">The component params.</param>
+		/// <remarks>For full details, <see cref="RenderComponent{VC}(IDictionary componentParams)"/>
 		/// </remarks>
 		/// <example><code><![CDATA[
-		///  RenderComponent( new LinkSubmitButtonComponent(), DictHelper.N("linkText","Search").N("formToSubmit", searchFormName);
+		/// RenderComponent( new LinkSubmitButtonComponent(), DictHelper.N("linkText","Search").N("formToSubmit", searchFormName);
 		/// ]]></code></example>
-		/// <typeparam name="VC">The type of the C.</typeparam>
-		/// <param name="componentParams">The component params.</param>
 		public void RenderComponent(ViewComponentEx component, IDictionary componentParams)
 		{
 			component.Init(EngineContext, Context);

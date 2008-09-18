@@ -119,6 +119,21 @@ $css
 					</ul>
 #end
 #end
+
+#blockcomponent(CollapsiblePanel with "id=ColumnComponent"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#caption
+<h3>Columns component</h3>
+#end
+#body
+					<ul>
+						<li>
+							<a href="/columns/index.rails">Basic Usage</a>
+						</li>
+					</ul>
+#end
+#end
+
+
 #blockcomponent(CollapsiblePanel with "id=Captcha"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
 #caption
 					<h3>Captcha component</h3>

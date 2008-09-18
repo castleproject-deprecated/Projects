@@ -18,7 +18,6 @@ namespace Castle.MonoRail.ViewComponents
 	using System.Collections;
 	using System.Collections.Generic;
 	using System.Reflection;
-	using System.Text.RegularExpressions;
 	using Castle.MonoRail.Framework.Helpers;
 
 	/// <summary>
@@ -60,21 +59,27 @@ namespace Castle.MonoRail.ViewComponents
                 return false;
 
             bool isAlternate = false;
-
+			bool hasStartAlternateRow = Context.HasSection("startAlternateRow");
+			bool hasEndAlternateRow = Context.HasSection("endAlternateRow");
+			string ItemCss = (ComponentParams["ItemCssClass"] as string) ?? "grid_item";
+			string AltItemCss = (ComponentParams["AltItemCssClass"] as string) ?? "grid_alternateItem"; // ItemCss;
+			bool raw = string.Compare(ComponentParams["RawText"] as string, "true", true) == 0;
             string nullText = ComponentParams["nulltext"] as string ?? "null";
-            
 
+			int rowNum = 0;
+            RenderText("<tbody>");
             foreach (object item in source)
             {
                 PropertyBag["item"] = item;
+				PropertyBag["RowNum"] = ++rowNum;
 
-                if (isAlternate)
+				if (hasStartAlternateRow && isAlternate)
                 {
-                    RenderOptionalSection("startAlternateRow", "<tr class='grid_alternateItem'>");
+					RenderOptionalSection("startAlternateRow", "<tr class='" + AltItemCss + "'>");
                 }
                 else
                 {
-                    RenderOptionalSection("startRow", "<tr class='grid_item'>");
+					RenderOptionalSection("startRow", "<tr class='" + ItemCss + "'>");
                 }
 
                 RenderOptionalSection("columnStartRow");
@@ -92,13 +97,16 @@ namespace Castle.MonoRail.ViewComponents
 
 						object val = property.GetValue(item, null) ?? nullText;
 
-						RenderText(System.Web.HttpUtility.HtmlEncode(val.ToString()));
+						if (raw)
+							RenderText(val.ToString());
+						else
+							RenderText(System.Web.HttpUtility.HtmlEncode(val.ToString()));
 						RenderOptionalSection("endCell", "</td>");
 					}
 				}
                 RenderOptionalSection("more");
 
-                if (isAlternate)
+				if (hasEndAlternateRow && isAlternate)
                 {
                     RenderOptionalSection("endAlternateRow", "</tr>");
                 }
@@ -106,10 +114,9 @@ namespace Castle.MonoRail.ViewComponents
                 {
                     RenderOptionalSection("endRow", "</tr>");
                 }
-
                 isAlternate = !isAlternate;
-
             }
+            RenderText("</tbody>");
 
             return true;
         }
@@ -142,7 +149,7 @@ namespace Castle.MonoRail.ViewComponents
 
 			bool? sortDirection = ComponentParams["sortAsc"] as bool?;
 
-			bool sortEnabled = (bool) (ComponentParams["enableSort"] ?? false ) ;
+			bool sortEnabled = (ComponentParams["enableSort"] as string ?? "false" )=="true" ;
 
 
 			_sortFunction = ComponentParams["sortFunction"] as string;
@@ -252,8 +259,13 @@ namespace Castle.MonoRail.ViewComponents
 					return;
 				}
             }
+			IEnumerable columns;
+			object objColumn = ComponentParams["columns"];
+			if (objColumn is string)
+				columns = objColumn.ToString().Split(',', '|');
+			else
+				columns = objColumn as IEnumerable;
 
-            IEnumerable columns = (IEnumerable)ComponentParams["columns"];
             foreach (string columnName in columns)
             {
                 string key = type.FullName + "." + columnName;
