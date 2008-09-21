@@ -22,10 +22,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReturnsWordsAsSeperateTokens()
         {
+            _scanner.Options.SplitTextTokens = true;
             _scanner.SetSource(
                 "First Second Third");
-
-            _scanner.Options.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlText, "First");
             AssertMatchToken(TokenType.XmlText, " ");
@@ -37,10 +36,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReturnsMultipleSpacesAsASingleToken()
         {
+            _scanner.Options.SplitTextTokens = true;
             _scanner.SetSource(
                 "First   Second");
-
-            _scanner.Options.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlText, "First");
             AssertMatchToken(TokenType.XmlText, "   ");
@@ -50,10 +48,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReturnsPunctionationCharsSeperately()
         {
+            _scanner.Options.SplitTextTokens = true;
             _scanner.SetSource(
                 "First! Second ? !@#");
-
-            _scanner.Options.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlText, "First");
             AssertMatchToken(TokenType.XmlText, "!");
@@ -70,10 +67,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReferencesAndDirectivesAreScanned()
         {
+            _scanner.Options.SplitTextTokens = true;
             _scanner.SetSource(
                 "text $var #directive text #$%");
-
-            _scanner.Options.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlText, "text");
             AssertMatchToken(TokenType.XmlText, " ");
@@ -93,10 +89,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReturnsWordsAsSeperateTokensWithinXmlAttributeValue()
         {
+            _scanner.Options.SplitTextTokens = true;
             _scanner.SetSource(
                 "<div class=\"someClass anotherClass\"/>");
-
-            _scanner.Options.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlTagStart);
             AssertMatchToken(TokenType.XmlTagName, "div");
@@ -114,10 +109,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReturnsWordsAsSeperateTokensWithinCDataSection()
         {
+            _scanner.Options.SplitTextTokens = true;
             _scanner.SetSource(
                 "<![CDATA[First Second Third]]>");
-
-            _scanner.Options.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlCDataStart, new Position(1, 1, 1, 10));
             AssertMatchToken(TokenType.XmlCDataSection, "First", new Position(1, 10, 1, 15));
@@ -131,10 +125,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReturnsWordsAsSeperateTokensWithinScriptElement()
         {
+            _scanner.Options.SplitTextTokens = true;
             _scanner.SetSource(
                 "<script>This is JavaScript</script>");
-
-            _scanner.Options.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.XmlTagStart, new Position(1, 1, 1, 2));
             AssertMatchToken(TokenType.XmlTagName, "script", new Position(1, 2, 1, 8));
@@ -155,10 +148,9 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReturnsWordsAsSeperateTokensWithinNVDoubleQuote()
         {
+            _scanner.Options.SplitTextTokens = true;
             _scanner.SetSource(
                 "$a.B(\"First $second Third\")");
-
-            _scanner.Options.SplitTextTokens = true;
 
             AssertMatchToken(TokenType.NVDollar, new Position(1, 1, 1, 2));
             AssertMatchToken(TokenType.NVIdentifier, "a", new Position(1, 2, 1, 3));
@@ -179,6 +171,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
         [Test]
         public void ReturnsWordsAsSeperateTokensWithinNVSingleQuote()
         {
+            _scanner.Options.SplitTextTokens = true;
             _scanner.SetSource(
                 "$a.B('First Second Third')");
 

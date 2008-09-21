@@ -14,6 +14,7 @@
 
 namespace Castle.NVelocity
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
 
@@ -30,8 +31,8 @@ namespace Castle.NVelocity
         /// </returns>
         private delegate bool StopScanningDelegate();
 
-        private static readonly char CR = '\r';
-        private static readonly char LF = '\n';
+        private const char CR = '\r';
+        private const char LF = '\n';
         private readonly Dictionary<string, TokenType> nvKeywords = new Dictionary<string, TokenType>();
 
         private Stack<ScannerState> state = new Stack<ScannerState>();
@@ -42,7 +43,7 @@ namespace Castle.NVelocity
         private char ch;
         private string _source;
         private int pos = 1;
-        private bool eof = false;
+        private bool eof;
         private int lineNo = 1, linePos = 1;
         private ArrayList linestarts;
         private Position currPos = new Position(0, 0);
@@ -67,7 +68,10 @@ namespace Castle.NVelocity
         {
             if (restoredState != null)
             {
-                state = new Stack<ScannerState>(restoredState.ToArray());
+                ScannerState[] statesCopy = restoredState.ToArray();
+                Array.Reverse(statesCopy);
+
+                state = new Stack<ScannerState>(statesCopy);
             }
         }
 
@@ -89,7 +93,10 @@ namespace Castle.NVelocity
                 }
             }
 
-            return new Stack<ScannerState>(state.ToArray());
+            ScannerState[] statesCopy = state.ToArray();
+            Array.Reverse(statesCopy);
+
+            return new Stack<ScannerState>(statesCopy);
         }
 
         /// <summary>
@@ -122,6 +129,18 @@ namespace Castle.NVelocity
 
             ch = source[0];
             linestarts.Add(0);
+
+            // If the scanner is in line scanner mode then pop out of references because the scanner is unable to work
+            // out where an incomplete reference ends when it crosses a new line. References should be allowed over
+            // new lines anyway.
+            if (_options.IsLineScanner)
+            {
+                while (state.Peek() == ScannerState.NVReference ||
+                    state.Peek() == ScannerState.NVReferenceSelectors)
+                {
+                    state.Pop();
+                }
+            }
         }
 
         /// <summary>
@@ -180,7 +199,7 @@ namespace Castle.NVelocity
             {
                 eof = true;
                 ch = default(char);
-                
+
                 // Increment linePos and _pos so Positions are correct
                 if (pos == _source.Length)
                 {
@@ -200,7 +219,9 @@ namespace Castle.NVelocity
                     }
                 }
                 else
+                {
                     linePos++;
+                }
                 ch = _source[pos++];
             }
         }
@@ -212,7 +233,9 @@ namespace Castle.NVelocity
         private void GetCh(int count)
         {
             for (int i = 0; i < count; i++)
+            {
                 GetCh();
+            }
         }
 
         /// <summary>
@@ -418,9 +441,10 @@ namespace Castle.NVelocity
                         token.SetEndPosition(lineNo, linePos);
                         return token;
                     }
-                    else if (LookAhead(2) == '[' && LookAhead(3) == 'C' && LookAhead(4) == 'D' &&
-                             LookAhead(5) == 'A' && LookAhead(6) == 'T' && LookAhead(7) == 'A' &&
-                             LookAhead(8) == '[')
+
+                    if (LookAhead(2) == '[' && LookAhead(3) == 'C' && LookAhead(4) == 'D' &&
+                        LookAhead(5) == 'A' && LookAhead(6) == 'T' && LookAhead(7) == 'A' &&
+                        LookAhead(8) == '[')
                     {
                         // It is an XML CData section
                         GetCh(9);
@@ -685,7 +709,7 @@ namespace Castle.NVelocity
 				}
 				state.Pop(); // Pop XmlTag
 
-				token = GetToken();
+				token = GetNextToken();
 			}
             else
             {
@@ -810,7 +834,7 @@ namespace Castle.NVelocity
 				state.Pop(); // Pop XmlTagAttributes
 				state.Pop(); // Pop XmlTag
 
-				token = GetToken();
+				token = GetNextToken();
 			}
 			else
             {
@@ -975,7 +999,7 @@ namespace Castle.NVelocity
             else
             {
                 state.Pop(); // Pop NVDirective
-                token = GetToken();
+                token = GetNextToken();
             }
 
             token.SetEndPosition(lineNo, linePos);
@@ -999,7 +1023,7 @@ namespace Castle.NVelocity
                 state.Pop(); // Pop NVDirective
 
                 // Return the directive hash
-                return GetToken();
+                return GetNextToken();
             }
 
             if (ch == ')')
@@ -1009,6 +1033,13 @@ namespace Castle.NVelocity
                 GetCh();
                 state.Pop(); // Pop NVDirectiveParams
                 state.Pop(); // Pop NVDirective
+            }
+            else if (ch == '\n')
+            {
+                // Break out of the directive
+                state.Pop(); // Pop NVDirectiveParams
+                state.Pop(); // Pop NVDirective
+                return GetNextToken();
             }
             else
             {
@@ -1082,7 +1113,9 @@ namespace Castle.NVelocity
                 int startPos = pos;
                 GetCh();
                 while (char.IsLetterOrDigit(ch) || ch == '_' || ch == '-')
+                {
                     GetCh();
+                }
                 token.Type = TokenType.NVIdentifier;
                 token.Image = _source.Substring(startPos - 1, pos - startPos);
             }
@@ -1111,7 +1144,7 @@ namespace Castle.NVelocity
                 }
                 else
                 {
-                    token = GetToken();
+                    token = GetNextToken();
                 }
             }
             else
@@ -1120,7 +1153,7 @@ namespace Castle.NVelocity
                 state.Pop(); // Pop NVReference
                 if (state.Peek() == ScannerState.NVReferenceFormal)
                     state.Pop(); // Pop NVReferenceFormal
-                token = GetToken();
+                token = GetNextToken();
             }
 
             token.SetEndPosition(lineNo, linePos);
@@ -1230,7 +1263,15 @@ namespace Castle.NVelocity
             }
             else
             {
+                // If the dictionary is not complete and in IntelliSense mode then get out of it
+                if (_options.EnableIntelliSenseTriggerTokens)
+                {
+                    state.Pop(); // Pop NVDictionary
+                }
+
                 AddError("Expected opening dictionary declaration");
+
+                return GetNextToken();
             }
 
             token.SetEndPosition(lineNo, linePos);
@@ -1240,10 +1281,17 @@ namespace Castle.NVelocity
 
         private Token ScanTokenNVDictionaryInner()
         {
-            Token token = new Token();
-
             ConsumeSingleLineWhiteSpace();
 
+            // If the user has typed an incomplete dictionary then pop out of it so we can attempt to continue
+            if (ch == '\n' && Options.EnableIntelliSenseTriggerTokens)
+            {
+                state.Pop(); // Pop NVDictionaryInner
+                state.Pop(); // Pop NVDictionary
+                return GetNextToken();
+            }
+
+            Token token = new Token();
             token.SetStartPosition(lineNo, linePos);
 
             if (ch == '}')
@@ -1257,7 +1305,9 @@ namespace Castle.NVelocity
                 int startPos = pos;
                 GetCh();
                 while (char.IsLetter(ch))
+                {
                     GetCh();
+                }
                 token.Type = TokenType.NVDictionaryKey;
                 token.Image = _source.Substring(startPos - 1, pos - startPos);
             }
@@ -1286,6 +1336,21 @@ namespace Castle.NVelocity
             Token token = new Token();
 
             ConsumeSingleLineWhiteSpace();
+
+            // If the user has typed an incomplete directive then pop out of it so we can attempt to continue
+            if (ch == '\n' && Options.EnableIntelliSenseTriggerTokens)
+            {
+                AddError("Incomplete reference.");
+
+                state.Pop(); // Pop NVParens
+                if (state.Peek() == ScannerState.NVReferenceSelectors)
+                {
+                    state.Pop(); // Pop NVReferenceSelectors
+                    state.Pop(); // Pop NVReference
+                }
+
+                return GetNextToken();
+            }
 
             token.SetStartPosition(lineNo, linePos);
 
@@ -1339,7 +1404,7 @@ namespace Castle.NVelocity
 
         private void ConsumeWhiteSpace()
         {
-            while (char.IsWhiteSpace(ch) || ch == CR || ch == LF)
+            while (char.IsWhiteSpace(ch))
             {
                 GetCh();
             }
@@ -1347,7 +1412,7 @@ namespace Castle.NVelocity
 
         private void ConsumeSingleLineWhiteSpace()
         {
-            while (char.IsWhiteSpace(ch))
+            while (ch == ' ' || ch == '\t')
             {
                 GetCh();
             }
@@ -1450,7 +1515,7 @@ namespace Castle.NVelocity
 
         private bool NVDirectiveFollows()
         {
-            if (_options.EnableIntelliSenseTriggerTokens)
+            if (Options.EnableIntelliSenseTriggerTokens)
                 return true;
 
             char lookAhead = LookAhead(1);

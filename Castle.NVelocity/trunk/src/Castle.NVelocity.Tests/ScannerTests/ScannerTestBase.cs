@@ -18,7 +18,13 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
     public abstract class ScannerTestBase
     {
-        protected Scanner _scanner = new Scanner(new ErrorHandler());
+        protected Scanner _scanner;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _scanner = new Scanner(new ErrorHandler());
+        }
 
         protected void AssertMatchToken(TokenType tokenType)
         {

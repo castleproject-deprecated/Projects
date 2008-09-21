@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2009 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,14 +17,13 @@ namespace Castle.NVelocity.Demo
     using System;
     using System.IO;
     using System.Windows.Forms;
-    using Castle.NVelocity;
+    using NVelocity;
 
     class Program
     {
         public static void Main(string[] args)
         {
             Scanner scanner = new Scanner(new ErrorHandler());
-            string source;
             string fileName;
 
             if (args.Length == 1 && args[0] == "/parser-gui")
@@ -50,8 +49,14 @@ namespace Castle.NVelocity.Demo
                 fileName = Console.ReadLine();
             }
 
+            if (string.IsNullOrEmpty(fileName))
+            {
+                Console.WriteLine("Filename is null, exiting...");
+                return;
+            }
+
             Console.WriteLine("Loading: {0}", fileName);
-            source = File.ReadAllText(fileName);
+            string source = File.ReadAllText(fileName);
 
             Console.WriteLine();
             scanner.SetSource(source);

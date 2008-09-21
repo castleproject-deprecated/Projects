@@ -221,7 +221,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.NVDot);
             AssertMatchToken(TokenType.NVIdentifier, "Method");
             AssertMatchToken(TokenType.NVLParen);
-            
+
             AssertMatchToken(TokenType.NVDoubleQuote);
             AssertMatchToken(TokenType.NVDictionaryPercent);
             AssertMatchToken(TokenType.NVDictionaryLCurly);
@@ -260,6 +260,81 @@ namespace Castle.NVelocity.Tests.ScannerTests
             AssertMatchToken(TokenType.XmlText, "text");
 
             AssertEOF();
+        }
+
+        [Test]
+        public void IncompleteMethodCallIsClosedInIntelliSenseMode()
+        {
+            _scanner.Options.IsLineScanner = true;
+            _scanner.Options.EnableIntelliSenseTriggerTokens = true;
+
+            _scanner.SetSource(
+                "$var.Method(\n" +
+                "text");
+
+            AssertMatchToken(TokenType.NVDollar);
+            AssertMatchToken(TokenType.NVIdentifier, "var");
+            AssertMatchToken(TokenType.NVDot);
+            AssertMatchToken(TokenType.NVIdentifier, "Method");
+            AssertMatchToken(TokenType.NVLParen);
+            AssertMatchToken(TokenType.XmlText, "\ntext");
+
+            Assert.AreEqual(ScannerState.Default, _scanner.RetrieveState().Peek());
+        }
+
+        [Test]
+        public void IncompleteDictionaryIsClosedInIntelliSenseMode()
+        {
+            _scanner.Options.IsLineScanner = true;
+            _scanner.Options.EnableIntelliSenseTriggerTokens = true;
+
+            _scanner.SetSource(
+                "$Form.TextField(\"customer.LastName\", \"%\n" +
+                "<a />");
+
+            AssertMatchToken(TokenType.NVDollar);
+            AssertMatchToken(TokenType.NVIdentifier, "Form");
+            AssertMatchToken(TokenType.NVDot);
+            AssertMatchToken(TokenType.NVIdentifier, "TextField");
+            AssertMatchToken(TokenType.NVLParen);
+            AssertMatchToken(TokenType.NVDoubleQuote);
+            AssertMatchToken(TokenType.NVStringLiteral, "customer.LastName");
+            AssertMatchToken(TokenType.NVDoubleQuote);
+            AssertMatchToken(TokenType.NVComma);
+            AssertMatchToken(TokenType.NVDoubleQuote);
+            AssertMatchToken(TokenType.NVDictionaryPercent);
+
+            AssertMatchToken(TokenType.XmlText, "\n");
+            AssertMatchToken(TokenType.XmlTagStart);
+            AssertMatchToken(TokenType.XmlTagName, "a");
+            AssertMatchToken(TokenType.XmlAttributeMemberSelect, " ");
+            AssertMatchToken(TokenType.XmlForwardSlash);
+            AssertMatchToken(TokenType.XmlTagEnd);
+
+            Assert.AreEqual(ScannerState.Default, _scanner.RetrieveState().Peek());
+        }
+
+        [Test]
+        public void IncompleteDictionaryWithBraceIsClosedInIntelliSenseMode()
+        {
+            _scanner.Options.IsLineScanner = true;
+            _scanner.Options.EnableIntelliSenseTriggerTokens = true;
+
+            _scanner.SetSource(
+                "$var.Method(\"%{\n" +
+                "text");
+
+            AssertMatchToken(TokenType.NVDollar);
+            AssertMatchToken(TokenType.NVIdentifier, "var");
+            AssertMatchToken(TokenType.NVDot);
+            AssertMatchToken(TokenType.NVIdentifier, "Method");
+            AssertMatchToken(TokenType.NVLParen);
+            AssertMatchToken(TokenType.NVDoubleQuote);
+            AssertMatchToken(TokenType.NVDictionaryPercent);
+            AssertMatchToken(TokenType.NVDictionaryLCurly);
+            AssertMatchToken(TokenType.XmlText, "\ntext");
+
+            Assert.AreEqual(ScannerState.Default, _scanner.RetrieveState().Peek());
         }
     }
 }

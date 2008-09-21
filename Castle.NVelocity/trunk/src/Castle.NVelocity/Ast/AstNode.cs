@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -73,7 +73,7 @@ namespace Castle.NVelocity.Ast
             return this;
         }
 
-        protected void AddSemanticError(ErrorHandler errs, string message, Position pos, ErrorSeverity severity)
+        protected static void AddSemanticError(ErrorHandler errs, string message, Position pos, ErrorSeverity severity)
         {
             if (pos != null)
             {

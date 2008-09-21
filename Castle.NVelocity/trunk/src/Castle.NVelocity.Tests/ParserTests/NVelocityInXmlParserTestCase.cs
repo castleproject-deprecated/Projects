@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 
 namespace Castle.NVelocity.Tests.ParserTests
 {
-    using Castle.NVelocity.Ast;
+    using Ast;
     using NUnit.Framework;
 
     [TestFixture]

@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -54,17 +54,24 @@ namespace Castle.NVelocity.Ast
         {
             currentType = ResolveNamedTypeNodes(errs, currentScope, currentType);
 
-            //if (!(currentType is NVClassNode))
-            //{
-            //    AddSemanticError(errs, string.Format(
-            //        "Cannot apply identifier selector to type '{0}', the type must be a class type",
-            //        currentType.Name), _pos, ErrorSeverity.Warning);
-            //    return currentType;
-            //}
-
             // Check to see if the current node is an empty placeholder selector
             if (_id.Name == "")
             {
+                return currentType;
+            }
+
+            if (currentType == null)
+            {
+                //TODO: Uncomment this when support for objects passed through the property bag is much better
+                //AddSemanticError(errs, "Type of identifier unknown", _pos, ErrorSeverity.Warning);
+                return null;
+            }
+
+            if (!(currentType is NVClassNode))
+            {
+                AddSemanticError(errs, string.Format(
+                    "Cannot apply identifier selector to type '{0}', the type must be a class type",
+                    currentType.Name), _pos, ErrorSeverity.Warning);
                 return currentType;
             }
 
@@ -89,11 +96,8 @@ namespace Castle.NVelocity.Ast
                 {
                     return (NVTypeNode)newType;
                 }
-                else
-                {
-                    AddSemanticError(errs, string.Format(
-                        "The type name '{0}' could not be found", type.Name), _pos, ErrorSeverity.Warning);
-                }
+                AddSemanticError(errs, string.Format("The type name '{0}' could not be found", type.Name), _pos,
+                    ErrorSeverity.Warning);
             }
 
             return type;
@@ -111,13 +115,9 @@ namespace Castle.NVelocity.Ast
                         {
                             return null;
                         }
-
                         return _nvReference.Designator.IdentNode.Type;
                     }
-                    else
-                    {
-                        return _nvReference.Designator.Selectors[i - 1].Type;
-                    }
+                    return _nvReference.Designator.Selectors[i - 1].Type;
                 }
             }
 

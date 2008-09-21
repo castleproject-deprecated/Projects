@@ -128,6 +128,33 @@ namespace Castle.NVelocity.Tests.ScannerTests
         }
 
         [Test]
+        public void XmlDeclarationInLineScanner()
+        {
+            _scanner.Options.EnableIntelliSenseTriggerTokens = true;
+            _scanner.Options.IsLineScanner = true;
+            _scanner.Options.SplitTextTokens = true;
+            _scanner.SetSource(
+                "<?xml version=\"1.0\" ?>");
+
+            AssertMatchToken(TokenType.XmlTagStart);
+            AssertMatchToken(TokenType.XmlQuestionMark);
+            AssertMatchToken(TokenType.XmlTagName, "xml");
+            AssertMatchToken(TokenType.XmlAttributeMemberSelect, " ");
+            AssertMatchToken(TokenType.XmlAttributeName, "version");
+            AssertMatchToken(TokenType.XmlEquals);
+            AssertMatchToken(TokenType.XmlDoubleQuote);
+            AssertMatchToken(TokenType.XmlAttributeText, "1");
+            AssertMatchToken(TokenType.XmlAttributeText, ".");
+            AssertMatchToken(TokenType.XmlAttributeText, "0");
+            AssertMatchToken(TokenType.XmlDoubleQuote);
+            AssertMatchToken(TokenType.XmlAttributeMemberSelect, " ");
+            AssertMatchToken(TokenType.XmlQuestionMark);
+            AssertMatchToken(TokenType.XmlTagEnd);
+
+            AssertEOF();
+        }
+
+        [Test]
         public void DocTypeDeclaration()
         {
             _scanner.SetSource(

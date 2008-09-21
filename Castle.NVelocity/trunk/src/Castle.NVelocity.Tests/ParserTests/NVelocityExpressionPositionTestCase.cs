@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 
 namespace Castle.NVelocity.Tests.ParserTests
 {
-    using Castle.NVelocity.Ast;
+    using Ast;
     using NUnit.Framework;
 
     [TestFixture]
@@ -23,8 +23,9 @@ namespace Castle.NVelocity.Tests.ParserTests
         [Test]
         public void PositionOfRelExpresion()
         {
+            Parser parser;
             NVBinaryExpression expr = (NVBinaryExpression)GetExpressionFromTemplate(
-                "1 == 2");
+                "1 == 2", out parser);
 
             // Check BinaryExpression
             AssertPositionForExpression(new Position(1, 1, 1, 7), expr.Position);
@@ -32,6 +33,8 @@ namespace Castle.NVelocity.Tests.ParserTests
             // Check NumExpressions
             AssertPositionForExpression(new Position(1, 1, 1, 2), expr.Lhs.Position);
             AssertPositionForExpression(new Position(1, 6, 1, 7), expr.Rhs.Position);
+
+            AssertNoErrors(parser);
         }
     }
 }

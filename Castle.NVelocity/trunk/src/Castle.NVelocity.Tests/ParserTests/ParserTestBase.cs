@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,12 +19,12 @@ namespace Castle.NVelocity.Tests.ParserTests
 
     public abstract class ParserTestBase
     {
-        protected Parser GetNewParser(string template)
+        protected static Parser GetNewParser(string template)
         {
             return GetNewParser(new ScannerOptions(), template);
         }
 
-        protected Parser GetNewParser(ScannerOptions scannerOptions, string template)
+        protected static Parser GetNewParser(ScannerOptions scannerOptions, string template)
         {
             Scanner scanner = new Scanner(new ErrorHandler());
             scanner.Options = scannerOptions;
@@ -33,24 +33,24 @@ namespace Castle.NVelocity.Tests.ParserTests
             return new Parser(scanner, new ErrorHandler());
         }
 
-        protected void AssertPosition(Position expected, Position actual)
+        protected static void AssertPosition(Position expected, Position actual)
         {
             Assert.IsNotNull(actual, "Position is null.");
             Assert.IsTrue(actual.Equals(expected),
                 string.Format("Expected position: [{0}] was [{1}].", expected, actual));
         }
 
-        protected void AssertError(string expectedDescription, Position expectedPosition, Error actual)
+        protected static void AssertError(string expectedDescription, Position expectedPosition, Error actual)
         {
             Assert.AreEqual(expectedDescription, actual.Description);
             AssertPosition(expectedPosition, actual.Position);
         }
 
-        protected NVExpression GetExpressionFromTemplate(string template)
+        protected static NVExpression GetExpressionFromTemplate(string template, out Parser parser)
         {
             // Create Parser
-            Parser parser = GetNewParser(string.Format("$var.Method({0})", template));
-            
+            parser = GetNewParser(string.Format("$var.Method({0})", template));
+
             // Parse Expression
             TemplateNode templateNode = parser.ParseTemplate();
 
@@ -60,7 +60,7 @@ namespace Castle.NVelocity.Tests.ParserTests
             return ((NVReference)templateNode.Content[0]).Designator.Selectors[0].Actuals[0];
         }
 
-        protected void AssertPositionForExpression(Position expected, Position actual)
+        protected static void AssertPositionForExpression(Position expected, Position actual)
         {
             const int leftOffset = 12; // Not 13 because StartPos is 1-based
             
@@ -68,7 +68,7 @@ namespace Castle.NVelocity.Tests.ParserTests
                 expected.EndLine, expected.EndPos + leftOffset), actual);
         }
 
-        protected void AssertNoErrors(Parser parser)
+        protected static void AssertNoErrors(Parser parser)
         {
             // Assert there are no errors
             if (parser.Errors.Count > 0)

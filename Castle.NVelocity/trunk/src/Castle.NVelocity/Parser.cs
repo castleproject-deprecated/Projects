@@ -195,18 +195,16 @@ namespace Castle.NVelocity
                         // Return nodes created and do not process the closing tag
                         return content;
                     }
-                    else
-                    {
-                        // Parse this element
-                        content.Add(ParseXmlElement());
-                    }
+
+                    // Parse this element
+                    content.Add(ParseXmlElement());
                 }
                 else if (CurrentTokenType == TokenType.XmlText)
                 {
                     XmlTextNode xmlTextNode = new XmlTextNode(_scanner.CurrentToken.Image);
                     xmlTextNode.Position = GetCurrentTokenPosition();
                     content.Add(xmlTextNode);
-                    
+
                     _scanner.GetToken();
                 }
 
@@ -358,7 +356,8 @@ namespace Castle.NVelocity
                             "as if the parser is stuck. [In ParseXmlRestElement()]");
                         break;
                     }
-                    else if (_scanner.EOF)
+
+                    if (_scanner.EOF)
                     {
                         AddError(string.Format("Expected closing tag for opening tag '{0}'.", xmlElement.Name));
                         break;
@@ -384,7 +383,7 @@ namespace Castle.NVelocity
 
             MatchToken(TokenType.XmlTagStart);
             MatchToken(TokenType.XmlForwardSlash);
-            
+
             //TODO use ParseXmlName instead of just getting the image
             if (CurrentTokenType == TokenType.XmlTagName)
             {
@@ -493,15 +492,14 @@ namespace Castle.NVelocity
             {
                 return ParseNVDirective();
             }
-            else if (CurrentTokenType == TokenType.NVDollar)
+
+            if (CurrentTokenType == TokenType.NVDollar)
             {
                 return ParseNVReference();
             }
-            else
-            {
-                AddError("Expected directive or reference");
-                return null;
-            }
+
+            AddError("Expected directive or reference");
+            return null;
         }
 
         private NVDirective ParseNVDirective()
@@ -570,14 +568,12 @@ namespace Castle.NVelocity
                 }
                 else
                 {
-                    Position currentPos = GetCurrentTokenPosition();
                     while (!_scanner.EOF && !CurrentTokenIn(TokenType.NVDirectiveRParen, TokenType.NVDirectiveHash))
                     {
                         _scanner.GetToken();
 
-                        // If tokens are not being parsed then break out
-                        Position nextPos = GetCurrentTokenPosition();
-                        if (currentPos.Equals(nextPos))
+                        // If the tokens are errors break out
+                        if (CurrentTokenType == TokenType.Error)
                         {
                             AddError("Unable to parse all directive contents.");
                             break;
@@ -585,7 +581,7 @@ namespace Castle.NVelocity
                     }
 
                     // If a new directive starts in the middle of an unfinished directive params then stop parsing this directive
-                    if (CurrentTokenType == TokenType.NVDirectiveHash)
+                    if (CurrentTokenType != TokenType.NVDirectiveRParen)
                     {
                         AddError("Incomplete directive.");
 
@@ -600,7 +596,8 @@ namespace Castle.NVelocity
             if (nvDirective is NVForeachDirective)
             {
                 while (!(CurrentTokenType == TokenType.NVDirectiveHash &&
-                    _scanner.PeekToken(1) != null && _scanner.PeekToken(1).Type == TokenType.NVDirectiveName &&
+                    _scanner.PeekToken(1) != null &&
+                    _scanner.PeekToken(1).Type == TokenType.NVDirectiveName &&
                     _scanner.PeekToken(1).Image == "end"))
                 {
                     List<AstNode> content = ParseContent();
@@ -613,7 +610,9 @@ namespace Castle.NVelocity
                         nvDirective.Position = new Position(startPos, _scanner.CurrentPos);
                         return nvDirective;
                     }
-                    else if (content.Count == 0)
+
+                    // Break out of the loop if no content was found because the directive is incomplete
+                    if (content.Count == 0)
                     {
                         AddError("The parser has been pre-emptively terminated because it appears " +
                             "as if the parser is stuck. [In ParseNVForeachDirective()]");

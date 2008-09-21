@@ -1,4 +1,4 @@
-// Copyright 2007 Jonathon Rossi - http://www.jonorossi.com/
+// Copyright 2007-2008 Jonathon Rossi - http://www.jonorossi.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 
 namespace Castle.NVelocity.Tests.ParserTests
 {
-    using Castle.NVelocity.Ast;
+    using Ast;
     using NUnit.Framework;
 
     [TestFixture]
@@ -23,20 +23,24 @@ namespace Castle.NVelocity.Tests.ParserTests
         [Test]
         public void ParseOrExpression()
         {
+            Parser parser;
             NVBinaryExpression expr = (NVBinaryExpression)GetExpressionFromTemplate(
-                "true || false");
+                "true || false", out parser);
 
             // Check that LHS and RHS are BooleanExpressions and the operator is Or
             Assert.AreEqual(Operator.Or, expr.Op);
             Assert.AreEqual(true, ((NVBoolExpression)expr.Lhs).Value);
             Assert.AreEqual(false, ((NVBoolExpression)expr.Rhs).Value);
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseAndExpression()
         {
+            Parser parser;
             NVBinaryExpression expr = (NVBinaryExpression)GetExpressionFromTemplate(
-                "true && true and true");
+                "true && true and true", out parser);
 
             // The AST should look like this:
             //    and
@@ -55,13 +59,16 @@ namespace Castle.NVelocity.Tests.ParserTests
 
             // Check the RHS of the expr
             Assert.AreEqual(true, ((NVBoolExpression)expr.Rhs).Value);
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseBinaryExpressionWithRelOp()
         {
+            Parser parser;
             NVBinaryExpression expr = (NVBinaryExpression)GetExpressionFromTemplate(
-                "1 <= 2 && true ne false");
+                "1 <= 2 && true ne false", out parser);
 
             // The AST should look like this:
             //     and
@@ -82,13 +89,16 @@ namespace Castle.NVelocity.Tests.ParserTests
             Assert.AreEqual(Operator.Neq, ((NVBinaryExpression)expr.Rhs).Op);
             Assert.AreEqual(true, ((NVBoolExpression)((NVBinaryExpression)expr.Rhs).Lhs).Value);
             Assert.AreEqual(false, ((NVBoolExpression)((NVBinaryExpression)expr.Rhs).Rhs).Value);
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseBinaryExpressionWithAddOp()
         {
+            Parser parser;
             NVBinaryExpression expr = (NVBinaryExpression)GetExpressionFromTemplate(
-                "1 + 2 - 3");
+                "1 + 2 - 3", out parser);
 
             // The AST should look like this:
             //     -
@@ -107,13 +117,16 @@ namespace Castle.NVelocity.Tests.ParserTests
 
             // Check the RHS of the expr
             Assert.AreEqual(3, ((NVNumExpression)expr.Rhs).Value);
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseBinaryExpressionWithMulOp()
         {
+            Parser parser;
             NVBinaryExpression expr = (NVBinaryExpression)GetExpressionFromTemplate(
-                "1 * 2 / 3");
+                "1 * 2 / 3", out parser);
 
             // Check that there is a BinaryExpression with operator 'Div'
             Assert.AreEqual(Operator.Div, expr.Op);
@@ -125,33 +138,44 @@ namespace Castle.NVelocity.Tests.ParserTests
 
             // Chec the RHS
             Assert.AreEqual(3, ((NVNumExpression)expr.Rhs).Value);
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseUnaryExpression()
         {
-            GetExpressionFromTemplate("+1 * -1");
-            //TODO: Check UnaryExpression objects
+            Parser parser;
 
-            GetExpressionFromTemplate("!false and !!true");
+            GetExpressionFromTemplate("+1 * -1", out parser);
             //TODO: Check UnaryExpression objects
+            AssertNoErrors(parser);
+
+            GetExpressionFromTemplate("!false and !!true", out parser);
+            //TODO: Check UnaryExpression objects
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseNVReference()
         {
-            GetExpressionFromTemplate("$obj.Field");
-            //TODO: Check DesignatorExpression
+            Parser parser;
 
-            GetExpressionFromTemplate("$obj.Method($obj2)");
+            GetExpressionFromTemplate("$obj.Field", out parser);
             //TODO: Check DesignatorExpression
+            AssertNoErrors(parser);
+
+            GetExpressionFromTemplate("$obj.Method($obj2)", out parser);
+            //TODO: Check DesignatorExpression
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseExpressionWithParentheses()
         {
+            Parser parser;
             NVBinaryExpression expr = (NVBinaryExpression)GetExpressionFromTemplate(
-                "1 * (2 + 3)");
+                "1 * (2 + 3)", out parser);
 
             // Check expr
             Assert.AreEqual(Operator.Mul, expr.Op);
@@ -164,119 +188,167 @@ namespace Castle.NVelocity.Tests.ParserTests
             Assert.AreEqual(Operator.Plus, rhs.Op);
             Assert.AreEqual(2, ((NVNumExpression)rhs.Lhs).Value);
             Assert.AreEqual(3, ((NVNumExpression)rhs.Rhs).Value);
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseBooleanExpression()
         {
-            NVBoolExpression exprTrue = (NVBoolExpression)GetExpressionFromTemplate("true");
-            Assert.AreEqual(true, exprTrue.Value);
+            Parser parser;
 
-            NVBoolExpression exprFalse = (NVBoolExpression)GetExpressionFromTemplate("false");
+            NVBoolExpression exprTrue = (NVBoolExpression)GetExpressionFromTemplate("true", out parser);
+            Assert.AreEqual(true, exprTrue.Value);
+            AssertNoErrors(parser);
+
+            NVBoolExpression exprFalse = (NVBoolExpression)GetExpressionFromTemplate("false", out parser);
             Assert.AreEqual(false, exprFalse.Value);
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseNumExpression()
         {
-            NVNumExpression expr = (NVNumExpression)GetExpressionFromTemplate("100");
+            Parser parser;
+            NVNumExpression expr = (NVNumExpression)GetExpressionFromTemplate("100", out parser);
 
             // Check that the value of the expression is '100'
             Assert.AreEqual(100, expr.Value);
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseStringLiteralSingleQuotes()
         {
-            NVStringExpression expr = (NVStringExpression)GetExpressionFromTemplate("'string'");
+            Parser parser;
+            NVStringExpression expr = (NVStringExpression)GetExpressionFromTemplate("'string'", out parser);
 
             // Check that the value of the expression is 'string'
             Assert.AreEqual("string", expr.Value);
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseStringLiteralDoubleQuotes()
         {
-            NVStringExpression expr = (NVStringExpression)GetExpressionFromTemplate("\"string\"");
+            Parser parser;
+            NVStringExpression expr = (NVStringExpression)GetExpressionFromTemplate("\"string\"", out parser);
 
             // Check that the value of the expression is 'string'
             Assert.AreEqual("string", expr.Value);
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseDictionaryEmpty()
         {
-            GetExpressionFromTemplate("\"%{}\"");
+            Parser parser;
+            GetExpressionFromTemplate("\"%{}\"", out parser);
             //TODO: Check NVDictionary
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseDictionaryWithOnePair()
         {
-            GetExpressionFromTemplate("\"%{ key='value' }\"");
+            Parser parser;
+            GetExpressionFromTemplate("\"%{ key='value' }\"", out parser);
             //TODO: Check NVDictionary
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseDictionaryWithTwoPairs()
         {
-            GetExpressionFromTemplate("\"%{ key='value', anotherKey='anotherValue' }\"");
+            Parser parser;
+            GetExpressionFromTemplate("\"%{ key='value', anotherKey='anotherValue' }\"", out parser);
             //TODO: Check NVDictionary
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseDictionaryWithReferenceAsValue()
         {
-            GetExpressionFromTemplate("\"%{ key=$var.Field }\"");
+            Parser parser;
+            GetExpressionFromTemplate("\"%{ key=$var.Field }\"", out parser);
             //TODO: Check NVDictionary
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseRangeWithTwoConstants()
         {
-            GetExpressionFromTemplate("[1..10]");
+            Parser parser;
+            GetExpressionFromTemplate("[1..10]", out parser);
             //TODO
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseRangeWithConstantAndReference()
         {
-            GetExpressionFromTemplate("[1..$n]");
+            Parser parser;
+            GetExpressionFromTemplate("[1..$n]", out parser);
             //TODO
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseRangeWithTwoReferences()
         {
-            GetExpressionFromTemplate("[$i..$n]");
+            Parser parser;
+            GetExpressionFromTemplate("[$i..$n]", out parser);
             //TODO
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseArrayEmpty()
         {
-            GetExpressionFromTemplate("[]");
+            Parser parser;
+            GetExpressionFromTemplate("[]", out parser);
             //TODO
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseArrayWithSingleExpression()
         {
-            GetExpressionFromTemplate("[10]");
+            Parser parser;
+            GetExpressionFromTemplate("[10]", out parser);
             //TODO
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseArrayWithTwoExpressions()
         {
-            GetExpressionFromTemplate("[10, 20]");
+            Parser parser;
+            GetExpressionFromTemplate("[10, 20]", out parser);
+
+            AssertNoErrors(parser);
         }
 
         [Test]
         public void ParseArrayWithVariousDifferentExpressions()
         {
-            GetExpressionFromTemplate("[\"MonoRail\", $is, \"cool\"]");
+            Parser parser;
+            GetExpressionFromTemplate("[\"MonoRail\", $is, \"cool\"]", out parser);
             //TODO
+
+            AssertNoErrors(parser);
         }
     }
 }
