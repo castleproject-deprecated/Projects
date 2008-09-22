@@ -50,7 +50,7 @@ namespace Castle.VisualStudio.NVelocityLanguageService
 
         public override string GetDescription(int index)
         {
-            string description = "";
+            string description = string.Empty;
 
             NVIdNode idNode = _declarations[index].IdNode;
             if (idNode is NVClassNode)
@@ -82,9 +82,12 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             else if (idNode is NVMethodNode)
             {
                 NVClassNode classNode = (NVClassNode)((NVMethodNode)idNode).Parent;
-                XmlDocumentationProvider documentationProvider =
-                    new XmlDocumentationProvider(classNode.AssemblyFileName);
-                description = documentationProvider.GetMethodDocumentation(classNode.FullName, idNode.Name);
+                if (classNode != null)
+                {
+                    XmlDocumentationProvider documentationProvider =
+                        new XmlDocumentationProvider(classNode.AssemblyFileName);
+                    description = documentationProvider.GetMethodDocumentation(classNode.FullName, idNode.Name);
+                }
             }
 
             // Return the documentation or an error message
@@ -92,12 +95,9 @@ namespace Castle.VisualStudio.NVelocityLanguageService
             {
                 return description;
             }
-            else
-            {
-                return string.Format("Could not retrieve documentation for AST node '{0}' " +
-                    "(because it is not supported).",
-                    idNode != null ? idNode.GetType().Name : "");
-            }
+
+            return string.Format("Could not retrieve documentation for AST node '{0}' (because it is not supported).",
+                idNode != null ? idNode.GetType().Name : "");
         }
 
         public override int GetGlyph(int index)

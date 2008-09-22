@@ -506,5 +506,51 @@ namespace Castle.NVelocity.Tests.ScannerTests
 
 			AssertEOF();
 		}
+
+        [Test]
+        public void HashAtBeginningOfXmlTagAttributeValueFollowedByMoreAttributeContentIsDirectiveInTelliSenseMode()
+        {
+            _scanner.Options.EnableIntelliSenseTriggerTokens = true;
+            _scanner.Options.IsLineScanner = true;
+            _scanner.SetSource(
+                "<a href=\"# \"/>");
+
+            AssertMatchToken(TokenType.XmlTagStart);
+            AssertMatchToken(TokenType.XmlTagName, "a");
+            AssertMatchToken(TokenType.XmlAttributeMemberSelect, " ");
+            AssertMatchToken(TokenType.XmlAttributeName, "href");
+            AssertMatchToken(TokenType.XmlEquals);
+            AssertMatchToken(TokenType.XmlDoubleQuote);
+            AssertMatchToken(TokenType.NVDirectiveHash, "#");
+            AssertMatchToken(TokenType.XmlAttributeText, " ");
+            AssertMatchToken(TokenType.XmlDoubleQuote);
+            AssertMatchToken(TokenType.XmlForwardSlash);
+            AssertMatchToken(TokenType.XmlTagEnd);
+
+            AssertEOF();
+        }
+
+        [Test]
+        public void HashAtBeginningOfXmlTagAttributeValueDirectlyFollowedByQuoteIsXmlTextInIntelliSenseMode()
+        {
+            _scanner.Options.EnableIntelliSenseTriggerTokens = true;
+            _scanner.Options.IsLineScanner = true;
+            _scanner.Options.SplitTextTokens = true;
+            _scanner.SetSource(
+                "<a href=\"#\"/>");
+
+            AssertMatchToken(TokenType.XmlTagStart);
+            AssertMatchToken(TokenType.XmlTagName, "a");
+            AssertMatchToken(TokenType.XmlAttributeMemberSelect, " ");
+            AssertMatchToken(TokenType.XmlAttributeName, "href");
+            AssertMatchToken(TokenType.XmlEquals);
+            AssertMatchToken(TokenType.XmlDoubleQuote);
+            AssertMatchToken(TokenType.XmlAttributeText, "#");
+            AssertMatchToken(TokenType.XmlDoubleQuote);
+            AssertMatchToken(TokenType.XmlForwardSlash);
+            AssertMatchToken(TokenType.XmlTagEnd);
+
+            AssertEOF();
+        }
     }
 }

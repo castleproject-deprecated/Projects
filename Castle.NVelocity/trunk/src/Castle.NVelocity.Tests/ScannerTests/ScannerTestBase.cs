@@ -31,12 +31,12 @@ namespace Castle.NVelocity.Tests.ScannerTests
 			AssertMatchToken(_scanner, tokenType);
         }
 
-		protected void AssertMatchToken(Scanner scanner, TokenType tokenType)
+		protected static void AssertMatchToken(Scanner scanner, TokenType tokenType)
 		{
 			AssertMatchToken(tokenType, scanner.GetToken());
 		}
 
-    	protected void AssertMatchToken(TokenType tokenType, Token token)
+    	protected static void AssertMatchToken(TokenType tokenType, Token token)
         {
             CheckTokenType(token, tokenType);
         }
@@ -46,7 +46,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
 			AssertMatchToken(_scanner, tokenType, image);
 		}
 
-		protected void AssertMatchToken(Scanner scanner, TokenType tokenType, string image)
+		protected static void AssertMatchToken(Scanner scanner, TokenType tokenType, string image)
 		{
 			Token token = scanner.GetToken();
 			CheckTokenType(token, tokenType);
@@ -61,7 +61,7 @@ namespace Castle.NVelocity.Tests.ScannerTests
             CheckPosition(token, position);
         }
 
-        protected void AssertMatchToken(TokenType tokenType, string image, Token token)
+        protected static void AssertMatchToken(TokenType tokenType, string image, Token token)
         {
             CheckTokenType(token, tokenType);
             CheckImage(token, image);
@@ -80,21 +80,21 @@ namespace Castle.NVelocity.Tests.ScannerTests
             Assert.IsTrue(_scanner.EOF);
         }
 
-        private void CheckTokenType(Token token, TokenType tokenType)
+        private static void CheckTokenType(Token token, TokenType tokenType)
         {
             Assert.IsTrue(token.Type == tokenType,
                 string.Format("Expected token: '{0}' was '{1}', actual image '{2}'.",
                 tokenType, token.Type, token.Image));
         }
 
-        private void CheckPosition(Token token, Position position)
+        private static void CheckPosition(Token token, Position position)
         {
             Assert.IsNotNull(token.Position, "Position is null.");
             Assert.IsTrue(token.Position.Equals(position),
                 string.Format("Expected position: [{0}] was [{1}].", position, token.Position));
         }
 
-        private void CheckImage(Token token, string image)
+        private static void CheckImage(Token token, string image)
         {
             Assert.IsTrue(token.Image == image,
                 string.Format("Expected image: '{0}' was '{1}'.", image, token.Image));

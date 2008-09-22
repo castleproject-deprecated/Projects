@@ -611,7 +611,7 @@ namespace Castle.NVelocity
                     }
                 }
             }
-            
+
             token.SetEndPosition(lineNo, linePos);
             token.Type = tokenType;
             token.Image = _source.Substring(startPos - 1, pos - startPos);
@@ -815,7 +815,7 @@ namespace Castle.NVelocity
                 GetCh();
                 state.Pop(); // Pop XmlTagAttributeValue
             }
-            else if (ch == '#' && NVDirectiveFollows())
+            else if (ch == '#' && NVDirectiveFollows() && LookAhead(1) != '"')
             {
                 token.Type = TokenType.NVDirectiveHash;
                 state.Push(ScannerState.NVPreDirective);
@@ -842,7 +842,7 @@ namespace Castle.NVelocity
                 {
                     return (ch == '"' && CurrentState == ScannerState.XmlTagAttributeValueDouble) ||
                            (ch == '\'' && CurrentState == ScannerState.XmlTagAttributeValueSingle) ||
-                           (ch == '#' && NVDirectiveFollows()) ||
+                           (ch == '#' && NVDirectiveFollows() && LookAhead(1) != '"') ||
                            (ch == '$' && NVReferenceFollows());
                 });
             }

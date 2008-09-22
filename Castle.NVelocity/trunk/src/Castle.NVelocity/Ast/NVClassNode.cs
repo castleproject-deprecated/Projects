@@ -78,8 +78,7 @@ namespace Castle.NVelocity.Ast
             {
                 if (_scope.Exists(methodNode.Name))
                 {
-                    AddSemanticError(errs, string.Format(
-                        "Type '{0}' already defines a member called {1}", _name, methodNode.Name),
+                    AddSemanticError(errs, string.Format("Type '{0}' already defines a member called {1}", _name, methodNode.Name),
                         methodNode.Position, ErrorSeverity.Error);
                 }
                 else
@@ -91,13 +90,19 @@ namespace Castle.NVelocity.Ast
 
         public NVIdNode FindMember(ErrorHandler errs, Position pos, string name)
         {
-            NVIdNode idNode = _scope.Find(name);
-            if (idNode == null)
+            if (_scope != null)
             {
-                AddSemanticError(errs, string.Format(
-                    "The name '{0}' does not exist in the current context", name), _pos, ErrorSeverity.Warning);
+                NVIdNode idNode = _scope.Find(name);
+                if (idNode != null)
+                {
+                    return idNode;
+                }
             }
-            return idNode;
+
+            // Could not obtain the identifier node
+            AddSemanticError(errs, string.Format(
+                "The name '{0}' does not exist in the current context", name), _pos, ErrorSeverity.Warning);
+            return null;
         }
 
         public List<NVMethodNode> Methods
