@@ -4,6 +4,10 @@
 
 Unreleased Changes
 ==================
+- n/a
+
+0.3.2 Beta (2008-09-30)
+=======================
 - Fixed memory issues causing Visual Studio lock ups (reported by Alex Henderson and Chuck Snell)
 - Fixed null reference exception reported in error window (reported by Alex Henderson)
 - Fixed editor loosing colourisation when typing % in a dictionary (reported by Chuck Snell)

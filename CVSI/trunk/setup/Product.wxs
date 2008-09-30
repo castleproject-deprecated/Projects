@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?define ProductShortName = "Castle Visual Studio Integration" ?>
-<?define ProductVersion = "0.3.1" ?>
+<?define ProductVersion = "0.3.2" ?>
 <?define ProductVersionText = "$(var.ProductVersion)" ?>
 <?define ProductVersionDir = "0.3" ?>
 <?define Manufacturer = "Jonathon Rossi" ?>
