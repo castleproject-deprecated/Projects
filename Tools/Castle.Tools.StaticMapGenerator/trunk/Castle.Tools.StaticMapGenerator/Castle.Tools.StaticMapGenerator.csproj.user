@@ -1,5 +1,0 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <StartArguments>/site:D:\dev\musicglue\Music_Glue\WorkingCopy\MusicGlue\MusicGlue.RightsHolder.Web.UI</StartArguments>
-  </PropertyGroup>
-</Project>

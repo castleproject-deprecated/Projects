@@ -1,2 +1,0 @@
-msbuild Default.Build
-pause
