@@ -52,7 +52,6 @@
     <Compile Include="ContextParameter.cs" />
     <Compile Include="NullParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queries\CriteraCountQuery.cs" />
     <Compile Include="StaticParameter.cs" />
   </ItemGroup>
   <ItemGroup>

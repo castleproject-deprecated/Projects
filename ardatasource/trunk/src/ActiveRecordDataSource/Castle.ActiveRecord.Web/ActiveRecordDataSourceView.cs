@@ -227,7 +227,7 @@ namespace Castle.ActiveRecord.Web
 
         protected int ExecuteCount(ActiveRecordDataSourceFindEventArgs args)
         {
-            IList result = ActiveRecordMediator.ExecuteQuery(new CriteraCountQuery(args.ModelType, args.Criteria.ToArray())) as IList;
+            IList result = ActiveRecordMediator.ExecuteQuery(new CountQuery(args.ModelType, args.Criteria.ToArray())) as IList;
 
             return Convert.ToInt32(result[0]);
         }

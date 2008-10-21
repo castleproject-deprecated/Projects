@@ -1,2 +1,5 @@
+- Remove CountQuery because it no longer builds. 
+  Replace with patch from brian dunn from: http://using.castleproject.org/display/Contrib/Patch+for+use+with+ActiveRecord+rc3
+
 2006-10-13
 - Initial release.
