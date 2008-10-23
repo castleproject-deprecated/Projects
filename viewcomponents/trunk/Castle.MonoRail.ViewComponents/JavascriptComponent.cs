@@ -30,6 +30,7 @@ namespace Castle.MonoRail.ViewComponents
     #endregion
 
     using StringSet = System.Collections.Generic.List<string>;
+using System.Collections;
     // When ported to .Net v 3.5, use the following line instead.
 //    using StringSet = System.Collections.Generic.HashSet<string>;
 
@@ -39,6 +40,7 @@ namespace Castle.MonoRail.ViewComponents
     /// </summary>
     internal class JSsegments
     {
+		const bool useGoogleDefault = false;
         /// <summary>
         /// Initializes a new instance of the JSsegments class.
         /// </summary>
@@ -46,12 +48,20 @@ namespace Castle.MonoRail.ViewComponents
         {
             segments = new Dictionary<string, string>();
             files = new StringSet();
+			useGoogle = useGoogleDefault;
         }
         internal bool incAjax;
         internal bool incBehavior;
         internal bool incScriptaculous;
         internal bool incEffectsFat;
         internal bool incValidate;
+		
+		internal bool incMootools;
+		internal bool incDojo;
+		internal bool incJQuery;
+
+
+		internal bool useGoogle;
 
         internal bool wasRendered;
 
@@ -65,7 +75,7 @@ namespace Castle.MonoRail.ViewComponents
     public enum versionDirection 
     {
         /// <summary>
-        /// Only the exact browswr version matches.
+        /// Only the exact browser version matches.
         /// </summary>
         Exact,
         /// <summary>
@@ -188,7 +198,13 @@ namespace Castle.MonoRail.ViewComponents
     /// <b>Required</b> when used as a block component. 
     /// (Pointless, when used as a line component)</description>
     /// </item>
-    /// <item>
+	/// <item>
+	/// <term>       UseGoogle         </term>
+	/// <description><c>True</c> or <c>False</c>, specifying if Google AJAX Libraries API should be used to load 
+	/// the standard script files given using the <c>Std</c> parameter, or 
+	/// if they should be read directly from the website.</description>
+	/// </item>
+	/// <item>
     /// <term>       Std      </term>
     /// <description>A comma or space seaparated list of the standard Javascript files to include. 
     /// Will automatically include needed requestisits. 
@@ -231,7 +247,22 @@ namespace Castle.MonoRail.ViewComponents
     /// Validate.Lang <br/>
     /// </description>
     /// </item>
-    /// </list>
+	/// <item>
+	/// <term>                     moo                    </term>
+	/// <description>MooTools</description>
+	/// </item>
+	/// <item>
+	/// <term>                     jquery                    </term>
+	/// <description>jQuery</description>
+	/// </item>
+	/// <item>
+	/// <term>                     dojo                    </term>
+	/// <description>DoJo</description>
+	/// </item>
+	/// </list>
+	/// <para>Note that MooTools, jQuery, and Dojo are not part of the standard Monorail installation, and will not be  available, if UseGoogle is false, 
+	/// unless the needed files are manually copied to the site. </para>
+	/// <para>Note that behavior, effectfat and validate are presently not part of the Google AJAX Libraries API, and will always be loaded from the website.</para>
     /// <para/>
     /// JavascriptComponent allows a number of subsections, to allow
     /// customizing the included Javascript to the requesting browser.
@@ -348,7 +379,7 @@ namespace Castle.MonoRail.ViewComponents
     /// ]]></code>
     /// </example>
     /// <seealso cref="JavascriptHelper"/> <seealso cref="InsertJavascriptComponent"/>
-
+	[ViewComponentDetails("Javascript")]
     public class JavascriptComponent : ViewComponentEx
     {
         List<BrowserSpec> sectionsUsed;
@@ -439,7 +470,9 @@ namespace Castle.MonoRail.ViewComponents
             if (Context.HasSection("inline"))
             {
                 RenderText("\n\r<script>");
+                RenderText(@"//<![CDATA[");
                 RenderSection("inline");
+                RenderText(@"//]]>");
                 RenderText("</script>\n\r");
             }
 
@@ -567,7 +600,7 @@ namespace Castle.MonoRail.ViewComponents
             base.Initialize();
 
 			helper = new JavascriptHelper(this.Context, this.EngineContext, "DummyInsertJavascript");
-            string std = Context.ComponentParameters["std"] as string ?? string.Empty;
+            string std = Context.ComponentParameters["Std"] as string ?? string.Empty;
             helper.IncludeStandardScripts(std);
         }
 
@@ -599,35 +632,35 @@ namespace Castle.MonoRail.ViewComponents
 
             if (js.incAjax)
             {
-                AjaxHelper helper = Context.ContextVars["AjaxHelper"] as AjaxHelper;
+				AjaxHelper helper = Context.ContextVars["AjaxHelper"] as AjaxHelper;
                 RenderText(helper.InstallScripts());
                 RenderText(Environment.NewLine);
             }
 
             if (js.incBehavior)
             {
-                BehaviourHelper helper = Context.ContextVars["BehaviourHelper"] as BehaviourHelper;
+				BehaviourHelper helper = Context.ContextVars["BehaviourHelper"] as BehaviourHelper;
                 RenderText(helper.InstallScripts());
                 RenderText(Environment.NewLine);
             }
 
             if (js.incScriptaculous)
             {
-                ScriptaculousHelper helper = Context.ContextVars["ScriptaculousHelper"] as ScriptaculousHelper;
+				ScriptaculousHelper helper = Context.ContextVars["ScriptaculousHelper"] as ScriptaculousHelper;
                 RenderText(helper.InstallScripts());
                 RenderText(Environment.NewLine);
             }
 
             if (js.incEffectsFat)
             {
-                EffectsFatHelper helper = Context.ContextVars["EffectsFatHelper"] as EffectsFatHelper;
+				EffectsFatHelper helper = Context.ContextVars["EffectsFatHelper"] as EffectsFatHelper;
                 RenderText(helper.InstallScripts());
                 RenderText(Environment.NewLine);
             }
 
             if (js.incValidate)
             {
-                ValidationHelper helper = Context.ContextVars["ValidationHelper"] as ValidationHelper;
+				ValidationHelper helper = Context.ContextVars["ValidationHelper"] as ValidationHelper;
                 RenderText(helper.InstallScripts());
                 RenderText(Environment.NewLine);
             }
@@ -653,8 +686,10 @@ namespace Castle.MonoRail.ViewComponents
 
     public class JavascriptHelper
     {
+		private const string STR_JSsegments = "JSsegments";
         #region Private fields
         private IViewComponentContext context;
+		private IDictionary contextVars;
         private HttpBrowserCapabilities browCaps;
         private JSsegments js;
         private string id;
@@ -678,16 +713,11 @@ namespace Castle.MonoRail.ViewComponents
         public JavascriptHelper(IViewComponentContext context,HttpContext httpcontext, string key)
         {
             this.context = context;
+			this.contextVars = context.ContextVars;
+			this.id = key;
+			this.browCaps = httpcontext.Request.Browser;
 
-			js = context.ContextVars["JSsegments"] as JSsegments ?? new JSsegments();
-			context.ContextVars["JSsegments"] = js;
-
-            this.id = key;
-            if (((ICollection<string>)js.segments.Keys).Contains(key))
-                skipRender = true;
-
-            this.browCaps = httpcontext.Request.Browser;
-            this.scriptBuilder = new StringBuilder(1024);
+			Init();
 		}
 
 		/// <summary>
@@ -704,18 +734,38 @@ namespace Castle.MonoRail.ViewComponents
 		public JavascriptHelper(IViewComponentContext context, IEngineContext engine, string key)
 		{
 			this.context = context;
-
-			js = context.ContextVars["JSsegments"] as JSsegments ?? new JSsegments();
-			context.ContextVars["JSsegments"] = js;
-
+			this.contextVars = context.ContextVars;
 			this.id = key;
-			if (((ICollection<string>)js.segments.Keys).Contains(key))
-				skipRender = true;
-
 			this.browCaps = engine.UnderlyingContext.Request.Browser;
-			this.scriptBuilder = new StringBuilder(1024);
+
+			Init();
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="JavascriptHelper"/> class.
+		/// </summary>
+		/// <param name="controller">The controller.</param>
+		/// <param name="key">The key.</param>
+		public JavascriptHelper(Controller controller, string key)
+		{
+			this.context = null;
+			this.contextVars = controller.PropertyBag;
+			this.id = key;
+			this.browCaps = controller.Context.UnderlyingContext.Request.Browser;
+
+			Init();
+
+		}
+		private void Init()
+		{
+			this.js = contextVars[STR_JSsegments] as JSsegments ?? new JSsegments();
+			contextVars[STR_JSsegments] = js;
+
+			if (((ICollection<string>)js.segments.Keys).Contains(id))
+				this.skipRender = true;
+
+			this.scriptBuilder = new StringBuilder(1024);
+		}
 		/// <summary>
 		/// Browsers the is.
 		/// </summary>
@@ -892,7 +942,7 @@ namespace Castle.MonoRail.ViewComponents
             }
             else
             {
-                sb.AppendFormat(@"<script type=""text/javascript"" src=""{1}/javascript/{0}""></script>", file, context.ContextVars["siteRoot"]);
+                sb.AppendFormat(@"<script type=""text/javascript"" src=""{1}/javascript/{0}""></script>", file, contextVars["siteRoot"]);
                 sb.Append(Environment.NewLine);
             }
             return sb.ToString();
@@ -901,7 +951,9 @@ namespace Castle.MonoRail.ViewComponents
         private void RenderScriptImmedaitely(string text)
         {
             this.context.Writer.WriteLine(@"<script type=""text/javascript"">");
+            this.context.Writer.WriteLine(@"//<![CDATA[");
             this.context.Writer.WriteLine(text);
+            this.context.Writer.WriteLine(@"//]]>");
             this.context.Writer.WriteLine("</script>");
         }
         internal void AddScriptBlock(string text)

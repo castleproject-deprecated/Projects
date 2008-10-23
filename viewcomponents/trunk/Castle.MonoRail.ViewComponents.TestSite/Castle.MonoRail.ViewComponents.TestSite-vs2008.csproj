@@ -80,6 +80,7 @@
     <Compile Include="Controllers\CompositeController.cs" />
     <Compile Include="Controllers\DualListController.cs" />
     <Compile Include="Controllers\FaqController.cs" />
+    <Compile Include="Controllers\GravatarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaskedTextBoxController.cs" />
     <Compile Include="Controllers\MoreLessTextController.cs" />
@@ -107,6 +108,7 @@
     <None Include="Views\DualList\index.brail" />
     <None Include="Views\Faq\index.brail" />
     <None Include="Views\Faq\List.brail" />
+    <None Include="Views\Gravatar\Index.vm" />
     <None Include="Views\Grid\Alternate.brail" />
     <None Include="Views\Grid\OverrideEmpty.brail" />
     <None Include="Views\Grid\Empty.brail" />

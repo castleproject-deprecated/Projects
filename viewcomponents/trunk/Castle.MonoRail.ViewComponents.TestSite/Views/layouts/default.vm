@@ -266,6 +266,19 @@ $css
 
 #end
 #end
+#blockcomponent(CollapsiblePanel with "id=GravatarComponent"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#caption
+					<h3>Gravatar component & Helper</h3>
+#end
+#body
+					<ul>
+						<li>
+							<a href="/Gravatar/index.rails">Examples</a>
+						</li>
+					</ul>	
+
+#end
+#end
 					
 					
 				</div>

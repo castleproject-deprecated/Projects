@@ -66,11 +66,11 @@
     <Compile Include="ColumnsComponent.cs" />
     <Compile Include="DualListComponent.cs" />
     <Compile Include="FaqItemComponent.cs" />
+    <Compile Include="GravatarViewComponent.cs" />
     <Compile Include="GridComponent .cs" />
     <Compile Include="JavascriptComponent.cs" />
     <Compile Include="LinkSubmitButtonComponent.cs" />
     <Compile Include="MaskedTextboxComponent.cs" />
-    <Compile Include="MatrixComponent.cs" />
     <Compile Include="MobileFilter.cs" />
     <Compile Include="MoreLessTextComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

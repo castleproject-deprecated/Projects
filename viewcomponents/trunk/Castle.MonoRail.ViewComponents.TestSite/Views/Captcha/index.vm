@@ -1,20 +1,8 @@
 ${FormHelper.FormTag('TestValue.rails', "%{}")}
 ${FormHelper.DisableValidation()}
 #component(CaptchaComponent)
-$Url.Link("Some link", "%{controller='Home', action='Index'}")
 ${FormHelper.Submit("Test Value", "%{class='button'}")}
-
-
-#blockcomponent(CaptchaComponent)
-#template
-<img src="${Url}" width="${Width}" height="${Height}" alt=\"captcha\" />
-#end
-#end
-$Url.Link("Some link", "%{controller='Home', action='Index'}")
-
 ${FormHelper.EndFormTag()}
 
-$Url.Link("Some link", "%{controller='Home', action='Index'}")
-$UrlHelper.Link("Some link", "%{controller='Home', action='Index'}")
 
 
