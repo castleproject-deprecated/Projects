@@ -15,22 +15,26 @@
 // limitations under the License.
 #endregion
 
-#region Reference
-using System;
-using System.IO;
-#endregion
 
 namespace Castle.MonoRail.ViewComponents
 {
-	using System.Collections;
-	using Castle.MonoRail.Framework;
-	using Castle.MonoRail.Framework.Helpers;
-using Castle.Core.Logging;
+    #region Reference
+    using System;
+    using System.IO;
+    using System.Collections;
+    using Castle.MonoRail.Framework;
+    using Castle.MonoRail.Framework.Helpers;
+    using Castle.Core.Logging;
+    using System.Web;
+    using System.Collections.Specialized;
+    #endregion
+
+
 	/// <summary>
 	/// Helper class to provide a some convenient methods for viewcomponents.
 	/// </summary>
 	/// <remarks>May one day be incorporated into base class.</remarks>
-	public class ViewComponentEx : ViewComponent
+	public abstract class ViewComponentEx : ViewComponent
 	{
 		private ILogger logger;
 
@@ -78,6 +82,7 @@ using Castle.Core.Logging;
 		/// Renders the optional section.
 		/// </summary>
 		/// <param name="section">The section.</param>
+        /// <returns>bool, [true] is the section was rendered</returns>
 		protected bool RenderOptionalSection(string section)
 		{
 			if (Context.HasSection(section))
@@ -121,7 +126,12 @@ using Castle.Core.Logging;
 		/// <param name="key">The key.</param>
 		/// <param name="defaultValue">The value used if there is no parameter named key.</param>
 		/// <returns></returns>
-		public bool GetBoolParamValue(string key, bool defaultValue)
+        [Obsolete("use GetParamValue instead")]
+        public bool GetBoolParamValue(string key, bool defaultValue)
+        {
+            return GetParamValue(key, defaultValue);
+        }
+		public bool GetParamValue(string key, bool defaultValue)
 		{
 			object parmValue = Context.ComponentParameters[key];
 			bool value = defaultValue;
@@ -137,6 +147,36 @@ using Castle.Core.Logging;
 			return value;
 		}
 
+        public string GetParamValue(string key, string defaultValue)
+        {
+            return Context.ComponentParameters[key] as string ?? defaultValue;
+        }
+
+
+        /// <summary>
+        /// Gets the param value.
+        /// </summary>
+        /// <typeparam name="E"></typeparam>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns></returns>
+        public E GetParamValue<E>(string key, E defaultValue) where E:struct
+        {
+            object parmValue = Context.ComponentParameters[key];
+            E value = defaultValue;
+            if (parmValue is string)
+            {
+                try
+                { value = (E)Enum.Parse(typeof(E), parmValue as string, true); }
+                catch
+                { value = defaultValue; }
+            }
+            else if (parmValue is E)
+            {
+                value = (E)parmValue;
+            }
+            return value;
+        }
 		/// <summary>
 		/// Makes an unique id.
 		/// </summary>
@@ -236,8 +276,78 @@ using Castle.Core.Logging;
 
 			RenderText(html);
 		}
-
 		#endregion
-
 	}
+
+    /// <summary>
+    /// Base class to be inherited by ViewComponents which access
+    /// the ASP.NET SiteMap.   Handles the Provider &  SiteMapProvider properties,
+    /// defaulting to the values in web.config, as does ASP.NET
+    /// 
+    /// Also added a SiteMapFile property, to set it more directly.
+    /// </summary>
+    public abstract class ViewComponentUsingSiteMap : ViewComponentEx
+    {
+        /// <summary>
+        /// Gets or sets the site map file.
+        /// </summary>
+        /// <value>The site map file.</value>
+        [ViewComponentParam("SiteMapFile", Default = "~/web.sitemap")]
+        public string SiteMapFile { get; set; }
+
+        SiteMapProvider m_Provider;
+        /// <summary>
+        /// Gets or sets a <see cref="SiteMapProvider"/> that is associated with the ViewComponent.
+        /// </summary>
+        /// <value>The provider.</value>
+        /// <remarks>The Provider property specifies an instance of a site map provider to use with the control. 
+        /// This provider may be different from the provider identified by the <see cref="SiteMapProvider"/> property, if set.
+        ///</remarks>
+        [ViewComponentParam]
+        public SiteMapProvider Provider 
+        {
+            get
+            {
+                if (m_Provider == null)
+                {
+                    if (!string.IsNullOrEmpty(SiteMapProvider))
+                    {
+                        m_Provider= SiteMap.Providers[SiteMapProvider];
+                    }
+                    else if (SiteMap.Provider != null)
+                    {
+                        m_Provider= SiteMap.Provider;
+                    }
+
+                    if (m_Provider== null)
+                    {
+                        // Create an instance of the XmlSiteMapProvider class.
+                        XmlSiteMapProvider testXmlProvider = new XmlSiteMapProvider();
+                        NameValueCollection providerAttributes = new NameValueCollection(1);
+                        providerAttributes.Add("siteMapFile", this.SiteMapFile);
+
+                        // Initialize the provider with a provider name and file name.
+                        testXmlProvider.Initialize("ViewComponentUsingSiteMapProvider", providerAttributes);
+
+                        // Call the BuildSiteMap to load the site map information into memory.
+                        testXmlProvider.BuildSiteMap();
+                        m_Provider = testXmlProvider;
+                    }
+                }
+                return m_Provider;
+            }
+            set
+            {
+                m_Provider = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the name of the <see cref="SiteMapProvider"/> used to render the site navigation control.
+        /// </summary>
+        /// <value>The site map provider.</value>
+        [ViewComponentParam]
+        public string SiteMapProvider { get; set; }
+
+    }
 }

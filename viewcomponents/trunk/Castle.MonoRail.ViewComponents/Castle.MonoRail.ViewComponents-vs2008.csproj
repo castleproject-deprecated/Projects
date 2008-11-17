@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BreadcrumbViewComponent.cs" />
     <Compile Include="CaptchaComponent.cs" />
     <Compile Include="CaptchaImage.cs" />
     <Compile Include="CaptchaImageHandler.cs" />
@@ -62,6 +63,11 @@
     <Compile Include="ChartProperties.cs" />
     <Compile Include="CheckboxListComponent.cs" />
     <Compile Include="CollapsiblePanelComponent.cs" />
+    <Compile Include="CollapsiblePanelScripts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CollapsiblePanelScripts.resx</DependentUpon>
+    </Compile>
     <Compile Include="ColumnChartComponent.cs" />
     <Compile Include="ColumnsComponent.cs" />
     <Compile Include="DualListComponent.cs" />
@@ -84,6 +90,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="javascript\MaskedTextbox.js" />
+    <Content Include="jslibraries.sample.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="JSLibraries.xsd" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CollapsiblePanelScripts.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CollapsiblePanelScripts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

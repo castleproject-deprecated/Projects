@@ -158,6 +158,7 @@ namespace Castle.MonoRail.ViewComponents
         private string questionCssClass;
         private string answerCssClass;
         private bool wrapItems;
+        private string jsLibrary;
         #endregion
 
         /// <summary>
@@ -185,9 +186,11 @@ namespace Castle.MonoRail.ViewComponents
             questionCssClass = Context.ContextVars["QuestionCssClass"] as string ?? "Question";
             answerCssClass = Context.ContextVars["AnswerCssClass"] as string ?? "Answer";
             string strWrap = Context.ContextVars["WrapItems"] as string ?? "false";
+            jsLibrary = Context.ContextVars["JSLibrary"] as string ?? "proto";
 
             questionCssClass = Context.ComponentParameters["QuestionCssClass"] as string ?? questionCssClass;
             answerCssClass = Context.ComponentParameters["AnswerCssClass"] as string ?? answerCssClass;
+            jsLibrary = Context.ComponentParameters["JSLibrary"] as string ?? jsLibrary;
             strWrap = Context.ComponentParameters["WrapItems"] as string ?? strWrap;
             if (!Boolean.TryParse(strWrap, out wrapItems))
                 wrapItems = false;
@@ -202,7 +205,9 @@ namespace Castle.MonoRail.ViewComponents
                     // and it's value is True, save values
                     Context.ContextVars["QuestionCssClass"] = questionCssClass;
                     Context.ContextVars["AnswerCssClass"] = answerCssClass;
+                    Context.ContextVars["JSLibrary"] = jsLibrary;
                     Context.ContextVars["WrapItems"] = strWrap;
+
                 }
                 else
                 {
@@ -211,6 +216,7 @@ namespace Castle.MonoRail.ViewComponents
                     Context.ContextVars.Remove("QuestionCssClass");
                     Context.ContextVars.Remove("AnswerCssClass");
                     Context.ContextVars.Remove("WrapItems");
+                    Context.ContextVars.Remove("JSLibrary");
                 }
             }
         }
@@ -231,8 +237,18 @@ namespace Castle.MonoRail.ViewComponents
             param.QuestionCssClass = questionCssClass;
             param.Number = faqNum.Value;
             param.WrapItems = wrapItems;
+            param.jsLibrary = Enum.IsDefined(typeof(Library), jsLibrary.ToLowerInvariant()) ? (Library) Enum.Parse(typeof(Library), jsLibrary.ToLowerInvariant()) : Library.proto;
             param.helper = new JavascriptHelper(Context, EngineContext, "FaqItemComponent");
-            param.helper.IncludeStandardScripts("Ajax");
+            switch (param.jsLibrary)
+            {
+                case Library.proto:
+                    param.helper.IncludeStandardScripts("Ajax");
+                    break;
+
+                case Library.jquery:
+                    param.helper.IncludeStandardScripts("jQuery");
+                    break;
+            }
 
             RenderText(FaqItemHelper.BuildItem(question, answer, param));
 
@@ -479,6 +495,7 @@ namespace Castle.MonoRail.ViewComponents
         #endregion
     }
 
+    internal enum Library { proto, jquery};
 
     /// <summary>
     /// Private class used to pass around parameter easily.
@@ -490,6 +507,7 @@ namespace Castle.MonoRail.ViewComponents
         public string AnswerCssClass;
         public bool WrapItems;
         public JavascriptHelper helper;
+        public Library jsLibrary;
     }
 
     /// <summary>
@@ -515,14 +533,30 @@ namespace Castle.MonoRail.ViewComponents
         /// <returns>The Html generated for this FAQ item.</returns>
         public static string BuildItem(string question, string answer, FaqParameters param)
         {
-            param.helper.IncludeStandardScripts("Ajax");
+            string divFormat;
+            string hideFormat;
+            switch (param.jsLibrary)
+            {
+                case Library.proto:
+                default:
+                    param.helper.IncludeStandardScripts("Ajax");
+                    divFormat = @"<div id=""Faq_Q{0}"" onclick=""Element.toggle('Faq_A{0}')"" class=""{1}"">";
+                    hideFormat = @"<script>$(Faq_A{0}).style.display='none';</script>";
+                    break;
+
+                case Library.jquery:
+                    param.helper.IncludeStandardScripts("jQuery");
+                    divFormat = @"<div id=""Faq_Q{0}"" onclick=""jQuery('#Faq_A{0}').slideToggle()"" class=""{1}"">";
+                    hideFormat = @"<script>jQuery('#Faq_A{0}').hide();</script>";
+                    break;
+            }
+
             StringBuilder sb = new StringBuilder(250);
 
             if (param.WrapItems)
                 sb.Append("<li>");
 
-            sb.AppendFormat(@"<div id=""Faq_Q{0}"" onclick=""Element.toggle('Faq_A{0}')"" class=""{1}"">", 
-                param.Number, param.QuestionCssClass);
+            sb.AppendFormat(divFormat, param.Number, param.QuestionCssClass);
             sb.Append(Environment.NewLine);
             sb.Append(question);
             sb.Append("</div>");
@@ -532,7 +566,7 @@ namespace Castle.MonoRail.ViewComponents
                 param.Number, param.AnswerCssClass);
             sb.Append(Environment.NewLine);
 
-            sb.Append("<br/>");
+//            sb.Append("<br/>");
             sb.Append(answer);
             sb.Append("<hr/>");
             sb.Append("</div>");
@@ -540,7 +574,8 @@ namespace Castle.MonoRail.ViewComponents
             if (param.WrapItems)
                 sb.Append("</li>");
             sb.Append(Environment.NewLine);
-            sb.AppendFormat("<script>$(Faq_A{0}).style.display='none';</script>", param.Number);
+//            sb.AppendFormat(, param.Number);
+            sb.AppendFormat(hideFormat, param.Number);
             sb.Append(Environment.NewLine);
 
             return sb.ToString();

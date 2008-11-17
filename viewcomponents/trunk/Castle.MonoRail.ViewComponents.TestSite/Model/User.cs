@@ -23,7 +23,7 @@ namespace Castle.MonoRail.ViewComponents.TestSite.Controllers
 			set { manager = value; }
 		}
 
-		public List<User> Underlings   /// Skipped, ICollection<T>
+		public List<User> Underlings   // Skipped, ICollection<T>
 		{
 			get { return new List<User>(); }
 			set { }

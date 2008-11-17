@@ -21,16 +21,18 @@ namespace Castle.MonoRail.ViewComponents
     #region Reference
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Text;
     using System.Web;
+    using System.Collections;
+    using System.Xml;
+    using System.Drawing;
 
     using Castle.MonoRail.Framework;
     using Castle.MonoRail.Framework.Helpers;
-    using System.IO;
     #endregion
 
     using StringSet = System.Collections.Generic.List<string>;
-using System.Collections;
     // When ported to .Net v 3.5, use the following line instead.
 //    using StringSet = System.Collections.Generic.HashSet<string>;
 
@@ -40,7 +42,6 @@ using System.Collections;
     /// </summary>
     internal class JSsegments
     {
-		const bool useGoogleDefault = false;
         /// <summary>
         /// Initializes a new instance of the JSsegments class.
         /// </summary>
@@ -48,26 +49,66 @@ using System.Collections;
         {
             segments = new Dictionary<string, string>();
             files = new StringSet();
-			useGoogle = useGoogleDefault;
+            stdFiles = new List<LibraryDetail>();
         }
-        internal bool incAjax;
-        internal bool incBehavior;
-        internal bool incScriptaculous;
-        internal bool incEffectsFat;
-        internal bool incValidate;
-		
-		internal bool incMootools;
-		internal bool incDojo;
-		internal bool incJQuery;
-
-
-		internal bool useGoogle;
 
         internal bool wasRendered;
 
         internal Dictionary<string, string> segments;
         internal StringSet files;
+        internal List<LibraryDetail> stdFiles;
 
+    }
+
+    internal class LibraryDetail
+    {
+        public string Name;
+        public bool AutoLoad;
+        public bool UseGoogle;
+        public string PathName;
+        public string[] Alias;
+        public string[] DependsOn;
+        public string Version;
+        public LibraryDetail(string name, bool autoLoad, bool useGoogle, string version, string pathName, string alias, string dependsOn)
+        {
+            this.Name = name;
+            this.Alias = alias.Split(' ', ',');
+            this.AutoLoad = autoLoad;
+            this.DependsOn = dependsOn.Split(' ', ',');
+            this.PathName = pathName;
+            this.UseGoogle = useGoogle;
+            this.Version = version;
+        }
+        public LibraryDetail(string name, bool autoLoad) : this(name, autoLoad, false, "1", null, "", "") { }
+        public LibraryDetail(string name, string dependsOn) : this(name, true, false, "1", null, "", dependsOn) { }
+        public LibraryDetail(string name, string dependsOn, string alias) : this(name, true, false, "1", null, alias, dependsOn) { }
+        public LibraryDetail(XmlElement node)
+        {
+            this.Name = node.Attributes["name"].Value;
+            this.Alias = (Attribute(node, "alias") ?? "").Split(' ', ',');
+            this.AutoLoad = AttributeBool(node, "autoLoad");
+            this.DependsOn = (Attribute(node, "dependsOn") ?? "").Split(' ', ',');
+            this.PathName = Attribute(node, "pathname");
+            this.UseGoogle = AttributeBool(node, "useGoogle");
+            this.Version = Attribute(node, "version");
+        }
+
+        private static bool AttributeBool(XmlElement node, string p)
+        {
+            string val = Attribute(node, p);
+            return val == null ? false : XmlConvert.ToBoolean(val);
+        }
+        private static string Attribute(XmlElement ele, string key)
+        {
+            XmlAttribute attr = ele.Attributes[key];
+            return attr == null ? null : attr.Value;
+        }
+
+        internal  static Predicate<LibraryDetail> ByNameOrAlias(string name)
+        {
+            name = name.Trim().ToLowerInvariant();
+            return delegate(LibraryDetail ld) { return ld.Name == name || Array.IndexOf(ld.Alias, name) !=-1; };
+        }
     }
     /// <summary>
     /// Speicifies how the version field of a <see cref="BrowserSpec"/> object is interpreted.
@@ -622,49 +663,66 @@ using System.Collections;
         /// Called by the framework so the component can
         /// render its contents.
         /// </summary>
+        /// 
         public override void Render()
         {
             base.Render();
-			JSsegments js = Context.ContextVars["JSsegments"] as JSsegments;
+            JSsegments js = Context.ContextVars["JSsegments"] as JSsegments;
+
             CancelView();
             if (js == null)
                 return;
 
-            if (js.incAjax)
+            foreach (LibraryDetail lib in js.stdFiles)
             {
-				AjaxHelper helper = Context.ContextVars["AjaxHelper"] as AjaxHelper;
-                RenderText(helper.InstallScripts());
-                RenderText(Environment.NewLine);
-            }
+                if (lib.AutoLoad )
+                {
+                    string name = lib.Name;
+                    if (lib.UseGoogle)
+                    {
+                        RenderText(this.helper.RenderJavascriptFile(string.Format("http://ajax.googleapis.com/ajax/libs/{0}/{1}/{0}.js", name, lib.Version)));
+                        continue;
+                    }
 
-            if (js.incBehavior)
-            {
-				BehaviourHelper helper = Context.ContextVars["BehaviourHelper"] as BehaviourHelper;
-                RenderText(helper.InstallScripts());
-                RenderText(Environment.NewLine);
-            }
+                    string filePath = null;
+                    switch (name)
+                    {
+                        case "prototype":
+                            filePath = (Context.ContextVars["AjaxHelper"] as AjaxHelper).InstallScripts();
+                            break;
 
-            if (js.incScriptaculous)
-            {
-				ScriptaculousHelper helper = Context.ContextVars["ScriptaculousHelper"] as ScriptaculousHelper;
-                RenderText(helper.InstallScripts());
-                RenderText(Environment.NewLine);
-            }
+                        case "behavior":
+                            filePath = (Context.ContextVars["BehaviourHelper"] as BehaviourHelper).InstallScripts();
+                            break;
 
-            if (js.incEffectsFat)
-            {
-				EffectsFatHelper helper = Context.ContextVars["EffectsFatHelper"] as EffectsFatHelper;
-                RenderText(helper.InstallScripts());
-                RenderText(Environment.NewLine);
-            }
+                        case "scriptaculous":
+                            filePath = (Context.ContextVars["ScriptaculousHelper"] as ScriptaculousHelper).InstallScripts();
+                            break;
 
-            if (js.incValidate)
-            {
-				ValidationHelper helper = Context.ContextVars["ValidationHelper"] as ValidationHelper;
-                RenderText(helper.InstallScripts());
-                RenderText(Environment.NewLine);
-            }
+                        case "effectsfat":
+                            filePath = (Context.ContextVars["EffectsFatHelper"] as EffectsFatHelper).InstallScripts();
+                            break;
 
+                        case "validate":
+                            filePath = (Context.ContextVars["ValidationHelper"] as ValidationHelper).InstallScripts();
+                            break;
+
+                        //case "jquery":
+                        //   filePath = (Context.ContextVars["jQueryHelper"] as jQueryHelper).InstallScripts();
+                        //    break;
+
+                        default:
+                            if (lib.PathName != null)
+                                filePath=this.helper.RenderJavascriptFile(lib.PathName);
+                            break;
+                    }
+                    if (filePath !=null)
+                    {
+                        RenderText(filePath);
+                        RenderText(Environment.NewLine);
+                    }
+                }
+            }
             foreach (string file in js.files)
             {
                 RenderText(this.helper.RenderJavascriptFile(file));
@@ -696,6 +754,16 @@ using System.Collections;
         private StringBuilder scriptBuilder;
         private bool skipRender;
         private bool segmentChoosen;
+        private IEngineContext engine; 
+
+        private LibraryDetail[] libraryDefaults = new LibraryDetail[]
+            {
+                new LibraryDetail("prototype", true),
+                new LibraryDetail("scriptaculous", "prototype", "effects2"),
+                new LibraryDetail("effectsfat", "prototype"),
+                new LibraryDetail("validate", "prototype"),
+                new LibraryDetail("behavior", "prototype", "behaviour")
+            };
         #endregion
 
         /// <summary>
@@ -716,8 +784,8 @@ using System.Collections;
 			this.contextVars = context.ContextVars;
 			this.id = key;
 			this.browCaps = httpcontext.Request.Browser;
-
-			Init();
+//            this.engine = engine;
+            Init();
 		}
 
 		/// <summary>
@@ -737,8 +805,10 @@ using System.Collections;
 			this.contextVars = context.ContextVars;
 			this.id = key;
 			this.browCaps = engine.UnderlyingContext.Request.Browser;
-
-			Init();
+            this.cacheProvider = engine.Services.CacheProvider;
+            this.engine = engine;
+            GetJSSegments(engine);
+            Init();
 		}
 
 		/// <summary>
@@ -752,38 +822,59 @@ using System.Collections;
 			this.contextVars = controller.PropertyBag;
 			this.id = key;
 			this.browCaps = controller.Context.UnderlyingContext.Request.Browser;
-
+            cacheProvider = controller.Context.Services.CacheProvider;
+            GetJSSegments(controller.Context);
 			Init();
 
 		}
 		private void Init()
 		{
-			this.js = contextVars[STR_JSsegments] as JSsegments ?? new JSsegments();
-			contextVars[STR_JSsegments] = js;
 
 			if (((ICollection<string>)js.segments.Keys).Contains(id))
 				this.skipRender = true;
 
 			this.scriptBuilder = new StringBuilder(1024);
 		}
-		/// <summary>
-		/// Browsers the is.
-		/// </summary>
-		/// <param name="browser">The browser.</param>
-		/// <param name="baseversion">The baseversion.</param>
-		/// <param name="direction">The direction.</param>
-		/// <returns></returns>
+
+        private void GetJSSegments(IEngineContext engine)
+        {
+            // nVeloecity preserves controller.PropertyBag between ViewComponents and the layout.
+            // Brail preserves engine.Flash between ViewComponents and the layout.
+            // so, one way or another, this gets saved.
+            this.js = (contextVars[STR_JSsegments] ?? engine.Flash[STR_JSsegments] ?? new JSsegments()) as JSsegments;
+            contextVars[STR_JSsegments]  = js;
+            engine.Flash[STR_JSsegments] = js;
+            contextVars[STR_JSsegments + ".@bubbleUp"] = true;
+        }
+        /// <summary>
+        /// Indicates whether or not the user's browser mets the given specification.
+        /// </summary>
+        /// <param name="browser">The browser.</param>
+        /// <param name="baseversion">The baseversion.</param>
+        /// <param name="direction">The direction.</param>
+        /// <returns></returns>
 		public bool BrowserIs(string browser, int baseversion, versionDirection direction)
 		{
 			BrowserSpec spec = new BrowserSpec(browser, baseversion, direction);
 			return spec.MatchesBrowser(browCaps);
 		}
 
+        /// <summary>
+        /// Indicates whether or not the user's browser mets the given specification.
+        /// </summary>
+        /// <param name="browser">The browser.</param>
+        /// <returns></returns>
 		public bool BrowserIs(string browser)
 		{
 			return BrowserIs(browser, 0, versionDirection.Exact);
 		}
 
+        /// <summary>
+        /// Indicates whether or not the user's browser mets the given specification.
+        /// </summary>
+        /// <param name="browser">The browser.</param>
+        /// <param name="baseversion">The baseversion.</param>
+        /// <returns></returns>
 		public bool BrowserIs(string browser, int baseversion)
 		{
 			return BrowserIs(browser, baseversion, versionDirection.Exact);
@@ -817,7 +908,6 @@ using System.Collections;
             {
                 RenderScriptImmedaitely(script);
             }
-
 
             if (!segmentChoosen)
             {
@@ -871,38 +961,33 @@ using System.Collections;
             {
                 if (script.Length > 0)
                 {
-                    switch (script.Trim().ToLowerInvariant())
-                    {
-                        case "ajax":
-                            js.incAjax = true;
-                            break;
-
-                        case "behavior":
-                        case "behaviour":
-                            js.incAjax = true;
-                            js.incBehavior = true;
-                            break;
-
-                        case "effects2":
-                        case "scriptaculous":
-                            js.incAjax = true;
-                            js.incScriptaculous = true;
-                            break;
-
-                        case "effectsfat":
-                            js.incAjax = true;
-                            js.incEffectsFat = true;
-                            break;
-
-                        case "validate":
-                            js.incAjax = true;
-                            js.incValidate = true;
-                            break;
-
-                        default:
-                            throw new ViewComponentException("JavascriptHelper: '" + script + "' is not a valid standard script");
-                    }
+                    if (this.LibraryDetails.Exists(LibraryDetail.ByNameOrAlias(script)))
+                        InsertDependancy(script, js.stdFiles.Count);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Inserts the details of a required javascript file into the list.
+        /// </summary>
+        /// <remarks>
+        /// Places the details of the js script file known by <paramref name="name"/> onto the list
+        /// of files that will be included on this page.  Designed to place new files at the end, and
+        /// files they depend on just before them.
+        /// </remarks>
+        /// <param name="name">The name.</param>
+        /// <param name="index">The index.</param>
+        private void InsertDependancy(string name, int index)
+        {
+            if (string.IsNullOrEmpty(name))
+                return;
+
+            if (js.stdFiles.Find(LibraryDetail.ByNameOrAlias(name)) == null)
+            {
+                LibraryDetail details = LibraryDetails.Find(LibraryDetail.ByNameOrAlias(name));
+                js.stdFiles.Insert(index, details);
+                foreach (string fname in details.DependsOn)
+                    InsertDependancy(fname, index);
             }
         }
 
@@ -968,8 +1053,8 @@ using System.Collections;
             else
             {
                 scriptBuilder.Append(text);
+                js.segments[id] = scriptBuilder.ToString();
             }
-            js.segments[id]= text;
         }
 
 
@@ -988,6 +1073,84 @@ using System.Collections;
 			sb.AppendLine(@"//]]>");
             sb.AppendLine("</script>");
             return sb.ToString();
+        }
+
+        private XmlDocument libraryInfo = null;
+        private ICacheProvider cacheProvider = null;
+        private const string xmlfilename = @"jslibraries.xml";
+        private const string detailskeyword = @"jslibrariesDetails";
+
+
+        private List<LibraryDetail> libraryDetails = null;
+        internal List<LibraryDetail> LibraryDetails
+        {
+            get
+            {
+                if (libraryDetails == null)
+                {
+                    libraryDetails = cacheProvider.Get(detailskeyword) as List<LibraryDetail>;
+                }
+
+                if (libraryDetails == null )
+                {
+                    if (LibraryInfo != null)
+                    {
+                        List<LibraryDetail> details = new List<LibraryDetail>();
+                        foreach (XmlElement lib in LibraryInfo.DocumentElement.ChildNodes)
+                        {
+                            details.Add(new LibraryDetail(lib));
+                        }
+                        libraryDetails = details;
+                    }
+                    else
+                        libraryDetails = new List<LibraryDetail>(libraryDefaults);
+
+                    cacheProvider.Store(detailskeyword, libraryDetails);
+                }
+                return libraryDetails;
+            }
+        }
+
+        internal XmlDocument LibraryInfo
+        {
+            get
+            {
+                if (libraryInfo == null)
+                {
+                    libraryInfo= cacheProvider.Get(xmlfilename) as XmlDocument;
+                }
+
+                if (libraryInfo == null)
+                {
+//                    string xmlpath = Path.Combine(Path.GetDirectoryName(this.GetType().Assembly.CodeBase), xmlfilename);
+                    string webPath = engine.Server.MapPath(null);
+                    string xmlpath = Path.Combine(webPath, "jslibraries.xml");
+                    if (File.Exists(xmlpath))
+                    {
+                        libraryInfo = new XmlDocument();
+                        libraryInfo.Load(xmlpath);
+                        cacheProvider.Store(xmlfilename, libraryInfo);
+                    }
+                }
+                return libraryInfo;
+            }
+        }
+
+        public string PreferredLibrary
+        {
+            get
+            {
+                if (LibraryInfo != null)
+                {
+//                    XmlAttribute attr = LibraryInfo.DocumentElement.SelectSingleNode("/libraries/@preferredLibrary") as XmlAttribute;
+                    XmlAttribute attr = LibraryInfo.DocumentElement.Attributes["preferredLibrary"];
+                    if (attr != null)
+                    {
+                        return attr.Value;
+                    }
+                }
+                return "prototype";
+            }
         }
 
         internal bool SkipRender

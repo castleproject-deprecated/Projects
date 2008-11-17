@@ -9,10 +9,10 @@
 <div style="padding: 20px;">
   <%
   component CollapsiblePanel, {@id:"panelWithLink", @caption:"Collapsible Panel With Toggle Link"}:
-    section body:
-      %>
-        ${loremIpsumText}
-      <%
+    section body:   
+    %>
+    ${loremIpsumText}
+    <%
       end
     end
     %>

@@ -25,8 +25,10 @@ component InsertJavascript, {@Std: "Ajax, Scriptaculous"}
 						Logged on as: ${context.CurrentUser.Identity.Name}
 					</span>
 				</h2>
+<% component Breadcrumb %>
 				<h1>Castle.MonoRail.ViewComponents:<br/> Sample Site</h1>
 			</div>
+
 
 			<div class="content">
 				${ChildOutput}

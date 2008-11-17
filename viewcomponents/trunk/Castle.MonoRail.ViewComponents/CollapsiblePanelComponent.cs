@@ -18,6 +18,10 @@ namespace Castle.MonoRail.ViewComponents
 {
 	using Framework;
     using Framework.Helpers;
+    using System.Text;
+    using System.Resources;
+    using System.Collections;
+    using System.Reflection;
 
 	/// <summary>
     /// A ViewComponent that renders a collapsible panel.
@@ -25,7 +29,6 @@ namespace Castle.MonoRail.ViewComponents
     [ViewComponentDetails("CollapsiblePanel",Sections="body,caption")]
     public class CollapsiblePanelComponent : ViewComponentEx
     {
-        private string javascriptFunctionName;
         private const string wasScriptaculousInstalledKey = "wasScriptaculousInstalled";
 
         private string id;
@@ -45,20 +48,24 @@ namespace Castle.MonoRail.ViewComponents
         private string initialImage;
         private bool useImage;
         private string effect;
-        private double effectDuration;
+        private double? effectDuration;
+        private string jsLibrary;
 
         /// <summary>
         /// Initializes this instance.
         /// </summary>
         public override void Initialize()
         {
+            this.Flash["test"] = (this.Flash["test"] ?? "") + "+";
             GetParameters();
 
             initialCommand = collapsed ? expandLinkText : collapseLinkText;
+            if (initialCommand == null)
+                initialCommand = collapsed ? "Show": "Hide";
+
             bodyId = string.Format("{0}Body", id);
             toggleId = string.Format("{0}Toggle", id);
-            javascriptCall = string.Format("javascript:{0}(\"{1}\", \"{2}\")",
-                javascriptFunctionName, bodyId, toggleId);
+            javascriptCall = string.Format("javascript:expandCollapse({0}Opts)", id);
             initialImage = collapsed ? expandImagePath : collapseImagePath;
             useImage =
                 !string.IsNullOrEmpty(expandImagePath) ||
@@ -76,16 +83,17 @@ namespace Castle.MonoRail.ViewComponents
             }
             expandImagePath = ComponentParams["expandImagePath"] as string;
             collapseImagePath = ComponentParams["collapseImagePath"] as string;
-            expandLinkText = ComponentParams["expandLinkText"] as string ?? "Show";
-            collapseLinkText = ComponentParams["collapseLinkText"] as string ?? "Hide";
+            expandLinkText = ComponentParams["expandLinkText"] as string;
+            collapseLinkText = ComponentParams["collapseLinkText"] as string;
             caption = ComponentParams["caption"] as string;
-            cssClass = ComponentParams["cssClass"] as string;
+            cssClass = ComponentParams["cssClass"] as string ?? "collapsiblePanel";
             style = ComponentParams["style"] as string;
             collapsed = GetBoolParamValue("collapsed", false);
-            effect = ComponentParams["effect"] as string ?? "blind";
-            effectDuration = ComponentParams["effectDuration"] as double? ?? 0.3;
+            effect = ComponentParams["effect"] as string;
+            effectDuration = ComponentParams["effectDuration"] as double?;
             toggleOnClickHeader = GetBoolParamValue("toggleOnClickHeader", false);
-            javascriptFunctionName = string.Format("expandCollapse_{0}", id);
+
+            jsLibrary = ComponentParams["JSLibrary"] as string;
         }
 
         /// <summary>
@@ -99,13 +107,10 @@ namespace Castle.MonoRail.ViewComponents
 
         private void RenderComponent()
         {
-            RenderTextFormat("<div id='{0}' class='{1}'{2}>", id,
-                !string.IsNullOrEmpty(cssClass) 
-                    ? cssClass 
-                    : "collapsiblePanel",
-                !string.IsNullOrEmpty(style) 
-                    ? string.Format("style='{0}'", style) 
-                    : null);
+            if (string.IsNullOrEmpty(style))
+                RenderTextFormat("<div id='{0}' class='{1}'>", id, cssClass);
+            else
+                RenderTextFormat("<div id='{0}' class='{1}' style='{2}>", id, cssClass, style);
 
             RenderHeader();
 
@@ -116,26 +121,59 @@ namespace Castle.MonoRail.ViewComponents
 
         private void RenderJavascript()
         {
-            if (Context.ContextVars[wasScriptaculousInstalledKey] as bool? != true)
-            {
-				AjaxHelper ajaxHelper = new AjaxHelper(EngineContext);
-				RenderTextFormat("\r\n{0}\r\n", ajaxHelper.InstallScripts());
-				ScriptaculousHelper helper = new ScriptaculousHelper(EngineContext);
-                RenderTextFormat("\r\n{0}\r\n", helper.InstallScripts());
-                Context.ContextVars[wasScriptaculousInstalledKey] = true;
-            }
-            RenderText(AjaxHelper.ScriptBlock(ToggleJsFunction));
+            AddScript();
+
+            JavascriptHelper helper = new JavascriptHelper(this.Context, this.EngineContext, "CollapsiblePanelComponent-"+this.id);
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(@"var {0}Opts = {{controlName: '{0}Body', togglerName: '{0}Toggle'", this.id);
+
+            if (collapseLinkText != null)
+                sb.AppendFormat(@", collapseLinkText:'{0}'", collapseLinkText);
+
+            if (expandLinkText != null)
+                sb.AppendFormat(@", expandLinkText: '{0}'", expandLinkText);
+
+            if (this.collapseImagePath != null)
+                sb.AppendFormat(@", collapseImagePath:'{0}'", collapseImagePath);
+
+            if (this.expandImagePath != null)
+                sb.AppendFormat(@", expandImagePath:'{0}'", expandImagePath);
+
+            if (this.effect != null)
+                    sb.AppendFormat(@", effect:'{0}'", effect);
+
+            if (this.effectDuration.HasValue)
+                    sb.AppendFormat(@", effectDuration:{0}", effectDuration.Value);
+
+            sb.Append("};");
+
+            helper.IncludeScriptText(sb.ToString());
+        }
+
+        void AddScript()
+        {
+            JavascriptHelper helper = new JavascriptHelper(this.Context, this.EngineContext, "CollapsiblePanelComponent");
+            jsLibrary = jsLibrary ?? helper.PreferredLibrary;
+            ResourceManager rm = new ResourceManager("Castle.MonoRail.ViewComponents.CollapsiblePanelScripts", Assembly.GetExecutingAssembly());
+                string script = rm.GetString(jsLibrary);
+
+            if (script == null)
+                throw new ViewComponentException("unsupported JSLibrary option");
+
+            helper.IncludeScriptText(script);
+            helper.IncludeStandardScripts(jsLibrary);
+            helper.IncludeScriptText("\nvar CollapseConponentDefaults = {effect: 'blind', effectDuration:0.3,expandLinkText: 'Show', collapseLinkText: 'Hide'};");
         }
 
         private void RenderHeader()
         {
             string toolTipAttribute = "title='Click to expand/collapse'";
 
-            RenderTextFormat("<div class='header'{0}><table><tr>", 
-                toggleOnClickHeader 
-                    ? string.Format(" onclick='{0}' style='cursor:pointer;' {1}",
-                        javascriptCall, toolTipAttribute) 
-                    : null);
+            if (toggleOnClickHeader)
+                RenderTextFormat("<div class='header' onclick='{0}' style='cursor:pointer;' {1}><table><tr>", javascriptCall, toolTipAttribute);
+            else
+                RenderText("<div class='header'><table><tr>");
 
             if (useImage)
             {
@@ -174,54 +212,6 @@ namespace Castle.MonoRail.ViewComponents
             }
 
             RenderText("</div>");
-        }
-
-        private string ToggleJsFunction
-        {
-            get
-            {
-				if (!toggleOnClickHeader)
-				{
-					return string.Format(
-                        CultureInfo.InvariantCulture,
-	@"
-function {0}(controlName, togglerName)
-{{
-    new Effect.toggle(controlName, '{1}', {{duration:{2}}});
-    var toggler = document.getElementById(togglerName);
-    if (toggler.{3} == '{4}')
-    {{
-        toggler.{3} = '{5}';{6}
-    }}
-    else if (toggler.{3} == '{5}')
-    {{
-        toggler.{3} = '{4}';{7}
-    }}
-}}
-",
-					javascriptFunctionName,
-					effect,
-					effectDuration,
-					useImage ? "alt" : "innerHTML",
-					collapseLinkText,
-					expandLinkText,
-					useImage ? string.Format(" toggler.src = '{0}';", expandImagePath) : null,
-					useImage ? string.Format(" toggler.src = '{0}';", collapseImagePath) : null);
-				}
-				else
-				{
-					return string.Format(
-	@"
-function {0}(controlName, togglerName)
-{{
-    new Effect.toggle(controlName, '{1}', {{duration:{2}}});
-}}
-",
-					javascriptFunctionName,
-					effect,
-					effectDuration);
-				}
-            }
         }
     }
 }

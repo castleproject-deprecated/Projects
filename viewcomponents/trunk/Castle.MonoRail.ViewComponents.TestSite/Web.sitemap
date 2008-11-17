@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode url="~/Home/index.rails" title="Home"  description="Index of all ViewComponent samples">
+    <siteMapNode title="Grid Component"  description="" >
+      <siteMapNode url="/grid/index.rails" title="Basic Usage" />
+      <siteMapNode url="/grid/Alternate.rails" title="Alternate Rows" />
+      <siteMapNode url="/grid/Empty.rails" title="Empty data source" />
+      <siteMapNode url="/grid/OverrideEmpty.rails" title="Override Empty Rendering" />
+    </siteMapNode>
+
+    <siteMapNode title="Smart grid component"  description="" >
+      <siteMapNode url="/smartgrid/index.rails" title="Basic Usage" />
+      <siteMapNode url="/smartgrid/ignoringProperties.rails" title="Ignoring Properties" />
+      <siteMapNode url="/smartgrid/columnsOrderring.rails" title="Columns Orderring" />
+      <siteMapNode url="/smartgrid/OverridingHeaderBehavior.rails" title="Overriding Header Behavior" />
+      <siteMapNode url="/smartgrid/OverridingColumnBehavior.rails" title="Overriding Column Behavior" />
+      <siteMapNode url="/smartgrid/Empty.rails" title="Empty" />
+      <siteMapNode url="/smartgrid/More.rails" title="Handling additional columns" />
+      <siteMapNode url="/smartgrid/StartEndCell.rails" title="Start &amp; End Cell behaviors" />
+      <siteMapNode url="/smartgrid/StartEndRow.rails" title="Start &amp; End Row behaviors" />
+      <siteMapNode url="/smartgrid/SortBehavior.rails" title="Sorting Behavior" />
+      <siteMapNode url="/smartgrid/SortJSBehavior.rails" title="Sorting Behavior via Ajax" />
+    </siteMapNode>
+
+    <siteMapNode title="Captcha component"  description="" >
+      <siteMapNode url="/Captcha/index.rails" title="Basic Usage" />
+    </siteMapNode>
+
+    <siteMapNode title="Checkbox list component"  description="" >
+      <siteMapNode url="/checkboxlist/index.rails" title="Basic Usage" />
+    </siteMapNode>
+
+    <siteMapNode title="Column chart component"  description="" >
+      <siteMapNode url="/chart/index.rails" title="Basic Usage" />
+    </siteMapNode>
+
+    <siteMapNode title="Composite component"  description="" >
+      <siteMapNode url="/Composite /index.rails" title="Basic Usage" />
+    </siteMapNode>
+
+    <siteMapNode title="DualList component"  description="" >
+      <siteMapNode url="/DualList/index.rails" title="Basic Usage" />
+    </siteMapNode>
+
+    <siteMapNode title="FAQ component"  description="" >
+      <siteMapNode url="/Faq/index.rails" title="FAQ Item" />
+      <siteMapNode url="/Faq/list.rails" title="FAQ List" />
+    </siteMapNode>
+
+    <siteMapNode title="Whitespace filter component"  description="" >
+      <siteMapNode url="/whitespace/index.rails" title="Sample Charts Whitespaced" />
+    </siteMapNode>
+
+    <siteMapNode title="Masked textbox component"  description="" >
+      <siteMapNode url="/maskedtextbox/index.rails" title="Masked Textbox Examples" />
+    </siteMapNode>
+
+    <siteMapNode title="Collapsible panel component"  description="" >
+      <siteMapNode url="/collapsiblepanel/index.rails" title="Basic Usage" />
+    </siteMapNode>
+
+    <siteMapNode title="More or Less Text component"  description="" >
+      <siteMapNode url="/morelesstext/index.rails" title="Basic Usage" />
+    </siteMapNode>
+
+    <siteMapNode title="Gravatar component and Helper"  description="" >
+      <siteMapNode url="/Gravatar/index.rails" title="Basic Usage" />
+    </siteMapNode>
+
+    <siteMapNode title="Breadcrumb component" description="How to use the Breadcrumb component">
+      <siteMapNode url="~/breadcrumb/default.rails" title="Basic Usage"  description="Example of common usage"/>
+    </siteMapNode>
+  </siteMapNode>
+</siteMap>

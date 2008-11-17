@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<libraries xmlns="http://schemas.castleproject.org/MR/2008/11/JSLibrary" preferredLibrary="jquery">
+	<library name="prototype" useGoogle="false" autoLoad="true" alias="ajax proto" version="1.6.0.3"/>
+  <library name="scriptaculous" alias="effects effects2" autoLoad="true" useGoogle="false"  version="1.8.1" dependsOn="prototype"/>
+  <library name="effectsfat" autoLoad="true" useGoogle="false"  dependsOn="prototype"/>
+  <library name="validate" autoLoad="true" useGoogle="false"  dependsOn="prototype"/>
+  <library name="behavior"  alias="behaviour" autoLoad="true" useGoogle="false" dependsOn="prototype" />
+  <library name="jquery" version="1.2.6" useGoogle="true" autoLoad="true" pathname="jquery.js" />
+  <library name="dojo" useGoogle="true" autoLoad="true" pathname="javascript/dojo.js" />
+  <library name="mootools" useGoogle="true" autoLoad="false" pathname="javascript/mootools.js" />
+ </libraries>
