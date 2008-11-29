@@ -88,6 +88,7 @@
     <Compile Include="Controllers\GravatarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaskedTextBoxController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\MoreLessTextController.cs" />
     <Compile Include="Controllers\SmartGridController.cs" />
     <Compile Include="Controllers\GridController.cs" />
@@ -124,6 +125,8 @@
     <None Include="Views\layouts\default.brail" />
     <None Include="Views\MaskedTextBox\index.brail" />
     <None Include="Views\MaskedTextBox\TestValues.brail" />
+    <None Include="Views\Menu\default.vm" />
+    <Content Include="Views\Menu\minimenu.sitemap" />
     <None Include="Views\MoreLessText\index.brailXX" />
     <None Include="Views\MoreLessText\index.vm" />
     <None Include="Views\SmartGrid\More.brail" />

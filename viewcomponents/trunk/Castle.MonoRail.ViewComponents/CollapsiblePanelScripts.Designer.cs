@@ -63,7 +63,7 @@ namespace Castle.MonoRail.ViewComponents {
         /// <summary>
         ///   Looks up a localized string similar to function expandCollapse(userOpts)
         ///{
-        ///	var opts = jQuery.extend({}, CollapseConponentDefaults, userOpts);
+        ///	var opts = jQuery.extend({}, CollapseComponentDefaults, userOpts);
         ///	jQuery(&apos;#&apos;+opts.controlName).slideToggle(opts.effectDuration * 1000);
         ///	if (opts.togglerName)
         ///	{
@@ -84,7 +84,7 @@ namespace Castle.MonoRail.ViewComponents {
         /// <summary>
         ///   Looks up a localized string similar to function expandCollapse(userOpts)
         ///{
-        ///	var opts = Object.extend(Object.extend({},CollapseConponentDefaults), userOpts);
+        ///	var opts = Object.extend(Object.extend({},CollapseComponentDefaults), userOpts);
         ///    new Effect.toggle(opts.controlName, opts.effect, {duration:opts.effectDuration});
         ///    var toggler = document.getElementById(opts.togglerName);
         ///	    if (opts.showImg)

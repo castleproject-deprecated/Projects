@@ -68,7 +68,10 @@
     </siteMapNode>
 
     <siteMapNode title="Breadcrumb component" description="How to use the Breadcrumb component">
-      <siteMapNode url="~/breadcrumb/default.rails" title="Basic Usage"  description="Example of common usage"/>
+      <siteMapNode url="~/breadcrumb/default.rails" title="Basic Usage"  description="Examples of common usage"/>
+    </siteMapNode>
+    <siteMapNode title="Menu component" description="How to use the Menu component">
+      <siteMapNode url="~/menu/default.rails" title="Basic Examples"  description="Examples of common usage"/>
     </siteMapNode>
   </siteMapNode>
 </siteMap>

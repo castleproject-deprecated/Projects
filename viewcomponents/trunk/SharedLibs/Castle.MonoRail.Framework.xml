@@ -1175,6 +1175,23 @@
             	<c>true</c> if this instance is client connected; otherwise, <c>false</c>.
             </value>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Test.IMockResponse.IsCookiePresent(System.String)">
+            <summary>
+            Determines whether a cookie is present on the response.
+            </summary>
+            <param name="name">The name.</param>
+            <returns>
+            	<c>true</c> if the cookie exists in the response; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.IMockResponse.GetCookie(System.String)">
+            <summary>
+            Gets a cookie added through one of 
+            the <see cref="M:Castle.MonoRail.Framework.IResponse.CreateCookie(System.Web.HttpCookie)"/> overloads.
+            </summary>
+            <param name="name">The cookie name.</param>
+            <returns></returns>
+        </member>
         <member name="P:Castle.MonoRail.Framework.Test.IMockResponse.RedirectedTo">
             <summary>
             Gets the urls the request was redirected to.
@@ -1506,6 +1523,23 @@
             </summary>
             <param name="name">The name.</param>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.IsCookiePresent(System.String)">
+            <summary>
+            Determines whether a cookie is present on the response.
+            </summary>
+            <param name="name">The name.</param>
+            <returns>
+            	<c>true</c> if the cookie exists in the response; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Internal.BaseResponse.GetCookie(System.String)">
+            <summary>
+            Gets a cookie added through one of 
+            the <see cref="M:Castle.MonoRail.Framework.IResponse.CreateCookie(System.Web.HttpCookie)"/> overloads.
+            </summary>
+            <param name="name">The cookie name.</param>
+            <returns></returns>
+        </member>
         <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.StatusCode">
             <summary>
             Gets or sets the status code.
@@ -1592,6 +1626,11 @@
             Gets or sets the URL builder.
             </summary>
             <value>The URL builder.</value>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.Adapters.ResponseAdapter.response">
+            <summary>
+            Store original <see cref="T:System.Web.HttpResponse"/> class.
+            </summary>
         </member>
         <member name="M:Castle.MonoRail.Framework.Adapters.ResponseAdapter.#ctor(System.Web.HttpResponse,Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.IUrlBuilder,Castle.MonoRail.Framework.IServerUtility,Castle.MonoRail.Framework.Routing.RouteMatch,System.String)">
             <summary>
@@ -2599,12 +2638,29 @@
             to a controller
             </summary>
         </member>
+        <member name="T:Castle.MonoRail.Framework.Descriptors.IDynamicActionProviderDescriptorBuilder">
+            <summary>
+            Contract for <see cref="T:Castle.MonoRail.Framework.Descriptors.DynamicActionProviderDescriptor"/> builders.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Descriptors.IDynamicActionProviderDescriptorBuilder.BuildDynamicActionProviderDescriptors">
+            <summary>
+            Builds the dynamic action provider descriptors.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Castle.MonoRail.Framework.DynamicActionProviderAttribute.#ctor(System.Type)">
             <summary>
             Constructs a <see cref="T:Castle.MonoRail.Framework.DynamicActionProviderAttribute"/>
             associating the supplied type as the action provider.
             </summary>
             <param name="providerType"></param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.DynamicActionProviderAttribute.BuildDynamicActionProviderDescriptors">
+            <summary>
+            Builds the dynamic action provider descriptors.
+            </summary>
+            <returns></returns>
         </member>
         <member name="P:Castle.MonoRail.Framework.DynamicActionProviderAttribute.ProviderType">
             <summary>
@@ -2827,6 +2883,21 @@
             <param name="controllerContext">The controller context.</param>
             <param name="returnType">Type being returned.</param>
             <param name="returnValue">The return value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSONReturnBinderAttribute.SetContentType(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Sets response content type
+            </summary>
+            <param name="context">The context</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSONReturnBinderAttribute.GetRawValue(System.Type,System.Object,Castle.MonoRail.Framework.Services.IJSONSerializer)">
+            <summary>
+            Converts target object to its JSON representation
+            </summary>
+            <param name="returnType">Type of the target object</param>
+            <param name="returnValue">The target object</param>
+            <param name="serializer">The JSON serializer</param>
             <returns></returns>
         </member>
         <member name="P:Castle.MonoRail.Framework.JSONReturnBinderAttribute.Properties">
@@ -4213,6 +4284,12 @@
             </summary>
             <value>The resource factory.</value>
         </member>
+        <member name="P:Castle.MonoRail.Framework.IMonoRailServices.TransformFilterFactory">
+            <summary>
+            Gets or sets the transformfilter factory.
+            </summary>
+            <value>The resource factory.</value>
+        </member>
         <member name="P:Castle.MonoRail.Framework.IMonoRailServices.ServiceInitializer">
             <summary>
             Gets or sets the service initializer.
@@ -4230,6 +4307,12 @@
             Gets or sets the extension manager.
             </summary>
             <value>The extension manager.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.IMonoRailServices.DynamicActionProviderFactory">
+            <summary>
+            Gets or sets the dynamic action provider factory.
+            </summary>
+            <value>The dynamic action provider factory.</value>
         </member>
         <member name="M:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.#ctor(System.IServiceProvider)">
             <summary>
@@ -4395,6 +4478,12 @@
             </summary>
             <value>The resource factory.</value>
         </member>
+        <member name="P:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.TransformFilterFactory">
+            <summary>
+            Gets or sets the transformfilter factory.
+            </summary>
+            <value>The resource factory.</value>
+        </member>
         <member name="P:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.ServiceInitializer">
             <summary>
             Gets or sets the service initializer.
@@ -4406,6 +4495,12 @@
             Gets or sets the helper factory.
             </summary>
             <value>The helper factory.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.DynamicActionProviderFactory">
+            <summary>
+            Gets or sets the dynamic action provider factory.
+            </summary>
+            <value>The dynamic action provider factory.</value>
         </member>
         <member name="T:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.ServiceIdentification">
             <summary>
@@ -4550,6 +4645,21 @@
         <member name="F:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.ServiceIdentification.AjaxProxyGenerator">
             <summary>
             The <see cref="T:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.IAjaxProxyGenerator"/> service
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.ServiceIdentification.EngineContextFactory">
+            <summary>
+            The <see cref="T:Castle.MonoRail.Framework.IEngineContextFactory"/> service.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.ServiceIdentification.DynamicActionProviderFactory">
+            <summary>
+            The <see cref="T:Castle.MonoRail.Framework.IDynamicActionProviderFactory"/> service.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.ServiceIdentification.DynamicActionProviderDescriptorProvider">
+            <summary>
+            The <see cref="T:Castle.MonoRail.Framework.Providers.IDynamicActionProviderDescriptorProvider"/> service.
             </summary>
         </member>
         <member name="T:Castle.MonoRail.Framework.Descriptors.ActionMetaDescriptor">
@@ -4724,23 +4834,62 @@
             </summary>
             <value>The filters.</value>
         </member>
+        <member name="P:Castle.MonoRail.Framework.Descriptors.ControllerMetaDescriptor.DynamicActionProviders">
+            <summary>
+            Gets or sets the dynamic action providers.
+            </summary>
+            <value>The dynamic action providers.</value>
+        </member>
         <member name="P:Castle.MonoRail.Framework.Descriptors.ControllerMetaDescriptor.Scaffoldings">
             <summary>
             Gets the scaffoldings.
             </summary>
             <value>The scaffoldings.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Descriptors.ControllerMetaDescriptor.ActionProviders">
-            <summary>
-            Gets the action providers.
-            </summary>
-            <value>The action providers.</value>
-        </member>
         <member name="P:Castle.MonoRail.Framework.Descriptors.ControllerMetaDescriptor.TransformFilters">
             <summary>
             Gets or sets the transform filters.
             </summary>
             <value>The transform filters.</value>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Descriptors.DynamicActionProviderDescriptor">
+            <summary>
+            Represents the meta information and type of
+            an implementation of <see cref="T:Castle.MonoRail.Framework.IDynamicActionProvider"/>.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Descriptors.DynamicActionProviderDescriptor.#ctor(System.Type,Castle.MonoRail.Framework.DynamicActionProviderAttribute)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Descriptors.DynamicActionProviderDescriptor"/> class.
+            </summary>
+            <param name="dynamicActionProviderType">Type of the provider.</param>
+            <param name="attribute">The attribute.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Descriptors.DynamicActionProviderDescriptor.Clone">
+            <summary>
+            Creates a new object that is a copy of the current instance.
+            </summary>
+            <returns>
+            A new object that is a copy of this instance.
+            </returns>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Descriptors.DynamicActionProviderDescriptor.DynamicActionProviderType">
+            <summary>
+            Gets the type of the dynamic action provider.
+            </summary>
+            <value>The type of the dynamic action provider.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Descriptors.DynamicActionProviderDescriptor.DynamicActionProviderInstance">
+            <summary>
+            Gets or sets the dynamic action provider instance.
+            </summary>
+            <value>The dynamic action provider instance.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Descriptors.DynamicActionProviderDescriptor.Attribute">
+            <summary>
+            Gets the attribute.
+            </summary>
+            <value>The attribute.</value>
         </member>
         <member name="T:Castle.MonoRail.Framework.Descriptors.FilterDescriptor">
             <summary>
@@ -5848,12 +5997,302 @@
             <param name="target">The target name (ie, a hint about the controller being validated)</param>
             <param name="violationMessage">The violation message.</param>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.FValidateWebValidator.FValidateGenerator.SetAsGreaterThan(System.String,System.String,Castle.Components.Validator.IsGreaterValidationType,System.String)">
+            <summary>
+            Sets that a field's value must greater than another field's value.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="comparisonFieldName">The name of the field to compare with.</param>
+            <param name="validationType">The type of data to compare.</param>
+            <param name="violationMessage">The violation message.</param>
+            <remarks>Not implemented by the JQuery validate plugin. Done via a custom rule.</remarks>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.FValidateWebValidator.FValidateGenerator.SetAsLesserThan(System.String,System.String,Castle.Components.Validator.IsGreaterValidationType,System.String)">
+            <summary>
+            Sets that a field's value must be lesser than another field's value.
+            </summary>
+            <remarks>Not implemented by the JQuery validate plugin. Done via a custom rule.</remarks>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="comparisonFieldName">The name of the field to compare with.</param>
+            <param name="validationType">The type of data to compare.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.FValidateWebValidator.FValidateGenerator.AddValidator(System.String,System.String)">
             <summary>
             Adds the validator.
             </summary>
             <param name="target">The target.</param>
             <param name="validator">The validator.</param>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator">
+            <summary>
+            Implementation of a browser validator that uses the <c>JQuery.validate</c> 
+            plugin for <c>JQuery</c>, which can be found here : 
+            <c>http://plugins.jquery.com/project/validate</c>
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.CreateConfiguration(System.Collections.IDictionary)">
+            <summary>
+            Implementors should attempt to read their specific configuration
+            from the <paramref name="parameters"/>, configure and return
+            a class that extends from <see cref="T:Castle.Components.Validator.BrowserValidationConfiguration"/>
+            </summary>
+            <param name="parameters"></param>
+            <returns>
+            An instance that extends from <see cref="T:Castle.Components.Validator.BrowserValidationConfiguration"/>
+            </returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.CreateGenerator(Castle.Components.Validator.BrowserValidationConfiguration,Castle.Components.Validator.InputElementType,System.Collections.IDictionary)">
+            <summary>
+            Implementors should return their generator instance.
+            </summary>
+            <param name="configuration"></param>
+            <param name="inputType"></param>
+            <param name="attributes"></param>
+            <returns>A generator instance</returns>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration">
+            <summary>
+            The <see cref="T:Castle.Components.Validator.BrowserValidationConfiguration"/> implementation for the JQuery validate plugin.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration.AddCustomRule(System.String,System.String,System.String)">
+            <summary>
+            Adds a custom rule.
+            </summary>
+            <param name="name">The name of the rule.</param>
+            <param name="violationMessage">The violation message.</param>
+            <param name="rule">
+            The rule: must be an anonymous method declaration or the validation 
+            function reference (the function's name without parenthesis).
+            </param>
+            <example>
+            This example adds a custom rule by passing an anonymous method:
+            <code>
+            AddCustomRule( 
+            	"maxWords", 
+            	"Please enter {0} words or less.", 
+            	"function(value, element, params) { return this.optional(element) || value.match(/\b\w+\b/g).length &lt; params; }" );
+            </code>
+            This example adds a custom rule by passing a method reference, assuming that a 
+            referenced javascript file contains the <c>validateMaxWords</c> function.
+            <code>
+            AddCustomRule( 
+            	"maxWords", 
+            	"Please enter {0} words or less.", 
+            	"validateMaxWords" );
+            </code>
+            </example>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration.Configure(System.Collections.IDictionary)">
+            <summary>
+            Configures the JQuery Validate plugin based on the supplied parameters.
+            </summary>
+            <param name="parameters">The parameters.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration.CreateBeforeFormClosed(System.String)">
+            <summary>
+            Implementors should return any tag/js content
+            to be rendered after the form tag is closed.
+            </summary>
+            <param name="formId">The form id.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator">
+            <summary>
+            The <see cref="T:Castle.Components.Validator.IBrowserValidationGenerator"/> implementation for the JQuery validate plugin.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.#ctor(Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration,Castle.Components.Validator.InputElementType,System.Collections.IDictionary)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator"/> class.
+            </summary>
+            <param name="configuration">The configuration.</param>
+            <param name="inputElementType">Type of the input element.</param>
+            <param name="attributes">The attributes.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetDigitsOnly(System.String,System.String)">
+            <summary>
+            Set that a field should only accept digits.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetNumberOnly(System.String,System.String)">
+            <summary>
+            Set that a field should only accept numbers.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetAsRequired(System.String,System.String)">
+            <summary>
+            Sets that a field is required.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetRegExp(System.String,System.String,System.String)">
+            <summary>
+            Sets that a field value must match the specified regular expression.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="regExp">The reg exp.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetEmail(System.String,System.String)">
+            <summary>
+            Sets that a field value must be a valid email address.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetExactLength(System.String,System.Int32)">
+            <summary>
+            Sets that field must have an exact lenght.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="length">The length.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetExactLength(System.String,System.Int32,System.String)">
+            <summary>
+            Sets that field must have an exact lenght.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="length">The length.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetMinLength(System.String,System.Int32)">
+            <summary>
+            Sets that field must have an minimum lenght.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="minLength">The minimum length.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetMinLength(System.String,System.Int32,System.String)">
+            <summary>
+            Sets that field must have an minimum lenght.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="minLength">The minimum length.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetMaxLength(System.String,System.Int32)">
+            <summary>
+            Sets that field must have an maximum lenght.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="maxLength">The maximum length.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetMaxLength(System.String,System.Int32,System.String)">
+            <summary>
+            Sets that field must have an maximum lenght.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="maxLength">The maximum length.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetLengthRange(System.String,System.Int32,System.Int32)">
+            <summary>
+            Sets that field must be between a length range.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="minLength">The minimum length.</param>
+            <param name="maxLength">The maximum length.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetLengthRange(System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Sets that field must be between a length range.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="minLength">The minimum length.</param>
+            <param name="maxLength">The maximum length.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetValueRange(System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Sets that field must be between a value range.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="minValue">Minimum value.</param>
+            <param name="maxValue">Maximum value.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetValueRange(System.String,System.Decimal,System.Decimal,System.String)">
+            <summary>
+            Sets that field must be between a value range.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="minValue">Minimum value.</param>
+            <param name="maxValue">Maximum value.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetValueRange(System.String,System.DateTime,System.DateTime,System.String)">
+            <summary>
+            Sets that field must be between a value range.
+            </summary>
+            <remarks>This is not yet implemented in the JQuery validate plugin. It should be in next version: 1.2.3</remarks>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="minValue">Minimum value.</param>
+            <param name="maxValue">Maximum value.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetValueRange(System.String,System.String,System.String,System.String)">
+            <summary>
+            Sets that field must be between a value range.
+            </summary>
+            <remarks>Note that the string values must only contains numbers.</remarks>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="minValue">Minimum value: a number as a string.</param>
+            <param name="maxValue">Maximum value: a number as a string.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetAsSameAs(System.String,System.String,System.String)">
+            <summary>
+            Set that a field value must be the same as another field's value.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="comparisonFieldName">The name of the field to compare with.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetAsNotSameAs(System.String,System.String,System.String)">
+            <summary>
+            Set that a field value must _not_ be the same as another field's value.
+            </summary>
+            <remarks>Not implemented by the JQuery validate plugin.</remarks>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="comparisonFieldName">The name of the field to compare with.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetDate(System.String,System.String)">
+            <summary>
+            Set that a field value must be a valid date.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetAsGreaterThan(System.String,System.String,Castle.Components.Validator.IsGreaterValidationType,System.String)">
+            <summary>
+            Sets that a field's value must greater than another field's value.
+            </summary>
+            <remarks>
+            Only numeric values can be compared for now. The JQuery validation plugin does not yet support dates comparison.
+            </remarks>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="comparisonFieldName">The name of the field to compare with.</param>
+            <param name="validationType">The type of data to compare.</param>
+            <param name="violationMessage">The violation message.</param>
+            <remarks>Not implemented by the JQuery validate plugin. Done via a custom rule.</remarks>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetAsLesserThan(System.String,System.String,Castle.Components.Validator.IsGreaterValidationType,System.String)">
+            <summary>
+            Sets that a field's value must be lesser than another field's value.
+            </summary>
+            <remarks>Not implemented by the JQuery validate plugin. Done via a custom rule.</remarks>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="comparisonFieldName">The name of the field to compare with.</param>
+            <param name="validationType">The type of data to compare.</param>
+            <param name="violationMessage">The violation message.</param>
         </member>
         <member name="T:Castle.MonoRail.Framework.Helpers.ValidationStrategy.PrototypeWebValidator">
             <summary>
@@ -6078,6 +6517,26 @@
             <param name="target">The target name (ie, a hint about the controller being validated)</param>
             <param name="violationMessage">The violation message.</param>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.PrototypeWebValidator.PrototypeValidationGenerator.SetAsGreaterThan(System.String,System.String,Castle.Components.Validator.IsGreaterValidationType,System.String)">
+            <summary>
+            Sets that a field's value must greater than another field's value.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="comparisonFieldName">The name of the field to compare with.</param>
+            <param name="validationType">The type of data to compare.</param>
+            <param name="violationMessage">The violation message.</param>
+            <remarks>Not implemented by the JQuery validate plugin. Done via a custom rule.</remarks>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.PrototypeWebValidator.PrototypeValidationGenerator.SetAsLesserThan(System.String,System.String,Castle.Components.Validator.IsGreaterValidationType,System.String)">
+            <summary>
+            Sets that a field's value must be lesser than another field's value.
+            </summary>
+            <remarks>Not implemented by the JQuery validate plugin. Done via a custom rule.</remarks>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="comparisonFieldName">The name of the field to compare with.</param>
+            <param name="validationType">The type of data to compare.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
         <member name="T:Castle.MonoRail.Framework.Helpers.ValidationStrategy.ZebdaWebValidator">
             <summary>
             Provides an interface for the Zebda client side JS validator
@@ -6281,6 +6740,26 @@
             Set that a field value must be a valid date.
             </summary>
             <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.ZebdaWebValidationGenerator.SetAsGreaterThan(System.String,System.String,Castle.Components.Validator.IsGreaterValidationType,System.String)">
+            <summary>
+            Sets that a field's value must greater than another field's value.
+            </summary>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="comparisonFieldName">The name of the field to compare with.</param>
+            <param name="validationType">The type of data to compare.</param>
+            <param name="violationMessage">The violation message.</param>
+            <remarks>Not implemented by the JQuery validate plugin. Done via a custom rule.</remarks>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.ZebdaWebValidationGenerator.SetAsLesserThan(System.String,System.String,Castle.Components.Validator.IsGreaterValidationType,System.String)">
+            <summary>
+            Sets that a field's value must be lesser than another field's value.
+            </summary>
+            <remarks>Not implemented by the JQuery validate plugin. Done via a custom rule.</remarks>
+            <param name="target">The target name (ie, a hint about the controller being validated)</param>
+            <param name="comparisonFieldName">The name of the field to compare with.</param>
+            <param name="validationType">The type of data to compare.</param>
             <param name="violationMessage">The violation message.</param>
         </member>
         <member name="T:Castle.MonoRail.Framework.Helpers.RequestContext">
@@ -6719,6 +7198,14 @@
             <param name="target">The target.</param>
             <param name="action">The action.</param>
             <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.AbstractFormRelatedHelper.ObtainValue(System.String,System.Collections.IDictionary)">
+            <summary>
+            Queries the context for the target value
+            </summary>
+            <param name="target">The object to get the value from and to be based on to create the element name.</param>
+            <param name="attributes">The attributes. Accepts a "defaultValue" attribute value.</param>
+            <returns>The generated form element</returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.AbstractFormRelatedHelper.ObtainValue(System.String)">
             <summary>
@@ -7279,6 +7766,36 @@
             </summary>
             <param name="innerContent">Button legend</param>
             <param name="functionCodeOrName">Function definition or name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.AjaxHelper.ButtonToFunction(System.String,System.String,System.Object,System.Collections.IDictionary)">
+            <summary>
+            Returns a button that will trigger a javascript function using the 
+            onclick handler and return false after the fact.
+            </summary>
+            <param name="innerContent">Button legend</param>
+            <param name="functionCodeOrName">Function name</param>
+            <param name="parameter">The parameter.</param>
+            <param name="attributes">Attributes to be applied to the input html element</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.AjaxHelper.ButtonToFunction(System.String,System.String,System.Object)">
+            <summary>
+            Returns a button that will trigger a javascript function using the 
+            onclick handler and return false after the fact.
+            </summary>
+            <param name="innerContent">Content of the inner.</param>
+            <param name="functionCodeOrName">Name of the function.</param>
+            <param name="parameter">The parameter to the function.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.AjaxHelper.ButtonTo(System.String,System.String,System.String)">
+            <summary>
+            Buttons to.
+            </summary>
+            <param name="innerContent">Content of the inner.</param>
+            <param name="controller">The controller.</param>
+            <param name="action">The action.</param>
             <returns></returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.AjaxHelper.ButtonToRemote(System.String,System.String,System.Collections.IDictionary)">
@@ -8876,6 +9393,21 @@
             </summary>
             <param name="target">The object to get the value from and to be based on to create the element name.</param>
             <returns>The generated form element</returns>
+            <remarks>
+            The value of the password field is extracted from the target (if present) and used as the <c>value</c> attribute
+            of the generated form element. In situations where this is a security risk consider using 
+            <see cref="M:Castle.MonoRail.Framework.Helpers.FormHelper.PasswordField(System.String,Castle.MonoRail.Framework.Helpers.ValueBehaviour)"/> and define <see cref="F:Castle.MonoRail.Framework.Helpers.ValueBehaviour.DoNotSet"/>
+            as the value behaviour to suppress this behaviour.
+            </remarks>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.PasswordField(System.String,Castle.MonoRail.Framework.Helpers.ValueBehaviour)">
+            <summary>
+            Generates a password input field.
+            </summary>
+            <param name="target">The object to get the value from and to be based on to create the element name.</param>
+            <param name="valueBehaviour">The value behaviour which defines whether the <c>value</c> attribute
+            will be filled from the target.</param>
+            <returns>The generated form element</returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.PasswordField(System.String,System.Collections.IDictionary)">
             <summary>
@@ -8883,6 +9415,22 @@
             </summary>
             <param name="target">The object to get the value from and to be based on to create the element name.</param>
             <param name="attributes">Attributes for the FormHelper method and for the html element it generates</param>
+            <returns>The generated form element</returns>
+            <remarks>
+            The value of the password field is extracted from the target (if present) and used as the <c>value</c> attribute
+            of the generated form element. In situations where this is a security risk consider using 
+            <see cref="M:Castle.MonoRail.Framework.Helpers.FormHelper.PasswordField(System.String,System.Collections.IDictionary,Castle.MonoRail.Framework.Helpers.ValueBehaviour)"/> and define <see cref="F:Castle.MonoRail.Framework.Helpers.ValueBehaviour.DoNotSet"/>
+            as the value behaviour to suppress this behaviour.
+            </remarks>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.PasswordField(System.String,System.Collections.IDictionary,Castle.MonoRail.Framework.Helpers.ValueBehaviour)">
+            <summary>
+            Generates a password input field.
+            </summary>
+            <param name="target">The object to get the value from and to be based on to create the element name.</param>
+            <param name="attributes">Attributes for the FormHelper method and for the html element it generates</param>
+            <param name="valueBehaviour">The value behaviour which defines whether the <c>value</c> attribute
+            will be filled from the target.</param>
             <returns>The generated form element</returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.PasswordNumberField(System.String)">
@@ -8898,6 +9446,28 @@
             </remarks>
             <param name="target">The object to get the value from and to be based on to create the element name.</param>
             <returns>The generated form element</returns>
+            <remarks>
+            The value of the password field is extracted from the target (if present) and used as the <c>value</c> attribute
+            of the generated form element. In situations where this is a security risk consider using 
+            <see cref="M:Castle.MonoRail.Framework.Helpers.FormHelper.PasswordNumberField(System.String,Castle.MonoRail.Framework.Helpers.ValueBehaviour)"/> and define <see cref="F:Castle.MonoRail.Framework.Helpers.ValueBehaviour.DoNotSet"/>
+            as the value behaviour to suppress this behaviour.
+            </remarks>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.PasswordNumberField(System.String,Castle.MonoRail.Framework.Helpers.ValueBehaviour)">
+            <summary>
+            Generates an input password element with a javascript that prevents
+            chars other than numbers from being entered.
+            <para>
+            The value is extracted from the target (if available)
+            </para>
+            </summary>
+            <param name="target">The object to get the value from and to be based on to create the element name.</param>
+            <param name="valueBehaviour">The value behaviour which defines whether the <c>value</c> attribute
+            will be filled from the target.</param>
+            <returns>The generated form element</returns>
+            <remarks>
+            You must invoke <see cref="M:Castle.MonoRail.Framework.Helpers.FormHelper.InstallScripts"/> before using it
+            </remarks>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.PasswordNumberField(System.String,System.Collections.IDictionary)">
             <summary>
@@ -8931,6 +9501,47 @@
             <param name="target">The object to get the value from and to be based on to create the element name.</param>
             <param name="attributes">Attributes for the FormHelper method and for the html element it generates</param>
             <returns>The generated form element</returns>
+            <remarks>
+            The value of the password field is extracted from the target (if present) and used as the <c>value</c> attribute
+            of the generated form element. In situations where this is a security risk consider using 
+            <see cref="M:Castle.MonoRail.Framework.Helpers.FormHelper.PasswordNumberField(System.String,System.Collections.IDictionary,Castle.MonoRail.Framework.Helpers.ValueBehaviour)"/> and define <see cref="F:Castle.MonoRail.Framework.Helpers.ValueBehaviour.DoNotSet"/>
+            as the value behaviour to suppress this behaviour.
+            </remarks>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.PasswordNumberField(System.String,System.Collections.IDictionary,Castle.MonoRail.Framework.Helpers.ValueBehaviour)">
+            <summary>
+            Generates an input password element with a javascript that prevents
+            chars other than numbers from being entered.
+            <para>
+            The value is extracted from the target (if available)
+            </para>
+            	<para>
+            You can optionally pass an <c>exceptions</c> value through the dictionary.
+            It must be a comma separated list of chars that can be accepted on the field.
+            For example:
+            </para>
+            	<code>
+            FormHelper.NumberField("product.price", {exceptions='13,10,11'})
+            </code>
+            In this case the key codes 13, 10 and 11 will be accepted on the field.
+            <para>
+            You can aslo optionally pass an <c>forbid</c> value through the dictionary.
+            It must be a comma separated list of chars that cannot be accepted on the field.
+            For example:
+            </para>
+            	<code>
+            FormHelper.NumberField("product.price", {forbid='46'})
+            </code>
+            In this case the key code 46 (period) will not be accepted on the field.
+            </summary>
+            <param name="target">The object to get the value from and to be based on to create the element name.</param>
+            <param name="attributes">Attributes for the FormHelper method and for the html element it generates</param>
+            <param name="valueBehaviour">The value behaviour which defines whether the <c>value</c> attribute
+            will be filled from the target.</param>
+            <returns>The generated form element</returns>
+            <remarks>
+            You must invoke <see cref="M:Castle.MonoRail.Framework.Helpers.FormHelper.InstallScripts"/> before using it
+            </remarks>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.LiteralFor(System.String)">
             <summary>Returns the value for specified target with no additional markup. If no value is obtained
@@ -9421,6 +10032,11 @@
         <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.UseZebdaValidation">
             <summary>
             Configures this FormHelper instance to use Zebda for form fields validation
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.UseJQueryValidation">
+            <summary>
+            Configures this FormHelper instance to use JQuery validate plugin for form fields validation
             </summary>
         </member>
         <member name="T:Castle.MonoRail.Framework.Helpers.FormHelper.CheckboxList">
@@ -12521,6 +13137,27 @@
             <param name="options">Custom options</param>
             <returns></returns>
         </member>
+        <member name="T:Castle.MonoRail.Framework.Helpers.ValueBehaviour">
+            <summary>
+            Defines whether the <see cref="T:Castle.MonoRail.Framework.Helpers.FormHelper"/> should extract the value
+            from the target and assign it to the <c>value</c> attribute of the generated
+            HTML elemen.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.Helpers.ValueBehaviour.Set">
+            <summary>
+            The form helper methods extracts the value from the target and assigns
+            it to the <c>value</c> attribute of the generated HTML element.
+            This is the default behaviour.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.Helpers.ValueBehaviour.DoNotSet">
+            <summary>
+            The form helper does not use the target to set the <c>value</c> attribute. This
+            behaviour can be used in cases where it is a potential security risk to have the <c>value</c>
+            attribute filled in with the target value.
+            </summary>
+        </member>
         <member name="T:Castle.MonoRail.Framework.Helpers.WizardHelper">
             <summary>
             Provide useful helpers to be used in a layout view
@@ -14549,7 +15186,7 @@
             Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Providers.DefaultControllerDescriptorProvider"/> class.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Providers.DefaultControllerDescriptorProvider.#ctor(Castle.MonoRail.Framework.Providers.IHelperDescriptorProvider,Castle.MonoRail.Framework.Providers.IFilterDescriptorProvider,Castle.MonoRail.Framework.Providers.ILayoutDescriptorProvider,Castle.MonoRail.Framework.Providers.IRescueDescriptorProvider,Castle.MonoRail.Framework.Providers.IResourceDescriptorProvider,Castle.MonoRail.Framework.Providers.ITransformFilterDescriptorProvider,Castle.MonoRail.Framework.Providers.IReturnBinderDescriptorProvider)">
+        <member name="M:Castle.MonoRail.Framework.Providers.DefaultControllerDescriptorProvider.#ctor(Castle.MonoRail.Framework.Providers.IHelperDescriptorProvider,Castle.MonoRail.Framework.Providers.IFilterDescriptorProvider,Castle.MonoRail.Framework.Providers.ILayoutDescriptorProvider,Castle.MonoRail.Framework.Providers.IRescueDescriptorProvider,Castle.MonoRail.Framework.Providers.IResourceDescriptorProvider,Castle.MonoRail.Framework.Providers.ITransformFilterDescriptorProvider,Castle.MonoRail.Framework.Providers.IReturnBinderDescriptorProvider,Castle.MonoRail.Framework.Providers.IDynamicActionProviderDescriptorProvider)">
             <summary>
             Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Providers.DefaultControllerDescriptorProvider"/> class.
             </summary>
@@ -14560,6 +15197,7 @@
             <param name="resourceDescriptorProvider">The resource descriptor provider.</param>
             <param name="transformFilterDescriptorProvider">The transform filter descriptor provider.</param>
             <param name="returnBinderDescriptorProvider">The return binder descriptor provider.</param>
+            <param name="dynamicActionProviderDescriptorProvider">The dynamic action provider descriptor provider.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Providers.DefaultControllerDescriptorProvider.Service(Castle.MonoRail.Framework.IMonoRailServices)">
             <summary>
@@ -14683,9 +15321,9 @@
             <param name="descriptor">The descriptor.</param>
             <param name="controllerType">Type of the controller.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Providers.DefaultControllerDescriptorProvider.CollectDynamicAction(Castle.MonoRail.Framework.Descriptors.ControllerMetaDescriptor,System.Type)">
+        <member name="M:Castle.MonoRail.Framework.Providers.DefaultControllerDescriptorProvider.CollectDynamicActionProviders(Castle.MonoRail.Framework.Descriptors.ControllerMetaDescriptor,System.Type)">
             <summary>
-            Collects the dynamic action.
+            Collects the dynamic action providers.
             </summary>
             <param name="descriptor">The descriptor.</param>
             <param name="controllerType">Type of the controller.</param>
@@ -14801,6 +15439,55 @@
             Gets the instance.
             </summary>
             <value>The instance.</value>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Providers.DefaultDynamicActionProviderDescriptorProvider">
+            <summary>
+            Creates <see cref="T:Castle.MonoRail.Framework.DynamicActionProviderAttribute"/> from attributes 
+            associated with the <see cref="T:Castle.MonoRail.Framework.IController"/>
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Providers.IDynamicActionProviderDescriptorProvider">
+            <summary>
+            Defines the contract to an implementation 
+            that wish to create <see cref="T:Castle.MonoRail.Framework.Descriptors.DynamicActionProviderDescriptor"/>.
+            </summary>
+            <remarks>
+            The default implementation creates the descriptors
+            based on <see cref="T:Castle.MonoRail.Framework.DynamicActionProviderAttribute"/> associated
+            with the controller
+            </remarks>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Providers.IDynamicActionProviderDescriptorProvider.CollectProviders(System.Type)">
+            <summary>
+            Implementors should collect the dynamic action provider information
+            and return descriptors instances, or an empty array if none 
+            was found.
+            </summary>
+            <param name="controllerType">The controller type</param>
+            <returns>An array of <see cref="T:Castle.MonoRail.Framework.Descriptors.FilterDescriptor"/></returns>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.Providers.DefaultDynamicActionProviderDescriptorProvider.logger">
+            <summary>
+            The logger instance
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Providers.DefaultDynamicActionProviderDescriptorProvider.Service(Castle.MonoRail.Framework.IMonoRailServices)">
+            <summary>
+            Invoked by the framework in order to give a chance to
+            obtain other services
+            </summary>
+            <param name="provider">The service proviver</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Providers.DefaultDynamicActionProviderDescriptorProvider.CollectProviders(System.Type)">
+            <summary>
+            Implementors should collect the dynamic action provider information
+            and return descriptors instances, or an empty array if none
+            was found.
+            </summary>
+            <param name="controllerType">The controller type</param>
+            <returns>
+            An array of <see cref="T:Castle.MonoRail.Framework.Descriptors.FilterDescriptor"/>
+            </returns>
         </member>
         <member name="T:Castle.MonoRail.Framework.Providers.DefaultFilterDescriptorProvider">
             <summary>
@@ -15311,6 +15998,12 @@
             </summary>
             <param name="rule">The rule.</param>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.IRoutingRuleContainer.AddFirst(Castle.MonoRail.Framework.Routing.IRoutingRule)">
+            <summary>
+            Pendent
+            </summary>
+            <param name="rule">The rule.</param>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Routing.IRoutingRuleContainer.Add(Castle.MonoRail.Framework.Routing.IRoutingRule,Castle.MonoRail.Framework.Routing.RouteAction)">
             <summary>
             Pendent
@@ -15318,22 +16011,25 @@
             <param name="rule">The rule.</param>
             <param name="action">The action executed if the rule matches.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Routing.IRoutingRuleContainer.CreateUrl(System.String,System.String,System.String,System.Collections.IDictionary)">
+        <member name="M:Castle.MonoRail.Framework.Routing.IRoutingRuleContainer.AddFirst(Castle.MonoRail.Framework.Routing.IRoutingRule,Castle.MonoRail.Framework.Routing.RouteAction)">
+            <summary>
+            Pendent
+            </summary>
+            <param name="rule">The rule.</param>
+            <param name="action">The action executed if the rule matches.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.IRoutingRuleContainer.CreateUrl(System.String,System.Collections.IDictionary)">
             <summary>
             Pendent
             </summary>
             <param name="routeName">Name of the route.</param>
-            <param name="hostname">The hostname.</param>
-            <param name="virtualPath">The virtual path.</param>
             <param name="parameters">The parameters.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Routing.IRoutingRuleContainer.CreateUrl(System.String,System.String,System.Collections.IDictionary)">
+        <member name="M:Castle.MonoRail.Framework.Routing.IRoutingRuleContainer.CreateUrl(System.Collections.IDictionary)">
             <summary>
             Pendent
             </summary>
-            <param name="hostname">The hostname.</param>
-            <param name="virtualPath">The virtual path.</param>
             <param name="parameters">The parameters.</param>
             <returns></returns>
         </member>
@@ -15357,36 +16053,49 @@
             </summary>
             <param name="rule">The rule.</param>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleContainer.AddFirst(Castle.MonoRail.Framework.Routing.IRoutingRule)">
+            <summary>
+            Adds the specified rule.
+            </summary>
+            <param name="rule">The rule.</param>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleContainer.Add(Castle.MonoRail.Framework.Routing.IRoutingRule,Castle.MonoRail.Framework.Routing.RouteAction)">
             <summary>
             Pendent
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleContainer.CreateUrl(System.String,System.String,System.String,System.Collections.IDictionary)">
+        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleContainer.AddFirst(Castle.MonoRail.Framework.Routing.IRoutingRule,Castle.MonoRail.Framework.Routing.RouteAction)">
+            <summary>
+            Pendent
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleContainer.CreateUrl(System.String,System.Collections.IDictionary)">
             <summary>
             Creates the URL.
             </summary>
             <param name="routeName">Name of the route.</param>
-            <param name="hostname">The hostname.</param>
-            <param name="virtualPath">The virtual path.</param>
             <param name="parameters">The parameters.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleContainer.CreateUrl(System.String,System.String,System.Collections.IDictionary)">
+        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleContainer.CreateUrl(System.Collections.IDictionary)">
             <summary>
             Pendent
             </summary>
-            <param name="hostname">The hostname.</param>
-            <param name="virtualPath">The virtual path.</param>
             <param name="parameters">The parameters.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleContainer.CreateUrl(System.String,System.String,System.Object)">
+        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleContainer.CreateUrl(System.Object)">
             <summary>
             Pendent
             </summary>
-            <param name="hostname">The hostname.</param>
-            <param name="virtualPath">The virtual path.</param>
+            <param name="parameters">The parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleContainer.CreateUrl(System.String,System.Object)">
+            <summary>
+            Pendent
+            </summary>
+            <param name="routeName">Name of the route.</param>
             <param name="parameters">The parameters.</param>
             <returns></returns>
         </member>
@@ -15397,6 +16106,18 @@
             <param name="url">The URL.</param>
             <param name="context">The context.</param>
             <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleContainer.IsExcludedUrl(System.String)">
+            <summary>
+            Determines whether the given url should be excluded from routing.
+            </summary>
+            <param name="appRelativeUrl">The app relative url</param>
+            <returns><c>true</c> if the given url should be excluded from routing; 
+            otherwise, <c>false</c></returns>
+            <remarks>
+            The <paramref name="appRelativeUrl"/> is expected to be relative to the
+            application directory. 
+            </remarks>
         </member>
         <member name="P:Castle.MonoRail.Framework.Routing.RoutingRuleContainer.IsEmpty">
             <summary>
@@ -15412,14 +16133,11 @@
             Implementors can use this interface to implement custom rules. 
             </remarks>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Routing.IRoutingRule.CreateUrl(System.String,System.String,System.Collections.IDictionary,System.Int32@)">
+        <member name="M:Castle.MonoRail.Framework.Routing.IRoutingRule.CreateUrl(System.Collections.IDictionary)">
             <summary>
             Pendent
             </summary>
-            <param name="hostname">The hostname.</param>
-            <param name="virtualPath">The virtual path.</param>
             <param name="parameters">The parameters.</param>
-            <param name="points">The points.</param>
             <returns></returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Routing.IRoutingRule.Matches(System.String,Castle.MonoRail.Framework.IRouteContext,Castle.MonoRail.Framework.Routing.RouteMatch)">
@@ -15452,6 +16170,12 @@
             <summary>
             The Http Request
             </summary>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.IRouteContext.Response">
+            <summary>
+            Gets the response.
+            </summary>
+            <value>The response.</value>
         </member>
         <member name="P:Castle.MonoRail.Framework.IRouteContext.ContextItems">
             <summary>
@@ -15501,14 +16225,11 @@
             <param name="name">The route name.</param>
             <param name="pattern">The pattern.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Routing.PatternRoute.CreateUrl(System.String,System.String,System.Collections.IDictionary,System.Int32@)">
+        <member name="M:Castle.MonoRail.Framework.Routing.PatternRoute.CreateUrl(System.Collections.IDictionary)">
             <summary>
             Pendent
             </summary>
-            <param name="hostname">The hostname.</param>
-            <param name="virtualPath">The virtual path.</param>
             <param name="parameters">The parameters.</param>
-            <param name="points">The points.</param>
             <returns></returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Routing.PatternRoute.Matches(System.String,Castle.MonoRail.Framework.IRouteContext,Castle.MonoRail.Framework.Routing.RouteMatch)">
@@ -15652,16 +16373,52 @@
             </summary>
             <value>The is empty.</value>
         </member>
+        <member name="T:Castle.MonoRail.Framework.Routing.RedirectRoute">
+            <summary>
+            Pendent
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.RedirectRoute.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Routing.RedirectRoute"/> class.
+            </summary>
+            <param name="url">The URL.</param>
+            <param name="redirectUrl">The redirect URL.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.RedirectRoute.CreateUrl(System.Collections.IDictionary)">
+            <summary>
+            Pendent
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.RedirectRoute.Matches(System.String,Castle.MonoRail.Framework.IRouteContext,Castle.MonoRail.Framework.Routing.RouteMatch)">
+            <summary>
+            Determines if the specified URL matches the
+            routing rule.
+            </summary>
+            <param name="url">The URL.</param>
+            <param name="context">The context</param>
+            <param name="match">The match.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Routing.RedirectRoute.RouteName">
+            <summary>
+            Gets the name of the route.
+            </summary>
+            <value>The name of the route.</value>
+        </member>
         <member name="T:Castle.MonoRail.Framework.Routing.RouteContext">
             <summary>
             The default RouteContext
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Routing.RouteContext.#ctor(Castle.MonoRail.Framework.IRequest,System.String,System.Collections.IDictionary)">
+        <member name="M:Castle.MonoRail.Framework.Routing.RouteContext.#ctor(Castle.MonoRail.Framework.IRequest,System.Web.HttpResponse,System.String,System.Collections.IDictionary)">
             <summary>
             Creates a new RouteContext
             </summary>
             <param name="request">The request.</param>
+            <param name="response">The response.</param>
             <param name="applicationPath">The application path.</param>
             <param name="contextItems">The context items.</param>
         </member>
@@ -15674,6 +16431,12 @@
             <summary>
             The Http Request
             </summary>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Routing.RouteContext.Response">
+            <summary>
+            Gets the Http response.
+            </summary>
+            <value>The response.</value>
         </member>
         <member name="P:Castle.MonoRail.Framework.Routing.RouteContext.ContextItems">
             <summary>
@@ -15763,44 +16526,6 @@
             Gets the engine.
             </summary>
             <value>The engine.</value>
-        </member>
-        <member name="T:Castle.MonoRail.Framework.Routing.RoutingRuleWithActionDecorator">
-            <summary>
-            Pendent
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleWithActionDecorator.#ctor(Castle.MonoRail.Framework.Routing.IRoutingRule,Castle.MonoRail.Framework.Routing.RouteAction)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Routing.RoutingRuleWithActionDecorator"/> class.
-            </summary>
-            <param name="inner">The real routing rule.</param>
-            <param name="action">The action.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleWithActionDecorator.CreateUrl(System.String,System.String,System.Collections.IDictionary,System.Int32@)">
-            <summary>
-            Pendent
-            </summary>
-            <param name="hostname">The hostname.</param>
-            <param name="virtualPath">The virtual path.</param>
-            <param name="parameters">The parameters.</param>
-            <param name="points">The points.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Routing.RoutingRuleWithActionDecorator.Matches(System.String,Castle.MonoRail.Framework.IRouteContext,Castle.MonoRail.Framework.Routing.RouteMatch)">
-            <summary>
-            Determines if the specified URL matches the
-            routing rule.
-            </summary>
-            <param name="url">The URL.</param>
-            <param name="context">The context</param>
-            <param name="match">The match.</param>
-            <returns></returns>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Routing.RoutingRuleWithActionDecorator.RouteName">
-            <summary>
-            Gets the name of the route.
-            </summary>
-            <value>The name of the route.</value>
         </member>
         <member name="T:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.IAjaxProxyGenerator">
             <summary>
@@ -16575,6 +17300,55 @@
             Gets the type of the controller.
             </summary>
             <value>The type of the controller.</value>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Services.DefaultDynamicActionProviderFactory">
+            <summary>
+            Standard implementation of <see cref="T:Castle.MonoRail.Framework.IDynamicActionProviderFactory"/>.
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.IDynamicActionProviderFactory">
+            <summary>
+            Depicts the contract used by the engine
+            to obtain implementations of <see cref="T:Castle.MonoRail.Framework.IDynamicActionProvider"/>.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IDynamicActionProviderFactory.Create(System.Type)">
+            <summary>
+            Creates the specified dynamic action provider type.
+            </summary>
+            <param name="dynamicActionProviderType">Type of the dynamic action provider.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.IDynamicActionProviderFactory.Release(Castle.MonoRail.Framework.IDynamicActionProvider)">
+            <summary>
+            Releases the specified dynamic action provider.
+            </summary>
+            <param name="dynamicActionProvider">The dynamic action provider.</param>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.Services.DefaultDynamicActionProviderFactory.logger">
+            <summary>
+            The logger instance
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultDynamicActionProviderFactory.Service(System.IServiceProvider)">
+            <summary>
+            Invoked by the framework in order to give a chance to
+            obtain other services
+            </summary>
+            <param name="provider">The service provider.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultDynamicActionProviderFactory.Create(System.Type)">
+            <summary>
+            Creates the specified dynamic action provider type.
+            </summary>
+            <param name="dynamicActionProviderType">Type of the dynamic action provider.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultDynamicActionProviderFactory.Release(Castle.MonoRail.Framework.IDynamicActionProvider)">
+            <summary>
+            Releases the specified dynamic action provider.
+            </summary>
+            <param name="dynamicActionProvider">The dynamic action provider.</param>
         </member>
         <member name="T:Castle.MonoRail.Framework.Services.DefaultEngineContextFactory">
             <summary>
@@ -17367,13 +18141,6 @@
             <param name="name">The name.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultViewComponentRegistry.NormalizeName(System.String)">
-            <summary>
-            Normalizes the name.
-            </summary>
-            <param name="name">The name.</param>
-            <returns></returns>
-        </member>
         <member name="M:Castle.MonoRail.Framework.Services.DefaultViewComponentRegistry.GetDetails(System.Type)">
             <summary>
             Gets the details.
@@ -18136,6 +18903,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Services.UrlParts.InsertFrontPath(System.String)">
+            <summary>
+            Inserts the piece in front of the existing path.
+            </summary>
+            <param name="piece">The path.</param>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Services.UrlParts.AppendPath(System.String)">
             <summary>
             Pendent
@@ -18269,6 +19042,19 @@
             Exposes methods on top of <see cref="T:Castle.MonoRail.Framework.IRequest"/>
             that can be useful to write unit tests
             </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.IMockRequest.AddCookie(System.Web.HttpCookie)">
+            <summary>
+            Adds a cookie to this mock object cookie collection
+            </summary>
+            <param name="cookie">The cookie.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.IMockRequest.AddCookie(System.String,System.String)">
+            <summary>
+            Adds a cookie to this mock object cookie collection
+            </summary>
+            <param name="name">The name.</param>
+            <param name="cookieContent">The cookie content.</param>
         </member>
         <member name="P:Castle.MonoRail.Framework.Test.IMockRequest.AcceptHeader">
             <summary>
@@ -18711,6 +19497,19 @@
             Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockRequest"/> class.
             </summary>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Test.MockRequest.AddCookie(System.Web.HttpCookie)">
+            <summary>
+            Adds a cookie to this mock object cookie collection
+            </summary>
+            <param name="cookie">The cookie.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.MockRequest.AddCookie(System.String,System.String)">
+            <summary>
+            Adds a cookie to this mock object cookie collection
+            </summary>
+            <param name="name">The name.</param>
+            <param name="cookieContent">The cookie content.</param>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Test.MockRequest.ReadCookie(System.String)">
             <summary>
             Reads the cookie.
@@ -18912,6 +19711,23 @@
             Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockResponse"/> class.
             </summary>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.IsCookiePresent(System.String)">
+            <summary>
+            Determines whether a cookie is present on the response.
+            </summary>
+            <param name="name">The cookie name.</param>
+            <returns>
+            	<c>true</c> if the cookie exists in the response; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.GetCookie(System.String)">
+            <summary>
+            Gets a cookie added through one of
+            the <see cref="M:Castle.MonoRail.Framework.IResponse.CreateCookie(System.Web.HttpCookie)"/> overloads.
+            </summary>
+            <param name="name">The cookie name.</param>
+            <returns></returns>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Test.MockResponse.AppendHeader(System.String,System.String)">
             <summary>
             Appends the header.
@@ -18992,6 +19808,12 @@
             Gets the urls the request was redirected to.
             </summary>
             <value>The redirected to.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.MockResponse.Headers">
+            <summary>
+            Gets the http headers.
+            </summary>
+            <value>The headers.</value>
         </member>
         <member name="P:Castle.MonoRail.Framework.Test.MockResponse.StatusCode">
             <summary>
@@ -19176,7 +19998,7 @@
             Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockServices"/> class with default mock services.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockServices.#ctor(Castle.MonoRail.Framework.Services.IUrlBuilder,Castle.MonoRail.Framework.IFilterFactory,Castle.MonoRail.Framework.IViewEngineManager,Castle.MonoRail.Framework.IActionSelector)">
+        <member name="M:Castle.MonoRail.Framework.Test.MockServices.#ctor(Castle.MonoRail.Framework.Services.IUrlBuilder,Castle.MonoRail.Framework.IFilterFactory,Castle.MonoRail.Framework.IViewEngineManager,Castle.MonoRail.Framework.IActionSelector,Castle.MonoRail.Framework.IDynamicActionProviderFactory)">
             <summary>
             Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockServices"/> class.
             </summary>
@@ -19184,6 +20006,7 @@
             <param name="filterFactory">The filter factory.</param>
             <param name="viewEngineManager">The view engine manager.</param>
             <param name="actionSelector">The action selector.</param>
+            <param name="dynamicActionProviderFactory">The dynamic action provider factory.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Test.MockServices.AddService(System.Type,System.Object)">
             <summary>
@@ -19298,6 +20121,12 @@
             </summary>
             <value>The filter factory.</value>
         </member>
+        <member name="P:Castle.MonoRail.Framework.Test.MockServices.DynamicActionProviderFactory">
+            <summary>
+            Gets or sets the dynamic action provider factory.
+            </summary>
+            <value>The dynamic action provider factory.</value>
+        </member>
         <member name="P:Castle.MonoRail.Framework.Test.MockServices.ControllerDescriptorProvider">
             <summary>
             Gets or sets the controller descriptor provider.
@@ -19355,6 +20184,12 @@
         <member name="P:Castle.MonoRail.Framework.Test.MockServices.ResourceFactory">
             <summary>
             Gets or sets the resource factory.
+            </summary>
+            <value>The resource factory.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.MockServices.TransformFilterFactory">
+            <summary>
+            Gets or sets the transformfilter factory.
             </summary>
             <value>The resource factory.</value>
         </member>
@@ -20323,6 +21158,18 @@
             Initializes a new instance of the ViewComponent class.
             </summary>
         </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponent.#ctor(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.ViewComponent"/> class.
+            </summary>
+            <remarks>
+            Only provided to be used from Controllers 
+            that needs non render related methods implemented by the ViewComponent.
+            Note that the ViewComponent would be in an invalid state 
+            (wont have the view engine context) and any rendering related operation will fail.
+            </remarks>
+            <param name="engineContext">The engine/request context.</param>
+        </member>
         <member name="M:Castle.MonoRail.Framework.ViewComponent.Init(Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IViewComponentContext)">
             <summary>
             Invoked by the framework.
@@ -20817,37 +21664,47 @@
             </value>
         </member>
         <member name="T:Castle.MonoRail.Framework.ViewComponents.DiggStylePagination">
-            <summary>
-            Creates a digg style pagination.
-            <para>
-            Based on Alex Henderson work. See 
-            (Monorail Pagination with Base4.Net)
-            http://blog.bittercoder.com/PermaLink,guid,579711a8-0b16-481b-b52b-ebdfa1a7e225.aspx
-            </para>
-            </summary>
+             <summary>
+             Creates a digg style pagination.
+             <para>
+             Based on Alex Henderson work. See 
+             (Monorail Pagination with Base4.Net)
+             http://blog.bittercoder.com/PermaLink,guid,579711a8-0b16-481b-b52b-ebdfa1a7e225.aspx
+             </para>
+             </summary>
+             
+             <remarks>
+             <list type="table">
+             <listheader><term>Parameters:  </term><description/></listheader>
+             <item><term><c>                      adjacents                                              </c></term>
+             <description>    number of links to show around the current page  (defaults to 2)  </description></item>
+             <item><term><c>                    page    </c> (required)                                      </term>
+             <description><see cref="T:Castle.MonoRail.Framework.Helpers.IPaginatedPage"/> instance (<see cref="T:Castle.MonoRail.Framework.Helpers.PaginationHelper"/>)</description></item>
+             <item><term><c>                 url                                                     </c></term>
+             <description>                    url to link to                                      </description></item>
+             <item><term><c>                useInlineStyle                                   </c></term>
+             <description>     defines if the outputted content will use inline style or css classnames (defaults to true) </description></item>
+             <item><term><c>                renderIfOnlyOnePage                        </c></term>
+             <description>     should the pagination render if there's only one page (defaults to true) </description></item>
+             <item><term><c>                paginatefunction                                </c></term>
+             <description>      a javascript function name to invoke on the page links (instead of a URL)</description>
+             </item>
+             </list>
             
-            <remarks>
-            <para>
-            Parameters: <br/>
-            <c>adjacents</c>: number of links to show around the current page <br/>
-            <c>page</c> (required): <see cref="T:Castle.MonoRail.Framework.Helpers.IPaginatedPage"/> instance (<see cref="T:Castle.MonoRail.Framework.Helpers.PaginationHelper"/>) <br/>
-            <c>url</c>: url to link to<br/>
-            <c>useInlineStyle</c>: defines if the outputted content will use inline style or css classnames (defaults to true)<br/>
-            <c>renderIfOnlyOnePage</c>: should the pagination render if there's only one page (defaults to true)<br/>
-            <c>paginatefunction</c>: a javascript function name to invoke on the page links (instead of a URL)<br/>
-            </para>
-            
-            <para>
-            Supported sections: <br/>
-            <c>startblock</c>: invoked with <c>page</c> <br/>
-            <c>endblock</c>: invoked with <c>page</c> <br/>
-            <c>link</c>: invoked with <c>pageIndex</c>, <c>url</c> and <c>text</c>
-            so you can build a custom link <br/>
-            <c>prev</c>: text displayed instead of "&lt;%lt;prev"  <br/>
-            <c>next</c>: text displayed instead of "next&gt;%gt;"  <br/>
-            </para>
-            
-            </remarks>
+             <list type="table">
+             <listheader><term>Supported sections:  </term><description/></listheader>
+             <item><term><c>                    startblock                                      </c></term>
+             <description>           invoked with <c>page</c>                 </description></item>
+             <item><term><c>                    endblock                                      </c></term>
+             <description>           invoked with <c>page</c>                 </description></item>
+             <item><term><c>                    link                                      </c></term>
+             <description>           invoked with <c>pageIndex</c>, <c>url</c> and <c>text</c>                 </description></item>
+             <item><term><c>                    prev                                      </c></term>
+             <description>           text displayed instead of "&lt;&lt;prev"                 </description></item>
+             <item><term><c>                    next                                      </c></term>
+             <description>           text displayed instead of "next&gt;&gt;"                </description></item>
+             </list>
+             </remarks>
         </member>
         <member name="M:Castle.MonoRail.Framework.ViewComponents.DiggStylePagination.Render">
             <summary>
@@ -20903,6 +21760,14 @@
             Called by the framework once the component instance
             is initialized
             </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.SecurityComponent.IsInRole(System.String,System.String)">
+            <summary>
+            Verify if the user is at least in one of the given role(s).
+            </summary>
+            <param name="role">string representing a role.</param>
+            <param name="roles">string (comma separated) representing an array of roles.</param>
+            <returns><c>true</c> if the user is at least in one of the roles, otherwise <c>false</c>.</returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.ViewComponents.SecurityComponent.Render">
             <summary>
@@ -21792,6 +22657,12 @@
             </summary>
             <value>The resources.</value>
         </member>
+        <member name="P:Castle.MonoRail.Framework.IExecutableAction.TransformFilters">
+            <summary>
+            Gets the transform filters.
+            </summary>
+            <value>The transform filters.</value>
+        </member>
         <member name="P:Castle.MonoRail.Framework.IExecutableAction.CachePolicyConfigurer">
             <summary>
             Gets the cache policy configurer.
@@ -21869,6 +22740,12 @@
             Gets the i18n related resource descriptors.
             </summary>
             <value>The resources.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.BaseExecutableAction.TransformFilters">
+            <summary>
+            Gets the transform filters.
+            </summary>
+            <value>The transform filters.</value>
         </member>
         <member name="P:Castle.MonoRail.Framework.BaseExecutableAction.ReturnBinderDescriptor">
             <summary>
@@ -22854,6 +23731,12 @@
             </summary>
             <param name="resources">The resources.</param>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.CreateTransformsFilters(Castle.MonoRail.Framework.IExecutableAction)">
+            <summary>
+            
+            </summary>
+            <param name="action"></param>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Controller.ResolveLayout(Castle.MonoRail.Framework.IExecutableAction)">
             <summary>
             Resolves the layout override for the specified action
@@ -22923,6 +23806,31 @@
         <member name="M:Castle.MonoRail.Framework.Controller.CopyFilterDescriptors">
             <summary>
             Clones all Filter descriptors, in order to get a writable copy.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.CreateDynamicActionProvidersDescriptors">
+            <summary>
+            Creates the dynamic action providers descriptors.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.CopyDynamicActionProviderDescriptors">
+            <summary>
+            Clones all Dynamic Action Provider descriptors, in order to get a writable copy.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.ProcessDynamicActionProviders">
+            <summary>
+            Processes the dynamic action providers.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.RegisterDynamicActions">
+            <summary>
+            Registers the dynamic actions on the controller. Brought inside for meta descriptor reference.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Controller.DisposeDynamicActionProviders">
+            <summary>
+            Disposes the dynamic action providers.
             </summary>
         </member>
         <member name="M:Castle.MonoRail.Framework.Controller.ProcessRescue(Castle.MonoRail.Framework.IExecutableAction,System.Exception)">
@@ -23601,6 +24509,12 @@
             Gets the i18n related resource descriptors.
             </summary>
             <value>The resources.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.DynamicActionExecutor.TransformFilters">
+            <summary>
+            Gets the transform filters.
+            </summary>
+            <value>The transform filters.</value>
         </member>
         <member name="P:Castle.MonoRail.Framework.DynamicActionExecutor.ReturnBinderDescriptor">
             <summary>
@@ -24532,6 +25446,12 @@
             Enables processing of HTTP Web requests by a custom HttpHandler that implements the <see cref="T:System.Web.IHttpHandler"/> interface.
             </summary>
             <param name="context">An <see cref="T:System.Web.HttpContext"/> object that provides references to the intrinsic server objects (for example, Request, Response, Session, and Server) used to service HTTP requests.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ResourceFileHandler.SetContentCache(System.Web.HttpContext)">
+            <summary>
+            Configures the cache policy for the static content
+            </summary>
+            <param name="context">The context.</param>
         </member>
         <member name="P:Castle.MonoRail.Framework.ResourceFileHandler.IsReusable">
             <summary>

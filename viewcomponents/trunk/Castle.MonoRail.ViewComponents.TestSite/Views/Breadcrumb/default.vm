@@ -19,7 +19,7 @@ component(Breadcrumb)
 component(Breadcrumb with "PathSeparator=&amp;nbsp;&amp;loz;&amp;rArr;&amp;loz;&amp;nbsp;")    
 #component(BreadcrumbViewComponent with "PathSeparator=&nbsp;&loz;&rArr;&loz;&nbsp;")    
 <br /><hr /><br />
-component(Breadcrumb with "cssClassNode=nodeclass" "cssClassRoot=rootclass" "RenderCurrentNodeAsLink=true"  with "PathSeparator=&nbsp;&ni;&nbsp;")    
+component(Breadcrumb with "cssClassNode=nodeclass" "cssClassRoot=rootclass" "RenderCurrentNodeAsLink=true"  with "PathSeparator=&amp;nbsp;&amp;ni;&amp;nbsp;")    
 #component(BreadcrumbViewComponent with "cssClassNode=nodeclass" "cssClassRoot=rootclass" "RenderCurrentNodeAsLink=true"  with "PathSeparator=&nbsp;&ni;&nbsp;")    
 <br /><hr /><br />
 component(Breadcrumb with "ShowToolTips=false" "ShowRoot=false")    

@@ -11,9 +11,6 @@
 			  type="text/css"
 			  href="/style.css"
 			  media="screen, print" />
-<%
-component InsertJavascript, {@Std: "Ajax, Scriptaculous"}
-%>			  
 	</head>
 	<body>
 
@@ -121,6 +118,24 @@ section body: %>
 					</ul>
 <%    end
   end %>
+
+
+
+<% component CollapsiblePanel, {@id:"BreadCrumbComponent",   @expandImagePath:"/Images/expand.jpg", @collapseImagePath:"/Images/collapse.jpg", @collapsed:true}:
+section caption: %>
+<h3>Breadcrumb component</h3>
+<% end
+section body: %>
+					<ul>
+						<li>
+							<a href="/breadcrumb/default.rails">Basic Usage</a>
+						</li>
+					</ul>
+<%    end
+  end %>
+
+
+
 <% component CollapsiblePanel, {@id:"Captcha",   @expandImagePath:"/Images/expand.jpg", @collapseImagePath:"/Images/collapse.jpg", @collapsed:true}:
 section caption: %>
 					<h3>Captcha component</h3>
@@ -240,6 +255,20 @@ section body: %>
 					</ul>	
 <%    end
   end %>
+
+<% component CollapsiblePanel, {@id:"MenuComponent",   @expandImagePath:"/Images/expand.jpg", @collapseImagePath:"/Images/collapse.jpg", @collapsed:true}:
+section caption: %>
+<h3>Menu component</h3>
+<% end
+section body: %>
+					<ul>
+						<li>
+							<a href="/menu/default.rails">Basic Examples</a>
+						</li>
+					</ul>
+<%    end
+  end %>
+
 <% component CollapsiblePanel, {@id:"morelesstext",   @expandImagePath:"/Images/expand.jpg", @collapseImagePath:"/Images/collapse.jpg", @collapsed:true}:
 section caption: %>
 					<h3>More or Less Text component</h3>
@@ -289,5 +318,8 @@ section body: %>
 		</div>
 
 	</body>
+<%
+component InsertJavascript, {@Std: "Ajax, Scriptaculous"}
+%>			  
 
 </html>

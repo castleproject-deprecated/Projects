@@ -15,6 +15,7 @@
 // limitations under the License.
 #endregion
 
+using System.Web.Caching;
 
 namespace Castle.MonoRail.ViewComponents
 {
@@ -427,7 +428,7 @@ namespace Castle.MonoRail.ViewComponents
         private string id;
         private JavascriptHelper helper;
 
-        private JSsegments js;
+//        private JSsegments js;
 
         /// <summary>
         /// Initializes a new instance of the JavascriptComponent class.
@@ -472,8 +473,7 @@ namespace Castle.MonoRail.ViewComponents
             base.Render();
             StringWriter script = new StringWriter();
 
-			js = Context.ContextVars["JSsegments"] as JSsegments ?? new JSsegments();
-			Context.ContextVars["JSsegments"] = js;
+            JSsegments js = helper.Segments;
 
 			// if a script has already been provided with the same id, then we use that one
             // and ignore this one.  This way, multiple components can provide the same script, and
@@ -667,7 +667,7 @@ namespace Castle.MonoRail.ViewComponents
         public override void Render()
         {
             base.Render();
-            JSsegments js = Context.ContextVars["JSsegments"] as JSsegments;
+            JSsegments js = helper.Segments;
 
             CancelView();
             if (js == null)
@@ -1105,7 +1105,17 @@ namespace Castle.MonoRail.ViewComponents
                     else
                         libraryDetails = new List<LibraryDetail>(libraryDefaults);
 
-                    cacheProvider.Store(detailskeyword, libraryDetails);
+                    Cache webcache = HttpContext.Current.Cache;
+                    if (webcache != null)
+                    {
+                        CacheDependency depend = new CacheDependency(new string[0], new string[] { xmlfilename });
+                        webcache.Add(detailskeyword, libraryDetails, depend, Cache.NoAbsoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.Default, null);
+                    }
+                    else
+                    {
+                        cacheProvider.Store(detailskeyword, libraryDetails);
+                    }
+                    
                 }
                 return libraryDetails;
             }
@@ -1123,13 +1133,22 @@ namespace Castle.MonoRail.ViewComponents
                 if (libraryInfo == null)
                 {
 //                    string xmlpath = Path.Combine(Path.GetDirectoryName(this.GetType().Assembly.CodeBase), xmlfilename);
-                    string webPath = engine.Server.MapPath(null);
-                    string xmlpath = Path.Combine(webPath, "jslibraries.xml");
+//                    string webPath = engine.Server.MapPath(null);
+//                    string xmlpath = Path.Combine(webPath, "jslibraries.xml");
+                    string xmlpath = engine.Server.MapPath(VirtualPathUtility.ToAbsolute("~/jslibraries.xml"));
                     if (File.Exists(xmlpath))
                     {
                         libraryInfo = new XmlDocument();
                         libraryInfo.Load(xmlpath);
-                        cacheProvider.Store(xmlfilename, libraryInfo);
+                        Cache webcache = HttpContext.Current.Cache;
+                        if (webcache != null)
+                        {
+                            webcache.Add(xmlfilename, libraryInfo, new CacheDependency(xmlpath), Cache.NoAbsoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.Default, null);
+                        }
+                        else
+                        {
+                            cacheProvider.Store(xmlfilename, libraryInfo);
+                        }
                     }
                 }
                 return libraryInfo;
@@ -1150,6 +1169,14 @@ namespace Castle.MonoRail.ViewComponents
                     }
                 }
                 return "prototype";
+            }
+        }
+
+        internal JSsegments Segments
+        {
+            get
+            {
+                return js;
             }
         }
 

@@ -12,9 +12,11 @@
 			  href="/style.css"
 			  media="screen, print" />
 #if ($css)
+<style>
 $css
+</style>
 #end			  
-		#component(InsertJavascript with "Std=Ajax, Scriptaculous")
+		#component(InsertJavascript )
 	</head>
 	<body>
 
@@ -121,6 +123,18 @@ $css
 #end
 #end
 
+#blockcomponent(CollapsiblePanel with "id=BrumdcrumbComponent"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#caption
+<h3>Breadcrumb component</h3>
+#end
+#body
+					<ul>
+						<li>
+							<a href="/breadcrumb/default.rails">Basic Usage</a>
+						</li>
+					</ul>
+#end
+#end
 #blockcomponent(CollapsiblePanel with "id=ColumnComponent"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
 #caption
 <h3>Columns component</h3>
@@ -254,6 +268,20 @@ $css
 					</ul>	
 #end
 #end
+#blockcomponent(CollapsiblePanel with "id=MenuComponent"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#caption
+<h3>Menu component</h3>
+#end
+#body
+					<ul>
+						<li>
+							<a href="/menu/default.rails">Basic Examples</a>
+						</li>
+					</ul>
+#end
+#end
+
+
 #blockcomponent(CollapsiblePanel with "id=morelesstext"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
 #caption
 					<h3>More or Less Text component</h3>

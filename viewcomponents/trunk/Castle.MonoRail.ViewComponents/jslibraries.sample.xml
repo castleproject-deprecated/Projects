@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<libraries xmlns="http://schemas.castleproject.org/MR/2008/11/JSLibrary" preferredLibrary="jquery">
+<libraries xmlns="http://schemas.castleproject.org/MR/2008/11/JSLibrary" preferredLibrary="prototype">
 	<library name="prototype" useGoogle="false" autoLoad="true" alias="ajax" version="1.6.0.3"/>
   <library name="scriptaculous" alias="effects2" autoLoad="true" useGoogle="false"  version="1.8.1" dependsOn="prototype"/>
   <library name="effectsfat" autoLoad="true" useGoogle="false"  dependsOn="prototype"/>

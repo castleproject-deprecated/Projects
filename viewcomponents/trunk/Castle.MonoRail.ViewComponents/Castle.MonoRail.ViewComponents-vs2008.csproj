@@ -77,6 +77,12 @@
     <Compile Include="JavascriptComponent.cs" />
     <Compile Include="LinkSubmitButtonComponent.cs" />
     <Compile Include="MaskedTextboxComponent.cs" />
+    <Compile Include="Menu.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Menu.resx</DependentUpon>
+    </Compile>
+    <Compile Include="MenuComponent.cs" />
     <Compile Include="MobileFilter.cs" />
     <Compile Include="MoreLessTextComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,6 +105,11 @@
     <EmbeddedResource Include="CollapsiblePanelScripts.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CollapsiblePanelScripts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menu.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Menu.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

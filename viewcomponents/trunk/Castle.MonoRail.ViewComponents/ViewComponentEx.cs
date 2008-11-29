@@ -281,7 +281,7 @@ namespace Castle.MonoRail.ViewComponents
 
     /// <summary>
     /// Base class to be inherited by ViewComponents which access
-    /// the ASP.NET SiteMap.   Handles the Provider &  SiteMapProvider properties,
+    /// the ASP.NET SiteMap.   Handles the Provider &amp;  SiteMapProvider properties,
     /// defaulting to the values in web.config, as does ASP.NET
     /// 
     /// Also added a SiteMapFile property, to set it more directly.
@@ -292,7 +292,7 @@ namespace Castle.MonoRail.ViewComponents
         /// Gets or sets the site map file.
         /// </summary>
         /// <value>The site map file.</value>
-        [ViewComponentParam("SiteMapFile", Default = "~/web.sitemap")]
+        [ViewComponentParam("SiteMapFile")]
         public string SiteMapFile { get; set; }
 
         SiteMapProvider m_Provider;
@@ -314,7 +314,7 @@ namespace Castle.MonoRail.ViewComponents
                     {
                         m_Provider= SiteMap.Providers[SiteMapProvider];
                     }
-                    else if (SiteMap.Provider != null)
+                    else if (this.SiteMapFile ==null)
                     {
                         m_Provider= SiteMap.Provider;
                     }
@@ -324,7 +324,7 @@ namespace Castle.MonoRail.ViewComponents
                         // Create an instance of the XmlSiteMapProvider class.
                         XmlSiteMapProvider testXmlProvider = new XmlSiteMapProvider();
                         NameValueCollection providerAttributes = new NameValueCollection(1);
-                        providerAttributes.Add("siteMapFile", this.SiteMapFile);
+                        providerAttributes.Add("siteMapFile", this.SiteMapFile ?? "~/web.sitemap");
 
                         // Initialize the provider with a provider name and file name.
                         testXmlProvider.Initialize("ViewComponentUsingSiteMapProvider", providerAttributes);

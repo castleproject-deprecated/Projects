@@ -26,11 +26,172 @@ namespace Castle.MonoRail.ViewComponents
 	/// <summary>
     /// A ViewComponent that renders a collapsible panel.
     /// </summary>
+    /// <remarks>
+    /// 
+    /// CollapsiblePanelViewComponent is a blockcomponent with two section and 12 parameters.
+    ///  
+    /// <para><list type="table"><listheader>
+    /// 
+    /// <term>                                Parameter                                                             </term>
+    /// <description>      Description                                                                       </description>
+    /// </listheader>
+    /// <item>
+    /// <term>                                 id                                                                 </term>
+    /// <description>
+    /// 
+    /// string, required.  Unique identifer for this control.
+    /// 
+    /// </description></item>
+    /// <item>
+    /// <term>                                 expandImagePath                                                                 </term>
+    /// <description>
+    /// 
+    /// string, optional.  Path to image for "Click to Expand" link.  Both expandImagePath &amp; collapseImagePath must be given together.
+    /// If either is missing, uses text link instead on image.
+    /// 
+    /// </description></item>
+    /// <item>
+    /// <term>                                 collapseImagePath                                                                 </term>
+    /// <description>
+    /// 
+    /// string, optional.  Path to image for "Click to Collapse" link.  Both expandImagePath and collapseImagePath must be given together.
+    /// If either is missing, uses text link instead on image.
+    /// 
+    /// </description></item>
+    /// <item>
+    /// <term>                                 expandLinkText                                                                 </term>
+    /// <description>
+    /// 
+    /// string, optional.  Text use for "Click to Expand" link.  Defaults to "Show".
+    /// 
+    /// </description></item>
+    /// <item>
+    /// <term>                                 collapseLinkText                                                                 </term>
+    /// <description>
+    /// 
+    /// string, optional.  Text use for "Click to Collapse" link.  Defaults to "Hide".
+    /// 
+    /// </description></item>
+    /// <item>
+    /// <term>                                 caption                                                                 </term>
+    /// <description>
+    /// 
+    /// string, optional.  Text use for in the caption of the panel.  May alsoo 
+    /// be specified in the "Caption" section. (section take precedence over parameter)
+    /// 
+    /// </description></item>
+    /// <item>
+    /// <term>                                 cssClass                                                                 </term>
+    /// <description>
+    /// 
+    /// string, optional.  CSS Class assigned to panel.  Defaults to "collapsiblePanel".
+    /// 
+    /// </description></item>
+    /// <item>
+    /// <term>                                 style                                                                 </term>
+    /// <description>
+    /// 
+    /// string, optional.  Extra inline stylesheet items that may be added to the panel.
+    /// 
+    /// </description></item>
+    /// <item>
+    /// <term>                                 collapsed                                                                 </term>
+    /// <description>
+    /// 
+    /// boolean, optional.  Specifies whether the panel should be initially collapsed. Defaults to <c>false</c>.
+    /// 
+    /// </description></item>
+    /// <item>
+    /// <term>                                 effect                                                                 </term>
+    /// <description>
+    /// 
+    /// string, optional.  The style of effect to use to open and close the panel.  Defaults to "slide".  
+    /// Note, only implemented when using prototype library.  under jQuery, "slide" is always iused.
+    /// 
+    /// </description></item>
+    /// <item>
+    /// <term>                                 effectDuration                                                                 </term>
+    /// <description>
+    /// 
+    /// float, optional.  The length of time used to create the opening effect.  Defaults to .3 seconds.
+    /// 
+    /// </description></item>
+    /// <item>
+    /// <term>                                 toggleOnClickHeader                                                                 </term>
+    /// <description>
+    /// 
+    /// boolean, optional.  Specifies if the panel header (caption) itself should be the link to open and close the panel, 
+    /// rather than a specific link or image (defaults to false).
+    /// 
+    /// </description></item>
+    /// <item>
+    /// <term>                                 JSLibrary                                                                 </term>
+    /// <description>
+    /// 
+    /// string, optional.  Specifed which Javascript library to use.  Presently only "prototype" and "jquery" are implemented.
+    /// Defaults to value in jslibraries.xml, if present, or "prototype".
+    /// 
+    /// </description></item>
+    /// </list>
+    /// <list type="table"><listheader>
+    /// 
+    /// <term>                                Section                                                             </term>
+    /// <description>      Description                                                                       </description>
+    /// </listheader>
+    /// <item>
+    /// <term>                                 body                                                                 </term>
+    /// <description>
+    /// 
+    /// Specifies the body of the panel which is to be hidden and revealed.  
+    /// Optional, but the control is rather pointless unless specified.
+    /// 
+    /// </description></item>
+    /// <item>
+    /// <term>                                 caption                                                                 </term>
+    /// <description>
+    /// 
+    /// Specifies the text for the panel header.  May alternately be specifed in the 'caption' parameter.
+    /// 
+    /// </description></item>
+    /// </list></para>
+    /// </remarks>
+    /// <example><code><![CDATA[
+    /// #blockcomponent(CollapsiblePanel with "id=ColumnComponent"  
+    ///                 "expandImagePath=/Images/expand.jpg" 
+    ///                 "collapseImagePath=/Images/collapse.jpg" 
+    ///                 "collapsed=true")
+    /// #caption
+    /// Columns component
+    /// #end
+    /// #body
+    ///		<a href="/columns/index.rails">Basic Usage</a>
+    ///#end
+    /// #end
+    /// ]]></code>
+    /// will generate Htmll like this:
+    /// 
+    /// <code><![CDATA[
+    /// <div id='ColumnComponent' class='collapsiblePanel'>
+    /// <div class='header'>
+    /// <table><tr><td>
+    ///   <img id='ColumnComponentToggle' src='/Images/expand.jpg' class='toggleImage' 
+    ///       onclick='javascript:expandCollapse(ColumnComponentOpts)' 
+    ///       alt='Show' title='Click to expand/collapse'/>
+    ///   </td>
+    ///   <td class='caption'><h3>Columns component</h3></td>
+    /// </tr></table>
+    /// </div>
+    /// <div id='ColumnComponentBody' class='body'style='display:none'>
+    /// 	<a href="/columns/index.rails">Basic Usage</a>
+    /// </div></div>
+    /// <script type="text/javascript">
+    /// var ColumnComponentOpts = {controlName: 'ColumnComponentBody', togglerName: 'ColumnComponentToggle', collapseImagePath:'/Images/collapse.jpg', expandImagePath:'/Images/expand.jpg'};
+    /// </script>
+    /// ]]></code></example>
+
     [ViewComponentDetails("CollapsiblePanel",Sections="body,caption")]
     public class CollapsiblePanelComponent : ViewComponentEx
     {
-        private const string wasScriptaculousInstalledKey = "wasScriptaculousInstalled";
-
         private string id;
         private string expandImagePath;
         private string collapseImagePath;
@@ -56,7 +217,6 @@ namespace Castle.MonoRail.ViewComponents
         /// </summary>
         public override void Initialize()
         {
-            this.Flash["test"] = (this.Flash["test"] ?? "") + "+";
             GetParameters();
 
             initialCommand = collapsed ? expandLinkText : collapseLinkText;
@@ -163,7 +323,7 @@ namespace Castle.MonoRail.ViewComponents
 
             helper.IncludeScriptText(script);
             helper.IncludeStandardScripts(jsLibrary);
-            helper.IncludeScriptText("\nvar CollapseConponentDefaults = {effect: 'blind', effectDuration:0.3,expandLinkText: 'Show', collapseLinkText: 'Hide'};");
+            helper.IncludeScriptText("\nvar CollapseComponentDefaults = {effect: 'blind', effectDuration:0.3,expandLinkText: 'Show', collapseLinkText: 'Hide'};");
         }
 
         private void RenderHeader()

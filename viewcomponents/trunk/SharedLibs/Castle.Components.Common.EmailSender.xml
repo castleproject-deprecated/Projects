@@ -62,7 +62,7 @@
         <member name="M:Castle.Components.Common.EmailSender.Smtp.SmtpSender.CreateMailMessage(Castle.Components.Common.EmailSender.Message)">
             <summary>
             Converts a message from Castle.Components.Common.EmailSender.Message  type
-            to System.Web.Mail.MailMessage
+            to System.Net.Mail.MailMessage
             </summary>
             <param name="message">The message to convert.</param>
             <returns>The converted message .</returns>
