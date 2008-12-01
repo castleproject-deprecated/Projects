@@ -1,0 +1,35 @@
+﻿<h1>Menu Examples</h1>
+#capturefor(css)
+<!-- CSS styles shown here are used only for appearance.  Styles needed for functionality are included inline. -->
+.vertMenu .MenuItem
+{
+   width:165px;
+	background-color:Aqua;
+}
+.vertMenu  .MenuFrame 
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+ 	float:left;
+}
+.vertMenu  li
+{
+    list-style: none;
+}
+.vertMenu  ul
+{
+    zIndex:1000;
+    position: absolute;
+}
+#end
+
+<h4>#Component(Menu with "direction=horizontal" "cssClass=vertMenu" "SiteMapFile=~/views/menu/minimenu.sitemap")   </h4>
+(see Page Source for CSS used)<br />
+#component(Menu with "direction=horizontal" "cssClass=vertMenu" "SiteMapFile=~/views/menu/minimenu.sitemap")
+
+<br /><br /><br /><hr />
+
+<h4>#Component(Menu)   Verticle menu, default styling. (uses /web.sitemap)</h4>
+#component(Menu)
+

@@ -127,7 +127,6 @@
     <None Include="Views\MaskedTextBox\TestValues.brail" />
     <None Include="Views\Menu\default.vm" />
     <Content Include="Views\Menu\minimenu.sitemap" />
-    <None Include="Views\MoreLessText\index.brailXX" />
     <None Include="Views\MoreLessText\index.vm" />
     <None Include="Views\SmartGrid\More.brail" />
     <None Include="Views\SmartGrid\nullText.brail" />
