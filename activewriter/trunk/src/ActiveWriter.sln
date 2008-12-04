@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DslPackage", "DslPackage\Ds
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveWriterSetup", "ActiveWriterSetup\ActiveWriterSetup.csproj", "{4BC76225-34A0-435A-9382-759300313F51}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveWriter.Test", "ActiveWriter.Test\ActiveWriter.Test.csproj", "{C0056210-BA5D-4D39-BDE8-5BCFF0A17868}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{68116C7F-C1D8-4DDC-9CA9-9DDA35356EC3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4BC76225-34A0-435A-9382-759300313F51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4BC76225-34A0-435A-9382-759300313F51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0056210-BA5D-4D39-BDE8-5BCFF0A17868}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0056210-BA5D-4D39-BDE8-5BCFF0A17868}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0056210-BA5D-4D39-BDE8-5BCFF0A17868}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0056210-BA5D-4D39-BDE8-5BCFF0A17868}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

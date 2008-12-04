@@ -19,20 +19,48 @@ limitations under the License.
 <#@ output extension=".%EXT%" #>
 <#@ ActiveWriter processor="ActiveWriterDirectiveProcessor" requires="fileName='%MODELFILE%'" #>
 <#@ import namespace="Altinoren.ActiveWriter.CodeGeneration" #>
+<#@ import namespace="System.CodeDom.Compiler" #>
 <#@ import namespace="System.Collections" #>
+<#@ import namespace="System.IO" #>
 <#@ import namespace="Altinoren.ActiveWriter.ServerExplorerSupport" #>
 <#
-	Hashtable propertyBag = new Hashtable();
-	propertyBag.Add("Generic.Model", this.Model);
-	propertyBag.Add("Generic.Namespace", "%NAMESPACE%");
-	propertyBag.Add("Generic.ProcessID", "%PID%");
-	propertyBag.Add("Generic.ModelFileFullName", @"%MODELFILEFULLNAME%");
-	propertyBag.Add("Generic.Host", this.Host);
+	VisualStudioHelper visualStudioHelper = new VisualStudioHelper(%PID%, @"%MODELFILEFULLNAME%");
 	
-	CodeGenerationHelper helper = new CodeGenerationHelper(propertyBag);
-	helper.Generate();
+	CodeGenerationContext codeGenerationContext = new CodeGenerationContext(
+		Model,
+		"%NAMESPACE%",
+		visualStudioHelper.DefaultNamespace,
+		visualStudioHelper.AssemblyName,
+		Path.GetDirectoryName(@"%MODELFILEFULLNAME%"),
+		visualStudioHelper.IntermediatePath,
+		visualStudioHelper.CodeDomProvider,
+		visualStudioHelper.UseStrongTyping,
+		visualStudioHelper.References
+		);
+		
+	CodeGenerationHelper codeGenerationHelper = new CodeGenerationHelper(codeGenerationContext);
 	
-	this.Write(propertyBag["CodeGeneration.PrimaryOutput"].ToString());
+    codeGenerationHelper.Log += delegate(object source, LogMessageEventArgs args)
+    {
+		visualStudioHelper.Log(args.Message);
+	};
+    
+    codeGenerationHelper.CompilerErrors += delegate(object source, CompilerErrorsEventArgs errors)
+    {
+		Host.LogErrors(errors.ErrorCollection);
+	};
+    
+    codeGenerationHelper.CodeFileCreated += delegate(object source, FileCreatedEventArgs args)
+    {
+		visualStudioHelper.AddCodeFile(args.FileName, Model.RelateWithActiwFile);
+	};
+    
+    codeGenerationHelper.ResourceCreated += delegate(object source, FileCreatedEventArgs args)
+    {
+		visualStudioHelper.AddResource(args.FileName, Model.RelateWithActiwFile);
+	};
+    
+	Write(codeGenerationHelper.Generate());
 	
 	// Disabled. Will be implemented in the plugin interface in the future.
 	/*if (this.Model.GenerateMonoRailProject)
