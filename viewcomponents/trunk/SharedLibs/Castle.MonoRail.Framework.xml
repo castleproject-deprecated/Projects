@@ -496,6 +496,12 @@
             </summary>
             <value>The accept header.</value>
         </member>
+        <member name="P:Castle.MonoRail.Framework.IRequest.AcceptTypes">
+            <summary>
+            Gets a string array of client-supported MIME accept types.
+            </summary>
+            <value>A string array of client-supported MIME accept types.</value>
+        </member>
         <member name="P:Castle.MonoRail.Framework.IRequest.RequestType">
             <summary>
             Gets the request type (GET, POST, etc)
@@ -583,6 +589,12 @@
             </summary>
             <value>The file path.</value>
         </member>
+        <member name="P:Castle.MonoRail.Framework.IRequest.UserAgent">
+            <summary>
+            Gets the user agent string of the client browser.
+            </summary>
+            <value>The agent string of the client browser.</value>
+        </member>
         <member name="P:Castle.MonoRail.Framework.IRequest.UserLanguages">
             <summary>
             Gets the user languages.
@@ -625,6 +637,12 @@
             Gets or sets the MIME content type of the incoming request.
             </summary>
             <value></value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.IRequest.InputStreamSize">
+            <summary>
+            Gets the size of the input stream (if you plan to read it directly as a byte[]).
+            </summary>
+            <value>The size of the input stream.</value>
         </member>
         <member name="F:Castle.MonoRail.Framework.Adapters.RequestAdapter.paramsCompositeNode">
             <summary>
@@ -681,6 +699,12 @@
             </summary>
             <value>The accept header.</value>
         </member>
+        <member name="P:Castle.MonoRail.Framework.Adapters.RequestAdapter.AcceptTypes">
+            <summary>
+            Gets a string array of client-supported MIME accept types.
+            </summary>
+            <value>A string array of client-supported MIME accept types.</value>
+        </member>
         <member name="P:Castle.MonoRail.Framework.Adapters.RequestAdapter.UrlReferrer">
             <summary>
             Gets the referring URL.
@@ -698,6 +722,12 @@
             Gets the contents of the incoming HTTP entity body.
             </summary>
             <value></value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Adapters.RequestAdapter.InputStreamSize">
+            <summary>
+            Gets the size of the input stream (if you plan to read it directly as a byte[]).
+            </summary>
+            <value>The size of the input stream.</value>
         </member>
         <member name="P:Castle.MonoRail.Framework.Adapters.RequestAdapter.ContentType">
             <summary>
@@ -777,6 +807,12 @@
             Gets the <see cref="T:System.Web.HttpPostedFile"/> per key.
             </summary>
             <value></value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Adapters.RequestAdapter.UserAgent">
+            <summary>
+            Gets the user agent string of the client browser.
+            </summary>
+            <value>The agent string of the client browser.</value>
         </member>
         <member name="P:Castle.MonoRail.Framework.Adapters.RequestAdapter.UserLanguages">
             <summary>
@@ -1144,6 +1180,11 @@
             Sets the Cache-Control HTTP header to Public or Private.
             </summary>
         </member>
+        <member name="P:Castle.MonoRail.Framework.IResponse.ContentEncoding">
+            <summary>
+            Gets or sets the HTTP character set of the output stream.
+            </summary>
+        </member>
         <member name="P:Castle.MonoRail.Framework.IResponse.Charset">
             <summary>
             Gets or sets the HTTP character set of the output stream.
@@ -1191,6 +1232,12 @@
             </summary>
             <param name="name">The cookie name.</param>
             <returns></returns>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.IMockResponse.Headers">
+            <summary>
+            Exposes the headers on the response. 
+            </summary>
+            <value>The headers.</value>
         </member>
         <member name="P:Castle.MonoRail.Framework.Test.IMockResponse.RedirectedTo">
             <summary>
@@ -1565,9 +1612,21 @@
             </summary>
             <value></value>
         </member>
+        <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.Headers">
+            <summary>
+            Exposes the headers on the response.
+            </summary>
+            <value>The headers.</value>
+        </member>
         <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.CacheControlHeader">
             <summary>
             Sets the Cache-Control HTTP header to Public or Private.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Internal.BaseResponse.ContentEncoding">
+            <summary>
+            Gets or sets the HTTP character set of the output stream.
             </summary>
             <value></value>
         </member>
@@ -1729,6 +1788,11 @@
             Sets the Cache-Control HTTP header to Public or Private.
             </summary>
         </member>
+        <member name="P:Castle.MonoRail.Framework.Adapters.ResponseAdapter.ContentEncoding">
+            <summary>
+            Gets or sets the HTTP character set of the output stream.
+            </summary>
+        </member>
         <member name="P:Castle.MonoRail.Framework.Adapters.ResponseAdapter.Charset">
             <summary>
             Gets or sets the HTTP character set of the output stream.
@@ -1757,6 +1821,12 @@
             Gets the output.
             </summary>
             <value>The output.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Adapters.ResponseAdapter.Headers">
+            <summary>
+            Exposes the headers on the response.
+            </summary>
+            <value>The headers.</value>
         </member>
         <member name="P:Castle.MonoRail.Framework.Adapters.ResponseAdapter.OutputStream">
             <summary>
@@ -2853,6 +2923,15 @@
             A instance based on the JSON values present in the <c>EntryKey</c> or the parameter name.
             </returns>
         </member>
+        <member name="P:Castle.MonoRail.Framework.JSONBinderAttribute.EntryKey">
+            <summary>
+            Gets the entry key.
+            </summary>
+            <remarks>
+            The entry key, which is the form or querystring key that identifies the JSON persisted content.
+            </remarks>
+            <value>The entry key.</value>
+        </member>
         <member name="T:Castle.MonoRail.Framework.JSONReturnBinderAttribute">
             <summary>
             Pendent
@@ -2926,6 +3005,14 @@
             <returns>
             	<c>true</c> if this instance can handle the specified type; otherwise, <c>false</c>.
             </returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.IJSONConverter.ReadJson(Castle.MonoRail.Framework.Services.IJSONReader,System.Type)">
+            <summary>
+            Converts the JSON read by the supplied reader into an instance of the requested type.
+            </summary>
+            <param name="reader">The reader.</param>
+            <param name="objectType">The type.</param>
+            <returns></returns>
         </member>
         <member name="T:Castle.MonoRail.Framework.LayoutAttribute">
             <summary>
@@ -4149,11 +4236,17 @@
             </summary>
             <value>The view engines.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Configuration.ViewEngineConfig.Sources">
+        <member name="P:Castle.MonoRail.Framework.Configuration.ViewEngineConfig.AssemblySources">
             <summary>
             Gets or sets the additional assembly sources.
             </summary>
             <value>The sources.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Configuration.ViewEngineConfig.PathSources">
+            <summary>
+            Gets or sets the path sources.
+            </summary>
+            <value>The path sources.</value>
         </member>
         <member name="T:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer">
             <summary>
@@ -4248,7 +4341,7 @@
             </summary>
             <value>The action selector.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.IMonoRailServices.ScaffoldSupport">
+        <member name="P:Castle.MonoRail.Framework.IMonoRailServices.ScaffoldingSupport">
             <summary>
             Gets or sets the scaffold support.
             </summary>
@@ -4313,6 +4406,12 @@
             Gets or sets the dynamic action provider factory.
             </summary>
             <value>The dynamic action provider factory.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.IMonoRailServices.AjaxProxyGenerator">
+            <summary>
+            Gets or sets the ajax proxy generator.
+            </summary>
+            <value>The ajax proxy generator.</value>
         </member>
         <member name="M:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.#ctor(System.IServiceProvider)">
             <summary>
@@ -4436,7 +4535,7 @@
             </summary>
             <value>The action selector.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.ScaffoldSupport">
+        <member name="P:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.ScaffoldingSupport">
             <summary>
             Gets or sets the scaffold support.
             </summary>
@@ -4465,12 +4564,6 @@
             Gets or sets the email sender.
             </summary>
             <value>The email sender.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.ExtensionManager">
-            <summary>
-            Gets or sets the extension manager.
-            </summary>
-            <value>The extension manager.</value>
         </member>
         <member name="P:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.ResourceFactory">
             <summary>
@@ -4501,6 +4594,18 @@
             Gets or sets the dynamic action provider factory.
             </summary>
             <value>The dynamic action provider factory.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.AjaxProxyGenerator">
+            <summary>
+            Gets or sets the ajax proxy generator.
+            </summary>
+            <value>The ajax proxy generator.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.ExtensionManager">
+            <summary>
+            Gets or sets the extension manager.
+            </summary>
+            <value>The extension manager.</value>
         </member>
         <member name="T:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.ServiceIdentification">
             <summary>
@@ -6007,7 +6112,7 @@
             <param name="violationMessage">The violation message.</param>
             <remarks>Not implemented by the JQuery validate plugin. Done via a custom rule.</remarks>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.FValidateWebValidator.FValidateGenerator.SetAsLesserThan(System.String,System.String,Castle.Components.Validator.IsGreaterValidationType,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.FValidateWebValidator.FValidateGenerator.SetAsLesserThan(System.String,System.String,Castle.Components.Validator.IsLesserValidationType,System.String)">
             <summary>
             Sets that a field's value must be lesser than another field's value.
             </summary>
@@ -6015,6 +6120,14 @@
             <param name="target">The target name (ie, a hint about the controller being validated)</param>
             <param name="comparisonFieldName">The name of the field to compare with.</param>
             <param name="validationType">The type of data to compare.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.FValidateWebValidator.FValidateGenerator.SetAsGroupValidation(System.String,System.String,System.String)">
+            <summary>
+            Sets that a flied is part of a group validation.
+            </summary>
+            <param name="target">The target.</param>
+            <param name="groupName">Name of the group.</param>
             <param name="violationMessage">The violation message.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.FValidateWebValidator.FValidateGenerator.AddValidator(System.String,System.String)">
@@ -6084,6 +6197,13 @@
             </code>
             </example>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration.AddCustomClass(System.String,System.Collections.IDictionary)">
+            <summary>
+            Adds a custom class.
+            </summary>
+            <param name="name">The name of the class.</param>
+            <param name="options">The class options</param>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration.Configure(System.Collections.IDictionary)">
             <summary>
             Configures the JQuery Validate plugin based on the supplied parameters.
@@ -6098,18 +6218,79 @@
             <param name="formId">The form id.</param>
             <returns></returns>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration.GenerateGroupNotEmptyValidatorCustomRule">
+            <summary>
+            Generates the custom group not empty validator rule.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration.MergeGroupDefinitionsWithOptions">
+            <summary>
+            Merges the group definitions with options.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration.GenerateGroupNotEmptyValidatorCustomClass">
+            <summary>
+            Generates the custom group not empty validator class rule.
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration.Group">
+            <summary>
+            Group definition.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration.Group.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration.Group"/> class.
+            </summary>
+            <param name="groupName">Name of the group.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration.Group.GetFormattedGroupItems">
+            <summary>
+            Gets the group items.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration.Group.GetFormattedGroup">
+            <summary>
+            Gets the group items.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration.Group.GetCustomRuleFunction">
+            <summary>
+            Gets the custom rule.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration.Group.GroupName">
+            <summary>
+            Gets the name of the group.
+            </summary>
+            <value>The name of the group.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration.Group.ViolationMessage">
+            <summary>
+            Gets the violation message.
+            </summary>
+            <value>The violation message.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration.Group.GroupItems">
+            <summary>
+            Gets the group items.
+            </summary>
+            <value>The group items.</value>
+        </member>
         <member name="T:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator">
             <summary>
             The <see cref="T:Castle.Components.Validator.IBrowserValidationGenerator"/> implementation for the JQuery validate plugin.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.#ctor(Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration,Castle.Components.Validator.InputElementType,System.Collections.IDictionary)">
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.#ctor(Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryConfiguration)">
             <summary>
             Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator"/> class.
             </summary>
             <param name="configuration">The configuration.</param>
-            <param name="inputElementType">Type of the input element.</param>
-            <param name="attributes">The attributes.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetDigitsOnly(System.String,System.String)">
             <summary>
@@ -6284,7 +6465,7 @@
             <param name="violationMessage">The violation message.</param>
             <remarks>Not implemented by the JQuery validate plugin. Done via a custom rule.</remarks>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetAsLesserThan(System.String,System.String,Castle.Components.Validator.IsGreaterValidationType,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetAsLesserThan(System.String,System.String,Castle.Components.Validator.IsLesserValidationType,System.String)">
             <summary>
             Sets that a field's value must be lesser than another field's value.
             </summary>
@@ -6292,6 +6473,15 @@
             <param name="target">The target name (ie, a hint about the controller being validated)</param>
             <param name="comparisonFieldName">The name of the field to compare with.</param>
             <param name="validationType">The type of data to compare.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.JQueryValidator.JQueryValidationGenerator.SetAsGroupValidation(System.String,System.String,System.String)">
+            <summary>
+            Sets that a flied is part of a group validation.
+            </summary>
+            <remarks>Not implemented by the JQuery validate plugin. Done via a custom rule.</remarks>
+            <param name="target">The target.</param>
+            <param name="groupName">Name of the group.</param>
             <param name="violationMessage">The violation message.</param>
         </member>
         <member name="T:Castle.MonoRail.Framework.Helpers.ValidationStrategy.PrototypeWebValidator">
@@ -6527,7 +6717,7 @@
             <param name="violationMessage">The violation message.</param>
             <remarks>Not implemented by the JQuery validate plugin. Done via a custom rule.</remarks>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.PrototypeWebValidator.PrototypeValidationGenerator.SetAsLesserThan(System.String,System.String,Castle.Components.Validator.IsGreaterValidationType,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.PrototypeWebValidator.PrototypeValidationGenerator.SetAsLesserThan(System.String,System.String,Castle.Components.Validator.IsLesserValidationType,System.String)">
             <summary>
             Sets that a field's value must be lesser than another field's value.
             </summary>
@@ -6535,6 +6725,14 @@
             <param name="target">The target name (ie, a hint about the controller being validated)</param>
             <param name="comparisonFieldName">The name of the field to compare with.</param>
             <param name="validationType">The type of data to compare.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.PrototypeWebValidator.PrototypeValidationGenerator.SetAsGroupValidation(System.String,System.String,System.String)">
+            <summary>
+            Sets that a flied is part of a group validation.
+            </summary>
+            <param name="target">The target.</param>
+            <param name="groupName">Name of the group.</param>
             <param name="violationMessage">The violation message.</param>
         </member>
         <member name="T:Castle.MonoRail.Framework.Helpers.ValidationStrategy.ZebdaWebValidator">
@@ -6752,7 +6950,7 @@
             <param name="violationMessage">The violation message.</param>
             <remarks>Not implemented by the JQuery validate plugin. Done via a custom rule.</remarks>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.ZebdaWebValidationGenerator.SetAsLesserThan(System.String,System.String,Castle.Components.Validator.IsGreaterValidationType,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.ZebdaWebValidationGenerator.SetAsLesserThan(System.String,System.String,Castle.Components.Validator.IsLesserValidationType,System.String)">
             <summary>
             Sets that a field's value must be lesser than another field's value.
             </summary>
@@ -6760,6 +6958,14 @@
             <param name="target">The target name (ie, a hint about the controller being validated)</param>
             <param name="comparisonFieldName">The name of the field to compare with.</param>
             <param name="validationType">The type of data to compare.</param>
+            <param name="violationMessage">The violation message.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.ValidationStrategy.ZebdaWebValidationGenerator.SetAsGroupValidation(System.String,System.String,System.String)">
+            <summary>
+            Sets that a flied is part of a group validation.
+            </summary>
+            <param name="target">The target.</param>
+            <param name="groupName">Name of the group.</param>
             <param name="violationMessage">The violation message.</param>
         </member>
         <member name="T:Castle.MonoRail.Framework.Helpers.RequestContext">
@@ -7009,6 +7215,16 @@
             <param name="content">The text to URL encode and escape JavaScript within.</param>
             <returns>The URL encoded and JavaScript escaped text.</returns>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.AbstractHelper.JavascriptOptions(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Builds a JS associative array based on the specified dictionary instance.
+            <para>
+            For example: <c>{name: value, other: 'another'}</c>
+            </para>
+            </summary>
+            <param name="jsOptions">The js options.</param>
+            <returns>An associative array in javascript</returns>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.AbstractHelper.JavascriptOptions(System.Collections.IDictionary)">
             <summary>
             Builds a JS associative array based on the specified dictionary instance.
@@ -7023,9 +7239,9 @@
             <summary>
             Generates script block.
             <code>
-            &lt;script type=\"text/javascript\"&gt;
+            &lt;script type=\"text/javascript\"&gt;/*&lt;![CDATA[*/
             scriptContents
-            &lt;/script&gt;
+            /*]]&gt;*/&lt;/script&gt;
             </code>
             </summary>
             <param name="scriptContents">The script contents.</param>
@@ -8055,7 +8271,7 @@
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.AjaxHelper.InputTextWithAutoCompletion(System.Collections.IDictionary,System.Collections.IDictionary)">
             <summary>
-            Rendes a input field with Google style autocomplete enabled.
+            Renders an input field with Google style autocomplete enabled.
             The specified <c>url</c> is used to gather the contents 
             for the auto complete panel, so 
             and your action should return filtered and sorted results.
@@ -9753,6 +9969,17 @@
             <param name="attributes">Attributes for the FormHelper method and for the html element it generates</param>
             <returns>The generated form element</returns>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.HiddenFieldItem(System.Int32,System.String,System.String,Castle.MonoRail.Framework.Helpers.SetItem,System.Collections.IDictionary)">
+            <summary>
+            Outputs a hidden element with an index (for internal use)
+            </summary>
+            <param name="index"></param>
+            <param name="target">The object to get the value from and to be based on to create the element name.</param>
+            <param name="suffix"></param>
+            <param name="item"></param>
+            <param name="attributes">Attributes for the FormHelper method and for the html element it generates</param>
+            <returns>The generated form element</returns>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.CheckboxLabel(System.Int32,System.String,System.String,System.String,System.Collections.IDictionary)">
             <summary>
             Creates a label for an item of the checkbox list (internal use). The method mirrors
@@ -9803,7 +10030,8 @@
             The checked and unchecked values sent to the server defaults
             to true and false. You can override them using the 
             parameters <c>trueValue</c> and <c>falseValue</c>, but the DataBinder is prepared only
-            to treat boolean arrays. 
+            to treat boolean arrays. By setting <c>suppressHiddenField</c> to true you can suppress 
+            the hidden field generation.
             </para>
             
             </summary>
@@ -10068,6 +10296,21 @@
             <summary>
             Outputs the Checkbox in the correct state (checked/unchecked) based
             on the Set. 
+            <seealso cref="M:Castle.MonoRail.Framework.Helpers.FormHelper.CreateCheckboxList(System.String,System.Collections.IEnumerable,System.Collections.IDictionary)"/>
+            </summary>
+            <param name="id">The element id</param>
+            <returns>The generated input element</returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.CheckboxList.ItemAsHiddenField">
+            <summary>
+            Outputs the Hidden field for list databinding based on the Set. 
+            <seealso cref="M:Castle.MonoRail.Framework.Helpers.FormHelper.CreateCheckboxList(System.String,System.Collections.IEnumerable,System.Collections.IDictionary)"/>
+            </summary>
+            <returns>The generated input element</returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Helpers.FormHelper.CheckboxList.ItemAsHiddenField(System.String)">
+            <summary>
+            Outputs the Hidden field for list databinding based on the Set. 
             <seealso cref="M:Castle.MonoRail.Framework.Helpers.FormHelper.CreateCheckboxList(System.String,System.Collections.IEnumerable,System.Collections.IDictionary)"/>
             </summary>
             <param name="id">The element id</param>
@@ -11799,90 +12042,6 @@
             </code>
             </example>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Helpers.IPaginatedPage">
-            <summary>
-            Represents a page of a bigger set
-            </summary>
-            <remarks>
-            Indexes are zero based.
-            </remarks>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.IPaginatedPage.HasPage(System.Int32)">
-            <summary>
-            Checks whether the specified page exists.
-            Useful for Google-like pagination.
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.IPaginatedPage.CurrentIndex">
-            <summary>
-            The index this page represents
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.IPaginatedPage.LastIndex">
-            <summary>
-            The last index available on the set
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.IPaginatedPage.NextIndex">
-            <summary>
-            The next index (from this page)
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.IPaginatedPage.PreviousIndex">
-            <summary>
-            The previous index (from this page)
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.IPaginatedPage.FirstIndex">
-            <summary>
-            The first index
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.IPaginatedPage.FirstItem">
-            <summary>
-            The first element (index + 1)
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.IPaginatedPage.LastItem">
-            <summary>
-            The last element in the page (count)
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.IPaginatedPage.TotalItems">
-            <summary>
-            The count of all elements on the set
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.IPaginatedPage.PageSize">
-            <summary>
-            Gets the size of the page.
-            </summary>
-            <value>The size of the page.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.IPaginatedPage.HasPrevious">
-            <summary>
-            Returns true if a previous page 
-            is accessible from this page
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.IPaginatedPage.HasNext">
-            <summary>
-            Returns true if a next page is
-            accessible from this page
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.IPaginatedPage.HasFirst">
-            <summary>
-            Returns true if a first page 
-            exists
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.IPaginatedPage.HasLast">
-            <summary>
-            Returns true if a last page 
-            exists
-            </summary>
-        </member>
         <member name="T:Castle.MonoRail.Framework.Helpers.JSONHelper">
             <summary>
             Provides utilities methods to work with JSON.
@@ -11938,7 +12097,7 @@
             </summary>
             
             <remarks>
-            With the pagination you expose a <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> instance to your view, 
+            With the pagination you expose a <see cref="T:Castle.Components.Pagination.Page"/> instance to your view, 
             that can be used to created a very detailed page navigator.
             
             <para>
@@ -11948,11 +12107,11 @@
             <list type="bullet">
             <item>
             	<term>CreatePagination</term>
-            	<description>Uses a whole data set and creates a <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> with a slice of it. </description>
+            	<description>Uses a whole data set and creates a <see cref="T:Castle.Components.Pagination.Page"/> with a slice of it. </description>
             </item>
             <item>
             	<term>CreateCachedPagination</term>
-            	<description>Caches the dataset and creates a <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> with a slice. 
+            	<description>Caches the dataset and creates a <see cref="T:Castle.Components.Pagination.Page"/> with a slice. 
             	As the cache is shared, you must be very careful on creating a cache key that uniquely represents the 
             	cached dataset.
             </description>
@@ -11960,7 +12119,7 @@
             <item>
             	<term>CreateCustomPage</term>
             	<description>
-            	In this case, you are handling the slicing. The <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> is created with your 
+            	In this case, you are handling the slicing. The <see cref="T:Castle.Components.Pagination.Page"/> is created with your 
             	actual dataset and information about total. It calculates the other information based on that.
             	</description>
             </item>
@@ -12026,47 +12185,47 @@
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.PaginationHelper.CreatePagination(Castle.MonoRail.Framework.IEngineContext,System.Collections.IList,System.Int32)">
             <summary>
-            Creates a <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> which is a sliced view of
+            Creates a <see cref="T:Castle.Components.Pagination.Page"/> which is a sliced view of
             the data source
             </summary>
             <param name="engineContext">The engine context.</param>
             <param name="datasource">Data source to be used as target of the pagination</param>
             <param name="pageSize">Page size</param>
-            <returns>A <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> instance</returns>
+            <returns>A <see cref="T:Castle.Components.Pagination.Page"/> instance</returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.PaginationHelper.CreatePagination(System.Collections.IList,System.Int32,System.Int32)">
             <summary>
-            Creates a <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> which is a sliced view of
+            Creates a <see cref="T:Castle.Components.Pagination.Page"/> which is a sliced view of
             the data source
             </summary>
             <param name="datasource">Data source to be used as target of the pagination</param>
             <param name="pageSize">Page size</param>
             <param name="currentPage">current page index (1 based)</param>
-            <returns>A <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> instance</returns>
+            <returns>A <see cref="T:Castle.Components.Pagination.Page"/> instance</returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.PaginationHelper.CreatePagination``1(Castle.MonoRail.Framework.IEngineContext,System.Collections.Generic.ICollection{``0},System.Int32)">
             <summary>
-            Creates a <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> which is a sliced view of
+            Creates a <see cref="T:Castle.Components.Pagination.Page"/> which is a sliced view of
             the data source
             </summary>
             <param name="engineContext">The engine context.</param>
             <param name="datasource">Data source to be used as target of the pagination</param>
             <param name="pageSize">Page size</param>
-            <returns>A <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> instance</returns>
+            <returns>A <see cref="T:Castle.Components.Pagination.Page"/> instance</returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.PaginationHelper.CreatePagination``1(System.Collections.Generic.ICollection{``0},System.Int32,System.Int32)">
             <summary>
-            Creates a <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> which is a sliced view of
+            Creates a <see cref="T:Castle.Components.Pagination.Page"/> which is a sliced view of
             the data source
             </summary>
             <param name="datasource">Data source to be used as target of the pagination</param>
             <param name="pageSize">Page size</param>
             <param name="currentPage">current page index (1 based)</param>
-            <returns>A <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> instance</returns>
+            <returns>A <see cref="T:Castle.Components.Pagination.Page"/> instance</returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.PaginationHelper.CreateCachedPagination(Castle.MonoRail.Framework.IEngineContext,System.String,System.Int32,Castle.MonoRail.Framework.Helpers.DataObtentionDelegate)">
             <summary>
-            Creates a <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> which is a sliced view of
+            Creates a <see cref="T:Castle.Components.Pagination.Page"/> which is a sliced view of
             the data source. This method first looks for the datasource
             in the <see cref="T:System.Web.Caching.Cache"/> and if not found,
             it invokes the <c>dataObtentionCallback</c> and caches the result
@@ -12076,7 +12235,7 @@
             <param name="cacheKey">Cache key used to query/store the datasource</param>
             <param name="pageSize">Page size</param>
             <param name="dataObtentionCallback">Callback to be used to populate the cache</param>
-            <returns>A <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> instance</returns>
+            <returns>A <see cref="T:Castle.Components.Pagination.Page"/> instance</returns>
             <remarks>
             CreateCachedPagination is quite dangerous exactly because the cache is
             shared. If the results vary per logged user, then the programmer must
@@ -12086,7 +12245,7 @@
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.PaginationHelper.CreateCustomPage(Castle.MonoRail.Framework.IEngineContext,System.Collections.IList,System.Int32,System.Int32)">
             <summary>
-            Creates a <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> which is a sliced view of
+            Creates a <see cref="T:Castle.Components.Pagination.Page"/> which is a sliced view of
             the data source
             <para>
             Assumes that the slicing is managed by the caller.
@@ -12096,11 +12255,11 @@
             <param name="datasource">Data source to be used as target of the pagination</param>
             <param name="pageSize">Page size</param>
             <param name="total">The total of items in the datasource</param>
-            <returns>A <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> instance</returns>
+            <returns>A <see cref="T:Castle.Components.Pagination.Page"/> instance</returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.PaginationHelper.CreateCustomPage(System.Collections.IList,System.Int32,System.Int32,System.Int32)">
             <summary>
-            Creates a <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> which is a sliced view of
+            Creates a <see cref="T:Castle.Components.Pagination.Page"/> which is a sliced view of
             the data source
             <para>
             Assumes that the slicing is managed by the caller.
@@ -12114,7 +12273,7 @@
         </member>
         <member name="M:Castle.MonoRail.Framework.Helpers.PaginationHelper.CreateCustomPage``1(System.Collections.Generic.IEnumerable{``0},System.Int32,System.Int32,System.Int32)">
             <summary>
-            Creates a <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> which is a sliced view of
+            Creates a <see cref="T:Castle.Components.Pagination.Page"/> which is a sliced view of
             the data source
             <para>
             Assumes that the slicing is managed by the caller.
@@ -12125,205 +12284,6 @@
             <param name="total">The total of items in the datasource</param>
             <param name="currentPage">The current page index (1 based).</param>
             <returns></returns>
-        </member>
-        <member name="T:Castle.MonoRail.Framework.Helpers.Page">
-            <summary>
-            Represents the sliced data and offers
-            a few read only properties to create a pagination bar.
-            </summary>
-        </member>
-        <member name="T:Castle.MonoRail.Framework.Helpers.AbstractPage">
-            <summary>
-            Abstract implementation of <see cref="T:Castle.MonoRail.Framework.Helpers.IPaginatedPage"/>
-            which performs the standard calculations on 
-            <see cref="M:Castle.MonoRail.Framework.Helpers.AbstractPage.CalculatePaginationInfo(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)"/>
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.AbstractPage.CalculatePaginationInfo(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Calculate the values of all properties
-            based on the specified parameters
-            </summary>
-            <param name="startIndex">Start index</param>
-            <param name="endIndex">Last index</param>
-            <param name="count">Total of elements</param>
-            <param name="pageSize">Page size</param>
-            <param name="curPage">This page index</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.AbstractPage.HasPage(System.Int32)">
-            <summary>
-            Checks whether the specified page exists.
-            Useful for Google-like pagination.
-            </summary>
-            <param name="pageNumber">The page number</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.AbstractPage.GetEnumerator">
-            <summary>
-            Returns a enumerator for the contents
-            of this page only (not the whole set)
-            </summary>
-            <returns>Enumerator instance</returns>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.AbstractPage.FirstIndex">
-            <summary>
-            The first index
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.AbstractPage.CurrentIndex">
-            <summary>
-            The index this page represents
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.AbstractPage.LastIndex">
-            <summary>
-            The last index available on the set
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.AbstractPage.PreviousIndex">
-            <summary>
-            The previous index (from this page)
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.AbstractPage.NextIndex">
-            <summary>
-            The next index (from this page)
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.AbstractPage.FirstItem">
-            <summary>
-            The first element (index + 1)
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.AbstractPage.LastItem">
-            <summary>
-            The last element in the page (count)
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.AbstractPage.TotalItems">
-            <summary>
-            The count of all elements on the set
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.AbstractPage.PageSize">
-            <summary>
-            Gets the size of the page.
-            </summary>
-            <value>The size of the page.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.AbstractPage.HasPrevious">
-            <summary>
-            Returns true if a previous page 
-            is accessible from this page
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.AbstractPage.HasNext">
-            <summary>
-            Returns true if a next page is
-            accessible from this page
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.AbstractPage.HasFirst">
-            <summary>
-            Returns true if a first page 
-            exists
-            </summary>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Helpers.AbstractPage.HasLast">
-            <summary>
-            Returns true if a last page 
-            exists
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.Page.#ctor(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> class.
-            </summary>
-            <param name="curPage">The desired page index</param>
-            <param name="pageSize">The desired page size</param>
-            <param name="total">The total of items in the data source.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.Page.#ctor(System.Collections.IList,System.Int32,System.Int32)">
-            <summary>
-            Constructs a Page using the specified parameters
-            </summary>
-            <param name="list">The whole set</param>
-            <param name="curPage">The desired page index</param>
-            <param name="pageSize">The desired page size</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.Page.#ctor(System.Collections.IList,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.Page"/> class.
-            </summary>
-            <param name="slice">The sliced list.</param>
-            <param name="curPage">The desired page index</param>
-            <param name="pageSize">The desired page size</param>
-            <param name="total">The total of items (not in the list, but on the original source).</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.Page.CreateSlicedCollection(System.Int32,System.Int32,System.Collections.IList)">
-            <summary>
-            Populates the sliced view of the whole set
-            </summary>
-            <param name="startIndex">Index to start to</param>
-            <param name="endIndex">Last index</param>
-            <param name="list">Source set</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.Page.GetEnumerator">
-            <summary>
-            Creates an enumerator for the 
-            sliced set
-            </summary>
-            <returns>An enumerator instance</returns>
-        </member>
-        <member name="T:Castle.MonoRail.Framework.Helpers.GenericPage`1">
-            <summary>
-            Represents the sliced data and offers
-            a few read only properties to create a pagination bar.
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.GenericPage`1.#ctor(System.Collections.Generic.ICollection{`0},System.Int32,System.Int32)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.GenericPage`1"/> class.
-            </summary>
-            <param name="list">The list.</param>
-            <param name="curPage">The cur page.</param>
-            <param name="pageSize">Size of the page.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.GenericPage`1.GetEnumerator">
-            <summary>
-            Returns a enumerator for the contents
-            of this page only (not the whole set)
-            </summary>
-            <returns>Enumerator instance</returns>
-        </member>
-        <member name="T:Castle.MonoRail.Framework.Helpers.GenericCustomPage`1">
-            <summary>
-            Represents the sliced data and offers
-            a few read only properties to create a pagination bar.
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.GenericCustomPage`1.#ctor(System.Collections.Generic.IEnumerable{`0},System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Helpers.GenericCustomPage`1"/> class.
-            </summary>
-            <param name="list">The list.</param>
-            <param name="curPage">The cur page.</param>
-            <param name="pageSize">Size of the page.</param>
-            <param name="total">The total.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.GenericCustomPage`1.GetEnumerator">
-            <summary>
-            Returns a enumerator for the contents
-            of this page only (not the whole set)
-            </summary>
-            <returns>Enumerator instance</returns>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Helpers.GenericCustomPage`1.System#Collections#Generic#IEnumerable{T}#GetEnumerator">
-            <summary>
-            Returns an enumerator that iterates through the collection.
-            </summary>
-            <returns>
-            A <see cref="T:System.Collections.Generic.IEnumerator`1"></see> that can be used to iterate through the collection.
-            </returns>
         </member>
         <member name="T:Castle.MonoRail.Framework.Helpers.SetOperation">
             <summary>
@@ -13719,6 +13679,12 @@
             </summary>
             <value>The subdomain.</value>
         </member>
+        <member name="P:Castle.MonoRail.Framework.UrlInfo.FullDomain">
+            <summary>
+            Gets the subdomain.
+            </summary>
+            <value>The subdomain.</value>
+        </member>
         <member name="P:Castle.MonoRail.Framework.UrlInfo.UrlRaw">
             <summary>
             Gets the URL raw.
@@ -14025,28 +13991,9 @@
             </summary>
             <value>The code gen.</value>
         </member>
-        <member name="T:Castle.MonoRail.Framework.JSGeneration.Prototype.BehaviourExtension">
+        <member name="T:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryElementGenerator">
             <summary>
-            Pendent
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.JSGeneration.Prototype.BehaviourExtension.#ctor(Castle.MonoRail.Framework.JSGeneration.IJSCodeGenerator)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.JSGeneration.Prototype.ScriptaculousExtension"/> class.
-            </summary>
-            <param name="jsCodeGenerator">The js code generator.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.JSGeneration.Prototype.BehaviourExtension.ReApply">
-            <summary>
-            Re-apply Behaviour css' rules.
-            </summary>
-            <remarks>
-            Only makes sense if you are using the Behaviour javascript library.
-            </remarks>
-        </member>
-        <member name="T:Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeElementGenerator">
-            <summary>
-            Implementation for the <see cref="T:Castle.MonoRail.Framework.JSGeneration.IJSElementGenerator"/>
+            Element generator for JQuery
             </summary>
         </member>
         <member name="T:Castle.MonoRail.Framework.JSGeneration.IJSElementGenerator">
@@ -14101,14 +14048,14 @@
             </summary>
             <value>The parent generator.</value>
         </member>
-        <member name="M:Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeElementGenerator.#ctor(Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeGenerator,System.String)">
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryElementGenerator.#ctor(Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator,System.String)">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeElementGenerator"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryElementGenerator"/> class.
             </summary>
-            <param name="generator">The generator.</param>
+            <param name="parent">The parent.</param>
             <param name="root">The root.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeElementGenerator.ReplaceHtml(System.Object)">
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryElementGenerator.ReplaceHtml(System.Object)">
             <summary>
             Replaces the content of the element.
             </summary>
@@ -14120,7 +14067,7 @@
             </code>
             </example>
         </member>
-        <member name="M:Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeElementGenerator.Replace(System.Object)">
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryElementGenerator.Replace(System.Object)">
             <summary>
             Replaces the entire element's content -- and not only its innerHTML --
             by the content evaluated.
@@ -14133,15 +14080,15 @@
             </code>
             </example>
         </member>
-        <member name="P:Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeElementGenerator.ParentGenerator">
+        <member name="P:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryElementGenerator.ParentGenerator">
             <summary>
             Gets the parent generator.
             </summary>
             <value>The parent generator.</value>
         </member>
-        <member name="T:Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeGenerator">
+        <member name="T:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator">
             <summary>
-            Pendent
+            JQuery Generator implementation
             </summary>
         </member>
         <member name="T:Castle.MonoRail.Framework.JSGeneration.AbstractJSGenerator">
@@ -14469,6 +14416,203 @@
             Gets the code generator instance.
             </summary>
             <value>The code generator.</value>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.#ctor(Castle.MonoRail.Framework.JSGeneration.IJSCodeGenerator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator"/> class.
+            </summary>
+            <param name="codeGenerator">The code generator.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.SelectRelevantElements(System.String[])">
+            <summary>
+            Selects the relevant elements.
+            </summary>
+            <param name="ids">The ids.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.WriteNewLine">
+            <summary>
+            Write a new line
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.InsertHtml(System.String,System.String,System.Object)">
+            <summary>
+            Pendent
+            </summary>
+            <param name="position"></param>
+            <param name="id"></param>
+            <param name="renderOptions"></param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.ReplaceHtml(System.String,System.Object)">
+            <summary>
+            Pendent
+            </summary>
+            <param name="id"></param>
+            <param name="renderOptions"></param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.Replace(System.String,System.Object)">
+            <summary>
+            Pendent
+            </summary>
+            <param name="id"></param>
+            <param name="renderOptions"></param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.Show(System.String[])">
+            <summary>
+            Pendent
+            </summary>
+            <param name="ids"></param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.Hide(System.String[])">
+            <summary>
+            Pendent
+            </summary>
+            <param name="ids"></param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.Toggle(System.String[])">
+            <summary>
+            Pendent
+            </summary>
+            <param name="ids"></param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.Remove(System.String[])">
+            <summary>
+            Pendent
+            </summary>
+            <param name="ids"></param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.CreateElementGenerator(System.String)">
+            <summary>
+            Creates a generator for an element.
+            </summary>
+            <param name="root">The root expression.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.Position">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.Position.append">
+            <summary>
+            Append content to the inside of every matched element.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.Position.appendTo">
+            <summary>
+            Append all of the matched elements to another, specified, set of elements.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.Position.prepend">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.Position.prependTo">
+            <summary>
+            Prepend content to the inside of every matched element.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.Position.after">
+            <summary>
+            Insert content after each of the matched elements.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.Position.before">
+            <summary>
+            Insert content before each of the matched elements.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.Position.insertAfter">
+            <summary>
+            Insert all of the matched elements after another, specified, set of elements.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.Position.insertBefore">
+            <summary>
+            Insert all of the matched elements before another, specified, set of elements.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.Position.wrap">
+            <summary>
+            Wrap each matched element with the specified HTML content.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.Position.wrapInner">
+            <summary>
+            Wrap all the elements in the matched set into a single wrapper element.
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.Framework.JSGeneration.jQuery.JQueryGenerator.Position.wrapAll">
+            <summary>
+            Wrap all the elements in the matched set into a single wrapper element.
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.JSGeneration.Prototype.BehaviourExtension">
+            <summary>
+            Pendent
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.Prototype.BehaviourExtension.#ctor(Castle.MonoRail.Framework.JSGeneration.IJSCodeGenerator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.JSGeneration.Prototype.ScriptaculousExtension"/> class.
+            </summary>
+            <param name="jsCodeGenerator">The js code generator.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.Prototype.BehaviourExtension.ReApply">
+            <summary>
+            Re-apply Behaviour css' rules.
+            </summary>
+            <remarks>
+            Only makes sense if you are using the Behaviour javascript library.
+            </remarks>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeElementGenerator">
+            <summary>
+            Implementation for the <see cref="T:Castle.MonoRail.Framework.JSGeneration.IJSElementGenerator"/>
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeElementGenerator.#ctor(Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeGenerator,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeElementGenerator"/> class.
+            </summary>
+            <param name="generator">The generator.</param>
+            <param name="root">The root.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeElementGenerator.ReplaceHtml(System.Object)">
+            <summary>
+            Replaces the content of the element.
+            </summary>
+            <param name="renderOptions">Defines what to render</param>
+            <example>
+            The following example uses nvelocity syntax:
+            <code>
+            $page.el('elementid').ReplaceHtml("%{partial='shared/newmessage.vm'}")
+            </code>
+            </example>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeElementGenerator.Replace(System.Object)">
+            <summary>
+            Replaces the entire element's content -- and not only its innerHTML --
+            by the content evaluated.
+            </summary>
+            <param name="renderOptions">Defines what to render</param>
+            <example>
+            The following example uses nvelocity syntax:
+            <code>
+            $page.el('messagediv').Replace("%{partial='shared/newmessage.vm'}")
+            </code>
+            </example>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeElementGenerator.ParentGenerator">
+            <summary>
+            Gets the parent generator.
+            </summary>
+            <value>The parent generator.</value>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeGenerator">
+            <summary>
+            Pendent
+            </summary>
         </member>
         <member name="M:Castle.MonoRail.Framework.JSGeneration.Prototype.PrototypeGenerator.#ctor(Castle.MonoRail.Framework.JSGeneration.IJSCodeGenerator)">
             <summary>
@@ -16242,6 +16386,13 @@
             <param name="match">The match.</param>
             <returns></returns>
         </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.PatternRoute.GetUrlParts(System.String)">
+            <summary>
+            Return url parts for given url
+            </summary>
+            <param name="url">url to get parts from</param>
+            <returns>url parts array</returns>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Routing.PatternRoute.AddDefault(System.String,System.String)">
             <summary>
             Adds a default entry.
@@ -16271,6 +16422,13 @@
         <member name="M:Castle.MonoRail.Framework.Routing.PatternRoute.DefaultForArea">
             <summary>
             Configures the default for the named pattern part.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Routing.PatternRoute.NoDefaultCheck">
+            <summary>
+            Tells the PatternRoute to not validate the defaults set when creating
+            an url representation of this route.
             </summary>
             <returns></returns>
         </member>
@@ -16527,6 +16685,11 @@
             </summary>
             <value>The engine.</value>
         </member>
+        <member name="T:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.IAjaxProxyGenerator">
             <summary>
             Provides a service which generates a <em>JavaScript</em> block, that
@@ -16541,27 +16704,9 @@
             <param name="proxyName">Name of the javascript proxy object</param>
             <param name="controller">Controller which will be target of the proxy</param>
             <param name="area">area which the controller belongs to</param>
+            <remarks>This function also includes the script tags</remarks>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.PrototypeAjaxProxyGenerator">
-            <summary>
-            Provides a service which generates a <em>JavaScript</em> block, that
-            can be used to call Ajax actions on the controller. This JavaScript will
-            use the <em>Prototype</em> syntax.
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.PrototypeAjaxProxyGenerator.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.PrototypeAjaxProxyGenerator"/> class.
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.PrototypeAjaxProxyGenerator.Service(Castle.MonoRail.Framework.IMonoRailServices)">
-            <summary>
-            Invoked by the framework in order to give a chance to
-            obtain other services
-            </summary>
-            <param name="provider">The service proviver</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.PrototypeAjaxProxyGenerator.GenerateJSProxy(Castle.MonoRail.Framework.IEngineContext,System.String,System.String,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.GenerateJSProxy(Castle.MonoRail.Framework.IEngineContext,System.String,System.String,System.String)">
             <summary>
             Generates an AJAX JavaScript proxy for a given controller.
             </summary>
@@ -16570,22 +16715,38 @@
             <param name="controller">Controller which will be target of the proxy</param>
             <param name="area">area which the controller belongs to</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.PrototypeAjaxProxyGenerator.GetParameterName(System.Reflection.ParameterInfo)">
+        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.GetScriptFunctionParameters(System.Collections.Generic.IEnumerable{System.Reflection.ParameterInfo})">
             <summary>
-            Gets the name of the parameter.
+            Gets the script function parameters.
             </summary>
-            <param name="paramInfo">The parameterInfo.</param>
+            <param name="parameters">The parameters.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.PrototypeAjaxProxyGenerator.GetPropertyValue(System.Object,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.GenerateJavascriptFunction(System.String,System.String,System.String,Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.ScriptFunctionParameter[])">
             <summary>
-            Gets the property value.
+            Generates the javascript proxy function.
             </summary>
-            <param name="obj">The obj.</param>
-            <param name="propName">Name of the prop.</param>
+            <param name="url">The URL.</param>
+            <param name="functionName">Name of the function.</param>
+            <param name="httpRequestMethod">The HTTP request method.</param>
+            <param name="scriptFunctionParameters">The script function parameters.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.PrototypeAjaxProxyGenerator.GetSingleAttribute``1(System.Reflection.ICustomAttributeProvider,System.Boolean)">
+        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.GetURLExtension(Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Gets the URL extension.
+            </summary>
+            <param name="context">The context.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.GetHTTPRequestMethod(System.Reflection.ICustomAttributeProvider)">
+            <summary>
+            Gets the HTTP request method.
+            </summary>
+            <param name="ajaxActionMethod">The ajax action method.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.GetSingleAttribute``1(System.Reflection.ICustomAttributeProvider,System.Boolean)">
             <summary>
             Gets the single attribute.
             </summary>
@@ -16593,7 +16754,7 @@
             <param name="inherit">if set to <c>true</c> [inherit].</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.PrototypeAjaxProxyGenerator.GetSingleAttribute(System.Reflection.ICustomAttributeProvider,System.Type,System.Boolean)">
+        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.GetSingleAttribute(System.Reflection.ICustomAttributeProvider,System.Type,System.Boolean)">
             <summary>
             Gets the single attribute.
             </summary>
@@ -16602,24 +16763,130 @@
             <param name="inherit">if set to <c>true</c> [inherit].</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.PrototypeAjaxProxyGenerator.ToCamelCase(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.ToCamelCase(System.String)">
             <summary>
             Toes the camel case.
             </summary>
             <param name="value">The value.</param>
             <returns></returns>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.PrototypeAjaxProxyGenerator.ControllerDescriptorBuilder">
+        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.GetBaseUrl(System.String,System.String,Castle.MonoRail.Framework.IEngineContext)">
+            <summary>
+            Gets the base URL.
+            </summary>
+            <param name="area">The area.</param>
+            <param name="controller">The controller.</param>
+            <param name="context">The context.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.GetPropertyValue(System.Object,System.String)">
+            <summary>
+            Gets the property value.
+            </summary>
+            <param name="obj">The obj.</param>
+            <param name="propName">Name of the prop.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.GetParameterName(System.Reflection.ParameterInfo)">
+            <summary>
+            Gets the name of the parameter.
+            </summary>
+            <param name="paramInfo">The parameterInfo.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.Service(Castle.MonoRail.Framework.IMonoRailServices)">
+            <summary>
+            Invoked by the framework in order to give a chance to
+            obtain other services
+            </summary>
+            <param name="provider">The service proviver</param>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.ControllerDescriptorBuilder">
             <summary>
             Gets or sets the controller descriptor builder.
             </summary>
             <value>The controller descriptor builder.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.PrototypeAjaxProxyGenerator.ControllerTree">
+        <member name="P:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.ControllerTree">
             <summary>
             Gets or sets the controller tree.
             </summary>
             <value>The controller tree.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.WrapProxyInScriptBlock">
+            <summary>
+            Deterains if the proxy generated by this instance will
+            be wrapped in a &lt;script&gt; block or not.
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.ScriptFunctionParameter">
+            <summary>
+            Script parameters
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.ScriptFunctionParameter.#ctor(System.String,System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.ScriptFunctionParameter"/> class.
+            </summary>
+            <param name="clientSideName">Name of the client side.</param>
+            <param name="serverSideName">Name of the server side.</param>
+            <param name="needsJSONEncoding">if set to <c>true</c> [needs JSON encoding].</param>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.ScriptFunctionParameter.ServerSideParameterName">
+            <summary>
+            Gets the name of the server side parameter.
+            </summary>
+            <value>The name of the server side parameter.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.ScriptFunctionParameter.ClientSideParameterName">
+            <summary>
+            Gets the name of the client side parameter.
+            </summary>
+            <value>The name of the client side parameter.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.ScriptFunctionParameter.NeedsJSONEncoding">
+            <summary>
+            Gets a value indicating whether the parameter needs JSON encoding.
+            </summary>
+            <value><c>true</c> if [needs JSON encoding]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.JQueryAjaxProxyGenerator">
+            <summary>
+            Provides a service which generates a <em>JavaScript</em> block, that
+            can be used to call Ajax actions on the controller. This JavaScript will
+            use the <em>JQuery</em> syntax.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.JQueryAjaxProxyGenerator.GenerateJavascriptFunction(System.String,System.String,System.String,Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.ScriptFunctionParameter[])">
+            <summary>
+            Generates the javascript proxy function.
+            </summary>
+            <param name="url">The URL.</param>
+            <param name="functionName">Name of the function.</param>
+            <param name="httpRequestMethod">The HTTP request method.</param>
+            <param name="scriptFunctionParameters">The script function parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.PrototypeAjaxProxyGenerator">
+            <summary>
+            Provides a service which generates a <em>JavaScript</em> block, that
+            can be used to call Ajax actions on the controller. This JavaScript will
+            use the <em>Prototype</em> syntax.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.AjaxProxyGenerator.PrototypeAjaxProxyGenerator.GenerateJavascriptFunction(System.String,System.String,System.String,Castle.MonoRail.Framework.Services.AjaxProxyGenerator.AbstractAjaxProxyGenerator.ScriptFunctionParameter[])">
+            <summary>
+            Generates the javascript proxy function.
+            </summary>
+            <param name="url">The URL.</param>
+            <param name="functionName">Name of the function.</param>
+            <param name="httpRequestMethod">The HTTP request method.</param>
+            <param name="scriptFunctionParameters">The script function parameters.</param>
+            <returns></returns>
+            <remarks>
+            if we have a [JSONBinder] mark on the parameter, we can serialize the parameter using prototype's Object.toJSON().
+            This requires Prototype 1.5.1. Users of [JSONBinder] should be aware of that.
+            </remarks>
         </member>
         <member name="T:Castle.MonoRail.Framework.Services.Utils.ControllerInspectionUtil">
             <summary>
@@ -17502,19 +17769,20 @@
             Pendent
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.IStaticResourceRegistry.RegisterAssemblyResource(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.IStaticResourceRegistry.RegisterAssemblyResource(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Nullable{System.DateTime})">
             <summary>
             Registers an assembly resource.
             </summary>
             <param name="name">The name.</param>
             <param name="location">The location.</param>
             <param name="version">The version.</param>
-            <param name="mimeType">Mime-type.</param>
             <param name="assemblyName">Name of the assembly.</param>
             <param name="resourceName">Resource name.</param>
             <param name="resourceEntry">The resource entry name/key.</param>
+            <param name="mimeType">Mime-type.</param>
+            <param name="lastModified">The last modified.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.IStaticResourceRegistry.RegisterCustomResource(System.String,System.String,System.String,Castle.Core.Resource.IResource,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.IStaticResourceRegistry.RegisterCustomResource(System.String,System.String,System.String,Castle.Core.Resource.IResource,System.String,System.Nullable{System.DateTime})">
             <summary>
             Registers a custom resource.
             </summary>
@@ -17523,6 +17791,7 @@
             <param name="version">The version.</param>
             <param name="resource">The resource.</param>
             <param name="mimeType">Mime-type.</param>
+            <param name="lastModified">The last modified.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Services.IStaticResourceRegistry.Exists(System.String,System.String,System.String)">
             <summary>
@@ -17533,7 +17802,16 @@
             <param name="version">The version.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.IStaticResourceRegistry.GetResource(System.String,System.String,System.String,System.String@)">
+        <member name="M:Castle.MonoRail.Framework.Services.IStaticResourceRegistry.GetLastModified(System.String,System.String,System.String)">
+            <summary>
+            Gets the a resource last modified.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="location">The location.</param>
+            <param name="version">The version.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.IStaticResourceRegistry.GetResource(System.String,System.String,System.String,System.String@,System.Nullable{System.DateTime}@)">
             <summary>
             Gets the resource content identified by the name, location and version.
             </summary>
@@ -17541,6 +17819,7 @@
             <param name="location">The location.</param>
             <param name="version">The version.</param>
             <param name="mimeType">Mime-type.</param>
+            <param name="lastModified">The last modified.</param>
             <returns></returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Services.DefaultStaticResourceRegistry.#ctor">
@@ -17548,19 +17827,20 @@
             Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Services.DefaultStaticResourceRegistry"/> class.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultStaticResourceRegistry.RegisterAssemblyResource(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultStaticResourceRegistry.RegisterAssemblyResource(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Nullable{System.DateTime})">
             <summary>
             Registers an assembly resource.
             </summary>
             <param name="name">The name.</param>
             <param name="location">The location.</param>
             <param name="version">The version.</param>
-            <param name="mimeType">Mime-type.</param>
-            <param name="assemblyName"></param>
+            <param name="assemblyName">Name of the assembly.</param>
             <param name="resourceName">Resource name.</param>
             <param name="resourceEntry">The resource entry name/key.</param>
+            <param name="mimeType">Mime-type.</param>
+            <param name="lastModified">The last modified.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultStaticResourceRegistry.RegisterCustomResource(System.String,System.String,System.String,Castle.Core.Resource.IResource,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultStaticResourceRegistry.RegisterCustomResource(System.String,System.String,System.String,Castle.Core.Resource.IResource,System.String,System.Nullable{System.DateTime})">
             <summary>
             Registers a custom resource.
             </summary>
@@ -17569,6 +17849,7 @@
             <param name="version">The version.</param>
             <param name="resource">The resource.</param>
             <param name="mimeType">Mime-type.</param>
+            <param name="lastModified">The last modified.</param>
         </member>
         <member name="M:Castle.MonoRail.Framework.Services.DefaultStaticResourceRegistry.Exists(System.String,System.String,System.String)">
             <summary>
@@ -17579,7 +17860,16 @@
             <param name="version">The version.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Services.DefaultStaticResourceRegistry.GetResource(System.String,System.String,System.String,System.String@)">
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultStaticResourceRegistry.GetLastModified(System.String,System.String,System.String)">
+            <summary>
+            Gets the a resource last modified.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="location">The location.</param>
+            <param name="version">The version.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultStaticResourceRegistry.GetResource(System.String,System.String,System.String,System.String@,System.Nullable{System.DateTime}@)">
             <summary>
             Gets the resource content identified by the name, location and version.
             </summary>
@@ -17587,6 +17877,7 @@
             <param name="location">The location.</param>
             <param name="version">The version.</param>
             <param name="mimeType">Mime-type.</param>
+            <param name="lastModified">The last modified.</param>
             <returns></returns>
         </member>
         <member name="T:Castle.MonoRail.Framework.Services.DefaultTransformFilterFactory">
@@ -18127,6 +18418,13 @@
             <param name="name">The name.</param>
             <returns></returns>
         </member>
+        <member name="M:Castle.MonoRail.Framework.IViewComponentRegistry.HasViewComponent(System.String)">
+            <summary>
+            Checks if the view component is registered.
+            </summary>
+            <param name="name">The name.</param>
+            <returns>True if registered or false if GetViewComponent would throw an exception.</returns>
+        </member>
         <member name="M:Castle.MonoRail.Framework.Services.DefaultViewComponentRegistry.AddViewComponent(System.String,System.Type)">
             <summary>
             Adds the view component.
@@ -18140,6 +18438,13 @@
             </summary>
             <param name="name">The name.</param>
             <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultViewComponentRegistry.HasViewComponent(System.String)">
+            <summary>
+            Checks if the view component is registered.
+            </summary>
+            <param name="name">The name.</param>
+            <returns>True if registered or false if GetViewComponent would throw an exception.</returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.Services.DefaultViewComponentRegistry.GetDetails(System.Type)">
             <summary>
@@ -18334,6 +18639,16 @@
             MonoRail's view engine to process email templates.
             </summary>
         </member>
+        <member name="M:Castle.MonoRail.Framework.IEmailTemplateService.HasMailTemplate(System.String)">
+            <summary>
+            Determines whether the specified template exists in the e-mail 
+            template folder (<c>views/mail</c>).
+            </summary>
+            <param name="templateName">Name of the e-mail template.</param>
+            <returns>
+            	<c>true</c> if the template exists; otherwise, <c>false</c>.
+            </returns>
+        </member>
         <member name="M:Castle.MonoRail.Framework.IEmailTemplateService.RenderMailMessage(System.String,System.String,System.Collections.IDictionary)">
             <summary>
             Creates an instance of <see cref="T:Castle.Components.Common.EmailSender.Message"/>
@@ -18393,6 +18708,16 @@
             obtain other services
             </summary>
             <param name="serviceProvider">The service proviver</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.EmailTemplateService.HasMailTemplate(System.String)">
+            <summary>
+            Determines whether the specified template exists in the e-mail
+            template folder (<c>views/mail</c>).
+            </summary>
+            <param name="templateName">Name of the e-mail template.</param>
+            <returns>
+            	<c>true</c> if the template exists; otherwise, <c>false</c>.
+            </returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.EmailTemplateService.RenderMailMessage(System.String,System.String,System.Object)">
             <summary>
@@ -18586,6 +18911,47 @@
             </summary>
             <param name="jsonString">The json representation of an object string.</param>
             <returns></returns>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Services.IJSONReader">
+            <summary>
+            Represents a reader that provides fast, non-cached, forward-only access to serialized Json data.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.IJSONReader.Read">
+            <summary>
+            Reads the next Json token from the stream.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.IJSONReader.Skip">
+            <summary>
+            Pending.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.IJSONReader.Close">
+            <summary>
+            Changes the <see cref="T:Newtonsoft.Json.JsonReader.State"/> to Closed. 
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.IJSONReader.QuoteChar">
+            <summary>
+            Gets the quotation mark character used to enclose the value of a string.
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.IJSONReader.Value">
+            <summary>
+            Gets the text value of the current Json token.
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.IJSONReader.ValueType">
+            <summary>
+            Gets The Common Language Runtime (CLR) type for the current Json token.
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.IJSONReader.Depth">
+            <summary>
+            Pending.
+            </summary>
         </member>
         <member name="T:Castle.MonoRail.Framework.Services.UrlBuilderParameters">
             <summary>
@@ -19068,6 +19434,12 @@
             </summary>
             <value>The path info.</value>
         </member>
+        <member name="P:Castle.MonoRail.Framework.Test.IMockRequest.InputStreamSize">
+            <summary>
+            Sets the size of the input stream.
+            </summary>
+            <value>The size of the input stream.</value>
+        </member>
         <member name="P:Castle.MonoRail.Framework.Test.IMockRequest.IsLocal">
             <summary>
             Sets a value indicating whether this 
@@ -19099,6 +19471,12 @@
             </summary>
             <value>The file path.</value>
         </member>
+        <member name="P:Castle.MonoRail.Framework.Test.IMockRequest.UserAgent">
+            <summary>
+            Sets the user agent string.
+            </summary>
+            <value>The user agent string.</value>
+        </member>
         <member name="P:Castle.MonoRail.Framework.Test.IMockRequest.UserLanguages">
             <summary>
             Sets the user languages.
@@ -19110,6 +19488,11 @@
             Sets the IP host address of the remote client. 
             </summary>
             <value>The IP address of the remote client.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.IMockRequest.UrlReferrer">
+            <summary>
+            Sets the referring URL.
+            </summary>
         </member>
         <member name="T:Castle.MonoRail.Framework.Test.IMockViewComponentContext">
             <summary>
@@ -19134,7 +19517,8 @@
         </member>
         <member name="M:Castle.MonoRail.Framework.IViewComponentContext.RenderView(System.String,System.IO.TextWriter)">
             <summary>
-            Renders the view specified to the writer.
+            Renders the view specified to the writer. This is any view, 
+            not tied to the components view. 
             </summary>
             <param name="name">The view template name</param>
             <param name="writer">A writer to output</param>
@@ -19209,18 +19593,18 @@
             </summary>
             <value>The section render.</value>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Test.MockCacheProvider">
+        <member name="T:Castle.MonoRail.Framework.Test.StubCacheProvider">
             <summary>
             Represents a mock implementation of <see cref="T:Castle.MonoRail.Framework.ICacheProvider"/> for unit test purposes.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockCacheProvider.Service(Castle.MonoRail.Framework.IMonoRailServices)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubCacheProvider.Service(Castle.MonoRail.Framework.IMonoRailServices)">
             <summary>
             Services the specified provider.
             </summary>
             <param name="provider">The provider.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockCacheProvider.HasKey(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubCacheProvider.HasKey(System.String)">
             <summary>
             Determines whether the specified key is on the cache.
             </summary>
@@ -19229,40 +19613,50 @@
             	<c>true</c> if the cache has the key; otherwise, <c>false</c>.
             </returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockCacheProvider.Get(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubCacheProvider.Get(System.String)">
             <summary>
             Gets the cache item by the specified key.
             </summary>
             <param name="key">The key.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockCacheProvider.Store(System.String,System.Object)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubCacheProvider.Store(System.String,System.Object)">
             <summary>
             Stores the cache item by the specified key.
             </summary>
             <param name="key">The key.</param>
             <param name="data">The data.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockCacheProvider.Delete(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubCacheProvider.Delete(System.String)">
             <summary>
             Deletes the cache item by the specified key.
             </summary>
             <param name="key">The key.</param>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Test.MockEmailTemplateService">
+        <member name="T:Castle.MonoRail.Framework.Test.StubEmailTemplateService">
             <summary>
             Mocks the <see cref="T:Castle.MonoRail.Framework.IEmailTemplateService"/> calling 
-            <see cref="M:Castle.MonoRail.Framework.Test.MockEngineContext.AddMailTemplateRendered(System.String,System.Collections.IDictionary)"/> to register
+            <see cref="M:Castle.MonoRail.Framework.Test.StubEngineContext.AddMailTemplateRendered(System.String,System.Collections.IDictionary)"/> to register
             the calls made to these methods
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockEmailTemplateService.#ctor(Castle.MonoRail.Framework.Test.MockEngineContext)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubEmailTemplateService.#ctor(Castle.MonoRail.Framework.Test.StubEngineContext)">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockEmailTemplateService"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubEmailTemplateService"/> class.
             </summary>
             <param name="context">The context.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockEmailTemplateService.RenderMailMessage(System.String,System.String,System.Collections.IDictionary)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubEmailTemplateService.HasMailTemplate(System.String)">
+            <summary>
+            Determines whether the specified template exists in the e-mail
+            template folder (<c>views/mail</c>).
+            </summary>
+            <param name="templateName">Name of the e-mail template.</param>
+            <returns>
+            	<c>true</c> if the template exists; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.StubEmailTemplateService.RenderMailMessage(System.String,System.String,System.Collections.IDictionary)">
             <summary>
             Creates an instance of <see cref="T:Castle.Components.Common.EmailSender.Message"/>
             using the specified template for the body
@@ -19274,7 +19668,7 @@
             that you can use on the email template</param>
             <returns>An instance of <see cref="T:Castle.Components.Common.EmailSender.Message"/></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockEmailTemplateService.RenderMailMessage(System.String,System.String,System.Object)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubEmailTemplateService.RenderMailMessage(System.String,System.String,System.Object)">
             <summary>
             Creates an instance of <see cref="T:Castle.Components.Common.EmailSender.Message"/>
             using the specified template for the body
@@ -19286,7 +19680,7 @@
             that you can use on the email template</param>
             <returns>An instance of <see cref="T:Castle.Components.Common.EmailSender.Message"/></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockEmailTemplateService.RenderMailMessage(System.String,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext,System.Boolean)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubEmailTemplateService.RenderMailMessage(System.String,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext,System.Boolean)">
             <summary>
             Renders the mail message.
             </summary>
@@ -19297,386 +19691,633 @@
             <param name="doNotApplyLayout">if set to <c>true</c> [do not apply layout].</param>
             <returns></returns>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Test.MockEngineContext">
+        <member name="T:Castle.MonoRail.Framework.Test.StubEngineContext">
             <summary>
             Represents a mock implementation of <see cref="T:Castle.MonoRail.Framework.IEngineContext"/> for unit test purposes.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockEngineContext.#ctor">
+        <member name="M:Castle.MonoRail.Framework.Test.StubEngineContext.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockEngineContext"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubEngineContext"/> class.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockEngineContext.#ctor(Castle.MonoRail.Framework.UrlInfo)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubEngineContext.#ctor(Castle.MonoRail.Framework.UrlInfo)">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockEngineContext"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubEngineContext"/> class.
             </summary>
             <param name="urlInfo">The URL info.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockEngineContext.#ctor(Castle.MonoRail.Framework.Test.IMockRequest,Castle.MonoRail.Framework.Test.IMockResponse,Castle.MonoRail.Framework.UrlInfo)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubEngineContext.#ctor(Castle.MonoRail.Framework.Test.IMockRequest,Castle.MonoRail.Framework.Test.IMockResponse,Castle.MonoRail.Framework.UrlInfo)">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockEngineContext"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubEngineContext"/> class.
             </summary>
             <param name="request">The request.</param>
             <param name="response">The response.</param>
             <param name="urlInfo">The URL info.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockEngineContext.#ctor(Castle.MonoRail.Framework.Test.IMockRequest,Castle.MonoRail.Framework.Test.IMockResponse,Castle.MonoRail.Framework.IMonoRailServices,Castle.MonoRail.Framework.UrlInfo)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubEngineContext.#ctor(Castle.MonoRail.Framework.Test.IMockRequest,Castle.MonoRail.Framework.Test.IMockResponse,Castle.MonoRail.Framework.IMonoRailServices,Castle.MonoRail.Framework.UrlInfo)">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockEngineContext"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubEngineContext"/> class.
             </summary>
             <param name="request">The request.</param>
             <param name="response">The response.</param>
             <param name="services">The services.</param>
             <param name="urlInfo">The URL info.</param>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.MockRequest">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.MockRequest">
             <summary>
             Gets or sets the mock request.
             </summary>
             <value>The mock request.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.MockResponse">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.MockResponse">
             <summary>
             Gets or sets the mock response.
             </summary>
             <value>The mock response.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.UnderlyingContext">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.UnderlyingContext">
             <summary>
             Gets the underlying context of the API being used.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.Session">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.Session">
             <summary>
             Access the session objects.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.Request">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.Request">
             <summary>
             Gets the request object.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.Response">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.Response">
             <summary>
             Gets the response object.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.Trace">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.Trace">
             <summary>
             Gets the trace object.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.Flash">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.Flash">
             <summary>
             Access a dictionary of volative items.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.CurrentUser">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.CurrentUser">
             <summary>
             Gets or sets the current user.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.LastException">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.LastException">
             <summary>
             Gets the last exception raised during
             the execution of an action.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.ApplicationPath">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.ApplicationPath">
             <summary>
             Returns the application path.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.ApplicationPhysicalPath">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.ApplicationPhysicalPath">
             <summary>
             Returns the physical application path.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.UrlInfo">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.UrlInfo">
             <summary>
-            Returns the <see cref="P:Castle.MonoRail.Framework.Test.MockEngineContext.UrlInfo"/> of the the current request.
+            Returns the <see cref="P:Castle.MonoRail.Framework.Test.StubEngineContext.UrlInfo"/> of the the current request.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.Server">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.Server">
             <summary>
             Returns an <see cref="T:Castle.MonoRail.Framework.IServerUtility"/>.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.Items">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.Items">
             <summary>
             Returns the Items collection from the current HttpContext.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.CurrentController">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.CurrentController">
             <summary>
             Gets or sets the current controller.
             </summary>
             <value>The current controller.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.CurrentControllerContext">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.CurrentControllerContext">
             <summary>
             Gets or sets the current controller context.
             </summary>
             <value>The current controller context.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.Services">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.Services">
             <summary>
             Gets a reference to the MonoRail services.
             </summary>
             <value>The services.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.RenderedEmailTemplates">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.RenderedEmailTemplates">
             <summary>
             Gets the rendered email templates.
             </summary>
             <value>The rendered email templates.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.MessagesSent">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.MessagesSent">
             <summary>
             Gets the messages sent.
             </summary>
             <value>The messages sent.</value>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Test.MockEngineContext.RenderedEmailTemplate">
+        <member name="T:Castle.MonoRail.Framework.Test.StubEngineContext.RenderedEmailTemplate">
             <summary>
             Represents an email template for unit test purposes
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockEngineContext.RenderedEmailTemplate.#ctor(System.String,System.Collections.IDictionary)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubEngineContext.RenderedEmailTemplate.#ctor(System.String,System.Collections.IDictionary)">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockEngineContext.RenderedEmailTemplate"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubEngineContext.RenderedEmailTemplate"/> class.
             </summary>
             <param name="name">The name.</param>
             <param name="parameters">The parameters.</param>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.RenderedEmailTemplate.Name">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.RenderedEmailTemplate.Name">
             <summary>
             Gets the name.
             </summary>
             <value>The name.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockEngineContext.RenderedEmailTemplate.Parameters">
+        <member name="P:Castle.MonoRail.Framework.Test.StubEngineContext.RenderedEmailTemplate.Parameters">
             <summary>
             Gets the parameters.
             </summary>
             <value>The parameters.</value>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Test.MockRequest">
+        <member name="T:Castle.MonoRail.Framework.Test.StubMonoRailServices">
+            <summary>
+            Pendent
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.StubMonoRailServices.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubMonoRailServices"/> class with default mock services.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.StubMonoRailServices.#ctor(Castle.MonoRail.Framework.Services.IUrlBuilder,Castle.MonoRail.Framework.IFilterFactory,Castle.MonoRail.Framework.IViewEngineManager,Castle.MonoRail.Framework.IActionSelector,Castle.MonoRail.Framework.IDynamicActionProviderFactory)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubMonoRailServices"/> class.
+            </summary>
+            <param name="urlBuilder">The URL builder.</param>
+            <param name="filterFactory">The filter factory.</param>
+            <param name="viewEngineManager">The view engine manager.</param>
+            <param name="actionSelector">The action selector.</param>
+            <param name="dynamicActionProviderFactory">The dynamic action provider factory.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.StubMonoRailServices.AddService(System.Type,System.Object)">
+            <summary>
+            Adds the specified service to the service container.
+            </summary>
+            <param name="serviceType">The type of service to add.</param>
+            <param name="serviceInstance">An instance of the service type to add. This object must implement or inherit from the type indicated by the <paramref name="serviceType"/> parameter.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.StubMonoRailServices.AddService(System.Type,System.Object,System.Boolean)">
+            <summary>
+            Adds the specified service to the service container, and optionally promotes the service to any parent service containers.
+            </summary>
+            <param name="serviceType">The type of service to add.</param>
+            <param name="serviceInstance">An instance of the service type to add. This object must implement or inherit from the type indicated by the <paramref name="serviceType"/> parameter.</param>
+            <param name="promote">true to promote this request to any parent service containers; otherwise, false.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.StubMonoRailServices.AddService(System.Type,System.ComponentModel.Design.ServiceCreatorCallback)">
+            <summary>
+            Adds the specified service to the service container.
+            </summary>
+            <param name="serviceType">The type of service to add.</param>
+            <param name="callback">A callback object that is used to create the service. This allows a service to be declared as available, but delays the creation of the object until the service is requested.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.StubMonoRailServices.AddService(System.Type,System.ComponentModel.Design.ServiceCreatorCallback,System.Boolean)">
+            <summary>
+            Adds the specified service to the service container, and optionally promotes the service to parent service containers.
+            </summary>
+            <param name="serviceType">The type of service to add.</param>
+            <param name="callback">A callback object that is used to create the service. This allows a service to be declared as available, but delays the creation of the object until the service is requested.</param>
+            <param name="promote">true to promote this request to any parent service containers; otherwise, false.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.StubMonoRailServices.RemoveService(System.Type)">
+            <summary>
+            Removes the specified service type from the service container.
+            </summary>
+            <param name="serviceType">The type of service to remove.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.StubMonoRailServices.RemoveService(System.Type,System.Boolean)">
+            <summary>
+            Removes the specified service type from the service container, and optionally promotes the service to parent service containers.
+            </summary>
+            <param name="serviceType">The type of service to remove.</param>
+            <param name="promote">true to promote this request to any parent service containers; otherwise, false.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.StubMonoRailServices.GetService``1">
+            <summary>
+            Gets the service.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.StubMonoRailServices.GetService(System.Type)">
+            <summary>
+            Gets the service object of the specified type.
+            </summary>
+            <param name="serviceType">An object that specifies the type of service object to get.</param>
+            <returns>
+            A service object of type <paramref name="serviceType"/>.-or- null if there is no service object of type <paramref name="serviceType"/>.
+            </returns>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.UrlTokenizer">
+            <summary>
+            Gets or sets the URL tokenizer.
+            </summary>
+            <value>The URL tokenizer.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.UrlBuilder">
+            <summary>
+            Gets or sets the URL builder.
+            </summary>
+            <value>The URL builder.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.CacheProvider">
+            <summary>
+            Gets or sets the cache provider.
+            </summary>
+            <value>The cache provider.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.EngineContextFactory">
+            <summary>
+            Gets or sets the engine context factory.
+            </summary>
+            <value>The engine context factory.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.ControllerFactory">
+            <summary>
+            Gets or sets the controller factory.
+            </summary>
+            <value>The controller factory.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.ControllerContextFactory">
+            <summary>
+            Gets or sets the controller context factory.
+            </summary>
+            <value>The controller context factory.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.ControllerTree">
+            <summary>
+            Gets or sets the controller tree.
+            </summary>
+            <value>The controller tree.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.ViewSourceLoader">
+            <summary>
+            Gets or sets the view source loader.
+            </summary>
+            <value>The view source loader.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.FilterFactory">
+            <summary>
+            Gets or sets the filter factory.
+            </summary>
+            <value>The filter factory.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.DynamicActionProviderFactory">
+            <summary>
+            Gets or sets the dynamic action provider factory.
+            </summary>
+            <value>The dynamic action provider factory.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.AjaxProxyGenerator">
+            <summary>
+            Gets or sets the ajax proxy generator.
+            </summary>
+            <value>The ajax proxy generator.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.ControllerDescriptorProvider">
+            <summary>
+            Gets or sets the controller descriptor provider.
+            </summary>
+            <value>The controller descriptor provider.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.ViewEngineManager">
+            <summary>
+            Gets or sets the view engine manager.
+            </summary>
+            <value>The view engine manager.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.ValidatorRegistry">
+            <summary>
+            Gets or sets the validator registry.
+            </summary>
+            <value>The validator registry.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.ActionSelector">
+            <summary>
+            Gets or sets the action selector.
+            </summary>
+            <value>The action selector.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.ScaffoldingSupport">
+            <summary>
+            Gets or sets the scaffold support.
+            </summary>
+            <value>The scaffold support.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.JSONSerializer">
+            <summary>
+            Gets or sets the JSON serializer.
+            </summary>
+            <value>The JSON serializer.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.StaticResourceRegistry">
+            <summary>
+            Gets or sets the static resource registry service.
+            </summary>
+            <value>The static resource registry.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.EmailTemplateService">
+            <summary>
+            Gets or sets the email template service.
+            </summary>
+            <value>The email template service.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.EmailSender">
+            <summary>
+            Gets or sets the email sender.
+            </summary>
+            <value>The email sender.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.ResourceFactory">
+            <summary>
+            Gets or sets the resource factory.
+            </summary>
+            <value>The resource factory.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.TransformFilterFactory">
+            <summary>
+            Gets or sets the transformfilter factory.
+            </summary>
+            <value>The resource factory.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.ServiceInitializer">
+            <summary>
+            Gets or sets the service initializer.
+            </summary>
+            <value>The service initializer.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.HelperFactory">
+            <summary>
+            Gets or sets the helper factory.
+            </summary>
+            <value>The helper factory.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.ExtensionManager">
+            <summary>
+            Gets or sets the extension manager.
+            </summary>
+            <value>The extension manager.</value>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Test.StubRequest">
             <summary>
             Represents a mock implementation of <see cref="T:Castle.MonoRail.Framework.IRequest"/> for unit test purposes.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockRequest.#ctor(System.Collections.Generic.IDictionary{System.String,System.Web.HttpCookie})">
+        <member name="M:Castle.MonoRail.Framework.Test.StubRequest.#ctor(System.Collections.Generic.IDictionary{System.String,System.Web.HttpCookie})">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockRequest"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubRequest"/> class.
             </summary>
             <param name="cookies">The cookies.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockRequest.#ctor(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubRequest.#ctor(System.String)">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockRequest"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubRequest"/> class.
             </summary>
             <param name="httpMethod">The HTTP method.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockRequest.#ctor">
+        <member name="M:Castle.MonoRail.Framework.Test.StubRequest.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockRequest"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubRequest"/> class.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockRequest.AddCookie(System.Web.HttpCookie)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubRequest.AddCookie(System.Web.HttpCookie)">
             <summary>
             Adds a cookie to this mock object cookie collection
             </summary>
             <param name="cookie">The cookie.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockRequest.AddCookie(System.String,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubRequest.AddCookie(System.String,System.String)">
             <summary>
             Adds a cookie to this mock object cookie collection
             </summary>
             <param name="name">The name.</param>
             <param name="cookieContent">The cookie content.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockRequest.ReadCookie(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubRequest.ReadCookie(System.String)">
             <summary>
             Reads the cookie.
             </summary>
             <param name="name">The cookie name.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockRequest.ValidateInput">
+        <member name="M:Castle.MonoRail.Framework.Test.StubRequest.ValidateInput">
             <summary>
             Validates the input.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockRequest.ObtainParamsNode(Castle.MonoRail.Framework.ParamStore)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubRequest.ObtainParamsNode(Castle.MonoRail.Framework.ParamStore)">
             <summary>
             Obtains the params node.
             </summary>
             <param name="from">From.</param>
             <returns></returns>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.AcceptHeader">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.AcceptHeader">
             <summary>
             Gets or sets the accept header.
             </summary>
             <value>The accept header.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.UrlReferrer">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.AcceptTypes">
+            <summary>
+            Gets a string array of client-supported MIME accept types.
+            </summary>
+            <value>A string array of client-supported MIME accept types.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.UrlReferrer">
             <summary>
             Gets the referring URL.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.Headers">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.UserAgent">
+            <summary>
+            Gets the user agent string of the client browser.
+            </summary>
+            <value>The agent string of the client browser.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.Headers">
             <summary>
             Gets the Http headers.
             </summary>
             <value>The Http headers.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.Files">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.Files">
             <summary>
             Gets the <see cref="T:System.Web.HttpPostedFile"/> per key.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.IsLocal">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.IsLocal">
             <summary>
             Gets a value indicating whether this requeest is from a local address.
             </summary>
             <value><c>true</c> if this instance is local; otherwise, <c>false</c>.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.PathInfo">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.PathInfo">
             <summary>
             Gets additional path information for
             a resource with a URL extension.
             </summary>
             <value>The path info.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.RequestType">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.RequestType">
             <summary>
             Gets the request type (GET, POST, etc)
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.Url">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.Url">
             <summary>
             Gets the request URL.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.RawUrl">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.RawUrl">
             <summary>
             Gets the raw URL.
             </summary>
             <value>The raw URL.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.Uri">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.Uri">
             <summary>
             Gets the URI.
             </summary>
             <value>The URI.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.HttpMethod">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.HttpMethod">
             <summary>
             Gets the HTTP method.
             </summary>
             <value>The HTTP method.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.FilePath">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.FilePath">
             <summary>
             Gets the file path.
             </summary>
             <value>The file path.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.Item(System.String)">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.Item(System.String)">
             <summary>
             Gets the param with the specified key.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.Params">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.Params">
             <summary>
             Gets the params which accumulates headers, post, querystring and cookies.
             </summary>
             <value>The params.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.QueryString">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.QueryString">
             <summary>
             Gets the query string.
             </summary>
             <value>The query string.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.Form">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.Form">
             <summary>
             Gets the form.
             </summary>
             <value>The form.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.UserLanguages">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.UserLanguages">
             <summary>
             Gets the user languages.
             </summary>
             <value>The user languages.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.ParamsNode">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.ParamsNode">
             <summary>
             Lazy initialized property with a hierarchical
             representation of the flat data on <see cref="P:Castle.MonoRail.Framework.Controller.Params"/>
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.FormNode">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.FormNode">
             <summary>
             Lazy initialized property with a hierarchical
             representation of the flat data on <see cref="P:Castle.MonoRail.Framework.IRequest.Form"/>
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.QueryStringNode">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.QueryStringNode">
             <summary>
             Lazy initialized property with a hierarchical
             representation of the flat data on <see cref="P:Castle.MonoRail.Framework.IRequest.QueryString"/>
             </summary>
             <value>The query string node.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.InputStream">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.InputStream">
             <summary>
             Gets the contents of the incoming HTTP entity body.
             </summary>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.ContentType">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.InputStreamSize">
+            <summary>
+            Gets or sets the size of the input stream.
+            </summary>
+            <value>The size of the input stream.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.ContentType">
             <summary>
             Gets or sets the MIME content type of the incoming request.
             </summary>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockRequest.UserHostAddress">
+        <member name="P:Castle.MonoRail.Framework.Test.StubRequest.UserHostAddress">
             <summary>
             Gets the IP host address of the remote client.
             </summary>
             <value>The IP address of the remote client.</value>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Test.MockResponse">
+        <member name="T:Castle.MonoRail.Framework.Test.StubResponse">
             <summary>
             Represents a mock implementation of <see cref="T:Castle.MonoRail.Framework.Test.IMockResponse"/> for unit test purposes.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.#ctor(Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.IUrlBuilder,Castle.MonoRail.Framework.IServerUtility,Castle.MonoRail.Framework.Routing.RouteMatch,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.#ctor(Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.IUrlBuilder,Castle.MonoRail.Framework.IServerUtility,Castle.MonoRail.Framework.Routing.RouteMatch,System.String)">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockResponse"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubResponse"/> class.
             </summary>
             <param name="currentUrl">The current URL.</param>
             <param name="urlBuilder">The URL builder.</param>
@@ -19684,34 +20325,34 @@
             <param name="routeMatch">The route match.</param>
             <param name="referrer">The referrer.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.#ctor(Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.IUrlBuilder,Castle.MonoRail.Framework.IServerUtility,Castle.MonoRail.Framework.Routing.RouteMatch)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.#ctor(Castle.MonoRail.Framework.UrlInfo,Castle.MonoRail.Framework.Services.IUrlBuilder,Castle.MonoRail.Framework.IServerUtility,Castle.MonoRail.Framework.Routing.RouteMatch)">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockResponse"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubResponse"/> class.
             </summary>
             <param name="currentUrl">The current URL.</param>
             <param name="urlBuilder">The URL builder.</param>
             <param name="serverUtility">The server utility.</param>
             <param name="routeMatch">The route match.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.#ctor(System.Collections.Generic.IDictionary{System.String,System.Web.HttpCookie},Castle.MonoRail.Framework.UrlInfo)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.#ctor(System.Collections.Generic.IDictionary{System.String,System.Web.HttpCookie},Castle.MonoRail.Framework.UrlInfo)">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockResponse"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubResponse"/> class.
             </summary>
             <param name="cookies">The cookies.</param>
             <param name="info">Current url</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.#ctor(System.Collections.Generic.IDictionary{System.String,System.Web.HttpCookie})">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.#ctor(System.Collections.Generic.IDictionary{System.String,System.Web.HttpCookie})">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockResponse"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubResponse"/> class.
             </summary>
             <param name="cookies">The cookies.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.#ctor">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockResponse"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubResponse"/> class.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.IsCookiePresent(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.IsCookiePresent(System.String)">
             <summary>
             Determines whether a cookie is present on the response.
             </summary>
@@ -19720,7 +20361,7 @@
             	<c>true</c> if the cookie exists in the response; otherwise, <c>false</c>.
             </returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.GetCookie(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.GetCookie(System.String)">
             <summary>
             Gets a cookie added through one of
             the <see cref="M:Castle.MonoRail.Framework.IResponse.CreateCookie(System.Web.HttpCookie)"/> overloads.
@@ -19728,54 +20369,54 @@
             <param name="name">The cookie name.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.AppendHeader(System.String,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.AppendHeader(System.String,System.String)">
             <summary>
             Appends the header.
             </summary>
             <param name="name">The name.</param>
             <param name="value">The value.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.BinaryWrite(System.Byte[])">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.BinaryWrite(System.Byte[])">
             <summary>
             Writes the buffer to the browser
             </summary>
             <param name="buffer">The buffer.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.BinaryWrite(System.IO.Stream)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.BinaryWrite(System.IO.Stream)">
             <summary>
             Writes the stream to the browser
             </summary>
             <param name="stream">The stream.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.Clear">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.Clear">
             <summary>
             Clears the response (only works if buffered)
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.ClearContent">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.ClearContent">
             <summary>
             Clears the response content (only works if buffered).
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.Write(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.Write(System.String)">
             <summary>
             Writes the specified string.
             </summary>
             <param name="s">The string.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.Write(System.Object)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.Write(System.Object)">
             <summary>
             Writes the specified obj.
             </summary>
             <param name="obj">The obj.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.Write(System.Char)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.Write(System.Char)">
             <summary>
             Writes the specified char.
             </summary>
             <param name="ch">The char.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.Write(System.Char[],System.Int32,System.Int32)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.Write(System.Char[],System.Int32,System.Int32)">
             <summary>
             Writes the specified buffer.
             </summary>
@@ -19783,13 +20424,13 @@
             <param name="index">The index.</param>
             <param name="count">The count.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.WriteFile(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.WriteFile(System.String)">
             <summary>
             Writes the file.
             </summary>
             <param name="fileName">Name of the file.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.RedirectToUrl(System.String,System.Boolean)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.RedirectToUrl(System.String,System.Boolean)">
             <summary>
             Redirects to the specified url
             </summary>
@@ -19797,80 +20438,86 @@
             <param name="endProcess">if set to <c>true</c>, sends the redirect and
             kills the current request process.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockResponse.CreateCookie(System.Web.HttpCookie)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubResponse.CreateCookie(System.Web.HttpCookie)">
             <summary>
             Creates a http cookie.
             </summary>
             <param name="cookie">The cookie.</param>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockResponse.RedirectedTo">
+        <member name="P:Castle.MonoRail.Framework.Test.StubResponse.RedirectedTo">
             <summary>
             Gets the urls the request was redirected to.
             </summary>
             <value>The redirected to.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockResponse.Headers">
+        <member name="P:Castle.MonoRail.Framework.Test.StubResponse.Headers">
             <summary>
             Gets the http headers.
             </summary>
             <value>The headers.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockResponse.StatusCode">
+        <member name="P:Castle.MonoRail.Framework.Test.StubResponse.StatusCode">
             <summary>
             Gets or sets the status code.
             </summary>
             <value>The status code.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockResponse.StatusDescription">
+        <member name="P:Castle.MonoRail.Framework.Test.StubResponse.StatusDescription">
             <summary>
             Gets or sets the status description.
             </summary>
             <value>The status code.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockResponse.ContentType">
+        <member name="P:Castle.MonoRail.Framework.Test.StubResponse.ContentType">
             <summary>
             Gets or sets the type of the content.
             </summary>
             <value>The type of the content.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockResponse.CachePolicy">
+        <member name="P:Castle.MonoRail.Framework.Test.StubResponse.CachePolicy">
             <summary>
             Gets the caching policy (expiration time, privacy,
             vary clauses) of a Web page.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockResponse.CacheControlHeader">
+        <member name="P:Castle.MonoRail.Framework.Test.StubResponse.CacheControlHeader">
             <summary>
             Sets the Cache-Control HTTP header to Public or Private.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockResponse.Charset">
+        <member name="P:Castle.MonoRail.Framework.Test.StubResponse.ContentEncoding">
             <summary>
             Gets or sets the HTTP character set of the output stream.
             </summary>
             <value></value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockResponse.Output">
+        <member name="P:Castle.MonoRail.Framework.Test.StubResponse.Charset">
+            <summary>
+            Gets or sets the HTTP character set of the output stream.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubResponse.Output">
             <summary>
             Gets the output.
             </summary>
             <value>The output.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockResponse.OutputStream">
+        <member name="P:Castle.MonoRail.Framework.Test.StubResponse.OutputStream">
             <summary>
             Gets the output stream.
             </summary>
             <value>The output stream.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockResponse.WasRedirected">
+        <member name="P:Castle.MonoRail.Framework.Test.StubResponse.WasRedirected">
             <summary>
             Gets a value indicating whether the response sent a redirect.
             </summary>
             <value><c>true</c> if was redirected; otherwise, <c>false</c>.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockResponse.IsClientConnected">
+        <member name="P:Castle.MonoRail.Framework.Test.StubResponse.IsClientConnected">
             <summary>
             Gets a value indicating whether this instance is client connected.
             </summary>
@@ -19878,32 +20525,32 @@
             	<c>true</c> if this instance is client connected; otherwise, <c>false</c>.
             </value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockResponse.OutputContent">
+        <member name="P:Castle.MonoRail.Framework.Test.StubResponse.OutputContent">
             <summary>
             Gets the output.
             </summary>
             <value>The output.</value>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Test.MockRoutingEngine">
+        <member name="T:Castle.MonoRail.Framework.Test.StubRoutingEngine">
             <summary>
             Lot to do here
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockRoutingEngine.ForDomain(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubRoutingEngine.ForDomain(System.String)">
             <summary>
             Pendent
             </summary>
             <param name="domainName">Name of the domain.</param>
             <returns></returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockRoutingEngine.ForSubDomain(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubRoutingEngine.ForSubDomain(System.String)">
             <summary>
             Pendent
             </summary>
             <param name="subdomain">The subdomain.</param>
             <returns></returns>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Test.MockScaffoldingSupport">
+        <member name="T:Castle.MonoRail.Framework.Test.StubScaffoldingSupport">
             <summary>
             Represents a mock implementation of <see cref="T:Castle.MonoRail.Framework.IScaffoldingSupport"/> for unit test purposes.
             </summary>
@@ -19926,7 +20573,7 @@
             <param name="controller">The controller.</param>
             <param name="controllerContext">The controller context.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockScaffoldingSupport.Process(Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubScaffoldingSupport.Process(Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
             <summary>
             Implementors should use this method to read information
             from the controller instance and add dynamic actions to the controller.
@@ -19935,12 +20582,12 @@
             <param name="controller">The controller.</param>
             <param name="controllerContext">The controller context.</param>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Test.MockServerUtility">
+        <member name="T:Castle.MonoRail.Framework.Test.StubServerUtility">
             <summary>
             Represents a mock implementation of <see cref="T:Castle.MonoRail.Framework.IServerUtility"/> for unit test purposes.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockServerUtility.MapPath(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubServerUtility.MapPath(System.String)">
             <summary>
             Returns the physical path for the
             specified virtual path.
@@ -19948,35 +20595,35 @@
             <param name="virtualPath">The virtual path.</param>
             <returns>The mapped path</returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockServerUtility.HtmlEncode(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubServerUtility.HtmlEncode(System.String)">
             <summary>
             HTML encodes a string and returns the encoded string.
             </summary>
             <param name="content">The text string to HTML encode.</param>
             <returns>The HTML encoded text.</returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockServerUtility.UrlEncode(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubServerUtility.UrlEncode(System.String)">
             <summary>
             URL encodes a string and returns the encoded string.
             </summary>
             <param name="content">The text to URL encode.</param>
             <returns>The URL encoded text.</returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockServerUtility.UrlDecode(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubServerUtility.UrlDecode(System.String)">
             <summary>
             URL decodes a string and returns the decoded string.
             </summary>
             <param name="content">The text to URL decode.</param>
             <returns>The URL decoded text.</returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockServerUtility.UrlPathEncode(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubServerUtility.UrlPathEncode(System.String)">
             <summary>
             URL encodes the path portion of a URL string and returns the encoded string.
             </summary>
             <param name="content">The text to URL encode.</param>
             <returns>The URL encoded text.</returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockServerUtility.JavaScriptEscape(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubServerUtility.JavaScriptEscape(System.String)">
             <summary>
             Escapes JavaScript with Url encoding and returns the encoded string.
             </summary>
@@ -19988,241 +20635,18 @@
             Converts quotes, single quotes and CR/LFs to their representation as an escape character.
             </remarks>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Test.MockServices">
-            <summary>
-            Pendent
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockServices.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockServices"/> class with default mock services.
-            </summary>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockServices.#ctor(Castle.MonoRail.Framework.Services.IUrlBuilder,Castle.MonoRail.Framework.IFilterFactory,Castle.MonoRail.Framework.IViewEngineManager,Castle.MonoRail.Framework.IActionSelector,Castle.MonoRail.Framework.IDynamicActionProviderFactory)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockServices"/> class.
-            </summary>
-            <param name="urlBuilder">The URL builder.</param>
-            <param name="filterFactory">The filter factory.</param>
-            <param name="viewEngineManager">The view engine manager.</param>
-            <param name="actionSelector">The action selector.</param>
-            <param name="dynamicActionProviderFactory">The dynamic action provider factory.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockServices.AddService(System.Type,System.Object)">
-            <summary>
-            Adds the specified service to the service container.
-            </summary>
-            <param name="serviceType">The type of service to add.</param>
-            <param name="serviceInstance">An instance of the service type to add. This object must implement or inherit from the type indicated by the <paramref name="serviceType"/> parameter.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockServices.AddService(System.Type,System.Object,System.Boolean)">
-            <summary>
-            Adds the specified service to the service container, and optionally promotes the service to any parent service containers.
-            </summary>
-            <param name="serviceType">The type of service to add.</param>
-            <param name="serviceInstance">An instance of the service type to add. This object must implement or inherit from the type indicated by the <paramref name="serviceType"/> parameter.</param>
-            <param name="promote">true to promote this request to any parent service containers; otherwise, false.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockServices.AddService(System.Type,System.ComponentModel.Design.ServiceCreatorCallback)">
-            <summary>
-            Adds the specified service to the service container.
-            </summary>
-            <param name="serviceType">The type of service to add.</param>
-            <param name="callback">A callback object that is used to create the service. This allows a service to be declared as available, but delays the creation of the object until the service is requested.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockServices.AddService(System.Type,System.ComponentModel.Design.ServiceCreatorCallback,System.Boolean)">
-            <summary>
-            Adds the specified service to the service container, and optionally promotes the service to parent service containers.
-            </summary>
-            <param name="serviceType">The type of service to add.</param>
-            <param name="callback">A callback object that is used to create the service. This allows a service to be declared as available, but delays the creation of the object until the service is requested.</param>
-            <param name="promote">true to promote this request to any parent service containers; otherwise, false.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockServices.RemoveService(System.Type)">
-            <summary>
-            Removes the specified service type from the service container.
-            </summary>
-            <param name="serviceType">The type of service to remove.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockServices.RemoveService(System.Type,System.Boolean)">
-            <summary>
-            Removes the specified service type from the service container, and optionally promotes the service to parent service containers.
-            </summary>
-            <param name="serviceType">The type of service to remove.</param>
-            <param name="promote">true to promote this request to any parent service containers; otherwise, false.</param>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockServices.GetService``1">
-            <summary>
-            Gets the service.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockServices.GetService(System.Type)">
-            <summary>
-            Gets the service object of the specified type.
-            </summary>
-            <param name="serviceType">An object that specifies the type of service object to get.</param>
-            <returns>
-            A service object of type <paramref name="serviceType"/>.-or- null if there is no service object of type <paramref name="serviceType"/>.
-            </returns>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.UrlTokenizer">
-            <summary>
-            Gets or sets the URL tokenizer.
-            </summary>
-            <value>The URL tokenizer.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.UrlBuilder">
-            <summary>
-            Gets or sets the URL builder.
-            </summary>
-            <value>The URL builder.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.CacheProvider">
-            <summary>
-            Gets or sets the cache provider.
-            </summary>
-            <value>The cache provider.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.EngineContextFactory">
-            <summary>
-            Gets or sets the engine context factory.
-            </summary>
-            <value>The engine context factory.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.ControllerFactory">
-            <summary>
-            Gets or sets the controller factory.
-            </summary>
-            <value>The controller factory.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.ControllerContextFactory">
-            <summary>
-            Gets or sets the controller context factory.
-            </summary>
-            <value>The controller context factory.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.ControllerTree">
-            <summary>
-            Gets or sets the controller tree.
-            </summary>
-            <value>The controller tree.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.ViewSourceLoader">
-            <summary>
-            Gets or sets the view source loader.
-            </summary>
-            <value>The view source loader.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.FilterFactory">
-            <summary>
-            Gets or sets the filter factory.
-            </summary>
-            <value>The filter factory.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.DynamicActionProviderFactory">
-            <summary>
-            Gets or sets the dynamic action provider factory.
-            </summary>
-            <value>The dynamic action provider factory.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.ControllerDescriptorProvider">
-            <summary>
-            Gets or sets the controller descriptor provider.
-            </summary>
-            <value>The controller descriptor provider.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.ViewEngineManager">
-            <summary>
-            Gets or sets the view engine manager.
-            </summary>
-            <value>The view engine manager.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.ValidatorRegistry">
-            <summary>
-            Gets or sets the validator registry.
-            </summary>
-            <value>The validator registry.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.ActionSelector">
-            <summary>
-            Gets or sets the action selector.
-            </summary>
-            <value>The action selector.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.ScaffoldSupport">
-            <summary>
-            Gets or sets the scaffold support.
-            </summary>
-            <value>The scaffold support.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.JSONSerializer">
-            <summary>
-            Gets or sets the JSON serializer.
-            </summary>
-            <value>The JSON serializer.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.StaticResourceRegistry">
-            <summary>
-            Gets or sets the static resource registry service.
-            </summary>
-            <value>The static resource registry.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.EmailTemplateService">
-            <summary>
-            Gets or sets the email template service.
-            </summary>
-            <value>The email template service.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.EmailSender">
-            <summary>
-            Gets or sets the email sender.
-            </summary>
-            <value>The email sender.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.ResourceFactory">
-            <summary>
-            Gets or sets the resource factory.
-            </summary>
-            <value>The resource factory.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.TransformFilterFactory">
-            <summary>
-            Gets or sets the transformfilter factory.
-            </summary>
-            <value>The resource factory.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.ServiceInitializer">
-            <summary>
-            Gets or sets the service initializer.
-            </summary>
-            <value>The service initializer.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.HelperFactory">
-            <summary>
-            Gets or sets the helper factory.
-            </summary>
-            <value>The helper factory.</value>
-        </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockServices.ExtensionManager">
-            <summary>
-            Gets or sets the extension manager.
-            </summary>
-            <value>The extension manager.</value>
-        </member>
-        <member name="T:Castle.MonoRail.Framework.Test.MockSmtpSender">
+        <member name="T:Castle.MonoRail.Framework.Test.StubSmtpSender">
             <summary>
             Represents a mock implementation of <see cref="T:Castle.Components.Common.EmailSender.IEmailSender"/> for unit test purposes.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockSmtpSender.#ctor(Castle.MonoRail.Framework.Test.MockEngineContext)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubSmtpSender.#ctor(Castle.MonoRail.Framework.Test.StubEngineContext)">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockSmtpSender"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubSmtpSender"/> class.
             </summary>
             <param name="context">The context.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockSmtpSender.Send(System.String,System.String,System.String,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubSmtpSender.Send(System.String,System.String,System.String,System.String)">
             <summary>
             Sends a message.
             </summary>
@@ -20231,37 +20655,37 @@
             <param name="subject">e-mail's subject</param>
             <param name="messageText">message's body</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockSmtpSender.Send(Castle.Components.Common.EmailSender.Message)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubSmtpSender.Send(Castle.Components.Common.EmailSender.Message)">
             <summary>
             Sends a message.
             </summary>
             <param name="message">Message instance</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockSmtpSender.Send(Castle.Components.Common.EmailSender.Message[])">
+        <member name="M:Castle.MonoRail.Framework.Test.StubSmtpSender.Send(Castle.Components.Common.EmailSender.Message[])">
             <summary>
             Sends multiple messages.
             </summary>
             <param name="messages">Array of messages</param>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Test.MockTrace">
+        <member name="T:Castle.MonoRail.Framework.Test.StubTrace">
             <summary>
             Represents a mock implementation of <see cref="T:Castle.MonoRail.Framework.ITrace"/> for unit test purposes.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockTrace.Warn(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubTrace.Warn(System.String)">
             <summary>
             Logs the specified message on the ASP.Net trace
             </summary>
             <param name="message">The message.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockTrace.Warn(System.String,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubTrace.Warn(System.String,System.String)">
             <summary>
             Logs the specified message on the ASP.Net trace
             </summary>
             <param name="category">The category.</param>
             <param name="message">The message.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockTrace.Warn(System.String,System.String,System.Exception)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubTrace.Warn(System.String,System.String,System.Exception)">
             <summary>
             Logs the specified message on the ASP.Net trace
             </summary>
@@ -20269,20 +20693,20 @@
             <param name="message">The message.</param>
             <param name="errorInfo">The error info.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockTrace.Write(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubTrace.Write(System.String)">
             <summary>
             Logs the specified message on the ASP.Net trace
             </summary>
             <param name="message">The message.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockTrace.Write(System.String,System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubTrace.Write(System.String,System.String)">
             <summary>
             Logs the specified message on the ASP.Net trace
             </summary>
             <param name="category">The category.</param>
             <param name="message">The message.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockTrace.Write(System.String,System.String,System.Exception)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubTrace.Write(System.String,System.String,System.Exception)">
             <summary>
             Logs the specified message on the ASP.Net trace
             </summary>
@@ -20305,35 +20729,35 @@
             <param name="context">The content available to the view</param>
             <param name="writer">The writer</param>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Test.MockViewComponentContext">
+        <member name="T:Castle.MonoRail.Framework.Test.StubViewComponentContext">
             <summary>
             Represents a mock implementation of <see cref="T:Castle.MonoRail.Framework.Test.IMockViewComponentContext"/> for unit test purposes.
             </summary>
         </member>
-        <member name="F:Castle.MonoRail.Framework.Test.MockViewComponentContext.OnBodyRender">
+        <member name="F:Castle.MonoRail.Framework.Test.StubViewComponentContext.OnBodyRender">
             <summary>
             Event that is raised when a section is rendered by the viewcomponent.
             </summary>
         </member>
-        <member name="F:Castle.MonoRail.Framework.Test.MockViewComponentContext.OnViewRender">
+        <member name="F:Castle.MonoRail.Framework.Test.StubViewComponentContext.OnViewRender">
             <summary>
             Event that is raised when a view is rendered by the viewcomponent.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockViewComponentContext.#ctor">
+        <member name="M:Castle.MonoRail.Framework.Test.StubViewComponentContext.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockViewComponentContext"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubViewComponentContext"/> class.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockViewComponentContext.#ctor(System.String,System.IO.TextWriter,Castle.MonoRail.Framework.IViewEngine)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubViewComponentContext.#ctor(System.String,System.IO.TextWriter,Castle.MonoRail.Framework.IViewEngine)">
             <summary>
-            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.MockViewComponentContext"/> class.
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.Test.StubViewComponentContext"/> class.
             </summary>
             <param name="componentName">Name of the component.</param>
             <param name="writer">The writer.</param>
             <param name="viewEngine">The view engine.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockViewComponentContext.HasSection(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubViewComponentContext.HasSection(System.String)">
             <summary>
             Determines whether the current component declaration on the view
             has the specified section.
@@ -20343,32 +20767,32 @@
             	<c>true</c> if the specified section exists; otherwise, <c>false</c>.
             </returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockViewComponentContext.RenderView(System.String,System.IO.TextWriter)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubViewComponentContext.RenderView(System.String,System.IO.TextWriter)">
             <summary>
             Renders the view specified to the writer.
             </summary>
             <param name="name">The view template name</param>
             <param name="writer">A writer to output</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockViewComponentContext.RenderBody">
+        <member name="M:Castle.MonoRail.Framework.Test.StubViewComponentContext.RenderBody">
             <summary>
             Renders the component body.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockViewComponentContext.RenderBody(System.IO.TextWriter)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubViewComponentContext.RenderBody(System.IO.TextWriter)">
             <summary>
             Renders the body into the specified <see cref="T:System.IO.TextWriter"/>
             </summary>
             <param name="writer">The writer.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockViewComponentContext.RenderSection(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubViewComponentContext.RenderSection(System.String)">
             <summary>
             Renders the the specified section.
             No exception will the throw if the section cannot be found.
             </summary>
             <param name="sectionName">Name of the section.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.MockViewComponentContext.RenderSection(System.String,System.IO.TextWriter)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubViewComponentContext.RenderSection(System.String,System.IO.TextWriter)">
             <summary>
             Renders the the specified section.
             No exception will the throw if the section cannot be found.
@@ -20376,69 +20800,69 @@
             <param name="sectionName">Name of the section.</param>
             <param name="writer">The writer to output the section content.</param>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockViewComponentContext.SectionRender">
+        <member name="P:Castle.MonoRail.Framework.Test.StubViewComponentContext.SectionRender">
             <summary>
             Gets or sets the section render dictionary.
             </summary>
             <value>The section render.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockViewComponentContext.ComponentName">
+        <member name="P:Castle.MonoRail.Framework.Test.StubViewComponentContext.ComponentName">
             <summary>
             Gets the name of the component.
             </summary>
             <value>The name of the component.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockViewComponentContext.Writer">
+        <member name="P:Castle.MonoRail.Framework.Test.StubViewComponentContext.Writer">
             <summary>
             Gets the writer used to render the view component
             </summary>
             <value>The writer.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockViewComponentContext.ContextVars">
+        <member name="P:Castle.MonoRail.Framework.Test.StubViewComponentContext.ContextVars">
             <summary>
             Gets the dictionary that holds variables for the
             view and for the view component
             </summary>
             <value>The context vars.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockViewComponentContext.ComponentParameters">
+        <member name="P:Castle.MonoRail.Framework.Test.StubViewComponentContext.ComponentParameters">
             <summary>
             Gets the component parameters that the view has passed
             to the component
             </summary>
             <value>The component parameters.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockViewComponentContext.ViewToRender">
+        <member name="P:Castle.MonoRail.Framework.Test.StubViewComponentContext.ViewToRender">
             <summary>
             Gets or sets the view to render.
             </summary>
             <value>The view to render.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.MockViewComponentContext.ViewEngine">
+        <member name="P:Castle.MonoRail.Framework.Test.StubViewComponentContext.ViewEngine">
             <summary>
             Gets the view engine instance.
             </summary>
             <value>The view engine.</value>
         </member>
-        <member name="T:Castle.MonoRail.Framework.Test.ViewEngineManagerStub">
+        <member name="T:Castle.MonoRail.Framework.Test.StubViewEngineManager">
             <summary>
             Pendent
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.ViewEngineManagerStub.RegisterTemplate(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubViewEngineManager.RegisterTemplate(System.String)">
             <summary>
             Registers the template.
             </summary>
             <param name="template">The template.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.ViewEngineManagerStub.HasTemplate(System.String)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubViewEngineManager.HasTemplate(System.String)">
             <summary>
             Evaluates whether the specified template exists.
             </summary>
             <param name="templateName"></param>
             <returns><c>true</c> if it exists</returns>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.ViewEngineManagerStub.Process(System.String,System.IO.TextWriter,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubViewEngineManager.Process(System.String,System.IO.TextWriter,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
             <summary>
             Processes the view - using the templateName
             to obtain the correct template
@@ -20448,27 +20872,27 @@
             </para>
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.ViewEngineManagerStub.Process(System.String,System.String,System.IO.TextWriter,System.Collections.Generic.IDictionary{System.String,System.Object})">
+        <member name="M:Castle.MonoRail.Framework.Test.StubViewEngineManager.Process(System.String,System.String,System.IO.TextWriter,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Processes the view - using the templateName
             to obtain the correct template
             and writes the results to the System.TextWriter.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.ViewEngineManagerStub.ProcessPartial(System.String,System.IO.TextWriter,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubViewEngineManager.ProcessPartial(System.String,System.IO.TextWriter,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
             <summary>
             Processes a partial view using the partialName
             to obtain the correct template and writes the
             results to the System.TextWriter.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.ViewEngineManagerStub.RenderStaticWithinLayout(System.String,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubViewEngineManager.RenderStaticWithinLayout(System.String,Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
             <summary>
             Wraps the specified content in the layout using
             the context to output the result.
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.Test.ViewEngineManagerStub.CreateJSCodeGeneratorInfo(Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
+        <member name="M:Castle.MonoRail.Framework.Test.StubViewEngineManager.CreateJSCodeGeneratorInfo(Castle.MonoRail.Framework.IEngineContext,Castle.MonoRail.Framework.IController,Castle.MonoRail.Framework.IControllerContext)">
             <summary>
             Creates the JS code generator info. Temporarily on IViewEngineManager
             </summary>
@@ -20477,19 +20901,19 @@
             <param name="controllerContext">The controller context.</param>
             <returns></returns>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.ViewEngineManagerStub.TemplateRendered">
+        <member name="P:Castle.MonoRail.Framework.Test.StubViewEngineManager.TemplateRendered">
             <summary>
             Gets the name of the template rendered by the controller.
             </summary>
             <value>The template rendered.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.ViewEngineManagerStub.PartialRendered">
+        <member name="P:Castle.MonoRail.Framework.Test.StubViewEngineManager.PartialRendered">
             <summary>
             Gets the name of the partial template rendered.
             </summary>
             <value>The partial rendered.</value>
         </member>
-        <member name="P:Castle.MonoRail.Framework.Test.ViewEngineManagerStub.ContentWithinLayoutRendered">
+        <member name="P:Castle.MonoRail.Framework.Test.StubViewEngineManager.ContentWithinLayoutRendered">
             <summary>
             Gets the static content rendered from the controller.
             </summary>
@@ -20845,6 +21269,12 @@
             <param name="context"></param>
             <param name="controller"></param>
             <param name="controllerContext"></param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Test.ViewEngineStub.HasTemplate(System.String)">
+            <summary>
+            Evaluates whether the specified template exists.
+            </summary>
+            <returns><c>true</c> if it exists</returns>
         </member>
         <member name="P:Castle.MonoRail.Framework.Test.ViewEngineStub.PartialRendered">
             <summary>
@@ -21214,6 +21644,11 @@
         <member name="M:Castle.MonoRail.Framework.ViewComponent.RenderView(System.String,System.String)">
             <summary>
             Specifies the view to be processed after the component has finished its processing. 
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponent.RenderView(System.String,System.IO.TextWriter)">
+            <summary>
+            Immediately renders the specified component view using the writer.
             </summary>
         </member>
         <member name="M:Castle.MonoRail.Framework.ViewComponent.RenderSharedView(System.String)">
@@ -21679,7 +22114,7 @@
              <item><term><c>                      adjacents                                              </c></term>
              <description>    number of links to show around the current page  (defaults to 2)  </description></item>
              <item><term><c>                    page    </c> (required)                                      </term>
-             <description><see cref="T:Castle.MonoRail.Framework.Helpers.IPaginatedPage"/> instance (<see cref="T:Castle.MonoRail.Framework.Helpers.PaginationHelper"/>)</description></item>
+             <description><see cref="T:Castle.Components.Pagination.IPaginatedPage"/> instance (<see cref="T:Castle.MonoRail.Framework.Helpers.PaginationHelper"/>)</description></item>
              <item><term><c>                 url                                                     </c></term>
              <description>                    url to link to                                      </description></item>
              <item><term><c>                useInlineStyle                                   </c></term>
@@ -21761,12 +22196,11 @@
             is initialized
             </summary>
         </member>
-        <member name="M:Castle.MonoRail.Framework.ViewComponents.SecurityComponent.IsInRole(System.String,System.String)">
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.SecurityComponent.IsInRole(System.String)">
             <summary>
             Verify if the user is at least in one of the given role(s).
             </summary>
-            <param name="role">string representing a role.</param>
-            <param name="roles">string (comma separated) representing an array of roles.</param>
+            <param name="role">string (comma separated) representing an array of roles.</param>
             <returns><c>true</c> if the user is at least in one of the roles, otherwise <c>false</c>.</returns>
         </member>
         <member name="M:Castle.MonoRail.Framework.ViewComponents.SecurityComponent.Render">
@@ -22454,6 +22888,12 @@
             </summary>
             <param name="assemblySourceInfo">The assembly source info.</param>
         </member>
+        <member name="M:Castle.MonoRail.Framework.IViewSourceLoader.AddPathSource(System.String)">
+            <summary>
+            Adds the path source.
+            </summary>
+            <param name="pathSource">The path source.</param>
+        </member>
         <member name="P:Castle.MonoRail.Framework.IViewSourceLoader.VirtualViewDir">
             <summary>
             Gets/sets the root directory of views, obtained from the configuration.
@@ -22470,6 +22910,11 @@
             </summary>
         </member>
         <member name="P:Castle.MonoRail.Framework.IViewSourceLoader.AssemblySources">
+            <summary>
+            Gets a list of assembly sources
+            </summary>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.IViewSourceLoader.PathSources">
             <summary>
             Gets a list of assembly sources
             </summary>
@@ -22517,6 +22962,13 @@
             <param name="fileExtensionsToInclude">Optional fileExtensions to include in listing.</param>
             <returns></returns>
         </member>
+        <member name="M:Castle.MonoRail.Framework.FileAssemblyViewSourceLoader.AddPathSource(System.String)">
+            <summary>
+            Adds the path source.
+            </summary>
+            <param name="pathSource">The path source.</param>
+            <remarks>The path is assumed to be relative to the AppDoamin BaseDirectory.</remarks>
+        </member>
         <member name="M:Castle.MonoRail.Framework.FileAssemblyViewSourceLoader.AddAssemblySource(Castle.MonoRail.Framework.AssemblySourceInfo)">
             <summary>
             Adds the assembly source.
@@ -22544,6 +22996,12 @@
         <member name="P:Castle.MonoRail.Framework.FileAssemblyViewSourceLoader.AssemblySources">
             <summary>
             Gets a list of assembly sources
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.FileAssemblyViewSourceLoader.PathSources">
+            <summary>
+            Gets a list of path sources
             </summary>
             <value></value>
         </member>
@@ -25185,6 +25643,13 @@
             <param name="controllerContext">The controller context.</param>
             <returns></returns>
         </member>
+        <member name="M:Castle.MonoRail.Framework.MonoRailHttpHandlerFactory.IsResourceFileUrl(Castle.MonoRail.Framework.UrlInfo)">
+            <summary>
+            Checks whether the target url is a resource file url.
+            </summary>
+            <param name="urlInfo">The url info.</param>
+            <returns></returns>
+        </member>
         <member name="M:Castle.MonoRail.Framework.MonoRailHttpHandlerFactory.CreateDefaultMonoRailContainer(Castle.Core.IServiceProviderEx,System.Web.HttpApplication)">
             <summary>
             Creates the default service container.
@@ -25447,11 +25912,12 @@
             </summary>
             <param name="context">An <see cref="T:System.Web.HttpContext"/> object that provides references to the intrinsic server objects (for example, Request, Response, Session, and Server) used to service HTTP requests.</param>
         </member>
-        <member name="M:Castle.MonoRail.Framework.ResourceFileHandler.SetContentCache(System.Web.HttpContext)">
+        <member name="M:Castle.MonoRail.Framework.ResourceFileHandler.SetContentCache(System.Web.HttpContext,System.Nullable{System.DateTime})">
             <summary>
             Configures the cache policy for the static content
             </summary>
             <param name="context">The context.</param>
+            <param name="lastModified">The last modified.</param>
         </member>
         <member name="P:Castle.MonoRail.Framework.ResourceFileHandler.IsReusable">
             <summary>

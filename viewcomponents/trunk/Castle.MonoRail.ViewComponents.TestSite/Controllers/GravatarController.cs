@@ -11,7 +11,8 @@ namespace Castle.MonoRail.ViewComponents.TestSite.Controllers
     {
         public void Index()
         {
-            PropertyBag["Gravatar"] = new GravatarHelper();
+            PropertyBag["Gravatar"] = new GravatarHelper(); 
+			PropertyBag["injection"] = @"blah:""><script>alert(""This is an (failed) Html injection attempt"");</script><p id=""x ";
         }
     }
 }

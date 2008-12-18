@@ -2149,6 +2149,18 @@
             Constructs a ComponentModel
             </summary>
         </member>
+        <member name="M:Castle.Core.ComponentModel.Requires(System.Predicate{Castle.Core.PropertySet}[])">
+            <summary>
+            Requires the selected property dependencies.
+            </summary>
+            <param name="selectors">The property selector.</param>
+        </member>
+        <member name="M:Castle.Core.ComponentModel.Requires``1">
+            <summary>
+            Requires the property dependencies of type <typeparamref name="D"/>.
+            </summary>
+            <typeparam name="D">The dependency type.</typeparam>
+        </member>
         <member name="P:Castle.Core.ComponentModel.Name">
             <summary>
             Sets or returns the component key

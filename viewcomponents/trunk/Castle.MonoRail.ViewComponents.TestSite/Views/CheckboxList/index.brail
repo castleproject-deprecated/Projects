@@ -42,14 +42,14 @@
   %>
 </div>
 <div style="padding: 20px;">
-  Crazy Styled Vertical Checkbox List<br />
+  Crazy Styled Horizontal Checkbox List<br />
   <br />
   <%
     component CheckboxList, {@source:statuses, @target:"selectedStatuses", @cssClass:"crazyCheckboxList", @horizontal:true}
   %>
 </div>
 <div style="padding: 20px;">
-  Crazy Styled Horizontal Checkbox List (don't split pascal case)<br />
+  Crazy Styled Vertical Checkbox List (don't split pascal case)<br />
   <br />
   <%
     component CheckboxList, {@source:statuses, @target:"selectedStatuses", @cssClass:"crazyCheckboxList", @splitPascalCase:false}

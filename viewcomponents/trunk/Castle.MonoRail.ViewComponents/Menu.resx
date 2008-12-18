@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="jquery" xml:space="preserve">
-    <value>jQuery(function($) 
+    <value>jQuery(function() {(function($)
 {       $(".collapsed").click(function(evnt)  
         { var chld = $(this).children("ul");  
            if (chld.length &gt; 0) 
@@ -127,7 +127,7 @@
           } 
         }).children("ul").hide();
         $(".collapsed a").click(function(evnt) { evnt.stopPropagation(); });
-})(jQuery);</value>
+})(jQuery); })</value>
   </data>
   <data name="prototype" xml:space="preserve">
     <value>Event.observe(window, 'load', function()

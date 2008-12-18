@@ -248,10 +248,10 @@ namespace Castle.MonoRail.ViewComponents
             caption = ComponentParams["caption"] as string;
             cssClass = ComponentParams["cssClass"] as string ?? "collapsiblePanel";
             style = ComponentParams["style"] as string;
-            collapsed = GetBoolParamValue("collapsed", false);
+            collapsed = GetParamValue("collapsed", false);
             effect = ComponentParams["effect"] as string;
             effectDuration = ComponentParams["effectDuration"] as double?;
-            toggleOnClickHeader = GetBoolParamValue("toggleOnClickHeader", false);
+            toggleOnClickHeader = GetParamValue("toggleOnClickHeader", false);
 
             jsLibrary = ComponentParams["JSLibrary"] as string;
         }

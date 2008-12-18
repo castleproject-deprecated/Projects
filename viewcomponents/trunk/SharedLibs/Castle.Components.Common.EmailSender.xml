@@ -67,13 +67,13 @@
             <param name="message">The message to convert.</param>
             <returns>The converted message .</returns>
         </member>
-        <member name="M:Castle.Components.Common.EmailSender.Smtp.SmtpSender.ConfigureSender(Castle.Components.Common.EmailSender.Message)">
+        <member name="M:Castle.Components.Common.EmailSender.Smtp.SmtpSender.Configure(System.Net.Mail.SmtpClient)">
             <summary>
-            Configures the message or the sender
+            Configures the sender
             with port information and eventual credential
             informed
             </summary>
-            <param name="message">Message instance</param>
+            <param name="smtpClient">Message instance</param>
         </member>
         <member name="P:Castle.Components.Common.EmailSender.Smtp.SmtpSender.Port">
             <summary>
@@ -177,6 +177,11 @@
         <member name="T:Castle.Components.Common.EmailSender.MessageAttachment">
             <summary>
             Represents a file attachment
+            </summary>
+        </member>
+        <member name="M:Castle.Components.Common.EmailSender.MessageAttachment.#ctor">
+            <summary>
+            Creates a new attachment
             </summary>
         </member>
         <member name="M:Castle.Components.Common.EmailSender.MessageAttachment.#ctor(System.String,System.String)">

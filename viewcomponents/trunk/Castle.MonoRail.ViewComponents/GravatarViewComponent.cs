@@ -378,19 +378,19 @@ namespace Castle.MonoRail.Helpers
             if (string.IsNullOrEmpty(defaultImage))
             {
                 if (outputGravatarSiteLink)
-                    format = @"<a href=""http://www.gravatar.com"" title=""{4}""><img src=""http://www.gravatar.com/avatar/{0}.jpg?rating={1}&size={2}"" height=""{2}"" width=""{2}"" alt=""Gravatar"" /></a>";
+                    format = @"<a href=""http://www.gravatar.com"" title=""{4}""><img src=""http://www.gravatar.com/avatar/{0}.jpg?rating={1}&size={2}"" height=""{2}"" width=""{2}"" alt=""{4}"" /></a>";
                 else
                     format = @"<img src=""http://www.gravatar.com/avatar/{0}.jpg?rating={1}&size={2}"" height=""{2}"" width=""{2}"" alt=""Gravatar"" />";
             }
             else
             {
                 if (outputGravatarSiteLink)
-                    format = @"<a href=""http://www.gravatar.com"" title=""{4}""><img src=""http://www.gravatar.com/avatar/{0}.jpg?rating={1}&size={2}&default={3}"" height=""{2}"" width=""{2}"" alt=""Gravatar"" /></a>";
+                    format = @"<a href=""http://www.gravatar.com"" title=""{4}""><img src=""http://www.gravatar.com/avatar/{0}.jpg?rating={1}&size={2}&default={3}"" height=""{2}"" width=""{2}"" alt=""{4}"" /></a>";
                 else
                     format = @"<img src=""http://www.gravatar.com/avatar/{0}.jpg?rating={1}&size={2}&default={3}"" height=""{2}"" width=""{2}"" alt=""Gravatar"" />";
             }
 
-            return string.Format(format, sb, maxAllowedRating, size, HttpUtility.UrlEncode(defaultImage), linkTitle);
-        }
+            return string.Format(format, sb, maxAllowedRating, size, HttpUtility.UrlEncode(defaultImage), HttpUtility.HtmlEncode(linkTitle));
+		}
     }
 }

@@ -1036,7 +1036,7 @@ namespace Castle.MonoRail.ViewComponents
         private void RenderScriptImmedaitely(string text)
         {
             this.context.Writer.WriteLine(@"<script type=""text/javascript"">");
-            this.context.Writer.WriteLine(@"//<![CDATA[");
+            this.context.Writer.WriteLine("//<![CDATA[\n\n");
             this.context.Writer.WriteLine(text);
             this.context.Writer.WriteLine(@"//]]>");
             this.context.Writer.WriteLine("</script>");

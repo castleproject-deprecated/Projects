@@ -5,7 +5,8 @@ ViewComponent: (Gravatar with "Email=jamescurran@mvps.org" "Size=80" "DefaultIma
 <br/>
 
 ViewComponent: (Gravatar with "Email=johnsmith@example.com" "Size=80" "DefaultImage=identicon")    (unregistered email address) <br/>
-#component(Gravatar with "Email=johnsmith@example.com" "Size=80" "DefaultImage=identicon") <br/>
+
+#component(Gravatar with "Email=johnsmith@example.com" "Size=80" "DefaultImage=identicon" "LinkTitle=$injection") <br/>
  <br/>
 Helper: gravatar.CreateImageTag("johnsmith@example.com")      (unregistered email address, no default image) <br/>
 ${gravatar.CreateImageTag("johnsmith@example.com")} <br/>
