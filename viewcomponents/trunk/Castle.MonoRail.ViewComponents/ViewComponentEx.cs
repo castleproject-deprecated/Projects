@@ -100,9 +100,11 @@ namespace Castle.MonoRail.ViewComponents
 		/// <returns></returns>
 		public string GetSectionText(string section)
 		{
-			StringWriter sw = new StringWriter();
-			Context.RenderSection(section, sw);
-			return sw.ToString();
+			using (StringWriter sw = new StringWriter())
+            {
+				Context.RenderSection(section, sw);
+				return sw.ToString();
+            }
 		}
 		/// <summary>
 		/// Confirms a section is present.
