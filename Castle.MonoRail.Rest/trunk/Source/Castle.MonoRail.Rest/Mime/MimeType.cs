@@ -17,17 +17,13 @@ namespace Castle.MonoRail.Rest.Mime
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
-	using System.Text;
-
+	
 	public class MimeType
 	{
-		
 		public string MimeString { get; set; }
 		public string Symbol {get; set;}
 		public List<String> Synonyms { get; set; }
-		public List<String> ExtensionSynonyms { get; set; }
-
-		
+		public List<String> ExtensionSynonyms { get; set; }	
 	}
 
 	public class MimeTypes : System.Collections.Generic.List<MimeType>
@@ -46,7 +42,7 @@ namespace Castle.MonoRail.Rest.Mime
 			Register("text/javascript", "js", new[] { "application/javascript", "application/x-javascript" });
 			Register("text/css", "css");
 			Register("text/calendar", "ics");
-			Register("text/csv", "csv");
+			Register("text/csv", "csv", new[] { "application/csv", "application/vnd.ms-excel" });
 			Register("application/xml", "xml", new[] { "text/xml application/x-xml" });
 			Register("application/rss+xml", "rss");
 			Register("application/atom+xml", "atom");
@@ -55,8 +51,7 @@ namespace Castle.MonoRail.Rest.Mime
 			Register("application/x-www-form-urlencoded", "url_encoded_form");
 
 			//http://www.ietf.org/rfc/rfc4627.txt
-			Register("application/json", "json", new[] { "text/x-json" });         
-
+			Register("application/json", "json", new[] { "text/x-json" });
 		}
 
 		public void Register(string mimeString, string symbol)

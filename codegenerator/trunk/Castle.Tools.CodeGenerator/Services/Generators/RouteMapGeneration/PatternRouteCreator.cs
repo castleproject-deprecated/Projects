@@ -179,6 +179,16 @@ namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration
 			}
 		}
 
+		protected RouteParameters.RouteParameters RequiredRouteParameters
+		{
+			get { return requiredRouteParameters; }
+		}
+
+		protected RouteParameters.RouteParameters OptionalRouteParameters
+		{
+			get { return optionalRouteParameters; }
+		}
+
 		private void CreateParameterConstantsType(string paramatersClassName, IEnumerable<KeyValuePair<string, IRouteParameterType>> routeParameters)
 		{
 			var parameters = sourceGenerator.GenerateTypeDeclaration(

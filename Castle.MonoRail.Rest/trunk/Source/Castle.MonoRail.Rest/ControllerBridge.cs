@@ -15,9 +15,6 @@
 namespace Castle.MonoRail.Rest
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
 	using Castle.MonoRail.Rest.Mime;
 	using System.IO;
 	
@@ -32,54 +29,57 @@ namespace Castle.MonoRail.Rest
 			_controllerAction = controllerAction;
 		}
 
-		public void SetResponseType(MimeType mime)
+		public virtual void SetResponseType(MimeType mime)
 		{
 			_controller.Response.ContentType = mime.MimeString;
 		}
 
-		public void SendRenderView(string view)
+		public virtual void SendRenderView(string view)
 		{
 			_controller.RenderView(view);
 		}
 
-		public void SendCancelLayoutAndView()
+		public virtual void SendCancelLayoutAndView()
 		{
 			_controller.CancelLayout();
 			_controller.CancelView();
 		}
 
-		public void UseResponseWriter(Action<TextWriter> writerAction)
+		public virtual void UseResponseWriter(Action<TextWriter> writerAction)
 		{
 			writerAction(_controller.Response.Output);
 		}
 
-		public void SetResponseCode(int code)
+		public virtual void UseResponseStream(Action<Stream> streamAction)
+		{
+			streamAction(_controller.Response.OutputStream);
+		}
+
+		public virtual void SetResponseCode(int code)
 		{
 			_controller.Response.StatusCode = code;
 		}
 
-		public void AppendResponseHeader(string headerName, string value)
+		public virtual void AppendResponseHeader(string headerName, string value)
 		{
 			_controller.Response.AppendHeader(headerName, value);
 		}
 
-		public void SendRenderText(string text)
+		public virtual void SendRenderText(string text)
 		{
 			_controller.RenderText(text);
 		}
 
-		#region IControllerBridge Members
-
-
-		public string ControllerAction
+		public virtual string ControllerAction
 		{
 			get { return _controllerAction; }
 		}
 
-		public bool IsFormatDefined
+		public virtual bool IsFormatDefined
 		{
-			get {
-				if (String.IsNullOrEmpty(_controller.Params["format"]))
+			get 
+			{
+				if (String.IsNullOrEmpty(GetFormat()))
 				{
 					return false;
 				}
@@ -90,11 +90,9 @@ namespace Castle.MonoRail.Rest
 			}
 		}
 
-		public string GetFormat()
+		public virtual string GetFormat()
 		{
 			return _controller.Params["format"];
 		}
-
-		#endregion
 	}
 }

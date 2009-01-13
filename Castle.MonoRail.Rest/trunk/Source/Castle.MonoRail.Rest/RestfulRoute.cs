@@ -22,6 +22,7 @@ namespace Castle.MonoRail.Rest
 	public class RestfulRoute : PatternRoute
 	{
 		private readonly string requiredVerb;
+		private readonly UrlWithExtensionParser urlWithExtensionParser = new UrlWithExtensionParser();
 		private IRestVerbResolver restVerbResolver = new DefaultRestVerbResolver();
 
 		public RestfulRoute(string pattern, string requiredVerb) : base(pattern)
@@ -42,6 +43,11 @@ namespace Castle.MonoRail.Rest
 				return 0;
 			
 			return points;
+		}
+
+		protected override string[] GetUrlParts(string url)
+		{
+			return urlWithExtensionParser.GetParts(url);
 		}
 
 		public RestfulRoute WithRestVerbResolver(IRestVerbResolver resolver)

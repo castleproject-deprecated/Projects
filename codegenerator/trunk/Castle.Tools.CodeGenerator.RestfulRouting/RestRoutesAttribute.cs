@@ -9,15 +9,15 @@ namespace Castle.Tools.CodeGenerator.RestfulRouting
 		public RestRoutesAttribute(string name, string collection, string identifier)
 		{
 			Name = name;
-			Collection = collection;
-			Identifier = identifier;
+			Collection = collection.Trim('/');
+			Identifier = identifier.Trim('/');
 		}
 
 		public RestRoutesAttribute(string name, string collection, string identifier, Type resolverType)
 		{
 			Name = name;
-			Collection = collection;
-			Identifier = identifier;
+			Collection = collection.Trim('/');
+			Identifier = identifier.Trim('/');
 			
 			if (!typeof(IRestVerbResolver).IsAssignableFrom(resolverType) || !resolverType.IsClass)
 				throw new ArgumentException("The resolverType must be a class that implements IRestVerbResolver");

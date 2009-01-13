@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration.RouteParameters;
+
 namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration
 {
 	using System.CodeDom;
@@ -21,8 +23,11 @@ namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration
 
 	public class RestRouteCreator : PatternRouteCreator<RestRouteTreeNode>
 	{
+		const string FormatKey = "format";
+
 		public RestRouteCreator(string @namespace, ISourceGenerator sourceGenerator, INamingService namingService, RestRouteTreeNode node, CodeTypeDeclaration routeDefinitions, CodeTypeDeclaration routes) : base(@namespace, sourceGenerator, namingService, node, routeDefinitions, routes)
 		{
+			OptionalRouteParameters.Add(FormatKey, new StringRouteParameterType());
 		}
 
 		protected override void AddRouteDefinitionBaseType()
@@ -56,6 +61,14 @@ namespace Castle.Tools.CodeGenerator.Services.Generators.RouteMapGeneration
 			}
 
 			return expression;
+		}
+
+		protected override string RouteDefinitionPattern
+		{
+			get
+			{
+				return base.RouteDefinitionPattern + ".[" + FormatKey + "]";
+			}
 		}
 	}
 }

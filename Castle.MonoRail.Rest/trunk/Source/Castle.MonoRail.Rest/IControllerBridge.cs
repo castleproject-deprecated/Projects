@@ -15,9 +15,6 @@
 namespace Castle.MonoRail.Rest
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
 	using Castle.MonoRail.Rest.Mime;
 	using System.IO;
 	
@@ -27,6 +24,7 @@ namespace Castle.MonoRail.Rest
 		void SendRenderView(string view);
 		void SendCancelLayoutAndView();
 		void UseResponseWriter(Action<TextWriter> writerAction);
+		void UseResponseStream(Action<Stream> streamAction);
 		void SetResponseCode(int code);
 		void AppendResponseHeader(string headerName, string value);
 		void SendRenderText(string text);

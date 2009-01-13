@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using MbUnit.Framework;
+﻿using MbUnit.Framework;
 using Rhino.Mocks;
 using Castle.MonoRail.Rest.Mime;
 
@@ -12,24 +11,22 @@ namespace Castle.MonoRail.Rest.Tests
         private MockRepository mocks;
         private ResponseFormat format;
         private string handlerInvoked;
-        private MimeType[] mimes;
+        private MimeTypes mimes;
 
         [SetUp]
         public void Setup()
         {
+        	mimes = new MimeTypes();
+			mimes.RegisterBuiltinTypes();
+
             mocks = new MockRepository();
             bridge = mocks.DynamicMock<IControllerBridge>();
-            format = new ResponseFormat();
+            format = new ResponseFormat(mimes);
             handlerInvoked = "";
 
             ResponseFormatInternal iformat = (ResponseFormatInternal)format;
             iformat.AddRenderer("xml", x => handlerInvoked = "xml");
             iformat.AddRenderer("html", x => handlerInvoked = "html");
-
-            mimes = new MimeType[] {
-                new MimeType() { Symbol="html",MimeString="text/html"},
-                new MimeType() { Symbol="xml",MimeString="application/xml"}
-            };
         }
 
         [Test]

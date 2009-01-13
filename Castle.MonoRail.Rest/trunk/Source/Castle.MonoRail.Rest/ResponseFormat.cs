@@ -29,11 +29,13 @@ namespace Castle.MonoRail.Rest
 	{
 		private Dictionary<string, ResponderDelegate> _renderers;
 		private List<String> _order;
+		private MimeTypes _mimeTypes;
 
-		public ResponseFormat()
+		public ResponseFormat(MimeTypes mimeTypes)
 		{
 			_renderers = new Dictionary<string, ResponderDelegate>();
 			_order = new List<string>();
+			_mimeTypes = mimeTypes;
 		}
 
 		void ResponseFormatInternal.AddRenderer(string formatSymbol, ResponderDelegate renderer)
@@ -61,7 +63,6 @@ namespace Castle.MonoRail.Rest
 					return false;
 				}
 			}
-
 		}
 
 		private void DoResponse(string format, IControllerBridge bridge)
@@ -70,13 +71,8 @@ namespace Castle.MonoRail.Rest
 			hander.Format = format;
 			_renderers[format](hander);
 
-			MimeTypes types = new MimeTypes();
-			types.RegisterBuiltinTypes();
-
-			MimeType usedType = types.Where(mime => mime.Symbol == format).First();
+			MimeType usedType = _mimeTypes.Where(mime => mime.Symbol == format).First();
 			bridge.SetResponseType(usedType);
 		}
-	   
-	   
 	}
 }

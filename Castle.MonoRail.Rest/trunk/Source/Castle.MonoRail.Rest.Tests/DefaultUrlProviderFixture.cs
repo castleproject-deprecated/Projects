@@ -6,31 +6,12 @@ using MbUnit.Framework;
 using Castle.MonoRail.Framework.Services;
 using Castle.MonoRail.Framework;
 using Castle.MonoRail.Rest.Tests.Stubs;
-using Castle.MonoRail.Framework.Configuration;
 using Rhino.Mocks;
 namespace Castle.MonoRail.Rest.Tests
 {
     [TestFixture]
     public class DefaultUrlProviderFixture
     {
-        //private DefaultControllerTree controllerTree;
-        //private DefaultUrlTokenizer tokenizer;
-        //private DefaultUrlProvider provider;
-
-
-        //[SetUp]
-        //public void SetUp()
-        //{
-        //    StubServiceProvider serviceProvider = new StubServiceProvider(this);
-        //    controllerTree = new DefaultControllerTree();
-        //    tokenizer = new DefaultUrlTokenizer();
-
-        //    provider = new DefaultUrlProvider();
-        //    provider.Service(serviceProvider);
-
-        //    controllerTree.AddController("v1", "samplerest", typeof(SampleRestController));
-        //}
-
         [Test]
         public void Should_AddTwoUrls_WhenControllerAddedToTree()
         {
@@ -59,7 +40,6 @@ namespace Castle.MonoRail.Rest.Tests
 
     public class StubServiceProvider : IServiceProvider
     {
-
         private IUrlTokenizer tokenizer;
         private IControllerTree controllerTree;
 
@@ -81,6 +61,5 @@ namespace Castle.MonoRail.Rest.Tests
             }
             return null;
         }
-
     }
 }

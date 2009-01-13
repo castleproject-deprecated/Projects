@@ -12,16 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.IO;
+
 namespace Castle.MonoRail.Rest
 {
 	using System;
 	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-	using System.Linq.Expressions;
-	using Castle.MonoRail.Rest.Mime;
 	using System.Xml.Serialization;
-	using System.Collections.Specialized;
 
 	public static class ResponderExtensions 
 	{
@@ -69,8 +66,48 @@ namespace Castle.MonoRail.Rest
 		/// <param name="objectToSerialize">object to be serialized</param>
 		public void SerializeWith<T>(Action<System.IO.TextWriter, T> serializationActionAdapter, T objectToSerialize) 
 		{
+			SerializeWith(serializationActionAdapter, objectToSerialize, null);
+		}
+
+		/// <summary>
+		/// Serialize given object with provided serialization action adapter
+		/// </summary>
+		/// <typeparam name="T">object type to be serialized</typeparam>
+		/// <param name="serializationActionAdapter">delegate accepting TextWriter and object that will perform serialization</param>
+		/// <param name="objectToSerialize">object to be serialized</param>
+		/// <param name="addHeaders">Additional HTTP headers population delegate</param>
+		public void SerializeWith<T>(Action<System.IO.TextWriter, T> serializationActionAdapter, T objectToSerialize, Action<IDictionary<string, string>> addHeaders)
+		{
 			_controllerBridge.SendCancelLayoutAndView();
 			_controllerBridge.UseResponseWriter(writer => serializationActionAdapter(writer, objectToSerialize));
+
+			AddResponseHeaders(addHeaders);
+		}
+
+		/// <summary>
+		/// Outputs a stream with the provided stream action adapter
+		/// </summary>
+		/// <typeparam name="T">type of stream being outputted</typeparam>
+		/// <param name="streamActionAdapter">delegate accepting Stream and object that will perform the streaming</param>
+		/// <param name="streamToOutput">stream to be outputted</param>
+		public void StreamWith<T>(Action<System.IO.Stream, T> streamActionAdapter, T streamToOutput)
+		{
+			StreamWith(streamActionAdapter, streamToOutput, null);
+		}
+
+		/// <summary>
+		/// Outputs a stream with the provided stream action adapter
+		/// </summary>
+		/// <typeparam name="T">type of stream being outputted</typeparam>
+		/// <param name="streamActionAdapter">delegate accepting Stream and object that will perform the streaming</param>
+		/// <param name="streamToOutput">stream to be outputted</param>
+		/// <param name="addHeaders">Additional HTTP headers population delegate</param>
+		public void StreamWith<T>(Action<System.IO.Stream, T> streamActionAdapter, T streamToOutput, Action<IDictionary<string, string>> addHeaders)
+		{
+			_controllerBridge.SendCancelLayoutAndView();
+			_controllerBridge.UseResponseStream(stream => streamActionAdapter(stream, streamToOutput));
+
+			AddResponseHeaders(addHeaders);
 		}
     
 		/// <summary>
@@ -80,19 +117,10 @@ namespace Castle.MonoRail.Rest
 		/// <param name="addHeaders">Additional HTTP headers population delegate</param>
 		public void Empty(int statusCode, Action<IDictionary<string, string>> addHeaders)
 		{
-			Dictionary<string, string> headers = new Dictionary<string, string>();
-			
-			if (addHeaders != null)
-			{
-				addHeaders(headers);
-			}
 			_controllerBridge.SetResponseCode(statusCode);
+			
+			AddResponseHeaders(addHeaders);
 
-			foreach (KeyValuePair<string, string> pair in headers)
-			{
-				_controllerBridge.AppendResponseHeader(pair.Key, pair.Value);
-
-			}
 			_controllerBridge.SendCancelLayoutAndView();
 		}
 
@@ -100,7 +128,6 @@ namespace Castle.MonoRail.Rest
 		/// Sends an empty HTTP response
 		/// </summary>
 		/// <param name="statusCode">HTTP response status code</param>
-		/// <param name="addHeaders">Additional HTTP headers population delegate</param>
 		public void Empty(int statusCode)
 		{
 			Empty(statusCode, null);
@@ -113,6 +140,21 @@ namespace Castle.MonoRail.Rest
 		public void Text(string text)
 		{
 			_controllerBridge.SendRenderText(text);
+		}
+
+		private void AddResponseHeaders(Action<IDictionary<string, string>> addHeaders)
+		{
+			Dictionary<string, string> headers = new Dictionary<string, string>();
+
+			if (addHeaders != null)
+			{
+				addHeaders(headers);
+			}
+
+			foreach (KeyValuePair<string, string> pair in headers)
+			{
+				_controllerBridge.AppendResponseHeader(pair.Key, pair.Value);
+			}
 		}
 	}
 }

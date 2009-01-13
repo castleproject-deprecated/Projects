@@ -73,14 +73,13 @@ namespace Castle.MonoRail.Rest
 
 		protected void RespondTo(Action<ResponseFormat> collectFormats)
 		{
-			MimeTypes registeredMimes = new MimeTypes();
-			registeredMimes.RegisterBuiltinTypes();
-
+			MimeTypes registeredMimes = GetRegisteredMimeTypes();
+			
 			ResponseHandler handler = new ResponseHandler()
 			{
-				ControllerBridge = new ControllerBridge(this, _controllerAction),
+				ControllerBridge = GetControllerBridgeForAction(_controllerAction),
 				AcceptedMimes = GetAcceptedTypes(registeredMimes),
-				Format = new ResponseFormat()
+				Format = new ResponseFormat(registeredMimes)
 			};
 
 			collectFormats(handler.Format);
@@ -100,6 +99,19 @@ namespace Castle.MonoRail.Rest
 		protected virtual string AcceptHeader
 		{
 			get { return Request.Headers["Accept"]; }
+		}
+
+		protected virtual IControllerBridge GetControllerBridgeForAction(string action)
+		{
+			return new ControllerBridge(this, action);
+		}
+
+		protected virtual MimeTypes GetRegisteredMimeTypes()
+		{
+			var mimeTypes = new MimeTypes();
+			mimeTypes.RegisterBuiltinTypes();
+
+			return mimeTypes;
 		}
 
 		protected virtual string HttpMethod
