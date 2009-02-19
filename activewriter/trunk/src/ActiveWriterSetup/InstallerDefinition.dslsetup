@@ -27,7 +27,7 @@ For more specific information, see the Error List window.
 <installerDefinition xmlns="http://schemas.microsoft.com/VisualStudio/2005/DslTools/InstallerDefinitionModel" 
   productUrl="http://altinoren.com"
   defaultDirectoryName="ActiveWriter"
-  productVersion="1.1.0"
+  productVersion="1.0.0"
   requiresCSharp="false"
   requiresVisualBasic="false"
   productCode="44cbbaaa-6860-4836-899b-e62282e165f9"

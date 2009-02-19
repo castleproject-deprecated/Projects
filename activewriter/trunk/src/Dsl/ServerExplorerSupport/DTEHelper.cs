@@ -40,12 +40,6 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
         }
 
         [CLSCompliant(false)]
-        public static DTE GetDTE(int processID)
-        {
-            return GetDTE(processID.ToString());
-        }
-
-        [CLSCompliant(false)]
         public static DTE GetDTE(string processID)
         {
             IRunningObjectTable prot;

@@ -173,14 +173,18 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             }
         }
 
-        public static bool ContainsGenericDecleration(string typeName, bool outputVisualBasic)
+        public static bool ContainsGenericDecleration(string typeName, CodeLanguage language)
         {
-            if (outputVisualBasic)
+            if (language == CodeLanguage.CSharp)
+            {
+                return (typeName.IndexOf('>') >= 0);
+            }
+            if (language == CodeLanguage.VB)
             {
                 return (typeName.Replace(" ", string.Empty).ToUpperInvariant().IndexOf("(OF") >= 0);
             }
-
-            return (typeName.IndexOf('>') >= 0);
+            
+            throw new ArgumentOutOfRangeException("language", "Languages other than C# or VB.NET are not supported.");
         }
     }
 }

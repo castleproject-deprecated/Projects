@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{BB8E2A67-D8BC-424F-82E9-EBD4AF951B3D}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -14,7 +14,7 @@
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <SignAssembly>true</SignAssembly>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <GacTargetOutput>false</GacTargetOutput>
+    <GacTargetOutput>true</GacTargetOutput>
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
@@ -96,28 +96,20 @@
     <Compile Include="ARValidators\ValidateSet.cs" />
     <Compile Include="ARValidators\ValidateSingle.cs" />
     <Compile Include="CalculatedProperties\ModelClass.cs" />
-    <Compile Include="CodeGeneration\Adapters\ClassAdapter.cs" />
-    <Compile Include="CodeGeneration\Adapters\CommentAdapter.cs" />
-    <Compile Include="CodeGeneration\Adapters\FieldAdapter.cs" />
-    <Compile Include="CodeGeneration\Adapters\MethodAdapter.cs" />
-    <Compile Include="CodeGeneration\Adapters\PropertyAdapter.cs" />
     <Compile Include="CodeGeneration\AttributeHelper.cs" />
     <Compile Include="CodeGeneration\CodeGenerationContext.cs" />
     <Compile Include="CodeGeneration\CodeGenerationHelper.cs" />
-    <Compile Include="CodeGeneration\LogMessageEventArgs.cs" />
-    <Compile Include="CodeGeneration\FileCreatedEventArgs.cs" />
-    <Compile Include="CodeGeneration\ModelExtensions\ManyToManyRelation.cs" />
-    <Compile Include="CodeGeneration\ModelExtensions\ManyToOneRelation.cs" />
-    <Compile Include="CodeGeneration\ModelExtensions\Model.cs" />
-    <Compile Include="CodeGeneration\ModelExtensions\ModelClass.cs" />
-    <Compile Include="CodeGeneration\ModelExtensions\ModelProperty.cs" />
+    <Compile Include="CodeGeneration\ManyToManyRelation.cs" />
+    <Compile Include="CodeGeneration\ManyToOneRelation.cs" />
+    <Compile Include="CodeGeneration\Model.cs" />
+    <Compile Include="CodeGeneration\ModelClass.cs" />
+    <Compile Include="CodeGeneration\ModelProperty.cs" />
     <Compile Include="CodeGeneration\MonoRailGenerator.cs" />
     <Compile Include="CodeGeneration\NamingHelper.cs" />
-    <Compile Include="CodeGeneration\ModelExtensions\NestedClass.cs" />
-    <Compile Include="CodeGeneration\ModelExtensions\NestedClassReferencesModelClasses.cs" />
-    <Compile Include="CodeGeneration\ModelExtensions\OneToOneRelation.cs" />
+    <Compile Include="CodeGeneration\NestedClass.cs" />
+    <Compile Include="CodeGeneration\NestedClassReferencesModelClasses.cs" />
+    <Compile Include="CodeGeneration\OneToOneRelation.cs" />
     <Compile Include="CodeGeneration\TypeHelper.cs" />
-    <Compile Include="CodeGeneration\VisualStudioHelper.cs" />
     <Compile Include="Common\Common.cs" />
     <Compile Include="GeneratedCode\ConnectionBuilders.cs">
       <AutoGen>True</AutoGen>

@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Windows.Forms;
-
 namespace Altinoren.ActiveWriter.CustomTool
 {
     using System;
@@ -62,14 +60,22 @@ namespace Altinoren.ActiveWriter.CustomTool
                     .Replace("%EXT%", fileExtension)
                     .Replace("%PID%", currentProcess.Id.ToString());
 
-            // Implementation of the text templating creates separate AddDomin. Invoking DTE
-            // from non-default AppDomain is incorrect. As a workaround we run code generation in
+            // Implemenentation of the text templating creates separate AddDomin. Invoking DTE
+            // from non-default AddDomain is incorrect. As a workaround we run code generation in
             // separate thread to have all calls to DTE be automatically marshaled by COM to the
             // main thread and default AppDomain.
-            Func<byte[]> generateCode = () => base.GenerateCode(inputFileName, inputFileContent);
-            IAsyncResult async = generateCode.BeginInvoke(null, null);
+            GenerateCodeDelegate del = BaseGenerateCode;
+            IAsyncResult async = del.BeginInvoke(inputFileName, inputFileContent, null, null);
             async.AsyncWaitHandle.WaitOne();
-            return generateCode.EndInvoke(async);
+            byte[] data = del.EndInvoke(async);
+            return data;
+        }
+
+        private delegate byte[] GenerateCodeDelegate(string inputFileName, string inputFileContent);
+
+        private byte[] BaseGenerateCode(string inputFileName, string inputFileContent)
+        {
+            return base.GenerateCode(inputFileName, inputFileContent);
         }
     }
 }

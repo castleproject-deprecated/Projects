@@ -262,9 +262,15 @@ namespace Altinoren.ActiveWriter
 			// Prompt user for confirmation if there are validation errors and this is not a silent save
 			if (allowUserInterface)
 			{
-				vc.Validate(this.Store, DslValidation::ValidationCategories.Save);
+				bool unSaveableError = false;
 
-				if (vc.ErrorMessages.Count != 0)
+				if(!unloadableError)
+				{
+					vc.Validate(this.Store, DslValidation::ValidationCategories.Save);
+					unSaveableError = vc.ErrorMessages.Count != 0;
+				}
+
+				if(unloadableError || unSaveableError)
 				{
 					string errorMsg = (unloadableError ? "UnloadableSaveValidationFailed" : "SaveValidationFailed");
 					global::System.Windows.Forms.DialogResult result = DslShell::PackageUtility.ShowMessageBox(this.ServiceProvider, global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString(errorMsg), VSShellInterop::OLEMSGBUTTON.OLEMSGBUTTON_YESNO, VSShellInterop::OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_SECOND, VSShellInterop::OLEMSGICON.OLEMSGICON_WARNING);

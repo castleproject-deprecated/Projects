@@ -19,11 +19,11 @@ namespace Altinoren.ActiveWriter
 
     public partial class ManyToOneRelation
     {
-        public CodeAttributeDeclaration GetHasManyAttribute(CodeGenerationContext codeGenerationContext)
+        public CodeAttributeDeclaration GetHasManyAttribute()
         {
             CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("HasMany");
 
-            attribute.Arguments.Add(AttributeHelper.GetPrimitiveTypeAttributeArgument(codeGenerationContext.GetTypeDeclaration(Source).Name));
+            attribute.Arguments.Add(AttributeHelper.GetPrimitiveTypeAttributeArgument(CodeGenerationContext.GetTypeDeclaration(Source).Name));
             if (TargetAccess != PropertyAccess.Property)
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", TargetAccess));
             if (TargetCache != CacheEnum.Undefined)
