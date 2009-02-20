@@ -41,7 +41,7 @@ namespace Castle.MonoRail.ViewComponents
     public class CheckboxListComponent : ViewComponentEx
     {
 
-		private int? columns;
+		private int columns;
         private bool isHorizontal;
 		private PropertyInfo piDisplay;
         private IEnumerable source;
@@ -87,7 +87,10 @@ namespace Castle.MonoRail.ViewComponents
 			labelStyle = ComponentParams["labelStyle"] as string;
 			cssClass = GetCssClass();
 			splitPascalCase = GetBoolParamValue("splitPascalCase", true);
-			columns = ComponentParams["columns"] as int?;
+			string strColumns = ComponentParams["columns"] as string;
+			if (!String.IsNullOrEmpty(strColumns))
+				Int32.TryParse(strColumns, out columns);
+
 			columnVerticalAlign = ComponentParams["columnVerticalAlign"] as string;
 			labelFormat = ComponentParams["labelFormat"] as string;
 			string toolTip = ComponentParams["toolTip"] as string;
@@ -134,7 +137,7 @@ namespace Castle.MonoRail.ViewComponents
             FormHelper.CheckboxList list = helper.CreateCheckboxList(
                 target, source, attributes);
 
-            if (columns.HasValue && columns > 0)
+            if (columns > 1)
             {
                 RenderItemsInColumns(list);
             }
@@ -154,7 +157,7 @@ namespace Castle.MonoRail.ViewComponents
         private void RenderItemsInColumns(FormHelper.CheckboxList list)
         {
             int itemCount = GetCount(source);
-			int itemsPerColumn = ((itemCount + columns.Value - 1) / columns.Value);
+			int itemsPerColumn = ((itemCount + columns - 1) / columns);
             int index = 0;
             int positionInColumn = 1;
             RenderText("<table><tr>");

@@ -102,9 +102,21 @@ namespace Castle.MonoRail.ViewComponents
 		{
 			using (StringWriter sw = new StringWriter())
             {
-				Context.RenderSection(section, sw);
+				if (String.IsNullOrEmpty(section))
+					RenderBody(sw);
+				else
+					Context.RenderSection(section, sw);
 				return sw.ToString();
             }
+		}
+
+		/// <summary>
+		/// Gets the body text.
+		/// </summary>
+		/// <returns></returns>
+		public string GetBodyText()
+		{
+			return GetSectionText(null);
 		}
 		/// <summary>
 		/// Confirms a section is present.

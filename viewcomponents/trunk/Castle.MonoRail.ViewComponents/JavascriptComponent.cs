@@ -51,6 +51,7 @@ namespace Castle.MonoRail.ViewComponents
             segments = new Dictionary<string, string>();
             files = new StringSet();
             stdFiles = new List<LibraryDetail>();
+			wasRendered = false;
         }
 
         internal bool wasRendered;
@@ -1006,16 +1007,36 @@ namespace Castle.MonoRail.ViewComponents
         /// <param name="file">The filename.</param>
         public void IncludeScriptFile(string file)
         {
-            if (!js.files.Contains(file))
+			// ... if it's not on the list of files that we will/have already rendered
+			if (!js.files.Contains(file))
             {
-                if (js.wasRendered)
+				// ... then see if it's a standard library added the wrong way.
+				LibraryDetail stdfile = LibraryDetails.Find(ld => MatchLibraryByPath(ld, file));
+
+				// If it is a std file & on the list to be rendered, we're done.
+				if (stdfile != null && js.stdFiles.Contains(stdfile))
+					return;
+
+				// If it's not on either list, and we've already rendered the lists, render it now.
+				if (js.wasRendered)
                 {
                     this.context.Writer.Write(RenderJavascriptFile(file));
                 }
-                js.files.Add(file);
-            }
 
+				// Else add it to the appropriate list.
+				if (stdfile != null)
+					js.stdFiles.Add(stdfile);
+				else
+					js.files.Add(file);
+            }
         }
+
+		internal bool MatchLibraryByPath(LibraryDetail ld, string path)
+		{
+			string filename = Path.GetFileName(path);
+			string basename = Path.GetFileNameWithoutExtension(filename);
+			return ld.PathName == path || ld.Name == basename || ld.PathName == filename || Array.IndexOf(ld.Alias, basename) !=-1;
+		}
 
         internal string RenderJavascriptFile(string file)
         {
@@ -1067,7 +1088,8 @@ namespace Castle.MonoRail.ViewComponents
 
             foreach (string script in js.segments.Values)
             {
-                sb.AppendLine(script);
+				if (!String.IsNullOrEmpty(script))
+					sb.AppendLine(script.Trim());
             }
 
 			sb.AppendLine(@"//]]>");

@@ -416,6 +416,34 @@
             <param name="type"></param>
             <returns></returns>
         </member>
+        <member name="T:Castle.Components.Validator.ValidateGuidAttribute">
+            <summary>
+            Validate that this GUID is a valid one.
+            </summary>
+        </member>
+        <member name="M:Castle.Components.Validator.ValidateGuidAttribute.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Components.Validator.ValidateGuidAttribute"/> class.
+            </summary>
+            <param name="acceptEmptyGuid">Whether or not to treat Guid.Empty as valid - true for yes</param>
+        </member>
+        <member name="M:Castle.Components.Validator.ValidateGuidAttribute.#ctor(System.Boolean,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Components.Validator.ValidateGuidAttribute"/> class.
+            </summary>
+            <param name="errorMessage">The error message.</param>
+            <param name="acceptEmptyGuid">Whether or not to treat Guid.Empty as valid - true for yes</param>
+        </member>
+        <member name="M:Castle.Components.Validator.ValidateGuidAttribute.Build">
+            <summary>
+            Constructs and configures an <see cref="T:Castle.Components.Validator.IValidator"/>
+            instance based on the properties set on the attribute instance.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Castle.Components.Validator.ValidateGuidAttribute.AcceptEmptyGuid">
+            <summary>Whether or not to treat Guid.Empty as valid - true for yes</summary>
+        </member>
         <member name="T:Castle.Components.Validator.ValidateIntegerAttribute">
             <summary>
             Validate that this date is a valid one.
@@ -793,7 +821,20 @@
             </summary>
             <param name="set">The set of values to compare against.</param>
         </member>
+        <member name="M:Castle.Components.Validator.ValidateSetAttribute.#ctor(System.Int32[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Components.Validator.ValidateSetAttribute"/> class.
+            </summary>
+            <param name="set">The set of values to compare against.</param>
+        </member>
         <member name="M:Castle.Components.Validator.ValidateSetAttribute.#ctor(System.String,System.String[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Components.Validator.ValidateSetAttribute"/> class.
+            </summary>
+            <param name="errorMessage">The error message to be displayed if the validation fails.</param>
+            <param name="set">The set of values to compare against.</param>
+        </member>
+        <member name="M:Castle.Components.Validator.ValidateSetAttribute.#ctor(System.String,System.Int32[])">
             <summary>
             Initializes a new instance of the <see cref="T:Castle.Components.Validator.ValidateSetAttribute"/> class.
             </summary>
@@ -842,6 +883,29 @@
             <param name="errorMessage">The error message.</param>
         </member>
         <member name="M:Castle.Components.Validator.ValidateSingleAttribute.Build">
+            <summary>
+            Constructs and configures an <see cref="T:Castle.Components.Validator.IValidator"/>
+            instance based on the properties set on the attribute instance.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Castle.Components.Validator.ValidateTimeSpanAttribute">
+            <summary>
+            Validate that this TimeSpan is a valid one.
+            </summary>
+        </member>
+        <member name="M:Castle.Components.Validator.ValidateTimeSpanAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Components.Validator.ValidateTimeSpanAttribute"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.Components.Validator.ValidateTimeSpanAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Components.Validator.ValidateTimeSpanAttribute"/> class.
+            </summary>
+            <param name="errorMessage">The error message.</param>
+        </member>
+        <member name="M:Castle.Components.Validator.ValidateTimeSpanAttribute.Build">
             <summary>
             Constructs and configures an <see cref="T:Castle.Components.Validator.IValidator"/>
             instance based on the properties set on the attribute instance.
@@ -1762,6 +1826,57 @@
             is returned if non-null, otherwise it will return the property name.
             </summary>
         </member>
+        <member name="T:Castle.Components.Validator.Validators.GuidValidator">
+            <summary>
+            Validate that this is a valid GUID using regex; optionally, accept/reject Guid.Empty
+            </summary>
+        </member>
+        <member name="M:Castle.Components.Validator.Validators.GuidValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Components.Validator.Validators.GuidValidator"/> class
+            </summary>
+            <remarks>
+            Will consider Guid.Empty ('00000000-0000-0000-0000-000000000000') as valid
+            </remarks>
+        </member>
+        <member name="M:Castle.Components.Validator.Validators.GuidValidator.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Components.Validator.Validators.GuidValidator"/> class and specifies whether to consider Guid.Empty as valid
+            </summary>
+            <param name="acceptEmptyGuid">true to consider Guid.Empty as valid</param>
+        </member>
+        <member name="M:Castle.Components.Validator.Validators.GuidValidator.ApplyBrowserValidation(Castle.Components.Validator.BrowserValidationConfiguration,Castle.Components.Validator.InputElementType,Castle.Components.Validator.IBrowserValidationGenerator,System.Collections.IDictionary,System.String)">
+            <summary>
+            Applies the browser validation.
+            </summary>
+            <param name="config">The config.</param>
+            <param name="inputType">Type of the input.</param>
+            <param name="generator">The generator.</param>
+            <param name="attributes">The attributes.</param>
+            <param name="target">The target.</param>
+        </member>
+        <member name="M:Castle.Components.Validator.Validators.GuidValidator.IsValid(System.Object,System.Object)">
+            <summary>
+            Validate that the property value match the given regex.  Null or empty values are allowed.
+            </summary>
+            <param name="instance"></param>
+            <param name="fieldValue"></param>
+            <returns><c>true</c> if the field is OK</returns>
+        </member>
+        <member name="P:Castle.Components.Validator.Validators.GuidValidator.SupportsBrowserValidation">
+            <summary>
+            Gets a value indicating whether [supports browser validation].
+            </summary>
+            <value>
+            	<c>true</c> if [supports browser validation]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Castle.Components.Validator.Validators.GuidValidator.MessageKey">
+            <summary>
+            Returns the key used to internationalize error messages
+            </summary>
+            <value></value>
+        </member>
         <member name="T:Castle.Components.Validator.IntegerValidator">
             <summary>
             This is a meta validator. 
@@ -2368,6 +2483,12 @@
             </summary>
             <param name="set">The set of values to validate against.</param>
         </member>
+        <member name="M:Castle.Components.Validator.SetValidator.#ctor(System.Int32[])">
+            <summary>
+            Initializes a set-based validator.
+            </summary>
+            <param name="set">The set of values to validate against.</param>
+        </member>
         <member name="M:Castle.Components.Validator.SetValidator.#ctor(System.Type)">
             <summary>
             Initializes a set-based validator.
@@ -2458,6 +2579,49 @@
             </value>
         </member>
         <member name="P:Castle.Components.Validator.SingleValidator.MessageKey">
+            <summary>
+            Returns the key used to internationalize error messages
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Castle.Components.Validator.TimeSpanValidator">
+            <summary>
+            This is a meta validator. 
+            It is only useful to test a source content before setting it on the 
+            target instance.
+            </summary>
+        </member>
+        <member name="M:Castle.Components.Validator.TimeSpanValidator.IsValid(System.Object,System.Object)">
+            <summary>
+            Checks if the <c>fieldValue</c> can be converted to a valid TimeSpan.
+            Null or empty value are allowed.
+            </summary>
+            <param name="instance">The target type instance</param>
+            <param name="fieldValue">The property/field value. It can be null.</param>
+            <returns>
+            	<c>true</c> if the value is accepted (has passed the validation test)
+            </returns>
+        </member>
+        <member name="M:Castle.Components.Validator.TimeSpanValidator.ApplyBrowserValidation(Castle.Components.Validator.BrowserValidationConfiguration,Castle.Components.Validator.InputElementType,Castle.Components.Validator.IBrowserValidationGenerator,System.Collections.IDictionary,System.String)">
+            <summary>
+            Applies the browser validation by setting up one or
+            more input rules on <see cref="T:Castle.Components.Validator.IBrowserValidationGenerator"/>.
+            </summary>
+            <param name="config">The config.</param>
+            <param name="inputType">Type of the input.</param>
+            <param name="generator">The generator.</param>
+            <param name="attributes">The attributes.</param>
+            <param name="target">The target.</param>
+        </member>
+        <member name="P:Castle.Components.Validator.TimeSpanValidator.SupportsBrowserValidation">
+            <summary>
+            Gets a value indicating whether this validator supports browser validation.
+            </summary>
+            <value>
+            	<see langword="true"/> if browser validation is supported; otherwise, <see langword="false"/>.
+            </value>
+        </member>
+        <member name="P:Castle.Components.Validator.TimeSpanValidator.MessageKey">
             <summary>
             Returns the key used to internationalize error messages
             </summary>

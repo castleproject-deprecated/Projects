@@ -18,6 +18,7 @@ namespace Castle.MonoRail.ViewComponents
 	using System.IO;
 	using Castle.MonoRail.Framework;
 	using Castle.MonoRail.Framework.Helpers;
+	using Castle.Components.Pagination;
 
     /// <summary>
     /// The grid component is simple component, similar to the WebForms Repeater in style.
@@ -85,7 +86,6 @@ namespace Castle.MonoRail.ViewComponents
 			string ItemCss = (ComponentParams["ItemCssClass"] as string)  ?? "ListItem";
 			string AltItemCss = (ComponentParams["AltItemCssClass"] as string) ?? ItemCss;
 
-			int seq = 0;
 			foreach(object item in source)
 			{
 				hasItems = true;
@@ -125,20 +125,20 @@ Showing {0} - {1} of {2}
 </span><span class='paginationRight'>",
 				page.FirstItem, page.LastItem, page.TotalItems);
 			
-			if (page.HasFirst)
-			{
+			//if (page.HasFirst)
+			//{
 				CreateLink(output, paginationHelper, 1, "first");
-			}
-			else
-			{
-				output.Write("first");
-			}
+			//}
+			//else
+			//{
+			//    output.Write("first");
+			//}
 
 			output.Write(" | ");
 			
-			if (page.HasPrevious)
+			if (page.HasPreviousPage)
 			{
-				CreateLink(output, paginationHelper, page.PreviousIndex, "prev");
+				CreateLink(output, paginationHelper, page.PreviousPageIndex, "prev");
 			}
 			else
 			{
@@ -146,10 +146,10 @@ Showing {0} - {1} of {2}
 			}
 
 			output.Write(" | ");
-			
-			if (page.HasNext)
+
+			if (page.HasNextPage)
 			{
-				CreateLink(output, paginationHelper, page.NextIndex, "next");
+				CreateLink(output, paginationHelper, page.NextPageIndex, "next");
 			}
 			else
 			{
@@ -158,14 +158,14 @@ Showing {0} - {1} of {2}
 
 			output.Write(" | ");
 			
-			if (page.HasLast)
-			{
-				CreateLink(output, paginationHelper, page.LastIndex, "last");
-			}
-			else
-			{
-				output.Write("last");
-			}
+			//if (page.HasLast)
+			//{
+				CreateLink(output, paginationHelper, page.LastItemIndex, "last");
+			//}
+			//else
+			//{
+			//    output.Write("last");
+			//}
 
 			output.Write(@"</span></div>");
 
