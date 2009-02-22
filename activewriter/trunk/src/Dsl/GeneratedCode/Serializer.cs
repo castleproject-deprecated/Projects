@@ -622,6 +622,210 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// CollectionInterface
+			if (!serializationContext.Result.Failed)
+			{
+				string attribCollectionInterface = reader.GetAttribute("collectionInterface");
+				if (attribCollectionInterface != null)
+				{
+					global::System.String valueOfCollectionInterface;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCollectionInterface), out valueOfCollectionInterface))
+					{
+						instanceOfModel.CollectionInterface = valueOfCollectionInterface;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "collectionInterface", typeof(global::System.String), attribCollectionInterface);
+					}
+				}
+			}
+			// CollectionImplementation
+			if (!serializationContext.Result.Failed)
+			{
+				string attribCollectionImplementation = reader.GetAttribute("collectionImplementation");
+				if (attribCollectionImplementation != null)
+				{
+					global::System.String valueOfCollectionImplementation;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCollectionImplementation), out valueOfCollectionImplementation))
+					{
+						instanceOfModel.CollectionImplementation = valueOfCollectionImplementation;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "collectionImplementation", typeof(global::System.String), attribCollectionImplementation);
+					}
+				}
+			}
+			// ManyToManyRelationType
+			if (!serializationContext.Result.Failed)
+			{
+				string attribManyToManyRelationType = reader.GetAttribute("manyToManyRelationType");
+				if (attribManyToManyRelationType != null)
+				{
+					RelationType valueOfManyToManyRelationType;
+					if (DslModeling::SerializationUtilities.TryGetValue<RelationType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToManyRelationType), out valueOfManyToManyRelationType))
+					{
+						instanceOfModel.ManyToManyRelationType = valueOfManyToManyRelationType;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "manyToManyRelationType", typeof(RelationType), attribManyToManyRelationType);
+					}
+				}
+			}
+			// ManyToOneRelationType
+			if (!serializationContext.Result.Failed)
+			{
+				string attribManyToOneRelationType = reader.GetAttribute("manyToOneRelationType");
+				if (attribManyToOneRelationType != null)
+				{
+					RelationType valueOfManyToOneRelationType;
+					if (DslModeling::SerializationUtilities.TryGetValue<RelationType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToOneRelationType), out valueOfManyToOneRelationType))
+					{
+						instanceOfModel.ManyToOneRelationType = valueOfManyToOneRelationType;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "manyToOneRelationType", typeof(RelationType), attribManyToOneRelationType);
+					}
+				}
+			}
+			// ManyToManyCollectionIDColumn
+			if (!serializationContext.Result.Failed)
+			{
+				string attribManyToManyCollectionIDColumn = reader.GetAttribute("manyToManyCollectionIDColumn");
+				if (attribManyToManyCollectionIDColumn != null)
+				{
+					global::System.String valueOfManyToManyCollectionIDColumn;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToManyCollectionIDColumn), out valueOfManyToManyCollectionIDColumn))
+					{
+						instanceOfModel.ManyToManyCollectionIDColumn = valueOfManyToManyCollectionIDColumn;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "manyToManyCollectionIDColumn", typeof(global::System.String), attribManyToManyCollectionIDColumn);
+					}
+				}
+			}
+			// ManyToManyCollectionIDColumnType
+			if (!serializationContext.Result.Failed)
+			{
+				string attribManyToManyCollectionIDColumnType = reader.GetAttribute("manyToManyCollectionIDColumnType");
+				if (attribManyToManyCollectionIDColumnType != null)
+				{
+					NHibernateType valueOfManyToManyCollectionIDColumnType;
+					if (DslModeling::SerializationUtilities.TryGetValue<NHibernateType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToManyCollectionIDColumnType), out valueOfManyToManyCollectionIDColumnType))
+					{
+						instanceOfModel.ManyToManyCollectionIDColumnType = valueOfManyToManyCollectionIDColumnType;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "manyToManyCollectionIDColumnType", typeof(NHibernateType), attribManyToManyCollectionIDColumnType);
+					}
+				}
+			}
+			// ManyToManyCollectionIDGenerator
+			if (!serializationContext.Result.Failed)
+			{
+				string attribManyToManyCollectionIDGenerator = reader.GetAttribute("manyToManyCollectionIDGenerator");
+				if (attribManyToManyCollectionIDGenerator != null)
+				{
+					PrimaryKeyType valueOfManyToManyCollectionIDGenerator;
+					if (DslModeling::SerializationUtilities.TryGetValue<PrimaryKeyType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToManyCollectionIDGenerator), out valueOfManyToManyCollectionIDGenerator))
+					{
+						instanceOfModel.ManyToManyCollectionIDGenerator = valueOfManyToManyCollectionIDGenerator;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "manyToManyCollectionIDGenerator", typeof(PrimaryKeyType), attribManyToManyCollectionIDGenerator);
+					}
+				}
+			}
+			// ManyToManyIUserCollectionType
+			if (!serializationContext.Result.Failed)
+			{
+				string attribManyToManyIUserCollectionType = reader.GetAttribute("manyToManyIUserCollectionType");
+				if (attribManyToManyIUserCollectionType != null)
+				{
+					global::System.String valueOfManyToManyIUserCollectionType;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToManyIUserCollectionType), out valueOfManyToManyIUserCollectionType))
+					{
+						instanceOfModel.ManyToManyIUserCollectionType = valueOfManyToManyIUserCollectionType;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "manyToManyIUserCollectionType", typeof(global::System.String), attribManyToManyIUserCollectionType);
+					}
+				}
+			}
+			// ManyToOneIUserCollectionType
+			if (!serializationContext.Result.Failed)
+			{
+				string attribManyToOneIUserCollectionType = reader.GetAttribute("manyToOneIUserCollectionType");
+				if (attribManyToOneIUserCollectionType != null)
+				{
+					global::System.String valueOfManyToOneIUserCollectionType;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToOneIUserCollectionType), out valueOfManyToOneIUserCollectionType))
+					{
+						instanceOfModel.ManyToOneIUserCollectionType = valueOfManyToOneIUserCollectionType;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "manyToOneIUserCollectionType", typeof(global::System.String), attribManyToOneIUserCollectionType);
+					}
+				}
+			}
+			// AutomaticAssociations
+			if (!serializationContext.Result.Failed)
+			{
+				string attribAutomaticAssociations = reader.GetAttribute("automaticAssociations");
+				if (attribAutomaticAssociations != null)
+				{
+					global::System.Boolean valueOfAutomaticAssociations;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribAutomaticAssociations), out valueOfAutomaticAssociations))
+					{
+						instanceOfModel.AutomaticAssociations = valueOfAutomaticAssociations;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "automaticAssociations", typeof(global::System.Boolean), attribAutomaticAssociations);
+					}
+				}
+			}
+			// AutomaticAssociationCollectionImplementation
+			if (!serializationContext.Result.Failed)
+			{
+				string attribAutomaticAssociationCollectionImplementation = reader.GetAttribute("automaticAssociationCollectionImplementation");
+				if (attribAutomaticAssociationCollectionImplementation != null)
+				{
+					global::System.String valueOfAutomaticAssociationCollectionImplementation;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribAutomaticAssociationCollectionImplementation), out valueOfAutomaticAssociationCollectionImplementation))
+					{
+						instanceOfModel.AutomaticAssociationCollectionImplementation = valueOfAutomaticAssociationCollectionImplementation;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "automaticAssociationCollectionImplementation", typeof(global::System.String), attribAutomaticAssociationCollectionImplementation);
+					}
+				}
+			}
+			// ModelName
+			if (!serializationContext.Result.Failed)
+			{
+				string attribModelName = reader.GetAttribute("modelName");
+				if (attribModelName != null)
+				{
+					global::System.String valueOfModelName;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribModelName), out valueOfModelName))
+					{
+						instanceOfModel.ModelName = valueOfModelName;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "modelName", typeof(global::System.String), attribModelName);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -1589,6 +1793,137 @@ namespace Altinoren.ActiveWriter
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("implementINotifyPropertyChanging", serializedPropValue);
+					}
+				}
+			}
+			// CollectionInterface
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.CollectionInterface;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("collectionInterface", propValue);
+				}
+			}
+			// CollectionImplementation
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.CollectionImplementation;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("collectionImplementation", propValue);
+				}
+			}
+			// ManyToManyRelationType
+			if (!serializationContext.Result.Failed)
+			{
+				RelationType propValue = instanceOfModel.ManyToManyRelationType;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<RelationType>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Guess") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("manyToManyRelationType", serializedPropValue);
+					}
+				}
+			}
+			// ManyToOneRelationType
+			if (!serializationContext.Result.Failed)
+			{
+				RelationType propValue = instanceOfModel.ManyToOneRelationType;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<RelationType>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Guess") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("manyToOneRelationType", serializedPropValue);
+					}
+				}
+			}
+			// ManyToManyCollectionIDColumn
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.ManyToManyCollectionIDColumn;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("manyToManyCollectionIDColumn", propValue);
+				}
+			}
+			// ManyToManyCollectionIDColumnType
+			if (!serializationContext.Result.Failed)
+			{
+				NHibernateType propValue = instanceOfModel.ManyToManyCollectionIDColumnType;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<NHibernateType>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					writer.WriteAttributeString("manyToManyCollectionIDColumnType", serializedPropValue);
+				}
+			}
+			// ManyToManyCollectionIDGenerator
+			if (!serializationContext.Result.Failed)
+			{
+				PrimaryKeyType propValue = instanceOfModel.ManyToManyCollectionIDGenerator;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<PrimaryKeyType>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					writer.WriteAttributeString("manyToManyCollectionIDGenerator", serializedPropValue);
+				}
+			}
+			// ManyToManyIUserCollectionType
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.ManyToManyIUserCollectionType;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("manyToManyIUserCollectionType", propValue);
+				}
+			}
+			// ManyToOneIUserCollectionType
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.ManyToOneIUserCollectionType;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("manyToOneIUserCollectionType", propValue);
+				}
+			}
+			// AutomaticAssociations
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.Boolean propValue = instanceOfModel.AutomaticAssociations;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Boolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("automaticAssociations", serializedPropValue);
+					}
+				}
+			}
+			// AutomaticAssociationCollectionImplementation
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.AutomaticAssociationCollectionImplementation;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("automaticAssociationCollectionImplementation", propValue);
+				}
+			}
+			// ModelName
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.ModelName;
+				if (!serializationContext.Result.Failed)
+				{
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "Model") != 0))
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("modelName", propValue);
 					}
 				}
 			}
@@ -7534,14 +7869,14 @@ namespace Altinoren.ActiveWriter
 				string attribTargetRelationType = reader.GetAttribute("targetRelationType");
 				if (attribTargetRelationType != null)
 				{
-					RelationType valueOfTargetRelationType;
-					if (DslModeling::SerializationUtilities.TryGetValue<RelationType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetRelationType), out valueOfTargetRelationType))
+					InheritedRelationType valueOfTargetRelationType;
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritedRelationType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetRelationType), out valueOfTargetRelationType))
 					{
 						instanceOfManyToOneRelation.TargetRelationType = valueOfTargetRelationType;
 					}
 					else
 					{	// Invalid property value, ignored.
-						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetRelationType", typeof(RelationType), attribTargetRelationType);
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetRelationType", typeof(InheritedRelationType), attribTargetRelationType);
 					}
 				}
 			}
@@ -7967,6 +8302,57 @@ namespace Altinoren.ActiveWriter
 					else
 					{	// Invalid property value, ignored.
 						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetFetch", typeof(FetchEnum), attribTargetFetch);
+					}
+				}
+			}
+			// TargetIUserCollectionType
+			if (!serializationContext.Result.Failed)
+			{
+				string attribTargetIUserCollectionType = reader.GetAttribute("targetIUserCollectionType");
+				if (attribTargetIUserCollectionType != null)
+				{
+					global::System.String valueOfTargetIUserCollectionType;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetIUserCollectionType), out valueOfTargetIUserCollectionType))
+					{
+						instanceOfManyToOneRelation.TargetIUserCollectionType = valueOfTargetIUserCollectionType;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetIUserCollectionType", typeof(global::System.String), attribTargetIUserCollectionType);
+					}
+				}
+			}
+			// TargetPropertyGenerated
+			if (!serializationContext.Result.Failed)
+			{
+				string attribTargetPropertyGenerated = reader.GetAttribute("targetPropertyGenerated");
+				if (attribTargetPropertyGenerated != null)
+				{
+					global::System.Boolean valueOfTargetPropertyGenerated;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetPropertyGenerated), out valueOfTargetPropertyGenerated))
+					{
+						instanceOfManyToOneRelation.TargetPropertyGenerated = valueOfTargetPropertyGenerated;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetPropertyGenerated", typeof(global::System.Boolean), attribTargetPropertyGenerated);
+					}
+				}
+			}
+			// SourcePropertyGenerated
+			if (!serializationContext.Result.Failed)
+			{
+				string attribSourcePropertyGenerated = reader.GetAttribute("sourcePropertyGenerated");
+				if (attribSourcePropertyGenerated != null)
+				{
+					global::System.Boolean valueOfSourcePropertyGenerated;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourcePropertyGenerated), out valueOfSourcePropertyGenerated))
+					{
+						instanceOfManyToOneRelation.SourcePropertyGenerated = valueOfSourcePropertyGenerated;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "sourcePropertyGenerated", typeof(global::System.Boolean), attribSourcePropertyGenerated);
 					}
 				}
 			}
@@ -8533,11 +8919,11 @@ namespace Altinoren.ActiveWriter
 			// TargetRelationType
 			if (!serializationContext.Result.Failed)
 			{
-				RelationType propValue = instanceOfManyToOneRelation.TargetRelationType;
-				string serializedPropValue = DslModeling::SerializationUtilities.GetString<RelationType>(serializationContext, propValue);
+				InheritedRelationType propValue = instanceOfManyToOneRelation.TargetRelationType;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<InheritedRelationType>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
-					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Guess") != 0)
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherited") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("targetRelationType", serializedPropValue);
 					}
@@ -8822,6 +9208,42 @@ namespace Altinoren.ActiveWriter
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Unspecified") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("targetFetch", serializedPropValue);
+					}
+				}
+			}
+			// TargetIUserCollectionType
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfManyToOneRelation.TargetIUserCollectionType;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("targetIUserCollectionType", propValue);
+				}
+			}
+			// TargetPropertyGenerated
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.Boolean propValue = instanceOfManyToOneRelation.TargetPropertyGenerated;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Boolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("targetPropertyGenerated", serializedPropValue);
+					}
+				}
+			}
+			// SourcePropertyGenerated
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.Boolean propValue = instanceOfManyToOneRelation.SourcePropertyGenerated;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Boolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("sourcePropertyGenerated", serializedPropValue);
 					}
 				}
 			}
@@ -9966,14 +10388,14 @@ namespace Altinoren.ActiveWriter
 				string attribSourceRelationType = reader.GetAttribute("sourceRelationType");
 				if (attribSourceRelationType != null)
 				{
-					RelationType valueOfSourceRelationType;
-					if (DslModeling::SerializationUtilities.TryGetValue<RelationType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceRelationType), out valueOfSourceRelationType))
+					InheritedRelationType valueOfSourceRelationType;
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritedRelationType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceRelationType), out valueOfSourceRelationType))
 					{
 						instanceOfManyToManyRelation.SourceRelationType = valueOfSourceRelationType;
 					}
 					else
 					{	// Invalid property value, ignored.
-						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "sourceRelationType", typeof(RelationType), attribSourceRelationType);
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "sourceRelationType", typeof(InheritedRelationType), attribSourceRelationType);
 					}
 				}
 			}
@@ -10187,14 +10609,14 @@ namespace Altinoren.ActiveWriter
 				string attribTargetRelationType = reader.GetAttribute("targetRelationType");
 				if (attribTargetRelationType != null)
 				{
-					RelationType valueOfTargetRelationType;
-					if (DslModeling::SerializationUtilities.TryGetValue<RelationType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetRelationType), out valueOfTargetRelationType))
+					InheritedRelationType valueOfTargetRelationType;
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritedRelationType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetRelationType), out valueOfTargetRelationType))
 					{
 						instanceOfManyToManyRelation.TargetRelationType = valueOfTargetRelationType;
 					}
 					else
 					{	// Invalid property value, ignored.
-						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetRelationType", typeof(RelationType), attribTargetRelationType);
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetRelationType", typeof(InheritedRelationType), attribTargetRelationType);
 					}
 				}
 			}
@@ -10399,6 +10821,125 @@ namespace Altinoren.ActiveWriter
 					else
 					{	// Invalid property value, ignored.
 						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "sourceNotFoundBehaviour", typeof(NotFoundBehaviour), attribSourceNotFoundBehaviour);
+					}
+				}
+			}
+			// SourceIUserCollectionType
+			if (!serializationContext.Result.Failed)
+			{
+				string attribSourceIUserCollectionType = reader.GetAttribute("sourceIUserCollectionType");
+				if (attribSourceIUserCollectionType != null)
+				{
+					global::System.String valueOfSourceIUserCollectionType;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceIUserCollectionType), out valueOfSourceIUserCollectionType))
+					{
+						instanceOfManyToManyRelation.SourceIUserCollectionType = valueOfSourceIUserCollectionType;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "sourceIUserCollectionType", typeof(global::System.String), attribSourceIUserCollectionType);
+					}
+				}
+			}
+			// TargetIUserCollectionType
+			if (!serializationContext.Result.Failed)
+			{
+				string attribTargetIUserCollectionType = reader.GetAttribute("targetIUserCollectionType");
+				if (attribTargetIUserCollectionType != null)
+				{
+					global::System.String valueOfTargetIUserCollectionType;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetIUserCollectionType), out valueOfTargetIUserCollectionType))
+					{
+						instanceOfManyToManyRelation.TargetIUserCollectionType = valueOfTargetIUserCollectionType;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetIUserCollectionType", typeof(global::System.String), attribTargetIUserCollectionType);
+					}
+				}
+			}
+			// CollectionIDColumn
+			if (!serializationContext.Result.Failed)
+			{
+				string attribCollectionIDColumn = reader.GetAttribute("collectionIDColumn");
+				if (attribCollectionIDColumn != null)
+				{
+					global::System.String valueOfCollectionIDColumn;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCollectionIDColumn), out valueOfCollectionIDColumn))
+					{
+						instanceOfManyToManyRelation.CollectionIDColumn = valueOfCollectionIDColumn;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "collectionIDColumn", typeof(global::System.String), attribCollectionIDColumn);
+					}
+				}
+			}
+			// CollectionIDColumnType
+			if (!serializationContext.Result.Failed)
+			{
+				string attribCollectionIDColumnType = reader.GetAttribute("collectionIDColumnType");
+				if (attribCollectionIDColumnType != null)
+				{
+					NHibernateType valueOfCollectionIDColumnType;
+					if (DslModeling::SerializationUtilities.TryGetValue<NHibernateType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCollectionIDColumnType), out valueOfCollectionIDColumnType))
+					{
+						instanceOfManyToManyRelation.CollectionIDColumnType = valueOfCollectionIDColumnType;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "collectionIDColumnType", typeof(NHibernateType), attribCollectionIDColumnType);
+					}
+				}
+			}
+			// CollectionIDGenerator
+			if (!serializationContext.Result.Failed)
+			{
+				string attribCollectionIDGenerator = reader.GetAttribute("collectionIDGenerator");
+				if (attribCollectionIDGenerator != null)
+				{
+					PrimaryKeyType valueOfCollectionIDGenerator;
+					if (DslModeling::SerializationUtilities.TryGetValue<PrimaryKeyType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCollectionIDGenerator), out valueOfCollectionIDGenerator))
+					{
+						instanceOfManyToManyRelation.CollectionIDGenerator = valueOfCollectionIDGenerator;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "collectionIDGenerator", typeof(PrimaryKeyType), attribCollectionIDGenerator);
+					}
+				}
+			}
+			// TargetPropertyGenerated
+			if (!serializationContext.Result.Failed)
+			{
+				string attribTargetPropertyGenerated = reader.GetAttribute("targetPropertyGenerated");
+				if (attribTargetPropertyGenerated != null)
+				{
+					global::System.Boolean valueOfTargetPropertyGenerated;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetPropertyGenerated), out valueOfTargetPropertyGenerated))
+					{
+						instanceOfManyToManyRelation.TargetPropertyGenerated = valueOfTargetPropertyGenerated;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetPropertyGenerated", typeof(global::System.Boolean), attribTargetPropertyGenerated);
+					}
+				}
+			}
+			// SourcePropertyGenerated
+			if (!serializationContext.Result.Failed)
+			{
+				string attribSourcePropertyGenerated = reader.GetAttribute("sourcePropertyGenerated");
+				if (attribSourcePropertyGenerated != null)
+				{
+					global::System.Boolean valueOfSourcePropertyGenerated;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourcePropertyGenerated), out valueOfSourcePropertyGenerated))
+					{
+						instanceOfManyToManyRelation.SourcePropertyGenerated = valueOfSourcePropertyGenerated;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "sourcePropertyGenerated", typeof(global::System.Boolean), attribSourcePropertyGenerated);
 					}
 				}
 			}
@@ -10965,11 +11506,11 @@ namespace Altinoren.ActiveWriter
 			// SourceRelationType
 			if (!serializationContext.Result.Failed)
 			{
-				RelationType propValue = instanceOfManyToManyRelation.SourceRelationType;
-				string serializedPropValue = DslModeling::SerializationUtilities.GetString<RelationType>(serializationContext, propValue);
+				InheritedRelationType propValue = instanceOfManyToManyRelation.SourceRelationType;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<InheritedRelationType>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
-					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Guess") != 0)
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherited") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("sourceRelationType", serializedPropValue);
 					}
@@ -11110,11 +11651,11 @@ namespace Altinoren.ActiveWriter
 			// TargetRelationType
 			if (!serializationContext.Result.Failed)
 			{
-				RelationType propValue = instanceOfManyToManyRelation.TargetRelationType;
-				string serializedPropValue = DslModeling::SerializationUtilities.GetString<RelationType>(serializationContext, propValue);
+				InheritedRelationType propValue = instanceOfManyToManyRelation.TargetRelationType;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<InheritedRelationType>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
-					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Guess") != 0)
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherited") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("targetRelationType", serializedPropValue);
 					}
@@ -11253,6 +11794,82 @@ namespace Altinoren.ActiveWriter
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Default") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("sourceNotFoundBehaviour", serializedPropValue);
+					}
+				}
+			}
+			// SourceIUserCollectionType
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfManyToManyRelation.SourceIUserCollectionType;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("sourceIUserCollectionType", propValue);
+				}
+			}
+			// TargetIUserCollectionType
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfManyToManyRelation.TargetIUserCollectionType;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("targetIUserCollectionType", propValue);
+				}
+			}
+			// CollectionIDColumn
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfManyToManyRelation.CollectionIDColumn;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("collectionIDColumn", propValue);
+				}
+			}
+			// CollectionIDColumnType
+			if (!serializationContext.Result.Failed)
+			{
+				NHibernateType propValue = instanceOfManyToManyRelation.CollectionIDColumnType;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<NHibernateType>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					writer.WriteAttributeString("collectionIDColumnType", serializedPropValue);
+				}
+			}
+			// CollectionIDGenerator
+			if (!serializationContext.Result.Failed)
+			{
+				PrimaryKeyType propValue = instanceOfManyToManyRelation.CollectionIDGenerator;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<PrimaryKeyType>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					writer.WriteAttributeString("collectionIDGenerator", serializedPropValue);
+				}
+			}
+			// TargetPropertyGenerated
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.Boolean propValue = instanceOfManyToManyRelation.TargetPropertyGenerated;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Boolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("targetPropertyGenerated", serializedPropValue);
+					}
+				}
+			}
+			// SourcePropertyGenerated
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.Boolean propValue = instanceOfManyToManyRelation.SourcePropertyGenerated;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Boolean>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("sourcePropertyGenerated", serializedPropValue);
 					}
 				}
 			}

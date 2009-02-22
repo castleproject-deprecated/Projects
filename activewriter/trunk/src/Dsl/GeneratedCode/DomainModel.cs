@@ -124,6 +124,18 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(Model), "PropertyNameFilterExpression", Model.PropertyNameFilterExpressionDomainPropertyId, typeof(Model.PropertyNameFilterExpressionPropertyHandler)),
 				new DomainMemberInfo(typeof(Model), "InitializeIListFields", Model.InitializeIListFieldsDomainPropertyId, typeof(Model.InitializeIListFieldsPropertyHandler)),
 				new DomainMemberInfo(typeof(Model), "ImplementINotifyPropertyChanging", Model.ImplementINotifyPropertyChangingDomainPropertyId, typeof(Model.ImplementINotifyPropertyChangingPropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "CollectionInterface", Model.CollectionInterfaceDomainPropertyId, typeof(Model.CollectionInterfacePropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "CollectionImplementation", Model.CollectionImplementationDomainPropertyId, typeof(Model.CollectionImplementationPropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "ManyToManyRelationType", Model.ManyToManyRelationTypeDomainPropertyId, typeof(Model.ManyToManyRelationTypePropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "ManyToOneRelationType", Model.ManyToOneRelationTypeDomainPropertyId, typeof(Model.ManyToOneRelationTypePropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "ManyToManyCollectionIDColumn", Model.ManyToManyCollectionIDColumnDomainPropertyId, typeof(Model.ManyToManyCollectionIDColumnPropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "ManyToManyCollectionIDColumnType", Model.ManyToManyCollectionIDColumnTypeDomainPropertyId, typeof(Model.ManyToManyCollectionIDColumnTypePropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "ManyToManyCollectionIDGenerator", Model.ManyToManyCollectionIDGeneratorDomainPropertyId, typeof(Model.ManyToManyCollectionIDGeneratorPropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "ManyToManyIUserCollectionType", Model.ManyToManyIUserCollectionTypeDomainPropertyId, typeof(Model.ManyToManyIUserCollectionTypePropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "ManyToOneIUserCollectionType", Model.ManyToOneIUserCollectionTypeDomainPropertyId, typeof(Model.ManyToOneIUserCollectionTypePropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "AutomaticAssociations", Model.AutomaticAssociationsDomainPropertyId, typeof(Model.AutomaticAssociationsPropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "AutomaticAssociationCollectionImplementation", Model.AutomaticAssociationCollectionImplementationDomainPropertyId, typeof(Model.AutomaticAssociationCollectionImplementationPropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "ModelName", Model.ModelNameDomainPropertyId, typeof(Model.ModelNamePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "Cache", ModelClass.CacheDomainPropertyId, typeof(ModelClass.CachePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "DiscriminatorColumn", ModelClass.DiscriminatorColumnDomainPropertyId, typeof(ModelClass.DiscriminatorColumnPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "DiscriminatorType", ModelClass.DiscriminatorTypeDomainPropertyId, typeof(ModelClass.DiscriminatorTypePropertyHandler)),
@@ -214,6 +226,9 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(ManyToOneRelation), "TargetIndexType", ManyToOneRelation.TargetIndexTypeDomainPropertyId, typeof(ManyToOneRelation.TargetIndexTypePropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToOneRelation), "TargetIndex", ManyToOneRelation.TargetIndexDomainPropertyId, typeof(ManyToOneRelation.TargetIndexPropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToOneRelation), "TargetFetch", ManyToOneRelation.TargetFetchDomainPropertyId, typeof(ManyToOneRelation.TargetFetchPropertyHandler)),
+				new DomainMemberInfo(typeof(ManyToOneRelation), "TargetIUserCollectionType", ManyToOneRelation.TargetIUserCollectionTypeDomainPropertyId, typeof(ManyToOneRelation.TargetIUserCollectionTypePropertyHandler)),
+				new DomainMemberInfo(typeof(ManyToOneRelation), "TargetPropertyGenerated", ManyToOneRelation.TargetPropertyGeneratedDomainPropertyId, typeof(ManyToOneRelation.TargetPropertyGeneratedPropertyHandler)),
+				new DomainMemberInfo(typeof(ManyToOneRelation), "SourcePropertyGenerated", ManyToOneRelation.SourcePropertyGeneratedDomainPropertyId, typeof(ManyToOneRelation.SourcePropertyGeneratedPropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToManyRelation), "SourceCache", ManyToManyRelation.SourceCacheDomainPropertyId, typeof(ManyToManyRelation.SourceCachePropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToManyRelation), "SourceCascade", ManyToManyRelation.SourceCascadeDomainPropertyId, typeof(ManyToManyRelation.SourceCascadePropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToManyRelation), "SourceColumn", ManyToManyRelation.SourceColumnDomainPropertyId, typeof(ManyToManyRelation.SourceColumnPropertyHandler)),
@@ -248,6 +263,13 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(ManyToManyRelation), "TargetPropertyName", ManyToManyRelation.TargetPropertyNameDomainPropertyId, typeof(ManyToManyRelation.TargetPropertyNamePropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToManyRelation), "TargetNotFoundBehaviour", ManyToManyRelation.TargetNotFoundBehaviourDomainPropertyId, typeof(ManyToManyRelation.TargetNotFoundBehaviourPropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToManyRelation), "SourceNotFoundBehaviour", ManyToManyRelation.SourceNotFoundBehaviourDomainPropertyId, typeof(ManyToManyRelation.SourceNotFoundBehaviourPropertyHandler)),
+				new DomainMemberInfo(typeof(ManyToManyRelation), "SourceIUserCollectionType", ManyToManyRelation.SourceIUserCollectionTypeDomainPropertyId, typeof(ManyToManyRelation.SourceIUserCollectionTypePropertyHandler)),
+				new DomainMemberInfo(typeof(ManyToManyRelation), "TargetIUserCollectionType", ManyToManyRelation.TargetIUserCollectionTypeDomainPropertyId, typeof(ManyToManyRelation.TargetIUserCollectionTypePropertyHandler)),
+				new DomainMemberInfo(typeof(ManyToManyRelation), "CollectionIDColumn", ManyToManyRelation.CollectionIDColumnDomainPropertyId, typeof(ManyToManyRelation.CollectionIDColumnPropertyHandler)),
+				new DomainMemberInfo(typeof(ManyToManyRelation), "CollectionIDColumnType", ManyToManyRelation.CollectionIDColumnTypeDomainPropertyId, typeof(ManyToManyRelation.CollectionIDColumnTypePropertyHandler)),
+				new DomainMemberInfo(typeof(ManyToManyRelation), "CollectionIDGenerator", ManyToManyRelation.CollectionIDGeneratorDomainPropertyId, typeof(ManyToManyRelation.CollectionIDGeneratorPropertyHandler)),
+				new DomainMemberInfo(typeof(ManyToManyRelation), "TargetPropertyGenerated", ManyToManyRelation.TargetPropertyGeneratedDomainPropertyId, typeof(ManyToManyRelation.TargetPropertyGeneratedPropertyHandler)),
+				new DomainMemberInfo(typeof(ManyToManyRelation), "SourcePropertyGenerated", ManyToManyRelation.SourcePropertyGeneratedDomainPropertyId, typeof(ManyToManyRelation.SourcePropertyGeneratedPropertyHandler)),
 				new DomainMemberInfo(typeof(OneToOneRelation), "SourceAccess", OneToOneRelation.SourceAccessDomainPropertyId, typeof(OneToOneRelation.SourceAccessPropertyHandler)),
 				new DomainMemberInfo(typeof(OneToOneRelation), "SourceCascade", OneToOneRelation.SourceCascadeDomainPropertyId, typeof(OneToOneRelation.SourceCascadePropertyHandler)),
 				new DomainMemberInfo(typeof(OneToOneRelation), "SourceConstrained", OneToOneRelation.SourceConstrainedDomainPropertyId, typeof(OneToOneRelation.SourceConstrainedPropertyHandler)),
@@ -992,6 +1014,59 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OuterJoinEnum/False.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		False,
+	}
+}
+namespace Altinoren.ActiveWriter
+{
+	/// <summary>
+	/// DomainEnumeration: InheritedRelationType
+	/// Description for Altinoren.ActiveWriter.InheritedRelationType
+	/// </summary>
+	[global::System.CLSCompliant(true)]
+	public enum InheritedRelationType
+	{
+		/// <summary>
+		/// Inherited
+		/// Description for Altinoren.ActiveWriter.InheritedRelationType.Inherited
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritedRelationType/Inherited.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		Inherited,
+		/// <summary>
+		/// Guess
+		/// Description for Altinoren.ActiveWriter.InheritedRelationType.Guess
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritedRelationType/Guess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		Guess,
+		/// <summary>
+		/// Bag
+		/// Description for Altinoren.ActiveWriter.InheritedRelationType.Bag
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritedRelationType/Bag.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		Bag,
+		/// <summary>
+		/// Set
+		/// Description for Altinoren.ActiveWriter.InheritedRelationType.Set
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritedRelationType/Set.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		Set,
+		/// <summary>
+		/// IdBag
+		/// Description for Altinoren.ActiveWriter.InheritedRelationType.IdBag
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritedRelationType/IdBag.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		IdBag,
+		/// <summary>
+		/// Map
+		/// Description for Altinoren.ActiveWriter.InheritedRelationType.Map
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritedRelationType/Map.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		Map,
+		/// <summary>
+		/// List
+		/// Description for Altinoren.ActiveWriter.InheritedRelationType.List
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritedRelationType/List.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		List,
 	}
 }
 namespace Altinoren.ActiveWriter

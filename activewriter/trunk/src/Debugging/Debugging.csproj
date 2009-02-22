@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E7FBB08D-74D9-4DF8-9E18-D3CDB8BCC5AA}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -67,6 +67,11 @@
     <Compile Include="Tests\GeneratedCodeTest.cs" />
     <Compile Include="Tests\GeneratedCodeVirtualPropertyTest.cs" />
     <Compile Include="Tests\INotifyPropertyChangedTest.cs" />
+    <Compile Include="Tests\Models\GenerateCodeRelationTypeTestModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GenerateCodeRelationTypeTestModel.actiw</DependentUpon>
+    </Compile>
     <Compile Include="Tests\Models\GeneratedCodeGenericTestModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -249,6 +254,13 @@
       <DependentUpon>GeneratedCodeNHQGIntegrationWithNHTestModel.actiw</DependentUpon>
     </EmbeddedResource>
     <None Include="TestMacros.vb" />
+    <None Include="Tests\Models\GenerateCodeRelationTypeTestModel.actiw">
+      <Generator>ActiveWriterCodeGenerator</Generator>
+      <LastGenOutput>GenerateCodeRelationTypeTestModel.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Models\GenerateCodeRelationTypeTestModel.actiw.diagram">
+      <DependentUpon>GenerateCodeRelationTypeTestModel.actiw</DependentUpon>
+    </None>
     <None Include="Tests\Models\GeneratedCodeINotifyPropertyChangingTestModel.actiw">
       <Generator>ActiveWriterCodeGenerator</Generator>
       <LastGenOutput>GeneratedCodeINotifyPropertyChangingTestModel.cs</LastGenOutput>

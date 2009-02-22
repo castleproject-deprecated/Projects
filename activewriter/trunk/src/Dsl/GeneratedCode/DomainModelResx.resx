@@ -473,6 +473,10 @@
     <value>Initialize IList Fields</value>
     <comment>DisplayName for DomainProperty &apos;InitializeIListFields&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.Model/InitializeIListFields.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;InitializeIListFields&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.Model/ImplementINotifyPropertyChanging.Description" xml:space="preserve">
     <value>Instructs ActiveWriter to implement INotifyPropertyChanging interface in each class generated. This setting is overridable in class level.</value>
     <comment>Description for DomainProperty &apos;ImplementINotifyPropertyChanging&apos; on DomainClass &apos;Model&apos;</comment>
@@ -484,6 +488,150 @@
   <data name="Altinoren.ActiveWriter.Model/ImplementINotifyPropertyChanging.Category" xml:space="preserve">
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;ImplementINotifyPropertyChanging&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CollectionInterface.Description" xml:space="preserve">
+    <value>Interface to use for collections.  If none is specified, IList will be used.</value>
+    <comment>Description for DomainProperty &apos;CollectionInterface&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CollectionInterface.DisplayName" xml:space="preserve">
+    <value>Collection Interface</value>
+    <comment>DisplayName for DomainProperty &apos;CollectionInterface&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CollectionInterface.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;CollectionInterface&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CollectionImplementation.Description" xml:space="preserve">
+    <value>Concrete class to instantiate for list fields if InitializeIListFields is set to true.</value>
+    <comment>Description for DomainProperty &apos;CollectionImplementation&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CollectionImplementation.DisplayName" xml:space="preserve">
+    <value>Collection Implementation</value>
+    <comment>DisplayName for DomainProperty &apos;CollectionImplementation&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CollectionImplementation.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;CollectionImplementation&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyRelationType.Description" xml:space="preserve">
+    <value>Default relation type used by ManyToMany relationships.</value>
+    <comment>Description for DomainProperty &apos;ManyToManyRelationType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyRelationType.DisplayName" xml:space="preserve">
+    <value>Many To Many Relation Type</value>
+    <comment>DisplayName for DomainProperty &apos;ManyToManyRelationType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyRelationType.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;ManyToManyRelationType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToOneRelationType.Description" xml:space="preserve">
+    <value>Default relation type used by ManyToOne relationships.</value>
+    <comment>Description for DomainProperty &apos;ManyToOneRelationType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToOneRelationType.DisplayName" xml:space="preserve">
+    <value>Many To One Relation Type</value>
+    <comment>DisplayName for DomainProperty &apos;ManyToOneRelationType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToOneRelationType.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;ManyToOneRelationType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumn.Description" xml:space="preserve">
+    <value>This column name is used for many to many collection ID definition.  If a column name is specified in the relationship itself, the Column Type and Generator specified in the relationship will be used instead of those specified here in the model.</value>
+    <comment>Description for DomainProperty &apos;ManyToManyCollectionIDColumn&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumn.DisplayName" xml:space="preserve">
+    <value>Many To Many Collection ID Column</value>
+    <comment>DisplayName for DomainProperty &apos;ManyToManyCollectionIDColumn&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumn.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;ManyToManyCollectionIDColumn&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnType.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.Model.Many To Many Collection ID Column Type</value>
+    <comment>Description for DomainProperty &apos;ManyToManyCollectionIDColumnType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnType.DisplayName" xml:space="preserve">
+    <value>Many To Many Collection ID Column Type</value>
+    <comment>DisplayName for DomainProperty &apos;ManyToManyCollectionIDColumnType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnType.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;ManyToManyCollectionIDColumnType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDGenerator.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.Model.Many To Many Collection ID Generator</value>
+    <comment>Description for DomainProperty &apos;ManyToManyCollectionIDGenerator&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDGenerator.DisplayName" xml:space="preserve">
+    <value>Many To Many Collection ID Generator</value>
+    <comment>DisplayName for DomainProperty &apos;ManyToManyCollectionIDGenerator&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDGenerator.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;ManyToManyCollectionIDGenerator&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyIUserCollectionType.Description" xml:space="preserve">
+    <value>The type deriving from NHibernate.UserTypes.IUserCollectionType for collections.  This is used unless the collection type is specified in the ManyToMany relationship.</value>
+    <comment>Description for DomainProperty &apos;ManyToManyIUserCollectionType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyIUserCollectionType.DisplayName" xml:space="preserve">
+    <value>Many To Many IUserCollectionType</value>
+    <comment>DisplayName for DomainProperty &apos;ManyToManyIUserCollectionType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyIUserCollectionType.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;ManyToManyIUserCollectionType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToOneIUserCollectionType.Description" xml:space="preserve">
+    <value>The type deriving from NHibernate.UserTypes.IUserCollectionType for collections.  This is used unless the collection type is specified in the ManyToOne relationship.</value>
+    <comment>Description for DomainProperty &apos;ManyToOneIUserCollectionType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToOneIUserCollectionType.DisplayName" xml:space="preserve">
+    <value>Many To One IUserCollectionType</value>
+    <comment>DisplayName for DomainProperty &apos;ManyToOneIUserCollectionType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ManyToOneIUserCollectionType.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;ManyToOneIUserCollectionType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/AutomaticAssociations.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.Model.Automatic Associations</value>
+    <comment>Description for DomainProperty &apos;AutomaticAssociations&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/AutomaticAssociations.DisplayName" xml:space="preserve">
+    <value>Automatic Associations</value>
+    <comment>DisplayName for DomainProperty &apos;AutomaticAssociations&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/AutomaticAssociations.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;AutomaticAssociations&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/AutomaticAssociationCollectionImplementation.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.Model.Automatic Association Collection Implementation</value>
+    <comment>Description for DomainProperty &apos;AutomaticAssociationCollectionImplementation&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/AutomaticAssociationCollectionImplementation.DisplayName" xml:space="preserve">
+    <value>Automatic Association Collection Implementation</value>
+    <comment>DisplayName for DomainProperty &apos;AutomaticAssociationCollectionImplementation&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/AutomaticAssociationCollectionImplementation.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;AutomaticAssociationCollectionImplementation&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ModelName.Description" xml:space="preserve">
+    <value>A name for the entire model that is used as a prefix for various helper classes.  If there are multiple models in the same namespace, each model should have a unique value for this property to avoid class name conflicts.</value>
+    <comment>Description for DomainProperty &apos;ModelName&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ModelName.DisplayName" xml:space="preserve">
+    <value>Model Name</value>
+    <comment>DisplayName for DomainProperty &apos;ModelName&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/ModelName.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;ModelName&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ModelClass.Description" xml:space="preserve">
     <value>A class of the domain</value>
@@ -1625,6 +1773,34 @@
     <value>Target Fetch</value>
     <comment>DisplayName for DomainProperty &apos;TargetFetch&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetIUserCollectionType.Description" xml:space="preserve">
+    <value>User collection type for many side of relationship</value>
+    <comment>Description for DomainProperty &apos;TargetIUserCollectionType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetIUserCollectionType.DisplayName" xml:space="preserve">
+    <value>Target IUserCollectionType</value>
+    <comment>DisplayName for DomainProperty &apos;TargetIUserCollectionType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetIUserCollectionType.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetIUserCollectionType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyGenerated.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ManyToOneRelation.Target Property Generated</value>
+    <comment>Description for DomainProperty &apos;TargetPropertyGenerated&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyGenerated.DisplayName" xml:space="preserve">
+    <value>Target Property Generated</value>
+    <comment>DisplayName for DomainProperty &apos;TargetPropertyGenerated&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyGenerated.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ManyToOneRelation.Source Property Generated</value>
+    <comment>Description for DomainProperty &apos;SourcePropertyGenerated&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyGenerated.DisplayName" xml:space="preserve">
+    <value>Source Property Generated</value>
+    <comment>DisplayName for DomainProperty &apos;SourcePropertyGenerated&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ManyToOneRelation/Source.Description" xml:space="preserve">
     <value></value>
     <comment>Description for DomainRole &apos;Source&apos; on DomainRelationship &apos;ManyToOneRelation&apos;</comment>
@@ -2096,6 +2272,70 @@
   <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceNotFoundBehaviour.Category" xml:space="preserve">
     <value>Source</value>
     <comment>Category for DomainProperty &apos;SourceNotFoundBehaviour&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceIUserCollectionType.Description" xml:space="preserve">
+    <value>User collection type</value>
+    <comment>Description for DomainProperty &apos;SourceIUserCollectionType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceIUserCollectionType.DisplayName" xml:space="preserve">
+    <value>Source IUserCollectionType</value>
+    <comment>DisplayName for DomainProperty &apos;SourceIUserCollectionType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourceIUserCollectionType.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourceIUserCollectionType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetIUserCollectionType.Description" xml:space="preserve">
+    <value>User collection type</value>
+    <comment>Description for DomainProperty &apos;TargetIUserCollectionType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetIUserCollectionType.DisplayName" xml:space="preserve">
+    <value>Target IUserCollectionType</value>
+    <comment>DisplayName for DomainProperty &apos;TargetIUserCollectionType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetIUserCollectionType.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetIUserCollectionType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDColumn.Description" xml:space="preserve">
+    <value>The column name used for the primary key of the many to many link table.</value>
+    <comment>Description for DomainProperty &apos;CollectionIDColumn&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDColumn.DisplayName" xml:space="preserve">
+    <value>Collection IDColumn</value>
+    <comment>DisplayName for DomainProperty &apos;CollectionIDColumn&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDColumnType.Description" xml:space="preserve">
+    <value>The type of the column used for the primary key.</value>
+    <comment>Description for DomainProperty &apos;CollectionIDColumnType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDColumnType.DisplayName" xml:space="preserve">
+    <value>Collection IDColumn Type</value>
+    <comment>DisplayName for DomainProperty &apos;CollectionIDColumnType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDGenerator.Description" xml:space="preserve">
+    <value>The generator type for the primary key of the many to many link table.</value>
+    <comment>Description for DomainProperty &apos;CollectionIDGenerator&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDGenerator.DisplayName" xml:space="preserve">
+    <value>Collection IDGenerator</value>
+    <comment>DisplayName for DomainProperty &apos;CollectionIDGenerator&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyGenerated.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ManyToManyRelation.Target Property Generated</value>
+    <comment>Description for DomainProperty &apos;TargetPropertyGenerated&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyGenerated.DisplayName" xml:space="preserve">
+    <value>Target Property Generated</value>
+    <comment>DisplayName for DomainProperty &apos;TargetPropertyGenerated&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyGenerated.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ManyToManyRelation.Source Property Generated</value>
+    <comment>Description for DomainProperty &apos;SourcePropertyGenerated&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyGenerated.DisplayName" xml:space="preserve">
+    <value>Source Property Generated</value>
+    <comment>DisplayName for DomainProperty &apos;SourcePropertyGenerated&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ManyToManyRelation/Source.Description" xml:space="preserve">
     <value></value>
@@ -2772,6 +3012,62 @@
   <data name="Altinoren.ActiveWriter.OuterJoinEnum/False.Description" xml:space="preserve">
     <value>Description for Altinoren.ActiveWriter.OuterJoinEnum.False</value>
     <comment>Description for EnumerationLiteral &apos;False&apos; on DomainEnumeration &apos;OuterJoinEnum&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritedRelationType/Inherited.DisplayName" xml:space="preserve">
+    <value>Inherited</value>
+    <comment>Display name for EnumerationLiteral &apos;Inherited&apos; on DomainEnumeration &apos;InheritedRelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritedRelationType/Inherited.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritedRelationType.Inherited</value>
+    <comment>Description for EnumerationLiteral &apos;Inherited&apos; on DomainEnumeration &apos;InheritedRelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritedRelationType/Guess.DisplayName" xml:space="preserve">
+    <value>Guess</value>
+    <comment>Display name for EnumerationLiteral &apos;Guess&apos; on DomainEnumeration &apos;InheritedRelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritedRelationType/Guess.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritedRelationType.Guess</value>
+    <comment>Description for EnumerationLiteral &apos;Guess&apos; on DomainEnumeration &apos;InheritedRelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritedRelationType/Bag.DisplayName" xml:space="preserve">
+    <value>Bag</value>
+    <comment>Display name for EnumerationLiteral &apos;Bag&apos; on DomainEnumeration &apos;InheritedRelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritedRelationType/Bag.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritedRelationType.Bag</value>
+    <comment>Description for EnumerationLiteral &apos;Bag&apos; on DomainEnumeration &apos;InheritedRelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritedRelationType/Set.DisplayName" xml:space="preserve">
+    <value>Set</value>
+    <comment>Display name for EnumerationLiteral &apos;Set&apos; on DomainEnumeration &apos;InheritedRelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritedRelationType/Set.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritedRelationType.Set</value>
+    <comment>Description for EnumerationLiteral &apos;Set&apos; on DomainEnumeration &apos;InheritedRelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritedRelationType/IdBag.DisplayName" xml:space="preserve">
+    <value>IdBag</value>
+    <comment>Display name for EnumerationLiteral &apos;IdBag&apos; on DomainEnumeration &apos;InheritedRelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritedRelationType/IdBag.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritedRelationType.IdBag</value>
+    <comment>Description for EnumerationLiteral &apos;IdBag&apos; on DomainEnumeration &apos;InheritedRelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritedRelationType/Map.DisplayName" xml:space="preserve">
+    <value>Map</value>
+    <comment>Display name for EnumerationLiteral &apos;Map&apos; on DomainEnumeration &apos;InheritedRelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritedRelationType/Map.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritedRelationType.Map</value>
+    <comment>Description for EnumerationLiteral &apos;Map&apos; on DomainEnumeration &apos;InheritedRelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritedRelationType/List.DisplayName" xml:space="preserve">
+    <value>List</value>
+    <comment>Display name for EnumerationLiteral &apos;List&apos; on DomainEnumeration &apos;InheritedRelationType&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritedRelationType/List.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritedRelationType.List</value>
+    <comment>Description for EnumerationLiteral &apos;List&apos; on DomainEnumeration &apos;InheritedRelationType&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.RelationType/Guess.DisplayName" xml:space="preserve">
     <value>Guess</value>

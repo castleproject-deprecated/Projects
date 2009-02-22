@@ -143,7 +143,7 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="951613a5-1988-44fb-a3a1-b0fcd0388b9e" Description="Initializas private IList fields with List concrete type." Name="InitializeIListFields" DisplayName="Initialize IList Fields" DefaultValue="false">
+        <DomainProperty Id="951613a5-1988-44fb-a3a1-b0fcd0388b9e" Description="Initializas private IList fields with List concrete type." Name="InitializeIListFields" DisplayName="Initialize IList Fields" DefaultValue="false" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
@@ -151,6 +151,66 @@
         <DomainProperty Id="2992d717-bd8a-42a9-a454-f5d9ed767e00" Description="Instructs ActiveWriter to implement INotifyPropertyChanging interface in each class generated. This setting is overridable in class level." Name="ImplementINotifyPropertyChanging" DisplayName="Implement INotifyPropertyChanging" DefaultValue="false" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="207c0c14-8ed8-41ad-bd61-f3dfd3757d2b" Description="Interface to use for collections.  If none is specified, IList will be used." Name="CollectionInterface" DisplayName="Collection Interface" Category="Code Generation" IsBrowsable="false">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="c5f8cef8-aab9-4666-bca7-961179634166" Description="Concrete class to instantiate for list fields if InitializeIListFields is set to true." Name="CollectionImplementation" DisplayName="Collection Implementation" Category="Code Generation" IsBrowsable="false">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="405105d2-70b1-42e5-b436-4b17a4f02f63" Description="Default relation type used by ManyToMany relationships." Name="ManyToManyRelationType" DisplayName="Many To Many Relation Type" DefaultValue="Guess" Category="Code Generation">
+          <Type>
+            <DomainEnumerationMoniker Name="RelationType" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="f0ea48f0-b5a9-4d88-8f43-a8b9cb98b41a" Description="Default relation type used by ManyToOne relationships." Name="ManyToOneRelationType" DisplayName="Many To One Relation Type" DefaultValue="Guess" Category="Code Generation">
+          <Type>
+            <DomainEnumerationMoniker Name="RelationType" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="4e0c0023-6a86-4801-bb51-9ebbad2a1fd6" Description="This column name is used for many to many collection ID definition.  If a column name is specified in the relationship itself, the Column Type and Generator specified in the relationship will be used instead of those specified here in the model." Name="ManyToManyCollectionIDColumn" DisplayName="Many To Many Collection ID Column" Category="Code Generation" IsBrowsable="false">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="f01307ce-7d91-4b00-b352-fe5487587633" Description="Description for Altinoren.ActiveWriter.Model.Many To Many Collection ID Column Type" Name="ManyToManyCollectionIDColumnType" DisplayName="Many To Many Collection ID Column Type" Category="Code Generation" IsBrowsable="false">
+          <Type>
+            <DomainEnumerationMoniker Name="NHibernateType" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="7b97e93e-ea00-4884-a2bd-f7e146d8841c" Description="Description for Altinoren.ActiveWriter.Model.Many To Many Collection ID Generator" Name="ManyToManyCollectionIDGenerator" DisplayName="Many To Many Collection ID Generator" Category="Code Generation" IsBrowsable="false">
+          <Type>
+            <DomainEnumerationMoniker Name="PrimaryKeyType" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="fd0e9afd-c093-4941-a9e0-b1df7c8ab7b0" Description="The type deriving from NHibernate.UserTypes.IUserCollectionType for collections.  This is used unless the collection type is specified in the ManyToMany relationship." Name="ManyToManyIUserCollectionType" DisplayName="Many To Many IUserCollectionType" Category="Code Generation" IsBrowsable="false">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="85c3b996-122e-40fa-9438-70b50fcd363f" Description="The type deriving from NHibernate.UserTypes.IUserCollectionType for collections.  This is used unless the collection type is specified in the ManyToOne relationship." Name="ManyToOneIUserCollectionType" DisplayName="Many To One IUserCollectionType" Category="Code Generation" IsBrowsable="false">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="03de83cf-2e0e-4b06-9975-d4e443f68836" Description="Description for Altinoren.ActiveWriter.Model.Automatic Associations" Name="AutomaticAssociations" DisplayName="Automatic Associations" DefaultValue="false" Category="Code Generation" IsBrowsable="false">
+          <Type>
+            <ExternalTypeMoniker Name="/System/Boolean" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="71b0b47d-7c3e-429d-a501-1a91470e92aa" Description="Description for Altinoren.ActiveWriter.Model.Automatic Association Collection Implementation" Name="AutomaticAssociationCollectionImplementation" DisplayName="Automatic Association Collection Implementation" Category="Code Generation" IsBrowsable="false">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="86eca91c-4ab5-4bfe-b171-4cbf346ebc34" Description="A name for the entire model that is used as a prefix for various helper classes.  If there are multiple models in the same namespace, each model should have a unique value for this property to avoid class name conflicts." Name="ModelName" DisplayName="Model Name" DefaultValue="Model" Category="Code Generation" IsBrowsable="false">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
       </Properties>
@@ -573,9 +633,9 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="8c4ed47e-37dc-4975-b996-7c6521940bf2" Description="" Name="TargetRelationType" DisplayName="Target Relation Type" DefaultValue="Guess" Category="Target (HasMany)">
+        <DomainProperty Id="8c4ed47e-37dc-4975-b996-7c6521940bf2" Description="" Name="TargetRelationType" DisplayName="Target Relation Type" DefaultValue="Inherited" Category="Target (HasMany)">
           <Type>
-            <DomainEnumerationMoniker Name="RelationType" />
+            <DomainEnumerationMoniker Name="InheritedRelationType" />
           </Type>
         </DomainProperty>
         <DomainProperty Id="3da30e35-2a3d-4e5e-ab57-8f71af79c4c4" Description="" Name="TargetSchema" DisplayName="Target Schema" Category="Target (HasMany)">
@@ -703,6 +763,21 @@
             <DomainEnumerationMoniker Name="FetchEnum" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="173770db-04a0-4401-b2dd-69e70edda734" Description="User collection type for many side of relationship" Name="TargetIUserCollectionType" DisplayName="Target IUserCollectionType" Category="Target (HasMany)" IsBrowsable="false">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="b78081c0-24d3-4367-8007-6f5da73d411c" Description="Description for Altinoren.ActiveWriter.ManyToOneRelation.Target Property Generated" Name="TargetPropertyGenerated" DisplayName="Target Property Generated" DefaultValue="true" IsBrowsable="false">
+          <Type>
+            <ExternalTypeMoniker Name="/System/Boolean" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="5a6da19e-ae0e-49c5-afa1-dfce0433e464" Description="Description for Altinoren.ActiveWriter.ManyToOneRelation.Source Property Generated" Name="SourcePropertyGenerated" DisplayName="Source Property Generated" DefaultValue="true" IsBrowsable="false">
+          <Type>
+            <ExternalTypeMoniker Name="/System/Boolean" />
+          </Type>
+        </DomainProperty>
       </Properties>
       <Source>
         <DomainRole Id="8fc70677-e363-4cda-b821-17505cab2c14" Description="" Name="Source" DisplayName="Source" PropertyName="Targets" PropertyDisplayName="Targets">
@@ -777,9 +852,9 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="1a7ce077-b01a-4e14-ba2e-81f24d1645ac" Description="" Name="SourceRelationType" DisplayName="Source Relation Type" DefaultValue="Guess" Category="Source">
+        <DomainProperty Id="1a7ce077-b01a-4e14-ba2e-81f24d1645ac" Description="" Name="SourceRelationType" DisplayName="Source Relation Type" DefaultValue="Inherited" Category="Source">
           <Type>
-            <DomainEnumerationMoniker Name="RelationType" />
+            <DomainEnumerationMoniker Name="InheritedRelationType" />
           </Type>
         </DomainProperty>
         <DomainProperty Id="aa9b2d6f-225f-42c5-8871-05df449fc598" Description="" Name="Schema" DisplayName="Schema" Category="Common">
@@ -842,9 +917,9 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="913caa46-b08b-45bb-ac6f-6ef394c59938" Description="" Name="TargetRelationType" DisplayName="Target Relation Type" DefaultValue="Guess" Category="Target">
+        <DomainProperty Id="913caa46-b08b-45bb-ac6f-6ef394c59938" Description="" Name="TargetRelationType" DisplayName="Target Relation Type" DefaultValue="Inherited" Category="Target">
           <Type>
-            <DomainEnumerationMoniker Name="RelationType" />
+            <DomainEnumerationMoniker Name="InheritedRelationType" />
           </Type>
         </DomainProperty>
         <DomainProperty Id="65664bb5-5639-4405-85d0-837c8c56e1b8" Description="" Name="TargetSort" DisplayName="Target Sort" Category="Target">
@@ -905,6 +980,41 @@
         <DomainProperty Id="32c73c34-5d19-4c1c-8427-91646d05fb53" Description="Gets or sets the way broken relations are handled." Name="SourceNotFoundBehaviour" DisplayName="Source Not Found Behaviour" DefaultValue="Default" Category="Source">
           <Type>
             <DomainEnumerationMoniker Name="NotFoundBehaviour" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="96fda275-b5d3-48bb-b65c-1c3a04d3ccb2" Description="User collection type" Name="SourceIUserCollectionType" DisplayName="Source IUserCollectionType" Category="Source" IsBrowsable="false">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="cb5dddc8-a7c2-4fca-9493-09d9f5040087" Description="User collection type" Name="TargetIUserCollectionType" DisplayName="Target IUserCollectionType" Category="Target" IsBrowsable="false">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="e0cd5759-5c0c-4000-aaa8-6a81d30376a0" Description="The column name used for the primary key of the many to many link table." Name="CollectionIDColumn" DisplayName="Collection IDColumn" IsBrowsable="false">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="a0a2373a-bad1-487e-83e6-cfa23a02d4d0" Description="The type of the column used for the primary key." Name="CollectionIDColumnType" DisplayName="Collection IDColumn Type" IsBrowsable="false">
+          <Type>
+            <DomainEnumerationMoniker Name="NHibernateType" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="21f90b70-a02a-436d-a3c0-86aad9060e9d" Description="The generator type for the primary key of the many to many link table." Name="CollectionIDGenerator" DisplayName="Collection IDGenerator" IsBrowsable="false">
+          <Type>
+            <DomainEnumerationMoniker Name="PrimaryKeyType" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="feb33769-96a2-44c6-94fb-06ae1e160c10" Description="Description for Altinoren.ActiveWriter.ManyToManyRelation.Target Property Generated" Name="TargetPropertyGenerated" DisplayName="Target Property Generated" DefaultValue="true" IsBrowsable="false">
+          <Type>
+            <ExternalTypeMoniker Name="/System/Boolean" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="1a60bb90-b145-4931-b2fb-5f2988da83fb" Description="Description for Altinoren.ActiveWriter.ManyToManyRelation.Source Property Generated" Name="SourcePropertyGenerated" DisplayName="Source Property Generated" DefaultValue="true" IsBrowsable="false">
+          <Type>
+            <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
       </Properties>
@@ -1162,6 +1272,17 @@
         <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.OuterJoinEnum.Auto" Name="Auto" Value="" />
         <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.OuterJoinEnum.True" Name="True" Value="" />
         <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.OuterJoinEnum.False" Name="False" Value="" />
+      </Literals>
+    </DomainEnumeration>
+    <DomainEnumeration Name="InheritedRelationType" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.InheritedRelationType">
+      <Literals>
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritedRelationType.Inherited" Name="Inherited" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritedRelationType.Guess" Name="Guess" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritedRelationType.Bag" Name="Bag" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritedRelationType.Set" Name="Set" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritedRelationType.IdBag" Name="IdBag" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritedRelationType.Map" Name="Map" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritedRelationType.List" Name="List" Value="" />
       </Literals>
     </DomainEnumeration>
     <DomainEnumeration Name="RelationType" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.RelationType">
@@ -1461,6 +1582,42 @@
           <XmlPropertyData XmlName="implementINotifyPropertyChanging">
             <DomainPropertyMoniker Name="Model/ImplementINotifyPropertyChanging" />
           </XmlPropertyData>
+          <XmlPropertyData XmlName="collectionInterface">
+            <DomainPropertyMoniker Name="Model/CollectionInterface" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="collectionImplementation">
+            <DomainPropertyMoniker Name="Model/CollectionImplementation" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="manyToManyRelationType">
+            <DomainPropertyMoniker Name="Model/ManyToManyRelationType" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="manyToOneRelationType">
+            <DomainPropertyMoniker Name="Model/ManyToOneRelationType" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="manyToManyCollectionIDColumn">
+            <DomainPropertyMoniker Name="Model/ManyToManyCollectionIDColumn" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="manyToManyCollectionIDColumnType">
+            <DomainPropertyMoniker Name="Model/ManyToManyCollectionIDColumnType" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="manyToManyCollectionIDGenerator">
+            <DomainPropertyMoniker Name="Model/ManyToManyCollectionIDGenerator" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="manyToManyIUserCollectionType">
+            <DomainPropertyMoniker Name="Model/ManyToManyIUserCollectionType" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="manyToOneIUserCollectionType">
+            <DomainPropertyMoniker Name="Model/ManyToOneIUserCollectionType" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="automaticAssociations">
+            <DomainPropertyMoniker Name="Model/AutomaticAssociations" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="automaticAssociationCollectionImplementation">
+            <DomainPropertyMoniker Name="Model/AutomaticAssociationCollectionImplementation" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="modelName">
+            <DomainPropertyMoniker Name="Model/ModelName" />
+          </XmlPropertyData>
         </ElementData>
       </XmlClassData>
       <XmlClassData TypeName="ModelClass" MonikerAttributeName="" MonikerElementName="modelClassMoniker" ElementName="modelClass" MonikerTypeName="ModelClassMoniker">
@@ -1662,6 +1819,15 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="targetFetch">
             <DomainPropertyMoniker Name="ManyToOneRelation/TargetFetch" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="targetIUserCollectionType">
+            <DomainPropertyMoniker Name="ManyToOneRelation/TargetIUserCollectionType" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="targetPropertyGenerated">
+            <DomainPropertyMoniker Name="ManyToOneRelation/TargetPropertyGenerated" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="sourcePropertyGenerated">
+            <DomainPropertyMoniker Name="ManyToOneRelation/SourcePropertyGenerated" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>
@@ -1883,6 +2049,27 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="sourceNotFoundBehaviour">
             <DomainPropertyMoniker Name="ManyToManyRelation/SourceNotFoundBehaviour" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="sourceIUserCollectionType">
+            <DomainPropertyMoniker Name="ManyToManyRelation/SourceIUserCollectionType" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="targetIUserCollectionType">
+            <DomainPropertyMoniker Name="ManyToManyRelation/TargetIUserCollectionType" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="collectionIDColumn">
+            <DomainPropertyMoniker Name="ManyToManyRelation/CollectionIDColumn" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="collectionIDColumnType">
+            <DomainPropertyMoniker Name="ManyToManyRelation/CollectionIDColumnType" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="collectionIDGenerator">
+            <DomainPropertyMoniker Name="ManyToManyRelation/CollectionIDGenerator" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="targetPropertyGenerated">
+            <DomainPropertyMoniker Name="ManyToManyRelation/TargetPropertyGenerated" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="sourcePropertyGenerated">
+            <DomainPropertyMoniker Name="ManyToManyRelation/SourcePropertyGenerated" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

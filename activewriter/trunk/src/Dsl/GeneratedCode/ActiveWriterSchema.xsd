@@ -228,6 +228,62 @@
         <xsd:documentation>Instructs ActiveWriter to implement INotifyPropertyChanging interface in each class generated. This setting is overridable in class level.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
+    <!-- Property: CollectionInterface -->
+    <xsd:attribute name="collectionInterface" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Interface to use for collections.  If none is specified, IList will be used.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: CollectionImplementation -->
+    <xsd:attribute name="collectionImplementation" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>Concrete class to instantiate for list fields if InitializeIListFields is set to true.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: ManyToManyRelationType -->
+    <xsd:attribute name="manyToManyRelationType" type="RelationType" >
+      <xsd:annotation>
+        <xsd:documentation>Default relation type used by ManyToMany relationships.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: ManyToOneRelationType -->
+    <xsd:attribute name="manyToOneRelationType" type="RelationType" >
+      <xsd:annotation>
+        <xsd:documentation>Default relation type used by ManyToOne relationships.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: ManyToManyCollectionIDColumn -->
+    <xsd:attribute name="manyToManyCollectionIDColumn" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>This column name is used for many to many collection ID definition.  If a column name is specified in the relationship itself, the Column Type and Generator specified in the relationship will be used instead of those specified here in the model.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: ManyToManyCollectionIDColumnType -->
+    <xsd:attribute name="manyToManyCollectionIDColumnType" type="NHibernateType" />
+    <!-- Property: ManyToManyCollectionIDGenerator -->
+    <xsd:attribute name="manyToManyCollectionIDGenerator" type="PrimaryKeyType" />
+    <!-- Property: ManyToManyIUserCollectionType -->
+    <xsd:attribute name="manyToManyIUserCollectionType" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>The type deriving from NHibernate.UserTypes.IUserCollectionType for collections.  This is used unless the collection type is specified in the ManyToMany relationship.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: ManyToOneIUserCollectionType -->
+    <xsd:attribute name="manyToOneIUserCollectionType" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>The type deriving from NHibernate.UserTypes.IUserCollectionType for collections.  This is used unless the collection type is specified in the ManyToOne relationship.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: AutomaticAssociations -->
+    <xsd:attribute name="automaticAssociations" type="xsd:boolean" />
+    <!-- Property: AutomaticAssociationCollectionImplementation -->
+    <xsd:attribute name="automaticAssociationCollectionImplementation" type="xsd:string" />
+    <!-- Property: ModelName -->
+    <xsd:attribute name="modelName" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>A name for the entire model that is used as a prefix for various helper classes.  If there are multiple models in the same namespace, each model should have a unique value for this property to avoid class name conflicts.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
   </xsd:complexType>
   
   <!-- Model Moniker -->
@@ -779,7 +835,7 @@
     <!-- Property: TargetOrderBy -->
     <xsd:attribute name="targetOrderBy" type="xsd:string" />
     <!-- Property: TargetRelationType -->
-    <xsd:attribute name="targetRelationType" type="RelationType" />
+    <xsd:attribute name="targetRelationType" type="InheritedRelationType" />
     <!-- Property: TargetSchema -->
     <xsd:attribute name="targetSchema" type="xsd:string" />
     <!-- Property: TargetSort -->
@@ -874,6 +930,16 @@
     </xsd:attribute>
     <!-- Property: TargetFetch -->
     <xsd:attribute name="targetFetch" type="FetchEnum" />
+    <!-- Property: TargetIUserCollectionType -->
+    <xsd:attribute name="targetIUserCollectionType" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>User collection type for many side of relationship</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: TargetPropertyGenerated -->
+    <xsd:attribute name="targetPropertyGenerated" type="xsd:boolean" />
+    <!-- Property: SourcePropertyGenerated -->
+    <xsd:attribute name="sourcePropertyGenerated" type="xsd:boolean" />
   </xsd:complexType>
   
   <!-- ManyToOneRelation Moniker -->
@@ -947,7 +1013,7 @@
     <!-- Property: SourceOrderBy -->
     <xsd:attribute name="sourceOrderBy" type="xsd:string" />
     <!-- Property: SourceRelationType -->
-    <xsd:attribute name="sourceRelationType" type="RelationType" />
+    <xsd:attribute name="sourceRelationType" type="InheritedRelationType" />
     <!-- Property: Schema -->
     <xsd:attribute name="schema" type="xsd:string" />
     <!-- Property: SourceSort -->
@@ -973,7 +1039,7 @@
     <!-- Property: TargetOrderBy -->
     <xsd:attribute name="targetOrderBy" type="xsd:string" />
     <!-- Property: TargetRelationType -->
-    <xsd:attribute name="targetRelationType" type="RelationType" />
+    <xsd:attribute name="targetRelationType" type="InheritedRelationType" />
     <!-- Property: TargetSort -->
     <xsd:attribute name="targetSort" type="xsd:string" />
     <!-- Property: TargetWhere -->
@@ -1030,6 +1096,40 @@
         <xsd:documentation>Gets or sets the way broken relations are handled.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
+    <!-- Property: SourceIUserCollectionType -->
+    <xsd:attribute name="sourceIUserCollectionType" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>User collection type</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: TargetIUserCollectionType -->
+    <xsd:attribute name="targetIUserCollectionType" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>User collection type</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: CollectionIDColumn -->
+    <xsd:attribute name="collectionIDColumn" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>The column name used for the primary key of the many to many link table.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: CollectionIDColumnType -->
+    <xsd:attribute name="collectionIDColumnType" type="NHibernateType" >
+      <xsd:annotation>
+        <xsd:documentation>The type of the column used for the primary key.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: CollectionIDGenerator -->
+    <xsd:attribute name="collectionIDGenerator" type="PrimaryKeyType" >
+      <xsd:annotation>
+        <xsd:documentation>The generator type for the primary key of the many to many link table.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: TargetPropertyGenerated -->
+    <xsd:attribute name="targetPropertyGenerated" type="xsd:boolean" />
+    <!-- Property: SourcePropertyGenerated -->
+    <xsd:attribute name="sourcePropertyGenerated" type="xsd:boolean" />
   </xsd:complexType>
   
   <!-- ManyToManyRelation Moniker -->
@@ -1272,6 +1372,19 @@
       <xsd:enumeration value="Auto"/>
       <xsd:enumeration value="True"/>
       <xsd:enumeration value="False"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum InheritedRelationType -->
+  <xsd:simpleType name="InheritedRelationType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Inherited"/>
+      <xsd:enumeration value="Guess"/>
+      <xsd:enumeration value="Bag"/>
+      <xsd:enumeration value="Set"/>
+      <xsd:enumeration value="IdBag"/>
+      <xsd:enumeration value="Map"/>
+      <xsd:enumeration value="List"/>
     </xsd:restriction>
   </xsd:simpleType>
   

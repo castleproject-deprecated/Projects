@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<model dslVersion="1.0.0.0" Id="077ec74d-6f0b-4af9-90a6-929ac5807fa1" manyToManyRelationType="Bag" manyToOneRelationType="List" manyToManyCollectionIDColumnType="AnsiChar" manyToManyCollectionIDGenerator="None" xmlns="http://schemas.microsoft.com/dsltools/ActiveWriter">
+  <additionalImports>AAEAAAD/////AQAAAAAAAAAMAgAAAF1BbHRpbm9yZW4uQWN0aXZlV3JpdGVyLkRzbCwgVmVyc2lvbj0xLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTkwNTE0MTM5NmRkYjA3OTkEAQAAAKEBU3lzdGVtLkNvbGxlY3Rpb25zLkdlbmVyaWMuTGlzdGAxW1tBbHRpbm9yZW4uQWN0aXZlV3JpdGVyLkltcG9ydCwgQWx0aW5vcmVuLkFjdGl2ZVdyaXRlci5Ec2wsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj05MDUxNDEzOTZkZGIwNzk5XV0DAAAABl9pdGVtcwVfc2l6ZQhfdmVyc2lvbgQAAB9BbHRpbm9yZW4uQWN0aXZlV3JpdGVyLkltcG9ydFtdAgAAAAgICQMAAAAAAAAAAAAAAAcDAAAAAAEAAAAAAAAABB1BbHRpbm9yZW4uQWN0aXZlV3JpdGVyLkltcG9ydAIAAAAL</additionalImports>
+  <classes>
+    <modelClass name="ModelClass1">
+      <properties>
+        <modelProperty Id="0d9c7598-b087-4c5f-9e59-a93b2a7889ac" name="Id" length="0" keyType="PrimaryKey" />
+      </properties>
+    </modelClass>
+    <modelClass name="ModelClass2">
+      <targets>
+        <manyToOneRelation Id="9f222108-3f04-481f-8c04-6c3a5063d338" targetPropertyName="d" sourcePropertyName="c">
+          <modelClassMoniker name="/077ec74d-6f0b-4af9-90a6-929ac5807fa1/ModelClass1" />
+        </manyToOneRelation>
+        <manyToOneRelation Id="5825f453-8906-46c8-986c-523cf283cd52" targetRelationType="Map" targetPropertyName="f" sourcePropertyName="e">
+          <modelClassMoniker name="/077ec74d-6f0b-4af9-90a6-929ac5807fa1/ModelClass1" />
+        </manyToOneRelation>
+      </targets>
+      <properties>
+        <modelProperty Id="a3c07f8e-1a25-47cb-8bc6-3c4774a2e122" name="Id" length="0" keyType="PrimaryKey" />
+      </properties>
+      <manyToManyTargets>
+        <manyToManyRelation Id="a99941d8-4379-4ace-a2a2-8abb33c3d3f7" sourceColumn="Id" table="Dummy" targetColumn="Id" sourcePropertyName="a" targetPropertyName="b" collectionIDColumnType="AnsiChar" collectionIDGenerator="None">
+          <modelClassMoniker name="/077ec74d-6f0b-4af9-90a6-929ac5807fa1/ModelClass1" />
+        </manyToManyRelation>
+      </manyToManyTargets>
+    </modelClass>
+  </classes>
+</model>

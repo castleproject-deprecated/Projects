@@ -16,9 +16,20 @@ namespace Altinoren.ActiveWriter
 {
     using System.CodeDom;
     using CodeGeneration;
+    using GeneratedCodeExtensions;
 
     public partial class ManyToOneRelation
     {
+        public RelationType EffectiveRelationType
+        {
+            get
+            {
+                return (TargetRelationType == InheritedRelationType.Inherited
+                            ? Source.Model.ManyToOneRelationType
+                            : TargetRelationType.GetMatchingRelationType());
+            }
+        }
+
         public CodeAttributeDeclaration GetHasManyAttribute()
         {
             CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("HasMany");
@@ -34,7 +45,7 @@ namespace Altinoren.ActiveWriter
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnKey", TargetColumnKey));
             if (!string.IsNullOrEmpty(TargetCustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", TargetCustomAccess));
-            if (TargetRelationType == RelationType.Map)
+            if (EffectiveRelationType == RelationType.Map)
             {
                 // TODO: Index & IndexType ?
             }
@@ -48,12 +59,12 @@ namespace Altinoren.ActiveWriter
                 attribute.Arguments.Add(AttributeHelper.GetNamedTypeAttributeArgument("MapType", TargetMapType));
             if (!string.IsNullOrEmpty(TargetOrderBy))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("OrderBy", TargetOrderBy));
-            if (TargetRelationType != RelationType.Guess)
+            if (EffectiveRelationType != RelationType.Guess)
                 attribute.Arguments.Add(
-                    AttributeHelper.GetNamedEnumAttributeArgument("RelationType", "RelationType", TargetRelationType));
+                    AttributeHelper.GetNamedEnumAttributeArgument("RelationType", "RelationType", EffectiveRelationType));
             if (!string.IsNullOrEmpty(TargetSchema))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Schema", TargetSchema));
-            if (TargetRelationType == RelationType.Set && !string.IsNullOrEmpty(TargetSort))
+            if (EffectiveRelationType == RelationType.Set && !string.IsNullOrEmpty(TargetSort))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Sort", TargetSort));
             if (!string.IsNullOrEmpty(TargetTable))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Table", TargetTable));

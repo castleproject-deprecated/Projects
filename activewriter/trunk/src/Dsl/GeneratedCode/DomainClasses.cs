@@ -2573,6 +2573,7 @@ namespace Altinoren.ActiveWriter
 		/// Initializas private IList fields with List concrete type.
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/InitializeIListFields.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/InitializeIListFields.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/InitializeIListFields.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("951613a5-1988-44fb-a3a1-b0fcd0388b9e")]
 		public global::System.Boolean InitializeIListFields
@@ -2726,6 +2727,1088 @@ namespace Altinoren.ActiveWriter
 				{
 					ValueChanging(element, oldValue, newValue);
 					element.implementINotifyPropertyChangingPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region CollectionInterface domain property code
+		
+		/// <summary>
+		/// CollectionInterface domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid CollectionInterfaceDomainPropertyId = new global::System.Guid(0x207c0c14, 0x8ed8, 0x41ad, 0xbd, 0x61, 0xf3, 0xdf, 0xd3, 0x75, 0x7d, 0x2b);
+		
+		/// <summary>
+		/// Storage for CollectionInterface
+		/// </summary>
+		private global::System.String collectionInterfacePropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of CollectionInterface domain property.
+		/// Interface to use for collections.  If none is specified, IList will be used.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/CollectionInterface.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/CollectionInterface.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/CollectionInterface.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.Browsable(false)]
+		[DslModeling::DomainObjectId("207c0c14-8ed8-41ad-bd61-f3dfd3757d2b")]
+		public global::System.String CollectionInterface
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return collectionInterfacePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				CollectionInterfacePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.CollectionInterface domain property.
+		/// </summary>
+		internal sealed partial class CollectionInterfacePropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private CollectionInterfacePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.CollectionInterface domain property value handler.
+			/// </summary>
+			public static readonly CollectionInterfacePropertyHandler Instance = new CollectionInterfacePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.CollectionInterface domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return CollectionInterfaceDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.collectionInterfacePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.collectionInterfacePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region CollectionImplementation domain property code
+		
+		/// <summary>
+		/// CollectionImplementation domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid CollectionImplementationDomainPropertyId = new global::System.Guid(0xc5f8cef8, 0xaab9, 0x4666, 0xbc, 0xa7, 0x96, 0x11, 0x79, 0x63, 0x41, 0x66);
+		
+		/// <summary>
+		/// Storage for CollectionImplementation
+		/// </summary>
+		private global::System.String collectionImplementationPropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of CollectionImplementation domain property.
+		/// Concrete class to instantiate for list fields if InitializeIListFields is set to
+		/// true.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/CollectionImplementation.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/CollectionImplementation.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/CollectionImplementation.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.Browsable(false)]
+		[DslModeling::DomainObjectId("c5f8cef8-aab9-4666-bca7-961179634166")]
+		public global::System.String CollectionImplementation
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return collectionImplementationPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				CollectionImplementationPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.CollectionImplementation domain property.
+		/// </summary>
+		internal sealed partial class CollectionImplementationPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private CollectionImplementationPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.CollectionImplementation domain property value handler.
+			/// </summary>
+			public static readonly CollectionImplementationPropertyHandler Instance = new CollectionImplementationPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.CollectionImplementation domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return CollectionImplementationDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.collectionImplementationPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.collectionImplementationPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region ManyToManyRelationType domain property code
+		
+		/// <summary>
+		/// ManyToManyRelationType domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid ManyToManyRelationTypeDomainPropertyId = new global::System.Guid(0x405105d2, 0x70b1, 0x42e5, 0xb4, 0x36, 0x4b, 0x17, 0xa4, 0xf0, 0x2f, 0x63);
+		
+		/// <summary>
+		/// Storage for ManyToManyRelationType
+		/// </summary>
+		private RelationType manyToManyRelationTypePropertyStorage = RelationType.Guess;
+		
+		/// <summary>
+		/// Gets or sets the value of ManyToManyRelationType domain property.
+		/// Default relation type used by ManyToMany relationships.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ManyToManyRelationType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/ManyToManyRelationType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ManyToManyRelationType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(RelationType.Guess)]
+		[DslModeling::DomainObjectId("405105d2-70b1-42e5-b436-4b17a4f02f63")]
+		public RelationType ManyToManyRelationType
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return manyToManyRelationTypePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				ManyToManyRelationTypePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.ManyToManyRelationType domain property.
+		/// </summary>
+		internal sealed partial class ManyToManyRelationTypePropertyHandler : DslModeling::DomainPropertyValueHandler<Model, RelationType>
+		{
+			private ManyToManyRelationTypePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.ManyToManyRelationType domain property value handler.
+			/// </summary>
+			public static readonly ManyToManyRelationTypePropertyHandler Instance = new ManyToManyRelationTypePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.ManyToManyRelationType domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return ManyToManyRelationTypeDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed RelationType GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.manyToManyRelationTypePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, RelationType newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				RelationType oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.manyToManyRelationTypePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region ManyToOneRelationType domain property code
+		
+		/// <summary>
+		/// ManyToOneRelationType domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid ManyToOneRelationTypeDomainPropertyId = new global::System.Guid(0xf0ea48f0, 0xb5a9, 0x4d88, 0x8f, 0x43, 0xa8, 0xb9, 0xcb, 0x98, 0xb4, 0x1a);
+		
+		/// <summary>
+		/// Storage for ManyToOneRelationType
+		/// </summary>
+		private RelationType manyToOneRelationTypePropertyStorage = RelationType.Guess;
+		
+		/// <summary>
+		/// Gets or sets the value of ManyToOneRelationType domain property.
+		/// Default relation type used by ManyToOne relationships.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ManyToOneRelationType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/ManyToOneRelationType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ManyToOneRelationType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(RelationType.Guess)]
+		[DslModeling::DomainObjectId("f0ea48f0-b5a9-4d88-8f43-a8b9cb98b41a")]
+		public RelationType ManyToOneRelationType
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return manyToOneRelationTypePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				ManyToOneRelationTypePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.ManyToOneRelationType domain property.
+		/// </summary>
+		internal sealed partial class ManyToOneRelationTypePropertyHandler : DslModeling::DomainPropertyValueHandler<Model, RelationType>
+		{
+			private ManyToOneRelationTypePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.ManyToOneRelationType domain property value handler.
+			/// </summary>
+			public static readonly ManyToOneRelationTypePropertyHandler Instance = new ManyToOneRelationTypePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.ManyToOneRelationType domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return ManyToOneRelationTypeDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed RelationType GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.manyToOneRelationTypePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, RelationType newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				RelationType oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.manyToOneRelationTypePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region ManyToManyCollectionIDColumn domain property code
+		
+		/// <summary>
+		/// ManyToManyCollectionIDColumn domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid ManyToManyCollectionIDColumnDomainPropertyId = new global::System.Guid(0x4e0c0023, 0x6a86, 0x4801, 0xbb, 0x51, 0x9e, 0xbb, 0xad, 0x2a, 0x1f, 0xd6);
+		
+		/// <summary>
+		/// Storage for ManyToManyCollectionIDColumn
+		/// </summary>
+		private global::System.String manyToManyCollectionIDColumnPropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of ManyToManyCollectionIDColumn domain property.
+		/// This column name is used for many to many collection ID definition.  If a column
+		/// name is specified in the relationship itself, the Column Type and Generator
+		/// specified in the relationship will be used instead of those specified here in
+		/// the model.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumn.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumn.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumn.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.Browsable(false)]
+		[DslModeling::DomainObjectId("4e0c0023-6a86-4801-bb51-9ebbad2a1fd6")]
+		public global::System.String ManyToManyCollectionIDColumn
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return manyToManyCollectionIDColumnPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				ManyToManyCollectionIDColumnPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.ManyToManyCollectionIDColumn domain property.
+		/// </summary>
+		internal sealed partial class ManyToManyCollectionIDColumnPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private ManyToManyCollectionIDColumnPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.ManyToManyCollectionIDColumn domain property value handler.
+			/// </summary>
+			public static readonly ManyToManyCollectionIDColumnPropertyHandler Instance = new ManyToManyCollectionIDColumnPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.ManyToManyCollectionIDColumn domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return ManyToManyCollectionIDColumnDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.manyToManyCollectionIDColumnPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.manyToManyCollectionIDColumnPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region ManyToManyCollectionIDColumnType domain property code
+		
+		/// <summary>
+		/// ManyToManyCollectionIDColumnType domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid ManyToManyCollectionIDColumnTypeDomainPropertyId = new global::System.Guid(0xf01307ce, 0x7d91, 0x4b00, 0xb3, 0x52, 0xfe, 0x54, 0x87, 0x58, 0x76, 0x33);
+		
+		/// <summary>
+		/// Storage for ManyToManyCollectionIDColumnType
+		/// </summary>
+		private NHibernateType manyToManyCollectionIDColumnTypePropertyStorage;
+		
+		/// <summary>
+		/// Gets or sets the value of ManyToManyCollectionIDColumnType domain property.
+		/// Description for Altinoren.ActiveWriter.Model.Many To Many Collection ID Column
+		/// Type
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.Browsable(false)]
+		[DslModeling::DomainObjectId("f01307ce-7d91-4b00-b352-fe5487587633")]
+		public NHibernateType ManyToManyCollectionIDColumnType
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return manyToManyCollectionIDColumnTypePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				ManyToManyCollectionIDColumnTypePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.ManyToManyCollectionIDColumnType domain property.
+		/// </summary>
+		internal sealed partial class ManyToManyCollectionIDColumnTypePropertyHandler : DslModeling::DomainPropertyValueHandler<Model, NHibernateType>
+		{
+			private ManyToManyCollectionIDColumnTypePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.ManyToManyCollectionIDColumnType domain property value handler.
+			/// </summary>
+			public static readonly ManyToManyCollectionIDColumnTypePropertyHandler Instance = new ManyToManyCollectionIDColumnTypePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.ManyToManyCollectionIDColumnType domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return ManyToManyCollectionIDColumnTypeDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed NHibernateType GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.manyToManyCollectionIDColumnTypePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, NHibernateType newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				NHibernateType oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.manyToManyCollectionIDColumnTypePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region ManyToManyCollectionIDGenerator domain property code
+		
+		/// <summary>
+		/// ManyToManyCollectionIDGenerator domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid ManyToManyCollectionIDGeneratorDomainPropertyId = new global::System.Guid(0x7b97e93e, 0xea00, 0x4884, 0xa2, 0xbd, 0xf7, 0xe1, 0x46, 0xd8, 0x84, 0x1c);
+		
+		/// <summary>
+		/// Storage for ManyToManyCollectionIDGenerator
+		/// </summary>
+		private PrimaryKeyType manyToManyCollectionIDGeneratorPropertyStorage;
+		
+		/// <summary>
+		/// Gets or sets the value of ManyToManyCollectionIDGenerator domain property.
+		/// Description for Altinoren.ActiveWriter.Model.Many To Many Collection ID
+		/// Generator
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDGenerator.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDGenerator.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDGenerator.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.Browsable(false)]
+		[DslModeling::DomainObjectId("7b97e93e-ea00-4884-a2bd-f7e146d8841c")]
+		public PrimaryKeyType ManyToManyCollectionIDGenerator
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return manyToManyCollectionIDGeneratorPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				ManyToManyCollectionIDGeneratorPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.ManyToManyCollectionIDGenerator domain property.
+		/// </summary>
+		internal sealed partial class ManyToManyCollectionIDGeneratorPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, PrimaryKeyType>
+		{
+			private ManyToManyCollectionIDGeneratorPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.ManyToManyCollectionIDGenerator domain property value handler.
+			/// </summary>
+			public static readonly ManyToManyCollectionIDGeneratorPropertyHandler Instance = new ManyToManyCollectionIDGeneratorPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.ManyToManyCollectionIDGenerator domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return ManyToManyCollectionIDGeneratorDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed PrimaryKeyType GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.manyToManyCollectionIDGeneratorPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, PrimaryKeyType newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				PrimaryKeyType oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.manyToManyCollectionIDGeneratorPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region ManyToManyIUserCollectionType domain property code
+		
+		/// <summary>
+		/// ManyToManyIUserCollectionType domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid ManyToManyIUserCollectionTypeDomainPropertyId = new global::System.Guid(0xfd0e9afd, 0xc093, 0x4941, 0xa9, 0xe0, 0xb1, 0xdf, 0x7c, 0x8a, 0xb7, 0xb0);
+		
+		/// <summary>
+		/// Storage for ManyToManyIUserCollectionType
+		/// </summary>
+		private global::System.String manyToManyIUserCollectionTypePropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of ManyToManyIUserCollectionType domain property.
+		/// The type deriving from NHibernate.UserTypes.IUserCollectionType for collections.
+		///  This is used unless the collection type is specified in the ManyToMany
+		/// relationship.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ManyToManyIUserCollectionType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/ManyToManyIUserCollectionType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ManyToManyIUserCollectionType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.Browsable(false)]
+		[DslModeling::DomainObjectId("fd0e9afd-c093-4941-a9e0-b1df7c8ab7b0")]
+		public global::System.String ManyToManyIUserCollectionType
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return manyToManyIUserCollectionTypePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				ManyToManyIUserCollectionTypePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.ManyToManyIUserCollectionType domain property.
+		/// </summary>
+		internal sealed partial class ManyToManyIUserCollectionTypePropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private ManyToManyIUserCollectionTypePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.ManyToManyIUserCollectionType domain property value handler.
+			/// </summary>
+			public static readonly ManyToManyIUserCollectionTypePropertyHandler Instance = new ManyToManyIUserCollectionTypePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.ManyToManyIUserCollectionType domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return ManyToManyIUserCollectionTypeDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.manyToManyIUserCollectionTypePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.manyToManyIUserCollectionTypePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region ManyToOneIUserCollectionType domain property code
+		
+		/// <summary>
+		/// ManyToOneIUserCollectionType domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid ManyToOneIUserCollectionTypeDomainPropertyId = new global::System.Guid(0x85c3b996, 0x122e, 0x40fa, 0x94, 0x38, 0x70, 0xb5, 0x0f, 0xcd, 0x36, 0x3f);
+		
+		/// <summary>
+		/// Storage for ManyToOneIUserCollectionType
+		/// </summary>
+		private global::System.String manyToOneIUserCollectionTypePropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of ManyToOneIUserCollectionType domain property.
+		/// The type deriving from NHibernate.UserTypes.IUserCollectionType for collections.
+		///  This is used unless the collection type is specified in the ManyToOne
+		/// relationship.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ManyToOneIUserCollectionType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/ManyToOneIUserCollectionType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ManyToOneIUserCollectionType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.Browsable(false)]
+		[DslModeling::DomainObjectId("85c3b996-122e-40fa-9438-70b50fcd363f")]
+		public global::System.String ManyToOneIUserCollectionType
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return manyToOneIUserCollectionTypePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				ManyToOneIUserCollectionTypePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.ManyToOneIUserCollectionType domain property.
+		/// </summary>
+		internal sealed partial class ManyToOneIUserCollectionTypePropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private ManyToOneIUserCollectionTypePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.ManyToOneIUserCollectionType domain property value handler.
+			/// </summary>
+			public static readonly ManyToOneIUserCollectionTypePropertyHandler Instance = new ManyToOneIUserCollectionTypePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.ManyToOneIUserCollectionType domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return ManyToOneIUserCollectionTypeDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.manyToOneIUserCollectionTypePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.manyToOneIUserCollectionTypePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region AutomaticAssociations domain property code
+		
+		/// <summary>
+		/// AutomaticAssociations domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid AutomaticAssociationsDomainPropertyId = new global::System.Guid(0x03de83cf, 0x2e0e, 0x4b06, 0x99, 0x75, 0xd4, 0xe4, 0x43, 0xf6, 0x88, 0x36);
+		
+		/// <summary>
+		/// Storage for AutomaticAssociations
+		/// </summary>
+		private global::System.Boolean automaticAssociationsPropertyStorage;
+		
+		/// <summary>
+		/// Gets or sets the value of AutomaticAssociations domain property.
+		/// Description for Altinoren.ActiveWriter.Model.Automatic Associations
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/AutomaticAssociations.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/AutomaticAssociations.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/AutomaticAssociations.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.Browsable(false)]
+		[DslModeling::DomainObjectId("03de83cf-2e0e-4b06-9975-d4e443f68836")]
+		public global::System.Boolean AutomaticAssociations
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return automaticAssociationsPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				AutomaticAssociationsPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.AutomaticAssociations domain property.
+		/// </summary>
+		internal sealed partial class AutomaticAssociationsPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.Boolean>
+		{
+			private AutomaticAssociationsPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.AutomaticAssociations domain property value handler.
+			/// </summary>
+			public static readonly AutomaticAssociationsPropertyHandler Instance = new AutomaticAssociationsPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.AutomaticAssociations domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return AutomaticAssociationsDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.Boolean GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.automaticAssociationsPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.Boolean newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.Boolean oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.automaticAssociationsPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region AutomaticAssociationCollectionImplementation domain property code
+		
+		/// <summary>
+		/// AutomaticAssociationCollectionImplementation domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid AutomaticAssociationCollectionImplementationDomainPropertyId = new global::System.Guid(0x71b0b47d, 0x7c3e, 0x429d, 0xa5, 0x01, 0x1a, 0x91, 0x47, 0x0e, 0x92, 0xaa);
+		
+		/// <summary>
+		/// Storage for AutomaticAssociationCollectionImplementation
+		/// </summary>
+		private global::System.String automaticAssociationCollectionImplementationPropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of AutomaticAssociationCollectionImplementation domain property.
+		/// Description for Altinoren.ActiveWriter.Model.Automatic Association Collection
+		/// Implementation
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/AutomaticAssociationCollectionImplementation.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/AutomaticAssociationCollectionImplementation.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/AutomaticAssociationCollectionImplementation.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.Browsable(false)]
+		[DslModeling::DomainObjectId("71b0b47d-7c3e-429d-a501-1a91470e92aa")]
+		public global::System.String AutomaticAssociationCollectionImplementation
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return automaticAssociationCollectionImplementationPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				AutomaticAssociationCollectionImplementationPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.AutomaticAssociationCollectionImplementation domain property.
+		/// </summary>
+		internal sealed partial class AutomaticAssociationCollectionImplementationPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private AutomaticAssociationCollectionImplementationPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.AutomaticAssociationCollectionImplementation domain property value handler.
+			/// </summary>
+			public static readonly AutomaticAssociationCollectionImplementationPropertyHandler Instance = new AutomaticAssociationCollectionImplementationPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.AutomaticAssociationCollectionImplementation domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return AutomaticAssociationCollectionImplementationDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.automaticAssociationCollectionImplementationPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.automaticAssociationCollectionImplementationPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region ModelName domain property code
+		
+		/// <summary>
+		/// ModelName domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid ModelNameDomainPropertyId = new global::System.Guid(0x86eca91c, 0x4ab5, 0x4bfe, 0xb1, 0x71, 0x4c, 0xbf, 0x34, 0x6e, 0xbc, 0x34);
+		
+		/// <summary>
+		/// Storage for ModelName
+		/// </summary>
+		private global::System.String modelNamePropertyStorage = "Model";
+		
+		/// <summary>
+		/// Gets or sets the value of ModelName domain property.
+		/// A name for the entire model that is used as a prefix for various helper classes.
+		///  If there are multiple models in the same namespace, each model should have a
+		/// unique value for this property to avoid class name conflicts.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ModelName.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/ModelName.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ModelName.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue("Model")]
+		[global::System.ComponentModel.Browsable(false)]
+		[DslModeling::DomainObjectId("86eca91c-4ab5-4bfe-b171-4cbf346ebc34")]
+		public global::System.String ModelName
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return modelNamePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				ModelNamePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.ModelName domain property.
+		/// </summary>
+		internal sealed partial class ModelNamePropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private ModelNamePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.ModelName domain property value handler.
+			/// </summary>
+			public static readonly ModelNamePropertyHandler Instance = new ModelNamePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.ModelName domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return ModelNameDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.modelNamePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.modelNamePropertyStorage = newValue;
 					ValueChanged(element, oldValue, newValue);
 				}
 			}

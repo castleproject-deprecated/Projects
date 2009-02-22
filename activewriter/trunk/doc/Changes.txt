@@ -1,3 +1,5 @@
+- New: Model wide relation type, per-relation basis inheritable and overridable (Patch: Patrick Earl)
+
 Preview 4.1
 
 New:

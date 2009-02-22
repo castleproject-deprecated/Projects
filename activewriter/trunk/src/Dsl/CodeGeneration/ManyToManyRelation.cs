@@ -16,28 +16,50 @@ namespace Altinoren.ActiveWriter
 {
     using System.CodeDom;
     using CodeGeneration;
+    using GeneratedCodeExtensions;
 
     public partial class ManyToManyRelation
     {
-        #region Public Methods
+        public RelationType EffectiveSourceRelationType
+        {
+            get
+            {
+                return (SourceRelationType == InheritedRelationType.Inherited
+                            ? Source.Model.ManyToManyRelationType
+                            : SourceRelationType.GetMatchingRelationType());
+            }
+        }
+
+        public RelationType EffectiveTargetRelationType
+        {
+            get
+            {
+                return (TargetRelationType == InheritedRelationType.Inherited
+                            ? Source.Model.ManyToManyRelationType
+                            : TargetRelationType.GetMatchingRelationType());
+            }
+        }
 
         public CodeAttributeDeclaration GetHasAndBelongsToAttributeFromSource()
         {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("HasAndBelongsToMany");
+            var attribute = new CodeAttributeDeclaration("HasAndBelongsToMany");
 
             attribute.Arguments.Add(AttributeHelper.GetPrimitiveTypeAttributeArgument(Target.Name));
             if (SourceAccess != PropertyAccess.Property)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", SourceAccess));
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess",
+                                                                                      SourceAccess));
             if (SourceCache != CacheEnum.Undefined)
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cache", "CacheEnum", SourceCache));
             if (SourceCascade != ManyRelationCascadeEnum.None)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade", "ManyRelationCascadeEnum", SourceCascade));
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade",
+                                                                                      "ManyRelationCascadeEnum",
+                                                                                      SourceCascade));
             if (!string.IsNullOrEmpty(SourceCustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", SourceCustomAccess));
 
             attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnRef", TargetColumn));
             attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnKey", SourceColumn));
-            if (SourceRelationType == RelationType.Map)
+            if (EffectiveSourceRelationType == RelationType.Map)
             {
                 // TODO: Index & IndexType
             }
@@ -49,10 +71,10 @@ namespace Altinoren.ActiveWriter
                 attribute.Arguments.Add(AttributeHelper.GetNamedTypeAttributeArgument("MapType", SourceMapType));
             if (!string.IsNullOrEmpty(SourceOrderBy))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("OrderBy", SourceOrderBy));
-            if (SourceRelationType != RelationType.Guess)
+            if (EffectiveSourceRelationType != RelationType.Guess)
                 attribute.Arguments.Add(
-                    AttributeHelper.GetNamedEnumAttributeArgument("RelationType", "RelationType", SourceRelationType));
-            if (SourceRelationType == RelationType.Set && !string.IsNullOrEmpty(SourceSort))
+                    AttributeHelper.GetNamedEnumAttributeArgument("RelationType", "RelationType", EffectiveSourceRelationType));
+            if (EffectiveSourceRelationType == RelationType.Set && !string.IsNullOrEmpty(SourceSort))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Sort", SourceSort));
             if (!string.IsNullOrEmpty(SourceWhere))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Where", SourceWhere));
@@ -65,24 +87,27 @@ namespace Altinoren.ActiveWriter
 
             return attribute;
         }
-        
+
         public CodeAttributeDeclaration GetHasAndBelongsToAttributeFromTarget()
         {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("HasAndBelongsToMany");
+            var attribute = new CodeAttributeDeclaration("HasAndBelongsToMany");
 
             attribute.Arguments.Add(AttributeHelper.GetPrimitiveTypeAttributeArgument(Source.Name));
             if (TargetAccess != PropertyAccess.Property)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", TargetAccess));
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess",
+                                                                                      TargetAccess));
             if (TargetCache != CacheEnum.Undefined)
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cache", "CacheEnum", TargetCache));
             if (TargetCascade != ManyRelationCascadeEnum.None)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade", "ManyRelationCascadeEnum", TargetCascade));
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade",
+                                                                                      "ManyRelationCascadeEnum",
+                                                                                      TargetCascade));
             if (!string.IsNullOrEmpty(TargetCustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", TargetCustomAccess));
 
             attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnRef", SourceColumn));
             attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnKey", TargetColumn));
-            if (TargetRelationType == RelationType.Map)
+            if (EffectiveTargetRelationType == RelationType.Map)
             {
                 // TODO: Index & IndexType
             }
@@ -94,10 +119,10 @@ namespace Altinoren.ActiveWriter
                 attribute.Arguments.Add(AttributeHelper.GetNamedTypeAttributeArgument("MapType", TargetMapType));
             if (!string.IsNullOrEmpty(TargetOrderBy))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("OrderBy", TargetOrderBy));
-            if (TargetRelationType != RelationType.Guess)
+            if (EffectiveTargetRelationType != RelationType.Guess)
                 attribute.Arguments.Add(
-                    AttributeHelper.GetNamedEnumAttributeArgument("RelationType", "RelationType", TargetRelationType));
-            if (TargetRelationType == RelationType.Set && !string.IsNullOrEmpty(TargetSort))
+                    AttributeHelper.GetNamedEnumAttributeArgument("RelationType", "RelationType", EffectiveTargetRelationType));
+            if (EffectiveTargetRelationType == RelationType.Set && !string.IsNullOrEmpty(TargetSort))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Sort", TargetSort));
             if (!string.IsNullOrEmpty(TargetWhere))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Where", TargetWhere));
@@ -111,9 +136,6 @@ namespace Altinoren.ActiveWriter
             return attribute;
         }
 
-        #endregion
-
-        #region Private Methods
 
         private void PopulateCommonFields(CodeAttributeDeclaration attribute)
         {
@@ -122,9 +144,5 @@ namespace Altinoren.ActiveWriter
             if (!string.IsNullOrEmpty(Table))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Table", Table));
         }
-
-        #endregion
-
-
     }
 }
