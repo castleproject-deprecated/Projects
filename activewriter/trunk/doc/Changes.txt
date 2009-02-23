@@ -1,4 +1,7 @@
-- New: Model wide relation type, per-relation basis inheritable and overridable (Patch: Patrick Earl)
+New:
+- Model wide relation type, per-relation basis inheritable and overridable (Patch: Patrick Earl)
+- Custom CollectionType support  (Patch: Patrick Earl)
+- Better visual feedback when mouseover connector lines. (http://www.ticklishtechs.net/2008/06/26/visual-feedback-for-black-connectors-on-mouse-over/)
 
 Preview 4.1
 

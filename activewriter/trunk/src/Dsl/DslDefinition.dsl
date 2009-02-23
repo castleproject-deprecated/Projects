@@ -188,12 +188,12 @@
             <DomainEnumerationMoniker Name="PrimaryKeyType" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="fd0e9afd-c093-4941-a9e0-b1df7c8ab7b0" Description="The type deriving from NHibernate.UserTypes.IUserCollectionType for collections.  This is used unless the collection type is specified in the ManyToMany relationship." Name="ManyToManyIUserCollectionType" DisplayName="Many To Many IUserCollectionType" Category="Code Generation" IsBrowsable="false">
+        <DomainProperty Id="fd0e9afd-c093-4941-a9e0-b1df7c8ab7b0" Description="The type deriving from NHibernate.UserTypes.IUserCollectionType for collections.  This is used unless the collection type is specified in the ManyToMany relationship." Name="ManyToManyIUserCollectionType" DisplayName="Many To Many IUserCollectionType" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="85c3b996-122e-40fa-9438-70b50fcd363f" Description="The type deriving from NHibernate.UserTypes.IUserCollectionType for collections.  This is used unless the collection type is specified in the ManyToOne relationship." Name="ManyToOneIUserCollectionType" DisplayName="Many To One IUserCollectionType" Category="Code Generation" IsBrowsable="false">
+        <DomainProperty Id="85c3b996-122e-40fa-9438-70b50fcd363f" Description="The type deriving from NHibernate.UserTypes.IUserCollectionType for collections.  This is used unless the collection type is specified in the ManyToOne relationship." Name="ManyToOneIUserCollectionType" DisplayName="Many To One IUserCollectionType" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
@@ -763,7 +763,7 @@
             <DomainEnumerationMoniker Name="FetchEnum" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="173770db-04a0-4401-b2dd-69e70edda734" Description="User collection type for many side of relationship" Name="TargetIUserCollectionType" DisplayName="Target IUserCollectionType" Category="Target (HasMany)" IsBrowsable="false">
+        <DomainProperty Id="173770db-04a0-4401-b2dd-69e70edda734" Description="User collection type for many side of relationship" Name="TargetIUserCollectionType" DisplayName="Target IUserCollectionType" Category="Target (HasMany)">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
@@ -982,12 +982,12 @@
             <DomainEnumerationMoniker Name="NotFoundBehaviour" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="96fda275-b5d3-48bb-b65c-1c3a04d3ccb2" Description="User collection type" Name="SourceIUserCollectionType" DisplayName="Source IUserCollectionType" Category="Source" IsBrowsable="false">
+        <DomainProperty Id="96fda275-b5d3-48bb-b65c-1c3a04d3ccb2" Description="User collection type" Name="SourceIUserCollectionType" DisplayName="Source IUserCollectionType" Category="Source">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="cb5dddc8-a7c2-4fca-9493-09d9f5040087" Description="User collection type" Name="TargetIUserCollectionType" DisplayName="Target IUserCollectionType" Category="Target" IsBrowsable="false">
+        <DomainProperty Id="cb5dddc8-a7c2-4fca-9493-09d9f5040087" Description="User collection type" Name="TargetIUserCollectionType" DisplayName="Target IUserCollectionType" Category="Target">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>

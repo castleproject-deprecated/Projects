@@ -81,6 +81,10 @@ namespace Altinoren.ActiveWriter
             if (!string.IsNullOrEmpty(TargetElement))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Element", TargetElement));
 
+            AddOptionalCollectionType(attribute,
+                string.IsNullOrEmpty(TargetIUserCollectionType) ? Target.Model.ManyToOneIUserCollectionType : TargetIUserCollectionType,
+                Target.AreRelationsGeneric() ? Source.Name : null);
+
             return attribute;
         }
 
@@ -110,6 +114,23 @@ namespace Altinoren.ActiveWriter
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("NotFoundBehaviour", "NotFoundBehaviour", SourceNotFoundBehaviour));
 
             return attribute;
+        }
+        
+        /// <summary>
+        /// Constructs a CollectionType named attribute.
+        /// </summary>
+        /// <param name="attribute">The attribute to add the CollectionType argument to.</param>
+        /// <param name="collectionType">If null, nothing is added to the attribute.</param>
+        /// <param name="genericTypeParameter">If non-null, this is used as the generic parameter to the collection type.</param>
+        public static void AddOptionalCollectionType(CodeAttributeDeclaration attribute, string collectionType, string genericTypeParameter)
+        {
+            if (!string.IsNullOrEmpty(collectionType))
+            {
+                if (!string.IsNullOrEmpty(genericTypeParameter))
+                    attribute.Arguments.Add(AttributeHelper.GetNamedGenericTypeAttributeArgument("CollectionType", collectionType, genericTypeParameter));
+                else
+                    attribute.Arguments.Add(AttributeHelper.GetNamedTypeAttributeArgument("CollectionType", collectionType));
+            }
         }
     }
 }

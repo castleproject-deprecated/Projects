@@ -16,6 +16,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 {
     using System;
     using System.CodeDom;
+    using System.Linq;
 
     public static class AttributeHelper
     {
@@ -84,6 +85,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         public static CodeAttributeArgument GetNamedTypeAttributeArgument(string name, string type)
         {
             return new CodeAttributeArgument(name, new CodeTypeOfExpression(type));
+        }
+
+        public static CodeAttributeArgument GetNamedGenericTypeAttributeArgument(string name, string type, params string[] genericTypeParameters)
+        {
+            CodeTypeReference[] genericCodeTypeReferences = genericTypeParameters.Select(t => new CodeTypeReference(t)).ToArray();
+            return new CodeAttributeArgument(name, new CodeTypeOfExpression(new CodeTypeReference(type, genericCodeTypeReferences)));
         }
 
         #endregion

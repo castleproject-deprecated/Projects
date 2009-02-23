@@ -111,6 +111,7 @@
     <Compile Include="CodeGeneration\OneToOneRelation.cs" />
     <Compile Include="CodeGeneration\TypeHelper.cs" />
     <Compile Include="Common\Common.cs" />
+    <Compile Include="GeneratedCodeExtensions\Connectors.cs" />
     <Compile Include="GeneratedCodeExtensions\InheritedRelationTypeExtensions.cs" />
     <Compile Include="GeneratedCode\ConnectionBuilders.cs">
       <AutoGen>True</AutoGen>

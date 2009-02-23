@@ -83,6 +83,10 @@ namespace Altinoren.ActiveWriter
                     AttributeHelper.GetNamedEnumAttributeArgument("NotFoundBehaviour", "NotFoundBehaviour",
                                                                   SourceNotFoundBehaviour));
 
+            ManyToOneRelation.AddOptionalCollectionType(attribute,
+                string.IsNullOrEmpty(SourceIUserCollectionType) ? Source.Model.ManyToManyIUserCollectionType : SourceIUserCollectionType,
+                Source.AreRelationsGeneric() ? Target.Name : null);
+
             PopulateCommonFields(attribute);
 
             return attribute;
@@ -130,6 +134,10 @@ namespace Altinoren.ActiveWriter
                 attribute.Arguments.Add(
                     AttributeHelper.GetNamedEnumAttributeArgument("NotFoundBehaviour", "NotFoundBehaviour",
                                                                   TargetNotFoundBehaviour));
+
+            ManyToOneRelation.AddOptionalCollectionType(attribute,
+                string.IsNullOrEmpty(TargetIUserCollectionType) ? Target.Model.ManyToManyIUserCollectionType : TargetIUserCollectionType,
+                Target.AreRelationsGeneric() ? Source.Name : null);
 
             PopulateCommonFields(attribute);
 
