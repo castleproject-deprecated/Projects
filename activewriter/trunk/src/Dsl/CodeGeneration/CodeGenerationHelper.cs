@@ -904,45 +904,61 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private void GenerateHasManyRelation(CodeTypeDeclaration classDeclaration, CodeNamespace nameSpace,
                                              ManyToOneRelation relationship)
         {
-            CodeTypeDeclaration sourceClass = GenerateClass(relationship.Source, nameSpace);
+            GenerateHasMany(
+                nameSpace,
+                classDeclaration,
+                relationship.Source,
+                relationship.TargetPropertyName,
+                relationship.TargetPropertyType,
+                relationship.TargetAccess,
+                relationship.TargetDescription,
+                relationship.GetHasManyAttribute(),
+                relationship.Source.AreRelationsGeneric(),
+                relationship.Target.DoesImplementINotifyPropertyChanged(),
+                relationship.Target.DoesImplementINotifyPropertyChanging());
+        }
 
-            string propertyName = String.IsNullOrEmpty(relationship.TargetPropertyName)
-                                      ? NamingHelper.GetPlural(sourceClass.Name)
-                                      : NamingHelper.GetPlural(relationship.TargetPropertyName);
-            string propertyType = String.IsNullOrEmpty(relationship.TargetPropertyType)
+        private void GenerateHasMany(CodeNamespace nameSpace, CodeTypeDeclaration classDeclaration, ModelClass modelClass, string customPropertyName, string customPropertyType, PropertyAccess propertyAccess, string description, CodeAttributeDeclaration attribute, bool genericRelation, bool propertyChanged, bool propertyChanging)
+        {
+            CodeTypeDeclaration modelClassDeclaration = GenerateClass(modelClass, nameSpace);
+
+            // The customPropertyName used to be pluralized in HasMany and in only one side of HasAndBelongsToMany.
+            // It makes more sense to not pluralize the property since it allows users to avoid the automatic pluralization if desired.
+            // This allows users to create properties like "Children" and "Parent" rather than something strange like "Childs".
+            string propertyName = String.IsNullOrEmpty(customPropertyName)
+                                      ? NamingHelper.GetPlural(modelClassDeclaration.Name)
+                                      : customPropertyName;
+            string propertyType = String.IsNullOrEmpty(customPropertyType)
                                       ? GenericListInterface
-                                      : relationship.TargetPropertyType;
+                                      : customPropertyType;
 
             CodeMemberField memberField;
-            if (!relationship.Source.AreRelationsGeneric())
-                memberField = GetMemberField(propertyName, propertyType, Accessor.Private, relationship.TargetAccess);
+            if (!genericRelation)
+                memberField = GetMemberField(propertyName, propertyType, Accessor.Private, propertyAccess);
             else
-                memberField = GetGenericMemberField(sourceClass.Name, propertyName, propertyType, Accessor.Private, relationship.TargetAccess);
+                memberField = GetGenericMemberField(modelClassDeclaration.Name, propertyName, propertyType, Accessor.Private, propertyAccess);
             classDeclaration.Members.Add(memberField);
 
-            // initalise field
+            // Initializes the collection by assigning a new list instance to the field.
+            // Many-to-many relationships never had the initialization code enabled before.
             if (_model.InitializeIListFields && propertyType == GenericListInterface)
             {
                 CodeObjectCreateExpression fieldCreator = new CodeObjectCreateExpression();
 
                 CodeTypeReference fieldCreatorType = new CodeTypeReference(GenericListClass);
 
-                fieldCreatorType.TypeArguments.Add(sourceClass.Name);
+                fieldCreatorType.TypeArguments.Add(modelClassDeclaration.Name);
                 fieldCreator.CreateType = fieldCreatorType;
 
                 memberField.InitExpression = fieldCreator;
             }
 
-            CodeMemberProperty memberProperty;
-            if (String.IsNullOrEmpty(relationship.TargetDescription))
-                memberProperty = GetMemberProperty(memberField, propertyName, true, true, relationship.Target.DoesImplementINotifyPropertyChanged(), relationship.Target.DoesImplementINotifyPropertyChanging(), null);
-            else
-                memberProperty =
-                    GetMemberProperty(memberField, propertyName, true, true, relationship.Target.DoesImplementINotifyPropertyChanged(), relationship.Target.DoesImplementINotifyPropertyChanging(),
-                                      relationship.TargetDescription);
+            if (description == "") description = null;
+            CodeMemberProperty memberProperty = GetMemberProperty(memberField, propertyName, true, true, propertyChanged, propertyChanging, description);
+                               
             classDeclaration.Members.Add(memberProperty);
 
-            memberProperty.CustomAttributes.Add(relationship.GetHasManyAttribute());
+            memberProperty.CustomAttributes.Add(attribute);
         }
 
         #endregion
@@ -988,93 +1004,55 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private void GenerateHasAndBelongsToRelationFromTargets(CodeTypeDeclaration classDeclaration, CodeNamespace nameSpace,
                                                ManyToManyRelation relationship)
         {
-            if (String.IsNullOrEmpty(relationship.Table))
-                throw new ArgumentNullException(
-                    String.Format("Class {0} does not have a table name on it's many to many relation to class {1}",
-                                  relationship.Source.Name, relationship.Target.Name));
-            if (String.IsNullOrEmpty(relationship.SourceColumn))
-                throw new ArgumentNullException(
-                    String.Format("Class {0} does not have a source column name on it's many to many relation to class {1}",
-                                  relationship.Source.Name, relationship.Target.Name));
-            if (String.IsNullOrEmpty(relationship.TargetColumn))
-                throw new ArgumentNullException(
-                    String.Format("Class {0} does not have a target column name on it's many to many relation to class {1}",
-                                  relationship.Source.Name, relationship.Target.Name));
-
-            CodeTypeDeclaration targetClass = GenerateClass(relationship.Target, nameSpace);
-
-            string propertyName = String.IsNullOrEmpty(relationship.SourcePropertyName)
-                                      ? NamingHelper.GetPlural(relationship.Source.Name)
-                                      : NamingHelper.GetPlural(relationship.SourcePropertyName);
-
-            string propertyType = String.IsNullOrEmpty(relationship.TargetPropertyType)
-                                      ? GenericListInterface
-                                      : relationship.TargetPropertyType;
-
-            CodeMemberField memberField;
-            if (!relationship.Source.AreRelationsGeneric())
-                memberField = GetMemberField(propertyName, propertyType, Accessor.Private, relationship.TargetAccess);
-            else
-                memberField = GetGenericMemberField(targetClass.Name, propertyName, propertyType, Accessor.Private, relationship.TargetAccess);
-
-            classDeclaration.Members.Add(memberField);
-
-            CodeMemberProperty memberProperty;
-            if (String.IsNullOrEmpty(relationship.SourceDescription))
-                memberProperty = GetMemberProperty(memberField, NamingHelper.GetPlural(propertyName), true, true, relationship.Target.DoesImplementINotifyPropertyChanged(), relationship.Target.DoesImplementINotifyPropertyChanging(), null);
-            else
-                memberProperty =
-                    GetMemberProperty(memberField, NamingHelper.GetPlural(propertyName), true, true, relationship.Target.DoesImplementINotifyPropertyChanged(), relationship.Target.DoesImplementINotifyPropertyChanging(),
-                                      relationship.SourceDescription);
-            classDeclaration.Members.Add(memberProperty);
-
-            memberProperty.CustomAttributes.Add(relationship.GetHasAndBelongsToAttributeFromSource());
+            GenerateHasManyToMany(
+                nameSpace,
+                classDeclaration,
+                relationship.Target,
+                relationship.SourcePropertyName,
+                relationship.SourcePropertyType,
+                relationship.SourceAccess,
+                relationship.SourceDescription,
+                relationship.GetHasAndBelongsToAttributeFromSource(),
+                relationship.Target.AreRelationsGeneric(),
+                relationship.Source.DoesImplementINotifyPropertyChanged(),
+                relationship.Source.DoesImplementINotifyPropertyChanging(),
+                relationship);
         }
 
         private void GenerateHasAndBelongsToRelationFromSources(CodeTypeDeclaration classDeclaration, CodeNamespace nameSpace,
                                                ManyToManyRelation relationship)
         {
+            GenerateHasManyToMany(
+                nameSpace,
+                classDeclaration,
+                relationship.Source,
+                relationship.TargetPropertyName,
+                relationship.TargetPropertyType,
+                relationship.TargetAccess,
+                relationship.TargetDescription,
+                relationship.GetHasAndBelongsToAttributeFromTarget(),
+                relationship.Source.AreRelationsGeneric(),
+                relationship.Target.DoesImplementINotifyPropertyChanged(),
+                relationship.Target.DoesImplementINotifyPropertyChanging(),
+                relationship);
+        }
+
+        private void GenerateHasManyToMany(CodeNamespace nameSpace, CodeTypeDeclaration classDeclaration, ModelClass modelClass, string customPropertyName, string customPropertyType, PropertyAccess propertyAccess, string description, CodeAttributeDeclaration attribute, bool genericRelation, bool propertyChanged, bool propertyChanging, ManyToManyRelation relationship)
+        {
             if (String.IsNullOrEmpty(relationship.Table))
                 throw new ArgumentNullException(
                     String.Format("Class {0} does not have a table name on it's many to many relation to class {1}",
-                                  relationship.Target.Name, relationship.Source.Name));
-            if (String.IsNullOrEmpty(relationship.TargetColumn))
-                throw new ArgumentNullException(
-                    String.Format("Class {0} does not have a target column name on it's many to many relation to class {1}",
-                                  relationship.Target.Name, relationship.Source.Name));
+                                  relationship.Source.Name, relationship.Target.Name));
             if (String.IsNullOrEmpty(relationship.SourceColumn))
                 throw new ArgumentNullException(
                     String.Format("Class {0} does not have a source column name on it's many to many relation to class {1}",
-                                  relationship.Target.Name, relationship.Source.Name));
+                                  relationship.Source.Name, relationship.Target.Name));
+            if (String.IsNullOrEmpty(relationship.TargetColumn))
+                throw new ArgumentNullException(
+                    String.Format("Class {0} does not have a target column name on it's many to many relation to class {1}",
+                                  relationship.Source.Name, relationship.Target.Name));
 
-            CodeTypeDeclaration sourceClass = GenerateClass(relationship.Source, nameSpace);
-
-            string propertyName = String.IsNullOrEmpty(relationship.TargetPropertyName)
-                          ? NamingHelper.GetPlural(relationship.Target.Name)
-                          : relationship.TargetPropertyName;
-
-            string propertyType = String.IsNullOrEmpty(relationship.SourcePropertyType)
-                                      ? GenericListInterface
-                                      : relationship.SourcePropertyType;
-
-            CodeMemberField memberField;
-            if (!relationship.Source.AreRelationsGeneric())
-                memberField = GetMemberField(propertyName, propertyType, Accessor.Private, relationship.SourceAccess);
-            else
-                memberField = GetGenericMemberField(sourceClass.Name, propertyName, propertyType, Accessor.Private, relationship.SourceAccess);
-
-            classDeclaration.Members.Add(memberField);
-
-            CodeMemberProperty memberProperty;
-            if (String.IsNullOrEmpty(relationship.TargetDescription))
-                memberProperty = GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), relationship.Source.DoesImplementINotifyPropertyChanging(), null);
-            else
-                memberProperty =
-                    GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), relationship.Source.DoesImplementINotifyPropertyChanging(),
-                                      relationship.TargetDescription);
-            classDeclaration.Members.Add(memberProperty);
-
-            memberProperty.CustomAttributes.Add(relationship.GetHasAndBelongsToAttributeFromTarget());
+            GenerateHasMany(nameSpace, classDeclaration, modelClass, customPropertyName, customPropertyType, propertyAccess, description, attribute, genericRelation, propertyChanged, propertyChanging);
         }
 
         #endregion
