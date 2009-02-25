@@ -859,7 +859,7 @@
     <!-- Property: TargetPropertyType -->
     <xsd:attribute name="targetPropertyType" type="xsd:string" >
       <xsd:annotation>
-        <xsd:documentation>Type of the property. If not supplied, ActiveWriter will use IList by default.</xsd:documentation>
+        <xsd:documentation>Type of the property. If not supplied, ActiveWriter will use the model&apos;s Collection Inteface by default.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
     <!-- Property: SourceCascade -->
@@ -1063,13 +1063,13 @@
     <!-- Property: SourcePropertyType -->
     <xsd:attribute name="sourcePropertyType" type="xsd:string" >
       <xsd:annotation>
-        <xsd:documentation>Type of the property. If not supplied, ActiveWriter will use IList by default.</xsd:documentation>
+        <xsd:documentation>Type of the property. If not supplied, ActiveWriter will use the model&apos;s Collection Interface by default.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
     <!-- Property: TargetPropertyType -->
     <xsd:attribute name="targetPropertyType" type="xsd:string" >
       <xsd:annotation>
-        <xsd:documentation>Type of the property. If not supplied, ActiveWriter will use IList by default.</xsd:documentation>
+        <xsd:documentation>Type of the property. If not supplied, ActiveWriter will use the model&apos;s Collection Inteface by default.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
     <!-- Property: SourcePropertyName -->

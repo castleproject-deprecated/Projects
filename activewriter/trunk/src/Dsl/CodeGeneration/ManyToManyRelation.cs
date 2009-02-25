@@ -40,6 +40,39 @@ namespace Altinoren.ActiveWriter
             }
         }
 
+        public string EffectiveCollectionIDColumn
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(CollectionIDColumn))
+                    return Source.Model.ManyToManyCollectionIDColumn;
+                else
+                    return CollectionIDColumn;
+            }
+        }
+
+        public NHibernateType EffectiveCollectionIDColumnType
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(CollectionIDColumn))
+                    return Source.Model.ManyToManyCollectionIDColumnType;
+                else
+                    return CollectionIDColumnType;
+            }
+        }
+
+        public PrimaryKeyType EffectiveCollectionIDGenerator
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(CollectionIDColumn))
+                    return Source.Model.ManyToManyCollectionIDGenerator;
+                else
+                    return CollectionIDGenerator;
+            }
+        }
+
         public CodeAttributeDeclaration GetHasAndBelongsToAttributeFromSource()
         {
             var attribute = new CodeAttributeDeclaration("HasAndBelongsToMany");
@@ -144,6 +177,19 @@ namespace Altinoren.ActiveWriter
             return attribute;
         }
 
+        public CodeAttributeDeclaration GetCollectionIdAttribute(RelationType relationType)
+        {
+            if (string.IsNullOrEmpty(EffectiveCollectionIDColumn) || relationType != RelationType.IdBag)
+                return null;
+
+            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("CollectionID");
+
+            attribute.Arguments.Add(AttributeHelper.GetPrimitiveEnumAttributeArgument("CollectionIDType", EffectiveCollectionIDGenerator));
+            attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(EffectiveCollectionIDColumn));
+            attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(EffectiveCollectionIDColumnType.ToString()));
+
+            return attribute;
+        }
 
         private void PopulateCommonFields(CodeAttributeDeclaration attribute)
         {

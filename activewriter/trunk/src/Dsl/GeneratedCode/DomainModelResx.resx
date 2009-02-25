@@ -1550,7 +1550,7 @@
     <comment>Category for DomainProperty &apos;TargetPropertyName&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyType.Description" xml:space="preserve">
-    <value>Type of the property. If not supplied, ActiveWriter will use IList by default.</value>
+    <value>Type of the property. If not supplied, ActiveWriter will use the model&apos;s Collection Inteface by default.</value>
     <comment>Description for DomainProperty &apos;TargetPropertyType&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyType.DisplayName" xml:space="preserve">
@@ -1793,6 +1793,10 @@
     <value>Target Property Generated</value>
     <comment>DisplayName for DomainProperty &apos;TargetPropertyGenerated&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyGenerated.Category" xml:space="preserve">
+    <value>Target (HasMany)</value>
+    <comment>Category for DomainProperty &apos;TargetPropertyGenerated&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyGenerated.Description" xml:space="preserve">
     <value>Description for Altinoren.ActiveWriter.ManyToOneRelation.Source Property Generated</value>
     <comment>Description for DomainProperty &apos;SourcePropertyGenerated&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
@@ -1800,6 +1804,10 @@
   <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyGenerated.DisplayName" xml:space="preserve">
     <value>Source Property Generated</value>
     <comment>DisplayName for DomainProperty &apos;SourcePropertyGenerated&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyGenerated.Category" xml:space="preserve">
+    <value>Source (BelongsTo)</value>
+    <comment>Category for DomainProperty &apos;SourcePropertyGenerated&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ManyToOneRelation/Source.Description" xml:space="preserve">
     <value></value>
@@ -2202,7 +2210,7 @@
     <comment>Category for DomainProperty &apos;TargetAccess&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyType.Description" xml:space="preserve">
-    <value>Type of the property. If not supplied, ActiveWriter will use IList by default.</value>
+    <value>Type of the property. If not supplied, ActiveWriter will use the model&apos;s Collection Interface by default.</value>
     <comment>Description for DomainProperty &apos;SourcePropertyType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyType.DisplayName" xml:space="preserve">
@@ -2214,7 +2222,7 @@
     <comment>Category for DomainProperty &apos;SourcePropertyType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyType.Description" xml:space="preserve">
-    <value>Type of the property. If not supplied, ActiveWriter will use IList by default.</value>
+    <value>Type of the property. If not supplied, ActiveWriter will use the model&apos;s Collection Inteface by default.</value>
     <comment>Description for DomainProperty &apos;TargetPropertyType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyType.DisplayName" xml:space="preserve">
@@ -2313,6 +2321,10 @@
     <value>Collection IDColumn Type</value>
     <comment>DisplayName for DomainProperty &apos;CollectionIDColumnType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDColumnType.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;CollectionIDColumnType&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDGenerator.Description" xml:space="preserve">
     <value>The generator type for the primary key of the many to many link table.</value>
     <comment>Description for DomainProperty &apos;CollectionIDGenerator&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
@@ -2320,6 +2332,10 @@
   <data name="Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDGenerator.DisplayName" xml:space="preserve">
     <value>Collection IDGenerator</value>
     <comment>DisplayName for DomainProperty &apos;CollectionIDGenerator&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDGenerator.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;CollectionIDGenerator&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyGenerated.Description" xml:space="preserve">
     <value>Description for Altinoren.ActiveWriter.ManyToManyRelation.Target Property Generated</value>
@@ -2329,6 +2345,10 @@
     <value>Target Property Generated</value>
     <comment>DisplayName for DomainProperty &apos;TargetPropertyGenerated&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyGenerated.Category" xml:space="preserve">
+    <value>Target</value>
+    <comment>Category for DomainProperty &apos;TargetPropertyGenerated&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyGenerated.Description" xml:space="preserve">
     <value>Description for Altinoren.ActiveWriter.ManyToManyRelation.Source Property Generated</value>
     <comment>Description for DomainProperty &apos;SourcePropertyGenerated&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
@@ -2336,6 +2356,10 @@
   <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyGenerated.DisplayName" xml:space="preserve">
     <value>Source Property Generated</value>
     <comment>DisplayName for DomainProperty &apos;SourcePropertyGenerated&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyGenerated.Category" xml:space="preserve">
+    <value>Source</value>
+    <comment>Category for DomainProperty &apos;SourcePropertyGenerated&apos; on DomainClass &apos;ManyToManyRelation&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ManyToManyRelation/Source.Description" xml:space="preserve">
     <value></value>

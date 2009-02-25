@@ -2743,7 +2743,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for CollectionInterface
 		/// </summary>
-		private global::System.String collectionInterfacePropertyStorage = string.Empty;
+		private global::System.String collectionInterfacePropertyStorage = "IList";
 		
 		/// <summary>
 		/// Gets or sets the value of CollectionInterface domain property.
@@ -2752,7 +2752,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/CollectionInterface.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/CollectionInterface.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/CollectionInterface.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.Browsable(false)]
+		[global::System.ComponentModel.DefaultValue("IList")]
 		[DslModeling::DomainObjectId("207c0c14-8ed8-41ad-bd61-f3dfd3757d2b")]
 		public global::System.String CollectionInterface
 		{
@@ -2832,7 +2832,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for CollectionImplementation
 		/// </summary>
-		private global::System.String collectionImplementationPropertyStorage = string.Empty;
+		private global::System.String collectionImplementationPropertyStorage = "List";
 		
 		/// <summary>
 		/// Gets or sets the value of CollectionImplementation domain property.
@@ -2842,7 +2842,7 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/CollectionImplementation.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/CollectionImplementation.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/CollectionImplementation.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.Browsable(false)]
+		[global::System.ComponentModel.DefaultValue("List")]
 		[DslModeling::DomainObjectId("c5f8cef8-aab9-4666-bca7-961179634166")]
 		public global::System.String CollectionImplementation
 		{
@@ -3112,7 +3112,6 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumn.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumn.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumn.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.Browsable(false)]
 		[DslModeling::DomainObjectId("4e0c0023-6a86-4801-bb51-9ebbad2a1fd6")]
 		public global::System.String ManyToManyCollectionIDColumn
 		{
@@ -3202,7 +3201,6 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.Browsable(false)]
 		[DslModeling::DomainObjectId("f01307ce-7d91-4b00-b352-fe5487587633")]
 		public NHibernateType ManyToManyCollectionIDColumnType
 		{
@@ -3292,7 +3290,6 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDGenerator.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDGenerator.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDGenerator.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.Browsable(false)]
 		[DslModeling::DomainObjectId("7b97e93e-ea00-4884-a2bd-f7e146d8841c")]
 		public PrimaryKeyType ManyToManyCollectionIDGenerator
 		{
@@ -3743,7 +3740,6 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/ModelName.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ModelName.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue("Model")]
-		[global::System.ComponentModel.Browsable(false)]
 		[DslModeling::DomainObjectId("86eca91c-4ab5-4bfe-b171-4cbf346ebc34")]
 		public global::System.String ModelName
 		{

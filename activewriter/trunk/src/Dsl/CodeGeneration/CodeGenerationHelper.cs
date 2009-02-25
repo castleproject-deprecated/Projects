@@ -37,9 +37,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
     public class CodeGenerationHelper
     {
-        private const string GenericListInterface = "IList";
-        private const string GenericListClass = "List";
-
         #region Private Variables
 
         private Assembly _activeRecord;
@@ -154,6 +151,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             {
                 GenerateMetaData(nameSpace);
             }
+
+            GenerateHelperClass(nameSpace);
 
             _assemblyLoadPath = _model.AssemblyPath;
 
@@ -904,21 +903,23 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private void GenerateHasManyRelation(CodeTypeDeclaration classDeclaration, CodeNamespace nameSpace,
                                              ManyToOneRelation relationship)
         {
-            GenerateHasMany(
-                nameSpace,
-                classDeclaration,
-                relationship.Source,
-                relationship.TargetPropertyName,
-                relationship.TargetPropertyType,
-                relationship.TargetAccess,
-                relationship.TargetDescription,
-                relationship.GetHasManyAttribute(),
-                relationship.Source.AreRelationsGeneric(),
-                relationship.Target.DoesImplementINotifyPropertyChanged(),
-                relationship.Target.DoesImplementINotifyPropertyChanging());
+            if (relationship.TargetPropertyGenerated)
+                GenerateHasMany(
+                    nameSpace,
+                    classDeclaration,
+                    relationship.Source,
+                    relationship.TargetPropertyName,
+                    relationship.TargetPropertyType,
+                    relationship.TargetAccess,
+                    relationship.TargetDescription,
+                    relationship.GetHasManyAttribute(),
+                    relationship.Source.AreRelationsGeneric(),
+                    relationship.Target.DoesImplementINotifyPropertyChanged(),
+                    relationship.Target.DoesImplementINotifyPropertyChanging(),
+                    null);
         }
 
-        private void GenerateHasMany(CodeNamespace nameSpace, CodeTypeDeclaration classDeclaration, ModelClass modelClass, string customPropertyName, string customPropertyType, PropertyAccess propertyAccess, string description, CodeAttributeDeclaration attribute, bool genericRelation, bool propertyChanged, bool propertyChanging)
+        private void GenerateHasMany(CodeNamespace nameSpace, CodeTypeDeclaration classDeclaration, ModelClass modelClass, string customPropertyName, string customPropertyType, PropertyAccess propertyAccess, string description, CodeAttributeDeclaration attribute, bool genericRelation, bool propertyChanged, bool propertyChanging, CodeAttributeDeclaration collectionIdAttribute)
         {
             CodeTypeDeclaration modelClassDeclaration = GenerateClass(modelClass, nameSpace);
 
@@ -929,7 +930,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                       ? NamingHelper.GetPlural(modelClassDeclaration.Name)
                                       : customPropertyName;
             string propertyType = String.IsNullOrEmpty(customPropertyType)
-                                      ? GenericListInterface
+                                      ? _model.EffectiveListInterface
                                       : customPropertyType;
 
             CodeMemberField memberField;
@@ -941,15 +942,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             // Initializes the collection by assigning a new list instance to the field.
             // Many-to-many relationships never had the initialization code enabled before.
-            if (_model.InitializeIListFields && propertyType == GenericListInterface)
+            // Automatic associations initialize their lists in the constructor instead.
+            if (_model.InitializeIListFields && propertyType == _model.EffectiveListInterface && !_model.AutomaticAssociations)
             {
                 CodeObjectCreateExpression fieldCreator = new CodeObjectCreateExpression();
-
-                CodeTypeReference fieldCreatorType = new CodeTypeReference(GenericListClass);
-
-                fieldCreatorType.TypeArguments.Add(modelClassDeclaration.Name);
-                fieldCreator.CreateType = fieldCreatorType;
-
+                fieldCreator.CreateType = GetConcreteListType(modelClassDeclaration.Name);
                 memberField.InitExpression = fieldCreator;
             }
 
@@ -959,6 +956,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             classDeclaration.Members.Add(memberProperty);
 
             memberProperty.CustomAttributes.Add(attribute);
+
+            if (collectionIdAttribute != null)
+                memberProperty.CustomAttributes.Add(collectionIdAttribute);
         }
 
         #endregion
@@ -968,33 +968,36 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private void GenerateBelongsToRelation(CodeTypeDeclaration classDeclaration, CodeNamespace nameSpace,
                                                ManyToOneRelation relationship)
         {
-            if (!String.IsNullOrEmpty(relationship.TargetColumnKey) && (!String.IsNullOrEmpty(relationship.SourceColumn)) &&
-                !relationship.SourceColumn.ToUpperInvariant().Equals(relationship.TargetColumnKey.ToUpperInvariant()))
-                throw new ArgumentException(
-                    String.Format(
-                        "Class {0} column name does not match with column key {1} on it's many to one relation to class {2}",
-                        relationship.Source.Name, relationship.TargetColumnKey, relationship.Target.Name));
+            if (relationship.SourcePropertyGenerated)
+            {
+                if (!String.IsNullOrEmpty(relationship.TargetColumnKey) && (!String.IsNullOrEmpty(relationship.SourceColumn)) &&
+                    !relationship.SourceColumn.ToUpperInvariant().Equals(relationship.TargetColumnKey.ToUpperInvariant()))
+                    throw new ArgumentException(
+                        String.Format(
+                            "Class {0} column name does not match with column key {1} on it's many to one relation to class {2}",
+                            relationship.Source.Name, relationship.TargetColumnKey, relationship.Target.Name));
 
-            CodeTypeDeclaration targetClass = GenerateClass(relationship.Target, nameSpace);
+                CodeTypeDeclaration targetClass = GenerateClass(relationship.Target, nameSpace);
 
-            string propertyName = String.IsNullOrEmpty(relationship.SourcePropertyName)
-                                      ? targetClass.Name
-                                      : relationship.SourcePropertyName;
+                string propertyName = String.IsNullOrEmpty(relationship.SourcePropertyName)
+                                          ? targetClass.Name
+                                          : relationship.SourcePropertyName;
 
-            // We use PropertyAccess.Property to default it to camel case underscore
-            CodeMemberField memberField = GetMemberField(propertyName, targetClass.Name, Accessor.Private, PropertyAccess.Property);
-            classDeclaration.Members.Add(memberField);
+                // We use PropertyAccess.Property to default it to camel case underscore
+                CodeMemberField memberField = GetMemberField(propertyName, targetClass.Name, Accessor.Private, PropertyAccess.Property);
+                classDeclaration.Members.Add(memberField);
 
-            CodeMemberProperty memberProperty;
-            if (String.IsNullOrEmpty(relationship.SourceDescription))
-                memberProperty = GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), relationship.Source.DoesImplementINotifyPropertyChanging(), null);
-            else
-                memberProperty =
-                    GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), relationship.Source.DoesImplementINotifyPropertyChanging(),
-                                      relationship.SourceDescription);
-            classDeclaration.Members.Add(memberProperty);
+                CodeMemberProperty memberProperty;
+                if (String.IsNullOrEmpty(relationship.SourceDescription))
+                    memberProperty = GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), relationship.Source.DoesImplementINotifyPropertyChanging(), null);
+                else
+                    memberProperty =
+                        GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), relationship.Source.DoesImplementINotifyPropertyChanging(),
+                                          relationship.SourceDescription);
+                classDeclaration.Members.Add(memberProperty);
 
-            memberProperty.CustomAttributes.Add(relationship.GetBelongsToAttribute());
+                memberProperty.CustomAttributes.Add(relationship.GetBelongsToAttribute());
+            }
         }
 
         #endregion
@@ -1004,40 +1007,44 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private void GenerateHasAndBelongsToRelationFromTargets(CodeTypeDeclaration classDeclaration, CodeNamespace nameSpace,
                                                ManyToManyRelation relationship)
         {
-            GenerateHasManyToMany(
-                nameSpace,
-                classDeclaration,
-                relationship.Target,
-                relationship.SourcePropertyName,
-                relationship.SourcePropertyType,
-                relationship.SourceAccess,
-                relationship.SourceDescription,
-                relationship.GetHasAndBelongsToAttributeFromSource(),
-                relationship.Target.AreRelationsGeneric(),
-                relationship.Source.DoesImplementINotifyPropertyChanged(),
-                relationship.Source.DoesImplementINotifyPropertyChanging(),
-                relationship);
+            if (relationship.SourcePropertyGenerated)
+                GenerateHasManyToMany(
+                    nameSpace,
+                    classDeclaration,
+                    relationship.Target,
+                    relationship.SourcePropertyName,
+                    relationship.SourcePropertyType,
+                    relationship.SourceAccess,
+                    relationship.SourceDescription,
+                    relationship.GetHasAndBelongsToAttributeFromSource(),
+                    relationship.Target.AreRelationsGeneric(),
+                    relationship.Source.DoesImplementINotifyPropertyChanged(),
+                    relationship.Source.DoesImplementINotifyPropertyChanging(),
+                    relationship.EffectiveSourceRelationType,
+                    relationship);
         }
 
         private void GenerateHasAndBelongsToRelationFromSources(CodeTypeDeclaration classDeclaration, CodeNamespace nameSpace,
                                                ManyToManyRelation relationship)
         {
-            GenerateHasManyToMany(
-                nameSpace,
-                classDeclaration,
-                relationship.Source,
-                relationship.TargetPropertyName,
-                relationship.TargetPropertyType,
-                relationship.TargetAccess,
-                relationship.TargetDescription,
-                relationship.GetHasAndBelongsToAttributeFromTarget(),
-                relationship.Source.AreRelationsGeneric(),
-                relationship.Target.DoesImplementINotifyPropertyChanged(),
-                relationship.Target.DoesImplementINotifyPropertyChanging(),
-                relationship);
+            if (relationship.TargetPropertyGenerated)
+                GenerateHasManyToMany(
+                    nameSpace,
+                    classDeclaration,
+                    relationship.Source,
+                    relationship.TargetPropertyName,
+                    relationship.TargetPropertyType,
+                    relationship.TargetAccess,
+                    relationship.TargetDescription,
+                    relationship.GetHasAndBelongsToAttributeFromTarget(),
+                    relationship.Source.AreRelationsGeneric(),
+                    relationship.Target.DoesImplementINotifyPropertyChanged(),
+                    relationship.Target.DoesImplementINotifyPropertyChanging(),
+                    relationship.EffectiveTargetRelationType,
+                    relationship);
         }
 
-        private void GenerateHasManyToMany(CodeNamespace nameSpace, CodeTypeDeclaration classDeclaration, ModelClass modelClass, string customPropertyName, string customPropertyType, PropertyAccess propertyAccess, string description, CodeAttributeDeclaration attribute, bool genericRelation, bool propertyChanged, bool propertyChanging, ManyToManyRelation relationship)
+        private void GenerateHasManyToMany(CodeNamespace nameSpace, CodeTypeDeclaration classDeclaration, ModelClass modelClass, string customPropertyName, string customPropertyType, PropertyAccess propertyAccess, string description, CodeAttributeDeclaration attribute, bool genericRelation, bool propertyChanged, bool propertyChanging, Altinoren.ActiveWriter.RelationType relationType, ManyToManyRelation relationship)
         {
             if (String.IsNullOrEmpty(relationship.Table))
                 throw new ArgumentNullException(
@@ -1052,7 +1059,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     String.Format("Class {0} does not have a target column name on it's many to many relation to class {1}",
                                   relationship.Source.Name, relationship.Target.Name));
 
-            GenerateHasMany(nameSpace, classDeclaration, modelClass, customPropertyName, customPropertyType, propertyAccess, description, attribute, genericRelation, propertyChanged, propertyChanging);
+            GenerateHasMany(nameSpace, classDeclaration, modelClass, customPropertyName, customPropertyType, propertyAccess, description, attribute, genericRelation, propertyChanged, propertyChanging, relationship.GetCollectionIdAttribute(relationType));
         }
 
         #endregion
@@ -1775,6 +1782,33 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private void Log(string message)
         {
             _output.Write(string.Format("ActiveWriter: {0}", message));
+        }
+
+        private CodeTypeReference GetConcreteListType(string sourceClassName)
+        {
+            CodeTypeReference fieldCreatorType = new CodeTypeReference(_model.EffectiveListClass);
+            fieldCreatorType.TypeArguments.Add(sourceClassName);
+            return fieldCreatorType;
+        }
+
+        private void GenerateHelperClass(CodeNamespace nameSpace)
+        {
+            if (_model.Target == CodeGenerationTarget.ActiveRecord)
+            {
+                CodeTypeDeclaration helperClass = new CodeTypeDeclaration(_model.HelperName);
+                nameSpace.Types.Add(helperClass);
+                CodeMemberMethod getTypesMethod = new CodeMemberMethod();
+                helperClass.Members.Add(getTypesMethod);
+                getTypesMethod.Name = "GetTypes";
+                getTypesMethod.ReturnType = new CodeTypeReference("Type", 1);
+                getTypesMethod.Attributes = MemberAttributes.Public | MemberAttributes.Static;
+
+                CodeArrayCreateExpression arrayCreate = new CodeArrayCreateExpression("Type");
+                foreach (ModelClass modelClass in _model.Classes)
+                    arrayCreate.Initializers.Add(new CodeTypeOfExpression(modelClass.Name));
+
+                getTypesMethod.Statements.Add(new CodeMethodReturnStatement(arrayCreate));
+            }
         }
 
         #endregion

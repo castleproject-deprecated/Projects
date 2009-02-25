@@ -1722,16 +1722,17 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetPropertyType
 		/// </summary>
-		private global::System.String targetPropertyTypePropertyStorage = "IList";
+		private global::System.String targetPropertyTypePropertyStorage = string.Empty;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetPropertyType domain property.
-		/// Type of the property. If not supplied, ActiveWriter will use IList by default.
+		/// Type of the property. If not supplied, ActiveWriter will use the model's
+		/// Collection Inteface by default.
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue("IList")]
+		[global::System.ComponentModel.DefaultValue("")]
 		[DslModeling::DomainObjectId("f415a978-5c96-46e1-900e-443303aa5a37")]
 		public global::System.String TargetPropertyType
 		{
@@ -3489,9 +3490,9 @@ namespace Altinoren.ActiveWriter
 		/// Generated
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyGenerated.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyGenerated.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyGenerated.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(true)]
-		[global::System.ComponentModel.Browsable(false)]
 		[DslModeling::DomainObjectId("b78081c0-24d3-4367-8007-6f5da73d411c")]
 		public global::System.Boolean TargetPropertyGenerated
 		{
@@ -3579,9 +3580,9 @@ namespace Altinoren.ActiveWriter
 		/// Generated
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyGenerated.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyGenerated.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyGenerated.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(true)]
-		[global::System.ComponentModel.Browsable(false)]
 		[DslModeling::DomainObjectId("5a6da19e-ae0e-49c5-afa1-dfce0433e464")]
 		public global::System.Boolean SourcePropertyGenerated
 		{
@@ -6541,16 +6542,17 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for SourcePropertyType
 		/// </summary>
-		private global::System.String sourcePropertyTypePropertyStorage = "IList";
+		private global::System.String sourcePropertyTypePropertyStorage = string.Empty;
 		
 		/// <summary>
 		/// Gets or sets the value of SourcePropertyType domain property.
-		/// Type of the property. If not supplied, ActiveWriter will use IList by default.
+		/// Type of the property. If not supplied, ActiveWriter will use the model's
+		/// Collection Interface by default.
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue("IList")]
+		[global::System.ComponentModel.DefaultValue("")]
 		[DslModeling::DomainObjectId("e5d28e22-22c2-48bb-9540-8be851751818")]
 		public global::System.String SourcePropertyType
 		{
@@ -6630,16 +6632,17 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetPropertyType
 		/// </summary>
-		private global::System.String targetPropertyTypePropertyStorage = "IList";
+		private global::System.String targetPropertyTypePropertyStorage = string.Empty;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetPropertyType domain property.
-		/// Type of the property. If not supplied, ActiveWriter will use IList by default.
+		/// Type of the property. If not supplied, ActiveWriter will use the model's
+		/// Collection Inteface by default.
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue("IList")]
+		[global::System.ComponentModel.DefaultValue("")]
 		[DslModeling::DomainObjectId("9a519de5-5dbd-4c8b-91ab-7c2ba677566a")]
 		public global::System.String TargetPropertyType
 		{
@@ -7259,7 +7262,6 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDColumn.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDColumn.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.Browsable(false)]
 		[DslModeling::DomainObjectId("e0cd5759-5c0c-4000-aaa8-6a81d30376a0")]
 		public global::System.String CollectionIDColumn
 		{
@@ -7346,8 +7348,8 @@ namespace Altinoren.ActiveWriter
 		/// The type of the column used for the primary key.
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDColumnType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDColumnType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDColumnType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.Browsable(false)]
 		[DslModeling::DomainObjectId("a0a2373a-bad1-487e-83e6-cfa23a02d4d0")]
 		public NHibernateType CollectionIDColumnType
 		{
@@ -7434,8 +7436,8 @@ namespace Altinoren.ActiveWriter
 		/// The generator type for the primary key of the many to many link table.
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDGenerator.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDGenerator.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDGenerator.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.Browsable(false)]
 		[DslModeling::DomainObjectId("21f90b70-a02a-436d-a3c0-86aad9060e9d")]
 		public PrimaryKeyType CollectionIDGenerator
 		{
@@ -7523,9 +7525,9 @@ namespace Altinoren.ActiveWriter
 		/// Generated
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyGenerated.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyGenerated.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyGenerated.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(true)]
-		[global::System.ComponentModel.Browsable(false)]
 		[DslModeling::DomainObjectId("feb33769-96a2-44c6-94fb-06ae1e160c10")]
 		public global::System.Boolean TargetPropertyGenerated
 		{
@@ -7613,9 +7615,9 @@ namespace Altinoren.ActiveWriter
 		/// Generated
 		/// </summary>
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyGenerated.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyGenerated.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyGenerated.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(true)]
-		[global::System.ComponentModel.Browsable(false)]
 		[DslModeling::DomainObjectId("1a60bb90-b145-4931-b2fb-5f2988da83fb")]
 		public global::System.Boolean SourcePropertyGenerated
 		{

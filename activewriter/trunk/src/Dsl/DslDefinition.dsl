@@ -153,12 +153,12 @@
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="207c0c14-8ed8-41ad-bd61-f3dfd3757d2b" Description="Interface to use for collections.  If none is specified, IList will be used." Name="CollectionInterface" DisplayName="Collection Interface" Category="Code Generation" IsBrowsable="false">
+        <DomainProperty Id="207c0c14-8ed8-41ad-bd61-f3dfd3757d2b" Description="Interface to use for collections.  If none is specified, IList will be used." Name="CollectionInterface" DisplayName="Collection Interface" DefaultValue="IList" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="c5f8cef8-aab9-4666-bca7-961179634166" Description="Concrete class to instantiate for list fields if InitializeIListFields is set to true." Name="CollectionImplementation" DisplayName="Collection Implementation" Category="Code Generation" IsBrowsable="false">
+        <DomainProperty Id="c5f8cef8-aab9-4666-bca7-961179634166" Description="Concrete class to instantiate for list fields if InitializeIListFields is set to true." Name="CollectionImplementation" DisplayName="Collection Implementation" DefaultValue="List" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
@@ -173,17 +173,17 @@
             <DomainEnumerationMoniker Name="RelationType" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="4e0c0023-6a86-4801-bb51-9ebbad2a1fd6" Description="This column name is used for many to many collection ID definition.  If a column name is specified in the relationship itself, the Column Type and Generator specified in the relationship will be used instead of those specified here in the model." Name="ManyToManyCollectionIDColumn" DisplayName="Many To Many Collection ID Column" Category="Code Generation" IsBrowsable="false">
+        <DomainProperty Id="4e0c0023-6a86-4801-bb51-9ebbad2a1fd6" Description="This column name is used for many to many collection ID definition.  If a column name is specified in the relationship itself, the Column Type and Generator specified in the relationship will be used instead of those specified here in the model." Name="ManyToManyCollectionIDColumn" DisplayName="Many To Many Collection ID Column" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="f01307ce-7d91-4b00-b352-fe5487587633" Description="Description for Altinoren.ActiveWriter.Model.Many To Many Collection ID Column Type" Name="ManyToManyCollectionIDColumnType" DisplayName="Many To Many Collection ID Column Type" Category="Code Generation" IsBrowsable="false">
+        <DomainProperty Id="f01307ce-7d91-4b00-b352-fe5487587633" Description="Description for Altinoren.ActiveWriter.Model.Many To Many Collection ID Column Type" Name="ManyToManyCollectionIDColumnType" DisplayName="Many To Many Collection ID Column Type" Category="Code Generation">
           <Type>
             <DomainEnumerationMoniker Name="NHibernateType" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="7b97e93e-ea00-4884-a2bd-f7e146d8841c" Description="Description for Altinoren.ActiveWriter.Model.Many To Many Collection ID Generator" Name="ManyToManyCollectionIDGenerator" DisplayName="Many To Many Collection ID Generator" Category="Code Generation" IsBrowsable="false">
+        <DomainProperty Id="7b97e93e-ea00-4884-a2bd-f7e146d8841c" Description="Description for Altinoren.ActiveWriter.Model.Many To Many Collection ID Generator" Name="ManyToManyCollectionIDGenerator" DisplayName="Many To Many Collection ID Generator" Category="Code Generation">
           <Type>
             <DomainEnumerationMoniker Name="PrimaryKeyType" />
           </Type>
@@ -208,7 +208,7 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="86eca91c-4ab5-4bfe-b171-4cbf346ebc34" Description="A name for the entire model that is used as a prefix for various helper classes.  If there are multiple models in the same namespace, each model should have a unique value for this property to avoid class name conflicts." Name="ModelName" DisplayName="Model Name" DefaultValue="Model" Category="Code Generation" IsBrowsable="false">
+        <DomainProperty Id="86eca91c-4ab5-4bfe-b171-4cbf346ebc34" Description="A name for the entire model that is used as a prefix for various helper classes.  If there are multiple models in the same namespace, each model should have a unique value for this property to avoid class name conflicts." Name="ModelName" DisplayName="Model Name" DefaultValue="Model" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
@@ -668,7 +668,7 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="f415a978-5c96-46e1-900e-443303aa5a37" Description="Type of the property. If not supplied, ActiveWriter will use IList by default." Name="TargetPropertyType" DisplayName="Target Property Type" DefaultValue="IList" Category="Code Generation">
+        <DomainProperty Id="f415a978-5c96-46e1-900e-443303aa5a37" Description="Type of the property. If not supplied, ActiveWriter will use the model's Collection Inteface by default." Name="TargetPropertyType" DisplayName="Target Property Type" DefaultValue="" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
@@ -768,12 +768,12 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="b78081c0-24d3-4367-8007-6f5da73d411c" Description="Description for Altinoren.ActiveWriter.ManyToOneRelation.Target Property Generated" Name="TargetPropertyGenerated" DisplayName="Target Property Generated" DefaultValue="true" IsBrowsable="false">
+        <DomainProperty Id="b78081c0-24d3-4367-8007-6f5da73d411c" Description="Description for Altinoren.ActiveWriter.ManyToOneRelation.Target Property Generated" Name="TargetPropertyGenerated" DisplayName="Target Property Generated" DefaultValue="true" Category="Target (HasMany)">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="5a6da19e-ae0e-49c5-afa1-dfce0433e464" Description="Description for Altinoren.ActiveWriter.ManyToOneRelation.Source Property Generated" Name="SourcePropertyGenerated" DisplayName="Source Property Generated" DefaultValue="true" IsBrowsable="false">
+        <DomainProperty Id="5a6da19e-ae0e-49c5-afa1-dfce0433e464" Description="Description for Altinoren.ActiveWriter.ManyToOneRelation.Source Property Generated" Name="SourcePropertyGenerated" DisplayName="Source Property Generated" DefaultValue="true" Category="Source (BelongsTo)">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
@@ -952,12 +952,12 @@
             <DomainEnumerationMoniker Name="PropertyAccess" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="e5d28e22-22c2-48bb-9540-8be851751818" Description="Type of the property. If not supplied, ActiveWriter will use IList by default." Name="SourcePropertyType" DisplayName="Source Property Type" DefaultValue="IList" Category="Code Generation">
+        <DomainProperty Id="e5d28e22-22c2-48bb-9540-8be851751818" Description="Type of the property. If not supplied, ActiveWriter will use the model's Collection Interface by default." Name="SourcePropertyType" DisplayName="Source Property Type" DefaultValue="" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="9a519de5-5dbd-4c8b-91ab-7c2ba677566a" Description="Type of the property. If not supplied, ActiveWriter will use IList by default." Name="TargetPropertyType" DisplayName="Target Property Type" DefaultValue="IList" Category="Code Generation">
+        <DomainProperty Id="9a519de5-5dbd-4c8b-91ab-7c2ba677566a" Description="Type of the property. If not supplied, ActiveWriter will use the model's Collection Inteface by default." Name="TargetPropertyType" DisplayName="Target Property Type" DefaultValue="" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
@@ -992,27 +992,27 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="e0cd5759-5c0c-4000-aaa8-6a81d30376a0" Description="The column name used for the primary key of the many to many link table." Name="CollectionIDColumn" DisplayName="Collection IDColumn" IsBrowsable="false">
+        <DomainProperty Id="e0cd5759-5c0c-4000-aaa8-6a81d30376a0" Description="The column name used for the primary key of the many to many link table." Name="CollectionIDColumn" DisplayName="Collection IDColumn">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="a0a2373a-bad1-487e-83e6-cfa23a02d4d0" Description="The type of the column used for the primary key." Name="CollectionIDColumnType" DisplayName="Collection IDColumn Type" IsBrowsable="false">
+        <DomainProperty Id="a0a2373a-bad1-487e-83e6-cfa23a02d4d0" Description="The type of the column used for the primary key." Name="CollectionIDColumnType" DisplayName="Collection IDColumn Type" Category="Code Generation">
           <Type>
             <DomainEnumerationMoniker Name="NHibernateType" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="21f90b70-a02a-436d-a3c0-86aad9060e9d" Description="The generator type for the primary key of the many to many link table." Name="CollectionIDGenerator" DisplayName="Collection IDGenerator" IsBrowsable="false">
+        <DomainProperty Id="21f90b70-a02a-436d-a3c0-86aad9060e9d" Description="The generator type for the primary key of the many to many link table." Name="CollectionIDGenerator" DisplayName="Collection IDGenerator" Category="Code Generation">
           <Type>
             <DomainEnumerationMoniker Name="PrimaryKeyType" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="feb33769-96a2-44c6-94fb-06ae1e160c10" Description="Description for Altinoren.ActiveWriter.ManyToManyRelation.Target Property Generated" Name="TargetPropertyGenerated" DisplayName="Target Property Generated" DefaultValue="true" IsBrowsable="false">
+        <DomainProperty Id="feb33769-96a2-44c6-94fb-06ae1e160c10" Description="Description for Altinoren.ActiveWriter.ManyToManyRelation.Target Property Generated" Name="TargetPropertyGenerated" DisplayName="Target Property Generated" DefaultValue="true" Category="Target">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="1a60bb90-b145-4931-b2fb-5f2988da83fb" Description="Description for Altinoren.ActiveWriter.ManyToManyRelation.Source Property Generated" Name="SourcePropertyGenerated" DisplayName="Source Property Generated" DefaultValue="true" IsBrowsable="false">
+        <DomainProperty Id="1a60bb90-b145-4931-b2fb-5f2988da83fb" Description="Description for Altinoren.ActiveWriter.ManyToManyRelation.Source Property Generated" Name="SourcePropertyGenerated" DisplayName="Source Property Generated" DefaultValue="true" Category="Source">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>

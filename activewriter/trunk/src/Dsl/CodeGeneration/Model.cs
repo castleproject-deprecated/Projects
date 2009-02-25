@@ -19,7 +19,18 @@ namespace Altinoren.ActiveWriter
 
     public partial class Model
     {
+        private const string GenericListInterface = "IList";
+        private const string GenericListClass = "List";
+
         public string ModelFileFullName { get; set; } // Set by DocData when the model is loaded.
+
+        public string HelperName
+        {
+            get
+            {
+                return (ModelName ?? "") + "Helper";
+            }
+        }   
 
         #region Public Code Generation Methods
 
@@ -56,6 +67,26 @@ namespace Altinoren.ActiveWriter
                 }
 
                 return imports;
+            }
+        }
+
+        public string EffectiveListInterface
+        {
+            get
+            {
+                return string.IsNullOrEmpty(CollectionInterface)
+                    ? GenericListInterface
+                    : CollectionInterface;
+            }
+        }
+
+        public string EffectiveListClass
+        {
+            get
+            {
+                return string.IsNullOrEmpty(CollectionImplementation)
+                    ? GenericListClass
+                    : CollectionImplementation;
             }
         }
 

@@ -1802,8 +1802,10 @@ namespace Altinoren.ActiveWriter
 				global::System.String propValue = instanceOfModel.CollectionInterface;
 				if (!serializationContext.Result.Failed)
 				{
-					if (!string.IsNullOrEmpty(propValue))
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "IList") != 0))
+					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("collectionInterface", propValue);
+					}
 				}
 			}
 			// CollectionImplementation
@@ -1812,8 +1814,10 @@ namespace Altinoren.ActiveWriter
 				global::System.String propValue = instanceOfModel.CollectionImplementation;
 				if (!serializationContext.Result.Failed)
 				{
-					if (!string.IsNullOrEmpty(propValue))
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "List") != 0))
+					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("collectionImplementation", propValue);
+					}
 				}
 			}
 			// ManyToManyRelationType
@@ -8995,7 +8999,7 @@ namespace Altinoren.ActiveWriter
 				global::System.String propValue = instanceOfManyToOneRelation.TargetPropertyType;
 				if (!serializationContext.Result.Failed)
 				{
-					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "IList") != 0))
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, string.Empty) != 0))
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("targetPropertyType", propValue);
 					}
@@ -11733,7 +11737,7 @@ namespace Altinoren.ActiveWriter
 				global::System.String propValue = instanceOfManyToManyRelation.SourcePropertyType;
 				if (!serializationContext.Result.Failed)
 				{
-					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "IList") != 0))
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, string.Empty) != 0))
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("sourcePropertyType", propValue);
 					}
@@ -11745,7 +11749,7 @@ namespace Altinoren.ActiveWriter
 				global::System.String propValue = instanceOfManyToManyRelation.TargetPropertyType;
 				if (!serializationContext.Result.Failed)
 				{
-					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "IList") != 0))
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, string.Empty) != 0))
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("targetPropertyType", propValue);
 					}

@@ -2,6 +2,10 @@ New:
 - Model wide relation type, per-relation basis inheritable and overridable (Patch: Patrick Earl)
 - Custom CollectionType support  (Patch: Patrick Earl)
 - Better visual feedback when mouseover connector lines. (http://www.ticklishtechs.net/2008/06/26/visual-feedback-for-black-connectors-on-mouse-over/)
+- Custom collection types at the model level. (Patch: Patrick Earl)
+- CollectionID support for IdBag on many-to-many. (Patch: Patrick Earl)
+- Helper class for assisting in type registration. (Patch: Patrick Earl)
+- Optional property generation support. (Patch: Patrick Earl)
 
 Preview 4.1
 

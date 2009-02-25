@@ -92,7 +92,14 @@ namespace Altinoren.ActiveWriter
                         String.Format("Class {0} does not have a target column name on it's many to many relation to class {1}",
                                       relationship.Source.Name, relationship.Target.Name),
                         "AW001ValidateManyToManyValidity3Error", relationship);
-            }
+                if ((relationship.EffectiveSourceRelationType == RelationType.IdBag ||
+                     relationship.EffectiveTargetRelationType == RelationType.IdBag) &&
+                    String.IsNullOrEmpty(relationship.EffectiveCollectionIDColumn))
+                    context.LogError(
+                        String.Format("The many to many relationship between {0} and {1} must have a collection id column since it is an IdBag relationship.",
+                                      relationship.Source.Name, relationship.Target.Name),
+                        "AW001ValidateManyToManyValidity4Error", relationship);
+           }
         }
         
         [ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
