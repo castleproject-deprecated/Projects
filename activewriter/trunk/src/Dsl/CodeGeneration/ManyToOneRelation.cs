@@ -34,7 +34,7 @@ namespace Altinoren.ActiveWriter
         {
             CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("HasMany");
 
-            attribute.Arguments.Add(AttributeHelper.GetPrimitiveTypeAttributeArgument(CodeGenerationContext.GetTypeDeclaration(Source).Name));
+            attribute.Arguments.Add(AttributeHelper.GetPrimitiveTypeAttributeArgument(Source.Name));
             if (TargetAccess != PropertyAccess.Property)
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", TargetAccess));
             if (TargetCache != CacheEnum.Undefined)

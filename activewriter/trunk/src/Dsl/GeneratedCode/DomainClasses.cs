@@ -1052,7 +1052,6 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/GeneratesDoubleDerived.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/GeneratesDoubleDerived.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/GeneratesDoubleDerived.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.Browsable(false)]
 		[DslModeling::DomainObjectId("c2748bf4-55c5-42b0-8823-6ac381aab13e")]
 		public global::System.Boolean GeneratesDoubleDerived
 		{
@@ -1142,7 +1141,6 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/DoubleDerivedNameSuffix.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/DoubleDerivedNameSuffix.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue("Base")]
-		[global::System.ComponentModel.Browsable(false)]
 		[DslModeling::DomainObjectId("98f6b364-1d02-4613-b206-20bd6823b115")]
 		public global::System.String DoubleDerivedNameSuffix
 		{

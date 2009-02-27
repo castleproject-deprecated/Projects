@@ -58,12 +58,12 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="c2748bf4-55c5-42b0-8823-6ac381aab13e" Description="If true, will generate a base class with all functionality and a derived partial class to support customization through overrides." Name="GeneratesDoubleDerived" DisplayName="Generates Double Derived" DefaultValue="false" Category="Code Generation" IsBrowsable="false">
+        <DomainProperty Id="c2748bf4-55c5-42b0-8823-6ac381aab13e" Description="If true, will generate a base class with all functionality and a derived partial class to support customization through overrides." Name="GeneratesDoubleDerived" DisplayName="Generates Double Derived" DefaultValue="false" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="98f6b364-1d02-4613-b206-20bd6823b115" Description="Suffix appended to base class names in double derived code generation. Defaults to &quot;Base&quot;, if not supplied." Name="DoubleDerivedNameSuffix" DisplayName="Double Derived Name Suffix" DefaultValue="Base" IsBrowsable="false">
+        <DomainProperty Id="98f6b364-1d02-4613-b206-20bd6823b115" Description="Suffix appended to base class names in double derived code generation. Defaults to &quot;Base&quot;, if not supplied." Name="DoubleDerivedNameSuffix" DisplayName="Double Derived Name Suffix" DefaultValue="Base">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>

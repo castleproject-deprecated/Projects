@@ -6,6 +6,7 @@ New:
 - CollectionID support for IdBag on many-to-many. (Patch: Patrick Earl)
 - Helper class for assisting in type registration. (Patch: Patrick Earl)
 - Optional property generation support. (Patch: Patrick Earl)
+- support for double derived classes. (Patch: Patrick Earl)
 
 Preview 4.1
 
