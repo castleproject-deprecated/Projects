@@ -12,102 +12,103 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Reflection;
+using VSLangProj;
+
 namespace Altinoren.ActiveWriter.CodeGeneration
 {
     using System;
-    using System.Collections.Generic;
     using System.CodeDom;
-    using Microsoft.VisualStudio.Modeling;
+    using System.IO;
+    using EnvDTE;
+    using Microsoft.CSharp;
+    using Microsoft.VisualBasic;
+    using Microsoft.VisualStudio.TextTemplating;
+    using ServerExplorerSupport;
 
-    public static class CodeGenerationContext
+    public class CodeGenerationContext
     {
-        private static bool isInitialized;
-        private static Dictionary<ModelClass, CodeTypeDeclaration> classDeclarations;
-        private static Dictionary<NestedClass, CodeTypeDeclaration> nestedClassDeclarations;
-        private static List<string> generatedClassNames;
+        public string AssemblyName { get; private set; }
+        public CodeCompileUnit CompileUnit { get; private set; }
+        public string DefaultNamespace { get; private set; }
+        public DTE DTE { get; private set; }
+        public CodeLanguage Language { get; private set; }
+        public Model Model { get; private set; }
+        public string ModelFileName { get; private set; }
+        public string Namespace { get; private set; }
+        internal OutputWindowHelper Output { get; private set; }
+        public ProjectItem ProjectItem { get; private set; }
+        public CodeDomProvider Provider { get; private set; }
+        public ITextTemplatingEngineHost TextTemplatingHost { get; private set; }
 
-        public static void Initialize()
+        /// <summary>
+        /// This is the output from the code generation that is written out by the ActiveWriterReport.tt template.
+        /// </summary>
+        public string PrimaryOutput { get; set; }
+
+        public string ModelFilePath
         {
-            classDeclarations = new Dictionary<ModelClass, CodeTypeDeclaration>();
-            nestedClassDeclarations = new Dictionary<NestedClass, CodeTypeDeclaration>();
-            generatedClassNames = new List<string>();
-
-            isInitialized = true;
+            get { return Path.GetDirectoryName(ModelFileName); }
         }
 
-        public static void AddClass(ModelElement cls, CodeTypeDeclaration declaration)
+        public string ModelName
         {
-            if (!isInitialized)
-                throw new ArgumentException("CodeGenerationContext must first be initialized");
-            if (cls == null)
-                throw new ArgumentNullException("cls", "No class supplied");
-            if (declaration == null)
-                throw new ArgumentNullException("declaration", "No CodeTypeDeclaration supplied");
+            get { return Path.GetFileNameWithoutExtension(ModelFileName); }
+        }
 
-            if (cls.GetType() == typeof(ModelClass))
-            {
-                ModelClass modelClass = (ModelClass)cls;
-                if (!classDeclarations.ContainsKey(modelClass))
-                    classDeclarations.Add(modelClass, declaration);
-            }
-            else if (cls.GetType() == typeof(NestedClass))
-            {
-                NestedClass nestedClass = (NestedClass)cls;
-                if (!nestedClassDeclarations.ContainsKey(nestedClass))
-                    nestedClassDeclarations.Add(nestedClass, declaration);
-            }
+        public string HelperClassName
+        {
+            get { return ModelName + "Helper"; }
+        }
+
+        public string InternalPropertyAccessorName
+        {
+            get { return ModelName + "InternalPropertyAccessor"; }
+        }
+
+        public CodeGenerationContext(Model model, string nameSpace, string processID, string modelFileFullName, ITextTemplatingEngineHost textTemplatingHost)
+        {
+            CompileUnit = new CodeCompileUnit();
+
+            Model = model;
+            if (string.IsNullOrEmpty(Model.Namespace))
+                Namespace = nameSpace;
             else
-                throw new ArgumentException("Only ModelClass and NestedClass entities supported", "cls");
+                Namespace = Model.Namespace;
 
-            generatedClassNames.Add(((NamedElement)cls).Name);
-        }
-        
-        public static CodeTypeDeclaration GetTypeDeclaration(ModelElement cls)
-        {
-            if (!isInitialized)
-                throw new ArgumentException("CodeGenerationContext must first be initialized");
-            if (cls == null)
-                throw new ArgumentNullException("cls", "No class supplied");
+            DTE = DTEHelper.GetDTE(processID);
 
-            if (cls.GetType() == typeof(ModelClass))
+            TextTemplatingHost = textTemplatingHost;
+
+            ModelFileName = modelFileFullName;
+
+            ProjectItem = DTE.Solution.FindProjectItem(ModelFileName);
+            AssemblyName = DTEHelper.GetAssemblyName(ProjectItem.ContainingProject);
+
+            Language = DTEHelper.GetProjectLanguage(ProjectItem.ContainingProject);
+            switch (Language)
             {
-                return classDeclarations[(ModelClass)cls];
-            }
-            if (cls.GetType() == typeof(NestedClass))
-            {
-                return nestedClassDeclarations[(NestedClass)cls];
-            }
-            
-            throw new ArgumentException("Only ModelClass and NestedClass entities supported", "cls");
-        }
+                case CodeLanguage.CSharp:
+                    Provider = new CSharpCodeProvider();
+                    break;
+                case CodeLanguage.VB:
+                    Provider = new VBCodeProvider();
 
-        public static bool IsClassGenerated(ModelElement cls)
-        {
-            if (!isInitialized)
-                throw new ArgumentException("CodeGenerationContext must first be initialized");
-            if (cls == null)
-                throw new ArgumentNullException("cls", "No class supplied");
+                    // use VB default namespace if it was set
+                    VSProject project = (VSProject)ProjectItem.ContainingProject.Object;
+                    Property DefaultNamespaceProperty = project.Project.Properties.Item("DefaultNamespace");
 
-            if (cls.GetType() == typeof(ModelClass))
-            {
-                return classDeclarations.ContainsKey((ModelClass)cls);
+                    DefaultNamespace = (string)DefaultNamespaceProperty.Value;
+
+                    break;
+                default:
+                    throw new ArgumentException(
+                        "Unsupported project type. ActiveWriter currently supports C# and Visual Basic.NET projects.");
             }
-            if (cls.GetType() == typeof(NestedClass))
-            {
-                return nestedClassDeclarations.ContainsKey((NestedClass)cls);
-            }
-            
-            throw new ArgumentException("Only ModelClass and NestedClass entities supported", "cls");
-        }
 
-        public static bool IsClassWithSameNameGenerated(string name)
-        {
-            if (!isInitialized)
-                throw new ArgumentException("CodeGenerationContext must first be initialized");
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name", "Name not supplied");
-
-            return generatedClassNames.Contains(name);
+            Output = new OutputWindowHelper(DTE);
         }
     }
 }

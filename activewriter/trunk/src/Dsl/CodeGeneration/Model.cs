@@ -24,14 +24,6 @@ namespace Altinoren.ActiveWriter
 
         public string ModelFileFullName { get; set; } // Set by DocData when the model is loaded.
 
-        public string HelperName
-        {
-            get
-            {
-                return (ModelName ?? "") + "Helper";
-            }
-        }   
-
         #region Public Code Generation Methods
 
         public List<CodeNamespaceImport> NamespaceImports

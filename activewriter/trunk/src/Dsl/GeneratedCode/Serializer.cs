@@ -809,23 +809,6 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
-			// ModelName
-			if (!serializationContext.Result.Failed)
-			{
-				string attribModelName = reader.GetAttribute("modelName");
-				if (attribModelName != null)
-				{
-					global::System.String valueOfModelName;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribModelName), out valueOfModelName))
-					{
-						instanceOfModel.ModelName = valueOfModelName;
-					}
-					else
-					{	// Invalid property value, ignored.
-						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "modelName", typeof(global::System.String), attribModelName);
-					}
-				}
-			}
 		}
 	
 		/// <summary>
@@ -1917,18 +1900,6 @@ namespace Altinoren.ActiveWriter
 				{
 					if (!string.IsNullOrEmpty(propValue))
 						writer.WriteAttributeString("automaticAssociationCollectionImplementation", propValue);
-				}
-			}
-			// ModelName
-			if (!serializationContext.Result.Failed)
-			{
-				global::System.String propValue = instanceOfModel.ModelName;
-				if (!serializationContext.Result.Failed)
-				{
-					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "Model") != 0))
-					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("modelName", propValue);
-					}
 				}
 			}
 		}

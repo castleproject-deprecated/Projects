@@ -621,18 +621,6 @@
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;AutomaticAssociationCollectionImplementation&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
-  <data name="Altinoren.ActiveWriter.Model/ModelName.Description" xml:space="preserve">
-    <value>A name for the entire model that is used as a prefix for various helper classes.  If there are multiple models in the same namespace, each model should have a unique value for this property to avoid class name conflicts.</value>
-    <comment>Description for DomainProperty &apos;ModelName&apos; on DomainClass &apos;Model&apos;</comment>
-  </data>
-  <data name="Altinoren.ActiveWriter.Model/ModelName.DisplayName" xml:space="preserve">
-    <value>Model Name</value>
-    <comment>DisplayName for DomainProperty &apos;ModelName&apos; on DomainClass &apos;Model&apos;</comment>
-  </data>
-  <data name="Altinoren.ActiveWriter.Model/ModelName.Category" xml:space="preserve">
-    <value>Code Generation</value>
-    <comment>Category for DomainProperty &apos;ModelName&apos; on DomainClass &apos;Model&apos;</comment>
-  </data>
   <data name="Altinoren.ActiveWriter.ModelClass.Description" xml:space="preserve">
     <value>A class of the domain</value>
     <comment>Description for DomainClass &apos;ModelClass&apos;</comment>

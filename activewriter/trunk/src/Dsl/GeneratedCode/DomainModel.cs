@@ -135,7 +135,6 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(Model), "ManyToOneIUserCollectionType", Model.ManyToOneIUserCollectionTypeDomainPropertyId, typeof(Model.ManyToOneIUserCollectionTypePropertyHandler)),
 				new DomainMemberInfo(typeof(Model), "AutomaticAssociations", Model.AutomaticAssociationsDomainPropertyId, typeof(Model.AutomaticAssociationsPropertyHandler)),
 				new DomainMemberInfo(typeof(Model), "AutomaticAssociationCollectionImplementation", Model.AutomaticAssociationCollectionImplementationDomainPropertyId, typeof(Model.AutomaticAssociationCollectionImplementationPropertyHandler)),
-				new DomainMemberInfo(typeof(Model), "ModelName", Model.ModelNameDomainPropertyId, typeof(Model.ModelNamePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "Cache", ModelClass.CacheDomainPropertyId, typeof(ModelClass.CachePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "DiscriminatorColumn", ModelClass.DiscriminatorColumnDomainPropertyId, typeof(ModelClass.DiscriminatorColumnPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "DiscriminatorType", ModelClass.DiscriminatorTypeDomainPropertyId, typeof(ModelClass.DiscriminatorTypePropertyHandler)),

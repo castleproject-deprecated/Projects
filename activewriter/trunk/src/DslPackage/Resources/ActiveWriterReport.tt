@@ -22,22 +22,22 @@ limitations under the License.
 <#@ import namespace="System.Collections" #>
 <#@ import namespace="Altinoren.ActiveWriter.ServerExplorerSupport" #>
 <#
-	Hashtable propertyBag = new Hashtable();
-	propertyBag.Add("Generic.Model", this.Model);
-	propertyBag.Add("Generic.Namespace", "%NAMESPACE%");
-	propertyBag.Add("Generic.ProcessID", "%PID%");
-	propertyBag.Add("Generic.ModelFileFullName", @"%MODELFILEFULLNAME%");
-	propertyBag.Add("Generic.Host", this.Host);
-	
-	CodeGenerationHelper helper = new CodeGenerationHelper(propertyBag);
+    CodeGenerationContext context = new CodeGenerationContext(
+        this.Model,
+        "%NAMESPACE%",
+        "%PID%",
+        @"%MODELFILEFULLNAME%",
+        this.Host);
+        
+	CodeGenerationHelper helper = new CodeGenerationHelper(context);
 	helper.Generate();
 	
-	this.Write(propertyBag["CodeGeneration.PrimaryOutput"].ToString());
+	this.Write(context.PrimaryOutput);
 	
 	// Disabled. Will be implemented in the plugin interface in the future.
 	/*if (this.Model.GenerateMonoRailProject)
 	{
-		MonoRailGenerator monoRailGenerator = new MonoRailGenerator(propertyBag);
+		MonoRailGenerator monoRailGenerator = new MonoRailGenerator(context);
 		monoRailGenerator.Generate();
 	}*/
 #>

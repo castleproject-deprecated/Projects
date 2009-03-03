@@ -25,86 +25,29 @@ namespace Altinoren.ActiveWriter.CodeGeneration
     using System.Reflection;
     using System.Text;
     using System.Xml;
-    using Microsoft.CSharp;
     using Microsoft.VisualBasic;
     using EnvDTE;
-    using System.ComponentModel.Design;
     using Microsoft.VisualStudio.Modeling;
     using ServerExplorerSupport;
     using VSLangProj;
-    using Microsoft.VisualStudio.TextTemplating;
     using CodeNamespace = System.CodeDom.CodeNamespace;
 
     public class CodeGenerationHelper
     {
         #region Private Variables
 
+        private CodeGenerationContext Context { get; set; }
+
+        private Dictionary<string, string> _nHibernateConfigs = new Dictionary<string, string>();
         private Assembly _activeRecord;
-        private Dictionary<string, string> nHibernateConfigs = new Dictionary<string, string>();
-        private string _assemblyLoadPath;
-
-        private CodeDomProvider _provider;
-        private OutputWindowHelper _output;
-        private Model _model;
-        private string _namespace;
-        private string _defaultNamespace;
-
-        private Hashtable _propertyBag = null;
-        private DTE _dte = null;
-        private ITextTemplatingEngineHost _textTemplatingHost;
-
-        private string _modelFileName = null;
-        private string _modelFilePath = null;
-        private ProjectItem _projectItem = null;
-		private CodeLanguage _language = CodeLanguage.CSharp;
 
         #endregion
 
         #region ctors
 
-        public CodeGenerationHelper(Hashtable propertyBag)
+        public CodeGenerationHelper(CodeGenerationContext context)
         {
-            _propertyBag = propertyBag;
-            _model = (Model)propertyBag["Generic.Model"];
-            if (string.IsNullOrEmpty(_model.Namespace))
-                _namespace = propertyBag["Generic.Namespace"].ToString();
-            else
-                _namespace = _model.Namespace;
-
-
-            _dte = DTEHelper.GetDTE(_propertyBag["Generic.ProcessID"].ToString());
-            _propertyBag.Add("Generic.DTE", _dte);
-
-            _textTemplatingHost = propertyBag["Generic.Host"] as ITextTemplatingEngineHost;
-
-            _modelFileName = (string)_propertyBag["Generic.ModelFileFullName"];
-            _modelFilePath = Path.GetDirectoryName(_modelFileName);
-            _projectItem = _dte.Solution.FindProjectItem(_modelFileName);
-
-            _language = DTEHelper.GetProjectLanguage(_projectItem.ContainingProject);
-            switch (_language)
-            {
-                case CodeLanguage.CSharp:
-                    _provider = new CSharpCodeProvider();
-                    _propertyBag.Add("Generic.Language", CodeLanguage.CSharp);
-                    break;
-                case CodeLanguage.VB:
-                    _provider = new VBCodeProvider();
-                    _propertyBag.Add("Generic.Language", CodeLanguage.VB);
-
-                    // use VB default namespace if it was set
-                    VSProject project = (VSProject)_projectItem.ContainingProject.Object;
-                    Property DefaultNamespaceProperty = project.Project.Properties.Item("DefaultNamespace");
-
-                    _defaultNamespace = (string)DefaultNamespaceProperty.Value;
-
-                    break;
-                default:
-                    throw new ArgumentException(
-                        "Unsupported project type. ActiveWriter currently supports C# and Visual Basic.NET projects.");
-            }
-
-            _output = new OutputWindowHelper(_dte);
+            Context = context;
         }
 
         #endregion
@@ -113,60 +56,50 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         public void Generate()
         {
-            CodeGenerationContext.Initialize();
-
-            CodeCompileUnit compileUnit = new CodeCompileUnit();
-
-            if (_language == CodeLanguage.VB)
+            if (Context.Language == CodeLanguage.VB)
             {
                 // turn option strict on for VB if in project settings
 
-                VSProject project = (VSProject) _projectItem.ContainingProject.Object;
+                VSProject project = (VSProject) Context.ProjectItem.ContainingProject.Object;
                 Property prop = project.Project.Properties.Item("OptionExplicit");
 
                 if ((prjOptionStrict) prop.Value == prjOptionStrict.prjOptionStrictOn)
                 {
-                    compileUnit.UserData.Add("AllowLateBound", false);
+                    Context.CompileUnit.UserData.Add("AllowLateBound", false);
                 }
             }
-            
-            _propertyBag.Add("CodeGeneration.CodeCompileUnit", compileUnit);
 
-            CodeNamespace nameSpace = new CodeNamespace(_namespace);
-            nameSpace.Imports.AddRange(_model.NamespaceImports.ToArray());
-            compileUnit.Namespaces.Add(nameSpace);
+            CodeNamespace nameSpace = new CodeNamespace(Context.Namespace);
+            nameSpace.Imports.AddRange(Context.Model.NamespaceImports.ToArray());
+            Context.CompileUnit.Namespaces.Add(nameSpace);
 
-            foreach (ModelClass cls in _model.Classes)
+            foreach (ModelClass cls in Context.Model.Classes)
             {
                 GenerateClass(cls, nameSpace);
             }
 
-            // Just to make sure if there are nested classes not conneced to a class, they are generated.
-            foreach (NestedClass cls in _model.NestedClasses)
+            foreach (NestedClass cls in Context.Model.NestedClasses)
             {
                 GenerateNestedClass(cls, nameSpace);
             }
 
-            if (_model.GenerateMetaData != MetaDataGeneration.False)
+            if (Context.Model.GenerateMetaData != MetaDataGeneration.False)
             {
                 GenerateMetaData(nameSpace);
             }
 
             GenerateHelperClass(nameSpace);
 
-            _assemblyLoadPath = _model.AssemblyPath;
-
-            if (_model.Target == CodeGenerationTarget.ActiveRecord)
+            if (Context.Model.Target == CodeGenerationTarget.ActiveRecord)
             {
-                string primaryOutput = GenerateCode(compileUnit);
-                _propertyBag.Add("CodeGeneration.PrimaryOutput", primaryOutput);
+                Context.PrimaryOutput = GenerateCode(Context.CompileUnit);
 
-                if (_model.UseNHQG)
+                if (Context.Model.UseNHQG)
                 {
                     try
                     {
                         AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
-                        Assembly assembly = GenerateARAssembly(compileUnit, false);
+                        Assembly assembly = GenerateARAssembly(Context.CompileUnit, false);
                         UseNHQG(assembly);
                     }
                     finally
@@ -180,12 +113,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 Type starter = null;
                 Assembly assembly = null;
 
+                AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(AssemblyResolve);
                 try
                 {
-                    AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(AssemblyResolve);
+                    _activeRecord = Assembly.Load(Context.Model.ActiveRecordAssemblyName);
 
                     // Code below means: ActiveRecordStarter.ModelsCreated += new ModelsCreatedDelegate(OnARModelCreated);
-                    _activeRecord = Assembly.Load(_model.ActiveRecordAssemblyName);
                     starter = _activeRecord.GetType("Castle.ActiveRecord.ActiveRecordStarter");
                     EventInfo eventInfo = starter.GetEvent("ModelsCreated");
                     Type eventType = eventInfo.EventHandlerType;
@@ -194,7 +127,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     Delegate del = Delegate.CreateDelegate(eventType, this, info);
                     eventInfo.AddEventHandler(this, del);
 
-                    assembly = GenerateARAssembly(compileUnit, !_model.UseNHQG);
+                    assembly = GenerateARAssembly(Context.CompileUnit, !Context.Model.UseNHQG);
                 }
                 finally
                 {
@@ -219,13 +152,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     if (!ex.InnerException.Message.StartsWith("Could not find configuration for"))
                         throw;
                 }
-                ClearARAttributes(compileUnit);
-                string primaryOutput = GenerateCode(compileUnit);
-                _propertyBag.Add("CodeGeneration.PrimaryOutput", primaryOutput);
+                ClearARAttributes(Context.CompileUnit);
+                Context.PrimaryOutput = GenerateCode(Context.CompileUnit);
 
-                foreach (KeyValuePair<string, string> pair in nHibernateConfigs)
+                foreach (KeyValuePair<string, string> pair in _nHibernateConfigs)
                 {
-                    string path = Path.Combine(_modelFilePath, RemoveNamespaceFromStart(pair.Key) + ".hbm.xml");
+                    string path = Path.Combine(Context.ModelFilePath, RemoveNamespaceFromStart(pair.Key) + ".hbm.xml");
                     using (StreamWriter writer = new StreamWriter(path, false, Encoding.Unicode))
                     {
                         writer.Write(pair.Value);
@@ -234,7 +166,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     AddToProject(path, prjBuildAction.prjBuildActionEmbeddedResource);
                 }
 
-                if (_model.UseNHQG)
+                if (Context.Model.UseNHQG)
                 {
                    UseNHQG(assembly);
                 }
@@ -304,8 +236,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 classDeclaration.CustomAttributes.Add(cls.GetActiveRecordAttribute());
             if (cls.Model.UseGeneratedCodeAttribute)
                 classDeclaration.CustomAttributes.Add(AttributeHelper.GetGeneratedCodeAttribute());
-            // Make a note as "generated" to prevent recursive generation attempts
-            CodeGenerationContext.AddClass(cls, classDeclaration);
 
             nameSpace.Types.Add(classDeclaration);
             return classDeclaration;
@@ -334,8 +264,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             if (cls.Model.UseGeneratedCodeAttribute)
                 classDeclaration.CustomAttributes.Add(AttributeHelper.GetGeneratedCodeAttribute());
-            // Make a note as "generated" to prevent recursive generation attempts
-            CodeGenerationContext.AddClass(cls, classDeclaration);
 
             nameSpace.Types.Add(classDeclaration);
             return classDeclaration;
@@ -441,7 +369,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             xor.Parameters.Add(new CodeParameterDeclarationExpression(typeof(Int32), "left"));
             xor.Parameters.Add(new CodeParameterDeclarationExpression(typeof(Int32), "right"));
             xor.Name = Common.XorHelperMethod;
-            if (_provider is VBCodeProvider)
+            if (Context.Provider is VBCodeProvider)
                 xor.Statements.Add(new CodeMethodReturnStatement(new CodeSnippetExpression("left XOR right")));
             else
                 xor.Statements.Add(new CodeMethodReturnStatement(new CodeSnippetExpression("left ^ right")));
@@ -676,9 +604,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CodeMemberProperty memberProperty =
                 GetMemberPropertyWithoutType(memberField, propertyName, get, set, implementINotifyPropertyChanged, implementINotifyPropertyChanging, description);
 
-			if (_model.UseNullables != NullableUsage.No && TypeHelper.IsNullable(propertyType) && !propertyNotNull)
+			if (Context.Model.UseNullables != NullableUsage.No && TypeHelper.IsNullable(propertyType) && !propertyNotNull)
             {
-                if (_model.UseNullables == NullableUsage.WithHelperLibrary)
+                if (Context.Model.UseNullables == NullableUsage.WithHelperLibrary)
                     memberProperty.Type = TypeHelper.GetNullableTypeReferenceForHelper(propertyType);
                 else
                     memberProperty.Type = TypeHelper.GetNullableTypeReference(propertyType);
@@ -707,7 +635,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             memberProperty.Name = propertyName;
 
-            if (_model.UseVirtualProperties)
+            if (Context.Model.UseVirtualProperties)
                 memberProperty.Attributes = MemberAttributes.Public;
             else
                 memberProperty.Attributes = MemberAttributes.Public | MemberAttributes.Final;
@@ -783,9 +711,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private CodeMemberField GetMemberFieldOfProperty(ModelProperty property, Accessor accessor)
         {
-            if (_model.UseNullables != NullableUsage.No && TypeHelper.IsNullable(property.ColumnType) && !property.NotNull)
+            if (Context.Model.UseNullables != NullableUsage.No && TypeHelper.IsNullable(property.ColumnType) && !property.NotNull)
 			{
-			    if (_model.UseNullables == NullableUsage.WithHelperLibrary)
+                if (Context.Model.UseNullables == NullableUsage.WithHelperLibrary)
                     return GetMemberField(property.Name, TypeHelper.GetNullableTypeReferenceForHelper(property.ColumnType), accessor, property.Access);
 			    
                 return GetMemberField(property.Name, TypeHelper.GetNullableTypeReference(property.ColumnType), accessor, property.Access);
@@ -846,7 +774,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CodeMemberField memberField = GetMemberFieldWithoutType(name, accessor, access);
 
             CodeTypeReference type = new CodeTypeReference(fieldType);
-            if (!TypeHelper.ContainsGenericDecleration(fieldType, _language))
+            if (!TypeHelper.ContainsGenericDecleration(fieldType, Context.Language))
             {
                 type.TypeArguments.Add(typeName);
             }
@@ -859,7 +787,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         {
             CodeMemberField memberField = GetMemberFieldWithoutTypeAndName(accessor);
 
-            memberField.Name = NamingHelper.GetName(name, access, _model.CaseOfPrivateFields);
+            memberField.Name = NamingHelper.GetName(name, access, Context.Model.CaseOfPrivateFields);
 
             return memberField;
         }
@@ -935,7 +863,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                       ? NamingHelper.GetPlural(className)
                                       : customPropertyName;
             string propertyType = String.IsNullOrEmpty(customPropertyType)
-                                      ? _model.EffectiveListInterface
+                                      ? Context.Model.EffectiveListInterface
                                       : customPropertyType;
 
             CodeMemberField memberField;
@@ -948,7 +876,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             // Initializes the collection by assigning a new list instance to the field.
             // Many-to-many relationships never had the initialization code enabled before.
             // Automatic associations initialize their lists in the constructor instead.
-            if (_model.InitializeIListFields && propertyType == _model.EffectiveListInterface && !_model.AutomaticAssociations)
+            if (Context.Model.InitializeIListFields && propertyType == Context.Model.EffectiveListInterface && !Context.Model.AutomaticAssociations)
             {
                 CodeObjectCreateExpression fieldCreator = new CodeObjectCreateExpression();
                 fieldCreator.CreateType = GetConcreteListType(className);
@@ -1107,15 +1035,13 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         #region Nested
 
-        private void GenerateNestingRelationFromRelationship(CodeTypeDeclaration classDeclaration, CodeNamespace nameSpace, NestedClassReferencesModelClasses relationship)
+        private void GenerateNestingRelationFromRelationship(CodeTypeDeclaration classDeclaration, NestedClassReferencesModelClasses relationship)
         {
-            CodeTypeDeclaration sourceClass = GenerateNestedClass(relationship.NestedClass, nameSpace);
-
             string propertyName = String.IsNullOrEmpty(relationship.PropertyName)
-                          ? sourceClass.Name
+                          ? relationship.NestedClass.Name
                           : relationship.PropertyName;
 
-            CodeMemberField memberField = GetMemberField(propertyName, sourceClass.Name, Accessor.Private, PropertyAccess.Property);
+            CodeMemberField memberField = GetMemberField(propertyName, relationship.NestedClass.Name, Accessor.Private, PropertyAccess.Property);
             classDeclaration.Members.Add(memberField);
 
             CodeMemberProperty memberProperty;
@@ -1167,32 +1093,22 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (String.IsNullOrEmpty(cls.Name))
                 throw new ArgumentException("Class name cannot be blank", "cls");
 
-            if (!CodeGenerationContext.IsClassGenerated(cls))
+            CodeTypeDeclaration classDeclaration = GetNestedClassDeclaration(cls, nameSpace);
+
+            // Properties and Fields
+            foreach (var property in cls.Properties)
             {
-                if (CodeGenerationContext.IsClassWithSameNameGenerated(cls.Name))
-                    throw new ArgumentException(
-                        "Ambiguous class name. Code for a class with the same name already generated. Please use a different name.",
-                        cls.Name);
+                CodeMemberField memberField = GetMemberField(classDeclaration, property);
 
-                CodeTypeDeclaration classDeclaration = GetNestedClassDeclaration(cls, nameSpace);
+                classDeclaration.Members.Add(memberField);
 
-                // Properties and Fields
-                foreach (var property in cls.Properties)
-                {
-                    CodeMemberField memberField = GetMemberField(classDeclaration, property);
-
-                    classDeclaration.Members.Add(memberField);
-
-                    if (property.DebuggerDisplay)
-                        classDeclaration.CustomAttributes.Add(property.GetDebuggerDisplayAttribute());
-                    if (property.DefaultMember)
-                        classDeclaration.CustomAttributes.Add(property.GetDefaultMemberAttribute());
-                }
-
-                return classDeclaration;
+                if (property.DebuggerDisplay)
+                    classDeclaration.CustomAttributes.Add(property.GetDebuggerDisplayAttribute());
+                if (property.DefaultMember)
+                    classDeclaration.CustomAttributes.Add(property.GetDefaultMemberAttribute());
             }
-            
-            return CodeGenerationContext.GetTypeDeclaration(cls);
+
+            return classDeclaration;
         }
 
         private CodeTypeDeclaration GenerateClass(ModelClass cls, CodeNamespace nameSpace)
@@ -1204,107 +1120,97 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (String.IsNullOrEmpty(cls.Name))
                 throw new ArgumentException("Class name cannot be blank", "cls");
 
-            if (!CodeGenerationContext.IsClassGenerated(cls))
+            CodeTypeDeclaration classDeclaration = GetClassDeclaration(cls, nameSpace);
+
+            List<ModelProperty> compositeKeys = new List<ModelProperty>();
+
+            // Properties and Fields
+            foreach (ModelProperty property in cls.Properties)
             {
-                if (CodeGenerationContext.IsClassWithSameNameGenerated(cls.Name))
-                    throw new ArgumentException(
-                        "Ambiguous class name. Code for a class with the same name already generated. Please use a different name.",
-                        cls.Name);
-
-                CodeTypeDeclaration classDeclaration = GetClassDeclaration(cls, nameSpace);
-
-                List<ModelProperty> compositeKeys = new List<ModelProperty>();
-
-                // Properties and Fields
-                foreach (ModelProperty property in cls.Properties)
+                if (property.KeyType != KeyType.CompositeKey)
                 {
-                    if (property.KeyType != KeyType.CompositeKey)
-                    {
-                        CodeMemberField memberField = GetMemberField(classDeclaration, property);
+                    CodeMemberField memberField = GetMemberField(classDeclaration, property);
 
-                        classDeclaration.Members.Add(memberField);
-
-                        if (property.DebuggerDisplay)
-                            classDeclaration.CustomAttributes.Add(property.GetDebuggerDisplayAttribute());
-                        if (property.DefaultMember)
-                            classDeclaration.CustomAttributes.Add(property.GetDefaultMemberAttribute());
-                    }
-                    else
-                        compositeKeys.Add(property);
-                }
-
-                if (compositeKeys.Count > 0)
-                {
-                    CodeTypeDeclaration compositeClass =
-                        GetCompositeClassDeclaration(nameSpace, classDeclaration, compositeKeys, cls.DoesImplementINotifyPropertyChanged());
-
-                    // TODO: All access fields in a composite group assumed to be the same.
-                    // We have a model validator for this case but the user may save anyway.
-                    // Check if all access fields are the same.
-                    CodeMemberField memberField = GetPrivateMemberFieldOfCompositeClass(compositeClass, PropertyAccess.Property);
                     classDeclaration.Members.Add(memberField);
 
-                    classDeclaration.Members.Add(GetActiveRecordMemberCompositeKeyProperty(compositeClass, memberField, cls.DoesImplementINotifyPropertyChanged(), cls.DoesImplementINotifyPropertyChanging()));
+                    if (property.DebuggerDisplay)
+                        classDeclaration.CustomAttributes.Add(property.GetDebuggerDisplayAttribute());
+                    if (property.DefaultMember)
+                        classDeclaration.CustomAttributes.Add(property.GetDefaultMemberAttribute());
                 }
-
-                //ManyToOne links where this class is the target (1-n)
-                ReadOnlyCollection<ManyToOneRelation> manyToOneSources = ManyToOneRelation.GetLinksToSources(cls);
-                foreach (ManyToOneRelation relationship in manyToOneSources)
-                {
-                    GenerateHasManyRelation(classDeclaration, nameSpace, relationship);
-                }
-
-                //ManyToOne links where this class is the source (n-1)
-                ReadOnlyCollection<ManyToOneRelation> manyToOneTargets = ManyToOneRelation.GetLinksToTargets(cls);
-                foreach (ManyToOneRelation relationship in manyToOneTargets)
-                {
-                    GenerateBelongsToRelation(classDeclaration, nameSpace, relationship);
-                }
-
-                //ManyToMany links where this class is the source
-                ReadOnlyCollection<ManyToManyRelation> manyToManyTargets = ManyToManyRelation.GetLinksToManyToManyTargets(cls);
-                foreach (ManyToManyRelation relationship in manyToManyTargets)
-                {
-                    GenerateHasAndBelongsToRelationFromTargets(classDeclaration, nameSpace, relationship);
-                }
-
-                //ManyToMany links where this class is the target
-                ReadOnlyCollection<ManyToManyRelation> manyToManySources = ManyToManyRelation.GetLinksToManyToManySources(cls);
-                foreach (ManyToManyRelation relationship in manyToManySources)
-                {
-                    GenerateHasAndBelongsToRelationFromSources(classDeclaration, nameSpace, relationship);
-                }
-
-                //OneToOne link where this class is the source
-                OneToOneRelation oneToOneTarget = OneToOneRelation.GetLinkToOneToOneTarget(cls);
-                if (oneToOneTarget != null)
-                {
-                    GenerateOneToOneRelationFromTarget(classDeclaration, nameSpace, oneToOneTarget);
-                }
-
-                //OneToOne links where this class is the target
-                ReadOnlyCollection<OneToOneRelation> oneToOneSources = OneToOneRelation.GetLinksToOneToOneSources(cls);
-                foreach (OneToOneRelation relationship in oneToOneSources)
-                {
-                    GenerateOneToOneRelationFromSources(classDeclaration, nameSpace, relationship);
-                }
-
-                //Nested links
-                ReadOnlyCollection<NestedClassReferencesModelClasses> nestingTargets =
-                    NestedClassReferencesModelClasses.GetLinksToNestedClasses(cls);
-                foreach (NestedClassReferencesModelClasses relationship in nestingTargets)
-                {
-                    GenerateNestingRelationFromRelationship(classDeclaration, nameSpace, relationship);
-                }
-
-                // TODO: Other relation types (any etc)
-
-                GenerateDerivedClass(cls, nameSpace);
-
-                return classDeclaration;
+                else
+                    compositeKeys.Add(property);
             }
-            
-            return CodeGenerationContext.GetTypeDeclaration(cls);
+
+            if (compositeKeys.Count > 0)
+            {
+                CodeTypeDeclaration compositeClass =
+                    GetCompositeClassDeclaration(nameSpace, classDeclaration, compositeKeys, cls.DoesImplementINotifyPropertyChanged());
+
+                // TODO: All access fields in a composite group assumed to be the same.
+                // We have a model validator for this case but the user may save anyway.
+                // Check if all access fields are the same.
+                CodeMemberField memberField = GetPrivateMemberFieldOfCompositeClass(compositeClass, PropertyAccess.Property);
+                classDeclaration.Members.Add(memberField);
+
+                classDeclaration.Members.Add(GetActiveRecordMemberCompositeKeyProperty(compositeClass, memberField, cls.DoesImplementINotifyPropertyChanged(), cls.DoesImplementINotifyPropertyChanging()));
+            }
+
+            //ManyToOne links where this class is the target (1-n)
+            ReadOnlyCollection<ManyToOneRelation> manyToOneSources = ManyToOneRelation.GetLinksToSources(cls);
+            foreach (ManyToOneRelation relationship in manyToOneSources)
+            {
+                GenerateHasManyRelation(classDeclaration, nameSpace, relationship);
+            }
+
+            //ManyToOne links where this class is the source (n-1)
+            ReadOnlyCollection<ManyToOneRelation> manyToOneTargets = ManyToOneRelation.GetLinksToTargets(cls);
+            foreach (ManyToOneRelation relationship in manyToOneTargets)
+            {
+                GenerateBelongsToRelation(classDeclaration, nameSpace, relationship);
+            }
+
+            //ManyToMany links where this class is the source
+            ReadOnlyCollection<ManyToManyRelation> manyToManyTargets = ManyToManyRelation.GetLinksToManyToManyTargets(cls);
+            foreach (ManyToManyRelation relationship in manyToManyTargets)
+            {
+                GenerateHasAndBelongsToRelationFromTargets(classDeclaration, nameSpace, relationship);
+            }
+
+            //ManyToMany links where this class is the target
+            ReadOnlyCollection<ManyToManyRelation> manyToManySources = ManyToManyRelation.GetLinksToManyToManySources(cls);
+            foreach (ManyToManyRelation relationship in manyToManySources)
+            {
+                GenerateHasAndBelongsToRelationFromSources(classDeclaration, nameSpace, relationship);
+            }
+
+            //OneToOne link where this class is the source
+            OneToOneRelation oneToOneTarget = OneToOneRelation.GetLinkToOneToOneTarget(cls);
+            if (oneToOneTarget != null)
+            {
+                GenerateOneToOneRelationFromTarget(classDeclaration, nameSpace, oneToOneTarget);
+            }
+
+            //OneToOne links where this class is the target
+            ReadOnlyCollection<OneToOneRelation> oneToOneSources = OneToOneRelation.GetLinksToOneToOneSources(cls);
+            foreach (OneToOneRelation relationship in oneToOneSources)
+            {
+                GenerateOneToOneRelationFromSources(classDeclaration, nameSpace, relationship);
+            }
+
+            //Nested links
+            ReadOnlyCollection<NestedClassReferencesModelClasses> nestingTargets =
+                NestedClassReferencesModelClasses.GetLinksToNestedClasses(cls);
+            foreach (NestedClassReferencesModelClasses relationship in nestingTargets)
+            {
+                GenerateNestingRelationFromRelationship(classDeclaration, relationship);
+            }
+
+            // TODO: Other relation types (any etc)
+
+            GenerateDerivedClass(cls, nameSpace);
+
+            return classDeclaration;
         }
 
         public static CodeExpression GetBooleanAnd(List<CodeExpression> expressions, int i)
@@ -1351,7 +1257,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             StringBuilder sb = new StringBuilder();
             using (StringWriter sw = new StringWriter(sb))
             {
-                _provider.GenerateCodeFromCompileUnit(compileUnit, sw, new CodeGeneratorOptions());
+                Context.Provider.GenerateCodeFromCompileUnit(compileUnit, sw, new CodeGeneratorOptions());
             }
 
             return sb.ToString();
@@ -1362,7 +1268,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             System.Diagnostics.Process nhqg = new System.Diagnostics.Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
 
-            string tempFilePath = Path.Combine(DTEHelper.GetIntermediatePath(DTEHelper.GetVSProject(_projectItem)), "ActiveWriterHbmOutput");
+            string tempFilePath = Path.Combine(DTEHelper.GetIntermediatePath(DTEHelper.GetVSProject(Context.ProjectItem)), "ActiveWriterHbmOutput");
             DirectoryInfo tempFileFolder = null;
 
             try
@@ -1378,13 +1284,13 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 else
                     tempFileFolder = Directory.CreateDirectory(tempFilePath);
 
-                startInfo.FileName = _model.NHQGExecutable;
-                startInfo.WorkingDirectory = Path.GetDirectoryName(_model.NHQGExecutable);
+                startInfo.FileName = Context.Model.NHQGExecutable;
+                startInfo.WorkingDirectory = Path.GetDirectoryName(Context.Model.NHQGExecutable);
                 string[] args = new string[4];
-                args[0] = "/lang:" + (_language == CodeLanguage.CSharp ? "CS": "VB");
+                args[0] = "/lang:" + (Context.Language == CodeLanguage.CSharp ? "CS" : "VB");
                 args[1] = "/files:\"" + assembly.Location + "\"";
                 args[2] = "/out:\"" + tempFileFolder.FullName + "\"";
-                args[3] = "/ns:" + _namespace;
+                args[3] = "/ns:" + Context.Namespace;
                 startInfo.Arguments = string.Join(" ", args);
                 startInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 startInfo.ErrorDialog = false;
@@ -1414,7 +1320,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     {
                         foreach (var file in tempFileFolder.GetFiles())
                         {
-                            string filePath = Path.Combine(_modelFilePath, file.Name);
+                            string filePath = Path.Combine(Context.ModelFilePath, file.Name);
                             file.CopyTo(filePath , true);
                             AddToProject(filePath, prjBuildAction.prjBuildActionCompile);
                         }
@@ -1432,10 +1338,10 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         {
             ProjectItem item = null;
 
-            if (_model.RelateWithActiwFile)
-                item = _projectItem.ProjectItems.AddFromFile(path);
+            if (Context.Model.RelateWithActiwFile)
+                item = Context.ProjectItem.ProjectItems.AddFromFile(path);
             else
-                item = _dte.ItemOperations.AddExistingItem(path);
+                item = Context.DTE.ItemOperations.AddExistingItem(path);
 
             item.Properties.Item("BuildAction").Value = (int)buildAction;
         }
@@ -1450,9 +1356,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                     GenerateExecutable = false
                                                 };
 
-            Assembly activeRecord = Assembly.Load(_model.ActiveRecordAssemblyName);
+            Assembly activeRecord = Assembly.Load(Context.Model.ActiveRecordAssemblyName);
             parameters.ReferencedAssemblies.Add(activeRecord.Location);
-            Assembly nHibernate = Assembly.Load(_model.NHibernateAssemblyName);
+            Assembly nHibernate = Assembly.Load(Context.Model.NHibernateAssemblyName);
             parameters.ReferencedAssemblies.Add(nHibernate.Location);
             parameters.ReferencedAssemblies.Add("System.dll");
             parameters.ReferencedAssemblies.Add("mscorlib.dll");
@@ -1462,7 +1368,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             addedAssemblies.Add("mscorlib.dll");
 
             // also add references to assemblies referenced by this project
-            VSProject proj = DTEHelper.GetVSProject(_projectItem);
+            VSProject proj = DTEHelper.GetVSProject(Context.ProjectItem);
             foreach (Reference reference in proj.References)
             {
                 if (!addedAssemblies.Contains(Path.GetFileName(reference.Path).ToLowerInvariant()))
@@ -1477,13 +1383,13 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                             : Path.Combine(
                                                   DTEHelper.GetIntermediatePath(proj), assemblyName);
             
-            CompilerResults results = _provider.CompileAssemblyFromDom(parameters, compileUnit);
+            CompilerResults results = Context.Provider.CompileAssemblyFromDom(parameters, compileUnit);
             if (results.Errors.Count == 0)
             {
                 return results.CompiledAssembly;
             }
             
-            _textTemplatingHost.LogErrors(results.Errors);
+            Context.TextTemplatingHost.LogErrors(results.Errors);
             throw new ModelingException("Cannot compile in-memory ActiveRecord assembly due to errors. Please check that all the information required, such as imports, to compile the generated code in-memory is provided. An ActiveRecord assembly is generated in-memory to support NHibernate .hbm.xml generation and NHQG integration.");
         }
 
@@ -1491,13 +1397,13 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         // We're not using it typed since we use this through reflection.
         public void OnARModelCreated(object models, object source)
         {
-            nHibernateConfigs.Clear();
+            _nHibernateConfigs.Clear();
             if (models != null)
             {
                 Type modelCollection = _activeRecord.GetType("Castle.ActiveRecord.Framework.Internal.ActiveRecordModelCollection");
                 if ((int)modelCollection.GetProperty("Count").GetValue(models, null) > 0)
                 {
-                    string actualAssemblyName = ", " + DTEHelper.GetAssemblyName(_projectItem.ContainingProject);
+                    string actualAssemblyName = ", " + DTEHelper.GetAssemblyName(Context.ProjectItem.ContainingProject);
                     IEnumerator enumerator = (IEnumerator)modelCollection.InvokeMember("GetEnumerator", BindingFlags.Public | BindingFlags.InvokeMethod | BindingFlags.Instance, null, models, null);
                     while (enumerator.MoveNext())
                     {
@@ -1527,8 +1433,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
                                 string newValue = name;
                                 // if name isn't a fully-qualified namespace, then prepend project default
-                                if ((name.IndexOf('.') < 0) && !string.IsNullOrEmpty(_defaultNamespace))
-                                    newValue = _defaultNamespace + "." + name;
+                                if ((name.IndexOf('.') < 0) && !string.IsNullOrEmpty(Context.DefaultNamespace))
+                                    newValue = Context.DefaultNamespace + "." + name;
 
                                 // append assembly name
                                 attribute.Value = newValue + actualAssemblyName;
@@ -1542,9 +1448,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                 }
 
                                 xml = document.OuterXml;
-                                nHibernateConfigs.Add(name, xml);
+                                _nHibernateConfigs.Add(name, xml);
                             }
-
                         }
                     }
                 }
@@ -1566,8 +1471,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (attribute.Value.Length != name.Length) {
 
                 // if name isn't a fully-qualified namespace, then prepend project default
-                if ((name.IndexOf('.') < 0) && !string.IsNullOrEmpty(_defaultNamespace))
-                    name = _defaultNamespace + "." + name;
+                if ((name.IndexOf('.') < 0) && !string.IsNullOrEmpty(Context.DefaultNamespace))
+                    name = Context.DefaultNamespace + "." + name;
 
                 // append assembly name
                 attribute.Value = name + actualAssemblyName;
@@ -1580,12 +1485,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (name.Name == "Castle.ActiveRecord" || name.Name == "Iesi.Collections" || name.Name == "log4net" || name.Name == "NHibernate")
             {
                 // If this line is reached, these assemblies are not in GAC. Load from designated place.
-                string assemblyPath = Path.Combine(_assemblyLoadPath, name.Name + ".dll");
+                string assemblyPath = Path.Combine(Context.Model.AssemblyPath, name.Name + ".dll");
 
                 // try project references
                 if (!File.Exists(assemblyPath))
                 {
-                    VSProject proj = (VSProject)_projectItem.ContainingProject.Object;
+                    VSProject proj = (VSProject)Context.ProjectItem.ContainingProject.Object;
                     foreach (Reference reference in proj.References)
                     {
                         if (reference.Name == name.Name)
@@ -1649,8 +1554,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private string RemoveNamespaceFromStart(string name)
         {
-            if (!string.IsNullOrEmpty(_namespace) && name.StartsWith(_namespace))
-                return name.Remove(0, _namespace.Length + 1);
+            if (!string.IsNullOrEmpty(Context.Namespace) && name.StartsWith(Context.Namespace))
+                return name.Remove(0, Context.Namespace.Length + 1);
 
             return name;
         }
@@ -1738,11 +1643,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
                 if (properties.Count > 0)
                 {
-                    if (_model.GenerateMetaData == MetaDataGeneration.InClass)
+                    if (Context.Model.GenerateMetaData == MetaDataGeneration.InClass)
                     {
                         GenerateInClassMetaData(type, properties);
                     }
-                    else if (_model.GenerateMetaData == MetaDataGeneration.InSubClass)
+                    else if (Context.Model.GenerateMetaData == MetaDataGeneration.InSubClass)
                     {
                         GenerateSubClassMetaData(type, properties);
                     }
@@ -1780,21 +1685,21 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private void Log(string message)
         {
-            _output.Write(string.Format("ActiveWriter: {0}", message));
+            Context.Output.Write(string.Format("ActiveWriter: {0}", message));
         }
 
         private CodeTypeReference GetConcreteListType(string sourceClassName)
         {
-            CodeTypeReference fieldCreatorType = new CodeTypeReference(_model.EffectiveListClass);
+            CodeTypeReference fieldCreatorType = new CodeTypeReference(Context.Model.EffectiveListClass);
             fieldCreatorType.TypeArguments.Add(sourceClassName);
             return fieldCreatorType;
         }
 
         private void GenerateHelperClass(CodeNamespace nameSpace)
         {
-            if (_model.Target == CodeGenerationTarget.ActiveRecord)
+            if (Context.Model.Target == CodeGenerationTarget.ActiveRecord)
             {
-                CodeTypeDeclaration helperClass = new CodeTypeDeclaration(_model.HelperName);
+                CodeTypeDeclaration helperClass = new CodeTypeDeclaration(Context.HelperClassName);
                 nameSpace.Types.Add(helperClass);
                 CodeMemberMethod getTypesMethod = new CodeMemberMethod();
                 helperClass.Members.Add(getTypesMethod);
@@ -1803,7 +1708,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 getTypesMethod.Attributes = MemberAttributes.Public | MemberAttributes.Static;
 
                 CodeArrayCreateExpression arrayCreate = new CodeArrayCreateExpression("Type");
-                foreach (ModelClass modelClass in _model.Classes)
+                foreach (ModelClass modelClass in Context.Model.Classes)
                     arrayCreate.Initializers.Add(new CodeTypeOfExpression(modelClass.Name));
 
                 getTypesMethod.Statements.Add(new CodeMethodReturnStatement(arrayCreate));

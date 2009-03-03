@@ -18,6 +18,7 @@ namespace Altinoren.ActiveWriter
 {
     using System.Collections.Generic;
     using Microsoft.VisualStudio.Modeling.Validation;
+    using Microsoft.VisualStudio.Modeling;
     using Altinoren.ActiveWriter.ServerExplorerSupport;
 
     [ValidationState(ValidationState.Enabled)]
@@ -26,26 +27,33 @@ namespace Altinoren.ActiveWriter
         [ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
         private void ValidateClassNameAndDuplication(ValidationContext context)
         {
-            if (Classes.Count > 0)
-            {
-                Dictionary<string, ModelClass> classes = new Dictionary<string, ModelClass>();
+            Dictionary<string, ModelElement> classes = new Dictionary<string, ModelElement>();
 
-                foreach (ModelClass cls in Classes)
-                {
-                    if (string.IsNullOrEmpty(cls.Name))
-                    {
-                        // Since we need the name for uniqueness validation, we check the existance of the name here.
-                        context.LogError("Class must have a name", "AW001ValidateClassNameError", cls);
-                    }
-                    else
-                    {
-                        if (classes.ContainsKey(cls.Name))
-                            context.LogError("Class must have a unique name", "AW001ValidateDuplicateClassNameError",
-                                             cls, classes[cls.Name]);
-                        else
-                            classes.Add(cls.Name, cls);
-                    }
-                }
+            foreach (ModelClass cls in Classes)
+            {
+                CheckClassName(context, classes, cls.Name, cls);
+            }
+
+            foreach (NestedClass cls in NestedClasses)
+            {
+                CheckClassName(context, classes, cls.Name, cls);
+            }
+        }
+
+        private void CheckClassName(ValidationContext context, Dictionary<string, ModelElement> classes, string className, ModelElement cls)
+        {
+            if (string.IsNullOrEmpty(className))
+            {
+                // Since we need the name for uniqueness validation, we check the existance of the name here.
+                context.LogError("Class must have a name", "AW001ValidateClassNameError", cls);
+            }
+            else
+            {
+                if (classes.ContainsKey(className))
+                    context.LogError("Duplicate class name in model: " + className, "AW001ValidateDuplicateClassNameError",
+                                     cls, classes[className]);
+                else
+                    classes.Add(className, cls);
             }
         }
 

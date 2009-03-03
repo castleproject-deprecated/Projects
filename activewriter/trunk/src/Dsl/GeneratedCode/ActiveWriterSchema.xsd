@@ -278,12 +278,6 @@
     <xsd:attribute name="automaticAssociations" type="xsd:boolean" />
     <!-- Property: AutomaticAssociationCollectionImplementation -->
     <xsd:attribute name="automaticAssociationCollectionImplementation" type="xsd:string" />
-    <!-- Property: ModelName -->
-    <xsd:attribute name="modelName" type="xsd:string" >
-      <xsd:annotation>
-        <xsd:documentation>A name for the entire model that is used as a prefix for various helper classes.  If there are multiple models in the same namespace, each model should have a unique value for this property to avoid class name conflicts.</xsd:documentation>
-      </xsd:annotation>
-    </xsd:attribute>
   </xsd:complexType>
   
   <!-- Model Moniker -->

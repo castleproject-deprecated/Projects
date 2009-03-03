@@ -208,11 +208,6 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="86eca91c-4ab5-4bfe-b171-4cbf346ebc34" Description="A name for the entire model that is used as a prefix for various helper classes.  If there are multiple models in the same namespace, each model should have a unique value for this property to avoid class name conflicts." Name="ModelName" DisplayName="Model Name" DefaultValue="Model" Category="Code Generation">
-          <Type>
-            <ExternalTypeMoniker Name="/System/String" />
-          </Type>
-        </DomainProperty>
       </Properties>
       <ElementMergeDirectives>
         <ElementMergeDirective>
@@ -1614,9 +1609,6 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="automaticAssociationCollectionImplementation">
             <DomainPropertyMoniker Name="Model/AutomaticAssociationCollectionImplementation" />
-          </XmlPropertyData>
-          <XmlPropertyData XmlName="modelName">
-            <DomainPropertyMoniker Name="Model/ModelName" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

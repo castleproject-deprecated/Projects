@@ -26,70 +26,56 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
     public class MonoRailGenerator
     {
-        private Hashtable _propertyBag;
-        private Model _model;
-        private DTE _dte;
-        private CodeLanguage _language;
+        private CodeGenerationContext Context { get; set; }
         
-        public MonoRailGenerator(Hashtable propertyBag)
+        public MonoRailGenerator(CodeGenerationContext context)
         {
-            _propertyBag = propertyBag;
+            Context = context;
         }
         
         public void Generate()
         {
-            _model = (Model) _propertyBag["Generic.Model"];
-            
-            if (_model.GenerateMonoRailProject && !String.IsNullOrEmpty(_model.MonoRailProjectName) && !String.IsNullOrEmpty(_model.MonoRailProjectPath))
+            if (Context.Model.GenerateMonoRailProject && !String.IsNullOrEmpty(Context.Model.MonoRailProjectName) && !String.IsNullOrEmpty(Context.Model.MonoRailProjectPath))
             {
-                _dte = (DTE)_propertyBag["Generic.DTE"];
-                if (_dte == null)
-                {
+                if (Context.DTE == null)
                     throw new NullReferenceException("Could not get a reference to active DTE object.");
-                }
-                else
+
+                Project project = null;
+                project = GetProject(Context.DTE, Context.Model.MonoRailProjectName);
+
+                if (project == null)
                 {
-                    _language = (CodeLanguage)_propertyBag["Generic.Language"];
+                    project =
+                        CreateProject(Context.DTE, Context.Model.MonoRailProjectPath + Path.DirectorySeparatorChar + Context.Model.MonoRailProjectName,
+                                      Context.Model.MonoRailProjectName);
+                }
 
-                    Project project = null;
-                    project = GetProject(_dte, _model.MonoRailProjectName);
-
-                    if (project == null)
+                // We will handle the first namespace by default.
+                if (Context.CompileUnit.Namespaces.Count > 0)
+                {
+                    CodeNamespace ns = Context.CompileUnit.Namespaces[0];
+                    List<CodeTypeDeclaration> classes = null;
+                    if (ns.Types.Count > 0)
                     {
-                        project =
-                            CreateProject(_dte, _model.MonoRailProjectPath + Path.DirectorySeparatorChar + _model.MonoRailProjectName,
-                                          _model.MonoRailProjectName);
-                    }
-
-                    CodeCompileUnit compileUnit = (CodeCompileUnit)_propertyBag["CodeGeneration.CodeCompileUnit"];
-                    
-                    // We will handle the first namespace by default.
-                    if (compileUnit.Namespaces.Count > 0)
-                    {
-                        CodeNamespace ns = compileUnit.Namespaces[0];
-                        List<CodeTypeDeclaration> classes = null;
-                        if (ns.Types.Count > 0)
+                        classes = new List<CodeTypeDeclaration>();
+                        foreach (CodeTypeDeclaration type in ns.Types)
                         {
-                            classes = new List<CodeTypeDeclaration>();
-                            foreach (CodeTypeDeclaration type in ns.Types)
+                            if (type.IsClass)
                             {
-                                if (type.IsClass)
+                                foreach (CodeAttributeDeclaration attribute in type.CustomAttributes)
                                 {
-                                    foreach (CodeAttributeDeclaration attribute in type.CustomAttributes)
+                                    if (attribute.Name == "ActiveRecord")
                                     {
-                                        if (attribute.Name == "ActiveRecord")
-                                        {
-                                            classes.Add(type);
-                                            break;
-                                        }
+                                        classes.Add(type);
+                                        break;
                                     }
                                 }
                             }
+                        }
 
-                            if (classes.Count > 0)
-                            {
-                                // TODO: ...
-                            }
+                        if (classes.Count > 0)
+                        {
+                            // TODO: ...
                         }
                     }
                 }
@@ -110,7 +96,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private string GetTemplatePath(DTE dte)
         {
-            if (_language == CodeLanguage.CSharp)
+            if (Context.Language == CodeLanguage.CSharp)
                 return 
                     ((Solution2) ((DTE2) dte).Solution).GetProjectTemplate(Common.BlankProjectTemplateName,
                                                                            Common.DTEProjectTemplateLanguageCSharp);
