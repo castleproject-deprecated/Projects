@@ -87,7 +87,7 @@ namespace Castle.MonoRail.ViewComponents {
         ///        } .bindAsEventListener(elem));
         ///        elem.getElementsBySelector(&quot;ul&quot;).first().hide();
         ///    });
-        ///    $$(&quot;.collapsed a&quot;).each(function(elem) { Event.observe(elem, &quot;click&quot;, function(evnt) {evnt.stopPropagation(); }); });
+        ///    $$(&quot;.collapsed a&quot;).each(function(elem) { Event.observe(elem, &quot;click&quot;, function(evnt) {Event.stop(evnt); }); });
         ///});.
         /// </summary>
         public static string prototype {

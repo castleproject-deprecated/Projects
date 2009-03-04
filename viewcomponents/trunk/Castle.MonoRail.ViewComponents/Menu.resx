@@ -138,7 +138,7 @@
         } .bindAsEventListener(elem));
         elem.getElementsBySelector("ul").first().hide();
     });
-    $$(".collapsed a").each(function(elem) { Event.observe(elem, "click", function(evnt) {evnt.stopPropagation(); }); });
+    $$(".collapsed a").each(function(elem) { Event.observe(elem, "click", function(evnt) {Event.stop(evnt); }); });
 });</value>
   </data>
 </root>
