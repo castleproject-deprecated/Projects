@@ -198,12 +198,12 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="03de83cf-2e0e-4b06-9975-d4e443f68836" Description="Description for Altinoren.ActiveWriter.Model.Automatic Associations" Name="AutomaticAssociations" DisplayName="Automatic Associations" DefaultValue="false" Category="Code Generation" IsBrowsable="false">
+        <DomainProperty Id="03de83cf-2e0e-4b06-9975-d4e443f68836" Description="Description for Altinoren.ActiveWriter.Model.Automatic Associations" Name="AutomaticAssociations" DisplayName="Automatic Associations" DefaultValue="false" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="71b0b47d-7c3e-429d-a501-1a91470e92aa" Description="Description for Altinoren.ActiveWriter.Model.Automatic Association Collection Implementation" Name="AutomaticAssociationCollectionImplementation" DisplayName="Automatic Association Collection Implementation" Category="Code Generation" IsBrowsable="false">
+        <DomainProperty Id="71b0b47d-7c3e-429d-a501-1a91470e92aa" Description="Description for Altinoren.ActiveWriter.Model.Automatic Association Collection Implementation" Name="AutomaticAssociationCollectionImplementation" DisplayName="Automatic Association Collection Implementation" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>

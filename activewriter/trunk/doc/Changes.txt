@@ -7,6 +7,7 @@ New:
 - Helper class for assisting in type registration. (Patch: Patrick Earl)
 - Optional property generation support. (Patch: Patrick Earl)
 - support for double derived classes. (Patch: Patrick Earl)
+- Automatic bi-directional property updates (Patch: Patrick Earl)
 
 Preview 4.1
 

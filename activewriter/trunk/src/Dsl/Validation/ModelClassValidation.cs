@@ -211,5 +211,15 @@ namespace Altinoren.ActiveWriter
                         "Class {0} has multiple default member attributes set. Only one is allowed per class.",
                         Name), "AW001ValidateMultipleDefaultMembersError", this);
         }
+
+        [ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
+        private void ValidateAutomaticAssociationGenerics(ValidationContext context)
+        {
+            if (Model.AutomaticAssociations && !AreRelationsGeneric())
+                context.LogError(
+                    string.Format(
+                        "Class {0} must use generic relations since AutomaticAssociations are enabled.",
+                        Name), "AW001ValidateAutomaticAssociationGenericsError", this);
+        }
     }
 }

@@ -40,6 +40,30 @@ namespace Altinoren.ActiveWriter
             }
         }
 
+        public string EffectiveSourcePropertyName
+        {
+            get
+            {
+                // Don't pluralize custom SourcePropertyNames to allow for override of automatic pluralization.
+                // If the user types it, they should know what they want.
+                return string.IsNullOrEmpty(SourcePropertyName)
+                           ? NamingHelper.GetPlural(Target.Name)
+                           : SourcePropertyName;
+            }
+        }
+
+        public string EffectiveTargetPropertyName
+        {
+            get
+            {
+                // Don't pluralize custom SourcePropertyNames to allow for override of automatic pluralization.
+                // If the user types it, they should know what they want.
+                return string.IsNullOrEmpty(TargetPropertyName)
+                           ? NamingHelper.GetPlural(Source.Name)
+                           : TargetPropertyName;
+            }
+        }
+
         public string EffectiveCollectionIDColumn
         {
             get
@@ -73,7 +97,7 @@ namespace Altinoren.ActiveWriter
             }
         }
 
-        public CodeAttributeDeclaration GetHasAndBelongsToAttributeFromSource()
+        public CodeAttributeDeclaration GetHasAndBelongsToAttributeFromSource(CodeGenerationContext context)
         {
             var attribute = new CodeAttributeDeclaration("HasAndBelongsToMany");
 
@@ -87,8 +111,11 @@ namespace Altinoren.ActiveWriter
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade",
                                                                                       "ManyRelationCascadeEnum",
                                                                                       SourceCascade));
+
             if (!string.IsNullOrEmpty(SourceCustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", SourceCustomAccess));
+            else if (Source.Model.AutomaticAssociations)
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", context.Namespace + "." + context.InternalPropertyAccessorName + ", " + context.AssemblyName));
 
             attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnRef", TargetColumn));
             attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnKey", SourceColumn));
@@ -125,7 +152,7 @@ namespace Altinoren.ActiveWriter
             return attribute;
         }
 
-        public CodeAttributeDeclaration GetHasAndBelongsToAttributeFromTarget()
+        public CodeAttributeDeclaration GetHasAndBelongsToAttributeFromTarget(CodeGenerationContext context)
         {
             var attribute = new CodeAttributeDeclaration("HasAndBelongsToMany");
 
@@ -139,8 +166,11 @@ namespace Altinoren.ActiveWriter
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade",
                                                                                       "ManyRelationCascadeEnum",
                                                                                       TargetCascade));
+
             if (!string.IsNullOrEmpty(TargetCustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", TargetCustomAccess));
+            else if (Target.Model.AutomaticAssociations)
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", context.Namespace + "." + context.InternalPropertyAccessorName + ", " + context.AssemblyName));
 
             attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnRef", SourceColumn));
             attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnKey", TargetColumn));

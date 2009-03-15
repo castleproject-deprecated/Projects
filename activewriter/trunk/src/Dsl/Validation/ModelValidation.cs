@@ -108,6 +108,14 @@ namespace Altinoren.ActiveWriter
             }
         }
 
+        [ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
+        private void ValidateAutomaticAssociationCollectionImplementation(ValidationContext context)
+        {
+            if (AutomaticAssociations && string.IsNullOrEmpty(AutomaticAssociationCollectionImplementation))
+            {
+                context.LogError("AutomaticAssociationCollectionImplementation must be supplied when AutomaticAssociations are enabled.", "AW001ValidateAutomaticAssociationCollectionImplementation", this);
+            }
+        }
 
         // TODO: Will activate this validation when there's an option to disable it through option pages or someting like that.
         // May get annoying otherwise.

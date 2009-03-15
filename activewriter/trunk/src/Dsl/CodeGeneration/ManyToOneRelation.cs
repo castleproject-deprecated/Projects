@@ -30,7 +30,29 @@ namespace Altinoren.ActiveWriter
             }
         }
 
-        public CodeAttributeDeclaration GetHasManyAttribute()
+        public string EffectiveSourcePropertyName
+        {
+            get
+            {
+                return string.IsNullOrEmpty(SourcePropertyName)
+                    ? Target.Name
+                    : SourcePropertyName;
+            }
+        }
+
+        public string EffectiveTargetPropertyName
+        {
+            get
+            {
+                // Don't pluralize custom SourcePropertyNames to allow for override of automatic pluralization.
+                // If the user types it, they should know what they want.
+                return string.IsNullOrEmpty(TargetPropertyName)
+                           ? NamingHelper.GetPlural(Source.Name)
+                           : TargetPropertyName;
+            }
+        }
+
+        public CodeAttributeDeclaration GetHasManyAttribute(CodeGenerationContext context)
         {
             CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("HasMany");
 
@@ -43,8 +65,12 @@ namespace Altinoren.ActiveWriter
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade", "ManyRelationCascadeEnum", TargetCascade));
             if (!string.IsNullOrEmpty(TargetColumnKey))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnKey", TargetColumnKey));
+
             if (!string.IsNullOrEmpty(TargetCustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", TargetCustomAccess));
+            else if (Target.Model.AutomaticAssociations)
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", context.Namespace + "." + context.InternalPropertyAccessorName + ", " + context.AssemblyName));
+
             if (EffectiveRelationType == RelationType.Map)
             {
                 // TODO: Index & IndexType ?
@@ -53,9 +79,9 @@ namespace Altinoren.ActiveWriter
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Inverse", TargetInverse));
             if (TargetLazy)
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Lazy", TargetLazy));
-			if (TargetFetch != FetchEnum.Unspecified)
-				attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Fetch", "FetchEnum", TargetFetch));
-			if (!string.IsNullOrEmpty(TargetMapType))
+            if (TargetFetch != FetchEnum.Unspecified)
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Fetch", "FetchEnum", TargetFetch));
+            if (!string.IsNullOrEmpty(TargetMapType))
                 attribute.Arguments.Add(AttributeHelper.GetNamedTypeAttributeArgument("MapType", TargetMapType));
             if (!string.IsNullOrEmpty(TargetOrderBy))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("OrderBy", TargetOrderBy));
@@ -95,8 +121,13 @@ namespace Altinoren.ActiveWriter
                 attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(SourceColumn));
             if (SourceCascade != CascadeEnum.None)
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade", "CascadeEnum", SourceCascade));
+
             if (!string.IsNullOrEmpty(SourceCustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", SourceCustomAccess));
+            else if (Source.Model.AutomaticAssociations)
+#warning FIXME - This should be returning the correct property accessor for the field case the user has selected.
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", PropertyAccess.FieldCamelcaseUnderscore));
+
             if (!SourceInsert)
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Insert", SourceInsert));
             if (SourceNotNull)
@@ -115,7 +146,7 @@ namespace Altinoren.ActiveWriter
 
             return attribute;
         }
-        
+
         /// <summary>
         /// Constructs a CollectionType named attribute.
         /// </summary>

@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Altinoren.ActiveWriter.CodeDomExtensions;
+
 namespace Altinoren.ActiveWriter.CodeGeneration
 {
     using System;
@@ -87,6 +89,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             {
                 GenerateMetaData(nameSpace);
             }
+
+            GenerateInternalPropertyAccessor(Context, Context.Model, nameSpace);
 
             GenerateHelperClass(nameSpace);
 
@@ -191,6 +195,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 className += cls.Model.DoubleDerivedNameSuffix;
 
             CodeTypeDeclaration classDeclaration = CreateClass(className);
+
+            if (cls.Model.AutomaticAssociations)
+                classDeclaration.CreateEmptyPublicConstructor();
 
             if (cls.Model.GeneratesDoubleDerived)
                 classDeclaration.TypeAttributes |= TypeAttributes.Abstract;
@@ -602,7 +609,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                 bool get, bool set, bool implementINotifyPropertyChanged, bool implementINotifyPropertyChanging, params string[] description)
 		{
             CodeMemberProperty memberProperty =
-                GetMemberPropertyWithoutType(memberField, propertyName, get, set, implementINotifyPropertyChanged, implementINotifyPropertyChanging, description);
+                GetMemberPropertyWithoutType(memberField, propertyName, null, null, get, set, implementINotifyPropertyChanged, implementINotifyPropertyChanging, description);
 
 			if (Context.Model.UseNullables != NullableUsage.No && TypeHelper.IsNullable(propertyType) && !propertyNotNull)
             {
@@ -620,15 +627,21 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private CodeMemberProperty GetMemberProperty(CodeMemberField memberField, string propertyName,
                                                      bool get, bool set, bool implementINotifyPropertyChanged, bool implementINotifyPropertyChanging, params string[] description)
         {
+            return GetMemberProperty(memberField, propertyName, null, null, get, set, implementINotifyPropertyChanged, implementINotifyPropertyChanging, description);
+        }
+
+        private CodeMemberProperty GetMemberProperty(CodeMemberField memberField, string propertyName, string automaticAssociationCollectionName, string automaticAssociationCollectionItemType,
+                                                     bool get, bool set, bool implementINotifyPropertyChanged, bool implementINotifyPropertyChanging, params string[] description)
+        {
             CodeMemberProperty memberProperty =
-                GetMemberPropertyWithoutType(memberField, propertyName, get, set, implementINotifyPropertyChanged, implementINotifyPropertyChanging, description);
+                GetMemberPropertyWithoutType(memberField, propertyName, automaticAssociationCollectionName, automaticAssociationCollectionItemType, get, set, implementINotifyPropertyChanged, implementINotifyPropertyChanging, description);
 
             memberProperty.Type = memberField.Type;
 
             return memberProperty;
         }
 
-        private CodeMemberProperty GetMemberPropertyWithoutType(CodeMemberField memberField, string propertyName,
+        private CodeMemberProperty GetMemberPropertyWithoutType(CodeMemberField memberField, string propertyName, string automaticAssociationCollectionName, string automaticAssociationCollectionItemType,
                                                                 bool get, bool set, bool implementINotifyPropertyChanged, bool implementINotifyPropertyChanging, params string[] description)
         {
             CodeMemberProperty memberProperty = new CodeMemberProperty();
@@ -650,24 +663,55 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                     new CodeArgumentReferenceExpression("value")
                                     );
 
-                if (!implementINotifyPropertyChanged && !implementINotifyPropertyChanging)
+                if (!implementINotifyPropertyChanged && !implementINotifyPropertyChanging && automaticAssociationCollectionName == null)
                 {
                     memberProperty.SetStatements.Add(assignValue);
                 }
                 else
                 {
-                    // There's no ValueInequality in CodeDOM (ridiculous), so we'll use ((a == b) == false) instead.
-                    var equalityCheck = new CodeBinaryOperatorExpression(
-                                            new CodeBinaryOperatorExpression(
-                                                new CodeFieldReferenceExpression(null, memberField.Name),
-                                                CodeBinaryOperatorType.ValueEquality,
-                                                new CodeArgumentReferenceExpression("value")),
-                                            CodeBinaryOperatorType.ValueEquality,
-                                            new CodePrimitiveExpression(false)
-                                        );
+                    var memberFieldExpression = new CodeFieldReferenceExpression(null, memberField.Name);
+                    var valueExpression = new CodeArgumentReferenceExpression("value");
 
-                    var assignment = new CodeConditionStatement(equalityCheck, assignValue);
+                    var equalityCheck = InequalityExpression(memberFieldExpression, valueExpression);
+
+                    var assignment = new CodeConditionStatement(equalityCheck);
                     memberProperty.SetStatements.Add(assignment);
+
+                    if (automaticAssociationCollectionName != null)
+                    {
+                        var thisExpression = new CodeCastExpression(automaticAssociationCollectionItemType, new CodeThisReferenceExpression());
+                        var nullExpression = new CodePrimitiveExpression(null);
+
+                        assignment.TrueStatements.Add(
+                            new CodeConditionStatement(
+                                InequalityExpression(memberFieldExpression, nullExpression),
+                                new CodeConditionStatement(
+                                    new CodeMethodInvokeExpression(
+                                        new CodePropertyReferenceExpression(memberFieldExpression, automaticAssociationCollectionName),
+                                        "Contains", thisExpression),
+                                    new CodeExpressionStatement(
+                                        new CodeMethodInvokeExpression(
+                                            new CodePropertyReferenceExpression(memberFieldExpression, automaticAssociationCollectionName),
+                                            "Remove", thisExpression)))));
+
+                        assignment.TrueStatements.Add(
+                            new CodeConditionStatement(
+                                InequalityExpression(valueExpression, nullExpression),
+                                new CodeConditionStatement(
+                                    new CodeBinaryOperatorExpression(
+                                        new CodeMethodInvokeExpression(
+                                            new CodePropertyReferenceExpression(valueExpression, automaticAssociationCollectionName),
+                                            "Contains", thisExpression),
+                                        CodeBinaryOperatorType.ValueEquality,
+                                        new CodePrimitiveExpression(false)
+                                    ),
+                                    new CodeExpressionStatement(
+                                        new CodeMethodInvokeExpression(
+                                            new CodePropertyReferenceExpression(valueExpression, automaticAssociationCollectionName),
+                                            "Add", thisExpression)))));
+                    }
+
+                    assignment.TrueStatements.Add(assignValue);
 
                     if (implementINotifyPropertyChanged)
                     {
@@ -842,35 +886,40 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (relationship.TargetPropertyGenerated)
                 GenerateHasMany(
                     classDeclaration,
-                    relationship.Source.Name,
-                    relationship.TargetPropertyName,
+                    relationship.Target.Name,
+                    relationship.EffectiveTargetPropertyName,
                     relationship.TargetPropertyType,
                     relationship.TargetAccess,
                     relationship.TargetDescription,
-                    relationship.GetHasManyAttribute(),
+                    relationship.GetHasManyAttribute(Context),
                     relationship.Source.AreRelationsGeneric(),
                     relationship.Target.DoesImplementINotifyPropertyChanged(),
                     relationship.Target.DoesImplementINotifyPropertyChanging(),
+                    relationship.Source.Name,
+                    relationship.EffectiveSourcePropertyName,
+                    relationship.SourcePropertyGenerated,
+                    false,
                     null);
         }
 
-        private void GenerateHasMany(CodeTypeDeclaration classDeclaration, string className, string customPropertyName, string customPropertyType, PropertyAccess propertyAccess, string description, CodeAttributeDeclaration attribute, bool genericRelation, bool propertyChanged, bool propertyChanging, CodeAttributeDeclaration collectionIdAttribute)
+        private void GenerateHasMany(CodeTypeDeclaration classDeclaration, string thisClassName, string propertyName, string customPropertyType, PropertyAccess propertyAccess, string description, CodeAttributeDeclaration attribute, bool genericRelation, bool propertyChanged, bool propertyChanging, string oppositeClassName, string oppositePropertyName, bool oppositeAssociationGenerated, bool manyToMany, CodeAttributeDeclaration collectionIdAttribute)
         {
-            // The customPropertyName used to be pluralized in HasMany and in only one side of HasAndBelongsToMany.
-            // It makes more sense to not pluralize the property since it allows users to avoid the automatic pluralization if desired.
-            // This allows users to create properties like "Children" and "Parent" rather than something strange like "Childs".
-            string propertyName = String.IsNullOrEmpty(customPropertyName)
-                                      ? NamingHelper.GetPlural(className)
-                                      : customPropertyName;
+            if (!Context.Model.AutomaticAssociations)
+                oppositeAssociationGenerated = false;
+
             string propertyType = String.IsNullOrEmpty(customPropertyType)
                                       ? Context.Model.EffectiveListInterface
                                       : customPropertyType;
 
+            string memberType = propertyType;
+            if (oppositeAssociationGenerated)
+                memberType = Context.Model.AutomaticAssociationCollectionImplementation;
+
             CodeMemberField memberField;
             if (!genericRelation)
-                memberField = GetMemberField(propertyName, propertyType, Accessor.Private, propertyAccess);
+                memberField = GetMemberField(propertyName, memberType, Accessor.Private, propertyAccess);
             else
-                memberField = GetGenericMemberField(className, propertyName, propertyType, Accessor.Private, propertyAccess);
+                memberField = GetGenericMemberField(oppositeClassName, propertyName, memberType, Accessor.Private, propertyAccess);
             classDeclaration.Members.Add(memberField);
 
             // Initializes the collection by assigning a new list instance to the field.
@@ -879,14 +928,26 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (Context.Model.InitializeIListFields && propertyType == Context.Model.EffectiveListInterface && !Context.Model.AutomaticAssociations)
             {
                 CodeObjectCreateExpression fieldCreator = new CodeObjectCreateExpression();
-                fieldCreator.CreateType = GetConcreteListType(className);
+                fieldCreator.CreateType = GetConcreteListType(oppositeClassName);
                 memberField.InitExpression = fieldCreator;
             }
 
+            bool createSetter = oppositeAssociationGenerated ? false : true;
+
             if (description == "") description = null;
-            CodeMemberProperty memberProperty = GetMemberProperty(memberField, propertyName, true, true, propertyChanged, propertyChanging, description);
+            CodeMemberProperty memberProperty = GetMemberProperty(memberField, propertyName, true, createSetter, propertyChanged, propertyChanging, description);
+            // We need the propertyType with generic arguments added if there are any.
+            memberProperty.Type = new CodeTypeReference(propertyType);
+            memberProperty.Type.TypeArguments.AddRange(memberField.Type.TypeArguments);
                                
             classDeclaration.Members.Add(memberProperty);
+
+            if (oppositeAssociationGenerated)
+            {
+                AddConstructorForWatchedList(classDeclaration, Context.Model, memberField, propertyName);
+                AddInternalWatchedListProperty(classDeclaration, memberProperty.Type, propertyName, memberField.Name, propertyChanged, propertyChanging);
+                AddOnAddAndOnRemoveMethods(classDeclaration, thisClassName, propertyName, oppositeClassName, oppositePropertyName, manyToMany);
+            }
 
             memberProperty.CustomAttributes.Add(attribute);
 
@@ -910,21 +971,16 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                             "Class {0} column name does not match with column key {1} on it's many to one relation to class {2}",
                             relationship.Source.Name, relationship.TargetColumnKey, relationship.Target.Name));
 
-                string propertyName = String.IsNullOrEmpty(relationship.SourcePropertyName)
-                                          ? relationship.Target.Name
-                                          : relationship.SourcePropertyName;
-
                 // We use PropertyAccess.Property to default it to camel case underscore
-                CodeMemberField memberField = GetMemberField(propertyName, relationship.Target.Name, Accessor.Private, PropertyAccess.Property);
+                CodeMemberField memberField = GetMemberField(relationship.EffectiveSourcePropertyName, relationship.Target.Name, Accessor.Private, PropertyAccess.Property);
                 classDeclaration.Members.Add(memberField);
 
-                CodeMemberProperty memberProperty;
-                if (String.IsNullOrEmpty(relationship.SourceDescription))
-                    memberProperty = GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), relationship.Source.DoesImplementINotifyPropertyChanging(), null);
-                else
-                    memberProperty =
-                        GetMemberProperty(memberField, propertyName, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), relationship.Source.DoesImplementINotifyPropertyChanging(),
-                                          relationship.SourceDescription);
+                string automaticAssociationCollectionName =
+                    Context.Model.AutomaticAssociations ? relationship.EffectiveTargetPropertyName : null;
+                if (!relationship.TargetPropertyGenerated)
+                    automaticAssociationCollectionName = null;
+
+                CodeMemberProperty memberProperty = GetMemberProperty(memberField, relationship.EffectiveSourcePropertyName, automaticAssociationCollectionName, relationship.Source.Name, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), relationship.Source.DoesImplementINotifyPropertyChanging(), relationship.SourceDescription == "" ? null : relationship.SourceDescription);
                 classDeclaration.Members.Add(memberProperty);
 
                 memberProperty.CustomAttributes.Add(relationship.GetBelongsToAttribute());
@@ -941,16 +997,19 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (relationship.SourcePropertyGenerated)
                 GenerateHasManyToMany(
                     classDeclaration,
-                    relationship.Target.Name,
-                    relationship.SourcePropertyName,
+                    relationship.Source.Name,
+                    relationship.EffectiveSourcePropertyName,
                     relationship.SourcePropertyType,
                     relationship.SourceAccess,
                     relationship.SourceDescription,
-                    relationship.GetHasAndBelongsToAttributeFromSource(),
+                    relationship.GetHasAndBelongsToAttributeFromSource(Context),
                     relationship.Target.AreRelationsGeneric(),
                     relationship.Source.DoesImplementINotifyPropertyChanged(),
                     relationship.Source.DoesImplementINotifyPropertyChanging(),
                     relationship.EffectiveSourceRelationType,
+                    relationship.Target.Name,
+                    relationship.EffectiveTargetPropertyName,
+                    relationship.TargetPropertyGenerated,
                     relationship);
         }
 
@@ -960,20 +1019,23 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (relationship.TargetPropertyGenerated)
                 GenerateHasManyToMany(
                     classDeclaration,
-                    relationship.Source.Name,
-                    relationship.TargetPropertyName,
+                    relationship.Target.Name,
+                    relationship.EffectiveTargetPropertyName,
                     relationship.TargetPropertyType,
                     relationship.TargetAccess,
                     relationship.TargetDescription,
-                    relationship.GetHasAndBelongsToAttributeFromTarget(),
+                    relationship.GetHasAndBelongsToAttributeFromTarget(Context),
                     relationship.Source.AreRelationsGeneric(),
                     relationship.Target.DoesImplementINotifyPropertyChanged(),
                     relationship.Target.DoesImplementINotifyPropertyChanging(),
                     relationship.EffectiveTargetRelationType,
+                    relationship.Source.Name,
+                    relationship.EffectiveSourcePropertyName,
+                    relationship.SourcePropertyGenerated,
                     relationship);
         }
 
-        private void GenerateHasManyToMany(CodeTypeDeclaration classDeclaration, string className, string customPropertyName, string customPropertyType, PropertyAccess propertyAccess, string description, CodeAttributeDeclaration attribute, bool genericRelation, bool propertyChanged, bool propertyChanging, Altinoren.ActiveWriter.RelationType relationType, ManyToManyRelation relationship)
+        private void GenerateHasManyToMany(CodeTypeDeclaration classDeclaration, string thisClassName, string propertyName, string customPropertyType, PropertyAccess propertyAccess, string description, CodeAttributeDeclaration attribute, bool genericRelation, bool propertyChanged, bool propertyChanging, Altinoren.ActiveWriter.RelationType relationType, string oppositeClassName, string oppositePropertyName, bool oppositeAssociationGenerated, ManyToManyRelation relationship)
         {
             if (String.IsNullOrEmpty(relationship.Table))
                 throw new ArgumentNullException(
@@ -988,7 +1050,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     String.Format("Class {0} does not have a target column name on it's many to many relation to class {1}",
                                   relationship.Source.Name, relationship.Target.Name));
 
-            GenerateHasMany(classDeclaration, className, customPropertyName, customPropertyType, propertyAccess, description, attribute, genericRelation, propertyChanged, propertyChanging, relationship.GetCollectionIdAttribute(relationType));
+            GenerateHasMany(classDeclaration, thisClassName, propertyName, customPropertyType, propertyAccess, description, attribute, genericRelation, propertyChanged, propertyChanging, oppositeClassName, oppositePropertyName, oppositeAssociationGenerated, true, relationship.GetCollectionIdAttribute(relationType));
         }
 
         #endregion
@@ -1727,6 +1789,201 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
                 nameSpace.Types.Add(derivedClass);
             }
+        }
+
+        /// <summary>
+        /// If automatic associations are enabled, this code generates a class that will be used to access a special internal property.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="nameSpace"></param>
+        private void GenerateInternalPropertyAccessor(CodeGenerationContext context, Model model, CodeNamespace nameSpace)
+        {
+            if (model.AutomaticAssociations)
+            {
+                /* Generates a class that looks something like this:
+                 *     public class InternalPropertyAccessor : IPropertyAccessor
+                 *     {
+                 *         BasicPropertyAccessor accessor = new BasicPropertyAccessor();
+                 *         
+                 *         public IGetter GetGetter(Type theClass, string propertyName)
+                 *         {
+                 *             return accessor.GetGetter(theClass, propertyName + "Internal");
+                 *         }
+                 *         
+                 *         public ISetter GetSetter(Type theClass, string propertyName)
+                 *         {
+                 *             return accessor.GetSetter(theClass, propertyName + "Internal");
+                 *         }
+                 *         
+                 *         public bool CanAccessTroughReflectionOptimizer
+                 *         {
+                 *             get { return false; }
+                 *         }
+                 */
+
+                nameSpace.Imports.Add(new CodeNamespaceImport("NHibernate.Properties"));
+                CodeTypeDeclaration accessorClass = new CodeTypeDeclaration(context.InternalPropertyAccessorName);
+                nameSpace.Types.Add(accessorClass);
+                accessorClass.BaseTypes.Add("IPropertyAccessor");
+
+                CodeMemberField accessorField = new CodeMemberField("BasicPropertyAccessor", "accessor");
+                accessorClass.Members.Add(accessorField);
+                accessorField.InitExpression = new CodeObjectCreateExpression("BasicPropertyAccessor");
+
+                accessorClass.Members.Add(GetterOrSetterMethod("Getter"));
+
+                accessorClass.Members.Add(GetterOrSetterMethod("Setter"));
+
+                CodeMemberProperty canAccessProperty = new CodeMemberProperty();
+                accessorClass.Members.Add(canAccessProperty);
+                canAccessProperty.Type = new CodeTypeReference("Boolean");
+                canAccessProperty.Name = "CanAccessTroughReflectionOptimizer";
+                canAccessProperty.Attributes = MemberAttributes.Public | MemberAttributes.Final;
+                canAccessProperty.GetStatements.Add(new CodeMethodReturnStatement(new CodePrimitiveExpression(false)));
+            }
+        }
+
+        private CodeMemberMethod GetterOrSetterMethod(string getterOrSetter)
+        {
+            CodeMemberMethod method = new CodeMemberMethod();
+            method.Name = "Get" + getterOrSetter;
+            method.Attributes = MemberAttributes.Public | MemberAttributes.Final;
+            method.ReturnType = new CodeTypeReference("I" + getterOrSetter);
+            method.Parameters.Add(new CodeParameterDeclarationExpression("Type", "theClass"));
+            method.Parameters.Add(new CodeParameterDeclarationExpression("String", "propertyName"));
+            method.Statements.Add(
+                new CodeMethodReturnStatement(
+                    new CodeMethodInvokeExpression(
+                        new CodeFieldReferenceExpression(null, "accessor"),
+                        "Get" + getterOrSetter,
+                        new CodeArgumentReferenceExpression("theClass"),
+                        new CodeBinaryOperatorExpression(
+                            new CodeArgumentReferenceExpression("propertyName"),
+                            CodeBinaryOperatorType.Add,
+                            new CodePrimitiveExpression("Internal")))));
+            return method;
+        }
+
+        private void AddOnAddAndOnRemoveMethods(CodeTypeDeclaration typeDeclaration, string thisClassName, string listPropertyName, string itemClassName, string propertyName, bool manyToMany)
+        {
+            typeDeclaration.Members.Add(MakeAddOrRemoveMethod(listPropertyName, thisClassName, itemClassName, propertyName, manyToMany, true));
+            typeDeclaration.Members.Add(MakeAddOrRemoveMethod(listPropertyName, thisClassName, itemClassName, propertyName, manyToMany, false));
+        }
+
+        private CodeMemberMethod MakeAddOrRemoveMethod(string listPropertyName, string thisClassName, string itemClassName, string propertyName, bool manyToMany, bool add)
+        {
+            var method = new CodeMemberMethod();
+            method.Name = listPropertyName + (add ? "OnAdd" : "OnRemove");
+            method.Attributes = MemberAttributes.Private;
+            method.Parameters.Add(new CodeParameterDeclarationExpression(itemClassName, "item"));
+
+            CodeExpression value = new CodeCastExpression(thisClassName, new CodeThisReferenceExpression());
+
+            if (manyToMany)
+            {
+                if (add)
+                {
+                    method.Statements.Add(
+                        new CodeConditionStatement(
+                            new CodeBinaryOperatorExpression(
+                                new CodeMethodInvokeExpression(
+                                    new CodePropertyReferenceExpression(new CodeArgumentReferenceExpression("item"), propertyName),
+                                    "Contains", value),
+                                CodeBinaryOperatorType.ValueEquality,
+                                new CodePrimitiveExpression(false)
+                            ),
+                            new CodeExpressionStatement(
+                                new CodeMethodInvokeExpression(
+                                    new CodePropertyReferenceExpression(new CodeArgumentReferenceExpression("item"), propertyName),
+                                    "Add", value))));
+                }
+                else
+                {
+                    method.Statements.Add(
+                        new CodeConditionStatement(
+                            new CodeMethodInvokeExpression(
+                                new CodePropertyReferenceExpression(new CodeArgumentReferenceExpression("item"), propertyName),
+                                "Contains", value),
+                            new CodeExpressionStatement(
+                                new CodeMethodInvokeExpression(
+                                    new CodePropertyReferenceExpression(new CodeArgumentReferenceExpression("item"), propertyName),
+                                    "Remove", value))));
+                }
+            }
+            else
+            {
+                if (!add)
+                    value = new CodePrimitiveExpression(null);
+
+                method.Statements.Add(
+                    new CodeAssignStatement(
+                        new CodePropertyReferenceExpression(
+                            new CodeArgumentReferenceExpression("item"),
+                            propertyName),
+                        value));
+            }
+
+            return method;
+        }
+
+        private void AddConstructorForWatchedList(CodeTypeDeclaration typeDeclaration, Model model, CodeMemberField memberField, string listPropertyName)
+        {
+            CodeConstructor constructor = typeDeclaration.FindEmptyConstructor();
+
+            var field = new CodeFieldReferenceExpression(null, memberField.Name);
+
+            CodeTypeReference innerListType = GetConcreteListType(memberField.Type.TypeArguments[0].BaseType);
+            CodeObjectCreateExpression innerList = new CodeObjectCreateExpression(innerListType);
+            CodeObjectCreateExpression outerList = new CodeObjectCreateExpression(memberField.Type, innerList);
+            CodeAssignStatement assignment = new CodeAssignStatement(field, outerList);
+            constructor.Statements.Add(assignment);
+
+            var onAddCode = new CodeMethodReferenceExpression(null, listPropertyName + "OnAdd");
+            constructor.Statements.Add(new CodeAttachEventStatement(field, "OnAdd", onAddCode));
+
+            var onRemoveCode = new CodeMethodReferenceExpression(null, listPropertyName + "OnRemove");
+            constructor.Statements.Add(new CodeAttachEventStatement(field, "OnRemove", onRemoveCode));
+        }
+ 
+        private void AddInternalWatchedListProperty(CodeTypeDeclaration typeDeclaration, CodeTypeReference propertyTypeReference, string propertyName, string fieldName, bool implementPropertyChanged, bool implementPropertyChanging)
+        {
+            CodeMemberProperty property = new CodeMemberProperty();
+            property.Name = propertyName + "Internal";
+            property.Type = propertyTypeReference;
+
+            var list = new CodePropertyReferenceExpression(new CodeFieldReferenceExpression(null, fieldName), "List");
+
+            property.GetStatements.Add(new CodeMethodReturnStatement(list));
+
+            if (implementPropertyChanging)
+                property.SetStatements.Add(new CodeMethodInvokeExpression(null, Common.PropertyChangingInternalMethod, new CodePrimitiveExpression(propertyName)));
+
+            property.SetStatements.Add(new CodeAssignStatement(list, new CodeArgumentReferenceExpression("value")));
+
+            if (implementPropertyChanged)
+                property.SetStatements.Add(new CodeMethodInvokeExpression(null, Common.PropertyChangedInternalMethod, new CodePrimitiveExpression(propertyName)));
+
+            typeDeclaration.Members.Add(property);
+        }
+
+        private CodeBinaryOperatorExpression InequalityExpression(CodeExpression left, CodeExpression right)
+        {
+            // There's no ValueInequality in CodeDOM (ridiculous), so we'll use ((a == b) == false) instead.
+            //return
+            //    new CodeBinaryOperatorExpression(
+            //        new CodeBinaryOperatorExpression(
+            //            left,
+            //            CodeBinaryOperatorType.IdentityInequality,
+            //            right),
+            //        CodeBinaryOperatorType.ValueEquality,
+            //        new CodePrimitiveExpression(false));
+            
+            #warning FIXME - C# seems to generate the right code even without value equality checking.  Does it work in VB?
+            return
+                new CodeBinaryOperatorExpression(
+                    left,
+                    CodeBinaryOperatorType.IdentityInequality,
+                    right);
         }
 
         #endregion

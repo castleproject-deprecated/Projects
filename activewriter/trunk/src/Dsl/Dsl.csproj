@@ -96,6 +96,7 @@
     <Compile Include="ARValidators\ValidateSet.cs" />
     <Compile Include="ARValidators\ValidateSingle.cs" />
     <Compile Include="CalculatedProperties\ModelClass.cs" />
+    <Compile Include="CodeDomExtensions\CodeTypeDeclarationExtensions.cs" />
     <Compile Include="CodeGeneration\AttributeHelper.cs" />
     <Compile Include="CodeGeneration\CodeGenerationContext.cs" />
     <Compile Include="CodeGeneration\CodeGenerationHelper.cs" />
