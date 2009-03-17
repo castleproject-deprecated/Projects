@@ -77,17 +77,17 @@ namespace Altinoren.ActiveWriter
             ReadOnlyCollection<ManyToManyRelation> manyToManySources = ManyToManyRelation.GetLinksToManyToManySources(this);
             foreach (ManyToManyRelation relationship in manyToManySources)
             {
-                if (String.IsNullOrEmpty(relationship.Table))
+                if (String.IsNullOrEmpty(relationship.EffectiveTable))
                     context.LogError(
                         String.Format("Class {0} does not have a table name on it's many to many relation to class {1}",
                                       relationship.Source.Name, relationship.Target.Name),
                         "AW001ValidateManyToManyValidity1Error", relationship);
-                if (String.IsNullOrEmpty(relationship.SourceColumn))
+                if (String.IsNullOrEmpty(relationship.EffectiveSourceColumn))
                     context.LogError(
                         String.Format("Class {0} does not have a source column name on it's many to many relation to class {1}",
                                       relationship.Source.Name, relationship.Target.Name),
                         "AW001ValidateManyToManyValidity2Error", relationship);
-                if (String.IsNullOrEmpty(relationship.TargetColumn))
+                if (String.IsNullOrEmpty(relationship.EffectiveTargetColumn))
                     context.LogError(
                         String.Format("Class {0} does not have a target column name on it's many to many relation to class {1}",
                                       relationship.Source.Name, relationship.Target.Name),

@@ -964,8 +964,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         {
             if (relationship.SourcePropertyGenerated)
             {
-                if (!String.IsNullOrEmpty(relationship.TargetColumnKey) && (!String.IsNullOrEmpty(relationship.SourceColumn)) &&
-                    !relationship.SourceColumn.ToUpperInvariant().Equals(relationship.TargetColumnKey.ToUpperInvariant()))
+                if (!String.IsNullOrEmpty(relationship.TargetColumnKey) && (!String.IsNullOrEmpty(relationship.EffectiveSourceColumn)) &&
+                    !relationship.EffectiveSourceColumn.ToUpperInvariant().Equals(relationship.TargetColumnKey.ToUpperInvariant()))
                     throw new ArgumentException(
                         String.Format(
                             "Class {0} column name does not match with column key {1} on it's many to one relation to class {2}",
@@ -995,7 +995,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                ManyToManyRelation relationship)
         {
             if (relationship.SourcePropertyGenerated)
-                GenerateHasManyToMany(
+                GenerateHasMany(
                     classDeclaration,
                     relationship.Source.Name,
                     relationship.EffectiveSourcePropertyName,
@@ -1006,18 +1006,18 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     relationship.Target.AreRelationsGeneric(),
                     relationship.Source.DoesImplementINotifyPropertyChanged(),
                     relationship.Source.DoesImplementINotifyPropertyChanging(),
-                    relationship.EffectiveSourceRelationType,
                     relationship.Target.Name,
                     relationship.EffectiveTargetPropertyName,
                     relationship.TargetPropertyGenerated,
-                    relationship);
+                    true,
+                    relationship.GetCollectionIdAttribute(relationship.EffectiveSourceRelationType));
         }
 
         private void GenerateHasAndBelongsToRelationFromSources(CodeTypeDeclaration classDeclaration, CodeNamespace nameSpace,
                                                ManyToManyRelation relationship)
         {
             if (relationship.TargetPropertyGenerated)
-                GenerateHasManyToMany(
+                GenerateHasMany(
                     classDeclaration,
                     relationship.Target.Name,
                     relationship.EffectiveTargetPropertyName,
@@ -1028,29 +1028,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     relationship.Source.AreRelationsGeneric(),
                     relationship.Target.DoesImplementINotifyPropertyChanged(),
                     relationship.Target.DoesImplementINotifyPropertyChanging(),
-                    relationship.EffectiveTargetRelationType,
                     relationship.Source.Name,
                     relationship.EffectiveSourcePropertyName,
                     relationship.SourcePropertyGenerated,
-                    relationship);
-        }
-
-        private void GenerateHasManyToMany(CodeTypeDeclaration classDeclaration, string thisClassName, string propertyName, string customPropertyType, PropertyAccess propertyAccess, string description, CodeAttributeDeclaration attribute, bool genericRelation, bool propertyChanged, bool propertyChanging, Altinoren.ActiveWriter.RelationType relationType, string oppositeClassName, string oppositePropertyName, bool oppositeAssociationGenerated, ManyToManyRelation relationship)
-        {
-            if (String.IsNullOrEmpty(relationship.Table))
-                throw new ArgumentNullException(
-                    String.Format("Class {0} does not have a table name on it's many to many relation to class {1}",
-                                  relationship.Source.Name, relationship.Target.Name));
-            if (String.IsNullOrEmpty(relationship.SourceColumn))
-                throw new ArgumentNullException(
-                    String.Format("Class {0} does not have a source column name on it's many to many relation to class {1}",
-                                  relationship.Source.Name, relationship.Target.Name));
-            if (String.IsNullOrEmpty(relationship.TargetColumn))
-                throw new ArgumentNullException(
-                    String.Format("Class {0} does not have a target column name on it's many to many relation to class {1}",
-                                  relationship.Source.Name, relationship.Target.Name));
-
-            GenerateHasMany(classDeclaration, thisClassName, propertyName, customPropertyType, propertyAccess, description, attribute, genericRelation, propertyChanged, propertyChanging, oppositeClassName, oppositePropertyName, oppositeAssociationGenerated, true, relationship.GetCollectionIdAttribute(relationType));
+                    true,
+                    relationship.GetCollectionIdAttribute(relationship.EffectiveTargetRelationType));
         }
 
         #endregion

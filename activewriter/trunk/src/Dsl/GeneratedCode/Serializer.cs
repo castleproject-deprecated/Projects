@@ -809,6 +809,40 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// ManyToManyTableFormat
+			if (!serializationContext.Result.Failed)
+			{
+				string attribManyToManyTableFormat = reader.GetAttribute("manyToManyTableFormat");
+				if (attribManyToManyTableFormat != null)
+				{
+					global::System.String valueOfManyToManyTableFormat;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToManyTableFormat), out valueOfManyToManyTableFormat))
+					{
+						instanceOfModel.ManyToManyTableFormat = valueOfManyToManyTableFormat;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "manyToManyTableFormat", typeof(global::System.String), attribManyToManyTableFormat);
+					}
+				}
+			}
+			// ForeignKeyFormat
+			if (!serializationContext.Result.Failed)
+			{
+				string attribForeignKeyFormat = reader.GetAttribute("foreignKeyFormat");
+				if (attribForeignKeyFormat != null)
+				{
+					global::System.String valueOfForeignKeyFormat;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribForeignKeyFormat), out valueOfForeignKeyFormat))
+					{
+						instanceOfModel.ForeignKeyFormat = valueOfForeignKeyFormat;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "foreignKeyFormat", typeof(global::System.String), attribForeignKeyFormat);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -1900,6 +1934,30 @@ namespace Altinoren.ActiveWriter
 				{
 					if (!string.IsNullOrEmpty(propValue))
 						writer.WriteAttributeString("automaticAssociationCollectionImplementation", propValue);
+				}
+			}
+			// ManyToManyTableFormat
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.ManyToManyTableFormat;
+				if (!serializationContext.Result.Failed)
+				{
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "{0}{1}") != 0))
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("manyToManyTableFormat", propValue);
+					}
+				}
+			}
+			// ForeignKeyFormat
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.ForeignKeyFormat;
+				if (!serializationContext.Result.Failed)
+				{
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "{0}") != 0))
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("foreignKeyFormat", propValue);
+					}
 				}
 			}
 		}

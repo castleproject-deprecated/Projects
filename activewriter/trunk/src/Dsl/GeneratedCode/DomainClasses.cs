@@ -3714,6 +3714,185 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region ManyToManyTableFormat domain property code
+		
+		/// <summary>
+		/// ManyToManyTableFormat domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid ManyToManyTableFormatDomainPropertyId = new global::System.Guid(0x602c1f33, 0x5502, 0x484a, 0xbd, 0xb6, 0x08, 0x5f, 0x8d, 0xce, 0x0f, 0xca);
+		
+		/// <summary>
+		/// Storage for ManyToManyTableFormat
+		/// </summary>
+		private global::System.String manyToManyTableFormatPropertyStorage = "{0}{1}";
+		
+		/// <summary>
+		/// Gets or sets the value of ManyToManyTableFormat domain property.
+		/// The format used by default for many-to-many table names.  {0} is replaced by the
+		/// source class name and {1} is replaced by the target class name.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ManyToManyTableFormat.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ManyToManyTableFormat.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue("{0}{1}")]
+		[DslModeling::DomainObjectId("602c1f33-5502-484a-bdb6-085f8dce0fca")]
+		public global::System.String ManyToManyTableFormat
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return manyToManyTableFormatPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				ManyToManyTableFormatPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.ManyToManyTableFormat domain property.
+		/// </summary>
+		internal sealed partial class ManyToManyTableFormatPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private ManyToManyTableFormatPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.ManyToManyTableFormat domain property value handler.
+			/// </summary>
+			public static readonly ManyToManyTableFormatPropertyHandler Instance = new ManyToManyTableFormatPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.ManyToManyTableFormat domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return ManyToManyTableFormatDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.manyToManyTableFormatPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.manyToManyTableFormatPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region ForeignKeyFormat domain property code
+		
+		/// <summary>
+		/// ForeignKeyFormat domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid ForeignKeyFormatDomainPropertyId = new global::System.Guid(0x9e0e8e58, 0x715a, 0x4131, 0x9f, 0x66, 0xfd, 0xb1, 0x50, 0x21, 0x0c, 0x85);
+		
+		/// <summary>
+		/// Storage for ForeignKeyFormat
+		/// </summary>
+		private global::System.String foreignKeyFormatPropertyStorage = "{0}";
+		
+		/// <summary>
+		/// Gets or sets the value of ForeignKeyFormat domain property.
+		/// The format string used by default for foreign key relationships.  {0} is
+		/// replaced with the property or class name.  A common format string might be:
+		/// {0}_ID
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ForeignKeyFormat.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ForeignKeyFormat.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue("{0}")]
+		[DslModeling::DomainObjectId("9e0e8e58-715a-4131-9f66-fdb150210c85")]
+		public global::System.String ForeignKeyFormat
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return foreignKeyFormatPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				ForeignKeyFormatPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.ForeignKeyFormat domain property.
+		/// </summary>
+		internal sealed partial class ForeignKeyFormatPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private ForeignKeyFormatPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.ForeignKeyFormat domain property value handler.
+			/// </summary>
+			public static readonly ForeignKeyFormatPropertyHandler Instance = new ForeignKeyFormatPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.ForeignKeyFormat domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return ForeignKeyFormatDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.foreignKeyFormatPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.foreignKeyFormatPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region Classes opposite domain role accessor
 		/// <summary>
 		/// Gets a list of Classes.

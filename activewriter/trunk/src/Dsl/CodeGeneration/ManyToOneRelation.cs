@@ -52,6 +52,17 @@ namespace Altinoren.ActiveWriter
             }
         }
 
+        public string EffectiveSourceColumn
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(SourceColumn) && !string.IsNullOrEmpty(Source.Model.ForeignKeyFormat))
+                    return string.Format(Source.Model.ForeignKeyFormat, EffectiveSourcePropertyName);
+                else
+                    return SourceColumn;
+            }
+        }
+
         public CodeAttributeDeclaration GetHasManyAttribute(CodeGenerationContext context)
         {
             CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("HasMany");
@@ -117,8 +128,8 @@ namespace Altinoren.ActiveWriter
         public CodeAttributeDeclaration GetBelongsToAttribute()
         {
             CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("BelongsTo");
-            if (!string.IsNullOrEmpty(SourceColumn))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(SourceColumn));
+            if (!string.IsNullOrEmpty(EffectiveSourceColumn) && EffectiveSourceColumn != EffectiveSourcePropertyName)
+                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(EffectiveSourceColumn));
             if (SourceCascade != CascadeEnum.None)
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade", "CascadeEnum", SourceCascade));
 

@@ -97,6 +97,38 @@ namespace Altinoren.ActiveWriter
             }
         }
 
+        public string EffectiveTargetColumn
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(TargetColumn) && !string.IsNullOrEmpty(Target.Model.ForeignKeyFormat))
+                    return string.Format(Target.Model.ForeignKeyFormat, Target.Name);
+                return TargetColumn;
+            }
+        }
+
+        public string EffectiveSourceColumn
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(SourceColumn) && !string.IsNullOrEmpty(Source.Model.ForeignKeyFormat))
+                    return string.Format(Source.Model.ForeignKeyFormat, Source.Name);
+                else
+                    return SourceColumn;
+            }
+        }
+
+        public string EffectiveTable
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Table) && !string.IsNullOrEmpty(Source.Model.ManyToManyTableFormat))
+                    return string.Format(Source.Model.ManyToManyTableFormat, Source.Name, Target.Name);
+                else
+                    return Table;
+            }
+        }
+
         public CodeAttributeDeclaration GetHasAndBelongsToAttributeFromSource(CodeGenerationContext context)
         {
             var attribute = new CodeAttributeDeclaration("HasAndBelongsToMany");
@@ -117,8 +149,8 @@ namespace Altinoren.ActiveWriter
             else if (Source.Model.AutomaticAssociations)
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", context.Namespace + "." + context.InternalPropertyAccessorName + ", " + context.AssemblyName));
 
-            attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnRef", TargetColumn));
-            attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnKey", SourceColumn));
+            attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnRef", EffectiveTargetColumn));
+            attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnKey", EffectiveSourceColumn));
             if (EffectiveSourceRelationType == RelationType.Map)
             {
                 // TODO: Index & IndexType
@@ -172,8 +204,8 @@ namespace Altinoren.ActiveWriter
             else if (Target.Model.AutomaticAssociations)
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", context.Namespace + "." + context.InternalPropertyAccessorName + ", " + context.AssemblyName));
 
-            attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnRef", SourceColumn));
-            attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnKey", TargetColumn));
+            attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnRef", EffectiveSourceColumn));
+            attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnKey", EffectiveTargetColumn));
             if (EffectiveTargetRelationType == RelationType.Map)
             {
                 // TODO: Index & IndexType
@@ -225,8 +257,8 @@ namespace Altinoren.ActiveWriter
         {
             if (!string.IsNullOrEmpty(Schema))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Schema", Schema));
-            if (!string.IsNullOrEmpty(Table))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Table", Table));
+            if (!string.IsNullOrEmpty(EffectiveTable))
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Table", EffectiveTable));
         }
     }
 }

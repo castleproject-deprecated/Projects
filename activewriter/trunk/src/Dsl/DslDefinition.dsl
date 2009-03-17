@@ -208,6 +208,16 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="602c1f33-5502-484a-bdb6-085f8dce0fca" Description="The format used by default for many-to-many table names.  {0} is replaced by the source class name and {1} is replaced by the target class name." Name="ManyToManyTableFormat" DisplayName="Many To Many Table Format" DefaultValue="{0}{1}">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="9e0e8e58-715a-4131-9f66-fdb150210c85" Description="The format string used by default for foreign key relationships.  {0} is replaced with the property or class name.  A common format string might be: {0}_ID" Name="ForeignKeyFormat" DisplayName="Foreign Key Format" DefaultValue="{0}">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
       </Properties>
       <ElementMergeDirectives>
         <ElementMergeDirective>
@@ -1609,6 +1619,12 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="automaticAssociationCollectionImplementation">
             <DomainPropertyMoniker Name="Model/AutomaticAssociationCollectionImplementation" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="manyToManyTableFormat">
+            <DomainPropertyMoniker Name="Model/ManyToManyTableFormat" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="foreignKeyFormat">
+            <DomainPropertyMoniker Name="Model/ForeignKeyFormat" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>
