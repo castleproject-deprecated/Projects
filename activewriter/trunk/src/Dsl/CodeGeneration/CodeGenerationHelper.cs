@@ -228,12 +228,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (cls.DoesImplementINotifyPropertyChanged())
             {
                 classDeclaration.BaseTypes.Add(new CodeTypeReference(Common.INotifyPropertyChangedType));
-                AddINotifyPropertyChangedRegion(classDeclaration);
+                AddINotifyPropertyChangedRegion(classDeclaration, cls.Lazy | Context.Model.UseVirtualProperties);
             }
             if (cls.DoesImplementINotifyPropertyChanging())
             {
                 classDeclaration.BaseTypes.Add(new CodeTypeReference(Common.INotifyPropertyChangingType));
-                AddINotifyPropertyChangingRegion(classDeclaration);
+                AddINotifyPropertyChangingRegion(classDeclaration, cls.Lazy | Context.Model.UseVirtualProperties);
             }
 
             if (!String.IsNullOrEmpty(cls.Description))
@@ -259,12 +259,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (cls.DoesImplementINotifyPropertyChanged())
             {
                 classDeclaration.BaseTypes.Add(new CodeTypeReference(Common.INotifyPropertyChangedType));
-                AddINotifyPropertyChangedRegion(classDeclaration);
+                AddINotifyPropertyChangedRegion(classDeclaration, Context.Model.UseVirtualProperties);
             }
             if (cls.DoesImplementINotifyPropertyChanging())
             {
                 classDeclaration.BaseTypes.Add(new CodeTypeReference(Common.INotifyPropertyChangingType));
-                AddINotifyPropertyChangingRegion(classDeclaration);
+                AddINotifyPropertyChangingRegion(classDeclaration, Context.Model.UseVirtualProperties);
             }
             if (!String.IsNullOrEmpty(cls.Description))
                 classDeclaration.Comments.AddRange(GetSummaryComment(cls.Description));
@@ -301,7 +301,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (implementINotifyPropertyChanged)
             {
                 classDeclaration.BaseTypes.Add(new CodeTypeReference(Common.INotifyPropertyChangedType));
-                AddINotifyPropertyChangedRegion(classDeclaration);
+                AddINotifyPropertyChangedRegion(classDeclaration, Context.Model.UseVirtualProperties);
             }
 
             classDeclaration.CustomAttributes.Add(new CodeAttributeDeclaration("Serializable"));
@@ -1622,15 +1622,16 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             return name;
         }
 
-        private void AddINotifyPropertyChangedRegion(CodeTypeDeclaration declaration)
+        private void AddINotifyPropertyChangedRegion(CodeTypeDeclaration declaration, bool useVirtual)
         {
-            CodeMemberEvent memberEvent = new CodeMemberEvent
-                                              {
-                                                  Attributes = MemberAttributes.Public,
-                                                  Name = "PropertyChanged",
-                                                  Type = new CodeTypeReference("PropertyChangedEventHandler")
-                                              };
-            memberEvent.StartDirectives.Add(new CodeRegionDirective(CodeRegionMode.Start, "INotifyPropertyChanged Members"));
+            // We used to put this in a nice tidy region, but since we need to support
+            // virtual events for lazy classes, and the CodeDOM doesn't support those,
+            // we had to generate the events using snippets.  This broke the region
+            // support by placing formerly contiguous members in entirely different
+            // parts of the generated output.
+
+            CodeTypeMember memberEvent = GetMemberEvent("PropertyChanged", "PropertyChangedEventHandler", useVirtual);
+            //memberEvent.StartDirectives.Add(new CodeRegionDirective(CodeRegionMode.Start, "INotifyPropertyChanged Members"));
             declaration.Members.Add(memberEvent);
 
             CodeMemberMethod propertyChangedMethod = new CodeMemberMethod
@@ -1638,8 +1639,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                              Attributes = MemberAttributes.Family,
                                                              Name = Common.PropertyChangedInternalMethod
                                                          };
-            propertyChangedMethod.EndDirectives.Add(new CodeRegionDirective(CodeRegionMode.End, null));
-            propertyChangedMethod.Parameters.Add(new CodeParameterDeclarationExpression(typeof (string), "information"));
+            //propertyChangedMethod.EndDirectives.Add(new CodeRegionDirective(CodeRegionMode.End, null));
+            propertyChangedMethod.Parameters.Add(new CodeParameterDeclarationExpression(typeof(string), "information"));
             declaration.Members.Add(propertyChangedMethod);
 
             CodeConditionStatement ifStatement = new CodeConditionStatement(
@@ -1656,15 +1657,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             propertyChangedMethod.Statements.Add(ifStatement);
         }
 
-        private void AddINotifyPropertyChangingRegion(CodeTypeDeclaration declaration)
+        private void AddINotifyPropertyChangingRegion(CodeTypeDeclaration declaration, bool useVirtual)
         {
-            CodeMemberEvent memberEvent = new CodeMemberEvent
-                                              {
-                                                  Attributes = MemberAttributes.Public,
-                                                  Name = "PropertyChanging",
-                                                  Type = new CodeTypeReference("PropertyChangingEventHandler")
-                                              };
-            memberEvent.StartDirectives.Add(new CodeRegionDirective(CodeRegionMode.Start, "INotifyPropertyChanging Members"));
+            // See comment on regions in AddINotifyPropertyChangedRegion.
+
+            CodeTypeMember memberEvent = GetMemberEvent("PropertyChanging", "PropertyChangingEventHandler", useVirtual);
+            //memberEvent.StartDirectives.Add(new CodeRegionDirective(CodeRegionMode.Start, "INotifyPropertyChanging Members"));
             declaration.Members.Add(memberEvent);
 
             CodeMemberMethod propertyChangingMethod = new CodeMemberMethod
@@ -1672,8 +1670,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                               Attributes = MemberAttributes.Family,
                                                               Name = Common.PropertyChangingInternalMethod
                                                           };
+            //propertyChangingMethod.EndDirectives.Add(new CodeRegionDirective(CodeRegionMode.End, null));
             propertyChangingMethod.Parameters.Add(new CodeParameterDeclarationExpression(typeof(string), "information"));
-            propertyChangingMethod.EndDirectives.Add(new CodeRegionDirective(CodeRegionMode.End, null));
             declaration.Members.Add(propertyChangingMethod);
 
             CodeConditionStatement ifStatement = new CodeConditionStatement(
@@ -1688,6 +1686,37 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                    new CodeFieldReferenceExpression(null, "information"))))
                 );
             propertyChangingMethod.Statements.Add(ifStatement);
+        }
+
+        private CodeTypeMember GetMemberEvent(string eventName, string eventType, bool useVirtual)
+        {
+            if (Context.Language == CodeLanguage.CSharp)
+            {
+                // This is here because CodeDOM doesn't let us create virtual events.
+                // Example: public virtual event PropertyChangedEventHandler PropertyChanged;
+                string snippet = "        ";
+                snippet += "public ";
+                if (useVirtual)
+                    snippet += "virtual ";
+                snippet += "event ";
+                snippet += eventType + " " + eventName + ";";
+                return new CodeSnippetTypeMember(snippet);
+            }
+
+            if (Context.Language == CodeLanguage.VB)
+            {
+                // VB is crazy and doesn't allow Overridable (virtual) events.  This means that lazy classes with events will only work properly with C# out of the box.
+                // It would be possible to implement additional NHibernate logic to work around this problem, but generating the code like this mirrors what's possible for typical developers out of the box.
+                // The following code is the original code, but it has never worked in VB because it's missing the "Implements INotifyPropertyChanged.PropertyChanged" part of the statement.  It wasn't obvious to me how to fix it, so I left it broken.
+                return new CodeMemberEvent
+                {
+                    Attributes = MemberAttributes.Public,
+                    Name = "PropertyChanged",
+                    Type = new CodeTypeReference("PropertyChangedEventHandler")
+                };
+            }
+
+            throw new NotImplementedException("Don't know how to generate events for language: " + Context.Language);
         }
 
         private void GenerateMetaData(CodeNamespace nameSpace)

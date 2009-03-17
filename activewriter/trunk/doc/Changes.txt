@@ -8,6 +8,7 @@ New:
 - Optional property generation support. (Patch: Patrick Earl)
 - support for double derived classes. (Patch: Patrick Earl)
 - Automatic bi-directional property updates (Patch: Patrick Earl)
+- Allow C# virtual events so PropertyChanged and Lazy classes work in as many cases as possible. (Patch: Patrick Earl)
 
 Preview 4.1
 
