@@ -897,22 +897,19 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     relationship.Target.DoesImplementINotifyPropertyChanging(),
                     relationship.Source.Name,
                     relationship.EffectiveSourcePropertyName,
-                    relationship.SourcePropertyGenerated,
+                    relationship.EffectiveAutomaticAssociations,
                     false,
                     null);
         }
 
-        private void GenerateHasMany(CodeTypeDeclaration classDeclaration, string thisClassName, string propertyName, string customPropertyType, PropertyAccess propertyAccess, string description, CodeAttributeDeclaration attribute, bool genericRelation, bool propertyChanged, bool propertyChanging, string oppositeClassName, string oppositePropertyName, bool oppositeAssociationGenerated, bool manyToMany, CodeAttributeDeclaration collectionIdAttribute)
+        private void GenerateHasMany(CodeTypeDeclaration classDeclaration, string thisClassName, string propertyName, string customPropertyType, PropertyAccess propertyAccess, string description, CodeAttributeDeclaration attribute, bool genericRelation, bool propertyChanged, bool propertyChanging, string oppositeClassName, string oppositePropertyName, bool automaticAssociationGenerated, bool manyToMany, CodeAttributeDeclaration collectionIdAttribute)
         {
-            if (!Context.Model.AutomaticAssociations)
-                oppositeAssociationGenerated = false;
-
             string propertyType = String.IsNullOrEmpty(customPropertyType)
                                       ? Context.Model.EffectiveListInterface
                                       : customPropertyType;
 
             string memberType = propertyType;
-            if (oppositeAssociationGenerated)
+            if (automaticAssociationGenerated)
                 memberType = Context.Model.AutomaticAssociationCollectionImplementation;
 
             CodeMemberField memberField;
@@ -925,14 +922,14 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             // Initializes the collection by assigning a new list instance to the field.
             // Many-to-many relationships never had the initialization code enabled before.
             // Automatic associations initialize their lists in the constructor instead.
-            if (Context.Model.InitializeIListFields && propertyType == Context.Model.EffectiveListInterface && !Context.Model.AutomaticAssociations)
+            if (Context.Model.InitializeIListFields && propertyType == Context.Model.EffectiveListInterface && !automaticAssociationGenerated)
             {
                 CodeObjectCreateExpression fieldCreator = new CodeObjectCreateExpression();
                 fieldCreator.CreateType = GetConcreteListType(oppositeClassName);
                 memberField.InitExpression = fieldCreator;
             }
 
-            bool createSetter = oppositeAssociationGenerated ? false : true;
+            bool createSetter = automaticAssociationGenerated ? false : true;
 
             if (description == "") description = null;
             CodeMemberProperty memberProperty = GetMemberProperty(memberField, propertyName, true, createSetter, propertyChanged, propertyChanging, description);
@@ -942,7 +939,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                
             classDeclaration.Members.Add(memberProperty);
 
-            if (oppositeAssociationGenerated)
+            if (automaticAssociationGenerated)
             {
                 AddConstructorForWatchedList(classDeclaration, Context.Model, memberField, propertyName);
                 AddInternalWatchedListProperty(classDeclaration, memberProperty.Type, propertyName, memberField.Name, propertyChanged, propertyChanging);
@@ -976,9 +973,9 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 classDeclaration.Members.Add(memberField);
 
                 string automaticAssociationCollectionName =
-                    Context.Model.AutomaticAssociations ? relationship.EffectiveTargetPropertyName : null;
-                if (!relationship.TargetPropertyGenerated)
-                    automaticAssociationCollectionName = null;
+                    relationship.EffectiveAutomaticAssociations
+                        ? relationship.EffectiveTargetPropertyName
+                        : null;
 
                 CodeMemberProperty memberProperty = GetMemberProperty(memberField, relationship.EffectiveSourcePropertyName, automaticAssociationCollectionName, relationship.Source.Name, true, true, relationship.Source.DoesImplementINotifyPropertyChanged(), relationship.Source.DoesImplementINotifyPropertyChanging(), relationship.SourceDescription == "" ? null : relationship.SourceDescription);
                 classDeclaration.Members.Add(memberProperty);
@@ -1008,7 +1005,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     relationship.Source.DoesImplementINotifyPropertyChanging(),
                     relationship.Target.Name,
                     relationship.EffectiveTargetPropertyName,
-                    relationship.TargetPropertyGenerated,
+                    relationship.EffectiveAutomaticAssociations,
                     true,
                     relationship.GetCollectionIdAttribute(relationship.EffectiveSourceRelationType));
         }
@@ -1030,7 +1027,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     relationship.Target.DoesImplementINotifyPropertyChanging(),
                     relationship.Source.Name,
                     relationship.EffectiveSourcePropertyName,
-                    relationship.SourcePropertyGenerated,
+                    relationship.EffectiveAutomaticAssociations,
                     true,
                     relationship.GetCollectionIdAttribute(relationship.EffectiveTargetRelationType));
         }
