@@ -3088,63 +3088,66 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
-		#region ManyToManyCollectionIDColumn domain property code
+		#region ManyToManyCollectionIDColumnFormat domain property code
 		
 		/// <summary>
-		/// ManyToManyCollectionIDColumn domain property Id.
+		/// ManyToManyCollectionIDColumnFormat domain property Id.
 		/// </summary>
-		public static readonly global::System.Guid ManyToManyCollectionIDColumnDomainPropertyId = new global::System.Guid(0x4e0c0023, 0x6a86, 0x4801, 0xbb, 0x51, 0x9e, 0xbb, 0xad, 0x2a, 0x1f, 0xd6);
+		public static readonly global::System.Guid ManyToManyCollectionIDColumnFormatDomainPropertyId = new global::System.Guid(0x4e0c0023, 0x6a86, 0x4801, 0xbb, 0x51, 0x9e, 0xbb, 0xad, 0x2a, 0x1f, 0xd6);
 		
 		/// <summary>
-		/// Storage for ManyToManyCollectionIDColumn
+		/// Storage for ManyToManyCollectionIDColumnFormat
 		/// </summary>
-		private global::System.String manyToManyCollectionIDColumnPropertyStorage = string.Empty;
+		private global::System.String manyToManyCollectionIDColumnFormatPropertyStorage = string.Empty;
 		
 		/// <summary>
-		/// Gets or sets the value of ManyToManyCollectionIDColumn domain property.
+		/// Gets or sets the value of ManyToManyCollectionIDColumnFormat domain property.
 		/// This column name is used for many to many collection ID definition.  If a column
 		/// name is specified in the relationship itself, the Column Type and Generator
 		/// specified in the relationship will be used instead of those specified here in
-		/// the model.
+		/// the model.  Any {0} specified in the format will be replaced with the table name
+		/// in the same way as Common Primary Key Format.  If no format is specified here or
+		/// in the many to many relationships, the generation system will fall back to the
+		/// Common Primary Key information.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumn.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumn.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumn.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnFormat.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnFormat.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnFormat.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("4e0c0023-6a86-4801-bb51-9ebbad2a1fd6")]
-		public global::System.String ManyToManyCollectionIDColumn
+		public global::System.String ManyToManyCollectionIDColumnFormat
 		{
 			[global::System.Diagnostics.DebuggerStepThrough]
 			get
 			{
-				return manyToManyCollectionIDColumnPropertyStorage;
+				return manyToManyCollectionIDColumnFormatPropertyStorage;
 			}
 			[global::System.Diagnostics.DebuggerStepThrough]
 			set
 			{
-				ManyToManyCollectionIDColumnPropertyHandler.Instance.SetValue(this, value);
+				ManyToManyCollectionIDColumnFormatPropertyHandler.Instance.SetValue(this, value);
 			}
 		}
 		/// <summary>
-		/// Value handler for the Model.ManyToManyCollectionIDColumn domain property.
+		/// Value handler for the Model.ManyToManyCollectionIDColumnFormat domain property.
 		/// </summary>
-		internal sealed partial class ManyToManyCollectionIDColumnPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		internal sealed partial class ManyToManyCollectionIDColumnFormatPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
 		{
-			private ManyToManyCollectionIDColumnPropertyHandler() { }
+			private ManyToManyCollectionIDColumnFormatPropertyHandler() { }
 		
 			/// <summary>
-			/// Gets the singleton instance of the Model.ManyToManyCollectionIDColumn domain property value handler.
+			/// Gets the singleton instance of the Model.ManyToManyCollectionIDColumnFormat domain property value handler.
 			/// </summary>
-			public static readonly ManyToManyCollectionIDColumnPropertyHandler Instance = new ManyToManyCollectionIDColumnPropertyHandler();
+			public static readonly ManyToManyCollectionIDColumnFormatPropertyHandler Instance = new ManyToManyCollectionIDColumnFormatPropertyHandler();
 		
 			/// <summary>
-			/// Gets the Id of the Model.ManyToManyCollectionIDColumn domain property.
+			/// Gets the Id of the Model.ManyToManyCollectionIDColumnFormat domain property.
 			/// </summary>
 			public sealed override global::System.Guid DomainPropertyId
 			{
 				[global::System.Diagnostics.DebuggerStepThrough]
 				get
 				{
-					return ManyToManyCollectionIDColumnDomainPropertyId;
+					return ManyToManyCollectionIDColumnFormatDomainPropertyId;
 				}
 			}
 			
@@ -3156,7 +3159,7 @@ namespace Altinoren.ActiveWriter
 			public override sealed global::System.String GetValue(Model element)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
-				return element.manyToManyCollectionIDColumnPropertyStorage;
+				return element.manyToManyCollectionIDColumnFormatPropertyStorage;
 			}
 		
 			/// <summary>
@@ -3172,7 +3175,7 @@ namespace Altinoren.ActiveWriter
 				if (newValue != oldValue)
 				{
 					ValueChanging(element, oldValue, newValue);
-					element.manyToManyCollectionIDColumnPropertyStorage = newValue;
+					element.manyToManyCollectionIDColumnFormatPropertyStorage = newValue;
 					ValueChanged(element, oldValue, newValue);
 				}
 			}
@@ -3887,6 +3890,367 @@ namespace Altinoren.ActiveWriter
 				{
 					ValueChanging(element, oldValue, newValue);
 					element.foreignKeyFormatPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region CommonPrimaryKeyPropertyFormat domain property code
+		
+		/// <summary>
+		/// CommonPrimaryKeyPropertyFormat domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid CommonPrimaryKeyPropertyFormatDomainPropertyId = new global::System.Guid(0xebdf3b2b, 0x288b, 0x431a, 0x93, 0xbd, 0xcb, 0xeb, 0x86, 0x97, 0xcc, 0x7a);
+		
+		/// <summary>
+		/// Storage for CommonPrimaryKeyPropertyFormat
+		/// </summary>
+		private global::System.String commonPrimaryKeyPropertyFormatPropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of CommonPrimaryKeyPropertyFormat domain property.
+		/// If no other primary key is specified, a primary key will be generated with this
+		/// format.  {0} will be replaced with the class name.  As an example, {0}Id would
+		/// generate SomeClassId as the primary key property for SomeClass.  If left blank,
+		/// no primary keys will be added to classes without existing primary keys.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/CommonPrimaryKeyPropertyFormat.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/CommonPrimaryKeyPropertyFormat.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/CommonPrimaryKeyPropertyFormat.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue("")]
+		[DslModeling::DomainObjectId("ebdf3b2b-288b-431a-93bd-cbeb8697cc7a")]
+		public global::System.String CommonPrimaryKeyPropertyFormat
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return commonPrimaryKeyPropertyFormatPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				CommonPrimaryKeyPropertyFormatPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.CommonPrimaryKeyPropertyFormat domain property.
+		/// </summary>
+		internal sealed partial class CommonPrimaryKeyPropertyFormatPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private CommonPrimaryKeyPropertyFormatPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.CommonPrimaryKeyPropertyFormat domain property value handler.
+			/// </summary>
+			public static readonly CommonPrimaryKeyPropertyFormatPropertyHandler Instance = new CommonPrimaryKeyPropertyFormatPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.CommonPrimaryKeyPropertyFormat domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return CommonPrimaryKeyPropertyFormatDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.commonPrimaryKeyPropertyFormatPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.commonPrimaryKeyPropertyFormatPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region CommonPrimaryKeyColumnFormat domain property code
+		
+		/// <summary>
+		/// CommonPrimaryKeyColumnFormat domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid CommonPrimaryKeyColumnFormatDomainPropertyId = new global::System.Guid(0x51fb36b6, 0x2aaf, 0x424a, 0x98, 0x11, 0x0a, 0xf8, 0x10, 0xb2, 0x7d, 0x87);
+		
+		/// <summary>
+		/// Storage for CommonPrimaryKeyColumnFormat
+		/// </summary>
+		private global::System.String commonPrimaryKeyColumnFormatPropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of CommonPrimaryKeyColumnFormat domain property.
+		/// The column name used for the common primary key property.  If not specified, the
+		/// name of the property will be used.  {0} will be replaced with the name of the
+		/// table.  For example, you could use the table name with a standard suffix: {0}_ID
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/CommonPrimaryKeyColumnFormat.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/CommonPrimaryKeyColumnFormat.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/CommonPrimaryKeyColumnFormat.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue("")]
+		[DslModeling::DomainObjectId("51fb36b6-2aaf-424a-9811-0af810b27d87")]
+		public global::System.String CommonPrimaryKeyColumnFormat
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return commonPrimaryKeyColumnFormatPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				CommonPrimaryKeyColumnFormatPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.CommonPrimaryKeyColumnFormat domain property.
+		/// </summary>
+		internal sealed partial class CommonPrimaryKeyColumnFormatPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private CommonPrimaryKeyColumnFormatPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.CommonPrimaryKeyColumnFormat domain property value handler.
+			/// </summary>
+			public static readonly CommonPrimaryKeyColumnFormatPropertyHandler Instance = new CommonPrimaryKeyColumnFormatPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.CommonPrimaryKeyColumnFormat domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return CommonPrimaryKeyColumnFormatDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.commonPrimaryKeyColumnFormatPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.commonPrimaryKeyColumnFormatPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region CommonPrimaryKeyColumnType domain property code
+		
+		/// <summary>
+		/// CommonPrimaryKeyColumnType domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid CommonPrimaryKeyColumnTypeDomainPropertyId = new global::System.Guid(0xd4b5a000, 0x5a74, 0x49fd, 0x84, 0xd9, 0x5c, 0x0f, 0x66, 0x86, 0x45, 0x39);
+		
+		/// <summary>
+		/// Storage for CommonPrimaryKeyColumnType
+		/// </summary>
+		private NHibernateType commonPrimaryKeyColumnTypePropertyStorage = NHibernateType.Int32;
+		
+		/// <summary>
+		/// Gets or sets the value of CommonPrimaryKeyColumnType domain property.
+		/// NHibernate type for common primary key.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/CommonPrimaryKeyColumnType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/CommonPrimaryKeyColumnType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/CommonPrimaryKeyColumnType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(NHibernateType.Int32)]
+		[DslModeling::DomainObjectId("d4b5a000-5a74-49fd-84d9-5c0f66864539")]
+		public NHibernateType CommonPrimaryKeyColumnType
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return commonPrimaryKeyColumnTypePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				CommonPrimaryKeyColumnTypePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.CommonPrimaryKeyColumnType domain property.
+		/// </summary>
+		internal sealed partial class CommonPrimaryKeyColumnTypePropertyHandler : DslModeling::DomainPropertyValueHandler<Model, NHibernateType>
+		{
+			private CommonPrimaryKeyColumnTypePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.CommonPrimaryKeyColumnType domain property value handler.
+			/// </summary>
+			public static readonly CommonPrimaryKeyColumnTypePropertyHandler Instance = new CommonPrimaryKeyColumnTypePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.CommonPrimaryKeyColumnType domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return CommonPrimaryKeyColumnTypeDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed NHibernateType GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.commonPrimaryKeyColumnTypePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, NHibernateType newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				NHibernateType oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.commonPrimaryKeyColumnTypePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region CommonPrimaryKeyGenerator domain property code
+		
+		/// <summary>
+		/// CommonPrimaryKeyGenerator domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid CommonPrimaryKeyGeneratorDomainPropertyId = new global::System.Guid(0xc867009e, 0xe763, 0x4884, 0xb9, 0xab, 0x99, 0x54, 0xbc, 0x30, 0x47, 0x6f);
+		
+		/// <summary>
+		/// Storage for CommonPrimaryKeyGenerator
+		/// </summary>
+		private PrimaryKeyType commonPrimaryKeyGeneratorPropertyStorage = PrimaryKeyType.Native;
+		
+		/// <summary>
+		/// Gets or sets the value of CommonPrimaryKeyGenerator domain property.
+		/// Generator type for common primary key.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/CommonPrimaryKeyGenerator.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/CommonPrimaryKeyGenerator.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/CommonPrimaryKeyGenerator.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(PrimaryKeyType.Native)]
+		[DslModeling::DomainObjectId("c867009e-e763-4884-b9ab-9954bc30476f")]
+		public PrimaryKeyType CommonPrimaryKeyGenerator
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return commonPrimaryKeyGeneratorPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				CommonPrimaryKeyGeneratorPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.CommonPrimaryKeyGenerator domain property.
+		/// </summary>
+		internal sealed partial class CommonPrimaryKeyGeneratorPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, PrimaryKeyType>
+		{
+			private CommonPrimaryKeyGeneratorPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.CommonPrimaryKeyGenerator domain property value handler.
+			/// </summary>
+			public static readonly CommonPrimaryKeyGeneratorPropertyHandler Instance = new CommonPrimaryKeyGeneratorPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.CommonPrimaryKeyGenerator domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return CommonPrimaryKeyGeneratorDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed PrimaryKeyType GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.commonPrimaryKeyGeneratorPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, PrimaryKeyType newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				PrimaryKeyType oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.commonPrimaryKeyGeneratorPropertyStorage = newValue;
 					ValueChanged(element, oldValue, newValue);
 				}
 			}

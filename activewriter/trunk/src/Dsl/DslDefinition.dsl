@@ -173,7 +173,7 @@
             <DomainEnumerationMoniker Name="RelationType" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="4e0c0023-6a86-4801-bb51-9ebbad2a1fd6" Description="This column name is used for many to many collection ID definition.  If a column name is specified in the relationship itself, the Column Type and Generator specified in the relationship will be used instead of those specified here in the model." Name="ManyToManyCollectionIDColumn" DisplayName="Many To Many Collection ID Column" Category="Code Generation">
+        <DomainProperty Id="4e0c0023-6a86-4801-bb51-9ebbad2a1fd6" Description="This column name is used for many to many collection ID definition.  If a column name is specified in the relationship itself, the Column Type and Generator specified in the relationship will be used instead of those specified here in the model.  Any {0} specified in the format will be replaced with the table name in the same way as Common Primary Key Format.  If no format is specified here or in the many to many relationships, the generation system will fall back to the Common Primary Key information." Name="ManyToManyCollectionIDColumnFormat" DisplayName="Many To Many Collection ID Column" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
@@ -216,6 +216,26 @@
         <DomainProperty Id="9e0e8e58-715a-4131-9f66-fdb150210c85" Description="The format string used by default for foreign key relationships.  {0} is replaced with the property or class name.  A common format string might be: {0}_ID" Name="ForeignKeyFormat" DisplayName="Foreign Key Format" DefaultValue="{0}">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="ebdf3b2b-288b-431a-93bd-cbeb8697cc7a" Description="If no other primary key is specified, a primary key will be generated with this format.  {0} will be replaced with the class name.  As an example, {0}Id would generate SomeClassId as the primary key property for SomeClass.  If left blank, no primary keys will be added to classes without existing primary keys." Name="CommonPrimaryKeyPropertyFormat" DisplayName="Common Primary Key Property Format" DefaultValue="" Category="Surrogate Primary Key">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="51fb36b6-2aaf-424a-9811-0af810b27d87" Description="The column name used for the common primary key property.  If not specified, the name of the property will be used.  {0} will be replaced with the name of the table.  For example, you could use the table name with a standard suffix: {0}_ID" Name="CommonPrimaryKeyColumnFormat" DisplayName="Common Primary Key Column Format" DefaultValue="" Category="Surrogate Primary Key">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="d4b5a000-5a74-49fd-84d9-5c0f66864539" Description="NHibernate type for common primary key." Name="CommonPrimaryKeyColumnType" DisplayName="Common Primary Key Column Type" DefaultValue="Int32" Category="Surrogate Primary Key">
+          <Type>
+            <DomainEnumerationMoniker Name="NHibernateType" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="c867009e-e763-4884-b9ab-9954bc30476f" Description="Generator type for common primary key." Name="CommonPrimaryKeyGenerator" DisplayName="Common Primary Key Generator" DefaultValue="Native" Category="Surrogate Primary Key">
+          <Type>
+            <DomainEnumerationMoniker Name="PrimaryKeyType" />
           </Type>
         </DomainProperty>
       </Properties>
@@ -1599,8 +1619,8 @@
           <XmlPropertyData XmlName="manyToOneRelationType">
             <DomainPropertyMoniker Name="Model/ManyToOneRelationType" />
           </XmlPropertyData>
-          <XmlPropertyData XmlName="manyToManyCollectionIDColumn">
-            <DomainPropertyMoniker Name="Model/ManyToManyCollectionIDColumn" />
+          <XmlPropertyData XmlName="manyToManyCollectionIDColumnFormat">
+            <DomainPropertyMoniker Name="Model/ManyToManyCollectionIDColumnFormat" />
           </XmlPropertyData>
           <XmlPropertyData XmlName="manyToManyCollectionIDColumnType">
             <DomainPropertyMoniker Name="Model/ManyToManyCollectionIDColumnType" />
@@ -1625,6 +1645,18 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="foreignKeyFormat">
             <DomainPropertyMoniker Name="Model/ForeignKeyFormat" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="commonPrimaryKeyPropertyFormat">
+            <DomainPropertyMoniker Name="Model/CommonPrimaryKeyPropertyFormat" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="commonPrimaryKeyColumnFormat">
+            <DomainPropertyMoniker Name="Model/CommonPrimaryKeyColumnFormat" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="commonPrimaryKeyColumnType">
+            <DomainPropertyMoniker Name="Model/CommonPrimaryKeyColumnType" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="commonPrimaryKeyGenerator">
+            <DomainPropertyMoniker Name="Model/CommonPrimaryKeyGenerator" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

@@ -104,12 +104,12 @@
     <Compile Include="CodeGeneration\ManyToOneRelation.cs" />
     <Compile Include="CodeGeneration\Model.cs" />
     <Compile Include="CodeGeneration\ModelClass.cs" />
-    <Compile Include="CodeGeneration\ModelProperty.cs" />
     <Compile Include="CodeGeneration\MonoRailGenerator.cs" />
     <Compile Include="CodeGeneration\NamingHelper.cs" />
     <Compile Include="CodeGeneration\NestedClass.cs" />
     <Compile Include="CodeGeneration\NestedClassReferencesModelClasses.cs" />
     <Compile Include="CodeGeneration\OneToOneRelation.cs" />
+    <Compile Include="CodeGeneration\PropertyData.cs" />
     <Compile Include="CodeGeneration\TypeHelper.cs" />
     <Compile Include="Common\Common.cs" />
     <Compile Include="GeneratedCodeExtensions\Connectors.cs" />

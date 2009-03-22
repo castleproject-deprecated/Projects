@@ -68,10 +68,16 @@ namespace Altinoren.ActiveWriter
         {
             get
             {
-                if (string.IsNullOrEmpty(CollectionIDColumn))
-                    return Source.Model.ManyToManyCollectionIDColumn;
-                else
+                if (!string.IsNullOrEmpty(CollectionIDColumn))
                     return CollectionIDColumn;
+
+                if (!string.IsNullOrEmpty(Source.Model.ManyToManyCollectionIDColumnFormat))
+                    return string.Format(Source.Model.ManyToManyCollectionIDColumnFormat, EffectiveTable);
+
+                if (!string.IsNullOrEmpty(Source.Model.CommonPrimaryKeyColumnFormat))
+                    return string.Format(Source.Model.CommonPrimaryKeyColumnFormat, EffectiveTable);
+
+                return null;
             }
         }
 
@@ -79,10 +85,16 @@ namespace Altinoren.ActiveWriter
         {
             get
             {
-                if (string.IsNullOrEmpty(CollectionIDColumn))
-                    return Source.Model.ManyToManyCollectionIDColumnType;
-                else
+                if (!string.IsNullOrEmpty(CollectionIDColumn))
                     return CollectionIDColumnType;
+
+                if (!string.IsNullOrEmpty(Source.Model.ManyToManyCollectionIDColumnFormat))
+                    return Source.Model.ManyToManyCollectionIDColumnType;
+
+                if (!string.IsNullOrEmpty(Source.Model.CommonPrimaryKeyColumnFormat))
+                    return Source.Model.CommonPrimaryKeyColumnType;
+
+                return CollectionIDColumnType;
             }
         }
 
@@ -90,10 +102,16 @@ namespace Altinoren.ActiveWriter
         {
             get
             {
-                if (string.IsNullOrEmpty(CollectionIDColumn))
-                    return Source.Model.ManyToManyCollectionIDGenerator;
-                else
+                if (!string.IsNullOrEmpty(CollectionIDColumn))
                     return CollectionIDGenerator;
+
+                if (!string.IsNullOrEmpty(Source.Model.ManyToManyCollectionIDColumnFormat))
+                    return Source.Model.ManyToManyCollectionIDGenerator;
+
+                if (!string.IsNullOrEmpty(Source.Model.CommonPrimaryKeyColumnFormat))
+                    return Source.Model.CommonPrimaryKeyGenerator;
+
+                return CollectionIDGenerator;
             }
         }
 

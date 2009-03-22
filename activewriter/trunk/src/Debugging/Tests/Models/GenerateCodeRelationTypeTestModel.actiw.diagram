@@ -14,7 +14,7 @@
         <elementListCompartment Id="e74565a9-cf95-4dff-887e-1ce94530c36d" absoluteBounds="5.015, 1.4100000000000001, 1.4700000000000002, 0.44169108072916663" name="Properties" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <manyToOneConnector edgePoints="[(5 : 1.47584554036458); (3.875 : 1.47584554036458)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <manyToOneConnector edgePoints="[(5 : 1.47584554036458); (3.875 : 1.47584554036458)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <manyToOneRelationMoniker Id="9f222108-3f04-481f-8c04-6c3a5063d338" />
       <relativeChildShapes />
       <nodes>
@@ -22,7 +22,7 @@
         <classShapeMoniker Id="86a1a932-c4a2-47cd-8f22-825c4947c00f" />
       </nodes>
     </manyToOneConnector>
-    <manyToManyConnector edgePoints="[(5 : 1.17542277018229); (3.875 : 1.17542277018229)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <manyToManyConnector edgePoints="[(5 : 1.17542277018229); (3.875 : 1.17542277018229)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <manyToManyRelationMoniker Id="a99941d8-4379-4ace-a2a2-8abb33c3d3f7" />
       <relativeChildShapes />
       <nodes>
@@ -30,7 +30,7 @@
         <classShapeMoniker Id="86a1a932-c4a2-47cd-8f22-825c4947c00f" />
       </nodes>
     </manyToManyConnector>
-    <manyToOneConnector edgePoints="[(5 : 1.77626831054688); (3.875 : 1.77626831054688)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <manyToOneConnector edgePoints="[(5 : 1.77626831054688); (3.875 : 1.77626831054688)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <manyToOneRelationMoniker Id="5825f453-8906-46c8-986c-523cf283cd52" />
       <relativeChildShapes />
       <nodes>

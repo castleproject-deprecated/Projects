@@ -61,16 +61,6 @@ namespace Altinoren.ActiveWriter
             this.validatorPropertyStorage = newValue;
         }
 
-        public ArrayList GetValidatorsAsArrayList()
-        {
-            if (IsValidatorSet())
-            {
-                return DeserializeValidatorList(validatorPropertyStorage);
-            }
-
-            return null;
-        }
-
         public static ArrayList DeserializeValidatorList(string value)
         {
             StringReader reader = new StringReader(value);

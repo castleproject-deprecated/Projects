@@ -1,28 +1,141 @@
-// Copyright 2006 Gokhan Altinoren - http://altinoren.com/
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//     http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.CodeDom;
 using Altinoren.ActiveWriter.ARValidators;
 
-namespace Altinoren.ActiveWriter
+namespace Altinoren.ActiveWriter.CodeGeneration
 {
-    using System.CodeDom;
-    using CodeGeneration;
+    using System;
 
-    public partial class ModelProperty
+    /// <summary>
+    /// PropertyData represents either a ModelProperty or something like the
+    /// common primary key.  It also stores additional information about
+    /// whether it's a joined key or not.  This is somewhat ugly, but the
+    /// model classes don't seem to like being modified directly.
+    /// </summary>
+    public class PropertyData
     {
+        #region ModelProperty Mirror Properties
+
+        public string Name { get; private set; }
+        public string Column { get; set; }
+        public NHibernateType ColumnType { get; set; }
+        public PrimaryKeyType Generator { get; set; }
+        public PropertyAccess Access { get; private set; }
+        private string CustomAccess { get; set; }
+        private int Length { get; set; }
+        private string Params { get; set; }
+        private string SequenceName { get; set; }
+        private string UnsavedValue { get; set; }
+        private string Formula { get; set; }
+        private bool Insert { get; set; }
+        private bool Update { get; set; }
+        private bool Unique { get; set; }
+        public bool NotNull { get; private set; }
+        private string CustomColumnType { get; set; }
+        private string UniqueKey { get; set; }
+        private string Index { get; set; }
+        private string SqlType { get; set; }
+        private string Check { get; set; }
+        private string ValidatorPropertyStorage { get; set; }
+        public PropertyType PropertyType { get; private set; }
+        public string Description { get; private set; }
+        public string CustomMemberType { get; private set; }
+        public KeyType KeyType { get; set; }
+        public Accessor Accessor { get; private set; }
+        public bool DefaultMember { get; private set; }
+        public bool DebuggerDisplay { get; private set; }
+
+        private ModelClass ModelClass { get; set; }
+        private NestedClass NestedClass { get; set; }
+
+        #endregion
+
+        private PropertyData(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("Property name cannot be null.");
+            Name = name;
+
+            Access = PropertyAccess.Property;
+            Accessor = Accessor.Public;
+            Check = null;
+            Column = null;
+            ColumnType = NHibernateType.String;
+            // Composite Key Name Missing.
+            CustomAccess = null;
+            CustomColumnType = null;
+            CustomMemberType = null;
+            DebuggerDisplay = false;
+            DefaultMember = false;
+            Description = null;
+            Formula = null;
+            Generator = PrimaryKeyType.Native;
+            Index = null;
+            Insert = true;
+            KeyType = KeyType.None;
+            Length = 0;
+            NotNull = false;
+            Params = null;
+            PropertyType = PropertyType.Property;
+            SequenceName = null;
+            SqlType = null;
+            Unique = false;
+            UniqueKey = null;
+            UnsavedValue = null;
+            Update = true;
+            ValidatorPropertyStorage = null;
+        }
+
+        public PropertyData(string name, ModelClass modelClass)
+            : this(name)
+        {
+            ModelClass = modelClass;
+        }
+
+        public PropertyData(string name, NestedClass nestedClass)
+            : this(name)
+        {
+            NestedClass = nestedClass;
+        }
+
+        public PropertyData(ModelProperty p)
+        {
+            Name = p.Name;
+            Column = p.Column;
+            ColumnType = p.ColumnType;
+            Generator = p.Generator;
+            Access = p.Access;
+            CustomAccess = p.CustomAccess;
+            Length = p.Length;
+            Params = p.Params;
+            SequenceName = p.SequenceName;
+            UnsavedValue = p.UnsavedValue;
+            Formula = p.Formula;
+            Insert = p.Insert;
+            Update = p.Update;
+            Unique = p.Unique;
+            NotNull = p.NotNull;
+            CustomColumnType = p.CustomColumnType;
+            UniqueKey = p.UniqueKey;
+            Index = p.Index;
+            SqlType = p.SqlType;
+            Check = p.Check;
+            ValidatorPropertyStorage = p.GetValidatorValue();
+            PropertyType = p.PropertyType;
+            Description = p.Description;
+            CustomMemberType = p.CustomMemberType;
+            KeyType = p.KeyType;
+            Accessor = p.Accessor;
+            DefaultMember = p.DefaultMember;
+            DebuggerDisplay = p.DebuggerDisplay;
+            
+            ModelClass = p.ModelClass;
+            NestedClass = p.NestedClass;
+        }
+
         #region Public Static Methods
 
         public static bool IsMetaDataGeneratable(CodeTypeMember member)
@@ -137,7 +250,7 @@ namespace Altinoren.ActiveWriter
                 CodeAttributeDeclaration[] result = new CodeAttributeDeclaration[list.Count];
 
                 for (int i = 0; i < list.Count; i++)
-                    result[i] = ((AbstractValidation) list[i]).GetAttributeDeclaration();
+                    result[i] = ((AbstractValidation)list[i]).GetAttributeDeclaration();
 
                 return result;
             }
@@ -230,5 +343,20 @@ namespace Altinoren.ActiveWriter
         }
 
         #endregion
+
+        public ArrayList GetValidatorsAsArrayList()
+        {
+            if (IsValidatorSet)
+            {
+                return ModelProperty.DeserializeValidatorList(ValidatorPropertyStorage);
+            }
+
+            return null;
+        }
+
+        public bool IsValidatorSet
+        {
+            get { return !string.IsNullOrEmpty(ValidatorPropertyStorage); }
+        }
     }
 }

@@ -537,17 +537,17 @@
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;ManyToOneRelationType&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
-  <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumn.Description" xml:space="preserve">
-    <value>This column name is used for many to many collection ID definition.  If a column name is specified in the relationship itself, the Column Type and Generator specified in the relationship will be used instead of those specified here in the model.</value>
-    <comment>Description for DomainProperty &apos;ManyToManyCollectionIDColumn&apos; on DomainClass &apos;Model&apos;</comment>
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnFormat.Description" xml:space="preserve">
+    <value>This column name is used for many to many collection ID definition.  If a column name is specified in the relationship itself, the Column Type and Generator specified in the relationship will be used instead of those specified here in the model.  Any {0} specified in the format will be replaced with the table name in the same way as Common Primary Key Format.  If no format is specified here or in the many to many relationships, the generation system will fall back to the Common Primary Key information.</value>
+    <comment>Description for DomainProperty &apos;ManyToManyCollectionIDColumnFormat&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
-  <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumn.DisplayName" xml:space="preserve">
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnFormat.DisplayName" xml:space="preserve">
     <value>Many To Many Collection ID Column</value>
-    <comment>DisplayName for DomainProperty &apos;ManyToManyCollectionIDColumn&apos; on DomainClass &apos;Model&apos;</comment>
+    <comment>DisplayName for DomainProperty &apos;ManyToManyCollectionIDColumnFormat&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
-  <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumn.Category" xml:space="preserve">
+  <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnFormat.Category" xml:space="preserve">
     <value>Code Generation</value>
-    <comment>Category for DomainProperty &apos;ManyToManyCollectionIDColumn&apos; on DomainClass &apos;Model&apos;</comment>
+    <comment>Category for DomainProperty &apos;ManyToManyCollectionIDColumnFormat&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnType.Description" xml:space="preserve">
     <value>Description for Altinoren.ActiveWriter.Model.Many To Many Collection ID Column Type</value>
@@ -636,6 +636,54 @@
   <data name="Altinoren.ActiveWriter.Model/ForeignKeyFormat.DisplayName" xml:space="preserve">
     <value>Foreign Key Format</value>
     <comment>DisplayName for DomainProperty &apos;ForeignKeyFormat&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CommonPrimaryKeyPropertyFormat.Description" xml:space="preserve">
+    <value>If no other primary key is specified, a primary key will be generated with this format.  {0} will be replaced with the class name.  As an example, {0}Id would generate SomeClassId as the primary key property for SomeClass.  If left blank, no primary keys will be added to classes without existing primary keys.</value>
+    <comment>Description for DomainProperty &apos;CommonPrimaryKeyPropertyFormat&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CommonPrimaryKeyPropertyFormat.DisplayName" xml:space="preserve">
+    <value>Common Primary Key Property Format</value>
+    <comment>DisplayName for DomainProperty &apos;CommonPrimaryKeyPropertyFormat&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CommonPrimaryKeyPropertyFormat.Category" xml:space="preserve">
+    <value>Surrogate Primary Key</value>
+    <comment>Category for DomainProperty &apos;CommonPrimaryKeyPropertyFormat&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CommonPrimaryKeyColumnFormat.Description" xml:space="preserve">
+    <value>The column name used for the common primary key property.  If not specified, the name of the property will be used.  {0} will be replaced with the name of the table.  For example, you could use the table name with a standard suffix: {0}_ID</value>
+    <comment>Description for DomainProperty &apos;CommonPrimaryKeyColumnFormat&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CommonPrimaryKeyColumnFormat.DisplayName" xml:space="preserve">
+    <value>Common Primary Key Column Format</value>
+    <comment>DisplayName for DomainProperty &apos;CommonPrimaryKeyColumnFormat&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CommonPrimaryKeyColumnFormat.Category" xml:space="preserve">
+    <value>Surrogate Primary Key</value>
+    <comment>Category for DomainProperty &apos;CommonPrimaryKeyColumnFormat&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CommonPrimaryKeyColumnType.Description" xml:space="preserve">
+    <value>NHibernate type for common primary key.</value>
+    <comment>Description for DomainProperty &apos;CommonPrimaryKeyColumnType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CommonPrimaryKeyColumnType.DisplayName" xml:space="preserve">
+    <value>Common Primary Key Column Type</value>
+    <comment>DisplayName for DomainProperty &apos;CommonPrimaryKeyColumnType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CommonPrimaryKeyColumnType.Category" xml:space="preserve">
+    <value>Surrogate Primary Key</value>
+    <comment>Category for DomainProperty &apos;CommonPrimaryKeyColumnType&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CommonPrimaryKeyGenerator.Description" xml:space="preserve">
+    <value>Generator type for common primary key.</value>
+    <comment>Description for DomainProperty &apos;CommonPrimaryKeyGenerator&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CommonPrimaryKeyGenerator.DisplayName" xml:space="preserve">
+    <value>Common Primary Key Generator</value>
+    <comment>DisplayName for DomainProperty &apos;CommonPrimaryKeyGenerator&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/CommonPrimaryKeyGenerator.Category" xml:space="preserve">
+    <value>Surrogate Primary Key</value>
+    <comment>Category for DomainProperty &apos;CommonPrimaryKeyGenerator&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ModelClass.Description" xml:space="preserve">
     <value>A class of the domain</value>

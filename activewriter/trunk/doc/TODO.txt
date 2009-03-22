@@ -1,6 +1,5 @@
 - Extract Nested menu command, which extracts some of the properties into a nested class or select one of the existing nested classes.
 - When adding a new property, handle enter key properly in toolwindow.
-- Double derived?
 - Import?
 - Sync. attribute properties with AR trunk.
 - Shouldn't it also be good practice when setting the Key Type to Primary key it is always NotNUll=true? (Robert van Hoornaar )
@@ -10,7 +9,6 @@
 - Would be nice if one could make the labels in the relations visible, that is the source and target property names...  (Gabriel)
 
 Ayende:
-- Classes should probably have a default Id property. (?)
 - While you can specify discriminators, there doesn’t seem to be a way to use inheritance. (Implementing Type hierarchies)
 - On the Northwind database, dragging the Customers table generate a PK of type System.Char
 - Another option to consider is to use the inflector to singularize the table tables when dragging from server explorer.

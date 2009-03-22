@@ -98,6 +98,16 @@ namespace Altinoren.ActiveWriter
             return attribute;
         }
 
+        public string EffectiveTable
+        {
+            get
+            {
+                return string.IsNullOrEmpty(Table)
+                           ? Name
+                           : Table;
+            }
+        }
+
         #endregion
 
     }

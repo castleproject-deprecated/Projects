@@ -690,20 +690,20 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
-			// ManyToManyCollectionIDColumn
+			// ManyToManyCollectionIDColumnFormat
 			if (!serializationContext.Result.Failed)
 			{
-				string attribManyToManyCollectionIDColumn = reader.GetAttribute("manyToManyCollectionIDColumn");
-				if (attribManyToManyCollectionIDColumn != null)
+				string attribManyToManyCollectionIDColumnFormat = reader.GetAttribute("manyToManyCollectionIDColumnFormat");
+				if (attribManyToManyCollectionIDColumnFormat != null)
 				{
-					global::System.String valueOfManyToManyCollectionIDColumn;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToManyCollectionIDColumn), out valueOfManyToManyCollectionIDColumn))
+					global::System.String valueOfManyToManyCollectionIDColumnFormat;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToManyCollectionIDColumnFormat), out valueOfManyToManyCollectionIDColumnFormat))
 					{
-						instanceOfModel.ManyToManyCollectionIDColumn = valueOfManyToManyCollectionIDColumn;
+						instanceOfModel.ManyToManyCollectionIDColumnFormat = valueOfManyToManyCollectionIDColumnFormat;
 					}
 					else
 					{	// Invalid property value, ignored.
-						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "manyToManyCollectionIDColumn", typeof(global::System.String), attribManyToManyCollectionIDColumn);
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "manyToManyCollectionIDColumnFormat", typeof(global::System.String), attribManyToManyCollectionIDColumnFormat);
 					}
 				}
 			}
@@ -840,6 +840,74 @@ namespace Altinoren.ActiveWriter
 					else
 					{	// Invalid property value, ignored.
 						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "foreignKeyFormat", typeof(global::System.String), attribForeignKeyFormat);
+					}
+				}
+			}
+			// CommonPrimaryKeyPropertyFormat
+			if (!serializationContext.Result.Failed)
+			{
+				string attribCommonPrimaryKeyPropertyFormat = reader.GetAttribute("commonPrimaryKeyPropertyFormat");
+				if (attribCommonPrimaryKeyPropertyFormat != null)
+				{
+					global::System.String valueOfCommonPrimaryKeyPropertyFormat;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCommonPrimaryKeyPropertyFormat), out valueOfCommonPrimaryKeyPropertyFormat))
+					{
+						instanceOfModel.CommonPrimaryKeyPropertyFormat = valueOfCommonPrimaryKeyPropertyFormat;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "commonPrimaryKeyPropertyFormat", typeof(global::System.String), attribCommonPrimaryKeyPropertyFormat);
+					}
+				}
+			}
+			// CommonPrimaryKeyColumnFormat
+			if (!serializationContext.Result.Failed)
+			{
+				string attribCommonPrimaryKeyColumnFormat = reader.GetAttribute("commonPrimaryKeyColumnFormat");
+				if (attribCommonPrimaryKeyColumnFormat != null)
+				{
+					global::System.String valueOfCommonPrimaryKeyColumnFormat;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCommonPrimaryKeyColumnFormat), out valueOfCommonPrimaryKeyColumnFormat))
+					{
+						instanceOfModel.CommonPrimaryKeyColumnFormat = valueOfCommonPrimaryKeyColumnFormat;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "commonPrimaryKeyColumnFormat", typeof(global::System.String), attribCommonPrimaryKeyColumnFormat);
+					}
+				}
+			}
+			// CommonPrimaryKeyColumnType
+			if (!serializationContext.Result.Failed)
+			{
+				string attribCommonPrimaryKeyColumnType = reader.GetAttribute("commonPrimaryKeyColumnType");
+				if (attribCommonPrimaryKeyColumnType != null)
+				{
+					NHibernateType valueOfCommonPrimaryKeyColumnType;
+					if (DslModeling::SerializationUtilities.TryGetValue<NHibernateType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCommonPrimaryKeyColumnType), out valueOfCommonPrimaryKeyColumnType))
+					{
+						instanceOfModel.CommonPrimaryKeyColumnType = valueOfCommonPrimaryKeyColumnType;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "commonPrimaryKeyColumnType", typeof(NHibernateType), attribCommonPrimaryKeyColumnType);
+					}
+				}
+			}
+			// CommonPrimaryKeyGenerator
+			if (!serializationContext.Result.Failed)
+			{
+				string attribCommonPrimaryKeyGenerator = reader.GetAttribute("commonPrimaryKeyGenerator");
+				if (attribCommonPrimaryKeyGenerator != null)
+				{
+					PrimaryKeyType valueOfCommonPrimaryKeyGenerator;
+					if (DslModeling::SerializationUtilities.TryGetValue<PrimaryKeyType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCommonPrimaryKeyGenerator), out valueOfCommonPrimaryKeyGenerator))
+					{
+						instanceOfModel.CommonPrimaryKeyGenerator = valueOfCommonPrimaryKeyGenerator;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "commonPrimaryKeyGenerator", typeof(PrimaryKeyType), attribCommonPrimaryKeyGenerator);
 					}
 				}
 			}
@@ -1863,14 +1931,14 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
-			// ManyToManyCollectionIDColumn
+			// ManyToManyCollectionIDColumnFormat
 			if (!serializationContext.Result.Failed)
 			{
-				global::System.String propValue = instanceOfModel.ManyToManyCollectionIDColumn;
+				global::System.String propValue = instanceOfModel.ManyToManyCollectionIDColumnFormat;
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("manyToManyCollectionIDColumn", propValue);
+						writer.WriteAttributeString("manyToManyCollectionIDColumnFormat", propValue);
 				}
 			}
 			// ManyToManyCollectionIDColumnType
@@ -1957,6 +2025,56 @@ namespace Altinoren.ActiveWriter
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "{0}") != 0))
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("foreignKeyFormat", propValue);
+					}
+				}
+			}
+			// CommonPrimaryKeyPropertyFormat
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.CommonPrimaryKeyPropertyFormat;
+				if (!serializationContext.Result.Failed)
+				{
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, string.Empty) != 0))
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("commonPrimaryKeyPropertyFormat", propValue);
+					}
+				}
+			}
+			// CommonPrimaryKeyColumnFormat
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.CommonPrimaryKeyColumnFormat;
+				if (!serializationContext.Result.Failed)
+				{
+					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, string.Empty) != 0))
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("commonPrimaryKeyColumnFormat", propValue);
+					}
+				}
+			}
+			// CommonPrimaryKeyColumnType
+			if (!serializationContext.Result.Failed)
+			{
+				NHibernateType propValue = instanceOfModel.CommonPrimaryKeyColumnType;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<NHibernateType>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Int32") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("commonPrimaryKeyColumnType", serializedPropValue);
+					}
+				}
+			}
+			// CommonPrimaryKeyGenerator
+			if (!serializationContext.Result.Failed)
+			{
+				PrimaryKeyType propValue = instanceOfModel.CommonPrimaryKeyGenerator;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<PrimaryKeyType>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Native") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("commonPrimaryKeyGenerator", serializedPropValue);
 					}
 				}
 			}

@@ -252,10 +252,10 @@
         <xsd:documentation>Default relation type used by ManyToOne relationships.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
-    <!-- Property: ManyToManyCollectionIDColumn -->
-    <xsd:attribute name="manyToManyCollectionIDColumn" type="xsd:string" >
+    <!-- Property: ManyToManyCollectionIDColumnFormat -->
+    <xsd:attribute name="manyToManyCollectionIDColumnFormat" type="xsd:string" >
       <xsd:annotation>
-        <xsd:documentation>This column name is used for many to many collection ID definition.  If a column name is specified in the relationship itself, the Column Type and Generator specified in the relationship will be used instead of those specified here in the model.</xsd:documentation>
+        <xsd:documentation>This column name is used for many to many collection ID definition.  If a column name is specified in the relationship itself, the Column Type and Generator specified in the relationship will be used instead of those specified here in the model.  Any {0} specified in the format will be replaced with the table name in the same way as Common Primary Key Format.  If no format is specified here or in the many to many relationships, the generation system will fall back to the Common Primary Key information.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
     <!-- Property: ManyToManyCollectionIDColumnType -->
@@ -288,6 +288,30 @@
     <xsd:attribute name="foreignKeyFormat" type="xsd:string" >
       <xsd:annotation>
         <xsd:documentation>The format string used by default for foreign key relationships.  {0} is replaced with the property or class name.  A common format string might be: {0}_ID</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: CommonPrimaryKeyPropertyFormat -->
+    <xsd:attribute name="commonPrimaryKeyPropertyFormat" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>If no other primary key is specified, a primary key will be generated with this format.  {0} will be replaced with the class name.  As an example, {0}Id would generate SomeClassId as the primary key property for SomeClass.  If left blank, no primary keys will be added to classes without existing primary keys.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: CommonPrimaryKeyColumnFormat -->
+    <xsd:attribute name="commonPrimaryKeyColumnFormat" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>The column name used for the common primary key property.  If not specified, the name of the property will be used.  {0} will be replaced with the name of the table.  For example, you could use the table name with a standard suffix: {0}_ID</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: CommonPrimaryKeyColumnType -->
+    <xsd:attribute name="commonPrimaryKeyColumnType" type="NHibernateType" >
+      <xsd:annotation>
+        <xsd:documentation>NHibernate type for common primary key.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: CommonPrimaryKeyGenerator -->
+    <xsd:attribute name="commonPrimaryKeyGenerator" type="PrimaryKeyType" >
+      <xsd:annotation>
+        <xsd:documentation>Generator type for common primary key.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
   </xsd:complexType>

@@ -314,11 +314,13 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             foreach (ModelProperty property in keys)
             {
-                CodeMemberField memberField = GetMemberFieldOfProperty(property, Accessor.Private);
+                PropertyData propertyData = new PropertyData(property);
+
+                CodeMemberField memberField = GetMemberFieldOfProperty(propertyData, Accessor.Private);
                 classDeclaration.Members.Add(memberField);
                 fields.Add(memberField);
 
-                classDeclaration.Members.Add(GetActiveRecordMemberKeyProperty(memberField, property));
+                classDeclaration.Members.Add(GetActiveRecordMemberKeyProperty(memberField, propertyData));
 
                 if (!String.IsNullOrEmpty(property.Description))
                     descriptions.Add(property.Description);
@@ -543,7 +545,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         }
 
         private CodeMemberProperty GetActiveRecordMemberKeyProperty(CodeMemberField memberField,
-                                                                    ModelProperty property)
+                                                                    PropertyData property)
         {
             CodeMemberProperty memberProperty =
                 GetMemberProperty(memberField, property.Name, property.ColumnType, null, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(), property.ImplementsINotifyPropertyChanging(), property.Description);
@@ -553,7 +555,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         }
 
         private CodeMemberProperty GetActiveRecordMemberProperty(CodeMemberField memberField,
-                                                                 ModelProperty property)
+                                                                 PropertyData property)
         {
             CodeMemberProperty memberProperty =
                 GetMemberProperty(memberField, property.Name, property.ColumnType,
@@ -583,7 +585,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         }
 
         private CodeMemberProperty GetActiveRecordMemberVersion(CodeMemberField memberField,
-                                                                ModelProperty property)
+                                                                PropertyData property)
         {
             CodeMemberProperty memberProperty =
                 GetMemberProperty(memberField, property.Name, property.ColumnType, null, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(), property.ImplementsINotifyPropertyChanging(),
@@ -594,7 +596,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         }
 
         private CodeMemberProperty GetActiveRecordMemberTimestamp(CodeMemberField memberField,
-                                                                  ModelProperty property)
+                                                                  PropertyData property)
         {
             CodeMemberProperty memberProperty =
                 GetMemberProperty(memberField, property.Name, property.ColumnType, null, property.NotNull, true, true, property.ImplementsINotifyPropertyChanged(), property.ImplementsINotifyPropertyChanging(),
@@ -753,7 +755,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             return GetMemberField(compositeClass.Name, compositeClass.Name, Accessor.Private, access);
         }
 
-        private CodeMemberField GetMemberFieldOfProperty(ModelProperty property, Accessor accessor)
+        private CodeMemberField GetMemberFieldOfProperty(PropertyData property, Accessor accessor)
         {
             if (Context.Model.UseNullables != NullableUsage.No && TypeHelper.IsNullable(property.ColumnType) && !property.NotNull)
 			{
@@ -766,7 +768,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             return GetMemberField(property.Name, TypeHelper.GetSystemType(property.ColumnType, property.CustomMemberType), accessor, property.Access);
         }
 
-        private CodeMemberField GetMemberField(CodeTypeDeclaration classDeclaration, ModelProperty property)
+        private CodeMemberField GetMemberField(CodeTypeDeclaration classDeclaration, PropertyData property)
         {
             // Soooo ugly.
             CodeMemberField memberField = null;
@@ -776,7 +778,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     memberField = GetMemberFieldOfProperty(property, Accessor.Private);
                     CodeMemberProperty memberProperty = GetActiveRecordMemberProperty(memberField, property);
                     classDeclaration.Members.Add(memberProperty);
-                    if (property.IsValidatorSet())
+                    if (property.IsValidatorSet)
                         memberProperty.CustomAttributes.AddRange(property.GetValidationAttributes());
                     break;
                 case PropertyType.Field:
@@ -1139,14 +1141,16 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             // Properties and Fields
             foreach (var property in cls.Properties)
             {
-                CodeMemberField memberField = GetMemberField(classDeclaration, property);
+                PropertyData propertyData = new PropertyData(property);
+
+                CodeMemberField memberField = GetMemberField(classDeclaration, propertyData);
 
                 classDeclaration.Members.Add(memberField);
 
-                if (property.DebuggerDisplay)
-                    classDeclaration.CustomAttributes.Add(property.GetDebuggerDisplayAttribute());
-                if (property.DefaultMember)
-                    classDeclaration.CustomAttributes.Add(property.GetDefaultMemberAttribute());
+                if (propertyData.DebuggerDisplay)
+                    classDeclaration.CustomAttributes.Add(propertyData.GetDebuggerDisplayAttribute());
+                if (propertyData.DefaultMember)
+                    classDeclaration.CustomAttributes.Add(propertyData.GetDefaultMemberAttribute());
             }
 
             return classDeclaration;
@@ -1163,21 +1167,25 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             CodeTypeDeclaration classDeclaration = GetClassDeclaration(cls, nameSpace);
 
+            GenerateCommonPrimaryKey(cls, classDeclaration);
+
             List<ModelProperty> compositeKeys = new List<ModelProperty>();
 
             // Properties and Fields
             foreach (ModelProperty property in cls.Properties)
             {
+                PropertyData propertyData = new PropertyData(property);
+
                 if (property.KeyType != KeyType.CompositeKey)
                 {
-                    CodeMemberField memberField = GetMemberField(classDeclaration, property);
+                    CodeMemberField memberField = GetMemberField(classDeclaration, propertyData);
 
                     classDeclaration.Members.Add(memberField);
 
                     if (property.DebuggerDisplay)
-                        classDeclaration.CustomAttributes.Add(property.GetDebuggerDisplayAttribute());
+                        classDeclaration.CustomAttributes.Add(propertyData.GetDebuggerDisplayAttribute());
                     if (property.DefaultMember)
-                        classDeclaration.CustomAttributes.Add(property.GetDefaultMemberAttribute());
+                        classDeclaration.CustomAttributes.Add(propertyData.GetDefaultMemberAttribute());
                 }
                 else
                     compositeKeys.Add(property);
@@ -1705,7 +1713,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 List<CodeTypeMember> properties = new List<CodeTypeMember>();
                 foreach (CodeTypeMember member in type.Members)
                 {
-                    if ((member is CodeMemberProperty || member is CodeMemberField) && ModelProperty.IsMetaDataGeneratable(member))
+                    if ((member is CodeMemberProperty || member is CodeMemberField) && PropertyData.IsMetaDataGeneratable(member))
                     {
                         properties.Add(member);
                     }
@@ -1976,22 +1984,44 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private CodeBinaryOperatorExpression InequalityExpression(CodeExpression left, CodeExpression right)
         {
-            // There's no ValueInequality in CodeDOM (ridiculous), so we'll use ((a == b) == false) instead.
-            //return
-            //    new CodeBinaryOperatorExpression(
-            //        new CodeBinaryOperatorExpression(
-            //            left,
-            //            CodeBinaryOperatorType.IdentityInequality,
-            //            right),
-            //        CodeBinaryOperatorType.ValueEquality,
-            //        new CodePrimitiveExpression(false));
-            
-            #warning FIXME - C# seems to generate the right code even without value equality checking.  Does it work in VB?
+            // This used to use ValueEquality to check the members, but it seems to make slightly more sense
+            // to use IdentityEquality since it might be useful to change the reference being used even if
+            // the values are equivalent. Additionally, CodeDOM makes it easier for us with IdentityEquality.
             return
                 new CodeBinaryOperatorExpression(
                     left,
                     CodeBinaryOperatorType.IdentityInequality,
                     right);
+        }
+
+        private void GenerateCommonPrimaryKey(ModelClass cls, CodeTypeDeclaration classDeclaration)
+        {
+            // Generate a primary key property from the common primary key information in the model.
+            // We only do so if no primary key is already present.
+            bool primaryKeyPresent = false;
+            foreach (ModelProperty property in cls.Properties)
+                if (property.KeyType != KeyType.None)
+                    primaryKeyPresent = true;
+            if (!primaryKeyPresent)
+            {
+                if (!String.IsNullOrEmpty(Context.Model.CommonPrimaryKeyPropertyFormat))
+                {
+                    PropertyData propertyData = new PropertyData(String.Format(Context.Model.CommonPrimaryKeyPropertyFormat, cls.Name), cls);
+                    if (!String.IsNullOrEmpty(Context.Model.CommonPrimaryKeyColumnFormat))
+                        propertyData.Column = String.Format(Context.Model.CommonPrimaryKeyColumnFormat, cls.EffectiveTable);
+                    propertyData.ColumnType = Context.Model.CommonPrimaryKeyColumnType;
+                    propertyData.Generator = Context.Model.CommonPrimaryKeyGenerator;
+                    propertyData.KeyType = KeyType.PrimaryKey;
+
+                    // The column name is implicitly the same as the property name.  This removes the extra argument if possible.
+                    if (propertyData.Name == propertyData.Column)
+                        propertyData.Column = null;
+
+                    CodeMemberField memberField = GetMemberField(classDeclaration, propertyData);
+
+                    classDeclaration.Members.Add(memberField);
+                }
+            }
         }
 
         #endregion

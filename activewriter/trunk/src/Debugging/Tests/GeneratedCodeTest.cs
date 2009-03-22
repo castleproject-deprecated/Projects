@@ -242,7 +242,7 @@ namespace Debugging.Tests
         {
             Type type = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.ManyToOne_One");
             Type type2 = Assembly.GetExecutingAssembly().GetType("Debugging.Tests.ManyToOne_Many");
-            PropertyInfo property = type.GetProperty("TargetProperties");
+            PropertyInfo property = type.GetProperty("ManyToOne_Manies");
 
             object[] propertyAttributes = property.GetCustomAttributes(typeof(HasManyAttribute), false);
             Assert.IsTrue(propertyAttributes.Length == 1, "Did not generate HasManyAttribute.");
