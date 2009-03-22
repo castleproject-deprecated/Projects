@@ -7,6 +7,9 @@ using Altinoren.ActiveWriter.ARValidators;
 
 namespace Altinoren.ActiveWriter.CodeGeneration
 {
+
+    using System;
+
     /// <summary>
     /// PropertyData represents either a ModelProperty or something like the
     /// common primary key.  It also stores additional information about
