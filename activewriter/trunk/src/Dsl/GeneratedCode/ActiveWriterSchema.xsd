@@ -405,6 +405,28 @@
               </xsd:sequence>
             </xsd:complexType>
           </xsd:element>
+          <!-- Relationship: InheritanceRelation -->
+          <xsd:element name="targetModelClasses" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Instances of InheritanceRelation</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:choice minOccurs="0" maxOccurs="unbounded" >
+                  <xsd:element ref="inheritanceRelation">
+                    <xsd:annotation>
+                      <xsd:documentation>[Relationship deriving from InheritanceRelation needs to be serialized in full-form]</xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element ref="modelClassMoniker" >
+                    <xsd:annotation>
+                      <xsd:documentation>[Target role-player]</xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:element>
+                </xsd:choice>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
         </xsd:sequence>
         <!-- Property: Cache -->
         <xsd:attribute name="cache" type="CacheEnum" />
@@ -1329,6 +1351,30 @@
   <xsd:complexType name="NestedClassReferencesModelClassesMoniker">
     <xsd:annotation>
       <xsd:documentation>Moniker for NestedClassReferencesModelClasses instance.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:complexType>
+  
+  <!-- InheritanceRelation -->
+  <xsd:element name="inheritanceRelation" abstract="true" type="InheritanceRelation" />
+  <xsd:complexType name="InheritanceRelation" abstract="true" >
+    <xsd:annotation>
+      <xsd:documentation>Indicates that a class inherits from another class.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence minOccurs="0" maxOccurs="1">
+      <!-- Target end ModelClass -->
+      <xsd:element ref="modelClassMoniker" minOccurs="1" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>[Target role-player]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <!-- InheritanceRelation Moniker -->
+  <xsd:element name="inheritanceRelationMoniker" abstract="true" type="InheritanceRelationMoniker" />
+  <xsd:complexType name="InheritanceRelationMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for InheritanceRelation instance.</xsd:documentation>
     </xsd:annotation>
   </xsd:complexType>
   

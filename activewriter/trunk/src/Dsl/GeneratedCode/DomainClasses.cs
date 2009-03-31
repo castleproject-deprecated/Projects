@@ -6749,6 +6749,34 @@ namespace Altinoren.ActiveWriter
 			}
 		}
 		#endregion
+		#region TargetModelClasses opposite domain role accessor
+		/// <summary>
+		/// Gets a list of TargetModelClasses.
+		/// Description for Altinoren.ActiveWriter.InheritanceRelation.SourceModelClass
+		/// </summary>
+		public virtual DslModeling::LinkedElementCollection<ModelClass> TargetModelClasses
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return new DslModeling::LinkedElementCollection<ModelClass>(this, global::Altinoren.ActiveWriter.InheritanceRelation.SourceModelClassDomainRoleId);
+			}
+		}
+		#endregion
+		#region SourceModelClasses opposite domain role accessor
+		/// <summary>
+		/// Gets a list of SourceModelClasses.
+		/// Description for Altinoren.ActiveWriter.InheritanceRelation.TargetModelClass
+		/// </summary>
+		public virtual DslModeling::LinkedElementCollection<ModelClass> SourceModelClasses
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return new DslModeling::LinkedElementCollection<ModelClass>(this, global::Altinoren.ActiveWriter.InheritanceRelation.TargetModelClassDomainRoleId);
+			}
+		}
+		#endregion
 		#region ElementGroupPrototype Merge methods
 		/// <summary>
 		/// Returns a value indicating whether the source element represented by the

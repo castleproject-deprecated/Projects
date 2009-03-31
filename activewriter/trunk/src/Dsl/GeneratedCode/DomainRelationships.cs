@@ -10339,3 +10339,222 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
+namespace Altinoren.ActiveWriter
+{
+	/// <summary>
+	/// DomainRelationship InheritanceRelation
+	/// Indicates that a class inherits from another class.
+	/// </summary>
+	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.InheritanceRelation.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritanceRelation.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[global::System.CLSCompliant(true)]
+	[DslModeling::DomainRelationship()]
+	[DslModeling::DomainObjectId("91bc9e95-6a4c-467b-9e05-19d77f3f5c6e")]
+	public partial class InheritanceRelation : DslModeling::ElementLink
+	{
+		#region Constructors, domain class Id
+		
+		/// <summary>
+		/// InheritanceRelation domain class Id.
+		/// </summary>
+		public static readonly new global::System.Guid DomainClassId = new global::System.Guid(0x91bc9e95, 0x6a4c, 0x467b, 0x9e, 0x05, 0x19, 0xd7, 0x7f, 0x3f, 0x5c, 0x6e);
+	
+				
+		/// <summary>
+		/// Constructor
+		/// Creates a InheritanceRelation link in the same Partition as the given ModelClass
+		/// </summary>
+		/// <param name="source">ModelClass to use as the source of the relationship.</param>
+		/// <param name="target">ModelClass to use as the target of the relationship.</param>
+		public InheritanceRelation(ModelClass source, ModelClass target)
+			: base((source != null ? source.Partition : null), new DslModeling::RoleAssignment[]{new DslModeling::RoleAssignment(InheritanceRelation.SourceModelClassDomainRoleId, source), new DslModeling::RoleAssignment(InheritanceRelation.TargetModelClassDomainRoleId, target)}, null)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="store">Store where new link is to be created.</param>
+		/// <param name="roleAssignments">List of relationship role assignments.</param>
+		public InheritanceRelation(DslModeling::Store store, params DslModeling::RoleAssignment[] roleAssignments)
+			: base(store != null ? store.DefaultPartition : null, roleAssignments, null)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="store">Store where new link is to be created.</param>
+		/// <param name="roleAssignments">List of relationship role assignments.</param>
+		/// <param name="propertyAssignments">List of properties assignments to set on the new link.</param>
+		public InheritanceRelation(DslModeling::Store store, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
+			: base(store != null ? store.DefaultPartition : null, roleAssignments, propertyAssignments)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="partition">Partition where new link is to be created.</param>
+		/// <param name="roleAssignments">List of relationship role assignments.</param>
+		public InheritanceRelation(DslModeling::Partition partition, params DslModeling::RoleAssignment[] roleAssignments)
+			: base(partition, roleAssignments, null)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="partition">Partition where new link is to be created.</param>
+		/// <param name="roleAssignments">List of relationship role assignments.</param>
+		/// <param name="propertyAssignments">List of properties assignments to set on the new link.</param>
+		public InheritanceRelation(DslModeling::Partition partition, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
+			: base(partition, roleAssignments, propertyAssignments)
+		{
+		}
+		#endregion
+		#region SourceModelClass domain role code
+		
+		/// <summary>
+		/// SourceModelClass domain role Id.
+		/// </summary>
+		public static readonly global::System.Guid SourceModelClassDomainRoleId = new global::System.Guid(0x041227b3, 0x4da3, 0x4472, 0x90, 0x9b, 0x98, 0x0e, 0xe5, 0xac, 0x16, 0x3a);
+		
+		/// <summary>
+		/// DomainRole SourceModelClass
+		/// Description for Altinoren.ActiveWriter.InheritanceRelation.SourceModelClass
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.InheritanceRelation/SourceModelClass.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritanceRelation/SourceModelClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "TargetModelClasses", PropertyDisplayNameKey="Altinoren.ActiveWriter.InheritanceRelation/SourceModelClass.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslModeling::DomainObjectId("041227b3-4da3-4472-909b-980ee5ac163a")]
+		public virtual ModelClass SourceModelClass
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return (ModelClass)DslModeling::DomainRoleInfo.GetRolePlayer(this, SourceModelClassDomainRoleId);
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				DslModeling::DomainRoleInfo.SetRolePlayer(this, SourceModelClassDomainRoleId, value);
+			}
+		}
+				
+		#endregion
+		#region Static methods to access SourceModelClasses of a ModelClass
+		/// <summary>
+		/// Gets a list of SourceModelClasses.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static DslModeling::LinkedElementCollection<ModelClass> GetSourceModelClasses(ModelClass element)
+		{
+			return new DslModeling::LinkedElementCollection<ModelClass>(element, TargetModelClassDomainRoleId);
+		}
+		#endregion
+		#region TargetModelClass domain role code
+		
+		/// <summary>
+		/// TargetModelClass domain role Id.
+		/// </summary>
+		public static readonly global::System.Guid TargetModelClassDomainRoleId = new global::System.Guid(0xa8f24912, 0x537a, 0x480a, 0x96, 0x5e, 0x7c, 0x0a, 0xa9, 0xc8, 0x8d, 0x19);
+		
+		/// <summary>
+		/// DomainRole TargetModelClass
+		/// Description for Altinoren.ActiveWriter.InheritanceRelation.TargetModelClass
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.InheritanceRelation/TargetModelClass.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritanceRelation/TargetModelClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "SourceModelClasses", PropertyDisplayNameKey="Altinoren.ActiveWriter.InheritanceRelation/TargetModelClass.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslModeling::DomainObjectId("a8f24912-537a-480a-965e-7c0aa9c88d19")]
+		public virtual ModelClass TargetModelClass
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return (ModelClass)DslModeling::DomainRoleInfo.GetRolePlayer(this, TargetModelClassDomainRoleId);
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				DslModeling::DomainRoleInfo.SetRolePlayer(this, TargetModelClassDomainRoleId, value);
+			}
+		}
+				
+		#endregion
+		#region Static methods to access TargetModelClasses of a ModelClass
+		/// <summary>
+		/// Gets a list of TargetModelClasses.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static DslModeling::LinkedElementCollection<ModelClass> GetTargetModelClasses(ModelClass element)
+		{
+			return new DslModeling::LinkedElementCollection<ModelClass>(element, SourceModelClassDomainRoleId);
+		}
+		#endregion
+		#region SourceModelClass link accessor
+		/// <summary>
+		/// Get the list of InheritanceRelation links to a ModelClass.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.InheritanceRelation> GetLinksToTargetModelClasses ( global::Altinoren.ActiveWriter.ModelClass sourceModelClassInstance )
+		{
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.InheritanceRelation>(sourceModelClassInstance, global::Altinoren.ActiveWriter.InheritanceRelation.SourceModelClassDomainRoleId);
+		}
+		#endregion
+		#region TargetModelClass link accessor
+		/// <summary>
+		/// Get the list of InheritanceRelation links to a ModelClass.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.InheritanceRelation> GetLinksToSourceModelClasses ( global::Altinoren.ActiveWriter.ModelClass targetModelClassInstance )
+		{
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.InheritanceRelation>(targetModelClassInstance, global::Altinoren.ActiveWriter.InheritanceRelation.TargetModelClassDomainRoleId);
+		}
+		#endregion
+		#region InheritanceRelation instance accessors
+		
+		/// <summary>
+		/// Get any InheritanceRelation links between a given ModelClass and a ModelClass.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.InheritanceRelation> GetLinks( global::Altinoren.ActiveWriter.ModelClass source, global::Altinoren.ActiveWriter.ModelClass target )
+		{
+			global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.InheritanceRelation> outLinks = new global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.InheritanceRelation>();
+			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.InheritanceRelation> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.InheritanceRelation>(source, global::Altinoren.ActiveWriter.InheritanceRelation.SourceModelClassDomainRoleId);
+			foreach ( global::Altinoren.ActiveWriter.InheritanceRelation link in links )
+			{
+				if ( target.Equals(link.TargetModelClass) )
+				{
+					outLinks.Add(link);
+				}
+			}
+			return outLinks.AsReadOnly();
+		}
+		/// <summary>
+		/// Get the one InheritanceRelation link between a given ModelClassand a ModelClass.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerStepThrough]
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
+		public static global::Altinoren.ActiveWriter.InheritanceRelation GetLink( global::Altinoren.ActiveWriter.ModelClass source, global::Altinoren.ActiveWriter.ModelClass target )
+		{
+			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.InheritanceRelation> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.InheritanceRelation>(source, global::Altinoren.ActiveWriter.InheritanceRelation.SourceModelClassDomainRoleId);
+			foreach ( global::Altinoren.ActiveWriter.InheritanceRelation link in links )
+			{
+				if ( target.Equals(link.TargetModelClass) )
+				{
+					return link;
+				}
+			}
+			return null;
+		}
+		
+		#endregion
+	}
+}

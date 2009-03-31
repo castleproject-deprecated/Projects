@@ -290,6 +290,7 @@
       </SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Resources\ConnectorInheritance.bmp" />
     <None Include="GeneratedCode\Serializer.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Serializer.cs</LastGenOutput>

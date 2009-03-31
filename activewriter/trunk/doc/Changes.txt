@@ -11,6 +11,7 @@ New:
 - Allow C# virtual events so PropertyChanged and Lazy classes work in as many cases as possible. (Patch: Patrick Earl)
 - Foreign key column name formatting and many-to-many table and column name generation. (Patch: Patrick Earl)
 - Ability to add a surrogate primary key to classes that don't already have primary keys specified. (Patch: Patrick Earl)
+- JoinedBase / JoinedKey multiple table inheritance relationships. (Patch: Patrick Earl)
 
 Preview 4.1
 

@@ -202,7 +202,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (cls.Model.GeneratesDoubleDerived)
                 classDeclaration.TypeAttributes |= TypeAttributes.Abstract;
 
-            if (cls.Model.UseBaseClass)
+            if (cls.ClassParent != null)
+            {
+                classDeclaration.BaseTypes.Add(new CodeTypeReference(cls.ClassParent.Name));
+            }
+            else if (cls.Model.UseBaseClass)
             {
                 bool withValidator = cls.Properties.FindAll(delegate(ModelProperty property)
                 {
@@ -225,12 +229,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 classDeclaration.BaseTypes.Add(type);
             }
 
-            if (cls.DoesImplementINotifyPropertyChanged())
+            if (cls.DoesImplementINotifyPropertyChanged() && cls.ClassParent == null)
             {
                 classDeclaration.BaseTypes.Add(new CodeTypeReference(Common.INotifyPropertyChangedType));
                 AddINotifyPropertyChangedRegion(classDeclaration, cls.Lazy | Context.Model.UseVirtualProperties);
             }
-            if (cls.DoesImplementINotifyPropertyChanging())
+            if (cls.DoesImplementINotifyPropertyChanging() && cls.ClassParent == null)
             {
                 classDeclaration.BaseTypes.Add(new CodeTypeReference(Common.INotifyPropertyChangingType));
                 AddINotifyPropertyChangingRegion(classDeclaration, cls.Lazy | Context.Model.UseVirtualProperties);
@@ -240,7 +244,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 classDeclaration.Comments.AddRange(GetSummaryComment(cls.Description));
 
             if (!cls.Model.GeneratesDoubleDerived)
-                classDeclaration.CustomAttributes.Add(cls.GetActiveRecordAttribute());
+                cls.AddActiveRecordAttributes(classDeclaration);
             if (cls.Model.UseGeneratedCodeAttribute)
                 classDeclaration.CustomAttributes.Add(AttributeHelper.GetGeneratedCodeAttribute());
 
@@ -757,44 +761,86 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private CodeMemberField GetMemberFieldOfProperty(PropertyData property, Accessor accessor)
         {
-            if (Context.Model.UseNullables != NullableUsage.No && TypeHelper.IsNullable(property.ColumnType) && !property.NotNull)
-			{
-                if (Context.Model.UseNullables == NullableUsage.WithHelperLibrary)
-                    return GetMemberField(property.Name, TypeHelper.GetNullableTypeReferenceForHelper(property.ColumnType), accessor, property.Access);
-			    
-                return GetMemberField(property.Name, TypeHelper.GetNullableTypeReference(property.ColumnType), accessor, property.Access);
-			}
-
-            return GetMemberField(property.Name, TypeHelper.GetSystemType(property.ColumnType, property.CustomMemberType), accessor, property.Access);
+            return GetMemberField(property.Name, GetPropertyType(property), accessor, property.Access);
         }
 
-        private CodeMemberField GetMemberField(CodeTypeDeclaration classDeclaration, PropertyData property)
+        private CodeTypeReference GetPropertyType(PropertyData property)
         {
-            // Soooo ugly.
-            CodeMemberField memberField = null;
-            switch (property.PropertyType)
+            if (Context.Model.UseNullables != NullableUsage.No && TypeHelper.IsNullable(property.ColumnType) && !property.NotNull)
             {
-                case PropertyType.Property:
-                    memberField = GetMemberFieldOfProperty(property, Accessor.Private);
-                    CodeMemberProperty memberProperty = GetActiveRecordMemberProperty(memberField, property);
-                    classDeclaration.Members.Add(memberProperty);
-                    if (property.IsValidatorSet)
-                        memberProperty.CustomAttributes.AddRange(property.GetValidationAttributes());
-                    break;
-                case PropertyType.Field:
-                    memberField = GetMemberFieldOfProperty(property, property.Accessor);
-                    memberField.CustomAttributes.Add(property.GetFieldAttribute());
-                    break;
-                case PropertyType.Version:
-                    memberField = GetMemberFieldOfProperty(property, Accessor.Private);
-                    classDeclaration.Members.Add(GetActiveRecordMemberVersion(memberField, property));
-                    break;
-                case PropertyType.Timestamp:
-                    memberField = GetMemberFieldOfProperty(property, Accessor.Private);
-                    classDeclaration.Members.Add(GetActiveRecordMemberTimestamp(memberField, property));
-                    break;
+                if (Context.Model.UseNullables == NullableUsage.WithHelperLibrary)
+                    return TypeHelper.GetNullableTypeReferenceForHelper(property.ColumnType);
+
+                return TypeHelper.GetNullableTypeReference(property.ColumnType);
             }
-            return memberField;
+
+            return new CodeTypeReference(TypeHelper.GetSystemType(property.ColumnType, property.CustomMemberType));
+        }
+
+        private void AddMemberField(CodeTypeDeclaration classDeclaration, PropertyData property)
+        {
+            if (property.IsJoinedKey)
+            {
+                classDeclaration.Members.Add(GetJoinedKeyProperty(property));
+            }
+            else
+            {
+                CodeMemberField memberField = null;
+                // Soooo ugly.
+                switch (property.PropertyType)
+                {
+                    case PropertyType.Property:
+                        memberField = GetMemberFieldOfProperty(property, Accessor.Private);
+                        CodeMemberProperty memberProperty = GetActiveRecordMemberProperty(memberField, property);
+                        classDeclaration.Members.Add(memberProperty);
+                        if (property.IsValidatorSet)
+                            memberProperty.CustomAttributes.AddRange(property.GetValidationAttributes());
+                        break;
+                    case PropertyType.Field:
+                        memberField = GetMemberFieldOfProperty(property, property.Accessor);
+                        memberField.CustomAttributes.Add(property.GetFieldAttribute());
+                        break;
+                    case PropertyType.Version:
+                        memberField = GetMemberFieldOfProperty(property, Accessor.Private);
+                        classDeclaration.Members.Add(GetActiveRecordMemberVersion(memberField, property));
+                        break;
+                    case PropertyType.Timestamp:
+                        memberField = GetMemberFieldOfProperty(property, Accessor.Private);
+                        classDeclaration.Members.Add(GetActiveRecordMemberTimestamp(memberField, property));
+                        break;
+                }
+                classDeclaration.Members.Add(memberField);
+            }
+        }
+
+        private CodeMemberProperty GetJoinedKeyProperty(PropertyData property)
+        {
+            string basePropertyName = property.ModelClass.PrimaryKey.Name;
+            CodeTypeReference basePropertyType = GetPropertyType(property.ModelClass.PrimaryKey);
+
+            CodeMemberProperty memberProperty = new CodeMemberProperty();
+            memberProperty.CustomAttributes.Add(property.GetPrimaryKeyAttribute());
+            memberProperty.Attributes = MemberAttributes.Public;
+            if (Context.Model.UseVirtualProperties)
+            {
+                if (property.Name == basePropertyName)
+                    memberProperty.Attributes |= MemberAttributes.Override;
+            }
+            else
+            {
+                memberProperty.Attributes |= MemberAttributes.Final;
+                if (property.Name == basePropertyName)
+                    memberProperty.Attributes |= MemberAttributes.New;
+            }
+
+            memberProperty.Name = property.Name;
+            memberProperty.Type = basePropertyType;
+            memberProperty.HasGet = true;
+            memberProperty.GetStatements.Add(new CodeMethodReturnStatement(new CodePropertyReferenceExpression(new CodeBaseReferenceExpression(), basePropertyName)));
+            memberProperty.HasSet = true;
+            memberProperty.SetStatements.Add(new CodeAssignStatement(new CodePropertyReferenceExpression(new CodeBaseReferenceExpression(), basePropertyName), new CodeVariableReferenceExpression("value")));
+
+            return memberProperty;
         }
 
         private CodeMemberField GetMemberField(string name, CodeTypeReference fieldType, Accessor accessor, PropertyAccess access)
@@ -808,11 +854,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private CodeMemberField GetMemberField(string name, string fieldType, Accessor accessor, PropertyAccess access)
         {
-            CodeMemberField memberField = GetMemberFieldWithoutType(name, accessor, access);
-
-            memberField.Type = new CodeTypeReference(fieldType);
-
-            return memberField;
+            return GetMemberField(name, new CodeTypeReference(fieldType), accessor, access);
         }
 
         private CodeMemberField GetGenericMemberField(string typeName, string name, string fieldType, Accessor accessor, PropertyAccess access)
@@ -943,7 +985,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             if (automaticAssociationGenerated)
             {
-                AddConstructorForWatchedList(classDeclaration, Context.Model, memberField, propertyName);
+                AddConstructorForWatchedList(classDeclaration, memberField, propertyName);
                 AddInternalWatchedListProperty(classDeclaration, memberProperty.Type, propertyName, memberField.Name, propertyChanged, propertyChanging);
                 AddOnAddAndOnRemoveMethods(classDeclaration, thisClassName, propertyName, oppositeClassName, oppositePropertyName, manyToMany);
             }
@@ -1143,9 +1185,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             {
                 PropertyData propertyData = new PropertyData(property);
 
-                CodeMemberField memberField = GetMemberField(classDeclaration, propertyData);
-
-                classDeclaration.Members.Add(memberField);
+                AddMemberField(classDeclaration, propertyData);
 
                 if (propertyData.DebuggerDisplay)
                     classDeclaration.CustomAttributes.Add(propertyData.GetDebuggerDisplayAttribute());
@@ -1178,9 +1218,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
                 if (property.KeyType != KeyType.CompositeKey)
                 {
-                    CodeMemberField memberField = GetMemberField(classDeclaration, propertyData);
-
-                    classDeclaration.Members.Add(memberField);
+                    AddMemberField(classDeclaration, propertyData);
 
                     if (property.DebuggerDisplay)
                         classDeclaration.CustomAttributes.Add(propertyData.GetDebuggerDisplayAttribute());
@@ -1801,7 +1839,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 derivedClass.IsPartial = true;
                 derivedClass.TypeAttributes = TypeAttributes.Public;
                 derivedClass.BaseTypes.Add(new CodeTypeReference(cls.Name + cls.Model.DoubleDerivedNameSuffix));
-                derivedClass.CustomAttributes.Add(cls.GetActiveRecordAttribute());
+                cls.AddActiveRecordAttributes(derivedClass);
 
                 nameSpace.Types.Add(derivedClass);
             }
@@ -1942,7 +1980,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             return method;
         }
 
-        private void AddConstructorForWatchedList(CodeTypeDeclaration typeDeclaration, Model model, CodeMemberField memberField, string listPropertyName)
+        private void AddConstructorForWatchedList(CodeTypeDeclaration typeDeclaration, CodeMemberField memberField, string listPropertyName)
         {
             CodeConstructor constructor = typeDeclaration.FindEmptyConstructor();
 
@@ -1998,28 +2036,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         {
             // Generate a primary key property from the common primary key information in the model.
             // We only do so if no primary key is already present.
-            bool primaryKeyPresent = false;
-            foreach (ModelProperty property in cls.Properties)
-                if (property.KeyType != KeyType.None)
-                    primaryKeyPresent = true;
-            if (!primaryKeyPresent)
+            if (!cls.PrimaryKeySpecifiedByUser)
             {
-                if (!String.IsNullOrEmpty(Context.Model.CommonPrimaryKeyPropertyFormat))
+                if (cls.PrimaryKey != null)
                 {
-                    PropertyData propertyData = new PropertyData(String.Format(Context.Model.CommonPrimaryKeyPropertyFormat, cls.Name), cls);
-                    if (!String.IsNullOrEmpty(Context.Model.CommonPrimaryKeyColumnFormat))
-                        propertyData.Column = String.Format(Context.Model.CommonPrimaryKeyColumnFormat, cls.EffectiveTable);
-                    propertyData.ColumnType = Context.Model.CommonPrimaryKeyColumnType;
-                    propertyData.Generator = Context.Model.CommonPrimaryKeyGenerator;
-                    propertyData.KeyType = KeyType.PrimaryKey;
-
-                    // The column name is implicitly the same as the property name.  This removes the extra argument if possible.
-                    if (propertyData.Name == propertyData.Column)
-                        propertyData.Column = null;
-
-                    CodeMemberField memberField = GetMemberField(classDeclaration, propertyData);
-
-                    classDeclaration.Members.Add(memberField);
+                    AddMemberField(classDeclaration, cls.PrimaryKey);
                 }
             }
         }

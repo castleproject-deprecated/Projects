@@ -14,6 +14,8 @@
 
 // Big TODO: Combine with CodeGenerationHelper validations in a seperate structure
 
+using Microsoft.VisualStudio.Modeling;
+
 namespace Altinoren.ActiveWriter
 {
     using System;
@@ -220,6 +222,17 @@ namespace Altinoren.ActiveWriter
                     string.Format(
                         "Class {0} must use generic relations since AutomaticAssociations are enabled.",
                         Name), "AW001ValidateAutomaticAssociationGenericsError", this);
+        }
+
+        [ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
+        private void ValidateSingleInheritance(ValidationContext context)
+        {
+            LinkedElementCollection<ModelClass> parentClasses = InheritanceRelation.GetTargetModelClasses(this);
+            if (parentClasses.Count > 1)
+                context.LogError(
+                    string.Format(
+                        "Class {0} cannot inherit from multiple classes.",
+                        Name), "AW001SingleInheritanceError", this);
         }
     }
 }

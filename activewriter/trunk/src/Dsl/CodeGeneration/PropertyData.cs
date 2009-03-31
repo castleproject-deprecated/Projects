@@ -12,44 +12,45 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
     /// <summary>
     /// PropertyData represents either a ModelProperty or something like the
-    /// common primary key.  It also stores additional information about
-    /// whether it's a joined key or not.  This is somewhat ugly, but the
-    /// model classes don't seem to like being modified directly.
+    /// common primary key.  This is somewhat ugly, but the model classes
+    /// don't seem to like being modified directly.
     /// </summary>
     public class PropertyData
     {
         #region ModelProperty Mirror Properties
 
         public string Name { get; private set; }
+
+        public PropertyAccess Access { get; private set; }
+        public Accessor Accessor { get; private set; }
+        private string Check { get; set; }
         public string Column { get; set; }
         public NHibernateType ColumnType { get; set; }
-        public PrimaryKeyType Generator { get; set; }
-        public PropertyAccess Access { get; private set; }
+        // Composite Key Name Missing.
         private string CustomAccess { get; set; }
-        private int Length { get; set; }
-        private string Params { get; set; }
-        private string SequenceName { get; set; }
-        private string UnsavedValue { get; set; }
-        private string Formula { get; set; }
-        private bool Insert { get; set; }
-        private bool Update { get; set; }
-        private bool Unique { get; set; }
-        public bool NotNull { get; private set; }
         private string CustomColumnType { get; set; }
-        private string UniqueKey { get; set; }
-        private string Index { get; set; }
-        private string SqlType { get; set; }
-        private string Check { get; set; }
-        private string ValidatorPropertyStorage { get; set; }
-        public PropertyType PropertyType { get; private set; }
-        public string Description { get; private set; }
         public string CustomMemberType { get; private set; }
-        public KeyType KeyType { get; set; }
-        public Accessor Accessor { get; private set; }
-        public bool DefaultMember { get; private set; }
         public bool DebuggerDisplay { get; private set; }
+        public bool DefaultMember { get; private set; }
+        public string Description { get; private set; }
+        private string Formula { get; set; }
+        public PrimaryKeyType Generator { get; set; }
+        private string Index { get; set; }
+        private bool Insert { get; set; }
+        public KeyType KeyType { get; set; }
+        private int Length { get; set; }
+        public bool NotNull { get; private set; }
+        private string Params { get; set; }
+        public PropertyType PropertyType { get; private set; }
+        private string SequenceName { get; set; }
+        private string SqlType { get; set; }
+        private bool Unique { get; set; }
+        private string UniqueKey { get; set; }
+        private string UnsavedValue { get; set; }
+        private bool Update { get; set; }
+        private string ValidatorPropertyStorage { get; set; }
 
-        private ModelClass ModelClass { get; set; }
+        public ModelClass ModelClass { get; private set; }
         private NestedClass NestedClass { get; set; }
 
         #endregion
@@ -65,7 +66,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             Check = null;
             Column = null;
             ColumnType = NHibernateType.String;
-            // Composite Key Name Missing.
             CustomAccess = null;
             CustomColumnType = null;
             CustomMemberType = null;
@@ -105,36 +105,45 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         public PropertyData(ModelProperty p)
         {
             Name = p.Name;
+
+            Access = p.Access;
+            Accessor = p.Accessor;
+            Check = p.Check;
             Column = p.Column;
             ColumnType = p.ColumnType;
-            Generator = p.Generator;
-            Access = p.Access;
             CustomAccess = p.CustomAccess;
-            Length = p.Length;
-            Params = p.Params;
-            SequenceName = p.SequenceName;
-            UnsavedValue = p.UnsavedValue;
-            Formula = p.Formula;
-            Insert = p.Insert;
-            Update = p.Update;
-            Unique = p.Unique;
-            NotNull = p.NotNull;
             CustomColumnType = p.CustomColumnType;
-            UniqueKey = p.UniqueKey;
-            Index = p.Index;
-            SqlType = p.SqlType;
-            Check = p.Check;
-            ValidatorPropertyStorage = p.GetValidatorValue();
-            PropertyType = p.PropertyType;
-            Description = p.Description;
             CustomMemberType = p.CustomMemberType;
-            KeyType = p.KeyType;
-            Accessor = p.Accessor;
-            DefaultMember = p.DefaultMember;
             DebuggerDisplay = p.DebuggerDisplay;
+            DefaultMember = p.DefaultMember;
+            Description = p.Description;
+            Formula = p.Formula;
+            Generator = p.Generator;
+            Index = p.Index;
+            Insert = p.Insert;
+            KeyType = p.KeyType;
+            Length = p.Length;
+            NotNull = p.NotNull;
+            Params = p.Params;
+            PropertyType = p.PropertyType;
+            SequenceName = p.SequenceName;
+            SqlType = p.SqlType;
+            Unique = p.Unique;
+            UniqueKey = p.UniqueKey;
+            UnsavedValue = p.UnsavedValue;
+            Update = p.Update;
+            ValidatorPropertyStorage = p.GetValidatorValue();
             
             ModelClass = p.ModelClass;
             NestedClass = p.NestedClass;
+        }
+
+        public bool IsJoinedKey
+        {
+            get
+            {
+                return ModelClass != null && ModelClass.IsJoinedSubclass && KeyType == KeyType.PrimaryKey;
+            }
         }
 
         #region Public Static Methods
@@ -171,26 +180,39 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         public CodeAttributeDeclaration GetPrimaryKeyAttribute()
         {
-            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("PrimaryKey");
+            if (ModelClass.IsJoinedSubclass)
+            {
+                CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("JoinedKey");
 
-            attribute.Arguments.Add(AttributeHelper.GetPrimitiveEnumAttributeArgument("PrimaryKeyType", Generator));
-            if (!string.IsNullOrEmpty(Column))
-                attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(Column));
-            attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnType", ColumnType.ToString()));
-            if (Access != PropertyAccess.Property)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", Access));
-            if (!string.IsNullOrEmpty(CustomAccess))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", CustomAccess));
-            if (Length > 0)
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Length", Length));
-            if (!string.IsNullOrEmpty(Params))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Params", Params));
-            if (!string.IsNullOrEmpty(SequenceName))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("SequenceName", SequenceName));
-            if (!string.IsNullOrEmpty(UnsavedValue))
-                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("UnsavedValue", UnsavedValue));
+                if (!string.IsNullOrEmpty(Column))
+                    attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(Column));
 
-            return attribute;
+                return attribute;
+            }
+            else
+            {
+                CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("PrimaryKey");
+
+                attribute.Arguments.Add(AttributeHelper.GetPrimitiveEnumAttributeArgument("PrimaryKeyType", Generator));
+                if (!string.IsNullOrEmpty(Column))
+                    attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(Column));
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnType", ColumnType.ToString()));
+                if (Access != PropertyAccess.Property)
+                    attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess",
+                                                                                          Access));
+                if (!string.IsNullOrEmpty(CustomAccess))
+                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", CustomAccess));
+                if (Length > 0)
+                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Length", Length));
+                if (!string.IsNullOrEmpty(Params))
+                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Params", Params));
+                if (!string.IsNullOrEmpty(SequenceName))
+                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("SequenceName", SequenceName));
+                if (!string.IsNullOrEmpty(UnsavedValue))
+                    attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("UnsavedValue", UnsavedValue));
+
+                return attribute;
+            }
         }
 
         public CodeAttributeDeclaration GetFieldAttribute()

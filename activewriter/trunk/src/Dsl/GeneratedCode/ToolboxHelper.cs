@@ -57,6 +57,10 @@ namespace Altinoren.ActiveWriter
 		/// Toolbox item filter string used to identify NestedRelationship connector tool.
 		/// </summary>
 		public const string NestedRelationshipFilterString = "NestedRelationship.1.0";
+		/// <summary>
+		/// Toolbox item filter string used to identify InheritanceRelationship connector tool.
+		/// </summary>
+		public const string InheritanceRelationshipFilterString = "InheritanceRelationship.1.0";
 
 		private global::System.IServiceProvider sp;
 		
@@ -100,7 +104,7 @@ namespace Altinoren.ActiveWriter
 		{
 			get
 			{
-				return 6;
+				return 7;
 			}
 		}
 		
@@ -216,6 +220,22 @@ namespace Altinoren.ActiveWriter
 						new global::System.ComponentModel.ToolboxItemFilterAttribute[] { // Collection of ToolboxItemFilterAttribute objects that determine visibility of the toolbox item.
 							new global::System.ComponentModel.ToolboxItemFilterAttribute(ToolboxFilterString, global::System.ComponentModel.ToolboxItemFilterType.Require), 
 							new global::System.ComponentModel.ToolboxItemFilterAttribute(NestedRelationshipFilterString)
+						}));
+
+					// Add InheritanceRelationship connector tool.
+					toolboxItems.Add(new DslDesign::ModelingToolboxItem(
+						"InheritanceRelationshipToolboxItem", // Unique identifier (non-localized) for the toolbox item.
+						7, // Position relative to other items in the same toolbox tab.
+						resourceManager.GetString("InheritanceRelationshipToolboxItem", resourceCulture), // Localized display name for the item.
+						(global::System.Drawing.Bitmap)DslDiagrams::ImageHelper.GetImage(resourceManager.GetObject("InheritanceRelationshipToolboxBitmap", resourceCulture)), // Image displayed next to the toolbox item.				
+						"ActiveWriterToolboxTab", // Unique identifier (non-localized) for the toolbox item tab.
+						resourceManager.GetString("ActiveWriterToolboxTab", resourceCulture), // Localized display name for the toolbox tab.
+						"InheritanceRelationship", // F1 help keyword for the toolbox item.
+						resourceManager.GetString("InheritanceRelationshipToolboxTooltip", resourceCulture), // Localized tooltip text for the toolbox item.
+						null, // Connector toolbox items do not have an underlying data object.
+						new global::System.ComponentModel.ToolboxItemFilterAttribute[] { // Collection of ToolboxItemFilterAttribute objects that determine visibility of the toolbox item.
+							new global::System.ComponentModel.ToolboxItemFilterAttribute(ToolboxFilterString, global::System.ComponentModel.ToolboxItemFilterType.Require), 
+							new global::System.ComponentModel.ToolboxItemFilterAttribute(InheritanceRelationshipFilterString)
 						}));
 
 					t.Rollback();

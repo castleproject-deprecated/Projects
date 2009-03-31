@@ -69,11 +69,13 @@ namespace Altinoren.ActiveWriter
 				typeof(ModelHasNestedClasses),
 				typeof(NestedClassHasProperties),
 				typeof(NestedClassReferencesModelClasses),
+				typeof(InheritanceRelation),
 				typeof(ActiveRecordMapping),
 				typeof(ManyToOneConnector),
 				typeof(ManyToManyConnector),
 				typeof(OneToOneConnector),
 				typeof(NestedConnector),
+				typeof(InheritanceConnector),
 				typeof(ClassShape),
 				typeof(NestedClassShape),
 				typeof(global::Altinoren.ActiveWriter.FixUpDiagram),
@@ -320,6 +322,8 @@ namespace Altinoren.ActiveWriter
 				new DomainRolePlayerInfo(typeof(NestedClassHasProperties), "Property", NestedClassHasProperties.PropertyDomainRoleId),
 				new DomainRolePlayerInfo(typeof(NestedClassReferencesModelClasses), "NestedClass", NestedClassReferencesModelClasses.NestedClassDomainRoleId),
 				new DomainRolePlayerInfo(typeof(NestedClassReferencesModelClasses), "ModelClass", NestedClassReferencesModelClasses.ModelClassDomainRoleId),
+				new DomainRolePlayerInfo(typeof(InheritanceRelation), "SourceModelClass", InheritanceRelation.SourceModelClassDomainRoleId),
+				new DomainRolePlayerInfo(typeof(InheritanceRelation), "TargetModelClass", InheritanceRelation.TargetModelClassDomainRoleId),
 			};
 		}
 		#endregion
@@ -341,7 +345,7 @@ namespace Altinoren.ActiveWriter
 	
 			if (createElementMap == null)
 			{
-				createElementMap = new global::System.Collections.Generic.Dictionary<global::System.Type, int>(13);
+				createElementMap = new global::System.Collections.Generic.Dictionary<global::System.Type, int>(14);
 				createElementMap.Add(typeof(Model), 0);
 				createElementMap.Add(typeof(ModelClass), 1);
 				createElementMap.Add(typeof(ModelProperty), 2);
@@ -351,8 +355,9 @@ namespace Altinoren.ActiveWriter
 				createElementMap.Add(typeof(ManyToManyConnector), 6);
 				createElementMap.Add(typeof(OneToOneConnector), 7);
 				createElementMap.Add(typeof(NestedConnector), 8);
-				createElementMap.Add(typeof(ClassShape), 9);
-				createElementMap.Add(typeof(NestedClassShape), 10);
+				createElementMap.Add(typeof(InheritanceConnector), 9);
+				createElementMap.Add(typeof(ClassShape), 10);
+				createElementMap.Add(typeof(NestedClassShape), 11);
 			}
 			int index;
 			if (!createElementMap.TryGetValue(elementType, out index))
@@ -375,8 +380,9 @@ namespace Altinoren.ActiveWriter
 				case 6: return new ManyToManyConnector(partition, propertyAssignments);
 				case 7: return new OneToOneConnector(partition, propertyAssignments);
 				case 8: return new NestedConnector(partition, propertyAssignments);
-				case 9: return new ClassShape(partition, propertyAssignments);
-				case 10: return new NestedClassShape(partition, propertyAssignments);
+				case 9: return new InheritanceConnector(partition, propertyAssignments);
+				case 10: return new ClassShape(partition, propertyAssignments);
+				case 11: return new NestedClassShape(partition, propertyAssignments);
 				default: return null;
 			}
 		}
@@ -399,7 +405,7 @@ namespace Altinoren.ActiveWriter
 	
 			if (createElementLinkMap == null)
 			{
-				createElementLinkMap = new global::System.Collections.Generic.Dictionary<global::System.Type, int>(8);
+				createElementLinkMap = new global::System.Collections.Generic.Dictionary<global::System.Type, int>(9);
 				createElementLinkMap.Add(typeof(ModelHasClass), 0);
 				createElementLinkMap.Add(typeof(ManyToOneRelation), 1);
 				createElementLinkMap.Add(typeof(ClassHasProperty), 2);
@@ -408,6 +414,7 @@ namespace Altinoren.ActiveWriter
 				createElementLinkMap.Add(typeof(ModelHasNestedClasses), 5);
 				createElementLinkMap.Add(typeof(NestedClassHasProperties), 6);
 				createElementLinkMap.Add(typeof(NestedClassReferencesModelClasses), 7);
+				createElementLinkMap.Add(typeof(InheritanceRelation), 8);
 			}
 			int index;
 			if (!createElementLinkMap.TryGetValue(elementLinkType, out index))
@@ -430,6 +437,7 @@ namespace Altinoren.ActiveWriter
 				case 5: return new ModelHasNestedClasses(partition, roleAssignments, propertyAssignments);
 				case 6: return new NestedClassHasProperties(partition, roleAssignments, propertyAssignments);
 				case 7: return new NestedClassReferencesModelClasses(partition, roleAssignments, propertyAssignments);
+				case 8: return new InheritanceRelation(partition, roleAssignments, propertyAssignments);
 				default: return null;
 			}
 		}

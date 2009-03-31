@@ -1221,6 +1221,22 @@
         </DomainRole>
       </Target>
     </DomainRelationship>
+    <DomainRelationship Id="91bc9e95-6a4c-467b-9e05-19d77f3f5c6e" Description="Indicates that a class inherits from another class." Name="InheritanceRelation" DisplayName="Inheritance Relation" Namespace="Altinoren.ActiveWriter">
+      <Source>
+        <DomainRole Id="041227b3-4da3-4472-909b-980ee5ac163a" Description="Description for Altinoren.ActiveWriter.InheritanceRelation.SourceModelClass" Name="SourceModelClass" DisplayName="Source Model Class" PropertyName="TargetModelClasses" PropertyDisplayName="Target Model Classes">
+          <RolePlayer>
+            <DomainClassMoniker Name="ModelClass" />
+          </RolePlayer>
+        </DomainRole>
+      </Source>
+      <Target>
+        <DomainRole Id="a8f24912-537a-480a-965e-7c0aa9c88d19" Description="Description for Altinoren.ActiveWriter.InheritanceRelation.TargetModelClass" Name="TargetModelClass" DisplayName="Target Model Class" PropertyName="SourceModelClasses" PropertyDisplayName="Source Model Classes">
+          <RolePlayer>
+            <DomainClassMoniker Name="ModelClass" />
+          </RolePlayer>
+        </DomainRole>
+      </Target>
+    </DomainRelationship>
   </Relationships>
   <Types>
     <ExternalType Name="DateTime" Namespace="System" />
@@ -1505,6 +1521,7 @@
         <TextDecorator Name="Nested" DisplayName="Nested" DefaultText="Nested" />
       </ConnectorHasDecorators>
     </Connector>
+    <Connector Id="6de26394-b772-45cd-8f76-8766bd5c7fbf" Description="Indicates that a class inherits from another class." Name="InheritanceConnector" DisplayName="Inheritance Connector" Namespace="Altinoren.ActiveWriter" FixedTooltipText="Inheritance Connector" TargetEndStyle="HollowArrow" />
   </Connectors>
   <XmlSerializationBehavior Name="ActiveWriterSerializationBehavior" Namespace="Altinoren.ActiveWriter">
     <ClassData>
@@ -1750,6 +1767,9 @@
           <XmlPropertyData XmlName="implementINotifyPropertyChanging">
             <DomainPropertyMoniker Name="ModelClass/ImplementINotifyPropertyChanging" />
           </XmlPropertyData>
+          <XmlRelationshipData RoleElementName="targetModelClasses">
+            <DomainRelationshipMoniker Name="InheritanceRelation" />
+          </XmlRelationshipData>
         </ElementData>
       </XmlClassData>
       <XmlClassData TypeName="ModelHasClass" MonikerAttributeName="" MonikerElementName="modelHasClassMoniker" ElementName="modelHasClass" MonikerTypeName="ModelHasClassMoniker">
@@ -2215,6 +2235,12 @@
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>
+      <XmlClassData TypeName="InheritanceRelation" MonikerAttributeName="" MonikerElementName="inheritanceRelationMoniker" ElementName="inheritanceRelation" MonikerTypeName="InheritanceRelationMoniker">
+        <DomainRelationshipMoniker Name="InheritanceRelation" />
+      </XmlClassData>
+      <XmlClassData TypeName="InheritanceConnector" MonikerAttributeName="" MonikerElementName="inheritanceConnectorMoniker" ElementName="inheritanceConnector" MonikerTypeName="InheritanceConnectorMoniker">
+        <ConnectorMoniker Name="InheritanceConnector" />
+      </XmlClassData>
     </ClassData>
   </XmlSerializationBehavior>
   <ExplorerBehavior Name="ActiveWriterExplorer" />
@@ -2304,6 +2330,25 @@
           <RolePlayerConnectDirective>
             <AcceptingClass>
               <DomainClassMoniker Name="NestedClass" />
+            </AcceptingClass>
+          </RolePlayerConnectDirective>
+        </SourceDirectives>
+        <TargetDirectives>
+          <RolePlayerConnectDirective>
+            <AcceptingClass>
+              <DomainClassMoniker Name="ModelClass" />
+            </AcceptingClass>
+          </RolePlayerConnectDirective>
+        </TargetDirectives>
+      </LinkConnectDirective>
+    </ConnectionBuilder>
+    <ConnectionBuilder Name="InheritanceRelationBuilder">
+      <LinkConnectDirective>
+        <DomainRelationshipMoniker Name="InheritanceRelation" />
+        <SourceDirectives>
+          <RolePlayerConnectDirective>
+            <AcceptingClass>
+              <DomainClassMoniker Name="ModelClass" />
             </AcceptingClass>
           </RolePlayerConnectDirective>
         </SourceDirectives>
@@ -2410,6 +2455,10 @@
         <ConnectorMoniker Name="NestedConnector" />
         <DomainRelationshipMoniker Name="NestedClassReferencesModelClasses" />
       </ConnectorMap>
+      <ConnectorMap>
+        <ConnectorMoniker Name="InheritanceConnector" />
+        <DomainRelationshipMoniker Name="InheritanceRelation" />
+      </ConnectorMap>
     </ConnectorMaps>
   </Diagram>
   <Designer FileExtension="actiw" EditorGuid="afa967d1-99df-4330-a1d6-a96343c24786">
@@ -2437,6 +2486,9 @@
       </ElementTool>
       <ConnectionTool Name="NestedRelationship" ToolboxIcon="Resources\ConnectorNested.bmp" Caption="Nested Relationship" Tooltip="Drag between classes to create a nested relationship" HelpKeyword="NestedRelationship">
         <ConnectionBuilderMoniker Name="ActiveWriter/NestedClassReferencesModelClassesBuilder" />
+      </ConnectionTool>
+      <ConnectionTool Name="InheritanceRelationship" ToolboxIcon="Resources\ConnectorInheritance.bmp" Caption="Inheritance Relationship" Tooltip="Drag from a subclass to a parent class to create an inheritance relationship." HelpKeyword="InheritanceRelationship">
+        <ConnectionBuilderMoniker Name="ActiveWriter/InheritanceRelationBuilder" />
       </ConnectionTool>
     </ToolboxTab>
     <Validation UsesMenu="true" UsesOpen="true" UsesSave="true" UsesLoad="false" />

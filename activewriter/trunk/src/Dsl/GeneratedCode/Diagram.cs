@@ -297,6 +297,11 @@ namespace Altinoren.ActiveWriter
 				global::Altinoren.ActiveWriter.NestedConnector newShape = new global::Altinoren.ActiveWriter.NestedConnector(this.Partition);
 				return newShape;
 			}
+			if(element is global::Altinoren.ActiveWriter.InheritanceRelation)
+			{
+				global::Altinoren.ActiveWriter.InheritanceConnector newShape = new global::Altinoren.ActiveWriter.InheritanceConnector(this.Partition);
+				return newShape;
+			}
 			return base.CreateChildShape(element);
 		}
 		#endregion
@@ -362,6 +367,7 @@ namespace Altinoren.ActiveWriter
 		private global::Altinoren.ActiveWriter.ManyToManyRelationshipConnectAction manyToManyRelationshipConnectAction;
 		private global::Altinoren.ActiveWriter.OneToOneRelationshipConnectAction oneToOneRelationshipConnectAction;
 		private global::Altinoren.ActiveWriter.NestedRelationshipConnectAction nestedRelationshipConnectAction;
+		private global::Altinoren.ActiveWriter.InheritanceRelationshipConnectAction inheritanceRelationshipConnectAction;
 		/// <summary>
 		/// Override to provide the right mouse action when trying
 		/// to create links on the diagram
@@ -410,6 +416,15 @@ namespace Altinoren.ActiveWriter
 						this.nestedRelationshipConnectAction.MouseActionDeactivated += new DslDiagrams::MouseAction.MouseActionDeactivatedEventHandler(OnConnectActionDeactivated);
 					}
 					action = this.nestedRelationshipConnectAction;
+				} 
+				else if (activeView.SelectedToolboxItemSupportsFilterString(global::Altinoren.ActiveWriter.ActiveWriterToolboxHelper.InheritanceRelationshipFilterString))
+				{
+					if (this.inheritanceRelationshipConnectAction == null)
+					{
+						this.inheritanceRelationshipConnectAction = new global::Altinoren.ActiveWriter.InheritanceRelationshipConnectAction(this);
+						this.inheritanceRelationshipConnectAction.MouseActionDeactivated += new DslDiagrams::MouseAction.MouseActionDeactivatedEventHandler(OnConnectActionDeactivated);
+					}
+					action = this.inheritanceRelationshipConnectAction;
 				} 
 				else
 				{
@@ -465,6 +480,11 @@ namespace Altinoren.ActiveWriter
 						this.nestedRelationshipConnectAction.Dispose();
 						this.nestedRelationshipConnectAction = null;
 					}
+					if(this.inheritanceRelationshipConnectAction != null)
+					{
+						this.inheritanceRelationshipConnectAction.Dispose();
+						this.inheritanceRelationshipConnectAction = null;
+					}
 					this.UnsubscribeCompartmentItemsEvents();
 				}
 			}
@@ -509,8 +529,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.ModelClass), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddShapeParentExistRulePriority, InitiallyDisabled=true)]
 		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.NestedClass), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddShapeParentExistRulePriority, InitiallyDisabled=true)]
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.OneToOneRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
 		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.InheritanceRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.OneToOneRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
 		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.ManyToOneRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
 		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.ManyToManyRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
 		internal sealed partial class FixUpDiagram : DslModeling::AddRule
@@ -932,6 +953,7 @@ namespace Altinoren.ActiveWriter
 		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.ManyToManyRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
 		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.OneToOneRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
 		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.InheritanceRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
 		internal sealed class ConnectorRolePlayerChanged : DslModeling::RolePlayerChangeRule
 		{
 			/// <summary>
