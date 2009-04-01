@@ -24,6 +24,8 @@ namespace Castle.MonoRail.Framework.Extensions
 	using Castle.MonoRail.Framework.Configuration;
 	using System.Collections;
 
+using System.CodeDom.Compiler;
+
 	/// <summary>
 	/// This extension appends the ASP.NET Tracing diagnostic information and custom 
 	/// tracing messages to the output of the page and sends this information to the 
@@ -71,6 +73,7 @@ namespace Castle.MonoRail.Framework.Extensions
 
 	public class WebTraceExtension : IMonoRailExtension
 	{
+
 		#region Private Fields
 		bool includePropertyBag;
 		bool htmlOnly = true;
@@ -152,5 +155,6 @@ namespace Castle.MonoRail.Framework.Extensions
 			}
 		}
 		#endregion
+	
 	}
 }

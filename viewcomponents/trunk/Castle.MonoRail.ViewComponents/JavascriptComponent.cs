@@ -52,6 +52,8 @@ namespace Castle.MonoRail.ViewComponents
             files = new StringSet();
             stdFiles = new List<LibraryDetail>();
 			wasRendered = false;
+//			engine.Trace.Warn("New JSsegment created");
+
         }
 
         internal bool wasRendered;
@@ -249,7 +251,7 @@ namespace Castle.MonoRail.ViewComponents
 	/// </item>
 	/// <item>
     /// <term>       Std      </term>
-    /// <description>A comma or space seaparated list of the standard Javascript files to include. 
+    /// <description>A comma or space separated list of the standard Javascript files to include. 
     /// Will automatically include needed requestisits. 
     /// It can include any of the following.
     /// </description>
@@ -839,12 +841,14 @@ namespace Castle.MonoRail.ViewComponents
 
         private void GetJSSegments(IEngineContext engine)
         {
-            // nVeloecity preserves controller.PropertyBag between ViewComponents and the layout.
+			engine.Trace.Warn(String.Format("In Flash: {0}", engine.Flash[STR_JSsegments] != null));
+			engine.Trace.Warn(String.Format("In PB: {0}", contextVars[STR_JSsegments] != null));
+			// nVeloecity preserves controller.PropertyBag between ViewComponents and the layout.
             // Brail preserves engine.Flash between ViewComponents and the layout.
             // so, one way or another, this gets saved.
             this.js = (contextVars[STR_JSsegments] ?? engine.Flash[STR_JSsegments] ?? new JSsegments()) as JSsegments;
             contextVars[STR_JSsegments]  = js;
-            engine.Flash[STR_JSsegments] = js;
+//            engine.Flash[STR_JSsegments] = js;
             contextVars[STR_JSsegments + ".@bubbleUp"] = true;
         }
         /// <summary>
@@ -1021,6 +1025,7 @@ namespace Castle.MonoRail.ViewComponents
 				if (js.wasRendered)
                 {
                     this.context.Writer.Write(RenderJavascriptFile(file));
+					return;
                 }
 
 				// Else add it to the appropriate list.
