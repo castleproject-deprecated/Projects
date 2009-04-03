@@ -124,7 +124,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
                     // Code below means: ActiveRecordStarter.ModelsCreated += new ModelsCreatedDelegate(OnARModelCreated);
                     starter = _activeRecord.GetType("Castle.ActiveRecord.ActiveRecordStarter");
-                    EventInfo eventInfo = starter.GetEvent("ModelsCreated");
+                    EventInfo eventInfo = starter.GetEvent("ModelsValidated");
+                    if (eventInfo == null)
+                    {
+                        eventInfo = starter.GetEvent("ModelsCreated");
+                    }
                     Type eventType = eventInfo.EventHandlerType;
                     MethodInfo info =
                         this.GetType().GetMethod("OnARModelCreated", BindingFlags.Public | BindingFlags.Instance);
@@ -1371,8 +1375,16 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 else
                     tempFileFolder = Directory.CreateDirectory(tempFilePath);
 
-                startInfo.FileName = Context.Model.NHQGExecutable;
-                startInfo.WorkingDirectory = Path.GetDirectoryName(Context.Model.NHQGExecutable);
+                string nHQGExecutable = Context.Model.NHQGExecutable;
+                if (!Path.IsPathRooted(nHQGExecutable))
+                {
+                  VSProject project = DTEHelper.GetVSProject(Context.ProjectItem);
+                  string projectDirectory = Path.GetDirectoryName(project.Project.FullName);
+                  nHQGExecutable = Path.GetFullPath(Path.Combine(projectDirectory, nHQGExecutable));
+                }
+
+                startInfo.FileName = nHQGExecutable;
+                startInfo.WorkingDirectory = Path.GetDirectoryName(nHQGExecutable);
                 string[] args = new string[4];
                 args[0] = "/lang:" + (Context.Language == CodeLanguage.CSharp ? "CS" : "VB");
                 args[1] = "/files:\"" + assembly.Location + "\"";
