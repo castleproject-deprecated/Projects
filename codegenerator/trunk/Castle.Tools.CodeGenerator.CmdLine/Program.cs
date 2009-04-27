@@ -51,33 +51,64 @@ namespace Castle.Tools.CodeGenerator.CmdLine
 			if (!Parser.ParseArgumentsWithUsage(args, arguments) || !arguments.IsValid()) return;
 
 			LoadReferences();
-			DeleteExistingOutputFile();
+			RenameExistingOutputFile();
+			
+			try
+			{
+				var sources = GetSources();
+				Console.Out.WriteLine(string.Format("Castle.Tools.CodeGenerator: Parsing {0} sources...", sources.Count));
+				ParseSources(sources);
 
-			var sources = GetSources();
-			Console.Out.WriteLine(string.Format("Castle.Tools.CodeGenerator: Parsing {0} sources...", sources.Count));
-			ParseSources(sources);
+				var controllerSources = GetControllerSources();
+				Console.Out.WriteLine(string.Format("Castle.Tools.CodeGenerator: Parsing {0} controller sources...",
+													controllerSources.Count));
+				ParseControllerSources(controllerSources);
 
-			var controllerSources = GetControllerSources();
-			Console.Out.WriteLine(string.Format("Castle.Tools.CodeGenerator: Parsing {0} controller sources...",
-			                                    controllerSources.Count));
-			ParseControllerSources(controllerSources);
+				var viewSources = GetViewSources();
+				Console.Out.WriteLine(string.Format("Castle.Tools.CodeGenerator: Parsing {0} view sources...", viewSources.Count));
+				ParseViewSources(viewSources);
 
-			var viewSources = GetViewSources();
-			Console.Out.WriteLine(string.Format("Castle.Tools.CodeGenerator: Parsing {0} view sources...", viewSources.Count));
-			ParseViewSources(viewSources);
+				var rootNamespace = GetRootNamespace();
+				Console.Out.WriteLine(string.Format("Castle.Tools.CodeGenerator: Using root namespace: {0}", rootNamespace));
 
-			var rootNamespace = GetRootNamespace();
-			Console.Out.WriteLine(string.Format("Castle.Tools.CodeGenerator: Using root namespace: {0}", rootNamespace));
-
-			var serviceType = typeof (ICodeGeneratorServices).FullName;
-			var nameSpace = rootNamespace + "." + arguments.OutputNamespace;
-			new Generator(nameSpace, arguments.OutputFilePath, serviceType, logger, namingService, sourceGenerator, treeCreationService).Execute();			
+				var serviceType = typeof(ICodeGeneratorServices).FullName;
+				var nameSpace = rootNamespace + "." + arguments.OutputNamespace;
+				new Generator(nameSpace, arguments.OutputFilePath, serviceType, logger, namingService, sourceGenerator, treeCreationService).Execute();
+				
+				DeleteOldOutputFile();
+			}
+			catch
+			{
+				RestoreOldOutputFile();
+				throw;
+			}
 		}
 
-		private static void DeleteExistingOutputFile()
+		private static string GetOldFileNameFromOutputFilePath(string outputFilePath)
+		{
+			return outputFilePath + ".old";
+		}
+
+		private static void RestoreOldOutputFile()
+		{
+			var filePath = GetOldFileNameFromOutputFilePath(arguments.OutputFilePath);
+
+			if (File.Exists(filePath))
+				File.Move(filePath, arguments.OutputFilePath);
+		}
+
+		private static void RenameExistingOutputFile()
 		{
 			if (File.Exists(arguments.OutputFilePath))
-				File.Delete(arguments.OutputFilePath);
+				File.Move(arguments.OutputFilePath, GetOldFileNameFromOutputFilePath(arguments.OutputFilePath));
+		}
+
+		private static void DeleteOldOutputFile()
+		{
+			var filePath = GetOldFileNameFromOutputFilePath(arguments.OutputFilePath);
+
+			if (File.Exists(filePath))
+				File.Delete(filePath);
 		}
 
 		private static List<string> GetControllerSources()
