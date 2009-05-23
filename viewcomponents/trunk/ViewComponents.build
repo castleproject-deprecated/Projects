@@ -6,7 +6,7 @@
 	<PropertyGroup>
 		<ProjectName>Castle.MonoRail.ViewComponents</ProjectName>
 		<ShortName>Castle.MonoRail.ViewComponents</ShortName>
-		<SolutionFile>$(MSBuildProjectDirectory)\Castle.MonoRail.ViewComponents-VS2005.sln</SolutionFile>
+		<SolutionFile>$(MSBuildProjectDirectory)\Castle.MonoRail.ViewComponents-vs2008.sln</SolutionFile>
 		<SectionId>-2</SectionId>
 		<Version>0.1.0</Version>
 		<ExtraInfo></ExtraInfo>

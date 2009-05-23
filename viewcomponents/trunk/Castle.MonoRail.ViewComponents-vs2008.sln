@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.ViewCompone
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.ViewComponents.TestSite-vs2008", "Castle.MonoRail.ViewComponents.TestSite\Castle.MonoRail.ViewComponents.TestSite-vs2008.csproj", "{6C229F56-62A2-47EE-973C-1F892960CA87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptSharpViewComponent", "ScriptSharpViewComponent\ScriptSharpViewComponent.csproj", "{C9C140F7-543B-46D5-A238-84E5B2BCFD7E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +19,6 @@ Global
 		{6C229F56-62A2-47EE-973C-1F892960CA87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C229F56-62A2-47EE-973C-1F892960CA87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C229F56-62A2-47EE-973C-1F892960CA87}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C9C140F7-543B-46D5-A238-84E5B2BCFD7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C9C140F7-543B-46D5-A238-84E5B2BCFD7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9C140F7-543B-46D5-A238-84E5B2BCFD7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

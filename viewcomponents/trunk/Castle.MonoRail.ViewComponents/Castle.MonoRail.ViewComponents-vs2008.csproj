@@ -88,7 +88,6 @@
     <Compile Include="GridComponent .cs" />
     <Compile Include="JavascriptComponent.cs" />
     <Compile Include="LinkSubmitButtonComponent.cs" />
-    <Compile Include="MarkdownViewComponent.cs" />
     <Compile Include="MaskedTextboxComponent.cs" />
     <Compile Include="Menu.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -109,7 +108,9 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="javascript\MaskedTextbox.js" />
+    <Content Include="javascript\MaskedTextbox.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="jslibraries.sample.xml" />
   </ItemGroup>
   <ItemGroup>
