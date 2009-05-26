@@ -30,7 +30,7 @@ namespace Castle.ActiveRecord.Linq.Tests
     {
         [Test,
          ExpectedException(typeof(ActiveRecordInitializationException),
-            "You can't invoke ActiveRecordStarter.Initialize more than once")]
+            ExpectedMessage = "You can't invoke ActiveRecordStarter.Initialize more than once")]
         public void InitializeCantBeInvokedMoreThanOnce()
         {
             ActiveRecordStarter.Initialize(GetConfigSource(), typeof(Post));
