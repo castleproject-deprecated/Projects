@@ -10,6 +10,7 @@
 
 Ayende:
 - While you can specify discriminators, there doesn’t seem to be a way to use inheritance. (Implementing Type hierarchies)
+    JoinedBase inheritance has now been implemented.
 - On the Northwind database, dragging the Customers table generate a PK of type System.Char
 - Another option to consider is to use the inflector to singularize the table tables when dragging from server explorer.
 
