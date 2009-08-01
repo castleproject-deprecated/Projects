@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E8F7B81A-EAAD-485E-83EA-604BEC164980}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Castle.Facilities.OptionalPropertyInjection.Tests</RootNamespace>
+    <AssemblyName>Castle.Facilities.OptionalPropertyInjection.Tests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MicroKernel, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Castle.MicroKernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="xunit, Version=1.4.9.1446, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\xunit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FluentConfiguration\WhenConfiguringWithDSL.cs" />
+    <Compile Include="FluentConfiguration\When_configuring_all_component_properties_with_extension.cs" />
+    <Compile Include="FluentConfiguration\When_configuring_properties_on_multiple_components_with_expression_extension.cs" />
+    <Compile Include="FluentConfiguration\When_configuring_select_component_properties_with_expression_extension.cs" />
+    <Compile Include="FluentConfiguration\When_configuring_select_component_properties_with_string_extension.cs" />
+    <Compile Include="FluentConfiguration\When_configuring_with_in_code_facility_initialization.cs" />
+    <Compile Include="QuestionOfLifeUniverseAndEverything.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WhenTestingConfigurationOptions.cs" />
+    <Compile Include="XmlConfiguration\WhenConfiguringWithXml.cs" />
+    <Compile Include="XmlConfiguration\When_configuring_all_component_properties_with_xml.cs" />
+    <Compile Include="XmlConfiguration\When_configuring_select_component_properties_with_xml.cs" />
+    <Compile Include="XmlConfiguration\When_configuring_with_xml_facility_initialization.cs" />
+    <Compile Include="XmlConfiguration\When_facility_is_added_code_and_components_in_xml.cs" />
+    <Compile Include="XmlConfiguration\XmlStringResource.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Castle.Facilities.OptionalPropertyInjection\Castle.Facilities.OptionalPropertyInjection.csproj">
+      <Project>{A4E5A3C7-E2A1-4DCE-A816-11F8E80CBCF6}</Project>
+      <Name>Castle.Facilities.OptionalPropertyInjection</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
