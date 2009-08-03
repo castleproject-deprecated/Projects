@@ -8,4 +8,9 @@ namespace Castle.Facilities.OptionalPropertyInjection.Tests {
         public AnswerToLifeUniverseAndEverything TheAnswer { get; set; }
         public AnswerToLifeUniverseAndEverything OtherAnswer { get; set; }
     }
+    public class AnswerToBeOrNotToBe {
+    }
+    public class QuestionToBeOrNotToBe {
+        public AnswerToBeOrNotToBe TheAnswer { get; set; }
+    }
 }

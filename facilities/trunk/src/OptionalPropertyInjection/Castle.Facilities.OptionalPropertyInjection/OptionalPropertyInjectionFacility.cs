@@ -3,8 +3,7 @@ using Castle.MicroKernel.Facilities;
 using Castle.MicroKernel;
 using System.Linq;
 using Castle.Core;
-using Castle.MicroKernel.Registration;
-using System.Collections.Generic;
+using Castle.Facilities.OptionalPropertyInjection.RegistrationOptions;
 
 namespace Castle.Facilities.OptionalPropertyInjection {
     internal static partial class ComponentModelExtensions {
@@ -19,19 +18,13 @@ namespace Castle.Facilities.OptionalPropertyInjection {
         }
     }
     public class OptionalPropertyInjectionFacility : AbstractFacility, IFacility {
-        private List<WireIRegistrationPropertiesOptions> _options = new List<WireIRegistrationPropertiesOptions>();
-        public IEnumerable<WireIRegistrationPropertiesOptions> RegistrationOptions {
-            get { return _options; }
+        public void ClearRegistrationOptions() {
+            _wiredPropertyChecker.CurrentRegistrationOptions = null;
         }
-        public void AddRegistrationOptions(WireIRegistrationPropertiesOptions opt) {
-            _options.Add(opt);
+        public void SetRegistrationOptions(FinalRegistrationOptions opt) {
+            _wiredPropertyChecker.CurrentRegistrationOptions = opt;
         }
-        public static OptionalPropertyInjectionFacility GetInstance() {
-            if (_instance.IsNull())
-                _instance = new OptionalPropertyInjectionFacility();
-            return _instance;
-        }
-        private static OptionalPropertyInjectionFacility _instance;
+        private WiredPropertyChecker _wiredPropertyChecker;
         private bool _wirePropertiesInContainerByDefault;
         public OptionalPropertyInjectionFacility() : this(true) { }
         public OptionalPropertyInjectionFacility(bool provideByDefault) {
@@ -48,6 +41,7 @@ namespace Castle.Facilities.OptionalPropertyInjection {
                 if (FacilityConfig.Attributes["provideByDefault"].ToBool().IsNotNull())
                     _wirePropertiesInContainerByDefault = (bool)FacilityConfig.Attributes["provideByDefault"].ToBool();
             }
+            _wiredPropertyChecker = new WiredPropertyChecker(_wirePropertiesInContainerByDefault);
         }
 
         void OnComponentRegistered(string key, IHandler handler) {
@@ -58,7 +52,7 @@ namespace Castle.Facilities.OptionalPropertyInjection {
         }
 
         private bool ShouldRemove(System.Reflection.PropertyInfo pi, ComponentModel model) {
-            return ! new WiredPropertyChecker(_wirePropertiesInContainerByDefault).IsWired(pi, model);
+            return !_wiredPropertyChecker.IsWired(pi, model);
         }
     }
 

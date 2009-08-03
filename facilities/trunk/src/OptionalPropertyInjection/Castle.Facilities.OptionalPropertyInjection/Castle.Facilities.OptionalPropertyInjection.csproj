@@ -47,12 +47,19 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComponentRegistrationExtensions.cs" />
     <Compile Include="HelpfulExtensions.cs" />
     <Compile Include="OptionalPropertyInjectionFacility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyFacilityRegistration.cs" />
+    <Compile Include="RegistrationOptions\ChainableFinalRegistrationOptions.cs" />
+    <Compile Include="RegistrationOptions\FinalRegistrationOptions.cs" />
+    <Compile Include="RegistrationOptions\InitialRegistrationOptions.cs" />
+    <Compile Include="RegistrationOptions\SelectAllOrNoneOptions.cs" />
     <Compile Include="WiredPropertyChecker.cs" />
     <Compile Include="WireIRegistrationPropertiesOptions.cs" />
   </ItemGroup>

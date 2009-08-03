@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using Castle.Core.Configuration;
 
 namespace Castle.MicroKernel.Registration {
-    public class ExceptionWirePropertiesOptions<COMPONENT_TYPE>  {
+    public class ExceptionWirePropertiesOptions<COMPONENT_TYPE> {
         WirePropertiesOptions<COMPONENT_TYPE> _parentOptions;
         public ExceptionWirePropertiesOptions(WirePropertiesOptions<COMPONENT_TYPE> parentOptions) {
             if (parentOptions.IsNull())
@@ -42,7 +42,7 @@ namespace Castle.MicroKernel.Registration {
             return new ExceptionWirePropertiesOptions<COMPONENT_TYPE>(this);
         }
     }
-    
+
     public static partial class OptionalPropertyInjectionFacility_ComponentRegistrationExtensions {
         public static ComponentRegistration<S> WireProperties<S>(this ComponentRegistration<S> reg, Action<WirePropertiesOptions<S>> optionCreation) {
             var opt = new WirePropertiesOptions<S>();
@@ -51,7 +51,7 @@ namespace Castle.MicroKernel.Registration {
                 return reg;
             var c = new MutableConfiguration("wire-properties")
                 .Attribute("value", opt.WireComponentProperties.Value.ToString());
-            opt.ExceptedPropertyNames.ForEach(p=>
+            opt.ExceptedPropertyNames.ForEach(p =>
                 c.CreateChild("except").Attribute("propertyName", p));
             return reg.Configuration(c);
         }

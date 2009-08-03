@@ -17,11 +17,7 @@ namespace Castle.Facilities.OptionalPropertyInjection.Tests {
             RegisterComponents(container);
             var q = Act(container);
             check(q);
-            //catch (Exception) {
-            //    "Container Nodes:".Output();
-            //    container.Kernel.GraphNodes.Select(n => n.ToString()).Join(Environment.NewLine).Output();
-            //    throw;
-            //}
+            check_container.DoIfNotNull(cc=>cc(container));
         }
         protected virtual void RegisterComponents(IWindsorContainer container) {
             ExpectError(_expectedExceptionDuringReg, () => {
@@ -49,6 +45,7 @@ namespace Castle.Facilities.OptionalPropertyInjection.Tests {
             return container.Resolve<QuestionOfLifeUniverseAndEverything>();
         }
         protected Action<QuestionOfLifeUniverseAndEverything> check = delegate { };
+        protected Action<IWindsorContainer> check_container;
 
         protected void no_properties_were_injected(QuestionOfLifeUniverseAndEverything question) {
             Assert.Null(question.TheAnswer);
