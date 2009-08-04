@@ -19,13 +19,8 @@ namespace Castle.MicroKernel.Registration {
         public void Register(IKernel kernel) {
             var fclty = kernel.GetFacilities().FirstOrDefault(f => f is OptionalPropertyInjectionFacility) as OptionalPropertyInjectionFacility;
             if (fclty.IsNotNull()) {
-                try {
-                    fclty.SetRegistrationOptions(_options);
-                    _inner.Register(kernel);
-                }
-                finally {
-                    fclty.ClearRegistrationOptions();
-                }
+                fclty.UseRegistrationOptions(_options, 
+                    () => _inner.Register(kernel));
             }
             else
                 _inner.Register(kernel);

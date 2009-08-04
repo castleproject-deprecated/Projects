@@ -18,11 +18,8 @@ namespace Castle.Facilities.OptionalPropertyInjection {
         }
     }
     public class OptionalPropertyInjectionFacility : AbstractFacility, IFacility {
-        public void ClearRegistrationOptions() {
-            _wiredPropertyChecker.CurrentRegistrationOptions = null;
-        }
-        public void SetRegistrationOptions(FinalRegistrationOptions opt) {
-            _wiredPropertyChecker.CurrentRegistrationOptions = opt;
+        public void UseRegistrationOptions(FinalRegistrationOptions options, Action action) {
+            _wiredPropertyChecker.UseRegistrationOptions(options, action);
         }
         private WiredPropertyChecker _wiredPropertyChecker;
         private bool _wirePropertiesInContainerByDefault;

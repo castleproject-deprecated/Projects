@@ -9,8 +9,8 @@ namespace Castle.Facilities.OptionalPropertyInjection {
     public class WiredPropertyChecker {
         private bool _wirePropertiesInContainerByDefault;
         public bool IsWired(PropertyInfo pi, ComponentModel model) {
-            if (CurrentRegistrationOptions.IsNotNull()) {
-                var res = CurrentRegistrationOptions.ShouldWire(pi);
+            if (_currentRegistrationOptions.IsNotNull()) {
+                var res = _currentRegistrationOptions.ShouldWire(pi);
                 if (res.IsNotNull())
                     return res??false;
             }
@@ -34,6 +34,16 @@ namespace Castle.Facilities.OptionalPropertyInjection {
         private IConfiguration GetChildNode(string nodeName, ConfigurationCollection configCollection) {
             return configCollection.FirstOrDefault(c => Eq(c.Name, nodeName));
         }
-        public FinalRegistrationOptions CurrentRegistrationOptions { get; set; }
+        private FinalRegistrationOptions _currentRegistrationOptions;
+
+        public void UseRegistrationOptions(FinalRegistrationOptions options, Action action) {
+            _currentRegistrationOptions = options;
+            try {
+                action();
+            }
+            finally {
+                _currentRegistrationOptions = null;
+            }
+        }
     }
 }
