@@ -244,6 +244,12 @@ namespace ICSharpCode.NRefactory.Visitors
 					codeTypeDeclaration.BaseTypes.Add(ConvType(typeRef));
 				}
 			}
+
+            if (typeDeclaration.Templates != null) {
+                foreach (TemplateDefinition templateDefinition in typeDeclaration.Templates) {
+                    codeTypeDeclaration.TypeParameters.Add(templateDefinition.Name);
+                }
+            }
 			
 			typeDeclarations.Push(codeTypeDeclaration);
 			typeDeclaration.AcceptChildren(this, data);
@@ -320,6 +326,13 @@ namespace ICSharpCode.NRefactory.Visitors
 			CodeMemberMethod memberMethod = new CodeMemberMethod();
 			memberMethod.Name = methodDeclaration.Name;
 			memberMethod.Attributes = ConvMemberAttributes(methodDeclaration.Modifier);
+		    memberMethod.ReturnType = ConvType(methodDeclaration.TypeReference);
+
+            if (methodDeclaration.Templates != null) {
+                foreach (TemplateDefinition templateDefinition in methodDeclaration.Templates) {
+                    memberMethod.TypeParameters.Add(templateDefinition.Name);
+                }
+            }
 
 			// RG: Private Interface Decl
 			if ((memberMethod.Attributes & MemberAttributes.Public) != MemberAttributes.Public &&
@@ -1135,7 +1148,8 @@ namespace ICSharpCode.NRefactory.Visitors
 					return new CodeCastExpression("System.Char", GetExpressionList(invocationExpression.Arguments)[0]);
 				}
 			} else if (target is IdentifierExpression) {
-				targetExpr = new CodeThisReferenceExpression();
+                // This used to be reference to "this".  It's used for static methods (not sure about instance), so we need to use null to preserve the meaning.
+				targetExpr = null;
 				methodName = ((IdentifierExpression)target).Identifier;
 			} else {
 				targetExpr = (CodeExpression)target.AcceptVisitor(this, data);
@@ -1459,6 +1473,9 @@ namespace ICSharpCode.NRefactory.Visitors
 		public override object VisitParameterDeclarationExpression(ParameterDeclarationExpression parameterDeclarationExpression, object data)
 		{
 			CodeParameterDeclarationExpression parameter = new CodeParameterDeclarationExpression(ConvType(parameterDeclarationExpression.TypeReference), parameterDeclarationExpression.ParameterName);
+
+            if (parameterDeclarationExpression.ParamModifier == ParameterModifiers.Params)
+                parameter.CustomAttributes.Add(new CodeAttributeDeclaration(new CodeTypeReference(typeof(ParamArrayAttribute))));
 
 			parameters.Add(parameter);
 
