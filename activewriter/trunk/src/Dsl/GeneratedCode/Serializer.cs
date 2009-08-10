@@ -962,6 +962,23 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// Access
+			if (!serializationContext.Result.Failed)
+			{
+				string attribAccess = reader.GetAttribute("access");
+				if (attribAccess != null)
+				{
+					PropertyAccess valueOfAccess;
+					if (DslModeling::SerializationUtilities.TryGetValue<PropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribAccess), out valueOfAccess))
+					{
+						instanceOfModel.Access = valueOfAccess;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "access", typeof(PropertyAccess), attribAccess);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -2157,6 +2174,19 @@ namespace Altinoren.ActiveWriter
 				{
 					if (!string.IsNullOrEmpty(propValue))
 						writer.WriteAttributeString("baseClassPropertyChangingMethod", propValue);
+				}
+			}
+			// Access
+			if (!serializationContext.Result.Failed)
+			{
+				PropertyAccess propValue = instanceOfModel.Access;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<PropertyAccess>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Property") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("access", serializedPropValue);
+					}
 				}
 			}
 		}
@@ -5459,14 +5489,14 @@ namespace Altinoren.ActiveWriter
 				string attribAccess = reader.GetAttribute("access");
 				if (attribAccess != null)
 				{
-					PropertyAccess valueOfAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<PropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribAccess), out valueOfAccess))
+					InheritablePropertyAccess valueOfAccess;
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribAccess), out valueOfAccess))
 					{
 						instanceOfModelElementWithAccess.Access = valueOfAccess;
 					}
 					else
 					{	// Invalid property value, ignored.
-						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "access", typeof(PropertyAccess), attribAccess);
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "access", typeof(InheritablePropertyAccess), attribAccess);
 					}
 				}
 			}
@@ -5767,11 +5797,11 @@ namespace Altinoren.ActiveWriter
 			// Access
 			if (!serializationContext.Result.Failed)
 			{
-				PropertyAccess propValue = instanceOfModelElementWithAccess.Access;
-				string serializedPropValue = DslModeling::SerializationUtilities.GetString<PropertyAccess>(serializationContext, propValue);
+				InheritablePropertyAccess propValue = instanceOfModelElementWithAccess.Access;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<InheritablePropertyAccess>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
-					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Property") != 0)
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("access", serializedPropValue);
 					}
@@ -8526,14 +8556,14 @@ namespace Altinoren.ActiveWriter
 				string attribTargetAccess = reader.GetAttribute("targetAccess");
 				if (attribTargetAccess != null)
 				{
-					PropertyAccess valueOfTargetAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<PropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetAccess), out valueOfTargetAccess))
+					InheritablePropertyAccess valueOfTargetAccess;
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetAccess), out valueOfTargetAccess))
 					{
 						instanceOfManyToOneRelation.TargetAccess = valueOfTargetAccess;
 					}
 					else
 					{	// Invalid property value, ignored.
-						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetAccess", typeof(PropertyAccess), attribTargetAccess);
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetAccess", typeof(InheritablePropertyAccess), attribTargetAccess);
 					}
 				}
 			}
@@ -8704,6 +8734,23 @@ namespace Altinoren.ActiveWriter
 					else
 					{	// Invalid property value, ignored.
 						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "sourcePropertyGenerated", typeof(global::System.Boolean), attribSourcePropertyGenerated);
+					}
+				}
+			}
+			// SourceAccess
+			if (!serializationContext.Result.Failed)
+			{
+				string attribSourceAccess = reader.GetAttribute("sourceAccess");
+				if (attribSourceAccess != null)
+				{
+					InheritablePropertyAccess valueOfSourceAccess;
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceAccess), out valueOfSourceAccess))
+					{
+						instanceOfManyToOneRelation.SourceAccess = valueOfSourceAccess;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "sourceAccess", typeof(InheritablePropertyAccess), attribSourceAccess);
 					}
 				}
 			}
@@ -9473,11 +9520,11 @@ namespace Altinoren.ActiveWriter
 			// TargetAccess
 			if (!serializationContext.Result.Failed)
 			{
-				PropertyAccess propValue = instanceOfManyToOneRelation.TargetAccess;
-				string serializedPropValue = DslModeling::SerializationUtilities.GetString<PropertyAccess>(serializationContext, propValue);
+				InheritablePropertyAccess propValue = instanceOfManyToOneRelation.TargetAccess;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<InheritablePropertyAccess>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
-					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Property") != 0)
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("targetAccess", serializedPropValue);
 					}
@@ -9595,6 +9642,19 @@ namespace Altinoren.ActiveWriter
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("sourcePropertyGenerated", serializedPropValue);
+					}
+				}
+			}
+			// SourceAccess
+			if (!serializationContext.Result.Failed)
+			{
+				InheritablePropertyAccess propValue = instanceOfManyToOneRelation.SourceAccess;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<InheritablePropertyAccess>(serializationContext, propValue);
+				if (!serializationContext.Result.Failed)
+				{
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
+					{	// No need to write the value out if it's the same as default value.
+						writer.WriteAttributeString("sourceAccess", serializedPropValue);
 					}
 				}
 			}
@@ -11045,14 +11105,14 @@ namespace Altinoren.ActiveWriter
 				string attribSourceAccess = reader.GetAttribute("sourceAccess");
 				if (attribSourceAccess != null)
 				{
-					PropertyAccess valueOfSourceAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<PropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceAccess), out valueOfSourceAccess))
+					InheritablePropertyAccess valueOfSourceAccess;
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceAccess), out valueOfSourceAccess))
 					{
 						instanceOfManyToManyRelation.SourceAccess = valueOfSourceAccess;
 					}
 					else
 					{	// Invalid property value, ignored.
-						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "sourceAccess", typeof(PropertyAccess), attribSourceAccess);
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "sourceAccess", typeof(InheritablePropertyAccess), attribSourceAccess);
 					}
 				}
 			}
@@ -11062,14 +11122,14 @@ namespace Altinoren.ActiveWriter
 				string attribTargetAccess = reader.GetAttribute("targetAccess");
 				if (attribTargetAccess != null)
 				{
-					PropertyAccess valueOfTargetAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<PropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetAccess), out valueOfTargetAccess))
+					InheritablePropertyAccess valueOfTargetAccess;
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetAccess), out valueOfTargetAccess))
 					{
 						instanceOfManyToManyRelation.TargetAccess = valueOfTargetAccess;
 					}
 					else
 					{	// Invalid property value, ignored.
-						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetAccess", typeof(PropertyAccess), attribTargetAccess);
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetAccess", typeof(InheritablePropertyAccess), attribTargetAccess);
 					}
 				}
 			}
@@ -12055,11 +12115,11 @@ namespace Altinoren.ActiveWriter
 			// SourceAccess
 			if (!serializationContext.Result.Failed)
 			{
-				PropertyAccess propValue = instanceOfManyToManyRelation.SourceAccess;
-				string serializedPropValue = DslModeling::SerializationUtilities.GetString<PropertyAccess>(serializationContext, propValue);
+				InheritablePropertyAccess propValue = instanceOfManyToManyRelation.SourceAccess;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<InheritablePropertyAccess>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
-					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Property") != 0)
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("sourceAccess", serializedPropValue);
 					}
@@ -12068,11 +12128,11 @@ namespace Altinoren.ActiveWriter
 			// TargetAccess
 			if (!serializationContext.Result.Failed)
 			{
-				PropertyAccess propValue = instanceOfManyToManyRelation.TargetAccess;
-				string serializedPropValue = DslModeling::SerializationUtilities.GetString<PropertyAccess>(serializationContext, propValue);
+				InheritablePropertyAccess propValue = instanceOfManyToManyRelation.TargetAccess;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<InheritablePropertyAccess>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
-					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Property") != 0)
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("targetAccess", serializedPropValue);
 					}
@@ -12593,14 +12653,14 @@ namespace Altinoren.ActiveWriter
 				string attribSourceAccess = reader.GetAttribute("sourceAccess");
 				if (attribSourceAccess != null)
 				{
-					PropertyAccess valueOfSourceAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<PropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceAccess), out valueOfSourceAccess))
+					InheritablePropertyAccess valueOfSourceAccess;
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceAccess), out valueOfSourceAccess))
 					{
 						instanceOfOneToOneRelation.SourceAccess = valueOfSourceAccess;
 					}
 					else
 					{	// Invalid property value, ignored.
-						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "sourceAccess", typeof(PropertyAccess), attribSourceAccess);
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "sourceAccess", typeof(InheritablePropertyAccess), attribSourceAccess);
 					}
 				}
 			}
@@ -12678,14 +12738,14 @@ namespace Altinoren.ActiveWriter
 				string attribTargetAccess = reader.GetAttribute("targetAccess");
 				if (attribTargetAccess != null)
 				{
-					PropertyAccess valueOfTargetAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<PropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetAccess), out valueOfTargetAccess))
+					InheritablePropertyAccess valueOfTargetAccess;
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetAccess), out valueOfTargetAccess))
 					{
 						instanceOfOneToOneRelation.TargetAccess = valueOfTargetAccess;
 					}
 					else
 					{	// Invalid property value, ignored.
-						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetAccess", typeof(PropertyAccess), attribTargetAccess);
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "targetAccess", typeof(InheritablePropertyAccess), attribTargetAccess);
 					}
 				}
 			}
@@ -13194,11 +13254,11 @@ namespace Altinoren.ActiveWriter
 			// SourceAccess
 			if (!serializationContext.Result.Failed)
 			{
-				PropertyAccess propValue = instanceOfOneToOneRelation.SourceAccess;
-				string serializedPropValue = DslModeling::SerializationUtilities.GetString<PropertyAccess>(serializationContext, propValue);
+				InheritablePropertyAccess propValue = instanceOfOneToOneRelation.SourceAccess;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<InheritablePropertyAccess>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
-					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Property") != 0)
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("sourceAccess", serializedPropValue);
 					}
@@ -13256,11 +13316,11 @@ namespace Altinoren.ActiveWriter
 			// TargetAccess
 			if (!serializationContext.Result.Failed)
 			{
-				PropertyAccess propValue = instanceOfOneToOneRelation.TargetAccess;
-				string serializedPropValue = DslModeling::SerializationUtilities.GetString<PropertyAccess>(serializationContext, propValue);
+				InheritablePropertyAccess propValue = instanceOfOneToOneRelation.TargetAccess;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<InheritablePropertyAccess>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
-					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Property") != 0)
+					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("targetAccess", serializedPropValue);
 					}

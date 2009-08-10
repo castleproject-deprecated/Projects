@@ -717,6 +717,18 @@
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;BaseClassPropertyChangingMethod&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.Model/Access.Description" xml:space="preserve">
+    <value>Global property access setting.  Can be overridden at class or property level.</value>
+    <comment>Description for DomainProperty &apos;Access&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/Access.DisplayName" xml:space="preserve">
+    <value>Access</value>
+    <comment>DisplayName for DomainProperty &apos;Access&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/Access.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;Access&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ModelClass.Description" xml:space="preserve">
     <value>A class of the domain</value>
     <comment>Description for DomainClass &apos;ModelClass&apos;</comment>
@@ -1904,6 +1916,18 @@
   <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyGenerated.Category" xml:space="preserve">
     <value>Source (BelongsTo)</value>
     <comment>Category for DomainProperty &apos;SourcePropertyGenerated&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceAccess.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.ManyToOneRelation.Source Access</value>
+    <comment>Description for DomainProperty &apos;SourceAccess&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceAccess.DisplayName" xml:space="preserve">
+    <value>Source Access</value>
+    <comment>DisplayName for DomainProperty &apos;SourceAccess&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ManyToOneRelation/SourceAccess.Category" xml:space="preserve">
+    <value>Source (BelongsTo)</value>
+    <comment>Category for DomainProperty &apos;SourceAccess&apos; on DomainClass &apos;ManyToOneRelation&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ManyToOneRelation/Source.Description" xml:space="preserve">
     <value></value>
@@ -3828,6 +3852,102 @@
   <data name="Altinoren.ActiveWriter.MetaDataGeneration/InSubClass.Description" xml:space="preserve">
     <value></value>
     <comment>Description for EnumerationLiteral &apos;InSubClass&apos; on DomainEnumeration &apos;MetaDataGeneration&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/Inherit.DisplayName" xml:space="preserve">
+    <value>Inherit</value>
+    <comment>Display name for EnumerationLiteral &apos;Inherit&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/Inherit.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritablePropertyAccess.Inherit</value>
+    <comment>Description for EnumerationLiteral &apos;Inherit&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/FieldLowercaseUnderscore.DisplayName" xml:space="preserve">
+    <value>FieldLowercaseUnderscore</value>
+    <comment>Display name for EnumerationLiteral &apos;FieldLowercaseUnderscore&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/FieldLowercaseUnderscore.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritablePropertyAccess.FieldLowercaseUnderscore</value>
+    <comment>Description for EnumerationLiteral &apos;FieldLowercaseUnderscore&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/FieldPascalcaseMUnderscore.DisplayName" xml:space="preserve">
+    <value>FieldPascalcaseMUnderscore</value>
+    <comment>Display name for EnumerationLiteral &apos;FieldPascalcaseMUnderscore&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/FieldPascalcaseMUnderscore.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritablePropertyAccess.FieldPascalcaseMUnderscore</value>
+    <comment>Description for EnumerationLiteral &apos;FieldPascalcaseMUnderscore&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterCamelcase.DisplayName" xml:space="preserve">
+    <value>NosetterCamelcase</value>
+    <comment>Display name for EnumerationLiteral &apos;NosetterCamelcase&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterCamelcase.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterCamelcase</value>
+    <comment>Description for EnumerationLiteral &apos;NosetterCamelcase&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterCamelcaseUnderscore.DisplayName" xml:space="preserve">
+    <value>NosetterCamelcaseUnderscore</value>
+    <comment>Display name for EnumerationLiteral &apos;NosetterCamelcaseUnderscore&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterCamelcaseUnderscore.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterCamelcaseUnderscore</value>
+    <comment>Description for EnumerationLiteral &apos;NosetterCamelcaseUnderscore&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/Property.DisplayName" xml:space="preserve">
+    <value>Property</value>
+    <comment>Display name for EnumerationLiteral &apos;Property&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/Property.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritablePropertyAccess.Property</value>
+    <comment>Description for EnumerationLiteral &apos;Property&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterPascalcaseMUnderscore.DisplayName" xml:space="preserve">
+    <value>NosetterPascalcaseMUnderscore</value>
+    <comment>Display name for EnumerationLiteral &apos;NosetterPascalcaseMUnderscore&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterPascalcaseMUnderscore.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterPascalcaseMUnderscore</value>
+    <comment>Description for EnumerationLiteral &apos;NosetterPascalcaseMUnderscore&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterLowercaseUnderscore.DisplayName" xml:space="preserve">
+    <value>NosetterLowercaseUnderscore</value>
+    <comment>Display name for EnumerationLiteral &apos;NosetterLowercaseUnderscore&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterLowercaseUnderscore.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterLowercaseUnderscore</value>
+    <comment>Description for EnumerationLiteral &apos;NosetterLowercaseUnderscore&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterLowercase.DisplayName" xml:space="preserve">
+    <value>NosetterLowercase</value>
+    <comment>Display name for EnumerationLiteral &apos;NosetterLowercase&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterLowercase.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterLowercase</value>
+    <comment>Description for EnumerationLiteral &apos;NosetterLowercase&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/Field.DisplayName" xml:space="preserve">
+    <value>Field</value>
+    <comment>Display name for EnumerationLiteral &apos;Field&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/Field.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritablePropertyAccess.Field</value>
+    <comment>Description for EnumerationLiteral &apos;Field&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/FieldCamelcase.DisplayName" xml:space="preserve">
+    <value>FieldCamelcase</value>
+    <comment>Display name for EnumerationLiteral &apos;FieldCamelcase&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/FieldCamelcase.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritablePropertyAccess.FieldCamelcase</value>
+    <comment>Description for EnumerationLiteral &apos;FieldCamelcase&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/FieldCamelcaseUnderscore.DisplayName" xml:space="preserve">
+    <value>FieldCamelcaseUnderscore</value>
+    <comment>Display name for EnumerationLiteral &apos;FieldCamelcaseUnderscore&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.InheritablePropertyAccess/FieldCamelcaseUnderscore.Description" xml:space="preserve">
+    <value>Description for Altinoren.ActiveWriter.InheritablePropertyAccess.FieldCamelcaseUnderscore</value>
+    <comment>Description for EnumerationLiteral &apos;FieldCamelcaseUnderscore&apos; on DomainEnumeration &apos;InheritablePropertyAccess&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.ClassShape.Description" xml:space="preserve">
     <value></value>

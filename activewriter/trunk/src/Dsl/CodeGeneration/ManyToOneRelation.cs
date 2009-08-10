@@ -22,6 +22,26 @@ namespace Altinoren.ActiveWriter
 
     public partial class ManyToOneRelation
     {
+        public PropertyAccess EffectiveSourceAccess
+        {
+            get
+            {
+                if (SourceAccess == InheritablePropertyAccess.Inherit)
+                    return Source.EffectiveAccess;
+                return SourceAccess.GetMatchingPropertyAccess();
+            }
+        }
+
+        public PropertyAccess EffectiveTargetAccess
+        {
+            get
+            {
+                if (TargetAccess == InheritablePropertyAccess.Inherit)
+                    return Target.EffectiveAccess;
+                return TargetAccess.GetMatchingPropertyAccess();
+            }
+        }
+
         public RelationType EffectiveRelationType
         {
             get
@@ -80,8 +100,6 @@ namespace Altinoren.ActiveWriter
             CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("HasMany");
 
             attribute.Arguments.Add(AttributeHelper.GetPrimitiveTypeAttributeArgument(Source.Name));
-            if (TargetAccess != PropertyAccess.Property)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", TargetAccess));
             if (TargetCache != CacheEnum.Undefined)
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cache", "CacheEnum", TargetCache));
             if (TargetCascade != ManyRelationCascadeEnum.None)
@@ -93,6 +111,8 @@ namespace Altinoren.ActiveWriter
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", TargetCustomAccess));
             else if (EffectiveAutomaticAssociations)
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", context.Namespace + "." + context.InternalPropertyAccessorName + ", " + context.AssemblyName));
+            else if (EffectiveTargetAccess != PropertyAccess.Property)
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", EffectiveTargetAccess));
 
             if (EffectiveRelationType == RelationType.Map)
             {
@@ -149,6 +169,8 @@ namespace Altinoren.ActiveWriter
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", SourceCustomAccess));
             else if (EffectiveAutomaticAssociations)
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", Source.Model.FieldPropertyAccess));
+            else if (EffectiveSourceAccess != PropertyAccess.Property)
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", EffectiveSourceAccess));
 
             if (!SourceInsert)
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Insert", SourceInsert));

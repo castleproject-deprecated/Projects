@@ -2687,7 +2687,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetAccess
 		/// </summary>
-		private PropertyAccess targetAccessPropertyStorage = PropertyAccess.Property;
+		private InheritablePropertyAccess targetAccessPropertyStorage = InheritablePropertyAccess.Inherit;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetAccess domain property.
@@ -2696,9 +2696,9 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(PropertyAccess.Property)]
+		[global::System.ComponentModel.DefaultValue(InheritablePropertyAccess.Inherit)]
 		[DslModeling::DomainObjectId("05776d07-5fe2-4041-84fc-8d0c1d3b21ec")]
-		public PropertyAccess TargetAccess
+		public InheritablePropertyAccess TargetAccess
 		{
 			[global::System.Diagnostics.DebuggerStepThrough]
 			get
@@ -2714,7 +2714,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Value handler for the ManyToOneRelation.TargetAccess domain property.
 		/// </summary>
-		internal sealed partial class TargetAccessPropertyHandler : DslModeling::DomainPropertyValueHandler<ManyToOneRelation, PropertyAccess>
+		internal sealed partial class TargetAccessPropertyHandler : DslModeling::DomainPropertyValueHandler<ManyToOneRelation, InheritablePropertyAccess>
 		{
 			private TargetAccessPropertyHandler() { }
 		
@@ -2740,7 +2740,7 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <returns>Property value.</returns>
-			public override sealed PropertyAccess GetValue(ManyToOneRelation element)
+			public override sealed InheritablePropertyAccess GetValue(ManyToOneRelation element)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 				return element.targetAccessPropertyStorage;
@@ -2751,11 +2751,11 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <param name="newValue">New property value.</param>
-			public override sealed void SetValue(ManyToOneRelation element, PropertyAccess newValue)
+			public override sealed void SetValue(ManyToOneRelation element, InheritablePropertyAccess newValue)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 		
-				PropertyAccess oldValue = GetValue(element);
+				InheritablePropertyAccess oldValue = GetValue(element);
 				if (newValue != oldValue)
 				{
 					ValueChanging(element, oldValue, newValue);
@@ -3646,6 +3646,95 @@ namespace Altinoren.ActiveWriter
 				{
 					ValueChanging(element, oldValue, newValue);
 					element.sourcePropertyGeneratedPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region SourceAccess domain property code
+		
+		/// <summary>
+		/// SourceAccess domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid SourceAccessDomainPropertyId = new global::System.Guid(0x06b82c89, 0x9c53, 0x467a, 0x8e, 0x36, 0x90, 0xe8, 0x7b, 0xe1, 0xe5, 0xf3);
+		
+		/// <summary>
+		/// Storage for SourceAccess
+		/// </summary>
+		private InheritablePropertyAccess sourceAccessPropertyStorage = InheritablePropertyAccess.Inherit;
+		
+		/// <summary>
+		/// Gets or sets the value of SourceAccess domain property.
+		/// Description for Altinoren.ActiveWriter.ManyToOneRelation.Source Access
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(InheritablePropertyAccess.Inherit)]
+		[DslModeling::DomainObjectId("06b82c89-9c53-467a-8e36-90e87be1e5f3")]
+		public InheritablePropertyAccess SourceAccess
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return sourceAccessPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				SourceAccessPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the ManyToOneRelation.SourceAccess domain property.
+		/// </summary>
+		internal sealed partial class SourceAccessPropertyHandler : DslModeling::DomainPropertyValueHandler<ManyToOneRelation, InheritablePropertyAccess>
+		{
+			private SourceAccessPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the ManyToOneRelation.SourceAccess domain property value handler.
+			/// </summary>
+			public static readonly SourceAccessPropertyHandler Instance = new SourceAccessPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the ManyToOneRelation.SourceAccess domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return SourceAccessDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed InheritablePropertyAccess GetValue(ManyToOneRelation element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.sourceAccessPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(ManyToOneRelation element, InheritablePropertyAccess newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				InheritablePropertyAccess oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.sourceAccessPropertyStorage = newValue;
 					ValueChanged(element, oldValue, newValue);
 				}
 			}
@@ -6366,7 +6455,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for SourceAccess
 		/// </summary>
-		private PropertyAccess sourceAccessPropertyStorage = PropertyAccess.Property;
+		private InheritablePropertyAccess sourceAccessPropertyStorage = InheritablePropertyAccess.Inherit;
 		
 		/// <summary>
 		/// Gets or sets the value of SourceAccess domain property.
@@ -6374,9 +6463,9 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(PropertyAccess.Property)]
+		[global::System.ComponentModel.DefaultValue(InheritablePropertyAccess.Inherit)]
 		[DslModeling::DomainObjectId("9e857994-04c2-40f0-99b1-d909623a6873")]
-		public PropertyAccess SourceAccess
+		public InheritablePropertyAccess SourceAccess
 		{
 			[global::System.Diagnostics.DebuggerStepThrough]
 			get
@@ -6392,7 +6481,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Value handler for the ManyToManyRelation.SourceAccess domain property.
 		/// </summary>
-		internal sealed partial class SourceAccessPropertyHandler : DslModeling::DomainPropertyValueHandler<ManyToManyRelation, PropertyAccess>
+		internal sealed partial class SourceAccessPropertyHandler : DslModeling::DomainPropertyValueHandler<ManyToManyRelation, InheritablePropertyAccess>
 		{
 			private SourceAccessPropertyHandler() { }
 		
@@ -6418,7 +6507,7 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <returns>Property value.</returns>
-			public override sealed PropertyAccess GetValue(ManyToManyRelation element)
+			public override sealed InheritablePropertyAccess GetValue(ManyToManyRelation element)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 				return element.sourceAccessPropertyStorage;
@@ -6429,11 +6518,11 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <param name="newValue">New property value.</param>
-			public override sealed void SetValue(ManyToManyRelation element, PropertyAccess newValue)
+			public override sealed void SetValue(ManyToManyRelation element, InheritablePropertyAccess newValue)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 		
-				PropertyAccess oldValue = GetValue(element);
+				InheritablePropertyAccess oldValue = GetValue(element);
 				if (newValue != oldValue)
 				{
 					ValueChanging(element, oldValue, newValue);
@@ -6454,7 +6543,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetAccess
 		/// </summary>
-		private PropertyAccess targetAccessPropertyStorage = PropertyAccess.Property;
+		private InheritablePropertyAccess targetAccessPropertyStorage = InheritablePropertyAccess.Inherit;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetAccess domain property.
@@ -6462,9 +6551,9 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(PropertyAccess.Property)]
+		[global::System.ComponentModel.DefaultValue(InheritablePropertyAccess.Inherit)]
 		[DslModeling::DomainObjectId("308436c6-0b6c-4887-b5d4-e15c9174f9cc")]
-		public PropertyAccess TargetAccess
+		public InheritablePropertyAccess TargetAccess
 		{
 			[global::System.Diagnostics.DebuggerStepThrough]
 			get
@@ -6480,7 +6569,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Value handler for the ManyToManyRelation.TargetAccess domain property.
 		/// </summary>
-		internal sealed partial class TargetAccessPropertyHandler : DslModeling::DomainPropertyValueHandler<ManyToManyRelation, PropertyAccess>
+		internal sealed partial class TargetAccessPropertyHandler : DslModeling::DomainPropertyValueHandler<ManyToManyRelation, InheritablePropertyAccess>
 		{
 			private TargetAccessPropertyHandler() { }
 		
@@ -6506,7 +6595,7 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <returns>Property value.</returns>
-			public override sealed PropertyAccess GetValue(ManyToManyRelation element)
+			public override sealed InheritablePropertyAccess GetValue(ManyToManyRelation element)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 				return element.targetAccessPropertyStorage;
@@ -6517,11 +6606,11 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <param name="newValue">New property value.</param>
-			public override sealed void SetValue(ManyToManyRelation element, PropertyAccess newValue)
+			public override sealed void SetValue(ManyToManyRelation element, InheritablePropertyAccess newValue)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 		
-				PropertyAccess oldValue = GetValue(element);
+				InheritablePropertyAccess oldValue = GetValue(element);
 				if (newValue != oldValue)
 				{
 					ValueChanging(element, oldValue, newValue);
@@ -7908,7 +7997,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for SourceAccess
 		/// </summary>
-		private PropertyAccess sourceAccessPropertyStorage = PropertyAccess.Property;
+		private InheritablePropertyAccess sourceAccessPropertyStorage = InheritablePropertyAccess.Inherit;
 		
 		/// <summary>
 		/// Gets or sets the value of SourceAccess domain property.
@@ -7916,9 +8005,9 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/SourceAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/SourceAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/SourceAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(PropertyAccess.Property)]
+		[global::System.ComponentModel.DefaultValue(InheritablePropertyAccess.Inherit)]
 		[DslModeling::DomainObjectId("6cab92a3-03e6-41fa-926d-f33afdbbbfcd")]
-		public PropertyAccess SourceAccess
+		public InheritablePropertyAccess SourceAccess
 		{
 			[global::System.Diagnostics.DebuggerStepThrough]
 			get
@@ -7934,7 +8023,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Value handler for the OneToOneRelation.SourceAccess domain property.
 		/// </summary>
-		internal sealed partial class SourceAccessPropertyHandler : DslModeling::DomainPropertyValueHandler<OneToOneRelation, PropertyAccess>
+		internal sealed partial class SourceAccessPropertyHandler : DslModeling::DomainPropertyValueHandler<OneToOneRelation, InheritablePropertyAccess>
 		{
 			private SourceAccessPropertyHandler() { }
 		
@@ -7960,7 +8049,7 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <returns>Property value.</returns>
-			public override sealed PropertyAccess GetValue(OneToOneRelation element)
+			public override sealed InheritablePropertyAccess GetValue(OneToOneRelation element)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 				return element.sourceAccessPropertyStorage;
@@ -7971,11 +8060,11 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <param name="newValue">New property value.</param>
-			public override sealed void SetValue(OneToOneRelation element, PropertyAccess newValue)
+			public override sealed void SetValue(OneToOneRelation element, InheritablePropertyAccess newValue)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 		
-				PropertyAccess oldValue = GetValue(element);
+				InheritablePropertyAccess oldValue = GetValue(element);
 				if (newValue != oldValue)
 				{
 					ValueChanging(element, oldValue, newValue);
@@ -8346,7 +8435,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for TargetAccess
 		/// </summary>
-		private PropertyAccess targetAccessPropertyStorage = PropertyAccess.Property;
+		private InheritablePropertyAccess targetAccessPropertyStorage = InheritablePropertyAccess.Inherit;
 		
 		/// <summary>
 		/// Gets or sets the value of TargetAccess domain property.
@@ -8354,9 +8443,9 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/TargetAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/TargetAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/TargetAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(PropertyAccess.Property)]
+		[global::System.ComponentModel.DefaultValue(InheritablePropertyAccess.Inherit)]
 		[DslModeling::DomainObjectId("f51a55ef-21f7-4e22-9776-14c00caf8879")]
-		public PropertyAccess TargetAccess
+		public InheritablePropertyAccess TargetAccess
 		{
 			[global::System.Diagnostics.DebuggerStepThrough]
 			get
@@ -8372,7 +8461,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Value handler for the OneToOneRelation.TargetAccess domain property.
 		/// </summary>
-		internal sealed partial class TargetAccessPropertyHandler : DslModeling::DomainPropertyValueHandler<OneToOneRelation, PropertyAccess>
+		internal sealed partial class TargetAccessPropertyHandler : DslModeling::DomainPropertyValueHandler<OneToOneRelation, InheritablePropertyAccess>
 		{
 			private TargetAccessPropertyHandler() { }
 		
@@ -8398,7 +8487,7 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <returns>Property value.</returns>
-			public override sealed PropertyAccess GetValue(OneToOneRelation element)
+			public override sealed InheritablePropertyAccess GetValue(OneToOneRelation element)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 				return element.targetAccessPropertyStorage;
@@ -8409,11 +8498,11 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <param name="newValue">New property value.</param>
-			public override sealed void SetValue(OneToOneRelation element, PropertyAccess newValue)
+			public override sealed void SetValue(OneToOneRelation element, InheritablePropertyAccess newValue)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 		
-				PropertyAccess oldValue = GetValue(element);
+				InheritablePropertyAccess oldValue = GetValue(element);
 				if (newValue != oldValue)
 				{
 					ValueChanging(element, oldValue, newValue);

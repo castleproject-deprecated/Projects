@@ -253,6 +253,11 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="c4d6694d-6588-4d94-b0fa-74c194ffaa4e" Description="Global property access setting.  Can be overridden at class or property level." Name="Access" DisplayName="Access" DefaultValue="Property" Category="Code Generation">
+          <Type>
+            <DomainEnumerationMoniker Name="PropertyAccess" />
+          </Type>
+        </DomainProperty>
       </Properties>
       <ElementMergeDirectives>
         <ElementMergeDirective>
@@ -570,9 +575,9 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="64a542a8-a0ce-42cc-b9a8-1845c744cb97" Description="" Name="Access" DisplayName="Access" DefaultValue="Property" Category="ActiveRecord">
+        <DomainProperty Id="64a542a8-a0ce-42cc-b9a8-1845c744cb97" Description="" Name="Access" DisplayName="Access" DefaultValue="Inherit" Category="ActiveRecord">
           <Type>
-            <DomainEnumerationMoniker Name="PropertyAccess" />
+            <DomainEnumerationMoniker Name="InheritablePropertyAccess" />
           </Type>
         </DomainProperty>
       </Properties>
@@ -768,9 +773,9 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="05776d07-5fe2-4041-84fc-8d0c1d3b21ec" Description="The access strategy." Name="TargetAccess" DisplayName="Target Access" DefaultValue="Property" Category="Target (HasMany)">
+        <DomainProperty Id="05776d07-5fe2-4041-84fc-8d0c1d3b21ec" Description="The access strategy." Name="TargetAccess" DisplayName="Target Access" DefaultValue="Inherit" Category="Target (HasMany)">
           <Type>
-            <DomainEnumerationMoniker Name="PropertyAccess" />
+            <DomainEnumerationMoniker Name="InheritablePropertyAccess" />
           </Type>
         </DomainProperty>
         <DomainProperty Id="46603735-0a4c-4811-a643-125844df7d70" Description="Name of the property. If not suplied, ActiveWriter will use target class name." Name="SourcePropertyName" DisplayName="Source Property Name" Category="Code Generation">
@@ -821,6 +826,11 @@
         <DomainProperty Id="5a6da19e-ae0e-49c5-afa1-dfce0433e464" Description="Description for Altinoren.ActiveWriter.ManyToOneRelation.Source Property Generated" Name="SourcePropertyGenerated" DisplayName="Source Property Generated" DefaultValue="true" Category="Source (BelongsTo)">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="06b82c89-9c53-467a-8e36-90e87be1e5f3" Description="Description for Altinoren.ActiveWriter.ManyToOneRelation.Source Access" Name="SourceAccess" DisplayName="Source Access" DefaultValue="Inherit" Category="Source (BelongsTo)">
+          <Type>
+            <DomainEnumerationMoniker Name="InheritablePropertyAccess" />
           </Type>
         </DomainProperty>
       </Properties>
@@ -987,14 +997,14 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="9e857994-04c2-40f0-99b1-d909623a6873" Description="" Name="SourceAccess" DisplayName="Source Access" DefaultValue="Property" Category="Source">
+        <DomainProperty Id="9e857994-04c2-40f0-99b1-d909623a6873" Description="" Name="SourceAccess" DisplayName="Source Access" DefaultValue="Inherit" Category="Source">
           <Type>
-            <DomainEnumerationMoniker Name="PropertyAccess" />
+            <DomainEnumerationMoniker Name="InheritablePropertyAccess" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="308436c6-0b6c-4887-b5d4-e15c9174f9cc" Description="" Name="TargetAccess" DisplayName="Target Access" DefaultValue="Property" Category="Target">
+        <DomainProperty Id="308436c6-0b6c-4887-b5d4-e15c9174f9cc" Description="" Name="TargetAccess" DisplayName="Target Access" DefaultValue="Inherit" Category="Target">
           <Type>
-            <DomainEnumerationMoniker Name="PropertyAccess" />
+            <DomainEnumerationMoniker Name="InheritablePropertyAccess" />
           </Type>
         </DomainProperty>
         <DomainProperty Id="e5d28e22-22c2-48bb-9540-8be851751818" Description="Type of the property. If not supplied, ActiveWriter will use the model's Collection Interface by default." Name="SourcePropertyType" DisplayName="Source Property Type" DefaultValue="" Category="Code Generation">
@@ -1080,9 +1090,9 @@
     </DomainRelationship>
     <DomainRelationship Id="fc147ce4-8aa0-4719-94a9-21179d6cf6a5" Description="Associates a foreign table where the current class and the target class share their primary key." Name="OneToOneRelation" DisplayName="One To One Relation" Namespace="Altinoren.ActiveWriter">
       <Properties>
-        <DomainProperty Id="6cab92a3-03e6-41fa-926d-f33afdbbbfcd" Description="" Name="SourceAccess" DisplayName="Source Access" DefaultValue="Property" Category="Source">
+        <DomainProperty Id="6cab92a3-03e6-41fa-926d-f33afdbbbfcd" Description="" Name="SourceAccess" DisplayName="Source Access" DefaultValue="Inherit" Category="Source">
           <Type>
-            <DomainEnumerationMoniker Name="PropertyAccess" />
+            <DomainEnumerationMoniker Name="InheritablePropertyAccess" />
           </Type>
         </DomainProperty>
         <DomainProperty Id="1d99e2db-2ed5-42dc-b869-cfb8041d97b5" Description="" Name="SourceCascade" DisplayName="Source Cascade" DefaultValue="None" Category="Source">
@@ -1105,9 +1115,9 @@
             <DomainEnumerationMoniker Name="OuterJoinEnum" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="f51a55ef-21f7-4e22-9776-14c00caf8879" Description="" Name="TargetAccess" DisplayName="Target Access" DefaultValue="Property" Category="Target">
+        <DomainProperty Id="f51a55ef-21f7-4e22-9776-14c00caf8879" Description="" Name="TargetAccess" DisplayName="Target Access" DefaultValue="Inherit" Category="Target">
           <Type>
-            <DomainEnumerationMoniker Name="PropertyAccess" />
+            <DomainEnumerationMoniker Name="InheritablePropertyAccess" />
           </Type>
         </DomainProperty>
         <DomainProperty Id="42102a9d-77ce-437e-abc7-3cd54e8a1061" Description="" Name="TargetCascade" DisplayName="Target Cascade" DefaultValue="None" Category="Target">
@@ -1484,6 +1494,22 @@
         <EnumerationLiteral Description="" Name="InSubClass" Value="" />
       </Literals>
     </DomainEnumeration>
+    <DomainEnumeration Name="InheritablePropertyAccess" Namespace="Altinoren.ActiveWriter" Description="Same as PropertyAccess, but with the ability to inherit from parents.">
+      <Literals>
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.Inherit" Name="Inherit" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.FieldLowercaseUnderscore" Name="FieldLowercaseUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.FieldPascalcaseMUnderscore" Name="FieldPascalcaseMUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterCamelcase" Name="NosetterCamelcase" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterCamelcaseUnderscore" Name="NosetterCamelcaseUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.Property" Name="Property" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterPascalcaseMUnderscore" Name="NosetterPascalcaseMUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterLowercaseUnderscore" Name="NosetterLowercaseUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterLowercase" Name="NosetterLowercase" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.Field" Name="Field" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.FieldCamelcase" Name="FieldCamelcase" Value="" />
+        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.FieldCamelcaseUnderscore" Name="FieldCamelcaseUnderscore" Value="" />
+      </Literals>
+    </DomainEnumeration>
   </Types>
   <Shapes>
     <CompartmentShape Id="ca45d586-12d1-4f5d-99c7-83c1eb0e61eb" Description="" Name="ClassShape" DisplayName="Class Shape" Namespace="Altinoren.ActiveWriter" GeneratesDoubleDerived="true" FixedTooltipText="Class Shape" FillColor="LightSteelBlue" InitialHeight="0.4" Geometry="RoundedRectangle">
@@ -1704,6 +1730,9 @@
           <XmlPropertyData XmlName="baseClassPropertyChangingMethod">
             <DomainPropertyMoniker Name="Model/BaseClassPropertyChangingMethod" />
           </XmlPropertyData>
+          <XmlPropertyData XmlName="access">
+            <DomainPropertyMoniker Name="Model/Access" />
+          </XmlPropertyData>
         </ElementData>
       </XmlClassData>
       <XmlClassData TypeName="ModelClass" MonikerAttributeName="" MonikerElementName="modelClassMoniker" ElementName="modelClass" MonikerTypeName="ModelClassMoniker">
@@ -1917,6 +1946,9 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="sourcePropertyGenerated">
             <DomainPropertyMoniker Name="ManyToOneRelation/SourcePropertyGenerated" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="sourceAccess">
+            <DomainPropertyMoniker Name="ManyToOneRelation/SourceAccess" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

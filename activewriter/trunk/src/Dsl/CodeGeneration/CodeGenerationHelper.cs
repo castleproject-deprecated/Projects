@@ -770,7 +770,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private CodeMemberField GetMemberFieldOfProperty(PropertyData property, Accessor accessor)
         {
-            return GetMemberField(property.Name, GetPropertyType(property), accessor, property.Access);
+            return GetMemberField(property.Name, GetPropertyType(property), accessor, property.EffectiveAccess);
         }
 
         private CodeTypeReference GetPropertyType(PropertyData property)
@@ -942,7 +942,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     relationship.Target.Name,
                     relationship.EffectiveTargetPropertyName,
                     relationship.TargetPropertyType,
-                    relationship.TargetAccess,
+                    relationship.EffectiveTargetAccess,
                     relationship.TargetDescription,
                     relationship.GetHasManyAttribute(Context),
                     relationship.Source.AreRelationsGeneric(),
@@ -1021,8 +1021,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                             "Class {0} column name does not match with column key {1} on it's many to one relation to class {2}",
                             relationship.Source.Name, relationship.TargetColumnKey, relationship.Target.Name));
 
-                #warning We use PropertyAccess.Property which uses the model's CaseOfPrivateFields to get the name.  If it's FieldCase.Unchanged, bad things happen.
-                CodeMemberField memberField = GetMemberField(relationship.EffectiveSourcePropertyName, relationship.Target.Name, Accessor.Private, PropertyAccess.Property);
+                #warning We might use PropertyAccess.Property which uses the model's CaseOfPrivateFields to get the name.  If it's FieldCase.Unchanged, bad things happen.
+                CodeMemberField memberField = GetMemberField(relationship.EffectiveSourcePropertyName, relationship.Target.Name, Accessor.Private, relationship.EffectiveSourceAccess);
                 classDeclaration.Members.Add(memberField);
 
                 string automaticAssociationCollectionName =
@@ -1050,7 +1050,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     relationship.Source.Name,
                     relationship.EffectiveSourcePropertyName,
                     relationship.SourcePropertyType,
-                    relationship.SourceAccess,
+                    relationship.EffectiveSourceAccess,
                     relationship.SourceDescription,
                     relationship.GetHasAndBelongsToAttributeFromSource(Context),
                     relationship.Target.AreRelationsGeneric(),
@@ -1072,7 +1072,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                     relationship.Target.Name,
                     relationship.EffectiveTargetPropertyName,
                     relationship.TargetPropertyType,
-                    relationship.TargetAccess,
+                    relationship.EffectiveTargetAccess,
                     relationship.TargetDescription,
                     relationship.GetHasAndBelongsToAttributeFromTarget(Context),
                     relationship.Source.AreRelationsGeneric(),
@@ -1092,7 +1092,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private void GenerateOneToOneRelationFromTarget(CodeTypeDeclaration classDeclaration, CodeNamespace nameSpace,
                                               OneToOneRelation relationship)
         {
-            CodeMemberField memberField = GetMemberField(relationship.Target.Name, relationship.Target.Name, Accessor.Private, relationship.TargetAccess);
+            CodeMemberField memberField = GetMemberField(relationship.Target.Name, relationship.Target.Name, Accessor.Private, relationship.EffectiveTargetAccess);
             classDeclaration.Members.Add(memberField);
 
             CodeMemberProperty memberProperty;
@@ -1110,7 +1110,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private void GenerateOneToOneRelationFromSources(CodeTypeDeclaration classDeclaration, CodeNamespace nameSpace,
                                                OneToOneRelation relationship)
         {
-            CodeMemberField memberField = GetMemberField(relationship.Source.Name, relationship.Source.Name, Accessor.Private, relationship.SourceAccess);
+            CodeMemberField memberField = GetMemberField(relationship.Source.Name, relationship.Source.Name, Accessor.Private, relationship.EffectiveSourceAccess);
             classDeclaration.Members.Add(memberField);
 
             CodeMemberProperty memberProperty;

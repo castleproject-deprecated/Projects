@@ -21,7 +21,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         public string Name { get; private set; }
 
-        public PropertyAccess Access { get; private set; }
+        public InheritablePropertyAccess Access { get; private set; }
         public Accessor Accessor { get; private set; }
         private string Check { get; set; }
         public string Column { get; set; }
@@ -62,7 +62,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 throw new ArgumentException("Property name cannot be null.");
             Name = name;
 
-            Access = PropertyAccess.Property;
+            Access = InheritablePropertyAccess.Inherit;
             Accessor = Accessor.Public;
             Check = null;
             Column = null;
@@ -149,6 +149,23 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             }
         }
 
+        public PropertyAccess EffectiveAccess
+        {
+            get
+            {
+                if (Access == InheritablePropertyAccess.Inherit)
+                {
+                    if (ModelClass != null)
+                        return ModelClass.EffectiveAccess;
+                    if (NestedClass != null)
+                        return NestedClass.EffectiveAccess;
+                    throw new InvalidOperationException("We must have either a NestedClass or ModelClass parent.");
+                }
+
+                return Access.GetMatchingPropertyAccess();
+            }
+        }
+
         #region Public Static Methods
 
         public static bool IsMetaDataGeneratable(CodeTypeMember member)
@@ -200,11 +217,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 if (!string.IsNullOrEmpty(Column))
                     attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(Column));
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnType", ColumnType.ToString()));
-                if (Access != PropertyAccess.Property)
-                    attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess",
-                                                                                          Access));
+
                 if (!string.IsNullOrEmpty(CustomAccess))
                     attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", CustomAccess));
+                else if (EffectiveAccess != PropertyAccess.Property)
+                    attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", EffectiveAccess));
+
                 if (Length > 0)
                     attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Length", Length));
                 if (!string.IsNullOrEmpty(Params))
@@ -293,10 +311,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (!string.IsNullOrEmpty(Column))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Column", Column));
             attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnType", ColumnType.ToString()));
-            if (Access != PropertyAccess.Property)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", Access));
+
             if (!string.IsNullOrEmpty(CustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", CustomAccess));
+            else if (EffectiveAccess != PropertyAccess.Property)
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", EffectiveAccess));
+
             if (!string.IsNullOrEmpty(Formula))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Formula", Formula));
             if (!Insert)
@@ -321,10 +341,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnType", CustomColumnType));
             else
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnType", ColumnType.ToString()));
-            if (Access != PropertyAccess.Property)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", Access));
+
             if (!string.IsNullOrEmpty(CustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", CustomAccess));
+            else if (EffectiveAccess != PropertyAccess.Property)
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", EffectiveAccess));
+
             if (!string.IsNullOrEmpty(Formula))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Formula", Formula));
             if (!Insert)
@@ -354,20 +376,22 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (!string.IsNullOrEmpty(Column))
                 attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(Column));
             attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Type", ColumnType.ToString()));
-            if (Access != PropertyAccess.Property)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", Access));
+
             if (!string.IsNullOrEmpty(CustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", CustomAccess));
+            else if (EffectiveAccess != PropertyAccess.Property)
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", EffectiveAccess));
         }
 
         private void PopulateTimestampAttribute(CodeAttributeDeclaration attribute)
         {
             if (!string.IsNullOrEmpty(Column))
                 attribute.Arguments.Add(AttributeHelper.GetPrimitiveAttributeArgument(Column));
-            if (Access != PropertyAccess.Property)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", Access));
+
             if (!string.IsNullOrEmpty(CustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", CustomAccess));
+            else if (EffectiveAccess != PropertyAccess.Property)
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", EffectiveAccess));
         }
 
         #endregion

@@ -332,6 +332,12 @@
         <xsd:documentation>If there is already a PropertyChanging event defined in the base class, specify the name of a method that takes a single string that can be used to invoke it.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
+    <!-- Property: Access -->
+    <xsd:attribute name="access" type="PropertyAccess" >
+      <xsd:annotation>
+        <xsd:documentation>Global property access setting.  Can be overridden at class or property level.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
   </xsd:complexType>
   
   <!-- Model Moniker -->
@@ -734,7 +740,7 @@
         <!-- Property: CustomAccess -->
         <xsd:attribute name="customAccess" type="xsd:string" />
         <!-- Property: Access -->
-        <xsd:attribute name="access" type="PropertyAccess" />
+        <xsd:attribute name="access" type="InheritablePropertyAccess" />
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>
@@ -963,7 +969,7 @@
       </xsd:annotation>
     </xsd:attribute>
     <!-- Property: TargetAccess -->
-    <xsd:attribute name="targetAccess" type="PropertyAccess" >
+    <xsd:attribute name="targetAccess" type="InheritablePropertyAccess" >
       <xsd:annotation>
         <xsd:documentation>The access strategy.</xsd:documentation>
       </xsd:annotation>
@@ -1016,6 +1022,8 @@
     <xsd:attribute name="targetPropertyGenerated" type="xsd:boolean" />
     <!-- Property: SourcePropertyGenerated -->
     <xsd:attribute name="sourcePropertyGenerated" type="xsd:boolean" />
+    <!-- Property: SourceAccess -->
+    <xsd:attribute name="sourceAccess" type="InheritablePropertyAccess" />
   </xsd:complexType>
   
   <!-- ManyToOneRelation Moniker -->
@@ -1133,9 +1141,9 @@
       </xsd:annotation>
     </xsd:attribute>
     <!-- Property: SourceAccess -->
-    <xsd:attribute name="sourceAccess" type="PropertyAccess" />
+    <xsd:attribute name="sourceAccess" type="InheritablePropertyAccess" />
     <!-- Property: TargetAccess -->
-    <xsd:attribute name="targetAccess" type="PropertyAccess" />
+    <xsd:attribute name="targetAccess" type="InheritablePropertyAccess" />
     <!-- Property: SourcePropertyType -->
     <xsd:attribute name="sourcePropertyType" type="xsd:string" >
       <xsd:annotation>
@@ -1236,7 +1244,7 @@
       </xsd:element>
     </xsd:sequence>
     <!-- Property: SourceAccess -->
-    <xsd:attribute name="sourceAccess" type="PropertyAccess" />
+    <xsd:attribute name="sourceAccess" type="InheritablePropertyAccess" />
     <!-- Property: SourceCascade -->
     <xsd:attribute name="sourceCascade" type="CascadeEnum" />
     <!-- Property: SourceConstrained -->
@@ -1246,7 +1254,7 @@
     <!-- Property: SourceOuterJoin -->
     <xsd:attribute name="sourceOuterJoin" type="OuterJoinEnum" />
     <!-- Property: TargetAccess -->
-    <xsd:attribute name="targetAccess" type="PropertyAccess" />
+    <xsd:attribute name="targetAccess" type="InheritablePropertyAccess" />
     <!-- Property: TargetCascade -->
     <xsd:attribute name="targetCascade" type="CascadeEnum" />
     <!-- Property: TargetConstrained -->
@@ -1651,6 +1659,27 @@
       <xsd:enumeration value="False"/>
       <xsd:enumeration value="InClass"/>
       <xsd:enumeration value="InSubClass"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum InheritablePropertyAccess -->
+  <xsd:simpleType name="InheritablePropertyAccess">
+    <xsd:annotation>
+      <xsd:documentation>Same as PropertyAccess, but with the ability to inherit from parents.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Inherit"/>
+      <xsd:enumeration value="FieldLowercaseUnderscore"/>
+      <xsd:enumeration value="FieldPascalcaseMUnderscore"/>
+      <xsd:enumeration value="NosetterCamelcase"/>
+      <xsd:enumeration value="NosetterCamelcaseUnderscore"/>
+      <xsd:enumeration value="Property"/>
+      <xsd:enumeration value="NosetterPascalcaseMUnderscore"/>
+      <xsd:enumeration value="NosetterLowercaseUnderscore"/>
+      <xsd:enumeration value="NosetterLowercase"/>
+      <xsd:enumeration value="Field"/>
+      <xsd:enumeration value="FieldCamelcase"/>
+      <xsd:enumeration value="FieldCamelcaseUnderscore"/>
     </xsd:restriction>
   </xsd:simpleType>
   

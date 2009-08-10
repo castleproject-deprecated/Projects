@@ -14,7 +14,9 @@
 
 // Big TODO: Combine with CodeGenerationHelper validations in a seperate structure
 
+using Altinoren.ActiveWriter.CodeGeneration;
 using Microsoft.VisualStudio.Modeling;
+using System.Linq;
 
 namespace Altinoren.ActiveWriter
 {
@@ -182,13 +184,13 @@ namespace Altinoren.ActiveWriter
         [ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
         private void ValidateAllCompositeKeysHaveSameAccess(ValidationContext context)
         {
-            List<ModelProperty> composits = ValidationHelper.GetCompositeKeys(Properties);
+            List<PropertyData> composits = ValidationHelper.GetCompositeKeys(Properties).Select(p => new PropertyData(p)).ToList();
             
             if (composits.Count > 1)
             {
-                PropertyAccess access = composits[0].Access;
+                PropertyAccess access = composits[0].EffectiveAccess;
 
-                if (composits.FindAll(property => (property.Access != access)).Count > 0)
+                if (composits.FindAll(property => (property.EffectiveAccess != access)).Count > 0)
                     context.LogError("All composite keys must have the same Access value.",
                                      "AW001ValidateAllCompositeKeysHaveSameAccessError", this);
             }

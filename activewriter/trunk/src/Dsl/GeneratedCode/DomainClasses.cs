@@ -4532,6 +4532,95 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region Access domain property code
+		
+		/// <summary>
+		/// Access domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid AccessDomainPropertyId = new global::System.Guid(0xc4d6694d, 0x6588, 0x4d94, 0xb0, 0xfa, 0x74, 0xc1, 0x94, 0xff, 0xaa, 0x4e);
+		
+		/// <summary>
+		/// Storage for Access
+		/// </summary>
+		private PropertyAccess accessPropertyStorage = PropertyAccess.Property;
+		
+		/// <summary>
+		/// Gets or sets the value of Access domain property.
+		/// Global property access setting.  Can be overridden at class or property level.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/Access.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/Access.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/Access.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[global::System.ComponentModel.DefaultValue(PropertyAccess.Property)]
+		[DslModeling::DomainObjectId("c4d6694d-6588-4d94-b0fa-74c194ffaa4e")]
+		public PropertyAccess Access
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return accessPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				AccessPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.Access domain property.
+		/// </summary>
+		internal sealed partial class AccessPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, PropertyAccess>
+		{
+			private AccessPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.Access domain property value handler.
+			/// </summary>
+			public static readonly AccessPropertyHandler Instance = new AccessPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.Access domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return AccessDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed PropertyAccess GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.accessPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, PropertyAccess newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				PropertyAccess oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.accessPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region Classes opposite domain role accessor
 		/// <summary>
 		/// Gets a list of Classes.
@@ -9635,7 +9724,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Storage for Access
 		/// </summary>
-		private PropertyAccess accessPropertyStorage = PropertyAccess.Property;
+		private InheritablePropertyAccess accessPropertyStorage = InheritablePropertyAccess.Inherit;
 		
 		/// <summary>
 		/// Gets or sets the value of Access domain property.
@@ -9643,9 +9732,9 @@ namespace Altinoren.ActiveWriter
 		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelElementWithAccess/Access.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelElementWithAccess/Access.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelElementWithAccess/Access.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[global::System.ComponentModel.DefaultValue(PropertyAccess.Property)]
+		[global::System.ComponentModel.DefaultValue(InheritablePropertyAccess.Inherit)]
 		[DslModeling::DomainObjectId("64a542a8-a0ce-42cc-b9a8-1845c744cb97")]
-		public PropertyAccess Access
+		public InheritablePropertyAccess Access
 		{
 			[global::System.Diagnostics.DebuggerStepThrough]
 			get
@@ -9661,7 +9750,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Value handler for the ModelElementWithAccess.Access domain property.
 		/// </summary>
-		internal sealed partial class AccessPropertyHandler : DslModeling::DomainPropertyValueHandler<ModelElementWithAccess, PropertyAccess>
+		internal sealed partial class AccessPropertyHandler : DslModeling::DomainPropertyValueHandler<ModelElementWithAccess, InheritablePropertyAccess>
 		{
 			private AccessPropertyHandler() { }
 		
@@ -9687,7 +9776,7 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <returns>Property value.</returns>
-			public override sealed PropertyAccess GetValue(ModelElementWithAccess element)
+			public override sealed InheritablePropertyAccess GetValue(ModelElementWithAccess element)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 				return element.accessPropertyStorage;
@@ -9698,11 +9787,11 @@ namespace Altinoren.ActiveWriter
 			/// </summary>
 			/// <param name="element">Element which owns the property.</param>
 			/// <param name="newValue">New property value.</param>
-			public override sealed void SetValue(ModelElementWithAccess element, PropertyAccess newValue)
+			public override sealed void SetValue(ModelElementWithAccess element, InheritablePropertyAccess newValue)
 			{
 				if (element == null) throw new global::System.ArgumentNullException("element");
 		
-				PropertyAccess oldValue = GetValue(element);
+				InheritablePropertyAccess oldValue = GetValue(element);
 				if (newValue != oldValue)
 				{
 					ValueChanging(element, oldValue, newValue);

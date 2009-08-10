@@ -19,18 +19,40 @@ namespace Altinoren.ActiveWriter
 
     public partial class OneToOneRelation
     {
+        public PropertyAccess EffectiveSourceAccess
+        {
+            get
+            {
+                if (SourceAccess == InheritablePropertyAccess.Inherit)
+                    return Source.EffectiveAccess;
+                return SourceAccess.GetMatchingPropertyAccess();
+            }
+        }
+
+        public PropertyAccess EffectiveTargetAccess
+        {
+            get
+            {
+                if (TargetAccess == InheritablePropertyAccess.Inherit)
+                    return Target.EffectiveAccess;
+                return TargetAccess.GetMatchingPropertyAccess();
+            }
+        }
+
         public CodeAttributeDeclaration GetOneToOneAttributeForSource()
         {
             CodeAttributeDeclaration attribute = new CodeAttributeDeclaration("OneToOne");
 
-            if (SourceAccess != PropertyAccess.Property)
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", SourceAccess));
             if (SourceCascade != CascadeEnum.None)
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade", "CascadeEnum", SourceCascade));
             if (SourceConstrained)
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Constrained", SourceConstrained));
+
             if (!string.IsNullOrEmpty(SourceCustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", SourceCustomAccess));
+            else if (EffectiveSourceAccess != PropertyAccess.Property)
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", EffectiveSourceAccess));
+
             if (SourceOuterJoin != OuterJoinEnum.Auto)
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("OuterJoin", "OuterJoinEnum", SourceOuterJoin));
 
@@ -45,8 +67,6 @@ namespace Altinoren.ActiveWriter
         	{
 				attribute = new CodeAttributeDeclaration("OneToOne");
 
-        		if (TargetAccess != PropertyAccess.Property)
-        			attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", TargetAccess));
         		if (TargetConstrained)
         			attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Constrained", TargetConstrained));
         	}
@@ -55,8 +75,13 @@ namespace Altinoren.ActiveWriter
 
 			if (TargetCascade != CascadeEnum.None)
 				attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade", "CascadeEnum", TargetCascade));
-			if (!string.IsNullOrEmpty(TargetCustomAccess))
+
+            if (!string.IsNullOrEmpty(TargetCustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", TargetCustomAccess));
+            // This was moved out of the above if(Lazy) block.  The properties themselves can be virtual and we can fill in the fields when the NHibernate object is loaded.
+            else if (EffectiveTargetAccess != PropertyAccess.Property)
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", EffectiveTargetAccess));
+
             if (TargetOuterJoin != OuterJoinEnum.Auto)
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("OuterJoin", "OuterJoinEnum", TargetOuterJoin));
 

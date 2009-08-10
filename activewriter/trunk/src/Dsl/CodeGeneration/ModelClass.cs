@@ -212,6 +212,16 @@ namespace Altinoren.ActiveWriter
             }
         }
 
+        public PropertyAccess EffectiveAccess
+        {
+            get
+            {
+                if (Access == InheritablePropertyAccess.Inherit)
+                    return Model.Access;
+                return Access.GetMatchingPropertyAccess();
+            }
+        }
+
         #endregion
 
     }

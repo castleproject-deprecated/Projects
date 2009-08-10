@@ -146,6 +146,7 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(Model), "MemberTemplateFile", Model.MemberTemplateFileDomainPropertyId, typeof(Model.MemberTemplateFilePropertyHandler)),
 				new DomainMemberInfo(typeof(Model), "BaseClassPropertyChangedMethod", Model.BaseClassPropertyChangedMethodDomainPropertyId, typeof(Model.BaseClassPropertyChangedMethodPropertyHandler)),
 				new DomainMemberInfo(typeof(Model), "BaseClassPropertyChangingMethod", Model.BaseClassPropertyChangingMethodDomainPropertyId, typeof(Model.BaseClassPropertyChangingMethodPropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "Access", Model.AccessDomainPropertyId, typeof(Model.AccessPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "Cache", ModelClass.CacheDomainPropertyId, typeof(ModelClass.CachePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "DiscriminatorColumn", ModelClass.DiscriminatorColumnDomainPropertyId, typeof(ModelClass.DiscriminatorColumnPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "DiscriminatorType", ModelClass.DiscriminatorTypeDomainPropertyId, typeof(ModelClass.DiscriminatorTypePropertyHandler)),
@@ -240,6 +241,7 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(ManyToOneRelation), "TargetIUserCollectionType", ManyToOneRelation.TargetIUserCollectionTypeDomainPropertyId, typeof(ManyToOneRelation.TargetIUserCollectionTypePropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToOneRelation), "TargetPropertyGenerated", ManyToOneRelation.TargetPropertyGeneratedDomainPropertyId, typeof(ManyToOneRelation.TargetPropertyGeneratedPropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToOneRelation), "SourcePropertyGenerated", ManyToOneRelation.SourcePropertyGeneratedDomainPropertyId, typeof(ManyToOneRelation.SourcePropertyGeneratedPropertyHandler)),
+				new DomainMemberInfo(typeof(ManyToOneRelation), "SourceAccess", ManyToOneRelation.SourceAccessDomainPropertyId, typeof(ManyToOneRelation.SourceAccessPropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToManyRelation), "SourceCache", ManyToManyRelation.SourceCacheDomainPropertyId, typeof(ManyToManyRelation.SourceCachePropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToManyRelation), "SourceCascade", ManyToManyRelation.SourceCascadeDomainPropertyId, typeof(ManyToManyRelation.SourceCascadePropertyHandler)),
 				new DomainMemberInfo(typeof(ManyToManyRelation), "SourceColumn", ManyToManyRelation.SourceColumnDomainPropertyId, typeof(ManyToManyRelation.SourceColumnPropertyHandler)),
@@ -1696,6 +1698,97 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.MetaDataGeneration/InSubClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
 		InSubClass,
+	}
+}
+namespace Altinoren.ActiveWriter
+{
+	/// <summary>
+	/// DomainEnumeration: InheritablePropertyAccess
+	/// Same as PropertyAccess, but with the ability to inherit from parents.
+	/// </summary>
+	[global::System.CLSCompliant(true)]
+	public enum InheritablePropertyAccess
+	{
+		/// <summary>
+		/// Inherit
+		/// Description for Altinoren.ActiveWriter.InheritablePropertyAccess.Inherit
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/Inherit.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		Inherit,
+		/// <summary>
+		/// FieldLowercaseUnderscore
+		/// Description for
+		/// Altinoren.ActiveWriter.InheritablePropertyAccess.FieldLowercaseUnderscore
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/FieldLowercaseUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		FieldLowercaseUnderscore,
+		/// <summary>
+		/// FieldPascalcaseMUnderscore
+		/// Description for
+		/// Altinoren.ActiveWriter.InheritablePropertyAccess.FieldPascalcaseMUnderscore
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/FieldPascalcaseMUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		FieldPascalcaseMUnderscore,
+		/// <summary>
+		/// NosetterCamelcase
+		/// Description for
+		/// Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterCamelcase
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterCamelcase.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		NosetterCamelcase,
+		/// <summary>
+		/// NosetterCamelcaseUnderscore
+		/// Description for
+		/// Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterCamelcaseUnderscore
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterCamelcaseUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		NosetterCamelcaseUnderscore,
+		/// <summary>
+		/// Property
+		/// Description for Altinoren.ActiveWriter.InheritablePropertyAccess.Property
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/Property.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		Property,
+		/// <summary>
+		/// NosetterPascalcaseMUnderscore
+		/// Description for
+		/// Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterPascalcaseMUnderscore
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterPascalcaseMUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		NosetterPascalcaseMUnderscore,
+		/// <summary>
+		/// NosetterLowercaseUnderscore
+		/// Description for
+		/// Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterLowercaseUnderscore
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterLowercaseUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		NosetterLowercaseUnderscore,
+		/// <summary>
+		/// NosetterLowercase
+		/// Description for
+		/// Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterLowercase
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterLowercase.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		NosetterLowercase,
+		/// <summary>
+		/// Field
+		/// Description for Altinoren.ActiveWriter.InheritablePropertyAccess.Field
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/Field.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		Field,
+		/// <summary>
+		/// FieldCamelcase
+		/// Description for Altinoren.ActiveWriter.InheritablePropertyAccess.FieldCamelcase
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/FieldCamelcase.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		FieldCamelcase,
+		/// <summary>
+		/// FieldCamelcaseUnderscore
+		/// Description for
+		/// Altinoren.ActiveWriter.InheritablePropertyAccess.FieldCamelcaseUnderscore
+		/// </summary>
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/FieldCamelcaseUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		FieldCamelcaseUnderscore,
 	}
 }
 

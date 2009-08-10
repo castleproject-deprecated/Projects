@@ -158,6 +158,7 @@
     <Compile Include="CodeGeneration\TypeHelper.cs" />
     <Compile Include="Common\Common.cs" />
     <Compile Include="GeneratedCodeExtensions\Connectors.cs" />
+    <Compile Include="GeneratedCodeExtensions\InheritablePropertyAccessExtensions.cs" />
     <Compile Include="GeneratedCodeExtensions\InheritedRelationTypeExtensions.cs" />
     <Compile Include="GeneratedCode\ConnectionBuilders.cs">
       <AutoGen>True</AutoGen>

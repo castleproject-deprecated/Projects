@@ -35,6 +35,14 @@ namespace Altinoren.ActiveWriter
             return Properties.Find(property => property.IsValidatorSet()) != null;
         }
 
+        public PropertyAccess EffectiveAccess
+        {
+            get
+            {
+                return Model.Access;
+            }
+        }
+
         #endregion
 
     }
