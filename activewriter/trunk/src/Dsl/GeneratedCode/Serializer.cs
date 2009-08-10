@@ -4523,6 +4523,23 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// ColumnDefault
+			if (!serializationContext.Result.Failed)
+			{
+				string attribColumnDefault = reader.GetAttribute("columnDefault");
+				if (attribColumnDefault != null)
+				{
+					global::System.String valueOfColumnDefault;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribColumnDefault), out valueOfColumnDefault))
+					{
+						instanceOfModelProperty.ColumnDefault = valueOfColumnDefault;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "columnDefault", typeof(global::System.String), attribColumnDefault);
+					}
+				}
+			}
 		}
 	
 		#region TryCreateInstance
@@ -5184,6 +5201,16 @@ namespace Altinoren.ActiveWriter
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("defaultMember", serializedPropValue);
 					}
+				}
+			}
+			// ColumnDefault
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModelProperty.ColumnDefault;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("columnDefault", propValue);
 				}
 			}
 		}

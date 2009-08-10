@@ -9206,6 +9206,94 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region ColumnDefault domain property code
+		
+		/// <summary>
+		/// ColumnDefault domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid ColumnDefaultDomainPropertyId = new global::System.Guid(0x32e63dff, 0x41bd, 0x470e, 0xa1, 0x9d, 0x11, 0x4c, 0x64, 0xc0, 0x00, 0x2c);
+		
+		/// <summary>
+		/// Storage for ColumnDefault
+		/// </summary>
+		private global::System.String columnDefaultPropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of ColumnDefault domain property.
+		/// The default value used in database column creation.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelProperty/ColumnDefault.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ModelProperty/ColumnDefault.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelProperty/ColumnDefault.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainObjectId("32e63dff-41bd-470e-a19d-114c64c0002c")]
+		public global::System.String ColumnDefault
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return columnDefaultPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				ColumnDefaultPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the ModelProperty.ColumnDefault domain property.
+		/// </summary>
+		internal sealed partial class ColumnDefaultPropertyHandler : DslModeling::DomainPropertyValueHandler<ModelProperty, global::System.String>
+		{
+			private ColumnDefaultPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the ModelProperty.ColumnDefault domain property value handler.
+			/// </summary>
+			public static readonly ColumnDefaultPropertyHandler Instance = new ColumnDefaultPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the ModelProperty.ColumnDefault domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return ColumnDefaultDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(ModelProperty element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.columnDefaultPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(ModelProperty element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.columnDefaultPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region ModelClass opposite domain role accessor
 		/// <summary>
 		/// Gets or sets ModelClass.

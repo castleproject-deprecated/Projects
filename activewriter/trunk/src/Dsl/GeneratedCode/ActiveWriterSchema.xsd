@@ -692,6 +692,12 @@
             <xsd:documentation>Decorates the class this property belongs to with DefaultMember attribute, using this property as the member source. Example:  [DefaultMember(&quot;Id&quot;)]</xsd:documentation>
           </xsd:annotation>
         </xsd:attribute>
+        <!-- Property: ColumnDefault -->
+        <xsd:attribute name="columnDefault" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>The default value used in database column creation.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>

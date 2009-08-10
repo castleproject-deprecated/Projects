@@ -32,6 +32,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         public string CustomMemberType { get; private set; }
         public bool DebuggerDisplay { get; private set; }
         public bool DefaultMember { get; private set; }
+        private string ColumnDefault { get; set; }
         public string Description { get; private set; }
         private string Formula { get; set; }
         public PrimaryKeyType Generator { get; set; }
@@ -71,6 +72,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CustomMemberType = null;
             DebuggerDisplay = false;
             DefaultMember = false;
+            ColumnDefault = null;
             Description = null;
             Formula = null;
             Generator = PrimaryKeyType.Native;
@@ -116,6 +118,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CustomMemberType = p.CustomMemberType;
             DebuggerDisplay = p.DebuggerDisplay;
             DefaultMember = p.DefaultMember;
+            ColumnDefault = p.ColumnDefault;
             Description = p.Description;
             Formula = p.Formula;
             Generator = p.Generator;
@@ -342,6 +345,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("SqlType", SqlType));
             if (!string.IsNullOrEmpty(Check))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Check", Check));
+            if (!string.IsNullOrEmpty(ColumnDefault))
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Default", ColumnDefault));
         }
 
         private void PopulateVersionAttribute(CodeAttributeDeclaration attribute)

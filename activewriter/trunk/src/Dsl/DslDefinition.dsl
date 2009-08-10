@@ -543,6 +543,11 @@
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="32e63dff-41bd-470e-a19d-114c64c0002c" Description="The default value used in database column creation." Name="ColumnDefault" DisplayName="Column Default" Category="ActiveRecord">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
       </Properties>
     </DomainClass>
     <DomainClass Id="cbea293a-1057-4c5b-b60d-78728f734ef2" Description="Description for Altinoren.ActiveWriter.ModelElementWithAccess" Name="ModelElementWithAccess" DisplayName="Model Element With Access" InheritanceModifier="Abstract" Namespace="Altinoren.ActiveWriter">
@@ -1985,6 +1990,9 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="defaultMember">
             <DomainPropertyMoniker Name="ModelProperty/DefaultMember" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="columnDefault">
+            <DomainPropertyMoniker Name="ModelProperty/ColumnDefault" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

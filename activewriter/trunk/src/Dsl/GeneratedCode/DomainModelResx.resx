@@ -1301,6 +1301,18 @@
     <value>Code Generation</value>
     <comment>Category for DomainProperty &apos;DefaultMember&apos; on DomainClass &apos;ModelProperty&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/ColumnDefault.Description" xml:space="preserve">
+    <value>The default value used in database column creation.</value>
+    <comment>Description for DomainProperty &apos;ColumnDefault&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/ColumnDefault.DisplayName" xml:space="preserve">
+    <value>Column Default</value>
+    <comment>DisplayName for DomainProperty &apos;ColumnDefault&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.ModelProperty/ColumnDefault.Category" xml:space="preserve">
+    <value>ActiveRecord</value>
+    <comment>Category for DomainProperty &apos;ColumnDefault&apos; on DomainClass &apos;ModelProperty&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ModelElementWithAccess.Description" xml:space="preserve">
     <value>Description for Altinoren.ActiveWriter.ModelElementWithAccess</value>
     <comment>Description for DomainClass &apos;ModelElementWithAccess&apos;</comment>
