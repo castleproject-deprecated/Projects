@@ -163,6 +163,14 @@ namespace Altinoren.ActiveWriter
             }
         }
 
+        public bool IsSubclass
+        {
+            get
+            {
+                return ClassParent != null;
+            }
+        }
+
         public bool PrimaryKeySpecifiedByUser
         {
             get

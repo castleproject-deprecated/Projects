@@ -911,6 +911,23 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// MemberTemplateFile
+			if (!serializationContext.Result.Failed)
+			{
+				string attribMemberTemplateFile = reader.GetAttribute("memberTemplateFile");
+				if (attribMemberTemplateFile != null)
+				{
+					global::System.String valueOfMemberTemplateFile;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribMemberTemplateFile), out valueOfMemberTemplateFile))
+					{
+						instanceOfModel.MemberTemplateFile = valueOfMemberTemplateFile;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "memberTemplateFile", typeof(global::System.String), attribMemberTemplateFile);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -2076,6 +2093,16 @@ namespace Altinoren.ActiveWriter
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("commonPrimaryKeyGenerator", serializedPropValue);
 					}
+				}
+			}
+			// MemberTemplateFile
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.MemberTemplateFile;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("memberTemplateFile", propValue);
 				}
 			}
 		}

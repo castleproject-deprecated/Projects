@@ -4257,6 +4257,103 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region MemberTemplateFile domain property code
+		
+		/// <summary>
+		/// MemberTemplateFile domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid MemberTemplateFileDomainPropertyId = new global::System.Guid(0xce08ed4d, 0x6e7a, 0x43b2, 0xbe, 0xbd, 0xbc, 0xad, 0x15, 0x0a, 0x6d, 0x1a);
+		
+		/// <summary>
+		/// Storage for MemberTemplateFile
+		/// </summary>
+		private global::System.String memberTemplateFilePropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of MemberTemplateFile domain property.
+		/// Methods and propeties from the single class within the template file will be
+		/// imported, transformed, and then placed in the generated output.  As an example,
+		/// you could specify the ActiveRecordBase.Generic.cs file and the generic methods
+		/// would be transformed into specific methods for each class.  The first generic
+		/// type parameter is replaced with the generated class type.  There are additional
+		/// transformations for subclasses.  The path to the source file is relative to the
+		/// .actiw file.  If the path has "..." in it, all parent folders are searched
+		/// upwards until a match is found.  For example,
+		/// "...\ActiveRecord\ActiveRecordBase.generic.cs" would look for
+		/// "ActiveRecord\ActiveRecordBase.generic.cs" in the folder containing the .actiw
+		/// file and in all folders up to the root.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/MemberTemplateFile.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/MemberTemplateFile.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainObjectId("ce08ed4d-6e7a-43b2-bebd-bcad150a6d1a")]
+		public global::System.String MemberTemplateFile
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return memberTemplateFilePropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				MemberTemplateFilePropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.MemberTemplateFile domain property.
+		/// </summary>
+		internal sealed partial class MemberTemplateFilePropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private MemberTemplateFilePropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.MemberTemplateFile domain property value handler.
+			/// </summary>
+			public static readonly MemberTemplateFilePropertyHandler Instance = new MemberTemplateFilePropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.MemberTemplateFile domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return MemberTemplateFileDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.memberTemplateFilePropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.memberTemplateFilePropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region Classes opposite domain role accessor
 		/// <summary>
 		/// Gets a list of Classes.

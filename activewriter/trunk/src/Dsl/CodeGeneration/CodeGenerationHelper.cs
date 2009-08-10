@@ -13,6 +13,8 @@
 // limitations under the License.
 
 using Altinoren.ActiveWriter.CodeDomExtensions;
+using ICSharpCode.NRefactory;
+using ICSharpCode.NRefactory.Visitors;
 
 namespace Altinoren.ActiveWriter.CodeGeneration
 {
@@ -75,9 +77,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             nameSpace.Imports.AddRange(Context.Model.NamespaceImports.ToArray());
             Context.CompileUnit.Namespaces.Add(nameSpace);
 
+            TemplateMemberGenerator templateMemberGenerator = new TemplateMemberGenerator(Context);
+            templateMemberGenerator.AddTemplateUsings();
+
             foreach (ModelClass cls in Context.Model.Classes)
             {
-                GenerateClass(cls, nameSpace);
+                GenerateClass(cls, nameSpace, templateMemberGenerator);
             }
 
             foreach (NestedClass cls in Context.Model.NestedClasses)
@@ -1200,7 +1205,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             return classDeclaration;
         }
 
-        private CodeTypeDeclaration GenerateClass(ModelClass cls, CodeNamespace nameSpace)
+        private CodeTypeDeclaration GenerateClass(ModelClass cls, CodeNamespace nameSpace, TemplateMemberGenerator templateMemberGenerator)
         {
             if (cls == null)
                 throw new ArgumentNullException("cls", "Class not supplied");
@@ -1300,6 +1305,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             // TODO: Other relation types (any etc)
 
             GenerateDerivedClass(cls, nameSpace);
+
+            templateMemberGenerator.AddTemplateMembers(cls, classDeclaration);
 
             return classDeclaration;
         }

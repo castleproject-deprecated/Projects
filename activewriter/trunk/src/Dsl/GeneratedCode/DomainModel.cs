@@ -143,6 +143,7 @@ namespace Altinoren.ActiveWriter
 				new DomainMemberInfo(typeof(Model), "CommonPrimaryKeyColumnFormat", Model.CommonPrimaryKeyColumnFormatDomainPropertyId, typeof(Model.CommonPrimaryKeyColumnFormatPropertyHandler)),
 				new DomainMemberInfo(typeof(Model), "CommonPrimaryKeyColumnType", Model.CommonPrimaryKeyColumnTypeDomainPropertyId, typeof(Model.CommonPrimaryKeyColumnTypePropertyHandler)),
 				new DomainMemberInfo(typeof(Model), "CommonPrimaryKeyGenerator", Model.CommonPrimaryKeyGeneratorDomainPropertyId, typeof(Model.CommonPrimaryKeyGeneratorPropertyHandler)),
+				new DomainMemberInfo(typeof(Model), "MemberTemplateFile", Model.MemberTemplateFileDomainPropertyId, typeof(Model.MemberTemplateFilePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "Cache", ModelClass.CacheDomainPropertyId, typeof(ModelClass.CachePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "DiscriminatorColumn", ModelClass.DiscriminatorColumnDomainPropertyId, typeof(ModelClass.DiscriminatorColumnPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "DiscriminatorType", ModelClass.DiscriminatorTypeDomainPropertyId, typeof(ModelClass.DiscriminatorTypePropertyHandler)),

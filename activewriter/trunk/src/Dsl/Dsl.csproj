@@ -23,7 +23,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET35</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -96,7 +96,51 @@
     <Compile Include="ARValidators\ValidateSet.cs" />
     <Compile Include="ARValidators\ValidateSingle.cs" />
     <Compile Include="CalculatedProperties\ModelClass.cs" />
+    <Compile Include="CodeDomExtensions\CodeArrayCreateExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeArrayIndexerExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeAssignStatementExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeAttachEventStatementExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeAttributeArgumentCollectionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeAttributeArgumentExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeAttributeDeclarationCollectionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeAttributeDeclarationExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeBinaryOperatorExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeCastExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeCatchClauseCollectionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeCatchClauseExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeConditionStatementExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeDelegateCreateExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeDelegateInvokeExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeDirectionExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeEventReferenceExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeExpressionCollectionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeExpressionStatementExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeFieldReferenceExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeIndexerExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeIterationStatementExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeLabeledStatementExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeMemberMethodExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeMemberPropertyExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeMethodInvokeExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeMethodReferenceExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeMethodReturnStatementExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeObjectCreateExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeParameterDeclarationExpressionCollectionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeParameterDeclarationExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodePropertyReferenceExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeRemoveEventStatementExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeStatementCollectionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeStatementExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeThrowExceptionStatementExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeTryCatchFinallyStatementExtensions.cs" />
     <Compile Include="CodeDomExtensions\CodeTypeDeclarationExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeTypeOfExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeTypeReferenceCollectionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeTypeReferenceExpressionExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeTypeReferenceExtensions.cs" />
+    <Compile Include="CodeDomExtensions\CodeVariableDeclarationStatementExtensions.cs" />
+    <Compile Include="CodeDomExtensions\IDictionaryExtensions.cs" />
     <Compile Include="CodeGeneration\AttributeHelper.cs" />
     <Compile Include="CodeGeneration\CodeGenerationContext.cs" />
     <Compile Include="CodeGeneration\CodeGenerationHelper.cs" />
@@ -110,6 +154,7 @@
     <Compile Include="CodeGeneration\NestedClassReferencesModelClasses.cs" />
     <Compile Include="CodeGeneration\OneToOneRelation.cs" />
     <Compile Include="CodeGeneration\PropertyData.cs" />
+    <Compile Include="CodeGeneration\TemplateMemberGenerator.cs" />
     <Compile Include="CodeGeneration\TypeHelper.cs" />
     <Compile Include="Common\Common.cs" />
     <Compile Include="GeneratedCodeExtensions\Connectors.cs" />
@@ -179,6 +224,79 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="NRefactory\AstBuilder\ExpressionBuilder.cs" />
+    <Compile Include="NRefactory\AstBuilder\StatementBuilder.cs" />
+    <Compile Include="NRefactory\Ast\AbstractNode.cs" />
+    <Compile Include="NRefactory\Ast\Enums.cs" />
+    <Compile Include="NRefactory\Ast\General\BlockStatement.cs" />
+    <Compile Include="NRefactory\Ast\General\CompilationUnit.cs" />
+    <Compile Include="NRefactory\Ast\General\Expression.cs" />
+    <Compile Include="NRefactory\Ast\General\LocalVariableDeclaration.cs" />
+    <Compile Include="NRefactory\Ast\General\PrimitiveExpression.cs" />
+    <Compile Include="NRefactory\Ast\General\Statement.cs" />
+    <Compile Include="NRefactory\Ast\Generated.cs" />
+    <Compile Include="NRefactory\Ast\INode.cs" />
+    <Compile Include="NRefactory\Ast\INullable.cs" />
+    <Compile Include="NRefactory\Ast\TypeReference.cs" />
+    <Compile Include="NRefactory\EnvironmentInformationProvider.cs" />
+    <Compile Include="NRefactory\IAstVisitor.cs" />
+    <Compile Include="NRefactory\Lexer\AbstractLexer.cs" />
+    <Compile Include="NRefactory\Lexer\CSharp\ConditionalCompilation.cs" />
+    <Compile Include="NRefactory\Lexer\CSharp\Keywords.cs" />
+    <Compile Include="NRefactory\Lexer\CSharp\Lexer.cs" />
+    <Compile Include="NRefactory\Lexer\CSharp\Tokens.cs" />
+    <Compile Include="NRefactory\Lexer\ILexer.cs" />
+    <Compile Include="NRefactory\Lexer\LookupTable.cs" />
+    <Compile Include="NRefactory\Lexer\Special\BlankLine.cs" />
+    <Compile Include="NRefactory\Lexer\Special\Comment.cs" />
+    <Compile Include="NRefactory\Lexer\Special\CommentType.cs" />
+    <Compile Include="NRefactory\Lexer\Special\ISpecial.cs" />
+    <Compile Include="NRefactory\Lexer\Special\PreProcessingDirective.cs" />
+    <Compile Include="NRefactory\Lexer\Special\SpecialTracker.cs" />
+    <Compile Include="NRefactory\Lexer\Special\TagComment.cs" />
+    <Compile Include="NRefactory\Lexer\Token.cs" />
+    <Compile Include="NRefactory\Lexer\VBNet\Keywords.cs" />
+    <Compile Include="NRefactory\Lexer\VBNet\Lexer.cs" />
+    <Compile Include="NRefactory\Lexer\VBNet\Tokens.cs" />
+    <Compile Include="NRefactory\Location.cs" />
+    <Compile Include="NRefactory\OperatorPrecedence.cs" />
+    <Compile Include="NRefactory\ParserFactory.cs" />
+    <Compile Include="NRefactory\Parser\AbstractParser.cs" />
+    <Compile Include="NRefactory\Parser\CSharp\CSharpParser.cs" />
+    <Compile Include="NRefactory\Parser\CSharp\Parser.cs" />
+    <Compile Include="NRefactory\Parser\Errors.cs" />
+    <Compile Include="NRefactory\Parser\IParser.cs" />
+    <Compile Include="NRefactory\Parser\ModifierList.cs" />
+    <Compile Include="NRefactory\Parser\VBNet\ParamModifierList.cs" />
+    <Compile Include="NRefactory\Parser\VBNet\Parser.cs" />
+    <Compile Include="NRefactory\Parser\VBNet\VBNetParser.cs" />
+    <Compile Include="NRefactory\PrettyPrinter\AbstractOutputFormatter.cs" />
+    <Compile Include="NRefactory\PrettyPrinter\AbstractPrettyPrintOptions.cs" />
+    <Compile Include="NRefactory\PrettyPrinter\CSharp\CSharpOutputVisitor.cs" />
+    <Compile Include="NRefactory\PrettyPrinter\CSharp\OutputFormatter.cs" />
+    <Compile Include="NRefactory\PrettyPrinter\CSharp\PrettyPrintOptions.cs" />
+    <Compile Include="NRefactory\PrettyPrinter\IOutputAstVisitor.cs" />
+    <Compile Include="NRefactory\PrettyPrinter\SpecialNodesInserter.cs" />
+    <Compile Include="NRefactory\PrettyPrinter\VBNet\VBNetOutputFormatter.cs" />
+    <Compile Include="NRefactory\PrettyPrinter\VBNet\VBNetOutputVisitor.cs" />
+    <Compile Include="NRefactory\PrettyPrinter\VBNet\VBNetPrettyPrintOptions.cs" />
+    <Compile Include="NRefactory\SnippetParser.cs" />
+    <Compile Include="NRefactory\Visitors\AbstractAstTransformer.cs" />
+    <Compile Include="NRefactory\Visitors\AbstractASTVisitor.cs" />
+    <Compile Include="NRefactory\Visitors\CodeDOMOutputVisitor.cs" />
+    <Compile Include="NRefactory\Visitors\CodeDOMVerboseOutputGenerator.cs" />
+    <Compile Include="NRefactory\Visitors\ConvertVisitorBase.cs" />
+    <Compile Include="NRefactory\Visitors\CSharpConstructsConvertVisitor.cs" />
+    <Compile Include="NRefactory\Visitors\LookupTableVisitor.cs" />
+    <Compile Include="NRefactory\Visitors\NodeTrackingAstVisitor.cs" />
+    <Compile Include="NRefactory\Visitors\NotImplementedAstVisitor.cs" />
+    <Compile Include="NRefactory\Visitors\PrefixFieldsVisitor.cs" />
+    <Compile Include="NRefactory\Visitors\RenameIdentifierVisitor.cs" />
+    <Compile Include="NRefactory\Visitors\SetParentVisitor.cs" />
+    <Compile Include="NRefactory\Visitors\ToCSharpConvertVisitor.cs" />
+    <Compile Include="NRefactory\Visitors\ToVBNetConvertVisitor.cs" />
+    <Compile Include="NRefactory\Visitors\ToVBNetRenameConflictingVariables.cs" />
+    <Compile Include="NRefactory\Visitors\VBNetConstructsConvertVisitor.cs" />
     <Compile Include="OptionsPage\ActiveWriterOptions.cs">
       <SubType>Component</SubType>
     </Compile>

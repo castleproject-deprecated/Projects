@@ -238,6 +238,11 @@
             <DomainEnumerationMoniker Name="PrimaryKeyType" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="ce08ed4d-6e7a-43b2-bebd-bcad150a6d1a" Description="Methods and propeties from the single class within the template file will be imported, transformed, and then placed in the generated output.  As an example, you could specify the ActiveRecordBase.Generic.cs file and the generic methods would be transformed into specific methods for each class.  The first generic type parameter is replaced with the generated class type.  There are additional transformations for subclasses.  The path to the source file is relative to the .actiw file.  If the path has &quot;...&quot; in it, all parent folders are searched upwards until a match is found.  For example, &quot;...\ActiveRecord\ActiveRecordBase.generic.cs&quot; would look for &quot;ActiveRecord\ActiveRecordBase.generic.cs&quot; in the folder containing the .actiw file and in all folders up to the root." Name="MemberTemplateFile" DisplayName="Member Template File">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
       </Properties>
       <ElementMergeDirectives>
         <ElementMergeDirective>
@@ -1674,6 +1679,9 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="commonPrimaryKeyGenerator">
             <DomainPropertyMoniker Name="Model/CommonPrimaryKeyGenerator" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="memberTemplateFile">
+            <DomainPropertyMoniker Name="Model/MemberTemplateFile" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>
