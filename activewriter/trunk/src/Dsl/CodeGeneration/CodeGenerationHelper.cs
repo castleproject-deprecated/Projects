@@ -1811,7 +1811,8 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
         private CodeMemberField GenerateMetaDataField(CodeTypeMember member, string nm)
         {
-            CodeMemberField field = GetStaticMemberFieldWithoutTypeAndName(Accessor.Public);
+            CodeMemberField field = new CodeMemberField();
+            field.Attributes = MemberAttributes.Public | MemberAttributes.Const;
             field.Name = NamingHelper.GetName(nm, PropertyAccess.Property, FieldCase.Pascalcase);
             field.Type = new CodeTypeReference(typeof(string));
             field.InitExpression = new CodePrimitiveExpression(member.Name);
