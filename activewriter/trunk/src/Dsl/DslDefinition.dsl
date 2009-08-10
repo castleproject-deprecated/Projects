@@ -243,6 +243,16 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
+        <DomainProperty Id="7ab0fb5b-7bb6-4a32-b01b-dd80a697be4b" Description="If there is already a PropertyChanged event defined in the base class, specify the name of a method that takes a single string that can be used to invoke it." Name="BaseClassPropertyChangedMethod" DisplayName="Base Class Property Changed Method" Category="Code Generation">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
+        <DomainProperty Id="6598afbe-f2a2-434a-b66d-29400461d692" Description="If there is already a PropertyChanging event defined in the base class, specify the name of a method that takes a single string that can be used to invoke it." Name="BaseClassPropertyChangingMethod" DisplayName="Base Class Property Changing Method" Category="Code Generation">
+          <Type>
+            <ExternalTypeMoniker Name="/System/String" />
+          </Type>
+        </DomainProperty>
       </Properties>
       <ElementMergeDirectives>
         <ElementMergeDirective>
@@ -1687,6 +1697,12 @@
           </XmlPropertyData>
           <XmlPropertyData XmlName="memberTemplateFile">
             <DomainPropertyMoniker Name="Model/MemberTemplateFile" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="baseClassPropertyChangedMethod">
+            <DomainPropertyMoniker Name="Model/BaseClassPropertyChangedMethod" />
+          </XmlPropertyData>
+          <XmlPropertyData XmlName="baseClassPropertyChangingMethod">
+            <DomainPropertyMoniker Name="Model/BaseClassPropertyChangingMethod" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

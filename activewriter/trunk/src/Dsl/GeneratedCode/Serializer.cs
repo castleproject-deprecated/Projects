@@ -928,6 +928,40 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
+			// BaseClassPropertyChangedMethod
+			if (!serializationContext.Result.Failed)
+			{
+				string attribBaseClassPropertyChangedMethod = reader.GetAttribute("baseClassPropertyChangedMethod");
+				if (attribBaseClassPropertyChangedMethod != null)
+				{
+					global::System.String valueOfBaseClassPropertyChangedMethod;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribBaseClassPropertyChangedMethod), out valueOfBaseClassPropertyChangedMethod))
+					{
+						instanceOfModel.BaseClassPropertyChangedMethod = valueOfBaseClassPropertyChangedMethod;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "baseClassPropertyChangedMethod", typeof(global::System.String), attribBaseClassPropertyChangedMethod);
+					}
+				}
+			}
+			// BaseClassPropertyChangingMethod
+			if (!serializationContext.Result.Failed)
+			{
+				string attribBaseClassPropertyChangingMethod = reader.GetAttribute("baseClassPropertyChangingMethod");
+				if (attribBaseClassPropertyChangingMethod != null)
+				{
+					global::System.String valueOfBaseClassPropertyChangingMethod;
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribBaseClassPropertyChangingMethod), out valueOfBaseClassPropertyChangingMethod))
+					{
+						instanceOfModel.BaseClassPropertyChangingMethod = valueOfBaseClassPropertyChangingMethod;
+					}
+					else
+					{	// Invalid property value, ignored.
+						ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "baseClassPropertyChangingMethod", typeof(global::System.String), attribBaseClassPropertyChangingMethod);
+					}
+				}
+			}
 		}
 	
 		/// <summary>
@@ -2103,6 +2137,26 @@ namespace Altinoren.ActiveWriter
 				{
 					if (!string.IsNullOrEmpty(propValue))
 						writer.WriteAttributeString("memberTemplateFile", propValue);
+				}
+			}
+			// BaseClassPropertyChangedMethod
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.BaseClassPropertyChangedMethod;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("baseClassPropertyChangedMethod", propValue);
+				}
+			}
+			// BaseClassPropertyChangingMethod
+			if (!serializationContext.Result.Failed)
+			{
+				global::System.String propValue = instanceOfModel.BaseClassPropertyChangingMethod;
+				if (!serializationContext.Result.Failed)
+				{
+					if (!string.IsNullOrEmpty(propValue))
+						writer.WriteAttributeString("baseClassPropertyChangingMethod", propValue);
 				}
 			}
 		}

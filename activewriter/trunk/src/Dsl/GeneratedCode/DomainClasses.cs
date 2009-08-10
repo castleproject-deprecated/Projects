@@ -4354,6 +4354,184 @@ namespace Altinoren.ActiveWriter
 		}
 		
 		#endregion
+		#region BaseClassPropertyChangedMethod domain property code
+		
+		/// <summary>
+		/// BaseClassPropertyChangedMethod domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid BaseClassPropertyChangedMethodDomainPropertyId = new global::System.Guid(0x7ab0fb5b, 0x7bb6, 0x4a32, 0xb0, 0x1b, 0xdd, 0x80, 0xa6, 0x97, 0xbe, 0x4b);
+		
+		/// <summary>
+		/// Storage for BaseClassPropertyChangedMethod
+		/// </summary>
+		private global::System.String baseClassPropertyChangedMethodPropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of BaseClassPropertyChangedMethod domain property.
+		/// If there is already a PropertyChanged event defined in the base class, specify
+		/// the name of a method that takes a single string that can be used to invoke it.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/BaseClassPropertyChangedMethod.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/BaseClassPropertyChangedMethod.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/BaseClassPropertyChangedMethod.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainObjectId("7ab0fb5b-7bb6-4a32-b01b-dd80a697be4b")]
+		public global::System.String BaseClassPropertyChangedMethod
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return baseClassPropertyChangedMethodPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				BaseClassPropertyChangedMethodPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.BaseClassPropertyChangedMethod domain property.
+		/// </summary>
+		internal sealed partial class BaseClassPropertyChangedMethodPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private BaseClassPropertyChangedMethodPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.BaseClassPropertyChangedMethod domain property value handler.
+			/// </summary>
+			public static readonly BaseClassPropertyChangedMethodPropertyHandler Instance = new BaseClassPropertyChangedMethodPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.BaseClassPropertyChangedMethod domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return BaseClassPropertyChangedMethodDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.baseClassPropertyChangedMethodPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.baseClassPropertyChangedMethodPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
+		#region BaseClassPropertyChangingMethod domain property code
+		
+		/// <summary>
+		/// BaseClassPropertyChangingMethod domain property Id.
+		/// </summary>
+		public static readonly global::System.Guid BaseClassPropertyChangingMethodDomainPropertyId = new global::System.Guid(0x6598afbe, 0xf2a2, 0x434a, 0xb6, 0x6d, 0x29, 0x40, 0x04, 0x61, 0xd6, 0x92);
+		
+		/// <summary>
+		/// Storage for BaseClassPropertyChangingMethod
+		/// </summary>
+		private global::System.String baseClassPropertyChangingMethodPropertyStorage = string.Empty;
+		
+		/// <summary>
+		/// Gets or sets the value of BaseClassPropertyChangingMethod domain property.
+		/// If there is already a PropertyChanging event defined in the base class, specify
+		/// the name of a method that takes a single string that can be used to invoke it.
+		/// </summary>
+		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.Model/BaseClassPropertyChangingMethod.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Altinoren.ActiveWriter.Model/BaseClassPropertyChangingMethod.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Model/BaseClassPropertyChangingMethod.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainObjectId("6598afbe-f2a2-434a-b66d-29400461d692")]
+		public global::System.String BaseClassPropertyChangingMethod
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				return baseClassPropertyChangingMethodPropertyStorage;
+			}
+			[global::System.Diagnostics.DebuggerStepThrough]
+			set
+			{
+				BaseClassPropertyChangingMethodPropertyHandler.Instance.SetValue(this, value);
+			}
+		}
+		/// <summary>
+		/// Value handler for the Model.BaseClassPropertyChangingMethod domain property.
+		/// </summary>
+		internal sealed partial class BaseClassPropertyChangingMethodPropertyHandler : DslModeling::DomainPropertyValueHandler<Model, global::System.String>
+		{
+			private BaseClassPropertyChangingMethodPropertyHandler() { }
+		
+			/// <summary>
+			/// Gets the singleton instance of the Model.BaseClassPropertyChangingMethod domain property value handler.
+			/// </summary>
+			public static readonly BaseClassPropertyChangingMethodPropertyHandler Instance = new BaseClassPropertyChangingMethodPropertyHandler();
+		
+			/// <summary>
+			/// Gets the Id of the Model.BaseClassPropertyChangingMethod domain property.
+			/// </summary>
+			public sealed override global::System.Guid DomainPropertyId
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				get
+				{
+					return BaseClassPropertyChangingMethodDomainPropertyId;
+				}
+			}
+			
+			/// <summary>
+			/// Gets a strongly-typed value of the property on specified element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <returns>Property value.</returns>
+			public override sealed global::System.String GetValue(Model element)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+				return element.baseClassPropertyChangingMethodPropertyStorage;
+			}
+		
+			/// <summary>
+			/// Sets property value on an element.
+			/// </summary>
+			/// <param name="element">Element which owns the property.</param>
+			/// <param name="newValue">New property value.</param>
+			public override sealed void SetValue(Model element, global::System.String newValue)
+			{
+				if (element == null) throw new global::System.ArgumentNullException("element");
+		
+				global::System.String oldValue = GetValue(element);
+				if (newValue != oldValue)
+				{
+					ValueChanging(element, oldValue, newValue);
+					element.baseClassPropertyChangingMethodPropertyStorage = newValue;
+					ValueChanged(element, oldValue, newValue);
+				}
+			}
+		}
+		
+		#endregion
 		#region Classes opposite domain role accessor
 		/// <summary>
 		/// Gets a list of Classes.

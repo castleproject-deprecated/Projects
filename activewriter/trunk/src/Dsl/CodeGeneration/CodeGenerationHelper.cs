@@ -238,12 +238,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 classDeclaration.BaseTypes.Add(type);
             }
 
-            if (cls.DoesImplementINotifyPropertyChanged() && cls.ClassParent == null)
+            if (cls.DoesImplementINotifyPropertyChanged() && cls.ClassParent == null && !cls.Model.PropertyChangedDefinedInBaseClass)
             {
                 classDeclaration.BaseTypes.Add(new CodeTypeReference(Common.INotifyPropertyChangedType));
                 AddINotifyPropertyChangedRegion(classDeclaration, cls.Lazy | Context.Model.UseVirtualProperties);
             }
-            if (cls.DoesImplementINotifyPropertyChanging() && cls.ClassParent == null)
+            if (cls.DoesImplementINotifyPropertyChanging() && cls.ClassParent == null && !cls.Model.PropertyChangingDefinedInBaseClass)
             {
                 classDeclaration.BaseTypes.Add(new CodeTypeReference(Common.INotifyPropertyChangingType));
                 AddINotifyPropertyChangingRegion(classDeclaration, cls.Lazy | Context.Model.UseVirtualProperties);
@@ -734,7 +734,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                             new CodeExpressionStatement(
                                 new CodeMethodInvokeExpression(
                                     new CodeMethodReferenceExpression(new CodeThisReferenceExpression(),
-                                                                             Common.PropertyChangedInternalMethod),
+                                                                             Context.Model.PropertyChangedMethodName),
                                            new CodePrimitiveExpression(propertyName)
                                            ))
                             );
@@ -745,7 +745,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                             new CodeExpressionStatement(
                                 new CodeMethodInvokeExpression(
                                     new CodeMethodReferenceExpression(new CodeThisReferenceExpression(),
-                                                                             Common.PropertyChangingInternalMethod),
+                                                                             Context.Model.PropertyChangingMethodName),
                                            new CodePrimitiveExpression(propertyName)
                                            ))
                             );
@@ -1681,7 +1681,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CodeMemberMethod propertyChangedMethod = new CodeMemberMethod
                                                          {
                                                              Attributes = MemberAttributes.Family,
-                                                             Name = Common.PropertyChangedInternalMethod
+                                                             Name = Context.Model.PropertyChangedMethodName
                                                          };
             //propertyChangedMethod.EndDirectives.Add(new CodeRegionDirective(CodeRegionMode.End, null));
             propertyChangedMethod.Parameters.Add(new CodeParameterDeclarationExpression(typeof(string), "information"));
@@ -1712,7 +1712,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CodeMemberMethod propertyChangingMethod = new CodeMemberMethod
                                                           {
                                                               Attributes = MemberAttributes.Family,
-                                                              Name = Common.PropertyChangingInternalMethod
+                                                              Name = Context.Model.PropertyChangingMethodName
                                                           };
             //propertyChangingMethod.EndDirectives.Add(new CodeRegionDirective(CodeRegionMode.End, null));
             propertyChangingMethod.Parameters.Add(new CodeParameterDeclarationExpression(typeof(string), "information"));
@@ -2030,12 +2030,12 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             property.GetStatements.Add(new CodeMethodReturnStatement(list));
 
             if (implementPropertyChanging)
-                property.SetStatements.Add(new CodeMethodInvokeExpression(null, Common.PropertyChangingInternalMethod, new CodePrimitiveExpression(propertyName)));
+                property.SetStatements.Add(new CodeMethodInvokeExpression(null, Context.Model.PropertyChangingMethodName, new CodePrimitiveExpression(propertyName)));
 
             property.SetStatements.Add(new CodeAssignStatement(list, new CodeArgumentReferenceExpression("value")));
 
             if (implementPropertyChanged)
-                property.SetStatements.Add(new CodeMethodInvokeExpression(null, Common.PropertyChangedInternalMethod, new CodePrimitiveExpression(propertyName)));
+                property.SetStatements.Add(new CodeMethodInvokeExpression(null, Context.Model.PropertyChangedMethodName, new CodePrimitiveExpression(propertyName)));
 
             typeDeclaration.Members.Add(property);
         }

@@ -693,6 +693,30 @@
     <value>Member Template File</value>
     <comment>DisplayName for DomainProperty &apos;MemberTemplateFile&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
+  <data name="Altinoren.ActiveWriter.Model/BaseClassPropertyChangedMethod.Description" xml:space="preserve">
+    <value>If there is already a PropertyChanged event defined in the base class, specify the name of a method that takes a single string that can be used to invoke it.</value>
+    <comment>Description for DomainProperty &apos;BaseClassPropertyChangedMethod&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/BaseClassPropertyChangedMethod.DisplayName" xml:space="preserve">
+    <value>Base Class Property Changed Method</value>
+    <comment>DisplayName for DomainProperty &apos;BaseClassPropertyChangedMethod&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/BaseClassPropertyChangedMethod.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;BaseClassPropertyChangedMethod&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/BaseClassPropertyChangingMethod.Description" xml:space="preserve">
+    <value>If there is already a PropertyChanging event defined in the base class, specify the name of a method that takes a single string that can be used to invoke it.</value>
+    <comment>Description for DomainProperty &apos;BaseClassPropertyChangingMethod&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/BaseClassPropertyChangingMethod.DisplayName" xml:space="preserve">
+    <value>Base Class Property Changing Method</value>
+    <comment>DisplayName for DomainProperty &apos;BaseClassPropertyChangingMethod&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
+  <data name="Altinoren.ActiveWriter.Model/BaseClassPropertyChangingMethod.Category" xml:space="preserve">
+    <value>Code Generation</value>
+    <comment>Category for DomainProperty &apos;BaseClassPropertyChangingMethod&apos; on DomainClass &apos;Model&apos;</comment>
+  </data>
   <data name="Altinoren.ActiveWriter.ModelClass.Description" xml:space="preserve">
     <value>A class of the domain</value>
     <comment>Description for DomainClass &apos;ModelClass&apos;</comment>

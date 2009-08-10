@@ -102,6 +102,44 @@ namespace Altinoren.ActiveWriter
             }
         }
 
+        public bool PropertyChangedDefinedInBaseClass
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(BaseClassPropertyChangedMethod);
+            }
+        }
+
+        public string PropertyChangedMethodName
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(BaseClassPropertyChangedMethod))
+                    return BaseClassPropertyChangedMethod;
+
+                return Common.PropertyChangedInternalMethod;
+            }
+        }
+
+        public bool PropertyChangingDefinedInBaseClass
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(BaseClassPropertyChangingMethod);
+            }
+        }
+
+        public string PropertyChangingMethodName
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(BaseClassPropertyChangingMethod))
+                    return BaseClassPropertyChangingMethod;
+
+                return Common.PropertyChangingInternalMethod;
+            }
+        }
+
         #endregion
 
         #region Private Methods

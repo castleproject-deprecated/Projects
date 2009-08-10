@@ -320,6 +320,18 @@
         <xsd:documentation>Methods and propeties from the single class within the template file will be imported, transformed, and then placed in the generated output.  As an example, you could specify the ActiveRecordBase.Generic.cs file and the generic methods would be transformed into specific methods for each class.  The first generic type parameter is replaced with the generated class type.  There are additional transformations for subclasses.  The path to the source file is relative to the .actiw file.  If the path has &quot;...&quot; in it, all parent folders are searched upwards until a match is found.  For example, &quot;...\ActiveRecord\ActiveRecordBase.generic.cs&quot; would look for &quot;ActiveRecord\ActiveRecordBase.generic.cs&quot; in the folder containing the .actiw file and in all folders up to the root.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
+    <!-- Property: BaseClassPropertyChangedMethod -->
+    <xsd:attribute name="baseClassPropertyChangedMethod" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>If there is already a PropertyChanged event defined in the base class, specify the name of a method that takes a single string that can be used to invoke it.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <!-- Property: BaseClassPropertyChangingMethod -->
+    <xsd:attribute name="baseClassPropertyChangingMethod" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation>If there is already a PropertyChanging event defined in the base class, specify the name of a method that takes a single string that can be used to invoke it.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
   </xsd:complexType>
   
   <!-- Model Moniker -->
