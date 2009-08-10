@@ -200,6 +200,7 @@ namespace Altinoren.ActiveWriter
                     propertyData.ColumnType = Model.CommonPrimaryKeyColumnType;
                     propertyData.Generator = Model.CommonPrimaryKeyGenerator;
                     propertyData.KeyType = KeyType.PrimaryKey;
+                    propertyData.NotNull = true;
 
                     // The column name is implicitly the same as the property name.  This removes the extra argument if possible.
                     if (propertyData.Name == propertyData.Column)

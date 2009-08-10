@@ -39,7 +39,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private bool Insert { get; set; }
         public KeyType KeyType { get; set; }
         private int Length { get; set; }
-        public bool NotNull { get; private set; }
+        public bool NotNull { get; set; }
         private string Params { get; set; }
         public PropertyType PropertyType { get; private set; }
         private string SequenceName { get; set; }
