@@ -149,9 +149,8 @@ namespace Altinoren.ActiveWriter
         {
             get
             {
-                // I assume that the JoinedBase attribute doesn't need to be added to intermediate classes,
-                // that it's only for the class at the top of the inheritance hierarchy.
-                return ClassParent == null && ClassChildren.Count > 0;
+                // We need the JoinedBase attribute on the top class and also any subclasses with further children.
+                return ClassChildren.Count > 0;
             }
         }
 
