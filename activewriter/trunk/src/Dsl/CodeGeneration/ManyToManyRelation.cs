@@ -77,6 +77,10 @@ namespace Altinoren.ActiveWriter
                 if (!string.IsNullOrEmpty(Source.Model.CommonPrimaryKeyColumnFormat))
                     return string.Format(Source.Model.CommonPrimaryKeyColumnFormat, EffectiveTable);
 
+                // We don't use a class name for the format since there is no class for many to many relationships.
+                if (!string.IsNullOrEmpty(Source.Model.CommonPrimaryKeyPropertyFormat))
+                    return string.Format(Source.Model.CommonPrimaryKeyPropertyFormat, EffectiveTable);
+
                 return null;
             }
         }
@@ -94,6 +98,9 @@ namespace Altinoren.ActiveWriter
                 if (!string.IsNullOrEmpty(Source.Model.CommonPrimaryKeyColumnFormat))
                     return Source.Model.CommonPrimaryKeyColumnType;
 
+                if (!string.IsNullOrEmpty(Source.Model.CommonPrimaryKeyPropertyFormat))
+                    return Source.Model.CommonPrimaryKeyColumnType;
+
                 return CollectionIDColumnType;
             }
         }
@@ -109,6 +116,9 @@ namespace Altinoren.ActiveWriter
                     return Source.Model.ManyToManyCollectionIDGenerator;
 
                 if (!string.IsNullOrEmpty(Source.Model.CommonPrimaryKeyColumnFormat))
+                    return Source.Model.CommonPrimaryKeyGenerator;
+
+                if (!string.IsNullOrEmpty(Source.Model.CommonPrimaryKeyPropertyFormat))
                     return Source.Model.CommonPrimaryKeyGenerator;
 
                 return CollectionIDGenerator;

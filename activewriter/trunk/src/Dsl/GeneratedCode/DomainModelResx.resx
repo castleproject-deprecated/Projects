@@ -542,7 +542,7 @@
     <comment>Description for DomainProperty &apos;ManyToManyCollectionIDColumnFormat&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnFormat.DisplayName" xml:space="preserve">
-    <value>Many To Many Collection ID Column</value>
+    <value>Many To Many Collection ID Column Format</value>
     <comment>DisplayName for DomainProperty &apos;ManyToManyCollectionIDColumnFormat&apos; on DomainClass &apos;Model&apos;</comment>
   </data>
   <data name="Altinoren.ActiveWriter.Model/ManyToManyCollectionIDColumnFormat.Category" xml:space="preserve">

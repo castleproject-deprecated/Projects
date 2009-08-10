@@ -173,7 +173,7 @@
             <DomainEnumerationMoniker Name="RelationType" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="4e0c0023-6a86-4801-bb51-9ebbad2a1fd6" Description="This column name is used for many to many collection ID definition.  If a column name is specified in the relationship itself, the Column Type and Generator specified in the relationship will be used instead of those specified here in the model.  Any {0} specified in the format will be replaced with the table name in the same way as Common Primary Key Format.  If no format is specified here or in the many to many relationships, the generation system will fall back to the Common Primary Key information." Name="ManyToManyCollectionIDColumnFormat" DisplayName="Many To Many Collection ID Column" Category="Code Generation">
+        <DomainProperty Id="4e0c0023-6a86-4801-bb51-9ebbad2a1fd6" Description="This column name is used for many to many collection ID definition.  If a column name is specified in the relationship itself, the Column Type and Generator specified in the relationship will be used instead of those specified here in the model.  Any {0} specified in the format will be replaced with the table name in the same way as Common Primary Key Format.  If no format is specified here or in the many to many relationships, the generation system will fall back to the Common Primary Key information." Name="ManyToManyCollectionIDColumnFormat" DisplayName="Many To Many Collection ID Column Format" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
