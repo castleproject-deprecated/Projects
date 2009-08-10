@@ -117,6 +117,25 @@ namespace Altinoren.ActiveWriter
             }
         }
 
+        [ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]
+        private void ValidateAutomaticAssociationFieldCase(ValidationContext context)
+        {
+            if (AutomaticAssociations)
+            {
+                switch (CaseOfPrivateFields)
+                {
+                    case FieldCase.Camelcase:
+                    case FieldCase.CamelcaseUnderscore:
+                    case FieldCase.PascalcaseMUnderscore:
+                        // The above are okay.
+                        break;
+                    default:
+                        context.LogError("Selected Case of Private Fields is not supported by Automatic Associations: " + CaseOfPrivateFields, "AW001ValidateAutomaticAssociationFieldCase", this);
+                        break;
+                }
+            }
+        }
+
         // TODO: Will activate this validation when there's an option to disable it through option pages or someting like that.
         // May get annoying otherwise.
         //[ValidationMethod(ValidationCategories.Open | ValidationCategories.Save | ValidationCategories.Menu)]

@@ -996,7 +996,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             {
                 AddConstructorForWatchedList(classDeclaration, memberField, propertyName);
                 AddInternalWatchedListProperty(classDeclaration, memberProperty.Type, propertyName, memberField.Name, propertyChanged, propertyChanging);
-                AddOnAddAndOnRemoveMethods(classDeclaration, thisClassName, propertyName, oppositeClassName, oppositePropertyName, manyToMany);
+                AddItemAddedRemovedMethods(classDeclaration, thisClassName, propertyName, oppositeClassName, oppositePropertyName, manyToMany);
             }
 
             memberProperty.CustomAttributes.Add(attribute);
@@ -1021,7 +1021,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                             "Class {0} column name does not match with column key {1} on it's many to one relation to class {2}",
                             relationship.Source.Name, relationship.TargetColumnKey, relationship.Target.Name));
 
-                // We use PropertyAccess.Property to default it to camel case underscore
+                #warning We use PropertyAccess.Property which uses the model's CaseOfPrivateFields to get the name.  If it's FieldCase.Unchanged, bad things happen.
                 CodeMemberField memberField = GetMemberField(relationship.EffectiveSourcePropertyName, relationship.Target.Name, Accessor.Private, PropertyAccess.Property);
                 classDeclaration.Members.Add(memberField);
 
@@ -1937,7 +1937,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             return method;
         }
 
-        private void AddOnAddAndOnRemoveMethods(CodeTypeDeclaration typeDeclaration, string thisClassName, string listPropertyName, string itemClassName, string propertyName, bool manyToMany)
+        private void AddItemAddedRemovedMethods(CodeTypeDeclaration typeDeclaration, string thisClassName, string listPropertyName, string itemClassName, string propertyName, bool manyToMany)
         {
             typeDeclaration.Members.Add(MakeAddOrRemoveMethod(listPropertyName, thisClassName, itemClassName, propertyName, manyToMany, true));
             typeDeclaration.Members.Add(MakeAddOrRemoveMethod(listPropertyName, thisClassName, itemClassName, propertyName, manyToMany, false));
@@ -1946,7 +1946,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         private CodeMemberMethod MakeAddOrRemoveMethod(string listPropertyName, string thisClassName, string itemClassName, string propertyName, bool manyToMany, bool add)
         {
             var method = new CodeMemberMethod();
-            method.Name = listPropertyName + (add ? "OnAdd" : "OnRemove");
+            method.Name = listPropertyName + (add ? "ItemAdded" : "ItemRemoved");
             method.Attributes = MemberAttributes.Private;
             method.Parameters.Add(new CodeParameterDeclarationExpression(itemClassName, "item"));
 
@@ -2011,11 +2011,11 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             CodeAssignStatement assignment = new CodeAssignStatement(field, outerList);
             constructor.Statements.Add(assignment);
 
-            var onAddCode = new CodeMethodReferenceExpression(null, listPropertyName + "OnAdd");
-            constructor.Statements.Add(new CodeAttachEventStatement(field, "OnAdd", onAddCode));
+            var itemAddedCode = new CodeMethodReferenceExpression(null, listPropertyName + "ItemAdded");
+            constructor.Statements.Add(new CodeAttachEventStatement(field, "ItemAdded", itemAddedCode));
 
-            var onRemoveCode = new CodeMethodReferenceExpression(null, listPropertyName + "OnRemove");
-            constructor.Statements.Add(new CodeAttachEventStatement(field, "OnRemove", onRemoveCode));
+            var itemRemovedCode = new CodeMethodReferenceExpression(null, listPropertyName + "ItemRemoved");
+            constructor.Statements.Add(new CodeAttachEventStatement(field, "ItemRemoved", itemRemovedCode));
         }
  
         private void AddInternalWatchedListProperty(CodeTypeDeclaration typeDeclaration, CodeTypeReference propertyTypeReference, string propertyName, string fieldName, bool implementPropertyChanged, bool implementPropertyChanging)

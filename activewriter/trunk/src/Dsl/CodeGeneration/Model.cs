@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+
 namespace Altinoren.ActiveWriter
 {
     using System.CodeDom;
@@ -79,6 +81,24 @@ namespace Altinoren.ActiveWriter
                 return string.IsNullOrEmpty(CollectionImplementation)
                     ? GenericListClass
                     : CollectionImplementation;
+            }
+        }
+
+        public PropertyAccess FieldPropertyAccess
+        {
+            get
+            {
+                switch (CaseOfPrivateFields)
+                {
+                    case FieldCase.Camelcase:
+                        return PropertyAccess.FieldCamelcase;
+                    case FieldCase.CamelcaseUnderscore:
+                        return PropertyAccess.FieldCamelcaseUnderscore;
+                    case FieldCase.PascalcaseMUnderscore:
+                        return PropertyAccess.FieldPascalcaseMUnderscore;
+                    default:
+                        throw new NotImplementedException("Cannot convert field case to property access: " + CaseOfPrivateFields);
+                }
             }
         }
 

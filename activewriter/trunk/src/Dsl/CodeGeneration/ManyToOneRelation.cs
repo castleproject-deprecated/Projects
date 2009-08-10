@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+
 namespace Altinoren.ActiveWriter
 {
     using System.CodeDom;
@@ -146,8 +148,7 @@ namespace Altinoren.ActiveWriter
             if (!string.IsNullOrEmpty(SourceCustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", SourceCustomAccess));
             else if (EffectiveAutomaticAssociations)
-#warning FIXME - This should be returning the correct property accessor for the field case the user has selected.
-                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", PropertyAccess.FieldCamelcaseUnderscore));
+                attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Access", "PropertyAccess", Source.Model.FieldPropertyAccess));
 
             if (!SourceInsert)
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("Insert", SourceInsert));
