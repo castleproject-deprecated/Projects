@@ -1896,7 +1896,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                  *             return accessor.GetSetter(theClass, propertyName + "Internal");
                  *         }
                  *         
-                 *         public bool CanAccessTroughReflectionOptimizer
+                 *         public bool CanAccessThroughReflectionOptimizer
                  *         {
                  *             get { return false; }
                  *         }
@@ -1918,7 +1918,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                 CodeMemberProperty canAccessProperty = new CodeMemberProperty();
                 accessorClass.Members.Add(canAccessProperty);
                 canAccessProperty.Type = new CodeTypeReference("Boolean");
-                canAccessProperty.Name = "CanAccessTroughReflectionOptimizer";
+                canAccessProperty.Name = "CanAccessThroughReflectionOptimizer";
                 canAccessProperty.Attributes = MemberAttributes.Public | MemberAttributes.Final;
                 canAccessProperty.GetStatements.Add(new CodeMethodReturnStatement(new CodePrimitiveExpression(false)));
             }
