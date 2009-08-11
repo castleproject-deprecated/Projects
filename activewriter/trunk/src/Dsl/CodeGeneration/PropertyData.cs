@@ -172,7 +172,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
         {
             foreach (CodeAttributeDeclaration attribute in member.CustomAttributes)
             {
-                if (attribute.Name == "PrimaryKey" || attribute.Name == "KeyProperty" || attribute.Name == "Field" || attribute.Name == "Property" || attribute.Name == "Version" || attribute.Name == "Timestamp")
+                if (attribute.Name == "PrimaryKey" || attribute.Name == "KeyProperty" || attribute.Name == "Field" || attribute.Name == "Property" || attribute.Name == "Version" || attribute.Name == "Timestamp" || attribute.Name == "BelongsTo" || attribute.Name == "HasMany" || attribute.Name == "HasAndBelongsToMany")
                     return true;
             }
 
