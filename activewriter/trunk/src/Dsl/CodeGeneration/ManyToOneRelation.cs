@@ -106,6 +106,8 @@ namespace Altinoren.ActiveWriter
                 attribute.Arguments.Add(AttributeHelper.GetNamedEnumAttributeArgument("Cascade", "ManyRelationCascadeEnum", TargetCascade));
             if (!string.IsNullOrEmpty(TargetColumnKey))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnKey", TargetColumnKey));
+            else if (!string.IsNullOrEmpty(EffectiveSourceColumn))
+                attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("ColumnKey", EffectiveSourceColumn));
 
             if (!string.IsNullOrEmpty(TargetCustomAccess))
                 attribute.Arguments.Add(AttributeHelper.GetNamedAttributeArgument("CustomAccess", TargetCustomAccess));
