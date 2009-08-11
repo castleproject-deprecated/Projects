@@ -623,18 +623,19 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 												NHibernateType propertyType, string propertyCustomMemberType, bool propertyNotNull,
                                                 bool get, bool set, bool implementINotifyPropertyChanged, bool implementINotifyPropertyChanging, params string[] description)
 		{
-            CodeMemberProperty memberProperty =
-                GetMemberPropertyWithoutType(memberField, propertyName, null, null, get, set, implementINotifyPropertyChanged, implementINotifyPropertyChanging, description);
-
-			if (Context.Model.UseNullables != NullableUsage.No && TypeHelper.IsNullable(propertyType) && !propertyNotNull)
+		    CodeTypeReference memberPropertyType;
+            if (Context.Model.UseNullables != NullableUsage.No && TypeHelper.IsNullable(propertyType) && !propertyNotNull)
             {
                 if (Context.Model.UseNullables == NullableUsage.WithHelperLibrary)
-                    memberProperty.Type = TypeHelper.GetNullableTypeReferenceForHelper(propertyType);
+                    memberPropertyType = TypeHelper.GetNullableTypeReferenceForHelper(propertyType);
                 else
-                    memberProperty.Type = TypeHelper.GetNullableTypeReference(propertyType);
+                    memberPropertyType = TypeHelper.GetNullableTypeReference(propertyType);
             }
             else
-				memberProperty.Type = new CodeTypeReference(TypeHelper.GetSystemType(propertyType, propertyCustomMemberType));
+                memberPropertyType = new CodeTypeReference(TypeHelper.GetSystemType(propertyType, propertyCustomMemberType));
+
+            CodeMemberProperty memberProperty =
+                GetMemberProperty(memberField, memberPropertyType, propertyName, null, null, get, set, implementINotifyPropertyChanged, implementINotifyPropertyChanging, description);
 
             return memberProperty;
         }
@@ -649,19 +650,18 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                                      bool get, bool set, bool implementINotifyPropertyChanged, bool implementINotifyPropertyChanging, params string[] description)
         {
             CodeMemberProperty memberProperty =
-                GetMemberPropertyWithoutType(memberField, propertyName, automaticAssociationCollectionName, automaticAssociationCollectionItemType, get, set, implementINotifyPropertyChanged, implementINotifyPropertyChanging, description);
-
-            memberProperty.Type = memberField.Type;
+                GetMemberProperty(memberField, memberField.Type, propertyName, automaticAssociationCollectionName, automaticAssociationCollectionItemType, get, set, implementINotifyPropertyChanged, implementINotifyPropertyChanging, description);
 
             return memberProperty;
         }
 
-        private CodeMemberProperty GetMemberPropertyWithoutType(CodeMemberField memberField, string propertyName, string automaticAssociationCollectionName, string automaticAssociationCollectionItemType,
+        private CodeMemberProperty GetMemberProperty(CodeMemberField memberField, CodeTypeReference propertyType, string propertyName, string automaticAssociationCollectionName, string automaticAssociationCollectionItemType,
                                                                 bool get, bool set, bool implementINotifyPropertyChanged, bool implementINotifyPropertyChanging, params string[] description)
         {
             CodeMemberProperty memberProperty = new CodeMemberProperty();
 
             memberProperty.Name = propertyName;
+            memberProperty.Type = propertyType;
 
             if (Context.Model.UseVirtualProperties)
                 memberProperty.Attributes = MemberAttributes.Public;
@@ -694,19 +694,28 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
                     if (automaticAssociationCollectionName != null)
                     {
+                        assignment.TrueStatements.Add(
+                            new CodeVariableDeclarationStatement(propertyType, "oldValue", memberFieldExpression));
+                    }
+
+                    assignment.TrueStatements.Add(assignValue);
+
+                    if (automaticAssociationCollectionName != null)
+                    {
                         var thisExpression = new CodeCastExpression(automaticAssociationCollectionItemType, new CodeThisReferenceExpression());
                         var nullExpression = new CodePrimitiveExpression(null);
+                        var oldValueExpression = new CodeVariableReferenceExpression("oldValue");
 
                         assignment.TrueStatements.Add(
                             new CodeConditionStatement(
-                                InequalityExpression(memberFieldExpression, nullExpression),
+                                InequalityExpression(oldValueExpression, nullExpression),
                                 new CodeConditionStatement(
                                     new CodeMethodInvokeExpression(
-                                        new CodePropertyReferenceExpression(memberFieldExpression, automaticAssociationCollectionName),
+                                        new CodePropertyReferenceExpression(oldValueExpression, automaticAssociationCollectionName),
                                         "Contains", thisExpression),
                                     new CodeExpressionStatement(
                                         new CodeMethodInvokeExpression(
-                                            new CodePropertyReferenceExpression(memberFieldExpression, automaticAssociationCollectionName),
+                                            new CodePropertyReferenceExpression(oldValueExpression, automaticAssociationCollectionName),
                                             "Remove", thisExpression)))));
 
                         assignment.TrueStatements.Add(
@@ -725,8 +734,6 @@ namespace Altinoren.ActiveWriter.CodeGeneration
                                             new CodePropertyReferenceExpression(valueExpression, automaticAssociationCollectionName),
                                             "Add", thisExpression)))));
                     }
-
-                    assignment.TrueStatements.Add(assignValue);
 
                     if (implementINotifyPropertyChanged)
                     {
