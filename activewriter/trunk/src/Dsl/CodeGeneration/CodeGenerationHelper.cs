@@ -995,7 +995,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             if (automaticAssociationGenerated)
             {
                 AddConstructorForWatchedList(classDeclaration, memberField, propertyName);
-                AddInternalWatchedListProperty(classDeclaration, memberProperty.Type, propertyName, memberField.Name, propertyChanged, propertyChanging);
+                AddInternalWatchedListProperty(classDeclaration, memberProperty.Type, propertyName, memberField.Name, propertyChanged, propertyChanging, propertyAccess);
                 AddItemAddedRemovedMethods(classDeclaration, thisClassName, propertyName, oppositeClassName, oppositePropertyName, manyToMany);
             }
 
@@ -2019,7 +2019,7 @@ namespace Altinoren.ActiveWriter.CodeGeneration
             constructor.Statements.Add(new CodeAttachEventStatement(field, "ItemRemoved", itemRemovedCode));
         }
  
-        private void AddInternalWatchedListProperty(CodeTypeDeclaration typeDeclaration, CodeTypeReference propertyTypeReference, string propertyName, string fieldName, bool implementPropertyChanged, bool implementPropertyChanging)
+        private void AddInternalWatchedListProperty(CodeTypeDeclaration typeDeclaration, CodeTypeReference propertyTypeReference, string propertyName, string fieldName, bool implementPropertyChanged, bool implementPropertyChanging, PropertyAccess propertyAccess)
         {
             CodeMemberProperty property = new CodeMemberProperty();
             property.Name = propertyName + "Internal";
@@ -2029,12 +2029,16 @@ namespace Altinoren.ActiveWriter.CodeGeneration
 
             property.GetStatements.Add(new CodeMethodReturnStatement(list));
 
-            if (implementPropertyChanging)
+            // If the user specifies that they access the data through the property, then we
+            // would want the change events to fire as if the property was being set.  If the
+            // field is being accessed directly, we want to avoid the change events.
+
+            if (implementPropertyChanging && propertyAccess == PropertyAccess.Property)
                 property.SetStatements.Add(new CodeMethodInvokeExpression(null, Context.Model.PropertyChangingMethodName, new CodePrimitiveExpression(propertyName)));
 
             property.SetStatements.Add(new CodeAssignStatement(list, new CodeArgumentReferenceExpression("value")));
 
-            if (implementPropertyChanged)
+            if (implementPropertyChanged && propertyAccess == PropertyAccess.Property)
                 property.SetStatements.Add(new CodeMethodInvokeExpression(null, Context.Model.PropertyChangedMethodName, new CodePrimitiveExpression(propertyName)));
 
             typeDeclaration.Members.Add(property);
