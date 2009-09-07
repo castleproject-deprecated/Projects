@@ -4,6 +4,20 @@
         <name>Castle.Components.Binder</name>
     </assembly>
     <members>
+        <member name="T:Castle.Components.Binder.IConverter">
+            <summary>
+            Depicts the contract for implementations able to convert an object
+            -- usually a string -- to the specified desired type.
+            </summary>
+        </member>
+        <member name="M:Castle.Components.Binder.ConverterUtil.FixInputForMonoIfNeeded(System.Type,System.Object)">
+            <summary>
+            Fix for mod_mono issue where array values are passed as a comma seperated String.
+            </summary>
+            <param name="elemType"></param>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
         <member name="T:Castle.Components.Binder.DataBinder">
             <summary>
             </summary>
@@ -248,12 +262,6 @@
             for the binder.
             </remarks>
         </member>
-        <member name="T:Castle.Components.Binder.IConverter">
-            <summary>
-            Depicts the contract for implementations able to convert an object
-            -- usually a string -- to the specified desired type.
-            </summary>
-        </member>
         <member name="M:Castle.Components.Binder.DefaultConverter.Convert(System.Type,System.Object,System.Boolean@)">
             <summary>
             Convert the input param into the desired type
@@ -270,20 +278,6 @@
             3) Has input data and can convert to particular type
             	 Return input converted to desired type and set <c>conversionSucceeded = true</c>
             </remarks>
-        </member>
-        <member name="M:Castle.Components.Binder.DefaultConverter.FixInputForMonoIfNeeded(System.Type,System.Object)">
-            <summary>
-            Fix for mod_mono issue where array values are passed as a comma seperated String.
-            </summary>
-            <param name="elemType"></param>
-            <param name="input"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Castle.Components.Binder.DefaultConverter.ConvertUsingTypeConverter(System.Type,System.Object,System.Boolean@)">
-            <summary>
-            Support for types that specify a TypeConverter, 
-            i.e.: NullableTypes
-            </summary>
         </member>
         <member name="T:Castle.Components.Binder.ErrorList">
             <summary>

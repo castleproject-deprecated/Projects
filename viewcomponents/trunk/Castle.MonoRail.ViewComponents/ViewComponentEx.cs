@@ -160,13 +160,10 @@ namespace Castle.MonoRail.ViewComponents
 			}
 			return value;
 		}
-
         public string GetParamValue(string key, string defaultValue)
         {
             return Context.ComponentParameters[key] as string ?? defaultValue;
         }
-
-
         /// <summary>
         /// Gets the param value.
         /// </summary>

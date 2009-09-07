@@ -541,13 +541,15 @@ namespace Castle.MonoRail.ViewComponents
                 default:
                     param.helper.IncludeStandardScripts("Ajax");
                     divFormat = @"<div id=""Faq_Q{0}"" onclick=""Element.toggle('Faq_A{0}')"" class=""{1}"">";
-                    hideFormat = @"<script>$(Faq_A{0}).style.display='none';</script>";
-                    break;
+//                    hideFormat = @"<script>$(Faq_A{0}).style.display='none';</script>";
+					hideFormat = @"$(Faq_A{0}).style.display='none';";
+					break;
 
                 case Library.jquery:
                     param.helper.IncludeStandardScripts("jQuery");
                     divFormat = @"<div id=""Faq_Q{0}"" onclick=""jQuery('#Faq_A{0}').slideToggle()"" class=""{1}"">";
-                    hideFormat = @"<script>jQuery('#Faq_A{0}').hide();</script>";
+//                    hideFormat = @"<script>jQuery('#Faq_A{0}').hide();</script>";
+					hideFormat = "jQuery('#Faq_A{0}').hide();";
                     break;
             }
 
@@ -574,9 +576,9 @@ namespace Castle.MonoRail.ViewComponents
             if (param.WrapItems)
                 sb.Append("</li>");
             sb.Append(Environment.NewLine);
-//            sb.AppendFormat(, param.Number);
-            sb.AppendFormat(hideFormat, param.Number);
-            sb.Append(Environment.NewLine);
+//            sb.AppendFormat(hideFormat, param.Number);
+//            sb.Append(Environment.NewLine);
+			param.helper.InsertSeparateText(string.Format(hideFormat, param.Number));
 
             return sb.ToString();
         }

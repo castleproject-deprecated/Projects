@@ -25,7 +25,7 @@ namespace Castle.MonoRail.ViewComponents
     /// </list>
     ///  </example>
     ///  <remarks>
-    ///  The componet take one required and two optional parameters.
+    ///  The component takes one required and two optional parameters.
     ///  <list type="table">
     ///  <listheader>
     ///  <term>Parameter</term>

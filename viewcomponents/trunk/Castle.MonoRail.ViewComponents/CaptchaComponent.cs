@@ -131,7 +131,7 @@ namespace Castle.MonoRail.ViewComponents
     /// </list><p/>
 	/// <b>Note</b>
 	/// <list type="bullet">
-	/// <item><description>View variable are only defined in a template section is defined.
+	/// <item><description>View variable are only defined if a template section is defined.
 	/// </description></item>
 	/// <item><description>If a Id parameter is specifically defined, it is prefixed onto the view variable names. 
 	/// i.e.  If Id is "Two", then the variable is "Two_url".  This prevents the view varaibles from conflicting with 

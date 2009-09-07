@@ -955,6 +955,11 @@ namespace Castle.MonoRail.ViewComponents
             IncludeScriptText("all", 0, versionDirection.Exact, script);
         }
 
+		public void InsertSeparateText(string script)
+		{
+			js.segments[Guid.NewGuid().ToString()] = script;
+		}
+
         /// <summary>
         /// Includes the standard scripts.
         /// </summary>
