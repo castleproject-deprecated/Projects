@@ -1664,6 +1664,13 @@
             <param name="key">The key.</param>
             <returns></returns>
         </member>
+        <member name="M:Castle.Components.Validator.CachedValidationRegistry.GetValidatorBuildersForProperty(System.Reflection.PropertyInfo)">
+            <summary>
+            Gets IValidatorBuilders for the specified targetType and property.
+            </summary>
+            <param name="property">The property.</param>
+            <returns>Array of IValidatorBuilders.</returns>
+        </member>
         <member name="M:Castle.Components.Validator.CachedValidationRegistry.ResolveProperties(System.Type)">
             <summary>
             Resolve properties that will be inspected for registered validators

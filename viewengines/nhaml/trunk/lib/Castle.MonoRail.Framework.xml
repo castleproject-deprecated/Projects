@@ -2495,12 +2495,12 @@
         </member>
         <member name="P:Castle.MonoRail.Framework.CacheAttribute.MaxAge">
             <summary>
-            Gets or sets the Cache-Control: max-age HTTP header.
+            Gets or sets the Cache-Control: max-age HTTP header (in seconds).
             </summary>
         </member>
         <member name="P:Castle.MonoRail.Framework.CacheAttribute.ProxyMaxAge">
             <summary>
-            Gets or sets the Cache-Control: s-maxage HTTP header.
+            Gets or sets the Cache-Control: s-maxage HTTP header (in seconds).
             </summary>
         </member>
         <member name="P:Castle.MonoRail.Framework.CacheAttribute.Revalidation">
@@ -4363,6 +4363,12 @@
             </summary>
             <value>The JSON serializer.</value>
         </member>
+        <member name="P:Castle.MonoRail.Framework.IMonoRailServices.ScriptBuilder">
+            <summary>
+            Gets or sets the script builder.
+            </summary>
+            <value>The script builder.</value>
+        </member>
         <member name="P:Castle.MonoRail.Framework.IMonoRailServices.StaticResourceRegistry">
             <summary>
             Gets or sets the static resource registry service.
@@ -4562,6 +4568,12 @@
             Gets or sets the JSON serializer.
             </summary>
             <value>The JSON serializer.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.ScriptBuilder">
+            <summary>
+            Gets or sets the script builder.
+            </summary>
+            <value>The script builder.</value>
         </member>
         <member name="P:Castle.MonoRail.Framework.Container.DefaultMonoRailContainer.StaticResourceRegistry">
             <summary>
@@ -17832,6 +17844,123 @@
             <param name="initialized">if set to <c>true</c> the helper is already initialized.</param>
             <returns></returns>
         </member>
+        <member name="T:Castle.MonoRail.Framework.Services.DefaultScriptBuilder">
+            <summary>
+            Standard implementation of <see cref="T:Castle.MonoRail.Framework.Services.IScriptBuilder"/>.
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.Services.IScriptBuilder">
+            <summary>
+            Service for compressing Javascript and CSS files
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.IScriptBuilder.CompressJavascript(System.String)">
+            <summary>
+            Compresses Javascript.
+            </summary>
+            <param name="script">The script.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.IScriptBuilder.CompressCSS(System.String)">
+            <summary>
+            Compresses CSS.
+            </summary>
+            <param name="css">The CSS.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.IScriptBuilder.Concatenate">
+            <summary>
+            Gets a value indicating whether this <see cref="T:Castle.MonoRail.Framework.Services.IScriptBuilder"/> will concatenate
+            script files into a single file. By default, this is set to <c>true</c>.
+            </summary>
+            <value><c>true</c> if concatenation should occur; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.IScriptBuilder.Minify">
+            <summary>
+            Gets a value indicating whether this <see cref="T:Castle.MonoRail.Framework.Services.IScriptBuilder"/> will minify
+            script files.  By default, this is set to <c>false</c>.
+            </summary>
+            <value><c>true</c> if compression should occur; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.IScriptBuilder.OptimizeJavaScript">
+            <summary>
+            Gets a value indicating whether JavaScript should be optimized if supported by the 
+            script builder. By default, this is set to <c>false</c>.
+            </summary>
+            <value><c>true</c> if JavaScript should be optimized; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.IScriptBuilder.ObfuscateJavaScript">
+            <summary>
+            Gets a value indicating whether JavaScript should be obfuscated if supported by the 
+            script builder. By default, this is set to <c>false</c>.
+            </summary>
+            <value><c>true</c> if JavaScript should be obfuscated; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.IScriptBuilder.CssColumnWidth">
+            <summary>
+            Gets the width of the CSS columns to use when minifying CSS if supported by the script builder.
+            If the value is null, then no column width will be set. By default, this is set to null.
+            </summary>
+            <value>The width of the CSS column.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.IScriptBuilder.LineBreakPosition">
+            <summary>
+            the position where a line feed is appened when the next semicolon is reached -1 (never add a line break).
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultScriptBuilder.CompressJavascript(System.String)">
+            <summary>
+            Compresses Javascript.
+            </summary>
+            <param name="script">The script.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.Services.DefaultScriptBuilder.CompressCSS(System.String)">
+            <summary>
+            Compresses CSS.
+            </summary>
+            <param name="css">The CSS.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.DefaultScriptBuilder.Concatenate">
+            <summary>
+            Gets a value indicating whether this <see cref="T:Castle.MonoRail.Framework.Services.IScriptBuilder"/> will concatenate
+            script files into a single file.
+            </summary>
+            <value><c>true</c> if concatenation should occur; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.DefaultScriptBuilder.Minify">
+            <summary>
+            Gets a value indicating whether this <see cref="T:Castle.MonoRail.Framework.Services.IScriptBuilder"/> will minify
+            script files.
+            </summary>
+            <value><c>true</c> if compression should occur; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.DefaultScriptBuilder.OptimizeJavaScript">
+            <summary>
+            Gets a value indicating whether JavaScript should be optimized if supported by the 
+            script builder.
+            </summary>
+            <value><c>true</c> if JavaScript should be optimized; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.DefaultScriptBuilder.ObfuscateJavaScript">
+            <summary>
+            Gets a value indicating whether JavaScript should be obfuscated.
+            </summary>
+            <value><c>true</c> if JavaScript should be obfuscated; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.DefaultScriptBuilder.CssColumnWidth">
+            <summary>
+            Gets the width of the CSS columns to use when minifying CSS.  If the value is null, then
+            no column width will be set.
+            </summary>
+            <value>The width of the CSS column.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.Services.DefaultScriptBuilder.LineBreakPosition">
+            <summary>
+            the position where a line feed is appened when the next semicolon is reached -1 (never add a line break).
+            </summary>
+        </member>
         <member name="T:Castle.MonoRail.Framework.Services.DefaultServiceInitializer">
             <summary>
             
@@ -20172,6 +20301,12 @@
             </summary>
             <value>The JSON serializer.</value>
         </member>
+        <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.ScriptBuilder">
+            <summary>
+            Gets or sets the script builder.
+            </summary>
+            <value>The script builder.</value>
+        </member>
         <member name="P:Castle.MonoRail.Framework.Test.StubMonoRailServices.StaticResourceRegistry">
             <summary>
             Gets or sets the static resource registry service.
@@ -22224,6 +22359,152 @@
             <value>
             	<c>true</c> if it should not render; otherwise, <c>false</c>.
             </value>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent">
+            <summary>
+            View component for concatenating and minifying Javascript
+            and CSS
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.Initialize">
+            <summary>
+            Initiliaze it.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.Render">
+            <summary>
+            Called by the framework so the component can
+            render its content
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.RenderCSS(System.String)">
+            <summary>
+            Renders the CSS.
+            </summary>
+            <param name="file">The file.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.RenderJavascript(System.String)">
+            <summary>
+            Renders the javascript.
+            </summary>
+            <param name="file">The file.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.RegisterCss(Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CombinerConfig,Castle.MonoRail.Framework.Services.IStaticResourceRegistry,System.String,System.Int64)">
+            <summary>
+            Registers the CSS.
+            </summary>
+            <param name="combiner">The combiner.</param>
+            <param name="resourceRegistry">The resource registry.</param>
+            <param name="cssKey">The CSS key.</param>
+            <param name="cssHash">The CSS hash.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.RegisterJavascript(Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CombinerConfig,System.String,Castle.MonoRail.Framework.Services.IStaticResourceRegistry,System.Int64)">
+            <summary>
+            Registers the javascript.
+            </summary>
+            <param name="combiner">The combiner.</param>
+            <param name="key">The key.</param>
+            <param name="resourceRegistry">The resource registry.</param>
+            <param name="javascriptHash">The javascript hash.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CombineCssFileContent(Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CombinerConfig)">
+            <summary>
+            Combines the content of the CSS files.
+            </summary>
+            <param name="combiner">The combiner.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CombineJSFileContent(System.Collections.Generic.ICollection{System.String})">
+            <summary>
+            Combines the content of the Javascript files.
+            </summary>
+            <param name="files">The files.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CombineFileContent(System.Collections.Generic.ICollection{System.String},Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.PostProcessScript)">
+            <summary>
+            Combines the content of the file.
+            </summary>
+            <param name="files">The files.</param>
+            <param name="postProcess">The post process.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CalculateChangeSetHash(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Calculates the change set hash.
+            </summary>
+            <param name="files">The files.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.ScriptBuilder">
+            <summary>
+             The default ScriptBuilder can be replaced
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CombinerConfig">
+            <summary>
+            Configuration class for the Javascript and CSS files that will be combined.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CombinerConfig.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CombinerConfig"/> class.
+            </summary>
+            <param name="basePath">The base path.</param>
+            <param name="applicationPath">The application path.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CombinerConfig.Add(System.String)">
+            <summary>
+            Adds the specified file.
+            </summary>
+            <param name="file">The file.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CombinerConfig.Add(System.String,System.Collections.IDictionary)">
+            <summary>
+            Adds the specified file.
+            </summary>
+            <param name="file">The file.</param>
+            <param name="options">The options.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CombinerConfig.Relative(System.String)">
+            <summary>
+            Gets the relative path to the file.
+            </summary>
+            <param name="file">The file.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CombinerConfig.JavascriptFiles">
+            <summary>
+            Gets the Javascript files.
+            </summary>
+            <value>The javascript files.</value>
+        </member>
+        <member name="P:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CombinerConfig.CssFiles">
+            <summary>
+            Gets the CSS files.
+            </summary>
+            <value>The CSS files.</value>
+        </member>
+        <member name="T:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CssRelativeUrlResolver">
+            <summary>
+            Utility class for determining the absolute path for any CSS files that have
+            relative URLs.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CssRelativeUrlResolver.#ctor(System.String,System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CssRelativeUrlResolver"/> class.
+            </summary>
+            <param name="physicalRoot">The physical root.</param>
+            <param name="virtualRoot">The virtual root.</param>
+        </member>
+        <member name="M:Castle.MonoRail.Framework.ViewComponents.CombineJSViewComponent.CssRelativeUrlResolver.Resolve(System.String,System.String)">
+            <summary>
+            Converts any URLs in the CSS string to be absolute URLs.
+            </summary>
+            <param name="file">The file.</param>
+            <param name="input">The input.</param>
+            <returns></returns>
         </member>
         <member name="T:Castle.MonoRail.Framework.ViewComponents.DiggStylePagination">
             <summary>
