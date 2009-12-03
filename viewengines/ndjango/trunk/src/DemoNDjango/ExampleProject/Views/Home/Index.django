@@ -1,0 +1,13 @@
+﻿{% extends "Common/base.django" %}
+
+{% block Title %}
+    New Template
+    
+{% endblock %}
+{% block body %}
+    Hello world. Test email:{{ testData.Email }} <br />
+    Image example <img src ="{% url 'Content/images/mr.png' %}" border="0" />
+
+{% endblock %}
+
+

@@ -1,0 +1,16 @@
+{% extends "Common/base.django" %}
+
+{% block Title %}
+    Unexpected error happenend
+{% endblock %}
+{% block body %}
+    <h2>Unexpected error happenend</h2>
+
+    <p> This is the rescue page and it is supposed to show you a nice message.</p>
+{% endblock %}
+
+
+
+
+
+

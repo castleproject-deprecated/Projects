@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleProject", "DemoNDjango\ExampleProject\ExampleProject.csproj", "{EAF16D88-38FF-4495-BC40-AAE93FD250EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleProject.Tests", "DemoNDjango\ExampleProject.Tests\ExampleProject.Tests.csproj", "{183C97C7-7985-4D57-B7BD-6CF545797C25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Monorail.Views.NDjangoView", "Castle.Monorail.Views.NDjangoView\Castle.Monorail.Views.NDjangoView.csproj", "{64D8A354-DCEE-44E2-B25C-C1D1A1E7BF58}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EAF16D88-38FF-4495-BC40-AAE93FD250EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAF16D88-38FF-4495-BC40-AAE93FD250EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAF16D88-38FF-4495-BC40-AAE93FD250EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAF16D88-38FF-4495-BC40-AAE93FD250EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{183C97C7-7985-4D57-B7BD-6CF545797C25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{183C97C7-7985-4D57-B7BD-6CF545797C25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{183C97C7-7985-4D57-B7BD-6CF545797C25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{183C97C7-7985-4D57-B7BD-6CF545797C25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64D8A354-DCEE-44E2-B25C-C1D1A1E7BF58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64D8A354-DCEE-44E2-B25C-C1D1A1E7BF58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64D8A354-DCEE-44E2-B25C-C1D1A1E7BF58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64D8A354-DCEE-44E2-B25C-C1D1A1E7BF58}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
