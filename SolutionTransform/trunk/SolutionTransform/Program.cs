@@ -15,6 +15,7 @@
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
 [assembly:InternalsVisibleTo("SolutionTransform.Tests")]
 
@@ -71,21 +72,53 @@ namespace SolutionTransform {
             return result.Substring(6);
         }
 
-		public static void Main(string[] args)
+		public static int Main(string[] args)
 		{
 			if (args.Length < 2) {
 				Console.WriteLine("Usage:  SolutionTransform <scriptPath> <solutionPath>");
 			} else
 			{
-				var interpreter = new Boo.Lang.Interpreter.InteractiveInterpreter2();
-				interpreter.SetValue("solution", GetSolutionFile(args[1]));
-                var script = FullPath(args[0]).FileContent();
-				var context = interpreter.Eval(script);
-				foreach (var e in context.Errors)
-				{
-					Console.WriteLine(e.ToString());
-				}
+                try
+                {
+
+                    var interpreter = new Boo.Lang.Interpreter.InteractiveInterpreter2();
+                    interpreter.SetValue("solution", GetSolutionFile(args[1]));
+                    string scriptFile = args[0];
+                    if (!scriptFile.Contains("."))
+                    {
+                        scriptFile += ".boo";
+                    }
+                    var script = FullPath(scriptFile).FileContent();
+
+                    var context = interpreter.Eval(script);
+                    foreach (var e in context.Errors)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
+                    if (context.Errors.Count != 0)
+                    {
+                        return 2;
+                    }
+            	} catch (Exception ex) {
+                    WriteException(Console.Out, ex);
+                    return 1;
+                }
 			}
+            return 0;
 		}
+
+        static void WriteException(TextWriter writer, Exception ex)
+        {
+            writer.WriteLine(ex.Message);
+            writer.WriteLine();
+            writer.WriteLine(ex.StackTrace);
+            var inner = ex.InnerException;
+            if (inner != null)
+            {
+                writer.WriteLine("======");
+                WriteException(writer, inner);
+            }
+            
+        }
 	}
 }

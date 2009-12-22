@@ -1,10 +1,12 @@
 ﻿import SolutionTransform
 import System.Text.RegularExpressions
+import SolutionTransform.ProjectFile
 
 solution.Transform(
 	RegexRename("-vs2008", "-Silverlight"),
 	RegexFilter(["Castle.Core", "Castle.DynamicProxy", "Castle.MicroKernel", "Castle.Windsor"]), 
-	StandardTransforms.SilverlightTransform()
+	StandardTransforms.SilverlightTransform(),
+	RebaseAssemblies(solution, """..\lib\silverlight-3.0""")
 	# ,StandardTransforms.CastleStandardsTransform()
 )
 

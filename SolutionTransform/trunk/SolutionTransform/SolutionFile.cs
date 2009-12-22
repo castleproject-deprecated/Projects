@@ -37,9 +37,13 @@ namespace SolutionTransform
 			projects = GetProjects().ToList();
 		}
 
-		
+	    public string FullPath
+	    {
+	        get { return path; }
+	    }
 
-		IEnumerable<SolutionProject> GetProjects() {
+
+	    IEnumerable<SolutionProject> GetProjects() {
 			int index = 0;
 			foreach (var line in lines)
 			{
@@ -95,7 +99,8 @@ namespace SolutionTransform
             // NB Solution files will not load unless you save them as Unicode.  In particular, UTF8 doesn't work.
 			using (var writer = new StreamWriter(destination, false, Encoding.Unicode))
 			{
-				foreach (var line in lines)
+                writer.WriteLine();  // Guarantee a blank line
+				foreach (var line in lines.SkipWhile(string.IsNullOrEmpty)) // Skip any others
 				{
 					writer.WriteLine(line);
 				}

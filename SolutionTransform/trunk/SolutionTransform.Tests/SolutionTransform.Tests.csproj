@@ -49,7 +49,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SolutionTransform\SolutionTransform.csproj">
+    <ProjectReference Include="..\SolutionTransform\SolutionTransform.csproj">
       <Project>{F37F9843-2A33-48A4-8D90-81277E0FBAC8}</Project>
       <Name>SolutionTransform</Name>
     </ProjectReference>
