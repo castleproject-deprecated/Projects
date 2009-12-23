@@ -12,19 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Text.RegularExpressions;
+
 namespace SolutionTransform.ProjectFile
 {
-	using System.Xml;
+    using System.Xml;
 
-	public class RemoveTarget : MSBuild2003Transform {
-		private readonly string target;
+    public class RemoveTarget : MSBuild2003Transform
+    {
+        private readonly Regex target;
 
-		public RemoveTarget(string target) {
-			this.target = target;
-		}
+        public RemoveTarget(string target)
+        {
+            this.target = new Regex(Regex.Escape(target), RegexOptions.IgnoreCase);
+        }
 
-		public override void DoApplyTransform(XmlDocument document) {
-			Delete(document.DocumentElement, string.Format("/*/x:Import[@Project='{0}']", target.Replace("\\", "\\\\").Replace("$", "\\$")));
-		}
-	}
+        public override void DoApplyTransform(XmlDocument document)
+        {
+            foreach (XmlElement node in document.SelectNodes("/*/x:Import", namespaces))
+            {
+                if (target.IsMatch(node.GetAttribute("Project")))
+                {
+                    Delete(node);
+                }
+            }
+        }
+    }
 }

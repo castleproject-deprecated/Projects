@@ -17,15 +17,16 @@ namespace SolutionTransform
     using SolutionTransform.CodingStandards;
     using SolutionTransform.ProjectFile;
 
-	public class StandardTransforms
-	{
-		public static ITransform SilverlightTransform() {
-			return new CompositeTransform(
-				new MainSolutionTransform(),
+    public class StandardTransforms
+    {
+        public static ITransform SilverlightTransform()
+        {
+            return new CompositeTransform(
+                new MainSolutionTransform(),
                 RemoveFlavourTargetsAndDefines(),
-				new AddDefineConstant("SILVERLIGHT"),
+                new AddDefineConstant("SILVERLIGHT"),
                 new AddTarget(SilverlightTarget),
-				new ReferenceMapTransform
+                new ReferenceMapTransform
 				    {
 						{ "System", "mscorlib", "system" },
 						{ "System.Data" },
@@ -34,8 +35,8 @@ namespace SolutionTransform
 						{ "System.Configuration" },
 						{ "System.Runtime.Remoting" },
 					}
-    		);
-		}
+            );
+        }
 
         static readonly string SilverlightTarget = @"$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets";
         static readonly string CsharpTarget = @"(MSBuildToolsPath)\Microsoft.CSharp.targets";
@@ -45,15 +46,14 @@ namespace SolutionTransform
             return new CompositeTransform(
                 new RemoveDefineConstant("DOTNET35"),
                 new RemoveDefineConstant("SILVERLIGHT"),
-                new RemoveTarget(CsharpTarget),
-                new RemoveTarget(SilverlightTarget)
+                new RemoveTarget("Microsoft.Silverlight.CSharp.targets"),
+                new RemoveTarget("Microsoft.CSharp.targets")
                 );
         }
 
-
-		public static ITransform CastleStandardsTransform()
-		{
-			return new StandardizeTransform(new CastleStandardizer());
-		}
-	}
+        public static ITransform CastleStandardsTransform()
+        {
+            return new StandardizeTransform(new CastleStandardizer());
+        }
+    }
 }
