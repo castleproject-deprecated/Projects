@@ -12,6 +12,11 @@ namespace SolutionTransform
             this.filePath = filePath;
         }
 
+        internal XmlFile(XmlDocument document)
+        {
+            this.document = document;
+        }
+
         internal XmlDocument Document {
             get {
                 if (document == null) {
