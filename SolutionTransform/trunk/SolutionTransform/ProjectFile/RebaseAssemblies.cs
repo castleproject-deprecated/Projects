@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
+using SolutionTransform.Solutions;
 
 namespace SolutionTransform.ProjectFile
 {
@@ -23,10 +24,10 @@ namespace SolutionTransform.ProjectFile
             this.absolutePaths = relativePaths.Select(p => p.Contains(":") ? p : Path.Combine(solutionDirectory, p)).ToList();
         }
 
-        public override void DoApplyTransform(string path, XmlDocument document)
+        public override void DoApplyTransform(XmlFile xmlFile)
         {
             // TODO: Centralize path hacking logic
-            foreach (XmlElement hintPath in document.SelectNodes("//x:HintPath", namespaces))
+            foreach (XmlElement hintPath in xmlFile.Document.SelectNodes("//x:HintPath", namespaces))
             {
                 var fileName = Path.GetFileName(hintPath.InnerText);
                 var directory = absolutePaths.FirstOrDefault(p => File.Exists(Path.Combine(p, fileName)));
@@ -39,7 +40,7 @@ namespace SolutionTransform.ProjectFile
                     
                 } else
                 {
-                    var relative = RelativePath(Path.GetDirectoryName(path), Path.Combine(directory, fileName));
+                    var relative = RelativePath(Path.GetDirectoryName(xmlFile.Path), Path.Combine(directory, fileName));
                     hintPath.InnerText = relative;
                 }
             }

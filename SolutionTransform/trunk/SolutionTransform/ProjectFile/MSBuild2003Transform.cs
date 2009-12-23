@@ -21,16 +21,16 @@ namespace SolutionTransform.ProjectFile
 		protected static string build2003 = "http://schemas.microsoft.com/developer/msbuild/2003";
 		protected XmlNamespaceManager namespaces = null;
 
-		public void ApplyTransform(string path, XmlDocument document)
+        public void ApplyTransform(XmlFile xmlFile)
 		{
-			namespaces = new XmlNamespaceManager(document.NameTable);
+			namespaces = new XmlNamespaceManager(xmlFile.Document.NameTable);
 			namespaces.AddNamespace("x", build2003);
-			DoApplyTransform(path, document);
+			DoApplyTransform(xmlFile);
 		}
 
-		public virtual void DoApplyTransform(string path, XmlDocument document)
+		public virtual void DoApplyTransform(XmlFile xmlFile)
 		{
-			DoApplyTransform(document);
+            DoApplyTransform(xmlFile.Document);
 		}
 
 		public abstract void DoApplyTransform(XmlDocument document);

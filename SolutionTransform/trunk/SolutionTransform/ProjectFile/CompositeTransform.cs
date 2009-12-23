@@ -40,11 +40,11 @@ namespace SolutionTransform.ProjectFile
 		}
 
 
-		public void ApplyTransform(string path, XmlDocument document)
+		public void ApplyTransform(XmlFile xmlFile)
 		{
 			foreach (var transform in transforms)
 			{
-				transform.ApplyTransform(path, document);
+                transform.ApplyTransform(xmlFile);
 			}
 		}
 	}

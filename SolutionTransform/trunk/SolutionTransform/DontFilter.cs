@@ -12,10 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using SolutionTransform.Solutions;
+
 namespace SolutionTransform
 {
-    public interface ITransform
-	{
-		void ApplyTransform(XmlFile xmlFile);
-	}
+	using System;
+
+    public class DontFilter : IProjectFilter
+    {
+        public bool ShouldApply(SolutionProject project)
+        {
+            return !project.IsFolder;
+        }
+    }
 }

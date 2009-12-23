@@ -33,10 +33,10 @@ namespace SolutionTransform.CodingStandards
 			this.standardizer = standardizer;
 		}
 
-		public override void DoApplyTransform(string path, XmlDocument document)
+		public override void DoApplyTransform(XmlFile xmlFile)
 		{
-			string root = Path.GetDirectoryName(path);
-			foreach (XmlElement compile in document.SelectNodes("//x:Compile[@Include]", namespaces))
+            string root = Path.GetDirectoryName(xmlFile.Path);
+            foreach (XmlElement compile in xmlFile.Document.SelectNodes("//x:Compile[@Include]", namespaces))
 			{
 				string include = compile.GetAttribute("Include");
 				if (CSharp.IsMatch(include) && !AssemblyInfo.IsMatch(include))

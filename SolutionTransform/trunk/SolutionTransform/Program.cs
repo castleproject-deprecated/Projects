@@ -15,7 +15,7 @@
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
+using SolutionTransform.Solutions;
 
 [assembly:InternalsVisibleTo("SolutionTransform.Tests")]
 

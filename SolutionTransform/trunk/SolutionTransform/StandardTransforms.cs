@@ -22,8 +22,9 @@ namespace SolutionTransform
 		public static ITransform SilverlightTransform() {
 			return new CompositeTransform(
 				new MainSolutionTransform(),
+                RemoveFlavourTargetsAndDefines(),
 				new AddDefineConstant("SILVERLIGHT"),
-				new RemoveDefineConstant("DOTNET35"),
+                new AddTarget(SilverlightTarget),
 				new ReferenceMapTransform
 				    {
 						{ "System", "mscorlib", "system" },
@@ -32,11 +33,22 @@ namespace SolutionTransform
 						{ "System.Web" },
 						{ "System.Configuration" },
 						{ "System.Runtime.Remoting" },
-					},
-				new AddTarget(@"$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets"),
-				new RemoveTarget(@"$(MSBuildToolsPath)\Microsoft.CSharp.targets")
+					}
     		);
 		}
+
+        static readonly string SilverlightTarget = @"$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets";
+        static readonly string CsharpTarget = @"(MSBuildToolsPath)\Microsoft.CSharp.targets";
+
+        public static ITransform RemoveFlavourTargetsAndDefines()
+        {
+            return new CompositeTransform(
+                new RemoveDefineConstant("DOTNET35"),
+                new RemoveDefineConstant("SILVERLIGHT"),
+                new RemoveTarget(CsharpTarget),
+                new RemoveTarget(SilverlightTarget)
+                );
+        }
 
 
 		public static ITransform CastleStandardsTransform()

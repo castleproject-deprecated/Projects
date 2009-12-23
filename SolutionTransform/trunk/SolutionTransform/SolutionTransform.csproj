@@ -79,6 +79,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DontRename.cs" />
+    <Compile Include="IProjectFilter.cs" />
+    <Compile Include="IRename.cs" />
     <Compile Include="ProjectFile\AddDefineConstant.cs" />
     <Compile Include="ProjectFile\AddTarget.cs" />
     <Compile Include="ProjectFile\AltDotNetTransform.cs" />
@@ -99,10 +101,16 @@
     <Compile Include="ProjectFile\MapTransformBase.cs" />
     <Compile Include="ProjectFile\RemoveDefineConstant.cs" />
     <Compile Include="ProjectFile\RemoveTarget.cs" />
-    <Compile Include="SolutionFile.cs" />
-    <Compile Include="SolutionProject.cs" />
-    <Compile Include="StandardFilters.cs" />
-    <Compile Include="StandardRenames.cs" />
+    <Compile Include="RegexFilter.cs" />
+    <Compile Include="Solutions\CompositeCommand.cs" />
+    <Compile Include="Solutions\ExcludeCommand.cs" />
+    <Compile Include="Solutions\ISolutionCommand.cs" />
+    <Compile Include="Solutions\SolutionFile.cs" />
+    <Compile Include="Solutions\SolutionProject.cs" />
+    <Compile Include="Solutions\TransformCommand.cs" />
+    <Compile Include="DontFilter.cs" />
+    <Compile Include="RegexRename.cs" />
+    <Compile Include="XmlFile.cs" />
     <Compile Include="StandardTransforms.cs" />
     <Compile Include="TextReaderHelper.cs" />
   </ItemGroup>
