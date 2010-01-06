@@ -23,10 +23,16 @@ namespace SolutionTransform.ProjectFile
 
         public void ApplyTransform(XmlFile xmlFile)
 		{
-			namespaces = new XmlNamespaceManager(xmlFile.Document.NameTable);
-			namespaces.AddNamespace("x", build2003);
+            namespaces = MsBuild2003Namespace(xmlFile.Document);
 			DoApplyTransform(xmlFile);
 		}
+
+        internal static XmlNamespaceManager MsBuild2003Namespace(XmlDocument document)
+        {
+            var result = new XmlNamespaceManager(document.NameTable);
+            result.AddNamespace("x", build2003);
+            return result;
+        }
 
 		public virtual void DoApplyTransform(XmlFile xmlFile)
 		{

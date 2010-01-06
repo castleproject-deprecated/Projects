@@ -6,7 +6,7 @@ solution.Transform(
 	RegexRename("-vs2008", "-Silverlight"),
 	DontFilter(), 
 	StandardTransforms.SilverlightTransform(),
-	RebaseAssemblies(solution, """..\lib\silverlight-3.0""")
+	RebaseAssemblies(solution.BasePath, """..\lib\silverlight-3.0""")
 	# ,StandardTransforms.CastleStandardsTransform()
 )
 

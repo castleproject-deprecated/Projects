@@ -16,6 +16,7 @@ using System.Text;
 
 namespace SolutionTransform.Solutions
 {
+    /*
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
@@ -65,6 +66,19 @@ namespace SolutionTransform.Solutions
 			projects.Remove(solutionProject);
 		}
 
+        public void Add(SolutionProject solutionProject) {
+            var insertLine = lines.FindLastIndex(l => l == "Global");
+            lines.InsertRange(insertLine, solutionProject.Lines()); // Slap it on the end where it won't do any damage
+
+            lines.RemoveRange(solutionProject.lineIndex, 2);  // Take out the end project as well
+            foreach (var project in projects.Where(p => p.lineIndex > solutionProject.lineIndex)) {
+                project.lineIndex -= 2;
+            }
+            var regex = new Regex(solutionProject.Id.ToString(), RegexOptions.IgnoreCase);
+            lines.RemoveAll(regex.IsMatch);
+            projects.Remove(solutionProject);
+        }
+
         public void Transform(IRename rename, ISolutionCommand solutionCommand)
         {
             solutionCommand.Process(this);
@@ -111,4 +125,5 @@ namespace SolutionTransform.Solutions
 	        }
 	    }
 	}
+     */
 }

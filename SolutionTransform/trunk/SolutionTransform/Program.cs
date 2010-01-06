@@ -23,9 +23,10 @@ namespace SolutionTransform {
 	using System;
 
 	public class Program {
-		public static SolutionFile GetSolutionFile(string path)
+        public static ExternalSolutionApi GetSolutionFile(string path)
 		{
-			return new SolutionFile(path, path.FileContent());
+            var parser = new SolutionFileParser();
+            return new ExternalSolutionApi(parser.Parse(path, path.FileContent().AsLines()));
 		}
 
         public static string FullPath(string file)

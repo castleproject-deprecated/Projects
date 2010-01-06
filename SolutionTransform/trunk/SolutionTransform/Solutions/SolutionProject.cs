@@ -12,29 +12,49 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.IO;
+using System.Xml;
+using SolutionTransform.ProjectFile;
+
 namespace SolutionTransform.Solutions
 {
 	using System;
 
-	public class SolutionProject {
-		internal int lineIndex;
-		private readonly SolutionFile file;
+    public class SolutionProject : SolutionChapter {
 		private Guid type;
 		private string name;
         private string path;
         private XmlFile xmlFile;
 		private Guid id;
 
-		public SolutionProject(string line, int lineIndex, SolutionFile file) {
-			this.lineIndex = lineIndex;
-			this.file = file;
-			var components = line.Split('"');
+        public SolutionProject(string start, string end, string basePath) : base(start, end) {
+			var components = start.Split('"');
 			type = new Guid(components[1]);
 			name = components[3];
             path = components[5];
-            xmlFile = new XmlFile(System.IO.Path.Combine(file.BasePath, path));
+            xmlFile = new XmlFile(System.IO.Path.Combine(basePath, path));
 			id = new Guid(components[7]);
 		}
+
+        public SolutionProject(string relativePath, string basePath, Guid projectType) : base("", "EndProject")
+        {
+            this.type = projectType;
+            name = System.IO.Path.GetFileNameWithoutExtension(relativePath);
+            path = relativePath;
+            xmlFile = new XmlFile(System.IO.Path.Combine(basePath, path));
+            id = ProjectGuid(xmlFile.Document);
+            WriteLineBack();
+        }
+
+        static Guid ProjectGuid(XmlDocument xmlFile)
+        {
+            var element = (XmlElement)xmlFile.SelectSingleNode("/*/*/x:ProjectGuid", MSBuild2003Transform.MsBuild2003Namespace(xmlFile));
+            if (element == null)
+            {
+                throw new InvalidDataException("Project file doesn't seem to have a project GUID.");
+            }
+            return new Guid(element.InnerText);
+        }
 
 	    public XmlFile XmlFile
 	    {
@@ -47,6 +67,7 @@ namespace SolutionTransform.Solutions
 		}}
 
 		public readonly static Guid FolderProject = new Guid("{2150E333-8FDC-42A3-9474-1A3956D46DE8}");
+        public readonly static Guid CsProjProject = new Guid("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}");
 
 		public Guid Id {
 			get { return id; }
@@ -66,15 +87,21 @@ namespace SolutionTransform.Solutions
 			get { return type; }
 		}
 
+	    string BeginProject
+	    {
+	        get
+	        {
+                return string.Format(@"Project(""{{{0}}}"") = ""{1}"", ""{2}"", ""{{{3}}}""",
+                                     Type.ToString().ToUpperInvariant(), 
+                                     Name, 
+                                     Path, 
+                                     Id.ToString().ToUpperInvariant()
+                );
+	        }
+	    }
+
 		void WriteLineBack() {
-			var line = string.Format(@"Project(""{{{0}}}"") = ""{1}"", ""{2}"", ""{{{3}}}""",
-									 Type, Name, Path, Id
-				);
-			file.lines[lineIndex] = line;
+			Start = BeginProject;
 		}
-
-        
-
-	    
 	}
 }

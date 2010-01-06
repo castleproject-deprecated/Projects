@@ -104,9 +104,14 @@
     <Compile Include="RegexFilter.cs" />
     <Compile Include="Solutions\CompositeCommand.cs" />
     <Compile Include="Solutions\ExcludeCommand.cs" />
+    <Compile Include="Solutions\GlobalSection.cs" />
     <Compile Include="Solutions\ISolutionCommand.cs" />
+    <Compile Include="Solutions\SolutionChapter.cs" />
     <Compile Include="Solutions\SolutionFile.cs" />
+    <Compile Include="Solutions\SolutionFile2.cs" />
+    <Compile Include="Solutions\SolutionFileParser.cs" />
     <Compile Include="Solutions\SolutionProject.cs" />
+    <Compile Include="Solutions\SolutionSection.cs" />
     <Compile Include="Solutions\TransformCommand.cs" />
     <Compile Include="DontFilter.cs" />
     <Compile Include="RegexRename.cs" />

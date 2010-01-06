@@ -11,7 +11,7 @@ namespace SolutionTransform.Solutions
             this.underlying = underlying;
         }
 
-        public void Process(SolutionFile solutionFile)
+        public void Process(SolutionFile2 solutionFile)
         {
             foreach (var command in underlying)
             {

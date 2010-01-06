@@ -13,14 +13,15 @@ namespace SolutionTransform.ProjectFile
     {
         private readonly IEnumerable<string> absolutePaths;
 
-        public RebaseAssemblies(SolutionFile root, params string[] relativePaths) : this(root.FullPath, (IEnumerable<string>) relativePaths)
+        public RebaseAssemblies(string basePath, params string[] relativePaths)
+            : this(basePath, (IEnumerable<string>)relativePaths)
         {
             
         }
 
-        public RebaseAssemblies(string solutionPath, IEnumerable<string> relativePaths)
+        public RebaseAssemblies(string basePath, IEnumerable<string> relativePaths)
         {
-            var solutionDirectory = Path.GetDirectoryName(solutionPath);
+            var solutionDirectory = basePath;
             this.absolutePaths = relativePaths.Select(p => p.Contains(":") ? p : Path.Combine(solutionDirectory, p)).ToList();
         }
 

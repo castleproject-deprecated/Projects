@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 
 namespace SolutionTransform.Solutions
@@ -13,12 +14,20 @@ namespace SolutionTransform.Solutions
             this.transform = transform;
         }
 
-        public void Process(SolutionFile solutionFile)
+        public void Process(SolutionFile2 solutionFile)
         {
-            foreach (var project in solutionFile.projects.Where(filter.ShouldApply))
+            foreach (var project in solutionFile.Projects.Where(filter.ShouldApply))
             {
                 transform.ApplyTransform(project.XmlFile);
             }
+        }
+    }
+
+    public class AddProjectCommand : ISolutionCommand
+    {
+        public void Process(SolutionFile2 solutionFile)
+        {
+            throw new NotImplementedException();
         }
     }
 }

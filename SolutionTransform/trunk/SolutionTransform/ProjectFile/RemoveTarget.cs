@@ -16,26 +16,21 @@ using System.Text.RegularExpressions;
 
 namespace SolutionTransform.ProjectFile
 {
-    using System.Xml;
+	using System.Xml;
 
-    public class RemoveTarget : MSBuild2003Transform
-    {
-        private readonly Regex target;
+	public class RemoveTarget : MSBuild2003Transform {
+		private readonly Regex target;
 
-        public RemoveTarget(string target)
-        {
+		public RemoveTarget(string target) {
             this.target = new Regex(Regex.Escape(target), RegexOptions.IgnoreCase);
-        }
+		}
 
-        public override void DoApplyTransform(XmlDocument document)
-        {
-            foreach (XmlElement node in document.SelectNodes("/*/x:Import", namespaces))
-            {
-                if (target.IsMatch(node.GetAttribute("Project")))
-                {
+		public override void DoApplyTransform(XmlDocument document) {
+            foreach (XmlElement node in document.SelectNodes("/*/x:Import", namespaces)) {
+                if (target.IsMatch(node.GetAttribute("Project"))) {
                     Delete(node);
                 }
             }
-        }
-    }
+		}
+	}
 }

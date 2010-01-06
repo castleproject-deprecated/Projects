@@ -45,8 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SolutionRoundTrip.cs" />
     <Compile Include="StandardizationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TargetTests.cs" />
     <Compile Include="TargetTests.cs" />
   </ItemGroup>
   <ItemGroup>

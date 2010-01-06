@@ -2,6 +2,6 @@ namespace SolutionTransform.Solutions
 {
     public interface ISolutionCommand
     {
-        void Process(SolutionFile solutionFile);
+        void Process(SolutionFile2 solutionFile);
     }
 }

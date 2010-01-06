@@ -51,9 +51,9 @@ namespace SolutionTransform
                 );
         }
 
-        public static ITransform CastleStandardsTransform()
-        {
-            return new StandardizeTransform(new CastleStandardizer());
-        }
-    }
+		public static ITransform CastleStandardsTransform()
+		{
+			return new StandardizeTransform(new CastleStandardizer());
+		}
+	}
 }
