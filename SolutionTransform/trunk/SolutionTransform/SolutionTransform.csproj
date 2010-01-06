@@ -84,10 +84,10 @@
     <Compile Include="ProjectFile\AddDefineConstant.cs" />
     <Compile Include="ProjectFile\AddTarget.cs" />
     <Compile Include="ProjectFile\AltDotNetTransform.cs" />
-    <Compile Include="CodingStandards\CastleStandardizer.cs" />
-    <Compile Include="CodingStandards\IStandardizer.cs" />
-    <Compile Include="CodingStandards\Standardizer.cs" />
-    <Compile Include="CodingStandards\StandardizeTransform.cs" />
+    <Compile Include="ProjectFile\CodingStandards\CastleStandardizer.cs" />
+    <Compile Include="ProjectFile\CodingStandards\IStandardizer.cs" />
+    <Compile Include="ProjectFile\CodingStandards\Standardizer.cs" />
+    <Compile Include="ProjectFile\CodingStandards\StandardizeTransform.cs" />
     <Compile Include="ProjectFile\DefineConstantTransform.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectFile\CompositeTransform.cs" />
