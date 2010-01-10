@@ -9,7 +9,7 @@ namespace SolutionTransform.Solutions
             this.filter = filter;
         }
 
-        public void Process(SolutionFile2 solutionFile) {
+        public void Process(SolutionFile solutionFile) {
             foreach (var project in solutionFile.Projects.ToList()) {
                 if (!filter.ShouldApply(project)) {
                     solutionFile.Remove(project);

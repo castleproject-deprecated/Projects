@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{741DBCAE-131
 		Lib\Boo.Lang.Parser.dll = Lib\Boo.Lang.Parser.dll
 		Lib\Boo.Lang.PatternMatching.dll = Lib\Boo.Lang.PatternMatching.dll
 		Lib\Boo.Lang.Useful.dll = Lib\Boo.Lang.Useful.dll
+		Lib\nunit.framework.dll = Lib\nunit.framework.dll
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{644CD592-1D91-4F41-B3D1-F79E985C4E16}"

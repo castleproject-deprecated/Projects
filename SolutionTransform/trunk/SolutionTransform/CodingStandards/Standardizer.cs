@@ -17,7 +17,7 @@ namespace SolutionTransform.CodingStandards {
 	using System.Collections.Generic;
 	using System.IO;
 
-	class Standardizer : IStandardizer {
+    class Standardizer : IStandardizer {
 		private readonly string licenseHeader;
 		private readonly int tabSize;
 
@@ -27,7 +27,7 @@ namespace SolutionTransform.CodingStandards {
 			this.tabSize = tabSize;
 		}
 
-		public string Standardize(string path, string code) {
+		public string Standardize(FilePath path, string code) {
 			var result = InternalStandardize(code);
 			if (result != InternalStandardize(result)) {
 				throw new Exception("Standardization code was not idempotent.");

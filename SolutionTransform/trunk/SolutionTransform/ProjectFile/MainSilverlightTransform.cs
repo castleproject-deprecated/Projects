@@ -39,6 +39,8 @@ namespace SolutionTransform.ProjectFile
 			var flavour = AddElement(vs, "FlavorProperties");
 			flavour.SetAttribute("GUID", "{A1591282-1198-4647-A2B1-27E5FF5F6F3B}");
 			var spp = AddElement(flavour, "SilverlightProjectProperties");
+
+            Delete(document.DocumentElement, "//x:RequiredTargetFramework");
 		}
 	}
 }

@@ -16,6 +16,6 @@ namespace SolutionTransform.CodingStandards
 {
 	public interface IStandardizer
 	{
-		string Standardize(string path, string code);
+		string Standardize(FilePath path, string code);
 	}
 }

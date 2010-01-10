@@ -14,7 +14,7 @@ namespace SolutionTransform.Solutions
             this.transform = transform;
         }
 
-        public void Process(SolutionFile2 solutionFile)
+        public void Process(SolutionFile solutionFile)
         {
             foreach (var project in solutionFile.Projects.Where(filter.ShouldApply))
             {
@@ -25,7 +25,7 @@ namespace SolutionTransform.Solutions
 
     public class AddProjectCommand : ISolutionCommand
     {
-        public void Process(SolutionFile2 solutionFile)
+        public void Process(SolutionFile solutionFile)
         {
             throw new NotImplementedException();
         }

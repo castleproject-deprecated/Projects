@@ -26,34 +26,35 @@ namespace SolutionTransform {
         public static ExternalSolutionApi GetSolutionFile(string path)
 		{
             var parser = new SolutionFileParser();
-            return new ExternalSolutionApi(parser.Parse(path, path.FileContent().AsLines()));
+            var filePath = new FilePath(path, false);
+            return new ExternalSolutionApi(parser.Parse(filePath, filePath.FileContent().AsLines()));
 		}
 
-        public static string FullPath(string file)
+        public static FilePath FullPath(string file)
         {
             if (file.Contains("\\"))
             {
                 if (file.Contains(":"))
                 {
-                    return file;
+                    return new FilePath(file, false);
                 }
-                return Path.Combine(GetCurrentPath(), file);
+                return GetCurrentPath().File(file);
             }
             return FindScript(GetCurrentPath(), file);
         }
 
-	    private static string FindScript(string path, string file)
+	    private static FilePath FindScript(FilePath path, string file)
 	    {
-            string fullPath = Path.Combine(path, file);
-	        if (File.Exists(fullPath))
+            var searchPath = path.File(file);
+	        if (File.Exists(searchPath.Path))
 	        {
-                return fullPath;
+                return searchPath;
 	        }
-            fullPath = Path.Combine(Path.Combine(path, "Scripts"), file);
-            if (File.Exists(fullPath)) {
-                return fullPath;
+            searchPath = path.Directory("Scripts").File(file);
+            if (File.Exists(searchPath.Path)) {
+                return searchPath;
             }
-            string parent = Path.GetDirectoryName(path);
+            var parent = path.Parent;
             if (parent == null)
             {
                 return null;
@@ -61,16 +62,16 @@ namespace SolutionTransform {
             return FindScript(parent, file);
 	    }
 
-	    public static string GetCurrentPath()
+	    public static FilePath GetCurrentPath()
         {
             var executablePath = Assembly.GetExecutingAssembly().CodeBase;
             return ToLocal(Path.GetDirectoryName(executablePath));
         }
 
-        static string ToLocal(string uriStyle)
+        static FilePath ToLocal(string uriStyle)
         {
             string result = uriStyle.Replace("/", "\\");
-            return result.Substring(6);
+            return new FilePath(result.Substring(6), true);
         }
 
 		public static int Main(string[] args)

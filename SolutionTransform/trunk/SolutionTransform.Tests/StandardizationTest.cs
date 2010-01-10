@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NUnit.Framework;
 using SolutionTransform.CodingStandards;
 
 namespace SolutionTransform.Tests {
+    [TestFixture]
     public class StandardizationTest {
-
+        [Test]
         public void CompilerDirectivesOutsideOfNamespaceShouldBePreserved()
         {
             string file = 
@@ -61,10 +63,7 @@ namespace Castle.Core.Resource
 ";
             var standardizer = new CastleStandardizer();
             var result = standardizer.Standardize(null, file);
-            if (!result.Contains("#if"))
-            {
-                throw new Exception();
-            }
+            Assert.IsTrue(result.Contains("#if"), "Preprocessor directive was stripped.  This is bad...");
         }
     }
 }

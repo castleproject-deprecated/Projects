@@ -33,9 +33,9 @@ namespace SolutionTransform
 			}
 		}
 
-		public static string FileContent(this string path)
+		public static string FileContent(this FilePath path)
 		{
-			using (var stream = new StreamReader(path)) {
+			using (var stream = new StreamReader(path.Path)) {
 				return stream.ReadToEnd();
 			}
 		}

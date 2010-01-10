@@ -3,57 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using SolutionTransform.ProjectFile;
 
 namespace SolutionTransform.Solutions
 {
-    public class ExternalSolutionApi
+    public class SolutionFile
     {
-        private readonly SolutionFile2 solutionFile;
-
-        public ExternalSolutionApi(SolutionFile2 solutionFile)
-        {
-            this.solutionFile = solutionFile;
-        }
-
-        public void Transform(IRename rename, ISolutionCommand solutionCommand) {
-            solutionCommand.Process(solutionFile);
-            var renameCommand = new TransformCommand(new DontFilter(), new NameTransform(rename));
-            renameCommand.Process(solutionFile);
-
-            foreach (var project in solutionFile.Projects.Where(p => !p.IsFolder)) {
-                project.Name = rename.RenameSolutionProjectName(project.Name);
-                project.Path = rename.RenameCsproj(project.Path);
-                project.XmlFile.Document.Save(rename.RenameCsproj(project.XmlFile.Path));
-                // Note that project.Path and project.XmlFile.Path have different values....
-            }
-            solutionFile.Save(rename.RenameSln(solutionFile.FullPath));
-        }
-
-        public void Transform(IRename rename, IProjectFilter filter, ITransform transform) {
-            Transform(rename, new TransformCommand(filter, transform));
-        }
-
-        public void Transform(IRename rename, IProjectFilter filter, params ITransform[] transforms) {
-            Transform(rename, filter, new CompositeTransform(transforms));
-        }
-
-        public string BasePath
-        {
-            get
-            {
-                return Path.GetDirectoryName(solutionFile.FullPath);
-            }
-        }
-    } 
-
-    public class SolutionFile2
-    {
-        private readonly string solutionPath;
+        private readonly FilePath solutionPath;
         List<string> preamble;
         List<SolutionChapter> chapters;
 
-        public SolutionFile2(string solutionPath, IEnumerable<string> preamble, IEnumerable<SolutionChapter> chapters)
+        public SolutionFile(FilePath solutionPath, IEnumerable<string> preamble, IEnumerable<SolutionChapter> chapters)
         {
             this.solutionPath = solutionPath;
             this.preamble = preamble.ToList();
@@ -81,7 +40,7 @@ namespace SolutionTransform.Solutions
             }
         }
 
-        public string FullPath
+        public FilePath FullPath
         {
             get { return solutionPath; }
         }

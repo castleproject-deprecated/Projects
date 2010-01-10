@@ -4,10 +4,10 @@ namespace SolutionTransform
 {
     public class XmlFile
     {
-        private readonly string filePath;
+        private readonly FilePath filePath;
         XmlDocument document;
 
-        public XmlFile(string filePath)
+        public XmlFile(FilePath filePath)
         {
             this.filePath = filePath;
         }
@@ -21,13 +21,13 @@ namespace SolutionTransform
             get {
                 if (document == null) {
                     document = new XmlDocument();
-                    document.Load(filePath);
+                    document.Load(filePath.Path);
                 }
                 return document;
             }
         }
 
-        public string Path
+        public FilePath Path
         {
             get { return filePath; }
         }

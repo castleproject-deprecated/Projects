@@ -6,17 +6,16 @@ using System.Text.RegularExpressions;
 
 namespace SolutionTransform.Solutions {
     public class SolutionFileParser {
-        public SolutionFile2 Parse(string solutionPath, IEnumerable<string> lines) {
+        public SolutionFile Parse(FilePath solutionPath, IEnumerable<string> lines) {
             Func<string, bool> chapter = l => l.StartsWith("Project") || l.StartsWith("Global");
-            var basePath = Path.GetDirectoryName(solutionPath);
             var chapterLines = Split(lines, chapter).ToList();
             var preamble = chapterLines[0];
             chapterLines.RemoveAt(0);
-            return new SolutionFile2(solutionPath, preamble, chapterLines.Select(l => ParseChapter(basePath, l)));
+            return new SolutionFile(solutionPath, preamble, chapterLines.Select(l => ParseChapter(solutionPath, l)));
 
         }
 
-        SolutionChapter ParseChapter(string basePath, List<string> lines) {
+        SolutionChapter ParseChapter(FilePath basePath, List<string> lines) {
             SolutionChapter result = null;
             var start = lines[0];
             var end = lines[lines.Count - 1];

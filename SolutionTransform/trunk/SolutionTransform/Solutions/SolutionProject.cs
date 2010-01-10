@@ -23,25 +23,26 @@ namespace SolutionTransform.Solutions
     public class SolutionProject : SolutionChapter {
 		private Guid type;
 		private string name;
-        private string path;
+        private FilePath path;
         private XmlFile xmlFile;
 		private Guid id;
 
-        public SolutionProject(string start, string end, string basePath) : base(start, end) {
+        public SolutionProject(string start, string end, FilePath basePath) : base(start, end) {
 			var components = start.Split('"');
 			type = new Guid(components[1]);
 			name = components[3];
-            path = components[5];
-            xmlFile = new XmlFile(System.IO.Path.Combine(basePath, path));
+            path = new FilePath(components[5], false);
+            xmlFile = new XmlFile(path.ToAbsolutePath(basePath));
 			id = new Guid(components[7]);
 		}
 
-        public SolutionProject(string relativePath, string basePath, Guid projectType) : base("", "EndProject")
+        public SolutionProject(FilePath relativePath, FilePath basePath, Guid projectType)
+            : base("", "EndProject")
         {
             this.type = projectType;
-            name = System.IO.Path.GetFileNameWithoutExtension(relativePath);
+            name = System.IO.Path.GetFileNameWithoutExtension(relativePath.Path);
             path = relativePath;
-            xmlFile = new XmlFile(System.IO.Path.Combine(basePath, path));
+            xmlFile = new XmlFile(path.ToAbsolutePath(basePath));
             id = ProjectGuid(xmlFile.Document);
             WriteLineBack();
         }
@@ -73,7 +74,7 @@ namespace SolutionTransform.Solutions
 			get { return id; }
 		}
 
-		public string Path {
+		public FilePath Path {
 			get { return path; }
 			set { path = value; WriteLineBack(); }
 		}
@@ -94,7 +95,7 @@ namespace SolutionTransform.Solutions
                 return string.Format(@"Project(""{{{0}}}"") = ""{1}"", ""{2}"", ""{{{3}}}""",
                                      Type.ToString().ToUpperInvariant(), 
                                      Name, 
-                                     Path, 
+                                     Path.Path, 
                                      Id.ToString().ToUpperInvariant()
                 );
 	        }

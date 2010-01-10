@@ -35,14 +35,14 @@ namespace SolutionTransform.CodingStandards
 
 		public override void DoApplyTransform(XmlFile xmlFile)
 		{
-            string root = Path.GetDirectoryName(xmlFile.Path);
+            FilePath root = xmlFile.Path.Parent;
             foreach (XmlElement compile in xmlFile.Document.SelectNodes("//x:Compile[@Include]", namespaces))
 			{
 				string include = compile.GetAttribute("Include");
 				if (CSharp.IsMatch(include) && !AssemblyInfo.IsMatch(include))
 				{
-					var filePath = Path.Combine(root, include);
-					if (File.Exists(filePath))
+					var filePath = root.File(include);
+					if (File.Exists(filePath.Path))
 					{
 						var content = filePath.FileContent();
 						var transformed = standardizer.Standardize(filePath, content);
@@ -50,7 +50,7 @@ namespace SolutionTransform.CodingStandards
 						{
 							continue;
 						}
-						using (var writer = new StreamWriter(filePath, false))
+						using (var writer = new StreamWriter(filePath.Path, false))
 						{
 							writer.Write(transformed);
 							writer.Flush();

@@ -78,20 +78,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodingStandards\CastleStandardizer.cs" />
+    <Compile Include="CodingStandards\IStandardizer.cs" />
+    <Compile Include="CodingStandards\Standardizer.cs" />
+    <Compile Include="CodingStandards\StandardizeTransform.cs" />
     <Compile Include="DontRename.cs" />
     <Compile Include="IProjectFilter.cs" />
     <Compile Include="IRename.cs" />
     <Compile Include="ProjectFile\AddDefineConstant.cs" />
     <Compile Include="ProjectFile\AddTarget.cs" />
     <Compile Include="ProjectFile\AltDotNetTransform.cs" />
-    <Compile Include="ProjectFile\CodingStandards\CastleStandardizer.cs" />
-    <Compile Include="ProjectFile\CodingStandards\IStandardizer.cs" />
-    <Compile Include="ProjectFile\CodingStandards\Standardizer.cs" />
-    <Compile Include="ProjectFile\CodingStandards\StandardizeTransform.cs" />
+    <Compile Include="ProjectFile\ChangeOutputPaths.cs" />
     <Compile Include="ProjectFile\DefineConstantTransform.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectFile\CompositeTransform.cs" />
     <Compile Include="ITransform.cs" />
+    <Compile Include="FilePath.cs" />
+    <Compile Include="ProjectFile\LocalizeGACedReferences.cs" />
     <Compile Include="ProjectFile\MainSilverlightTransform.cs" />
     <Compile Include="ProjectFile\MSBuild2003Transform.cs" />
     <Compile Include="ProjectFile\NameTransform.cs" />
@@ -104,11 +107,11 @@
     <Compile Include="RegexFilter.cs" />
     <Compile Include="Solutions\CompositeCommand.cs" />
     <Compile Include="Solutions\ExcludeCommand.cs" />
+    <Compile Include="Solutions\ExternalSolutionApi.cs" />
     <Compile Include="Solutions\GlobalSection.cs" />
     <Compile Include="Solutions\ISolutionCommand.cs" />
     <Compile Include="Solutions\SolutionChapter.cs" />
     <Compile Include="Solutions\SolutionFile.cs" />
-    <Compile Include="Solutions\SolutionFile2.cs" />
     <Compile Include="Solutions\SolutionFileParser.cs" />
     <Compile Include="Solutions\SolutionProject.cs" />
     <Compile Include="Solutions\SolutionSection.cs" />

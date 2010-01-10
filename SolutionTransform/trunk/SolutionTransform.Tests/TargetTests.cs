@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using NUnit.Framework;
 
 namespace SolutionTransform.Tests {
-    class TargetTests {
+    [TestFixture]
+    public class TargetTests {
         string iocTests = @"
 <Project DefaultTargets=""Build"" xmlns=""http://schemas.microsoft.com/developer/msbuild/2003"" ToolsVersion=""3.5"">
   <PropertyGroup>
@@ -512,10 +514,7 @@ namespace SolutionTransform.Tests {
             document.LoadXml(this.iocTests);
             var remove = StandardTransforms.RemoveFlavourTargetsAndDefines();
             remove.ApplyTransform(new XmlFile(document));
-            if (document.OuterXml.Contains(".targets"))
-            {
-                throw new Exception();
-            }
+            Assert.IsFalse(document.OuterXml.Contains(".targets"), "Targets were not removed.");
         }
     }
 }

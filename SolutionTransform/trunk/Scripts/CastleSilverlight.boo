@@ -3,10 +3,11 @@ import System.Text.RegularExpressions
 import SolutionTransform.ProjectFile
 
 solution.Transform(
-	RegexRename("-vs2008", "-Silverlight"),
+	StandardRename("-Silverlight"),
 	DontFilter(), 
-	StandardTransforms.SilverlightTransform(),
-	RebaseAssemblies(solution.BasePath, """..\lib\silverlight-3.0""")
+	StandardTransforms.Silverlight30Transform(),
+	RebaseAssemblies(solution.BasePath, """..\lib\silverlight-3.0"""),
+	ChangeOutputPaths("""build\silverlight30""")
 	# ,StandardTransforms.CastleStandardsTransform()
 )
 

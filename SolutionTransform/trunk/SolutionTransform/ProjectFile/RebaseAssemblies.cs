@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Xml;
 using SolutionTransform.Solutions;
 
 namespace SolutionTransform.ProjectFile
 {
+
     public class RebaseAssemblies : MSBuild2003Transform
     {
-        private readonly IEnumerable<string> absolutePaths;
+        private readonly IEnumerable<FilePath> absolutePaths;
 
         public RebaseAssemblies(string basePath, params string[] relativePaths)
             : this(basePath, (IEnumerable<string>)relativePaths)
@@ -21,8 +21,8 @@ namespace SolutionTransform.ProjectFile
 
         public RebaseAssemblies(string basePath, IEnumerable<string> relativePaths)
         {
-            var solutionDirectory = basePath;
-            this.absolutePaths = relativePaths.Select(p => p.Contains(":") ? p : Path.Combine(solutionDirectory, p)).ToList();
+            var solutionDirectory = new FilePath(basePath, true);
+            this.absolutePaths = relativePaths.Select(p => (new FilePath(p, true)).ToAbsolutePath(solutionDirectory)).ToList();
         }
 
         public override void DoApplyTransform(XmlFile xmlFile)
@@ -31,7 +31,7 @@ namespace SolutionTransform.ProjectFile
             foreach (XmlElement hintPath in xmlFile.Document.SelectNodes("//x:HintPath", namespaces))
             {
                 var fileName = Path.GetFileName(hintPath.InnerText);
-                var directory = absolutePaths.FirstOrDefault(p => File.Exists(Path.Combine(p, fileName)));
+                var directory = absolutePaths.FirstOrDefault(p => File.Exists(p.File(fileName).Path));
                 if (directory == null)
                 {
                     var error = string.Format("Couldn't rebase {0}.", hintPath.InnerText);
@@ -41,32 +41,12 @@ namespace SolutionTransform.ProjectFile
                     
                 } else
                 {
-                    var relative = RelativePath(Path.GetDirectoryName(xmlFile.Path), Path.Combine(directory, fileName));
+                    var relative = directory.File(fileName).PathFrom(xmlFile.Path).Path;
                     hintPath.InnerText = relative;
                 }
             }
         }
 
-        static string RelativePath(string from, string to)
-        {
-            return RelativePath(from, to, 0);
-        }
-
-        static string RelativePath(string from, string to, int directoriesUp)
-        {
-            var match = Regex.Match(to, Regex.Escape(from));
-            if (match == Match.Empty)
-            {
-                return RelativePath(Path.GetDirectoryName(from), to, directoriesUp+1);
-            }
-            var result = new string[directoriesUp+1];
-            for (int index = 0; index < directoriesUp; index++)
-            {
-                result[index] = "..";
-            }
-            result[directoriesUp] = to.Substring(match.Length+1);
-            return string.Join("\\", result);
-        }
 
         public override void DoApplyTransform(XmlDocument document)
         {

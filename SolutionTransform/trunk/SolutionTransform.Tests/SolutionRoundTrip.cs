@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SolutionTransform.Solutions;
+using NUnit.Framework;
 
 namespace SolutionTransform.Tests {
-    class SolutionRoundTrip {
+    [TestFixture]
+    public class SolutionRoundTrip {
         string iocSolutionJan2010 = @"
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
@@ -59,15 +61,13 @@ Global
 EndGlobal
 ";
 
+        [Test]
         public void CanRoundTripSolutionFile()
         {
             var parser = new SolutionFileParser();
-            var solutionFile = parser.Parse("c:\\x.sln", iocSolutionJan2010.AsLines());
+            var solutionFile = parser.Parse(new FilePath ("c:\\x.sln", false), iocSolutionJan2010.AsLines());
             var roundTripped = string.Join(Environment.NewLine, solutionFile.Lines().ToArray()) + Environment.NewLine;
-            if (roundTripped != iocSolutionJan2010)
-            {
-                throw new Exception("We have a problem");
-            }
+            Assert.That(roundTripped, Is.EqualTo(iocSolutionJan2010), "Roundtripping loading the solution should not have changed it at all.");
         }
     }
 }

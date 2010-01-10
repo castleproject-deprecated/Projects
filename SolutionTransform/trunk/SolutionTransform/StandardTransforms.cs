@@ -19,13 +19,13 @@ namespace SolutionTransform
 
     public class StandardTransforms
     {
-        public static ITransform SilverlightTransform()
+        public static ITransform Silverlight30Transform()
         {
             return new CompositeTransform(
                 new MainSolutionTransform(),
                 RemoveFlavourTargetsAndDefines(),
                 new AddDefineConstant("SILVERLIGHT"),
-                new AddTarget(SilverlightTarget),
+                new AddTarget(Silverlight30Target),
                 new ReferenceMapTransform
 				    {
 						{ "System", "mscorlib", "system" },
@@ -34,11 +34,12 @@ namespace SolutionTransform
 						{ "System.Web" },
 						{ "System.Configuration" },
 						{ "System.Runtime.Remoting" },
-					}
+					},
+                new LocalizeGACedReferences()
             );
         }
 
-        static readonly string SilverlightTarget = @"$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets";
+        static readonly string Silverlight30Target = @"$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets";
         static readonly string CsharpTarget = @"(MSBuildToolsPath)\Microsoft.CSharp.targets";
 
         public static ITransform RemoveFlavourTargetsAndDefines()
