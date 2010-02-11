@@ -66,7 +66,7 @@ namespace NHaml.Web.MonoRail.Tests
 
 
             Helpers["urlhelper"] = Helpers["url"] = new UrlHelper(StubEngineContext);
-            Helpers["htmlhelper"] = Helpers["html"] = new HtmlHelper(StubEngineContext);
+            Helpers["formhelper"] = Helpers["form"] = new FormHelper(StubEngineContext);
             Helpers["dicthelper"] = Helpers["dict"] = new DictHelper(StubEngineContext);
             Helpers["DateFormatHelper"] = Helpers["DateFormat"] = new DateFormatHelper(StubEngineContext);
 

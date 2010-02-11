@@ -34,6 +34,10 @@
     <DocumentationFile>bin\Release\NHaml.Web.MonoRail.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Components.Common.EmailSender, Version=1.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Castle.Components.Common.EmailSender.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.Components.DictionaryAdapter, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Castle.Components.DictionaryAdapter.dll</HintPath>
@@ -45,6 +49,10 @@
     <Reference Include="Castle.MonoRail.Framework, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Castle.MonoRail.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Castle.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="NHaml, Version=1.5.0.2, Culture=neutral, PublicKeyToken=d603208bac452365, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -67,8 +75,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComponentData.cs" />
     <Compile Include="ComponentMarkupRule.cs" />
     <Compile Include="ComponentSectionMarkupRule.cs" />
+    <Compile Include="HtmlHelper.cs" />
     <Compile Include="NHamlMonoRailView.cs" />
     <Compile Include="NHamlMonoRailViewEngine.cs" />
     <Compile Include="NHamlViewComponentContext.cs">

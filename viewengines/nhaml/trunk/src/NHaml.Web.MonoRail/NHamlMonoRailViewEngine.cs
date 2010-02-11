@@ -49,7 +49,7 @@ namespace NHaml.Web.MonoRail
 
 
             options.AddReference(typeof(IServiceEnabledComponent).Assembly.Location);
-            options.AddReference( typeof( HtmlHelper ).Assembly.Location );
+            options.AddReference( typeof( FormHelper ).Assembly.Location );
             options.AddReference( typeof( NHamlMonoRailViewEngine ).Assembly.Location );
             options.AddReference( typeof( DataContext ).Assembly.Location );
             options.AddReference( typeof( Action ).Assembly.Location );
@@ -113,6 +113,7 @@ namespace NHaml.Web.MonoRail
             foreach (var key in controllerContext.Helpers.Keys)
             {
                 templateBuilderContext.Helpers.Add((string) key, controllerContext.Helpers[key].GetType());
+                Debug.WriteLine(key);
 	}
             var compiledTemplate = TemplateEngine.Compile(TemplateEngine.Options.TemplateBaseType, TemplateEngine.ConvertPathsToViewSources(sources), templateBuilderContext);
             var template = (NHamlMonoRailView) compiledTemplate.CreateInstance();
@@ -121,7 +122,8 @@ namespace NHaml.Web.MonoRail
             foreach (var key in controllerContext.Helpers.Keys)
             {
                 var property = tempalteType.GetField((string) key);
-                property.SetValue(template, controllerContext.Helpers[key]);
+                var value = controllerContext.Helpers[key];
+                property.SetValue(template, value);
             }
             return template;
         }
@@ -193,9 +195,8 @@ namespace NHaml.Web.MonoRail
             var list = new List<string>();
             if (controllerContext.LayoutNames != null && controllerContext.LayoutNames.Length != 0)
             {
-                for (var index = 0; index < controllerContext.LayoutNames.Length; index++)
+                foreach (var layoutName in controllerContext.LayoutNames)
                 {
-                    var layoutName = controllerContext.LayoutNames[index];
                     var layoutTemplate = layoutName;
                     if (!layoutTemplate.StartsWith("/"))
                     {

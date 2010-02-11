@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Permissions;
 using System.Web;
 using Castle.MonoRail.Framework;
@@ -22,12 +23,7 @@ namespace NHaml.Web.MonoRail
 
         public static IDictionary<string,object> GetDictionaryFromKeyValue(params KeyValuePair<string, object>[] keyValuePairs)
         {
-            var dictionary = new Dictionary<string, object>();
-            foreach (var keyValuePair in keyValuePairs)
-            {
-                dictionary.Add(keyValuePair.Key, keyValuePair.Value);
-            }
-            return dictionary;
+            return keyValuePairs.ToDictionary(keyValuePair => keyValuePair.Key, keyValuePair => keyValuePair.Value);
         }
 
    
@@ -176,12 +172,11 @@ namespace NHaml.Web.MonoRail
                 subView.PropertyBag[entry.Key] = entry.Value;
             }
             subView.Render(writer);
-            foreach (DictionaryEntry entry in subView.PropertyBag)
+            foreach (var entry in subView
+                .PropertyBag
+                .Cast<DictionaryEntry>()
+                .Where(entry => subView.PropertyBag.Contains(entry.Key + ".@bubbleUp")))
             {
-                if (!subView.PropertyBag.Contains(entry.Key + ".@bubbleUp"))
-                {
-                    continue;
-                }
                 PropertyBag[entry.Key] = entry.Value;
                 PropertyBag[entry.Key + ".@bubbleUp"] = true;
             }
@@ -205,45 +200,14 @@ namespace NHaml.Web.MonoRail
         {
             //absolute path from Views directory
             if (subviewName[0] == '/')
+            {
                 return subviewName.Substring(1) + ViewEngine.ViewFileExtension;
+            }
             return Path.Combine(ViewEngine.ViewRootDir, subviewName) + ViewEngine.ViewFileExtension;
         }
 
 
     
-    }
-
-    public class ComponentData
-    {
-        public NHamlMonoRailView View { get; set; }
-        public string Name { get; set; }
-        public IDictionary<string, object> Parameters { get; set; }
-        public Dictionary<string, Action<TextWriter>> Sections{ get; set;}
-
-        public ComponentData(NHamlMonoRailView view, string name, IDictionary<string, object> parameters):this(view,name, parameters, null)
-        {
-        }
-        public ComponentData(NHamlMonoRailView view, string name, IDictionary<string, object> parameters, Action<TextWriter> action)
-        {
-            Body = action;
-            View = view;
-            Name = name;
-            Parameters = parameters;
-            Sections = new Dictionary<string, Action<TextWriter>>();
-        }
-
-        public Action<TextWriter> Body { get; set; }
-
-        public ComponentData AddSection(string sectionName, Action<TextWriter> action)
-        {
-            Sections.Add(sectionName,action);
-            return this;
-        }
-
-        public void Render()
-        {
-            View.RenderComponent(this);
-        }
     }
 }
 

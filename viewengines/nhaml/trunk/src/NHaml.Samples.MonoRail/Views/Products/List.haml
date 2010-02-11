@@ -4,4 +4,4 @@ $Component SimpleComponent
 %ul
   - foreach (var product in category.Products)
     _ Product
-= Html.LinkTo("Add New Product", "Products", "New")
+= Url.LinkTo("Add New Product", "Products", "New")
