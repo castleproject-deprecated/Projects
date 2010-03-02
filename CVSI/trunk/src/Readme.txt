@@ -35,6 +35,7 @@ Step 3 - Use Castle Visual Studio Integration
   will need to update the path to the targets file in the Castle.VisualStudio.NVelocityLanguageService.csproj
   file.
 
+
 +=================+
 |  Known Issues   |
 +=================+
