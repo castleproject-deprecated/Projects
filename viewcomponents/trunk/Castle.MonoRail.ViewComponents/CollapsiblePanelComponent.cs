@@ -294,7 +294,8 @@ namespace Castle.MonoRail.ViewComponents
             if (expandLinkText != null)
                 sb.AppendFormat(@", expandLinkText: '{0}'", expandLinkText);
 
-            if (this.collapseImagePath != null)
+
+			if (this.collapseImagePath != null)
                 sb.AppendFormat(@", collapseImagePath:'{0}'", collapseImagePath);
 
             if (this.expandImagePath != null)
@@ -323,6 +324,8 @@ namespace Castle.MonoRail.ViewComponents
 
             helper.IncludeScriptText(script);
             helper.IncludeStandardScripts(jsLibrary);
+			if (jsLibrary.StartsWith("proto"))
+				helper.IncludeStandardScripts("effects");
             helper.IncludeScriptText("\nvar CollapseComponentDefaults = {effect: 'blind', effectDuration:0.3,expandLinkText: 'Show', collapseLinkText: 'Hide'};");
         }
 

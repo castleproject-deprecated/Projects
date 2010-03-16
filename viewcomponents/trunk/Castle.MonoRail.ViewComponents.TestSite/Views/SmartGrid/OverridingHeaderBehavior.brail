@@ -7,7 +7,7 @@ component SmartGrid, {@source: users,
 }:
 	section emailHeader:
 	%>
-		<th style="padding-right: 150px;">Email</th>
+		<th style="padding-right: 150px; background-color:aqua;">Email</th>
 	<%
 	end
 end

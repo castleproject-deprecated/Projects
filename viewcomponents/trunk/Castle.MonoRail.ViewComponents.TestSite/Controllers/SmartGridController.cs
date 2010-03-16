@@ -2,6 +2,8 @@ namespace Castle.MonoRail.ViewComponents.TestSite.Controllers
 {
 	using Castle.MonoRail.Framework;
     using System.Collections.Generic;
+	using System.Data;
+	using System;
 	[Layout("default")]
 	public class SmartGridController : SmartDispatcherController
 	{
@@ -136,5 +138,26 @@ namespace Castle.MonoRail.ViewComponents.TestSite.Controllers
         public void NullText() {
             PropertyBag["users"] = User.FindAll();
         }
+
+		public void DataTable()
+		{
+			var dt = new DataTable();
+			dt.Columns.Add("id", typeof(Guid));
+			dt.Columns.Add("name", typeof(string));
+			dt.Columns.Add("email", typeof(string));
+
+			var r1 = dt.NewRow();
+			r1.ItemArray = new object[] { new Guid(), "ayende", "Ayende@ayende.com" };
+			var r2 = dt.NewRow();
+			r2.ItemArray = new object[] { new Guid(), "foo", "foo@bar.com" };
+			var r3 = dt.NewRow();
+			r3.ItemArray = new object[] { new Guid(), "bar", "bar@foo.com" };
+
+			dt.Rows.Add(r1);
+			dt.Rows.Add(r2);
+			dt.Rows.Add(r3);
+			PropertyBag["users"] = dt;
+
+		}
 	}
 }

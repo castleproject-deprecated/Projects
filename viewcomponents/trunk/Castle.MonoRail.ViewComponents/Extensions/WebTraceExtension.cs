@@ -81,6 +81,12 @@ using System.CodeDom.Compiler;
 
 		#region IMonoRailExtension Members
 
+		/// <summary>
+		/// Gives to the extension implementor a chance to read
+		/// attributes and child nodes of the extension node
+		/// </summary>
+		/// <param name="node">The node that defines the MonoRail extension</param>
+		/// <remarks>Not used by the WebTrace Extension.</remarks>
 		public void SetExtensionConfigNode(Castle.Core.Configuration.IConfiguration node)
 		{
 		}
@@ -89,6 +95,10 @@ using System.CodeDom.Compiler;
 
 		#region IMRServiceEnabled Members
 
+		/// <summary>
+		/// Configures the WebTrace extension based on value in the web.config.
+		/// </summary>
+		/// <param name="serviceProvider">The service provider.</param>
 		public void Service(IMonoRailServices serviceProvider)
 		{
 			var config = serviceProvider.GetService<IMonoRailConfiguration>();

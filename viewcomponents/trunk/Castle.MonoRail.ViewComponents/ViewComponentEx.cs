@@ -38,6 +38,11 @@ namespace Castle.MonoRail.ViewComponents
 	{
 		private ILogger logger;
 
+		/// <summary>
+		/// Gets or sets the logger. If a Logger is present in the IOC container, it will
+		/// automatically be made available.  If not, the NullLogger will be used.
+		/// </summary>
+		/// <value>The logger.</value>
 		public ILogger Logger
 		{
 			get
@@ -145,6 +150,12 @@ namespace Castle.MonoRail.ViewComponents
         {
             return GetParamValue(key, defaultValue);
         }
+		/// <summary>
+		/// Gets the param value.   Specialized for boolean values.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <param name="defaultValue">if set to <c>true</c> [default value].</param>
+		/// <returns></returns>
 		public bool GetParamValue(string key, bool defaultValue)
 		{
 			object parmValue = Context.ComponentParameters[key];
@@ -160,6 +171,12 @@ namespace Castle.MonoRail.ViewComponents
 			}
 			return value;
 		}
+		/// <summary>
+		/// Gets the param value.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <param name="defaultValue">The default value.</param>
+		/// <returns></returns>
         public string GetParamValue(string key, string defaultValue)
         {
             return Context.ComponentParameters[key] as string ?? defaultValue;
@@ -231,7 +248,7 @@ namespace Castle.MonoRail.ViewComponents
 		/// <summary>
 		/// Renders the component.
 		/// </summary>
-		/// <remarks>For full details, <see cref="RenderComponent(VC)(IDictionary componentParams)" />
+		/// <remarks>For full details, <see cref="RenderComponent{VC}(IDictionary)" />
 		/// </remarks>
 		/// <example><code><![CDATA[
 		///  RenderComponent<LinkSubmitButtonComponent>(DictHelper.N("linkText","Search").N("formToSubmit", searchFormName);
@@ -249,7 +266,7 @@ namespace Castle.MonoRail.ViewComponents
 		/// </summary>
 		/// <param name="component">The component.</param>
 		/// <param name="componentParams">The component params.</param>
-		/// <remarks>For full details, <see cref="RenderComponent{VC}(IDictionary componentParams)"/>
+		/// <remarks>For full details, <see cref="RenderComponent{VC}(IDictionary)"/>
 		/// </remarks>
 		/// <example><code><![CDATA[
 		/// RenderComponent( new LinkSubmitButtonComponent(), "linkText=Search",
@@ -265,7 +282,7 @@ namespace Castle.MonoRail.ViewComponents
 		/// </summary>
 		/// <param name="component">The component.</param>
 		/// <param name="componentParams">The component params.</param>
-		/// <remarks>For full details, <see cref="RenderComponent{VC}(IDictionary componentParams)"/>
+		/// <remarks>For full details, <see cref="RenderComponent{VC}(IDictionary)"/>
 		/// </remarks>
 		/// <example><code><![CDATA[
 		/// RenderComponent( new LinkSubmitButtonComponent(), DictHelper.N("linkText","Search").N("formToSubmit", searchFormName);

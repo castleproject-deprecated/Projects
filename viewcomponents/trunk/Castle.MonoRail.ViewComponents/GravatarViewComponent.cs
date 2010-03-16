@@ -40,7 +40,7 @@ namespace Castle.MonoRail.ViewComponents
     ///  
     ///  Gravatar ("Globally Recognized Avatar"; http://en.gravatar.com)  is a service which allows 
     ///  users to register a personal icon (avatar) to their email address, and displays that avatar 
-    ///  when requested.  This allows blogs and other websites which know a users email address
+    ///  when requested.  This allows blogs and other websites which know a user's email address
     ///  to display their personal avatar next to their comments.  For users who have not registered 
     ///  an icon, a graphic pattern based on a hash of thier email address can be displayed, so all people 
     ///  can have a personal icon which is consistant across websites.

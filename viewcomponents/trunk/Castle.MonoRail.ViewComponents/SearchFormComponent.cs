@@ -49,7 +49,6 @@ namespace Castle.MonoRail.ViewComponents
 	/// </remarks>
 	public class SearchFormComponent : ViewComponentEx
 	{
-		HtmlHelper html;
 
 		/// <summary>
 		/// Gets or sets the action to fire.
@@ -73,7 +72,6 @@ namespace Castle.MonoRail.ViewComponents
 		/// </summary>
         public override void Initialize()
 		{
-			html = new HtmlHelper(EngineContext);
 			base.Initialize();
 
 			searchCriteria = PropertyBag[searchCriteriaKey] as string ?? string.Empty;
@@ -87,12 +85,15 @@ namespace Castle.MonoRail.ViewComponents
 		{
 			base.Render();
 
-			RenderText(html.Form(ActionToFire, searchFormName, "post"));
+//			RenderText(html.FormTag(ActionToFire, searchFormName, "post"));
+			RenderTextFormat(@"<form action=""{0}"" name=""{1}"" method=""{2}"">", ActionToFire, searchFormName, "post");
 
-			RenderText(html.InputText(searchCriteriaKey, searchCriteria));
+//			RenderText(html.TextField(searchCriteriaKey, searchCriteria));
+			RenderTextFormat(@"<input type=""text"" name=""{0}"" value=""{1}"" />", searchCriteriaKey, searchCriteria);
+
 			RenderText("&nbsp;");
 			RenderComponent<LinkSubmitButtonComponent>(DictHelper.CreateN("linkText","Search").N("formToSubmit", searchFormName));
-			RenderText(html.EndForm());
+			RenderText("</form>");
 			CancelView();
 		}
 	}

@@ -111,6 +111,8 @@
     <None Include="Views\CheckboxList\index.brail" />
     <None Include="Views\CollapsiblePanel\index.brail" />
     <None Include="Views\Columns\Index.vm" />
+    <None Include="Views\Components\BoxWithTitleComponent\default.vm" />
+    <None Include="Views\Components\RenderBodyViewComponent\BoxWithTitle.vm" />
     <None Include="Views\Composite\index.vm" />
     <None Include="Views\DualList\index.brail" />
     <None Include="Views\Faq\index.brail" />
@@ -128,6 +130,7 @@
     <None Include="Views\Menu\default.vm" />
     <Content Include="Views\Menu\minimenu.sitemap" />
     <None Include="Views\MoreLessText\index.vm" />
+    <None Include="Views\SmartGrid\datatable.brail" />
     <None Include="Views\SmartGrid\More.brail" />
     <None Include="Views\SmartGrid\nullText.brail" />
     <None Include="Views\SmartGrid\SortBehavior.brail" />

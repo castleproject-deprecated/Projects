@@ -25,6 +25,7 @@ namespace Castle.MonoRail.ViewComponents
 {
 	using Castle.MonoRail.Framework;
 	using Castle.MonoRail.Framework.Helpers;
+
 	/// <summary>
 	/// ViewComponent to create a text link, which functions like a Submit button.
 	/// </summary>
@@ -45,7 +46,7 @@ namespace Castle.MonoRail.ViewComponents
 	/// </item>
 	/// </list>
 	/// </remarks>
-
+    ///
 	/// <example><code><![CDATA[
 	///#component(LinkSubmitButtonComponent with "linkText=Search" "formToSubmit=$searchFormName)
 	/// 
@@ -59,17 +60,13 @@ namespace Castle.MonoRail.ViewComponents
 		[ViewComponentParam(Default="Submit")]
 		public string LinkText { get; set; }
 
-		private string JavascriptToSubmitForm()
-		{
-			const string FormSubmissionJavascriptFormat = "javascript: $('{0}').submit()";
-			return string.Format(FormSubmissionJavascriptFormat, FormToSubmit);
-		}
-
 		private string LinkToRender()
 		{
-			return new HtmlHelper().Link(JavascriptToSubmitForm(), LinkText, 
-				DictHelper.CreateN("class", "linkButton"));
+			return string.Format(@"<a href=""javascript: $('{0}').submit()"" class=""{1}"">{2}</a>",
+			FormToSubmit, "linkButton", LinkText);
 		}
+
+
 		/// <summary>
 		/// Called by the framework so the component can
 		/// render its content

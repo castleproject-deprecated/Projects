@@ -1,4 +1,12 @@
 ﻿This example shows how sorting can be setup and used via a standard http get query.
+
 <%
-component SmartGrid, {@source: users, @columns : [@name, @email], @enableSort : true, @sortBy : sortBy, @sortAsc : sortAsc}
+component SmartGrid, 	{
+		 @source: users, 
+		 @columns : [@name, @email], 
+		 @enableSort : true, 
+		 @sortBy : sortBy, 
+		 @sortAsc : sortAsc
+	 }
 %>
+

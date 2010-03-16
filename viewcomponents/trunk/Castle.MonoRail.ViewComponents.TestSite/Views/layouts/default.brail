@@ -104,6 +104,10 @@ section body: %>
 							<a href="/smartgrid/More.rails">Handling additional columns</a>
 						</li>
 						<li>
+							<a href="/smartgrid/DataTable.rails">From a DataTable</a>
+						</li>
+
+						<li>
 							<a href="/smartgrid/StartEndCell.rails">Start & End Cell behaviors</a>
 						</li>
 						<li>

@@ -81,12 +81,12 @@ namespace Castle.MonoRail.ViewComponents
 				throw new ViewComponentException("The checkbox list component requires a view component parameter named 'target' that is a string");
 			}
 			valueMemberName = ComponentParams["valueMember"] as string;
-			isHorizontal = GetBoolParamValue("horizontal", false);
+			isHorizontal = GetParamValue("horizontal", false);
 			string displayMemberName = ComponentParams["displayMember"] as string;
 			style = ComponentParams["style"] as string;
 			labelStyle = ComponentParams["labelStyle"] as string;
 			cssClass = GetCssClass();
-			splitPascalCase = GetBoolParamValue("splitPascalCase", true);
+			splitPascalCase = GetParamValue("splitPascalCase", true);
 			string strColumns = ComponentParams["columns"] as string;
 			if (!String.IsNullOrEmpty(strColumns))
 				Int32.TryParse(strColumns, out columns);

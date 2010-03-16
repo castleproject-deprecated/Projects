@@ -158,8 +158,16 @@ namespace Castle.MonoRail.ViewComponents
                 RenderText(Text.Substring(0, inx));
 
 				JavascriptHelper helper = new JavascriptHelper(Context, EngineContext, "MoreLessComponent");
-                helper.IncludeStandardScripts("Ajax");
-                helper.IncludeScriptText("function moreless(key) {Element.toggle('extraText:'+key);Element.toggle('more:'+key);}");
+				if (helper.PreferredLibrary == "jquery")
+				{
+					helper.IncludeStandardScripts("jquery");
+					helper.IncludeScriptText("function moreless(key) {jQuery('#extraText:'+key).toggle();jQuery('#more:'+key);}");
+				}
+				else
+				{
+					helper.IncludeStandardScripts("Ajax");
+					helper.IncludeScriptText("function moreless(key) {Element.toggle('extraText:'+key);Element.toggle('more:'+key);}");
+				}
                 string key = base.MakeUniqueId("");
                 RenderTextFormat(@"&nbsp;<span id=""extraText:{0}"">", key);
                 RenderText(Text.Substring(inx));

@@ -15,27 +15,29 @@
 // limitations under the License.
 #endregion
 
-using System.Web.Caching;
 
 namespace Castle.MonoRail.ViewComponents
 {
     #region Reference
     using System;
     using System.Collections.Generic;
+	using System.Linq;
+	using Castle.MonoRail.Framework;
     using System.IO;
     using System.Text;
     using System.Web;
     using System.Collections;
     using System.Xml;
     using System.Drawing;
+	using System.Web.Caching;
 
-    using Castle.MonoRail.Framework;
     using Castle.MonoRail.Framework.Helpers;
     #endregion
 
-    using StringSet = System.Collections.Generic.List<string>;
+//    using StringSet = System.Collections.Generic.List<string>;
     // When ported to .Net v 3.5, use the following line instead.
-//    using StringSet = System.Collections.Generic.HashSet<string>;
+    using StringSet = System.Collections.Generic.HashSet<string>;
+using System.Diagnostics;
 
     /// <summary>
     /// Used internally at run-time by the JavascriptComponent system to hold details of 
@@ -63,7 +65,7 @@ namespace Castle.MonoRail.ViewComponents
         internal List<LibraryDetail> stdFiles;
 
     }
-
+	[DebuggerDisplay("{Name}")]
     internal class LibraryDetail
     {
         public string Name;
@@ -485,6 +487,7 @@ namespace Castle.MonoRail.ViewComponents
             if (!((ICollection<string>)js.segments.Keys).Contains(id))
             {
                 Context.RenderSection("all", script);
+//				RenderBody(script);			// treat unnamed block as "all"
 
                 HttpBrowserCapabilities browCaps = this.HttpContext.Request.Browser;
                 bool segmentChoosen = false;
@@ -706,9 +709,9 @@ namespace Castle.MonoRail.ViewComponents
                             filePath = (Context.ContextVars["EffectsFatHelper"] as EffectsFatHelper).InstallScripts();
                             break;
 
-                        case "validate":
-                            filePath = (Context.ContextVars["ValidationHelper"] as ValidationHelper).InstallScripts();
-                            break;
+						//case "validate":
+						//    filePath = (Context.ContextVars["ValidationHelper"] as ValidationHelper).InstallScripts();
+						//    break;
 
                         //case "jquery":
                         //   filePath = (Context.ContextVars["jQueryHelper"] as jQueryHelper).InstallScripts();
@@ -955,6 +958,10 @@ namespace Castle.MonoRail.ViewComponents
             IncludeScriptText("all", 0, versionDirection.Exact, script);
         }
 
+		/// <summary>
+		/// Inserts the separate text.   Text is always include in html file, even if it identical to another block.
+		/// </summary>
+		/// <param name="script">The script.</param>
 		public void InsertSeparateText(string script)
 		{
 			js.segments[Guid.NewGuid().ToString()] = script;
@@ -986,19 +993,23 @@ namespace Castle.MonoRail.ViewComponents
         /// files they depend on just before them.
         /// </remarks>
         /// <param name="name">The name.</param>
-        /// <param name="index">The index.</param>
-        private void InsertDependancy(string name, int index)
+        /// <param name="pos">The position in stdFile list to add items.</param>
+        private int InsertDependancy(string name, int pos)
         {
             if (string.IsNullOrEmpty(name))
-                return;
+                return 0;
+
+			int index = 0;
 
             if (js.stdFiles.Find(LibraryDetail.ByNameOrAlias(name)) == null)
             {
                 LibraryDetail details = LibraryDetails.Find(LibraryDetail.ByNameOrAlias(name));
-                js.stdFiles.Insert(index, details);
                 foreach (string fname in details.DependsOn)
-                    InsertDependancy(fname, index);
-            }
+						index += InsertDependancy(fname, pos + index);
+				js.stdFiles.Insert(pos + index, details);
+				index++;
+			}
+			return index;
         }
 
         /// <summary>
@@ -1128,7 +1139,8 @@ namespace Castle.MonoRail.ViewComponents
                     if (LibraryInfo != null)
                     {
                         List<LibraryDetail> details = new List<LibraryDetail>();
-                        foreach (XmlElement lib in LibraryInfo.DocumentElement.ChildNodes)
+						var libs = LibraryInfo.DocumentElement.ChildNodes.OfType<XmlElement>().Where(xe => xe.Name == "library");
+						foreach (XmlElement lib in libs)
                         {
                             details.Add(new LibraryDetail(lib));
                         }
@@ -1187,6 +1199,10 @@ namespace Castle.MonoRail.ViewComponents
             }
         }
 
+		/// <summary>
+		/// Gets the preferred library. The name of the javascript framework chosen as the default.  If none is specified, "prototype" is used.
+		/// </summary>
+		/// <value>The preferred library.</value>
         public string PreferredLibrary
         {
             get

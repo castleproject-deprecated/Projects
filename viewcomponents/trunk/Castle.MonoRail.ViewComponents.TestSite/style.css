@@ -233,6 +233,14 @@ h3 {
 {
 	background-color: #ffffff;
 }
+.grid_item
+{
+	background-color:Aqua;
+}
+.grid_alternateItem
+{
+	background-color:Yellow;
+}
 
 #child-content
 {

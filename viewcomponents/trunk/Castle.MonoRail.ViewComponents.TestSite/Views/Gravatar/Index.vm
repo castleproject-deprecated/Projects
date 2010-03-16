@@ -1,4 +1,17 @@
-﻿<h1>Gravatar Examples</h1>
+﻿#blockcomponent (BoxWithTitle with "title=Hello World")
+<p>This is a rainy day!</p>
+#end
+
+#blockcomponent (RenderBody with "title=Hello World" "view=BoxWithTitle")
+#RenderBody
+<p>This is a rainy day!</p>
+#end
+#OtherStuff
+Put Other info in Sections
+#end
+#end
+
+<h1>Gravatar Examples</h1>
 
 ViewComponent: (Gravatar with "Email=jamescurran@mvps.org" "Size=80" "DefaultImage=identicon")    (registered email address)  <br/>
 #component(Gravatar with "Email=jamescurran@mvps.org" "Size=80" "DefaultImage=identicon")<br/>

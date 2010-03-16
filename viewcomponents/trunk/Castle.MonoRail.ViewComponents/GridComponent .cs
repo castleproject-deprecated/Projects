@@ -40,13 +40,7 @@ namespace Castle.MonoRail.ViewComponents
         /// </summary>
 		public override void Render()
 		{
-			IEnumerable source = ComponentParams["source"] as IEnumerable;
-			
-			if (source == null)
-			{
-				throw new ViewComponentException(
-					"The grid requires a view component parameter named 'source' which should contain 'IEnumerable' instance");
-			}
+			 var source =  AnalyzeSource(ComponentParams["source"]);
 
 			string id = ComponentParams["id"] as string ?? MakeUniqueId("");
 
@@ -54,7 +48,8 @@ namespace Castle.MonoRail.ViewComponents
 			{
 				RenderTextFormat("<table id='{0}' class='{1}'>", id, ComponentParams["gridCssClass"] ?? "grid" );
 			}
-            ShowHeader(source);
+
+            ShowHeader();
 
 			bool hasItems = ShowRows(source);
 
@@ -72,6 +67,24 @@ namespace Castle.MonoRail.ViewComponents
 			{
 				ShowPagination(page);
 			}
+		}
+
+		/// <summary>
+		/// When implemented in a derived class, should validate the source object, and
+		/// if necessaary, convert it into a IEnumerable type (each item in the enumeration 
+		/// corresponding to one row).
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		protected virtual IEnumerable AnalyzeSource(object obj)
+		{
+			var source = obj as IEnumerable;
+			if (source == null)
+			{
+				throw new ViewComponentException(
+					"The grid requires a view component parameter named 'source' which should contain 'IEnumerable' instance");
+			}
+			return source;
 		}
 
 		/// <summary>
@@ -204,7 +217,7 @@ Showing {0} - {1} of {2}
         /// Shows the header.
         /// </summary>
         /// <param name="source">The source.</param>
-		protected virtual void ShowHeader(IEnumerable source)
+		protected virtual void ShowHeader()
 		{
             ConfirmSectionPresent("header");
 			Context.RenderSection("header");

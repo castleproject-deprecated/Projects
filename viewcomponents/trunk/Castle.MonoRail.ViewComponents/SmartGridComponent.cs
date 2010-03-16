@@ -19,17 +19,44 @@ namespace Castle.MonoRail.ViewComponents
 	using System.Collections.Generic;
 	using System.Reflection;
 	using Castle.MonoRail.Framework.Helpers;
+	using System.Data;
+	using System.Linq;
+	using Castle.MonoRail.Framework;
+
+	class ColumnInfo
+	{
+		public Type Type { get; set; }
+		public string Name { get; set; }
+		private Func<object, object> getter;
+
+		public object Value(object item)
+		{
+			return getter(item);
+		}
+
+		public ColumnInfo(PropertyInfo pi)
+		{
+			Type = pi.PropertyType;
+			Name = pi.Name;
+			getter = (obj => pi.GetValue(obj, null));
+		}
+
+		public ColumnInfo(DataColumn dc)
+		{
+			Type = dc.DataType;
+			Name = dc.Caption ?? dc.ColumnName;
+			getter = (dr => (dr as DataRow)[dc]);
+		}
+	}
 
 	/// <summary>
 	/// 
 	/// </summary>
     public class SmartGridComponent : GridComponent
     {
-        private  readonly Hashtable validTypesCache = Hashtable.Synchronized(new Hashtable());
-		private Dictionary<string, PropertyInfo[]> objPropertiesCache = new Dictionary<string, PropertyInfo[]>();
-		private Dictionary<string, PropertyInfo> memberPropertiesCache = new Dictionary<string, PropertyInfo>();
+		private readonly Dictionary<Type, bool> validTypesCache = new Dictionary<Type, bool>();
 
-        private PropertyInfo[] properties;
+		private List<ColumnInfo> Columns = new List<ColumnInfo>();
         private string _sortFunction;
 
 		/// <summary>
@@ -55,7 +82,7 @@ namespace Castle.MonoRail.ViewComponents
 		/// <returns></returns>
         protected override bool ShowRows(IEnumerable source)
         {
-            if (properties == null || properties.Length ==0) //there are no rows, if this is the case
+			if (Columns.Count== 0) //there are no rows, if this is the case
                 return false;
 
             bool isAlternate = false;
@@ -83,19 +110,18 @@ namespace Castle.MonoRail.ViewComponents
                 }
 
                 RenderOptionalSection("columnStartRow");
-
-				foreach (PropertyInfo property in properties)
+				foreach (var property in Columns)
 				{
 					if (Context.HasSection(property.Name))
 					{
-						PropertyBag["value"] = property.GetValue(item, null);
+						PropertyBag["value"] = property.Value(item);
 						Context.RenderSection(property.Name);
 					}
 					else
 					{
 						RenderOptionalSection("startCell", "<td>");
 
-						object val = property.GetValue(item, null) ?? nullText;
+						object val = property.Value(item) ?? nullText;
 
 						if (raw)
 							RenderText(val.ToString());
@@ -121,26 +147,80 @@ namespace Castle.MonoRail.ViewComponents
             return true;
         }
 
+		/// <summary>
+		///  Validate the source object, and
+		/// if necessaary, convert it into a IEnumerable type (each item in the enumeration
+		/// corresponding to one row).
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		protected override IEnumerable AnalyzeSource(Object obj)
+		{
+			if ((obj == null)  || !(obj is IEnumerable || obj is DataTable))
+			{
+				throw new ViewComponentException(
+					"The grid requires a view component parameter named 'source' which should be an 'IEnumerable' or a DataTable");
+			}
+
+			IEnumerable<string> columns;
+			object objColumn = ComponentParams["columns"];
+			if (objColumn is string)
+				columns = objColumn.ToString().Split(',', '|');
+			else
+			{
+				if (objColumn is IEnumerable)
+				{
+					columns = (objColumn as IEnumerable).Cast<string>();
+				}
+				else
+					columns = null;
+			}
+
+
+			if (obj is IEnumerable)
+			{
+				var source = obj as IEnumerable;
+				IEnumerator enumerator = source.GetEnumerator();
+
+				bool hasItem = enumerator.MoveNext();
+
+				if (hasItem)
+				{
+					object first = enumerator.Current;
+					InitializeProperties(first, columns);
+				}
+				return source;
+			}
+			else // obj is DataTable
+			{
+				var dt = obj as DataTable;
+				InitializeColumns(dt.Columns, columns);
+				return dt.Rows;
+			}
+		}
+
+		private void InitializeColumns(DataColumnCollection dataColumnCollection, IEnumerable<string> columns)
+		{
+			if (columns == null)
+			{
+				Columns.AddRange(
+					dataColumnCollection.Cast<DataColumn>().Select(dc => new ColumnInfo(dc)));
+			}
+			else
+			{
+				Columns.AddRange(
+					columns.Select(columnName => new ColumnInfo(dataColumnCollection[columnName])));
+			}
+		}
 
         /// <summary>
         /// Shows the header.
         /// </summary>
         /// <param name="source">The source.</param>
-		protected override void ShowHeader(IEnumerable source)
+		protected override void ShowHeader()
 		{
-			IEnumerator enumerator = source.GetEnumerator();
+
 			TextHelper text = PropertyBag["TextHelper"] as TextHelper;
-
-			bool hasItem = enumerator.MoveNext();
-
-			if (hasItem == false)
-			{
-				return;
-			}
-
-			object first = enumerator.Current;
-			InitializeProperties(first);
-
 			RenderOptionalSection("caption");
 			RenderOptionalSection("preHeaderRow", "<thead><tr>");
 			RenderOptionalSection("columnStartRowHeader");
@@ -149,12 +229,12 @@ namespace Castle.MonoRail.ViewComponents
 
 			bool? sortDirection = ComponentParams["sortAsc"] as bool?;
 
-			bool sortEnabled = (ComponentParams["enableSort"] as string ?? "false" )=="true" ;
+			bool sortEnabled = Convert.ToBoolean(ComponentParams["enableSort"]);
 
 
 			_sortFunction = ComponentParams["sortFunction"] as string;
 
-			foreach (PropertyInfo property in properties)
+			foreach (var property in Columns)
 			{
 				string overrideSection = property.Name + "Header";
 				if (Context.HasSection(overrideSection))
@@ -196,8 +276,8 @@ namespace Castle.MonoRail.ViewComponents
 					}
 				}
 
-				RenderOptionalSection("moreHeader");
 			}
+			RenderOptionalSection("moreHeader");
 			RenderOptionalSection("postHeaderRow", "</tr></thead>");
 			RenderOptionalSection("tFoot");
 		}
@@ -235,53 +315,26 @@ namespace Castle.MonoRail.ViewComponents
             RenderText(String.Format("<th class=\"grid_header{0}\"><a href=\"{1}\">", style, href));
         }
 
-        private void InitializeProperties(object first)
+        private void InitializeProperties(object first, IEnumerable<string> columns)
         {
             Type type = first.GetType();
-			List<PropertyInfo> props = new List<PropertyInfo>();
 
-            if (!ComponentParams.Contains("columns"))
-            {
-				if (objPropertiesCache.ContainsKey(type.FullName))
-				{
-					properties = objPropertiesCache[type.FullName] as PropertyInfo[];
-					return;
-				}
-				else
-				{
-					foreach (PropertyInfo prop in type.GetProperties())
-					{
-						if (ValidPropertyToAutoGenerate(prop))
-							props.Add(prop);
-					}
-					properties = props.ToArray();
-					objPropertiesCache[type.FullName] = properties;
-					return;
-				}
-            }
-			IEnumerable columns;
-			object objColumn = ComponentParams["columns"];
-			if (objColumn is string)
-				columns = objColumn.ToString().Split(',', '|');
-			else
-				columns = objColumn as IEnumerable;
-
-            foreach (string columnName in columns)
-            {
-                string key = type.FullName + "." + columnName;
-                PropertyInfo propertyInfo;
-				if (objPropertiesCache.ContainsKey(key))
-					propertyInfo = memberPropertiesCache[key];
-				else
-				{
-					propertyInfo = type.GetProperty(columnName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
-					memberPropertiesCache[key] = propertyInfo;
-				}
-
-				if (propertyInfo != null && ValidPropertyToAutoGenerate(propertyInfo))
-                    props.Add(propertyInfo);
-            }
-            properties = props.ToArray();
+			if (columns == null)
+			{
+				Columns.AddRange(
+					type.GetProperties()
+						.Where(prop => ValidPropertyToAutoGenerate(prop))
+						.Select(prop => new ColumnInfo(prop)));
+				return;
+			}
+			
+			else      // "columns" defined
+			{
+				Columns.AddRange(
+					columns.Select(columnName => type.GetProperty(columnName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase))
+						.Where(pi => pi != null && ValidPropertyToAutoGenerate(pi))
+						.Select(pi => new ColumnInfo(pi)));
+			}
         }
 
         private bool ValidPropertyToAutoGenerate(PropertyInfo property)
@@ -296,7 +349,7 @@ namespace Castle.MonoRail.ViewComponents
         private  bool IsValidType(Type typeToCheck)
         {
             if (validTypesCache.ContainsKey(typeToCheck))
-                return (bool)validTypesCache[typeToCheck];
+                return validTypesCache[typeToCheck];
 
 			bool result = true;
             if (typeof(ICollection).IsAssignableFrom(typeToCheck))
