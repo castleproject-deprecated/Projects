@@ -12,6 +12,7 @@
 		<ExtraInfo></ExtraInfo>
 	</PropertyGroup>
 	
+
 	<ItemGroup>
 		<AssemblyInfo Include="Item">
 			<File>$(MSBuildProjectDirectory)\Castle.MonoRail.ViewComponents\Properties\AssemblyInfo.cs</File>
