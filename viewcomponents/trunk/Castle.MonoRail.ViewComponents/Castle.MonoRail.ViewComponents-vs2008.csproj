@@ -92,6 +92,7 @@
     <Compile Include="GridComponent .cs" />
     <Compile Include="JavascriptComponent.cs" />
     <Compile Include="LinkSubmitButtonComponent.cs" />
+    <Compile Include="MarkdownViewComponent.cs" />
     <Compile Include="MaskedTextboxComponent.cs" />
     <Compile Include="Menu.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -101,6 +102,9 @@
     <Compile Include="MenuComponent.cs" />
     <Compile Include="Filters\MobileFilter.cs" />
     <Compile Include="MoreLessTextComponent.cs" />
+    <Compile Include="PortableAreaController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchFormComponent.cs" />
     <Compile Include="SmartGridComponent.cs" />

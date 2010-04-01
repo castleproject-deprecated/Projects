@@ -1,0 +1,6 @@
+﻿<h2>This is Page Two</h2>
+
+<p>This is the Override from the Website</p>
+<p> Remove (or rename) the file <code>Views/patest/page2.vm</code> to see the default page</p>
+
+

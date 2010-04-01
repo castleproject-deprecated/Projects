@@ -301,6 +301,21 @@ section body: %>
 					</ul>		
 <%    end
   end %>
+  
+  <% component CollapsiblePanel, {@id:"PortableArea",   @expandImagePath:"/Images/expand.jpg", @collapseImagePath:"/Images/collapse.jpg", @collapsed:true}:
+section caption: %>
+					<h3>Portable Area Example</h3>
+<% end
+section body: %>
+					<ul>
+						<li>
+							<a href="/PATest/Page1.rails">Example</a>
+						</li>
+
+					</ul>		
+<%    end
+  end %>
+  
 				</div>
 
 

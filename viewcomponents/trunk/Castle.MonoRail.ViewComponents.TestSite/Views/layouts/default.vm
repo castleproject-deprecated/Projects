@@ -310,6 +310,19 @@ $css
 
 #end
 #end
+#blockcomponent(CollapsiblePanel with "id=PortableArea"   "expandImagePath=/Images/expand.jpg" "collapseImagePath=/Images/collapse.jpg" "collapsed=true")
+#caption
+					<h3>Portable Area Example</h3>
+#end
+#body
+					<ul>
+						<li>
+							<a href="/PATest/Page1.rails">Example</a>
+						</li>
+					</ul>	
+
+#end
+#end
 					
 					
 				</div>

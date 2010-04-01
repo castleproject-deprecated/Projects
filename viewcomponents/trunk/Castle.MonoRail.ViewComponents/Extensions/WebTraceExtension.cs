@@ -24,7 +24,7 @@ namespace Castle.MonoRail.Framework.Extensions
 	using Castle.MonoRail.Framework.Configuration;
 	using System.Collections;
 
-using System.CodeDom.Compiler;
+//using System.CodeDom.Compiler;
 
 	/// <summary>
 	/// This extension appends the ASP.NET Tracing diagnostic information and custom 

@@ -15,6 +15,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,14 +53,29 @@
       <HintPath>..\SharedLibs\NVelocity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions.Design, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Xml.Linq, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
@@ -98,6 +114,10 @@
     <Compile Include="ViewComponents\MyCollapsiblePanelComponent.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Castle.MonoRail.PortableAreaExample-vs2008\Castle.MonoRail.PortableAreaExample-vs2008.csproj">
+      <Project>{32137E1C-0252-4009-82E6-1A482612E44A}</Project>
+      <Name>Castle.MonoRail.PortableAreaExample-vs2008</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Castle.MonoRail.ViewComponents\Castle.MonoRail.ViewComponents-vs2008.csproj">
       <Project>{717C688D-81BC-4C81-9487-1D5151ADF573}</Project>
       <Name>Castle.MonoRail.ViewComponents</Name>
@@ -130,6 +150,7 @@
     <None Include="Views\Menu\default.vm" />
     <Content Include="Views\Menu\minimenu.sitemap" />
     <None Include="Views\MoreLessText\index.vm" />
+    <EmbeddedResource Include="Views\patest\page2.vm" />
     <None Include="Views\SmartGrid\datatable.brail" />
     <None Include="Views\SmartGrid\More.brail" />
     <None Include="Views\SmartGrid\nullText.brail" />
