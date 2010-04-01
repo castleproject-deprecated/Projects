@@ -1,0 +1,7 @@
+﻿<link rel="stylesheet" type="text/css" href="$siteRoot/patest/patest.css.rails" />
+<div class="patest">
+<h1>Portable Areas Example</h1>
+${childContent}
+<hr />
+<a href="page1.rails">Page one</a>&nbsp;&nbsp;<a href="page2.rails">Page two</a>&nbsp;&nbsp;<a href="page3.rails">Page three</a>&nbsp;
+</div>
