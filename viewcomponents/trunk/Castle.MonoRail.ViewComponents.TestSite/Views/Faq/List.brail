@@ -1,3 +1,0 @@
-﻿<% 
-component FaqListComponent, {@Elements: faqItems, @ListType: "Ordered"}
-%>
