@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.CodeDom;
-using Altinoren.ActiveWriter.ARValidators;
+using Castle.ActiveWriter.ARValidators;
 
-namespace Altinoren.ActiveWriter.CodeGeneration
+namespace Castle.ActiveWriter.CodeGeneration
 {
 
     using System;

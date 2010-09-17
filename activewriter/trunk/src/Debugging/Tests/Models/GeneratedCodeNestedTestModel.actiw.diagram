@@ -2,32 +2,32 @@
 <activeRecordMapping dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" isCompleteView="false" name="GeneratedCodeNestedTestModel">
   <modelMoniker Id="e70b229d-e099-4b06-94f5-ef4f3a424a07" />
   <nestedChildShapes>
-    <classShape Id="5542d3f1-0016-49aa-8dc0-53fe27663426" absoluteBounds="0.5, 1.375, 1.5, 0.75938964843750023">
+    <classShape Id="5542d3f1-0016-49aa-8dc0-53fe27663426" absoluteBounds="0.5, 1.375, 1.5, 0.71745849609375023">
       <modelClassMoniker name="/e70b229d-e099-4b06-94f5-ef4f3a424a07/NestingClass1" />
       <nestedChildShapes>
-        <elementListCompartment Id="903a43f1-57c7-46b1-8e65-2f97abae70a6" absoluteBounds="0.515, 1.7850000000000001, 1.4700000000000002, 0.2493896484375" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+        <elementListCompartment Id="903a43f1-57c7-46b1-8e65-2f97abae70a6" absoluteBounds="0.515, 1.7850000000000001, 1.4700000000000002, 0.20745849609375" name="Properties" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <nestedClassShape Id="443eb9a7-58aa-4528-8fca-87c8b758b392" absoluteBounds="2.5, 0.5, 1.5, 0.95169108072916675">
+    <nestedClassShape Id="443eb9a7-58aa-4528-8fca-87c8b758b392" absoluteBounds="2.5, 0.5, 1.5, 0.88180582682291675">
       <nestedClassMoniker name="/e70b229d-e099-4b06-94f5-ef4f3a424a07/NestedClass1" />
       <nestedChildShapes>
-        <elementListCompartment Id="465944e4-cbd4-4c1c-a45b-0826a8490173" absoluteBounds="2.515, 0.91, 1.4700000000000002, 0.44169108072916663" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+        <elementListCompartment Id="465944e4-cbd4-4c1c-a45b-0826a8490173" absoluteBounds="2.515, 0.91, 1.4700000000000002, 0.37180582682291663" name="Properties" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </nestedClassShape>
-    <nestedClassShape Id="04e728e2-c056-4768-ab3f-7c9d4eb854c2" absoluteBounds="0.5, 2.25, 1.5, 0.75938964843750023">
+    <nestedClassShape Id="04e728e2-c056-4768-ab3f-7c9d4eb854c2" absoluteBounds="0.5, 2.25, 1.5, 0.71745849609375023">
       <nestedClassMoniker name="/e70b229d-e099-4b06-94f5-ef4f3a424a07/NestedClass2" />
       <nestedChildShapes>
-        <elementListCompartment Id="9f1cff96-255b-45d9-b695-b06579640fb5" absoluteBounds="0.515, 2.66, 1.4700000000000002, 0.2493896484375" name="Properties" title="Properties" titleFillColor="LightGray" compartmentFillColor="White" />
+        <elementListCompartment Id="9f1cff96-255b-45d9-b695-b06579640fb5" absoluteBounds="0.515, 2.66, 1.4700000000000002, 0.20745849609375" name="Properties" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </nestedClassShape>
-    <nestedConnector edgePoints="[(3.25 : 1.45169108072917); (3.25 : 1.79304086458333); (2 : 1.79304086458333)]" manuallyRouted="false" fixedFrom="Algorithm" fixedTo="Algorithm" TargetRelationshipDomainClassId="6d7cfc22-da01-49be-87ae-387c801c09a5">
+    <nestedConnector edgePoints="[(3.25 : 1.45169108072917); (3.25 : 1.79304086458333); (2 : 1.79304086458333)]" fixedFrom="NotFixed" fixedTo="NotFixed" TargetRelationshipDomainClassId="6d7cfc22-da01-49be-87ae-387c801c09a5">
       <relativeChildShapes />
       <nodes>
         <nestedClassShapeMoniker Id="443eb9a7-58aa-4528-8fca-87c8b758b392" />
         <classShapeMoniker Id="5542d3f1-0016-49aa-8dc0-53fe27663426" />
       </nodes>
     </nestedConnector>
-    <nestedConnector edgePoints="[(1.25 : 2.25); (1.25 : 2.1343896484375)]" manuallyRouted="false" fixedFrom="Algorithm" fixedTo="Algorithm" TargetRelationshipDomainClassId="6d7cfc22-da01-49be-87ae-387c801c09a5">
+    <nestedConnector edgePoints="[(1.25 : 2.25); (1.25 : 2.1343896484375)]" fixedFrom="NotFixed" fixedTo="NotFixed" TargetRelationshipDomainClassId="6d7cfc22-da01-49be-87ae-387c801c09a5">
       <relativeChildShapes />
       <nodes>
         <nestedClassShapeMoniker Id="04e728e2-c056-4768-ab3f-7c9d4eb854c2" />

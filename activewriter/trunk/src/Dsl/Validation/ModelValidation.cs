@@ -1,4 +1,4 @@
-// Copyright 2006 Gokhan Altinoren - http://altinoren.com/
+// Copyright 2006 Gokhan Castle - http://altinoren.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,12 +14,12 @@
 
 // Big TODO: Combine with CodeGenerationHelper validations in a seperate structure
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
     using System.Collections.Generic;
     using Microsoft.VisualStudio.Modeling.Validation;
     using Microsoft.VisualStudio.Modeling;
-    using Altinoren.ActiveWriter.ServerExplorerSupport;
+    using Castle.ActiveWriter.ServerExplorerSupport;
 
     [ValidationState(ValidationState.Enabled)]
     public partial class Model

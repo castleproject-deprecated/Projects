@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Dsl dslVersion="1.0.0.0" Id="3a7d8d12-f07c-4dd1-8689-f9610e7a79e1" Description="A Visual Studio 2008 addin to design domain models and to generate code decorated with ActiveRecord attributes or supported with NHibernate configuration based on the model." Name="ActiveWriter" DisplayName="ActiveWriter" Namespace="Altinoren.ActiveWriter" ProductName="ActiveWriter" CompanyName="altinoren.com" PackageGuid="9f4f10d0-81ad-4308-a398-ba7741f3f7e2" PackageNamespace="Altinoren.ActiveWriter" xmlns="http://schemas.microsoft.com/VisualStudio/2005/DslTools/DslDefinitionModel">
+<Dsl xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="3a7d8d12-f07c-4dd1-8689-f9610e7a79e1" Description="A Visual Studio 2010 addin to design domain models and to generate code decorated with ActiveRecord attributes or supported with NHibernate configuration based on the model." Name="ActiveWriter" DisplayName="ActiveWriter" Namespace="Castle.ActiveWriter" MajorVersion="10" Revision="1" ProductName="ActiveWriter" CompanyName="altinoren.com" PackageGuid="9f4f10d0-81ad-4308-a398-ba7741f3f7e2" PackageNamespace="Castle.ActiveWriter" xmlns="http://schemas.microsoft.com/VisualStudio/2005/DslTools/DslDefinitionModel">
   <Classes>
-    <DomainClass Id="fe94e99d-28aa-4a5d-9e43-168adeb72b60" Description="Domain model" Name="Model" DisplayName="Model" Namespace="Altinoren.ActiveWriter">
+    <DomainClass Id="fe94e99d-28aa-4a5d-9e43-168adeb72b60" Description="Domain model" Name="Model" DisplayName="Model" Namespace="Castle.ActiveWriter">
       <Properties>
         <DomainProperty Id="f85b9035-c755-438f-b54d-2acebc636a8c" Description="Instructs ActiveWriter to generate code using nullables where possible." Name="UseNullables" DisplayName="Use Nullables" DefaultValue="No" Category="Code Generation">
           <Type>
@@ -23,7 +23,7 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="2e26d6e6-fc84-4453-82b0-1a4599eba39a" Description="Description for Altinoren.ActiveWriter.Model.MonoRail Project Path" Name="MonoRailProjectPath" DisplayName="MonoRail Project Path" Category="Code Generation - Web" IsBrowsable="false">
+        <DomainProperty Id="2e26d6e6-fc84-4453-82b0-1a4599eba39a" Description="Description for Castle.ActiveWriter.Model.MonoRail Project Path" Name="MonoRailProjectPath" DisplayName="MonoRail Project Path" Category="Code Generation - Web" IsBrowsable="false">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
@@ -110,7 +110,7 @@
         </DomainProperty>
         <DomainProperty Id="b0d78aac-cb2a-483c-93c9-b682243a338c" Description="List of additional imports to be added to the generated class." Name="AdditionalImports" DisplayName="Additional Imports" Kind="CustomStorage" Category="Code Generation">
           <Type>
-            <ExternalTypeMoniker Name="/System.Collections.Generic/List&lt;Altinoren.ActiveWriter.Import&gt;" />
+            <ExternalTypeMoniker Name="/System.Collections.Generic/List&lt;Castle.ActiveWriter.Import&gt;" />
           </Type>
         </DomainProperty>
         <DomainProperty Id="4b0308e4-c189-4ef5-818d-59033de5aaee" Description="Instructs ActiveWriter to implement INotifyPropertyChanged interface in each class generated. This setting is overridable in class level." Name="ImplementINotifyPropertyChanged" DisplayName="Implement  INotifyPropertyChanged" DefaultValue="false" Category="Code Generation">
@@ -178,12 +178,12 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="f01307ce-7d91-4b00-b352-fe5487587633" Description="Description for Altinoren.ActiveWriter.Model.Many To Many Collection ID Column Type" Name="ManyToManyCollectionIDColumnType" DisplayName="Many To Many Collection ID Column Type" Category="Code Generation">
+        <DomainProperty Id="f01307ce-7d91-4b00-b352-fe5487587633" Description="Description for Castle.ActiveWriter.Model.Many To Many Collection ID Column Type" Name="ManyToManyCollectionIDColumnType" DisplayName="Many To Many Collection ID Column Type" Category="Code Generation">
           <Type>
             <DomainEnumerationMoniker Name="NHibernateType" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="7b97e93e-ea00-4884-a2bd-f7e146d8841c" Description="Description for Altinoren.ActiveWriter.Model.Many To Many Collection ID Generator" Name="ManyToManyCollectionIDGenerator" DisplayName="Many To Many Collection ID Generator" Category="Code Generation">
+        <DomainProperty Id="7b97e93e-ea00-4884-a2bd-f7e146d8841c" Description="Description for Castle.ActiveWriter.Model.Many To Many Collection ID Generator" Name="ManyToManyCollectionIDGenerator" DisplayName="Many To Many Collection ID Generator" Category="Code Generation">
           <Type>
             <DomainEnumerationMoniker Name="PrimaryKeyType" />
           </Type>
@@ -198,12 +198,12 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="03de83cf-2e0e-4b06-9975-d4e443f68836" Description="Description for Altinoren.ActiveWriter.Model.Automatic Associations" Name="AutomaticAssociations" DisplayName="Automatic Associations" DefaultValue="false" Category="Code Generation">
+        <DomainProperty Id="03de83cf-2e0e-4b06-9975-d4e443f68836" Description="Description for Castle.ActiveWriter.Model.Automatic Associations" Name="AutomaticAssociations" DisplayName="Automatic Associations" DefaultValue="false" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="71b0b47d-7c3e-429d-a501-1a91470e92aa" Description="Description for Altinoren.ActiveWriter.Model.Automatic Association Collection Implementation" Name="AutomaticAssociationCollectionImplementation" DisplayName="Automatic Association Collection Implementation" Category="Code Generation">
+        <DomainProperty Id="71b0b47d-7c3e-429d-a501-1a91470e92aa" Description="Description for Castle.ActiveWriter.Model.Automatic Association Collection Implementation" Name="AutomaticAssociationCollectionImplementation" DisplayName="Automatic Association Collection Implementation" Category="Code Generation">
           <Type>
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
@@ -279,7 +279,7 @@
         </ElementMergeDirective>
       </ElementMergeDirectives>
     </DomainClass>
-    <DomainClass Id="38be3d51-c07f-4b6c-b05a-42f20848e9e2" Description="A class of the domain" Name="ModelClass" DisplayName="Model Class" Namespace="Altinoren.ActiveWriter">
+    <DomainClass Id="38be3d51-c07f-4b6c-b05a-42f20848e9e2" Description="A class of the domain" Name="ModelClass" DisplayName="Model Class" Namespace="Castle.ActiveWriter">
       <BaseClass>
         <DomainClassMoniker Name="ModelElementWithAccess" />
       </BaseClass>
@@ -329,12 +329,12 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="834cd223-036c-49f8-9830-617b34ef00d4" Description="Description for Altinoren.ActiveWriter.ModelClass.Has Key Property" Name="HasKeyProperty" DisplayName="Has Key Property" Kind="Calculated" SetterAccessModifier="Private" IsBrowsable="false">
+        <DomainProperty Id="834cd223-036c-49f8-9830-617b34ef00d4" Description="Description for Castle.ActiveWriter.ModelClass.Has Key Property" Name="HasKeyProperty" DisplayName="Has Key Property" Kind="Calculated" SetterAccessModifier="Private" IsBrowsable="false">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="00ceff38-d06d-4eeb-8a77-4de5abfc4880" Description="Description for Altinoren.ActiveWriter.ModelClass.Is Validator Set" Name="IsValidatorSet" DisplayName="Is Validator Set" Kind="Calculated" SetterAccessModifier="Private" IsBrowsable="false">
+        <DomainProperty Id="00ceff38-d06d-4eeb-8a77-4de5abfc4880" Description="Description for Castle.ActiveWriter.ModelClass.Is Validator Set" Name="IsValidatorSet" DisplayName="Is Validator Set" Kind="Calculated" SetterAccessModifier="Private" IsBrowsable="false">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
@@ -374,7 +374,7 @@
             <ExternalTypeMoniker Name="/System/Int32" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="e4844c20-3d13-4a57-85e2-4049ed5fae88" Description="Description for Altinoren.ActiveWriter.ModelClass.Locking" Name="Locking" DisplayName="Locking" DefaultValue="Version" Category="ActiveRecord">
+        <DomainProperty Id="e4844c20-3d13-4a57-85e2-4049ed5fae88" Description="Description for Castle.ActiveWriter.ModelClass.Locking" Name="Locking" DisplayName="Locking" DefaultValue="Version" Category="ActiveRecord">
           <Type>
             <DomainEnumerationMoniker Name="OptimisticLocking" />
           </Type>
@@ -421,7 +421,7 @@
         </ElementMergeDirective>
       </ElementMergeDirectives>
     </DomainClass>
-    <DomainClass Id="03f30fca-953c-4ab2-b3e4-956a355e0768" Description="A property or field of a class" Name="ModelProperty" DisplayName="Property" Namespace="Altinoren.ActiveWriter">
+    <DomainClass Id="03f30fca-953c-4ab2-b3e4-956a355e0768" Description="A property or field of a class" Name="ModelProperty" DisplayName="Property" Namespace="Castle.ActiveWriter">
       <BaseClass>
         <DomainClassMoniker Name="ModelElementWithAccess" />
       </BaseClass>
@@ -525,7 +525,7 @@
           <Attributes>
             <ClrAttribute Name="System.ComponentModel.Editor">
               <Parameters>
-                <AttributeParameter Value="typeof(Altinoren.ActiveWriter.UIEditors.PropertyValidationEditor), typeof(System.Drawing.Design.UITypeEditor)" />
+                <AttributeParameter Value="typeof(Castle.ActiveWriter.UIEditors.PropertyValidationEditor), typeof(System.Drawing.Design.UITypeEditor)" />
               </Parameters>
             </ClrAttribute>
           </Attributes>
@@ -565,7 +565,7 @@
         </DomainProperty>
       </Properties>
     </DomainClass>
-    <DomainClass Id="cbea293a-1057-4c5b-b60d-78728f734ef2" Description="Description for Altinoren.ActiveWriter.ModelElementWithAccess" Name="ModelElementWithAccess" DisplayName="Model Element With Access" InheritanceModifier="Abstract" Namespace="Altinoren.ActiveWriter">
+    <DomainClass Id="cbea293a-1057-4c5b-b60d-78728f734ef2" Description="Description for Castle.ActiveWriter.ModelElementWithAccess" Name="ModelElementWithAccess" DisplayName="Model Element With Access" InheritanceModifier="Abstract" Namespace="Castle.ActiveWriter">
       <BaseClass>
         <DomainClassMoniker Name="NamedElement" />
       </BaseClass>
@@ -582,7 +582,7 @@
         </DomainProperty>
       </Properties>
     </DomainClass>
-    <DomainClass Id="ab60f55a-7fb1-44a9-9832-f708caeeee43" Description="Description for Altinoren.ActiveWriter.NamedElement" Name="NamedElement" DisplayName="Named Element" InheritanceModifier="Abstract" Namespace="Altinoren.ActiveWriter">
+    <DomainClass Id="ab60f55a-7fb1-44a9-9832-f708caeeee43" Description="Description for Castle.ActiveWriter.NamedElement" Name="NamedElement" DisplayName="Named Element" InheritanceModifier="Abstract" Namespace="Castle.ActiveWriter">
       <Properties>
         <DomainProperty Id="171d6e97-362e-4ae7-a2a7-9d1814709b1f" Description="Name of the element" Name="Name" DisplayName="Name" IsElementName="true">
           <Type>
@@ -596,7 +596,7 @@
         </DomainProperty>
       </Properties>
     </DomainClass>
-    <DomainClass Id="0df14a30-0137-4eb3-9617-f0d296e797db" Description="Description for Altinoren.ActiveWriter.NestedClass" Name="NestedClass" DisplayName="Nested Class" Namespace="Altinoren.ActiveWriter">
+    <DomainClass Id="0df14a30-0137-4eb3-9617-f0d296e797db" Description="Description for Castle.ActiveWriter.NestedClass" Name="NestedClass" DisplayName="Nested Class" Namespace="Castle.ActiveWriter">
       <BaseClass>
         <DomainClassMoniker Name="NamedElement" />
       </BaseClass>
@@ -625,7 +625,7 @@
     </DomainClass>
   </Classes>
   <Relationships>
-    <DomainRelationship Id="f9419603-bb7b-40fc-9fea-fcd2e7e1b990" Description="Description for Altinoren.ActiveWriter.ModelHasClass" Name="ModelHasClass" DisplayName="Model Has Class" Namespace="Altinoren.ActiveWriter" IsEmbedding="true">
+    <DomainRelationship Id="f9419603-bb7b-40fc-9fea-fcd2e7e1b990" Description="Description for Castle.ActiveWriter.ModelHasClass" Name="ModelHasClass" DisplayName="Model Has Class" Namespace="Castle.ActiveWriter" IsEmbedding="true">
       <Source>
         <DomainRole Id="9e22f600-80ad-4883-a32f-df2738ee3614" Description="Classes of the model" Name="Model" DisplayName="Model" PropertyName="Classes" PropertyDisplayName="Classes">
           <RolePlayer>
@@ -641,7 +641,7 @@
         </DomainRole>
       </Target>
     </DomainRelationship>
-    <DomainRelationship Id="68ba5474-0696-4988-9e76-1bc8e9eb9de8" Description="Maps a many to one association" Name="ManyToOneRelation" DisplayName="Many To One Relation" Namespace="Altinoren.ActiveWriter" AllowsDuplicates="true">
+    <DomainRelationship Id="68ba5474-0696-4988-9e76-1bc8e9eb9de8" Description="Maps a many to one association" Name="ManyToOneRelation" DisplayName="Many To One Relation" Namespace="Castle.ActiveWriter" AllowsDuplicates="true">
       <Properties>
         <DomainProperty Id="c3ac9ce5-87b4-48ca-a243-26e0a237e7ab" Description="" Name="TargetCache" DisplayName="Target Cache" DefaultValue="Undefined" Category="Target (HasMany)">
           <Type>
@@ -808,7 +808,7 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="65a5cad5-daac-4487-bdd4-24ba761f92b1" Description="Description for Altinoren.ActiveWriter.ManyToOneRelation.Target Fetch" Name="TargetFetch" DisplayName="Target Fetch" DefaultValue="Unspecified">
+        <DomainProperty Id="65a5cad5-daac-4487-bdd4-24ba761f92b1" Description="Description for Castle.ActiveWriter.ManyToOneRelation.Target Fetch" Name="TargetFetch" DisplayName="Target Fetch" DefaultValue="Unspecified">
           <Type>
             <DomainEnumerationMoniker Name="FetchEnum" />
           </Type>
@@ -818,17 +818,17 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="b78081c0-24d3-4367-8007-6f5da73d411c" Description="Description for Altinoren.ActiveWriter.ManyToOneRelation.Target Property Generated" Name="TargetPropertyGenerated" DisplayName="Target Property Generated" DefaultValue="true" Category="Target (HasMany)">
+        <DomainProperty Id="b78081c0-24d3-4367-8007-6f5da73d411c" Description="Description for Castle.ActiveWriter.ManyToOneRelation.Target Property Generated" Name="TargetPropertyGenerated" DisplayName="Target Property Generated" DefaultValue="true" Category="Target (HasMany)">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="5a6da19e-ae0e-49c5-afa1-dfce0433e464" Description="Description for Altinoren.ActiveWriter.ManyToOneRelation.Source Property Generated" Name="SourcePropertyGenerated" DisplayName="Source Property Generated" DefaultValue="true" Category="Source (BelongsTo)">
+        <DomainProperty Id="5a6da19e-ae0e-49c5-afa1-dfce0433e464" Description="Description for Castle.ActiveWriter.ManyToOneRelation.Source Property Generated" Name="SourcePropertyGenerated" DisplayName="Source Property Generated" DefaultValue="true" Category="Source (BelongsTo)">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="06b82c89-9c53-467a-8e36-90e87be1e5f3" Description="Description for Altinoren.ActiveWriter.ManyToOneRelation.Source Access" Name="SourceAccess" DisplayName="Source Access" DefaultValue="Inherit" Category="Source (BelongsTo)">
+        <DomainProperty Id="06b82c89-9c53-467a-8e36-90e87be1e5f3" Description="Description for Castle.ActiveWriter.ManyToOneRelation.Source Access" Name="SourceAccess" DisplayName="Source Access" DefaultValue="Inherit" Category="Source (BelongsTo)">
           <Type>
             <DomainEnumerationMoniker Name="InheritablePropertyAccess" />
           </Type>
@@ -849,7 +849,7 @@
         </DomainRole>
       </Target>
     </DomainRelationship>
-    <DomainRelationship Id="8f270f87-f8f4-4f43-9fe5-13b75748144c" Description="" Name="ClassHasProperty" DisplayName="Class Has Property" Namespace="Altinoren.ActiveWriter" IsEmbedding="true">
+    <DomainRelationship Id="8f270f87-f8f4-4f43-9fe5-13b75748144c" Description="" Name="ClassHasProperty" DisplayName="Class Has Property" Namespace="Castle.ActiveWriter" IsEmbedding="true">
       <Source>
         <DomainRole Id="8eddf27d-b9d1-4813-940e-c374248112cb" Description="" Name="ModelClass" DisplayName="Model Class" PropertyName="Properties" PropertyDisplayName="Properties">
           <RolePlayer>
@@ -865,7 +865,7 @@
         </DomainRole>
       </Target>
     </DomainRelationship>
-    <DomainRelationship Id="3facccc2-b82b-4dd9-b414-1a787f87ecd8" Description="Maps a many to many association with an association table" Name="ManyToManyRelation" DisplayName="Many To Many Relation" Namespace="Altinoren.ActiveWriter" AllowsDuplicates="true">
+    <DomainRelationship Id="3facccc2-b82b-4dd9-b414-1a787f87ecd8" Description="Maps a many to many association with an association table" Name="ManyToManyRelation" DisplayName="Many To Many Relation" Namespace="Castle.ActiveWriter" AllowsDuplicates="true">
       <Properties>
         <DomainProperty Id="0edaa292-6e4e-403e-87f5-c6e3b65d37c7" Description="" Name="SourceCache" DisplayName="Source Cache" DefaultValue="Undefined" Category="Source">
           <Type>
@@ -1062,12 +1062,12 @@
             <DomainEnumerationMoniker Name="PrimaryKeyType" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="feb33769-96a2-44c6-94fb-06ae1e160c10" Description="Description for Altinoren.ActiveWriter.ManyToManyRelation.Target Property Generated" Name="TargetPropertyGenerated" DisplayName="Target Property Generated" DefaultValue="true" Category="Target">
+        <DomainProperty Id="feb33769-96a2-44c6-94fb-06ae1e160c10" Description="Description for Castle.ActiveWriter.ManyToManyRelation.Target Property Generated" Name="TargetPropertyGenerated" DisplayName="Target Property Generated" DefaultValue="true" Category="Target">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="1a60bb90-b145-4931-b2fb-5f2988da83fb" Description="Description for Altinoren.ActiveWriter.ManyToManyRelation.Source Property Generated" Name="SourcePropertyGenerated" DisplayName="Source Property Generated" DefaultValue="true" Category="Source">
+        <DomainProperty Id="1a60bb90-b145-4931-b2fb-5f2988da83fb" Description="Description for Castle.ActiveWriter.ManyToManyRelation.Source Property Generated" Name="SourcePropertyGenerated" DisplayName="Source Property Generated" DefaultValue="true" Category="Source">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
@@ -1088,7 +1088,7 @@
         </DomainRole>
       </Target>
     </DomainRelationship>
-    <DomainRelationship Id="fc147ce4-8aa0-4719-94a9-21179d6cf6a5" Description="Associates a foreign table where the current class and the target class share their primary key." Name="OneToOneRelation" DisplayName="One To One Relation" Namespace="Altinoren.ActiveWriter">
+    <DomainRelationship Id="fc147ce4-8aa0-4719-94a9-21179d6cf6a5" Description="Associates a foreign table where the current class and the target class share their primary key." Name="OneToOneRelation" DisplayName="One To One Relation" Namespace="Castle.ActiveWriter">
       <Properties>
         <DomainProperty Id="6cab92a3-03e6-41fa-926d-f33afdbbbfcd" Description="" Name="SourceAccess" DisplayName="Source Access" DefaultValue="Inherit" Category="Source">
           <Type>
@@ -1171,25 +1171,25 @@
         </DomainRole>
       </Target>
     </DomainRelationship>
-    <DomainRelationship Id="b52af8b1-d8e4-4df3-9ccc-aed68d8c50f6" Description="Description for Altinoren.ActiveWriter.ModelHasNestedClasses" Name="ModelHasNestedClasses" DisplayName="Model Has Nested Classes" Namespace="Altinoren.ActiveWriter" IsEmbedding="true">
+    <DomainRelationship Id="b52af8b1-d8e4-4df3-9ccc-aed68d8c50f6" Description="Description for Castle.ActiveWriter.ModelHasNestedClasses" Name="ModelHasNestedClasses" DisplayName="Model Has Nested Classes" Namespace="Castle.ActiveWriter" IsEmbedding="true">
       <Source>
-        <DomainRole Id="aa430439-9ab3-4298-9636-53d2f9774d04" Description="Description for Altinoren.ActiveWriter.ModelHasNestedClasses.Model" Name="Model" DisplayName="Model" PropertyName="NestedClasses" PropertyDisplayName="Nested Classes">
+        <DomainRole Id="aa430439-9ab3-4298-9636-53d2f9774d04" Description="Description for Castle.ActiveWriter.ModelHasNestedClasses.Model" Name="Model" DisplayName="Model" PropertyName="NestedClasses" PropertyDisplayName="Nested Classes">
           <RolePlayer>
             <DomainClassMoniker Name="Model" />
           </RolePlayer>
         </DomainRole>
       </Source>
       <Target>
-        <DomainRole Id="6948fc5c-a899-4a5b-91a9-9650e8d27e3b" Description="Description for Altinoren.ActiveWriter.ModelHasNestedClasses.NestedClass" Name="NestedClass" DisplayName="Nested Class" PropertyName="Model" Multiplicity="One" PropagatesDelete="true" PropagatesCopy="true" PropertyDisplayName="Model">
+        <DomainRole Id="6948fc5c-a899-4a5b-91a9-9650e8d27e3b" Description="Description for Castle.ActiveWriter.ModelHasNestedClasses.NestedClass" Name="NestedClass" DisplayName="Nested Class" PropertyName="Model" Multiplicity="One" PropagatesDelete="true" PropagatesCopy="PropagatesCopyToLinkAndOppositeRolePlayer" PropertyDisplayName="Model">
           <RolePlayer>
             <DomainClassMoniker Name="NestedClass" />
           </RolePlayer>
         </DomainRole>
       </Target>
     </DomainRelationship>
-    <DomainRelationship Id="43b9347e-1b5e-4727-b8eb-8ce53dfe040d" Description="Description for Altinoren.ActiveWriter.NestedClassHasProperties" Name="NestedClassHasProperties" DisplayName="Nested Class Has Properties" Namespace="Altinoren.ActiveWriter" IsEmbedding="true">
+    <DomainRelationship Id="43b9347e-1b5e-4727-b8eb-8ce53dfe040d" Description="Description for Castle.ActiveWriter.NestedClassHasProperties" Name="NestedClassHasProperties" DisplayName="Nested Class Has Properties" Namespace="Castle.ActiveWriter" IsEmbedding="true">
       <Source>
-        <DomainRole Id="6180382e-dc27-408f-9293-4863f8054b67" Description="Description for Altinoren.ActiveWriter.NestedClassHasProperties.NestedClass" Name="NestedClass" DisplayName="Nested Class" PropertyName="Properties" PropertyDisplayName="Properties">
+        <DomainRole Id="6180382e-dc27-408f-9293-4863f8054b67" Description="Description for Castle.ActiveWriter.NestedClassHasProperties.NestedClass" Name="NestedClass" DisplayName="Nested Class" PropertyName="Properties" PropertyDisplayName="Properties">
           <RolePlayer>
             <DomainClassMoniker Name="NestedClass" />
           </RolePlayer>
@@ -1203,7 +1203,7 @@
         </DomainRole>
       </Target>
     </DomainRelationship>
-    <DomainRelationship Id="6d7cfc22-da01-49be-87ae-387c801c09a5" Description="" Name="NestedClassReferencesModelClasses" DisplayName="Nested Class References Model Classes" Namespace="Altinoren.ActiveWriter">
+    <DomainRelationship Id="6d7cfc22-da01-49be-87ae-387c801c09a5" Description="" Name="NestedClassReferencesModelClasses" DisplayName="Nested Class References Model Classes" Namespace="Castle.ActiveWriter">
       <Properties>
         <DomainProperty Id="f223ecda-896f-4951-a58d-f45b16c1f0bb" Description="Allows one to reference a different type than the property type" Name="MapType" DisplayName="Map Type" Category="ActiveRecord">
           <Type>
@@ -1215,7 +1215,7 @@
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="ce949210-8ff3-45ab-b8f9-df65ba4b40ef" Description="Description for Altinoren.ActiveWriter.NestedClassReferencesModelClasses.Update" Name="Update" DisplayName="Update" DefaultValue="true" Category="ActiveRecord">
+        <DomainProperty Id="ce949210-8ff3-45ab-b8f9-df65ba4b40ef" Description="Description for Castle.ActiveWriter.NestedClassReferencesModelClasses.Update" Name="Update" DisplayName="Update" DefaultValue="true" Category="ActiveRecord">
           <Type>
             <ExternalTypeMoniker Name="/System/Boolean" />
           </Type>
@@ -1237,30 +1237,30 @@
         </DomainProperty>
       </Properties>
       <Source>
-        <DomainRole Id="9afdc90c-c59b-4a9e-848d-7c82aed6cc3d" Description="Description for Altinoren.ActiveWriter.NestedClassReferencesModelClasses.NestedClass" Name="NestedClass" DisplayName="Nested Class" PropertyName="ModelClasses" PropertyDisplayName="Model Classes">
+        <DomainRole Id="9afdc90c-c59b-4a9e-848d-7c82aed6cc3d" Description="Description for Castle.ActiveWriter.NestedClassReferencesModelClasses.NestedClass" Name="NestedClass" DisplayName="Nested Class" PropertyName="ModelClasses" PropertyDisplayName="Model Classes">
           <RolePlayer>
             <DomainClassMoniker Name="NestedClass" />
           </RolePlayer>
         </DomainRole>
       </Source>
       <Target>
-        <DomainRole Id="c8a74401-0517-4a83-b799-8c64c26af5a3" Description="Description for Altinoren.ActiveWriter.NestedClassReferencesModelClasses.ModelClass" Name="ModelClass" DisplayName="Model Class" PropertyName="NestedClasses" PropertyDisplayName="Nested Classes">
+        <DomainRole Id="c8a74401-0517-4a83-b799-8c64c26af5a3" Description="Description for Castle.ActiveWriter.NestedClassReferencesModelClasses.ModelClass" Name="ModelClass" DisplayName="Model Class" PropertyName="NestedClasses" PropertyDisplayName="Nested Classes">
           <RolePlayer>
             <DomainClassMoniker Name="ModelClass" />
           </RolePlayer>
         </DomainRole>
       </Target>
     </DomainRelationship>
-    <DomainRelationship Id="91bc9e95-6a4c-467b-9e05-19d77f3f5c6e" Description="Indicates that a class inherits from another class." Name="InheritanceRelation" DisplayName="Inheritance Relation" Namespace="Altinoren.ActiveWriter">
+    <DomainRelationship Id="91bc9e95-6a4c-467b-9e05-19d77f3f5c6e" Description="Indicates that a class inherits from another class." Name="InheritanceRelation" DisplayName="Inheritance Relation" Namespace="Castle.ActiveWriter">
       <Source>
-        <DomainRole Id="041227b3-4da3-4472-909b-980ee5ac163a" Description="Description for Altinoren.ActiveWriter.InheritanceRelation.SourceModelClass" Name="SourceModelClass" DisplayName="Source Model Class" PropertyName="TargetModelClasses" PropertyDisplayName="Target Model Classes">
+        <DomainRole Id="041227b3-4da3-4472-909b-980ee5ac163a" Description="Description for Castle.ActiveWriter.InheritanceRelation.SourceModelClass" Name="SourceModelClass" DisplayName="Source Model Class" PropertyName="TargetModelClasses" PropertyDisplayName="Target Model Classes">
           <RolePlayer>
             <DomainClassMoniker Name="ModelClass" />
           </RolePlayer>
         </DomainRole>
       </Source>
       <Target>
-        <DomainRole Id="a8f24912-537a-480a-965e-7c0aa9c88d19" Description="Description for Altinoren.ActiveWriter.InheritanceRelation.TargetModelClass" Name="TargetModelClass" DisplayName="Target Model Class" PropertyName="SourceModelClasses" PropertyDisplayName="Source Model Classes">
+        <DomainRole Id="a8f24912-537a-480a-965e-7c0aa9c88d19" Description="Description for Castle.ActiveWriter.InheritanceRelation.TargetModelClass" Name="TargetModelClass" DisplayName="Target Model Class" PropertyName="SourceModelClasses" PropertyDisplayName="Source Model Classes">
           <RolePlayer>
             <DomainClassMoniker Name="ModelClass" />
           </RolePlayer>
@@ -1284,235 +1284,235 @@
     <ExternalType Name="Guid" Namespace="System" />
     <ExternalType Name="Boolean" Namespace="System" />
     <ExternalType Name="Char" Namespace="System" />
-    <DomainEnumeration Name="PropertyAccess" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.PropertyAccess">
+    <DomainEnumeration Name="PropertyAccess" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.PropertyAccess">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PropertyAccess.Property" Name="Property" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PropertyAccess.FieldCamelcase" Name="FieldCamelcase" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PropertyAccess.FieldCamelcaseUnderscore" Name="FieldCamelcaseUnderscore" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PropertyAccess.FieldPascalcaseMUnderscore" Name="FieldPascalcaseMUnderscore" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PropertyAccess.FieldLowercaseUnderscore" Name="FieldLowercaseUnderscore" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PropertyAccess.NosetterCamelcase" Name="NosetterCamelcase" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PropertyAccess.NosetterCamelcaseUnderscore" Name="NosetterCamelcaseUnderscore" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PropertyAccess.NosetterPascalcaseMUnderscore" Name="NosetterPascalcaseMUnderscore" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PropertyAccess.NosetterLowercaseUnderscore" Name="NosetterLowercaseUnderscore" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PropertyAccess.Field" Name="Field" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PropertyAccess.NosetterLowercase" Name="NosetterLowercase" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PropertyAccess.Property" Name="Property" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PropertyAccess.FieldCamelcase" Name="FieldCamelcase" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PropertyAccess.FieldCamelcaseUnderscore" Name="FieldCamelcaseUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PropertyAccess.FieldPascalcaseMUnderscore" Name="FieldPascalcaseMUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PropertyAccess.FieldLowercaseUnderscore" Name="FieldLowercaseUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PropertyAccess.NosetterCamelcase" Name="NosetterCamelcase" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PropertyAccess.NosetterCamelcaseUnderscore" Name="NosetterCamelcaseUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PropertyAccess.NosetterPascalcaseMUnderscore" Name="NosetterPascalcaseMUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PropertyAccess.NosetterLowercaseUnderscore" Name="NosetterLowercaseUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PropertyAccess.Field" Name="Field" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PropertyAccess.NosetterLowercase" Name="NosetterLowercase" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="CacheEnum" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.CacheEnum">
+    <DomainEnumeration Name="CacheEnum" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.CacheEnum">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.CacheEnum.Undefined" Name="Undefined" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.CacheEnum.ReadOnly" Name="ReadOnly" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.CacheEnum.ReadWrite" Name="ReadWrite" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.CacheEnum.NonStrictReadWrite" Name="NonStrictReadWrite" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.CacheEnum.Undefined" Name="Undefined" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.CacheEnum.ReadOnly" Name="ReadOnly" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.CacheEnum.ReadWrite" Name="ReadWrite" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.CacheEnum.NonStrictReadWrite" Name="NonStrictReadWrite" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="PrimaryKeyType" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.PrimaryKeyType">
+    <DomainEnumeration Name="PrimaryKeyType" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.PrimaryKeyType">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PrimaryKeyType.None" Name="None" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PrimaryKeyType.Identity" Name="Identity" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PrimaryKeyType.Sequence" Name="Sequence" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PrimaryKeyType.HiLo" Name="HiLo" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PrimaryKeyType.SeqHiLo" Name="SeqHiLo" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PrimaryKeyType.UuidHex" Name="UuidHex" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PrimaryKeyType.UuidString" Name="UuidString" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PrimaryKeyType.Guid" Name="Guid" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PrimaryKeyType.GuidComb" Name="GuidComb" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PrimaryKeyType.Native" Name="Native" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PrimaryKeyType.Assigned" Name="Assigned" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PrimaryKeyType.Foreign" Name="Foreign" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PrimaryKeyType.None" Name="None" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PrimaryKeyType.Identity" Name="Identity" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PrimaryKeyType.Sequence" Name="Sequence" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PrimaryKeyType.HiLo" Name="HiLo" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PrimaryKeyType.SeqHiLo" Name="SeqHiLo" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PrimaryKeyType.UuidHex" Name="UuidHex" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PrimaryKeyType.UuidString" Name="UuidString" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PrimaryKeyType.Guid" Name="Guid" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PrimaryKeyType.GuidComb" Name="GuidComb" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PrimaryKeyType.Native" Name="Native" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PrimaryKeyType.Assigned" Name="Assigned" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PrimaryKeyType.Foreign" Name="Foreign" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="KeyType" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.KeyType">
+    <DomainEnumeration Name="KeyType" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.KeyType">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.KeyType.None" Name="None" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.KeyType.PrimaryKey" Name="PrimaryKey" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.KeyType.CompositeKey" Name="CompositeKey" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.KeyType.None" Name="None" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.KeyType.PrimaryKey" Name="PrimaryKey" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.KeyType.CompositeKey" Name="CompositeKey" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="CascadeEnum" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.CascadeEnum">
+    <DomainEnumeration Name="CascadeEnum" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.CascadeEnum">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.CascadeEnum.None" Name="None" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.CascadeEnum.All" Name="All" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.CascadeEnum.SaveUpdate" Name="SaveUpdate" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.CascadeEnum.Delete" Name="Delete" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.CascadeEnum.None" Name="None" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.CascadeEnum.All" Name="All" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.CascadeEnum.SaveUpdate" Name="SaveUpdate" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.CascadeEnum.Delete" Name="Delete" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="OuterJoinEnum" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.OuterJoinEnum">
+    <DomainEnumeration Name="OuterJoinEnum" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.OuterJoinEnum">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.OuterJoinEnum.Auto" Name="Auto" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.OuterJoinEnum.True" Name="True" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.OuterJoinEnum.False" Name="False" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.OuterJoinEnum.Auto" Name="Auto" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.OuterJoinEnum.True" Name="True" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.OuterJoinEnum.False" Name="False" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="InheritedRelationType" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.InheritedRelationType">
+    <DomainEnumeration Name="InheritedRelationType" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.InheritedRelationType">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritedRelationType.Inherited" Name="Inherited" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritedRelationType.Guess" Name="Guess" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritedRelationType.Bag" Name="Bag" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritedRelationType.Set" Name="Set" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritedRelationType.IdBag" Name="IdBag" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritedRelationType.Map" Name="Map" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritedRelationType.List" Name="List" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritedRelationType.Inherited" Name="Inherited" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritedRelationType.Guess" Name="Guess" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritedRelationType.Bag" Name="Bag" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritedRelationType.Set" Name="Set" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritedRelationType.IdBag" Name="IdBag" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritedRelationType.Map" Name="Map" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritedRelationType.List" Name="List" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="RelationType" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.RelationType">
+    <DomainEnumeration Name="RelationType" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.RelationType">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.RelationType.Guess" Name="Guess" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.RelationType.Bag" Name="Bag" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.RelationType.Set" Name="Set" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.RelationType.IdBag" Name="IdBag" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.RelationType.Map" Name="Map" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.RelationType.List" Name="List" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.RelationType.Guess" Name="Guess" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.RelationType.Bag" Name="Bag" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.RelationType.Set" Name="Set" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.RelationType.IdBag" Name="IdBag" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.RelationType.Map" Name="Map" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.RelationType.List" Name="List" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="NHibernateType" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.NHibernateType">
+    <DomainEnumeration Name="NHibernateType" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.NHibernateType">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.AnsiChar" Name="AnsiChar" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.Single" Name="Single" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.AnsiString" Name="AnsiString" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.CultureInfo" Name="CultureInfo" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.Binary" Name="Binary" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.Type" Name="Type" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.String" Name="String" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.StringClob" Name="StringClob" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.BinaryBlob" Name="BinaryBlob" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.Boolean" Name="Boolean" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.Byte" Name="Byte" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.Char" Name="Char" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.DateTime" Name="DateTime" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.Decimal" Name="Decimal" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.Double" Name="Double" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.Guid" Name="Guid" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.Int16" Name="Int16" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.Int32" Name="Int32" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.Int64" Name="Int64" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.Ticks" Name="Ticks" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.TimeSpan" Name="TimeSpan" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.Timestamp" Name="Timestamp" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.TrueFalse" Name="TrueFalse" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.YesNo" Name="YesNo" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NHibernateType.Custom" Name="Custom" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.AnsiChar" Name="AnsiChar" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.Single" Name="Single" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.AnsiString" Name="AnsiString" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.CultureInfo" Name="CultureInfo" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.Binary" Name="Binary" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.Type" Name="Type" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.String" Name="String" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.StringClob" Name="StringClob" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.BinaryBlob" Name="BinaryBlob" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.Boolean" Name="Boolean" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.Byte" Name="Byte" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.Char" Name="Char" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.DateTime" Name="DateTime" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.Decimal" Name="Decimal" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.Double" Name="Double" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.Guid" Name="Guid" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.Int16" Name="Int16" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.Int32" Name="Int32" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.Int64" Name="Int64" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.Ticks" Name="Ticks" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.TimeSpan" Name="TimeSpan" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.Timestamp" Name="Timestamp" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.TrueFalse" Name="TrueFalse" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.YesNo" Name="YesNo" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NHibernateType.Custom" Name="Custom" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="Accessor" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.Accessor">
+    <DomainEnumeration Name="Accessor" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.Accessor">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.Accessor.Public" Name="Public" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.Accessor.Private" Name="Private" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.Accessor.Protected" Name="Protected" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.Accessor.Public" Name="Public" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.Accessor.Private" Name="Private" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.Accessor.Protected" Name="Protected" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="PropertyType" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.PropertyType">
+    <DomainEnumeration Name="PropertyType" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.PropertyType">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PropertyType.Property" Name="Property" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PropertyType.Field" Name="Field" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PropertyType.Version" Name="Version" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.PropertyType.Timestamp" Name="Timestamp" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PropertyType.Property" Name="Property" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PropertyType.Field" Name="Field" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PropertyType.Version" Name="Version" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.PropertyType.Timestamp" Name="Timestamp" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="FieldCase" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.FieldCase">
+    <DomainEnumeration Name="FieldCase" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.FieldCase">
       <Literals>
         <EnumerationLiteral Description="" Name="Unchanged" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.FieldCase.Camelcase" Name="Camelcase" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.FieldCase.CamelcaseUnderscore" Name="CamelcaseUnderscore" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.FieldCase.CamelcaseMUnderscore" Name="CamelcaseMUnderscore" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.FieldCase.Pascalcase" Name="Pascalcase" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.FieldCase.PascalcaseUnderscore" Name="PascalcaseUnderscore" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.FieldCase.PascalcaseMUnderscore" Name="PascalcaseMUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.FieldCase.Camelcase" Name="Camelcase" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.FieldCase.CamelcaseUnderscore" Name="CamelcaseUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.FieldCase.CamelcaseMUnderscore" Name="CamelcaseMUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.FieldCase.Pascalcase" Name="Pascalcase" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.FieldCase.PascalcaseUnderscore" Name="PascalcaseUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.FieldCase.PascalcaseMUnderscore" Name="PascalcaseMUnderscore" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="CodeLanguage" Namespace="Altinoren.ActiveWriter" Description="">
+    <DomainEnumeration Name="CodeLanguage" Namespace="Castle.ActiveWriter" Description="">
       <Literals>
         <EnumerationLiteral Description="" Name="CSharp" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.CodeLanguage.VB" Name="VB" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.CodeLanguage.VB" Name="VB" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="NullableUsage" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.NullableUsage">
+    <DomainEnumeration Name="NullableUsage" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.NullableUsage">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NullableUsage.No" Name="No" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NullableUsage.Native" Name="Native" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NullableUsage.WithHelperLibrary" Name="WithHelperLibrary" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NullableUsage.No" Name="No" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NullableUsage.Native" Name="Native" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NullableUsage.WithHelperLibrary" Name="WithHelperLibrary" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="Polymorphism" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.Polymorphism">
+    <DomainEnumeration Name="Polymorphism" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.Polymorphism">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.Polymorphism.Implicit" Name="Implicit" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.Polymorphism.Explicit" Name="Explicit" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.Polymorphism.Implicit" Name="Implicit" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.Polymorphism.Explicit" Name="Explicit" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="OptimisticLocking" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.OptimisticLocking">
+    <DomainEnumeration Name="OptimisticLocking" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.OptimisticLocking">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.OptimisticLocking.None" Name="None" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.OptimisticLocking.Version" Name="Version" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.OptimisticLocking.Dirty" Name="Dirty" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.OptimisticLocking.All" Name="All" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.OptimisticLocking.None" Name="None" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.OptimisticLocking.Version" Name="Version" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.OptimisticLocking.Dirty" Name="Dirty" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.OptimisticLocking.All" Name="All" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="NotFoundBehaviour" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.NotFoundBehaviour">
+    <DomainEnumeration Name="NotFoundBehaviour" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.NotFoundBehaviour">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NotFoundBehaviour.Default" Name="Default" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NotFoundBehaviour.Exception" Name="Exception" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.NotFoundBehaviour.Ignore" Name="Ignore" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NotFoundBehaviour.Default" Name="Default" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NotFoundBehaviour.Exception" Name="Exception" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.NotFoundBehaviour.Ignore" Name="Ignore" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="CodeGenerationTarget" Namespace="Altinoren.ActiveWriter" Description="">
+    <DomainEnumeration Name="CodeGenerationTarget" Namespace="Castle.ActiveWriter" Description="">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.CodeGenerationTarget.ActiveRecord" Name="ActiveRecord" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.CodeGenerationTarget.ActiveRecord" Name="ActiveRecord" Value="" />
         <EnumerationLiteral Description="" Name="NHibernate" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="ManyRelationCascadeEnum" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum">
+    <DomainEnumeration Name="ManyRelationCascadeEnum" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.ManyRelationCascadeEnum">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.None" Name="None" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.All" Name="All" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.SaveUpdate" Name="SaveUpdate" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.Delete" Name="Delete" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.AllDeleteOrphan" Name="AllDeleteOrphan" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.ManyRelationCascadeEnum.None" Name="None" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.ManyRelationCascadeEnum.All" Name="All" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.ManyRelationCascadeEnum.SaveUpdate" Name="SaveUpdate" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.ManyRelationCascadeEnum.Delete" Name="Delete" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.ManyRelationCascadeEnum.AllDeleteOrphan" Name="AllDeleteOrphan" Value="" />
       </Literals>
     </DomainEnumeration>
-    <ExternalType Name="List&lt;Altinoren.ActiveWriter.Import&gt;" Namespace="System.Collections.Generic" />
+    <ExternalType Name="List&lt;Castle.ActiveWriter.Import&gt;" Namespace="System.Collections.Generic" />
     <ExternalType Name="Array" Namespace="System" />
-    <DomainEnumeration Name="InheritableBoolean" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.InheritableBoolean">
+    <DomainEnumeration Name="InheritableBoolean" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.InheritableBoolean">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritableBoolean.True" Name="True" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritableBoolean.Inherit" Name="Inherit" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritableBoolean.False" Name="False" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritableBoolean.True" Name="True" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritableBoolean.Inherit" Name="Inherit" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritableBoolean.False" Name="False" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="FetchEnum" Namespace="Altinoren.ActiveWriter" Description="Description for Altinoren.ActiveWriter.FetchEnum">
+    <DomainEnumeration Name="FetchEnum" Namespace="Castle.ActiveWriter" Description="Description for Castle.ActiveWriter.FetchEnum">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.FetchEnum.Select" Name="Select" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.FetchEnum.Join" Name="Join" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.FetchEnum.SubSelect" Name="SubSelect" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.FetchEnum.Unspecified" Name="Unspecified" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.FetchEnum.Select" Name="Select" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.FetchEnum.Join" Name="Join" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.FetchEnum.SubSelect" Name="SubSelect" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.FetchEnum.Unspecified" Name="Unspecified" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="MetaDataGeneration" Namespace="Altinoren.ActiveWriter" Description="">
+    <DomainEnumeration Name="MetaDataGeneration" Namespace="Castle.ActiveWriter" Description="">
       <Literals>
         <EnumerationLiteral Description="" Name="False" Value="" />
         <EnumerationLiteral Description="" Name="InClass" Value="" />
         <EnumerationLiteral Description="" Name="InSubClass" Value="" />
       </Literals>
     </DomainEnumeration>
-    <DomainEnumeration Name="InheritablePropertyAccess" Namespace="Altinoren.ActiveWriter" Description="Same as PropertyAccess, but with the ability to inherit from parents.">
+    <DomainEnumeration Name="InheritablePropertyAccess" Namespace="Castle.ActiveWriter" Description="Same as PropertyAccess, but with the ability to inherit from parents.">
       <Literals>
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.Inherit" Name="Inherit" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.FieldLowercaseUnderscore" Name="FieldLowercaseUnderscore" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.FieldPascalcaseMUnderscore" Name="FieldPascalcaseMUnderscore" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterCamelcase" Name="NosetterCamelcase" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterCamelcaseUnderscore" Name="NosetterCamelcaseUnderscore" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.Property" Name="Property" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterPascalcaseMUnderscore" Name="NosetterPascalcaseMUnderscore" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterLowercaseUnderscore" Name="NosetterLowercaseUnderscore" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterLowercase" Name="NosetterLowercase" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.Field" Name="Field" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.FieldCamelcase" Name="FieldCamelcase" Value="" />
-        <EnumerationLiteral Description="Description for Altinoren.ActiveWriter.InheritablePropertyAccess.FieldCamelcaseUnderscore" Name="FieldCamelcaseUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritablePropertyAccess.Inherit" Name="Inherit" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritablePropertyAccess.FieldLowercaseUnderscore" Name="FieldLowercaseUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritablePropertyAccess.FieldPascalcaseMUnderscore" Name="FieldPascalcaseMUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritablePropertyAccess.NosetterCamelcase" Name="NosetterCamelcase" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritablePropertyAccess.NosetterCamelcaseUnderscore" Name="NosetterCamelcaseUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritablePropertyAccess.Property" Name="Property" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritablePropertyAccess.NosetterPascalcaseMUnderscore" Name="NosetterPascalcaseMUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritablePropertyAccess.NosetterLowercaseUnderscore" Name="NosetterLowercaseUnderscore" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritablePropertyAccess.NosetterLowercase" Name="NosetterLowercase" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritablePropertyAccess.Field" Name="Field" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritablePropertyAccess.FieldCamelcase" Name="FieldCamelcase" Value="" />
+        <EnumerationLiteral Description="Description for Castle.ActiveWriter.InheritablePropertyAccess.FieldCamelcaseUnderscore" Name="FieldCamelcaseUnderscore" Value="" />
       </Literals>
     </DomainEnumeration>
   </Types>
   <Shapes>
-    <CompartmentShape Id="ca45d586-12d1-4f5d-99c7-83c1eb0e61eb" Description="" Name="ClassShape" DisplayName="Class Shape" Namespace="Altinoren.ActiveWriter" GeneratesDoubleDerived="true" FixedTooltipText="Class Shape" FillColor="LightSteelBlue" InitialHeight="0.4" Geometry="RoundedRectangle">
+    <CompartmentShape Id="ca45d586-12d1-4f5d-99c7-83c1eb0e61eb" Description="" Name="ClassShape" DisplayName="Class Shape" Namespace="Castle.ActiveWriter" GeneratesDoubleDerived="true" FixedTooltipText="Class Shape" FillColor="LightSteelBlue" InitialHeight="0.4" Geometry="RoundedRectangle">
       <ShapeHasDecorators Position="InnerTopCenter" HorizontalOffset="0" VerticalOffset="0">
         <TextDecorator Name="Name" DisplayName="Name" DefaultText="Name" />
       </ShapeHasDecorators>
@@ -1527,7 +1527,7 @@
       </ShapeHasDecorators>
       <Compartment Name="Properties" Title="Properties" />
     </CompartmentShape>
-    <CompartmentShape Id="db37440f-1f67-41af-869d-fb873cfa72a1" Description="" Name="NestedClassShape" DisplayName="Nested Class Shape" Namespace="Altinoren.ActiveWriter" GeneratesDoubleDerived="true" FixedTooltipText="Nested Class Shape" FillColor="Khaki" InitialHeight="0.4" Geometry="RoundedRectangle">
+    <CompartmentShape Id="db37440f-1f67-41af-869d-fb873cfa72a1" Description="" Name="NestedClassShape" DisplayName="Nested Class Shape" Namespace="Castle.ActiveWriter" GeneratesDoubleDerived="true" FixedTooltipText="Nested Class Shape" FillColor="Khaki" InitialHeight="0.4" Geometry="RoundedRectangle">
       <ShapeHasDecorators Position="InnerTopCenter" HorizontalOffset="0" VerticalOffset="0">
         <TextDecorator Name="Name" DisplayName="Name" DefaultText="Name" />
       </ShapeHasDecorators>
@@ -1538,7 +1538,7 @@
     </CompartmentShape>
   </Shapes>
   <Connectors>
-    <Connector Id="e7702e83-2753-42c9-85ce-3a19239d6012" Description="" Name="ManyToOneConnector" DisplayName="Many To One Connector" Namespace="Altinoren.ActiveWriter" FixedTooltipText="Many To One Connector" SourceEndStyle="EmptyDiamond" TargetEndStyle="EmptyArrow" Thickness="0.01">
+    <Connector Id="e7702e83-2753-42c9-85ce-3a19239d6012" Description="" Name="ManyToOneConnector" DisplayName="Many To One Connector" Namespace="Castle.ActiveWriter" FixedTooltipText="Many To One Connector" SourceEndStyle="EmptyDiamond" TargetEndStyle="EmptyArrow" Thickness="0.01">
       <ConnectorHasDecorators Position="TargetTop" OffsetFromShape="0" OffsetFromLine="0">
         <TextDecorator Name="One" DisplayName="One" DefaultText="1" />
       </ConnectorHasDecorators>
@@ -1546,7 +1546,7 @@
         <TextDecorator Name="Many" DisplayName="Many" DefaultText="n" />
       </ConnectorHasDecorators>
     </Connector>
-    <Connector Id="2c40f7b4-090f-4cc2-802e-1aa792bf4785" Description="" Name="ManyToManyConnector" DisplayName="Many To Many Connector" Namespace="Altinoren.ActiveWriter" FixedTooltipText="Many To Many Connector" SourceEndStyle="EmptyDiamond" TargetEndStyle="EmptyDiamond" Thickness="0.01">
+    <Connector Id="2c40f7b4-090f-4cc2-802e-1aa792bf4785" Description="" Name="ManyToManyConnector" DisplayName="Many To Many Connector" Namespace="Castle.ActiveWriter" FixedTooltipText="Many To Many Connector" SourceEndStyle="EmptyDiamond" TargetEndStyle="EmptyDiamond" Thickness="0.01">
       <ConnectorHasDecorators Position="SourceTop" OffsetFromShape="0" OffsetFromLine="0">
         <TextDecorator Name="ManySource" DisplayName="Many Source" DefaultText="n" />
       </ConnectorHasDecorators>
@@ -1554,7 +1554,7 @@
         <TextDecorator Name="ManyTarget" DisplayName="Many Target" DefaultText="m" />
       </ConnectorHasDecorators>
     </Connector>
-    <Connector Id="be1643a1-a849-4031-9f25-eff913be9cce" Description="Associates a foreign table where the current class and the target class share their primary key." Name="OneToOneConnector" DisplayName="One To One Connector" Namespace="Altinoren.ActiveWriter" FixedTooltipText="One To One Connector" SourceEndStyle="EmptyArrow" TargetEndStyle="FilledArrow" Thickness="0.01">
+    <Connector Id="be1643a1-a849-4031-9f25-eff913be9cce" Description="Associates a foreign table where the current class and the target class share their primary key." Name="OneToOneConnector" DisplayName="One To One Connector" Namespace="Castle.ActiveWriter" FixedTooltipText="One To One Connector" SourceEndStyle="EmptyArrow" TargetEndStyle="FilledArrow" Thickness="0.01">
       <ConnectorHasDecorators Position="SourceTop" OffsetFromShape="0" OffsetFromLine="0">
         <TextDecorator Name="OneSource" DisplayName="One Source" DefaultText="1" />
       </ConnectorHasDecorators>
@@ -1562,14 +1562,14 @@
         <TextDecorator Name="OneTarget" DisplayName="One Target" DefaultText="1" />
       </ConnectorHasDecorators>
     </Connector>
-    <Connector Id="6fe0ecce-c266-4750-b28b-2e4e73e19800" Description="Associates a domain class with a nested class, representing an extracted subset of repeating properties for multiple classes." Name="NestedConnector" DisplayName="Nested Connector" Namespace="Altinoren.ActiveWriter" FixedTooltipText="Nested Connector" DashStyle="Dot" TargetEndStyle="HollowArrow" Thickness="0.01">
+    <Connector Id="6fe0ecce-c266-4750-b28b-2e4e73e19800" Description="Associates a domain class with a nested class, representing an extracted subset of repeating properties for multiple classes." Name="NestedConnector" DisplayName="Nested Connector" Namespace="Castle.ActiveWriter" FixedTooltipText="Nested Connector" DashStyle="Dot" TargetEndStyle="HollowArrow" Thickness="0.01">
       <ConnectorHasDecorators Position="SourceTop" OffsetFromShape="0" OffsetFromLine="0">
         <TextDecorator Name="Nested" DisplayName="Nested" DefaultText="Nested" />
       </ConnectorHasDecorators>
     </Connector>
-    <Connector Id="6de26394-b772-45cd-8f76-8766bd5c7fbf" Description="Indicates that a class inherits from another class." Name="InheritanceConnector" DisplayName="Inheritance Connector" Namespace="Altinoren.ActiveWriter" FixedTooltipText="Inheritance Connector" TargetEndStyle="HollowArrow" />
+    <Connector Id="6de26394-b772-45cd-8f76-8766bd5c7fbf" Description="Indicates that a class inherits from another class." Name="InheritanceConnector" DisplayName="Inheritance Connector" Namespace="Castle.ActiveWriter" FixedTooltipText="Inheritance Connector" TargetEndStyle="HollowArrow" />
   </Connectors>
-  <XmlSerializationBehavior Name="ActiveWriterSerializationBehavior" Namespace="Altinoren.ActiveWriter">
+  <XmlSerializationBehavior Name="ActiveWriterSerializationBehavior" Namespace="Castle.ActiveWriter">
     <ClassData>
       <XmlClassData TypeName="Model" MonikerAttributeName="" SerializeId="true" MonikerElementName="modelMoniker" ElementName="model" MonikerTypeName="ModelMoniker">
         <DomainClassMoniker Name="Model" />
@@ -2426,7 +2426,7 @@
       </LinkConnectDirective>
     </ConnectionBuilder>
   </ConnectionBuilders>
-  <Diagram Id="d25f93b4-c78e-4d22-9d48-ce498e8c1e58" Description="" Name="ActiveRecordMapping" DisplayName="Active Record Mapping" Namespace="Altinoren.ActiveWriter">
+  <Diagram Id="d25f93b4-c78e-4d22-9d48-ce498e8c1e58" Description="" Name="ActiveRecordMapping" DisplayName="Active Record Mapping" Namespace="Castle.ActiveWriter">
     <Class>
       <DomainClassMoniker Name="Model" />
     </Class>

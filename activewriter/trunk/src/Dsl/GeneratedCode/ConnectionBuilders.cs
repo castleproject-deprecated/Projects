@@ -10,7 +10,7 @@
 using DslModeling = global::Microsoft.VisualStudio.Modeling;
 using DslDiagrams = global::Microsoft.VisualStudio.Modeling.Diagrams;
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// ConnectionBuilder class to provide logic for constructing connections between elements.
@@ -27,7 +27,7 @@ namespace Altinoren.ActiveWriter
 		public static bool CanAcceptSource(DslModeling::ModelElement candidate)
 		{
 			if (candidate == null) return false;
-			else if (candidate is global::Altinoren.ActiveWriter.ModelClass)
+			else if (candidate is global::Castle.ActiveWriter.ModelClass)
 			{ 
 				return true;
 			}
@@ -44,7 +44,7 @@ namespace Altinoren.ActiveWriter
 		public static bool CanAcceptTarget(DslModeling::ModelElement candidate)
 		{
 			if (candidate == null) return false;
-			else if (candidate is global::Altinoren.ActiveWriter.ModelClass)
+			else if (candidate is global::Castle.ActiveWriter.ModelClass)
 			{ 
 				return true;
 			}
@@ -83,9 +83,9 @@ namespace Altinoren.ActiveWriter
 			}
 			else // Check combinations
 			{
-				if (candidateSource is global::Altinoren.ActiveWriter.ModelClass)
+				if (candidateSource is global::Castle.ActiveWriter.ModelClass)
 				{
-					if (candidateTarget is global::Altinoren.ActiveWriter.ModelClass)
+					if (candidateTarget is global::Castle.ActiveWriter.ModelClass)
 					{
 						return true;
 					}
@@ -118,13 +118,13 @@ namespace Altinoren.ActiveWriter
 			
 			if (CanAcceptSourceAndTarget(source, target))
 			{
-				if (source is global::Altinoren.ActiveWriter.ModelClass)
+				if (source is global::Castle.ActiveWriter.ModelClass)
 				{
-					if (target is global::Altinoren.ActiveWriter.ModelClass)
+					if (target is global::Castle.ActiveWriter.ModelClass)
 					{
-						global::Altinoren.ActiveWriter.ModelClass sourceAccepted = (global::Altinoren.ActiveWriter.ModelClass)source;
-						global::Altinoren.ActiveWriter.ModelClass targetAccepted = (global::Altinoren.ActiveWriter.ModelClass)target;
-						DslModeling::ElementLink result = new global::Altinoren.ActiveWriter.ManyToOneRelation(sourceAccepted, targetAccepted);
+						global::Castle.ActiveWriter.ModelClass sourceAccepted = (global::Castle.ActiveWriter.ModelClass)source;
+						global::Castle.ActiveWriter.ModelClass targetAccepted = (global::Castle.ActiveWriter.ModelClass)target;
+						DslModeling::ElementLink result = new global::Castle.ActiveWriter.ManyToOneRelation(sourceAccepted, targetAccepted);
 						if (DslModeling::DomainClassInfo.HasNameProperty(result))
 						{
 							DslModeling::DomainClassInfo.SetUniqueName(result);
@@ -154,7 +154,7 @@ namespace Altinoren.ActiveWriter
 		public static bool CanAcceptSource(DslModeling::ModelElement candidate)
 		{
 			if (candidate == null) return false;
-			else if (candidate is global::Altinoren.ActiveWriter.ModelClass)
+			else if (candidate is global::Castle.ActiveWriter.ModelClass)
 			{ 
 				return true;
 			}
@@ -171,7 +171,7 @@ namespace Altinoren.ActiveWriter
 		public static bool CanAcceptTarget(DslModeling::ModelElement candidate)
 		{
 			if (candidate == null) return false;
-			else if (candidate is global::Altinoren.ActiveWriter.ModelProperty)
+			else if (candidate is global::Castle.ActiveWriter.ModelProperty)
 			{ 
 				return true;
 			}
@@ -210,14 +210,14 @@ namespace Altinoren.ActiveWriter
 			}
 			else // Check combinations
 			{
-				if (candidateSource is global::Altinoren.ActiveWriter.ModelClass)
+				if (candidateSource is global::Castle.ActiveWriter.ModelClass)
 				{
-					if (candidateTarget is global::Altinoren.ActiveWriter.ModelProperty)
+					if (candidateTarget is global::Castle.ActiveWriter.ModelProperty)
 					{
-						global::Altinoren.ActiveWriter.ModelClass sourceModelClass = (global::Altinoren.ActiveWriter.ModelClass)candidateSource;
-						global::Altinoren.ActiveWriter.ModelProperty targetModelProperty = (global::Altinoren.ActiveWriter.ModelProperty)candidateTarget;
-						if(targetModelProperty == null || global::Altinoren.ActiveWriter.ClassHasProperty.GetLinkToModelClass(targetModelProperty) != null) return false;
-						if(targetModelProperty == null || sourceModelClass == null || global::Altinoren.ActiveWriter.ClassHasProperty.GetLinks(sourceModelClass, targetModelProperty).Count > 0) return false;
+						global::Castle.ActiveWriter.ModelClass sourceModelClass = (global::Castle.ActiveWriter.ModelClass)candidateSource;
+						global::Castle.ActiveWriter.ModelProperty targetModelProperty = (global::Castle.ActiveWriter.ModelProperty)candidateTarget;
+						if(targetModelProperty == null || global::Castle.ActiveWriter.ClassHasProperty.GetLinkToModelClass(targetModelProperty) != null) return false;
+						if(targetModelProperty == null || sourceModelClass == null || global::Castle.ActiveWriter.ClassHasProperty.GetLinks(sourceModelClass, targetModelProperty).Count > 0) return false;
 						return true;
 					}
 				}
@@ -249,13 +249,13 @@ namespace Altinoren.ActiveWriter
 			
 			if (CanAcceptSourceAndTarget(source, target))
 			{
-				if (source is global::Altinoren.ActiveWriter.ModelClass)
+				if (source is global::Castle.ActiveWriter.ModelClass)
 				{
-					if (target is global::Altinoren.ActiveWriter.ModelProperty)
+					if (target is global::Castle.ActiveWriter.ModelProperty)
 					{
-						global::Altinoren.ActiveWriter.ModelClass sourceAccepted = (global::Altinoren.ActiveWriter.ModelClass)source;
-						global::Altinoren.ActiveWriter.ModelProperty targetAccepted = (global::Altinoren.ActiveWriter.ModelProperty)target;
-						DslModeling::ElementLink result = new global::Altinoren.ActiveWriter.ClassHasProperty(sourceAccepted, targetAccepted);
+						global::Castle.ActiveWriter.ModelClass sourceAccepted = (global::Castle.ActiveWriter.ModelClass)source;
+						global::Castle.ActiveWriter.ModelProperty targetAccepted = (global::Castle.ActiveWriter.ModelProperty)target;
+						DslModeling::ElementLink result = new global::Castle.ActiveWriter.ClassHasProperty(sourceAccepted, targetAccepted);
 						if (DslModeling::DomainClassInfo.HasNameProperty(result))
 						{
 							DslModeling::DomainClassInfo.SetUniqueName(result);
@@ -285,7 +285,7 @@ namespace Altinoren.ActiveWriter
 		public static bool CanAcceptSource(DslModeling::ModelElement candidate)
 		{
 			if (candidate == null) return false;
-			else if (candidate is global::Altinoren.ActiveWriter.ModelClass)
+			else if (candidate is global::Castle.ActiveWriter.ModelClass)
 			{ 
 				return true;
 			}
@@ -302,7 +302,7 @@ namespace Altinoren.ActiveWriter
 		public static bool CanAcceptTarget(DslModeling::ModelElement candidate)
 		{
 			if (candidate == null) return false;
-			else if (candidate is global::Altinoren.ActiveWriter.ModelClass)
+			else if (candidate is global::Castle.ActiveWriter.ModelClass)
 			{ 
 				return true;
 			}
@@ -341,9 +341,9 @@ namespace Altinoren.ActiveWriter
 			}
 			else // Check combinations
 			{
-				if (candidateSource is global::Altinoren.ActiveWriter.ModelClass)
+				if (candidateSource is global::Castle.ActiveWriter.ModelClass)
 				{
-					if (candidateTarget is global::Altinoren.ActiveWriter.ModelClass)
+					if (candidateTarget is global::Castle.ActiveWriter.ModelClass)
 					{
 						return true;
 					}
@@ -376,13 +376,13 @@ namespace Altinoren.ActiveWriter
 			
 			if (CanAcceptSourceAndTarget(source, target))
 			{
-				if (source is global::Altinoren.ActiveWriter.ModelClass)
+				if (source is global::Castle.ActiveWriter.ModelClass)
 				{
-					if (target is global::Altinoren.ActiveWriter.ModelClass)
+					if (target is global::Castle.ActiveWriter.ModelClass)
 					{
-						global::Altinoren.ActiveWriter.ModelClass sourceAccepted = (global::Altinoren.ActiveWriter.ModelClass)source;
-						global::Altinoren.ActiveWriter.ModelClass targetAccepted = (global::Altinoren.ActiveWriter.ModelClass)target;
-						DslModeling::ElementLink result = new global::Altinoren.ActiveWriter.ManyToManyRelation(sourceAccepted, targetAccepted);
+						global::Castle.ActiveWriter.ModelClass sourceAccepted = (global::Castle.ActiveWriter.ModelClass)source;
+						global::Castle.ActiveWriter.ModelClass targetAccepted = (global::Castle.ActiveWriter.ModelClass)target;
+						DslModeling::ElementLink result = new global::Castle.ActiveWriter.ManyToManyRelation(sourceAccepted, targetAccepted);
 						if (DslModeling::DomainClassInfo.HasNameProperty(result))
 						{
 							DslModeling::DomainClassInfo.SetUniqueName(result);
@@ -412,7 +412,7 @@ namespace Altinoren.ActiveWriter
 		public static bool CanAcceptSource(DslModeling::ModelElement candidate)
 		{
 			if (candidate == null) return false;
-			else if (candidate is global::Altinoren.ActiveWriter.ModelClass)
+			else if (candidate is global::Castle.ActiveWriter.ModelClass)
 			{ 
 				return true;
 			}
@@ -429,7 +429,7 @@ namespace Altinoren.ActiveWriter
 		public static bool CanAcceptTarget(DslModeling::ModelElement candidate)
 		{
 			if (candidate == null) return false;
-			else if (candidate is global::Altinoren.ActiveWriter.ModelClass)
+			else if (candidate is global::Castle.ActiveWriter.ModelClass)
 			{ 
 				return true;
 			}
@@ -468,14 +468,14 @@ namespace Altinoren.ActiveWriter
 			}
 			else // Check combinations
 			{
-				if (candidateSource is global::Altinoren.ActiveWriter.ModelClass)
+				if (candidateSource is global::Castle.ActiveWriter.ModelClass)
 				{
-					if (candidateTarget is global::Altinoren.ActiveWriter.ModelClass)
+					if (candidateTarget is global::Castle.ActiveWriter.ModelClass)
 					{
-						global::Altinoren.ActiveWriter.ModelClass sourceModelClass = (global::Altinoren.ActiveWriter.ModelClass)candidateSource;
-						global::Altinoren.ActiveWriter.ModelClass targetModelClass = (global::Altinoren.ActiveWriter.ModelClass)candidateTarget;
-						if(sourceModelClass == null || global::Altinoren.ActiveWriter.OneToOneRelation.GetLinkToOneToOneTarget(sourceModelClass) != null) return false;
-						if(targetModelClass == null || sourceModelClass == null || global::Altinoren.ActiveWriter.OneToOneRelation.GetLinks(sourceModelClass, targetModelClass).Count > 0) return false;
+						global::Castle.ActiveWriter.ModelClass sourceModelClass = (global::Castle.ActiveWriter.ModelClass)candidateSource;
+						global::Castle.ActiveWriter.ModelClass targetModelClass = (global::Castle.ActiveWriter.ModelClass)candidateTarget;
+						if(sourceModelClass == null || global::Castle.ActiveWriter.OneToOneRelation.GetLinkToOneToOneTarget(sourceModelClass) != null) return false;
+						if(targetModelClass == null || sourceModelClass == null || global::Castle.ActiveWriter.OneToOneRelation.GetLinks(sourceModelClass, targetModelClass).Count > 0) return false;
 						return true;
 					}
 				}
@@ -507,13 +507,13 @@ namespace Altinoren.ActiveWriter
 			
 			if (CanAcceptSourceAndTarget(source, target))
 			{
-				if (source is global::Altinoren.ActiveWriter.ModelClass)
+				if (source is global::Castle.ActiveWriter.ModelClass)
 				{
-					if (target is global::Altinoren.ActiveWriter.ModelClass)
+					if (target is global::Castle.ActiveWriter.ModelClass)
 					{
-						global::Altinoren.ActiveWriter.ModelClass sourceAccepted = (global::Altinoren.ActiveWriter.ModelClass)source;
-						global::Altinoren.ActiveWriter.ModelClass targetAccepted = (global::Altinoren.ActiveWriter.ModelClass)target;
-						DslModeling::ElementLink result = new global::Altinoren.ActiveWriter.OneToOneRelation(sourceAccepted, targetAccepted);
+						global::Castle.ActiveWriter.ModelClass sourceAccepted = (global::Castle.ActiveWriter.ModelClass)source;
+						global::Castle.ActiveWriter.ModelClass targetAccepted = (global::Castle.ActiveWriter.ModelClass)target;
+						DslModeling::ElementLink result = new global::Castle.ActiveWriter.OneToOneRelation(sourceAccepted, targetAccepted);
 						if (DslModeling::DomainClassInfo.HasNameProperty(result))
 						{
 							DslModeling::DomainClassInfo.SetUniqueName(result);
@@ -543,7 +543,7 @@ namespace Altinoren.ActiveWriter
 		public static bool CanAcceptSource(DslModeling::ModelElement candidate)
 		{
 			if (candidate == null) return false;
-			else if (candidate is global::Altinoren.ActiveWriter.NestedClass)
+			else if (candidate is global::Castle.ActiveWriter.NestedClass)
 			{ 
 				return true;
 			}
@@ -560,7 +560,7 @@ namespace Altinoren.ActiveWriter
 		public static bool CanAcceptTarget(DslModeling::ModelElement candidate)
 		{
 			if (candidate == null) return false;
-			else if (candidate is global::Altinoren.ActiveWriter.ModelClass)
+			else if (candidate is global::Castle.ActiveWriter.ModelClass)
 			{ 
 				return true;
 			}
@@ -599,13 +599,13 @@ namespace Altinoren.ActiveWriter
 			}
 			else // Check combinations
 			{
-				if (candidateSource is global::Altinoren.ActiveWriter.NestedClass)
+				if (candidateSource is global::Castle.ActiveWriter.NestedClass)
 				{
-					if (candidateTarget is global::Altinoren.ActiveWriter.ModelClass)
+					if (candidateTarget is global::Castle.ActiveWriter.ModelClass)
 					{
-						global::Altinoren.ActiveWriter.NestedClass sourceNestedClass = (global::Altinoren.ActiveWriter.NestedClass)candidateSource;
-						global::Altinoren.ActiveWriter.ModelClass targetModelClass = (global::Altinoren.ActiveWriter.ModelClass)candidateTarget;
-						if(targetModelClass == null || sourceNestedClass == null || global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses.GetLinks(sourceNestedClass, targetModelClass).Count > 0) return false;
+						global::Castle.ActiveWriter.NestedClass sourceNestedClass = (global::Castle.ActiveWriter.NestedClass)candidateSource;
+						global::Castle.ActiveWriter.ModelClass targetModelClass = (global::Castle.ActiveWriter.ModelClass)candidateTarget;
+						if(targetModelClass == null || sourceNestedClass == null || global::Castle.ActiveWriter.NestedClassReferencesModelClasses.GetLinks(sourceNestedClass, targetModelClass).Count > 0) return false;
 						return true;
 					}
 				}
@@ -637,13 +637,13 @@ namespace Altinoren.ActiveWriter
 			
 			if (CanAcceptSourceAndTarget(source, target))
 			{
-				if (source is global::Altinoren.ActiveWriter.NestedClass)
+				if (source is global::Castle.ActiveWriter.NestedClass)
 				{
-					if (target is global::Altinoren.ActiveWriter.ModelClass)
+					if (target is global::Castle.ActiveWriter.ModelClass)
 					{
-						global::Altinoren.ActiveWriter.NestedClass sourceAccepted = (global::Altinoren.ActiveWriter.NestedClass)source;
-						global::Altinoren.ActiveWriter.ModelClass targetAccepted = (global::Altinoren.ActiveWriter.ModelClass)target;
-						DslModeling::ElementLink result = new global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses(sourceAccepted, targetAccepted);
+						global::Castle.ActiveWriter.NestedClass sourceAccepted = (global::Castle.ActiveWriter.NestedClass)source;
+						global::Castle.ActiveWriter.ModelClass targetAccepted = (global::Castle.ActiveWriter.ModelClass)target;
+						DslModeling::ElementLink result = new global::Castle.ActiveWriter.NestedClassReferencesModelClasses(sourceAccepted, targetAccepted);
 						if (DslModeling::DomainClassInfo.HasNameProperty(result))
 						{
 							DslModeling::DomainClassInfo.SetUniqueName(result);
@@ -673,7 +673,7 @@ namespace Altinoren.ActiveWriter
 		public static bool CanAcceptSource(DslModeling::ModelElement candidate)
 		{
 			if (candidate == null) return false;
-			else if (candidate is global::Altinoren.ActiveWriter.ModelClass)
+			else if (candidate is global::Castle.ActiveWriter.ModelClass)
 			{ 
 				return true;
 			}
@@ -690,7 +690,7 @@ namespace Altinoren.ActiveWriter
 		public static bool CanAcceptTarget(DslModeling::ModelElement candidate)
 		{
 			if (candidate == null) return false;
-			else if (candidate is global::Altinoren.ActiveWriter.ModelClass)
+			else if (candidate is global::Castle.ActiveWriter.ModelClass)
 			{ 
 				return true;
 			}
@@ -729,13 +729,13 @@ namespace Altinoren.ActiveWriter
 			}
 			else // Check combinations
 			{
-				if (candidateSource is global::Altinoren.ActiveWriter.ModelClass)
+				if (candidateSource is global::Castle.ActiveWriter.ModelClass)
 				{
-					if (candidateTarget is global::Altinoren.ActiveWriter.ModelClass)
+					if (candidateTarget is global::Castle.ActiveWriter.ModelClass)
 					{
-						global::Altinoren.ActiveWriter.ModelClass sourceModelClass = (global::Altinoren.ActiveWriter.ModelClass)candidateSource;
-						global::Altinoren.ActiveWriter.ModelClass targetModelClass = (global::Altinoren.ActiveWriter.ModelClass)candidateTarget;
-						if(targetModelClass == null || sourceModelClass == null || global::Altinoren.ActiveWriter.InheritanceRelation.GetLinks(sourceModelClass, targetModelClass).Count > 0) return false;
+						global::Castle.ActiveWriter.ModelClass sourceModelClass = (global::Castle.ActiveWriter.ModelClass)candidateSource;
+						global::Castle.ActiveWriter.ModelClass targetModelClass = (global::Castle.ActiveWriter.ModelClass)candidateTarget;
+						if(targetModelClass == null || sourceModelClass == null || global::Castle.ActiveWriter.InheritanceRelation.GetLinks(sourceModelClass, targetModelClass).Count > 0) return false;
 						return true;
 					}
 				}
@@ -767,13 +767,13 @@ namespace Altinoren.ActiveWriter
 			
 			if (CanAcceptSourceAndTarget(source, target))
 			{
-				if (source is global::Altinoren.ActiveWriter.ModelClass)
+				if (source is global::Castle.ActiveWriter.ModelClass)
 				{
-					if (target is global::Altinoren.ActiveWriter.ModelClass)
+					if (target is global::Castle.ActiveWriter.ModelClass)
 					{
-						global::Altinoren.ActiveWriter.ModelClass sourceAccepted = (global::Altinoren.ActiveWriter.ModelClass)source;
-						global::Altinoren.ActiveWriter.ModelClass targetAccepted = (global::Altinoren.ActiveWriter.ModelClass)target;
-						DslModeling::ElementLink result = new global::Altinoren.ActiveWriter.InheritanceRelation(sourceAccepted, targetAccepted);
+						global::Castle.ActiveWriter.ModelClass sourceAccepted = (global::Castle.ActiveWriter.ModelClass)source;
+						global::Castle.ActiveWriter.ModelClass targetAccepted = (global::Castle.ActiveWriter.ModelClass)target;
+						DslModeling::ElementLink result = new global::Castle.ActiveWriter.InheritanceRelation(sourceAccepted, targetAccepted);
 						if (DslModeling::DomainClassInfo.HasNameProperty(result))
 						{
 							DslModeling::DomainClassInfo.SetUniqueName(result);
@@ -861,7 +861,7 @@ namespace Altinoren.ActiveWriter
 				}
 				return shape;
 			}
-			
+						
 			/// <summary>
 			/// Called by the base ConnectAction class to determine if the given shapes can be connected.
 			/// </summary>
@@ -870,27 +870,42 @@ namespace Altinoren.ActiveWriter
 			/// </remarks>
 			public override bool CanCreateConnection(DslDiagrams::ShapeElement sourceShapeElement, DslDiagrams::ShapeElement targetShapeElement, ref string connectionWarning)
 			{
+				bool canConnect = true;
+				
 				if(sourceShapeElement == null) throw new global::System.ArgumentNullException("sourceShapeElement");
-				
 				sourceShapeElement = RemovePassThroughShapes(sourceShapeElement);
-				
 				DslModeling::ModelElement sourceElement = sourceShapeElement.ModelElement;
 				if(sourceElement == null) sourceElement = sourceShapeElement;
 				
-				if(targetShapeElement == null)
+				DslModeling::ModelElement targetElement = null;
+				if (targetShapeElement != null)
 				{
-					return ConnectRelation.CanAcceptSource(sourceElement);
+					targetShapeElement = RemovePassThroughShapes(targetShapeElement);
+					targetElement = targetShapeElement.ModelElement;
+					if(targetElement == null) targetElement = targetShapeElement;
+			
+				}
+
+				// base.CanCreateConnection must be called to check whether existing Locks prevent this link from getting created.	
+				canConnect = base.CanCreateConnection(sourceShapeElement, targetShapeElement, ref connectionWarning);
+				if (canConnect)
+				{				
+					if(targetShapeElement == null)
+					{
+						return ConnectRelation.CanAcceptSource(sourceElement);
+					}
+					else
+					{				
+						return ConnectRelation.CanAcceptSourceAndTarget(sourceElement, targetElement);
+					}
 				}
 				else
 				{
-					targetShapeElement = RemovePassThroughShapes(targetShapeElement);
-					DslModeling::ModelElement targetElement = targetShapeElement.ModelElement;
-					if(targetElement == null) targetElement = targetShapeElement;
-				
-					return ConnectRelation.CanAcceptSourceAndTarget(sourceElement, targetElement);
+					//return false
+					return canConnect;
 				}
 			}
-			
+						
 			/// <summary>
 			/// Called by the base ConnectAction class to ask whether the given source and target are valid.
 			/// </summary>
@@ -1005,7 +1020,7 @@ namespace Altinoren.ActiveWriter
 				}
 				return shape;
 			}
-			
+						
 			/// <summary>
 			/// Called by the base ConnectAction class to determine if the given shapes can be connected.
 			/// </summary>
@@ -1014,27 +1029,42 @@ namespace Altinoren.ActiveWriter
 			/// </remarks>
 			public override bool CanCreateConnection(DslDiagrams::ShapeElement sourceShapeElement, DslDiagrams::ShapeElement targetShapeElement, ref string connectionWarning)
 			{
+				bool canConnect = true;
+				
 				if(sourceShapeElement == null) throw new global::System.ArgumentNullException("sourceShapeElement");
-				
 				sourceShapeElement = RemovePassThroughShapes(sourceShapeElement);
-				
 				DslModeling::ModelElement sourceElement = sourceShapeElement.ModelElement;
 				if(sourceElement == null) sourceElement = sourceShapeElement;
 				
-				if(targetShapeElement == null)
+				DslModeling::ModelElement targetElement = null;
+				if (targetShapeElement != null)
 				{
-					return ConnectManyRelation.CanAcceptSource(sourceElement);
+					targetShapeElement = RemovePassThroughShapes(targetShapeElement);
+					targetElement = targetShapeElement.ModelElement;
+					if(targetElement == null) targetElement = targetShapeElement;
+			
+				}
+
+				// base.CanCreateConnection must be called to check whether existing Locks prevent this link from getting created.	
+				canConnect = base.CanCreateConnection(sourceShapeElement, targetShapeElement, ref connectionWarning);
+				if (canConnect)
+				{				
+					if(targetShapeElement == null)
+					{
+						return ConnectManyRelation.CanAcceptSource(sourceElement);
+					}
+					else
+					{				
+						return ConnectManyRelation.CanAcceptSourceAndTarget(sourceElement, targetElement);
+					}
 				}
 				else
 				{
-					targetShapeElement = RemovePassThroughShapes(targetShapeElement);
-					DslModeling::ModelElement targetElement = targetShapeElement.ModelElement;
-					if(targetElement == null) targetElement = targetShapeElement;
-				
-					return ConnectManyRelation.CanAcceptSourceAndTarget(sourceElement, targetElement);
+					//return false
+					return canConnect;
 				}
 			}
-			
+						
 			/// <summary>
 			/// Called by the base ConnectAction class to ask whether the given source and target are valid.
 			/// </summary>
@@ -1149,7 +1179,7 @@ namespace Altinoren.ActiveWriter
 				}
 				return shape;
 			}
-			
+						
 			/// <summary>
 			/// Called by the base ConnectAction class to determine if the given shapes can be connected.
 			/// </summary>
@@ -1158,27 +1188,42 @@ namespace Altinoren.ActiveWriter
 			/// </remarks>
 			public override bool CanCreateConnection(DslDiagrams::ShapeElement sourceShapeElement, DslDiagrams::ShapeElement targetShapeElement, ref string connectionWarning)
 			{
+				bool canConnect = true;
+				
 				if(sourceShapeElement == null) throw new global::System.ArgumentNullException("sourceShapeElement");
-				
 				sourceShapeElement = RemovePassThroughShapes(sourceShapeElement);
-				
 				DslModeling::ModelElement sourceElement = sourceShapeElement.ModelElement;
 				if(sourceElement == null) sourceElement = sourceShapeElement;
 				
-				if(targetShapeElement == null)
+				DslModeling::ModelElement targetElement = null;
+				if (targetShapeElement != null)
 				{
-					return OneToOneRelationBuilder.CanAcceptSource(sourceElement);
+					targetShapeElement = RemovePassThroughShapes(targetShapeElement);
+					targetElement = targetShapeElement.ModelElement;
+					if(targetElement == null) targetElement = targetShapeElement;
+			
+				}
+
+				// base.CanCreateConnection must be called to check whether existing Locks prevent this link from getting created.	
+				canConnect = base.CanCreateConnection(sourceShapeElement, targetShapeElement, ref connectionWarning);
+				if (canConnect)
+				{				
+					if(targetShapeElement == null)
+					{
+						return OneToOneRelationBuilder.CanAcceptSource(sourceElement);
+					}
+					else
+					{				
+						return OneToOneRelationBuilder.CanAcceptSourceAndTarget(sourceElement, targetElement);
+					}
 				}
 				else
 				{
-					targetShapeElement = RemovePassThroughShapes(targetShapeElement);
-					DslModeling::ModelElement targetElement = targetShapeElement.ModelElement;
-					if(targetElement == null) targetElement = targetShapeElement;
-				
-					return OneToOneRelationBuilder.CanAcceptSourceAndTarget(sourceElement, targetElement);
+					//return false
+					return canConnect;
 				}
 			}
-			
+						
 			/// <summary>
 			/// Called by the base ConnectAction class to ask whether the given source and target are valid.
 			/// </summary>
@@ -1293,7 +1338,7 @@ namespace Altinoren.ActiveWriter
 				}
 				return shape;
 			}
-			
+						
 			/// <summary>
 			/// Called by the base ConnectAction class to determine if the given shapes can be connected.
 			/// </summary>
@@ -1302,27 +1347,42 @@ namespace Altinoren.ActiveWriter
 			/// </remarks>
 			public override bool CanCreateConnection(DslDiagrams::ShapeElement sourceShapeElement, DslDiagrams::ShapeElement targetShapeElement, ref string connectionWarning)
 			{
+				bool canConnect = true;
+				
 				if(sourceShapeElement == null) throw new global::System.ArgumentNullException("sourceShapeElement");
-				
 				sourceShapeElement = RemovePassThroughShapes(sourceShapeElement);
-				
 				DslModeling::ModelElement sourceElement = sourceShapeElement.ModelElement;
 				if(sourceElement == null) sourceElement = sourceShapeElement;
 				
-				if(targetShapeElement == null)
+				DslModeling::ModelElement targetElement = null;
+				if (targetShapeElement != null)
 				{
-					return NestedClassReferencesModelClassesBuilder.CanAcceptSource(sourceElement);
+					targetShapeElement = RemovePassThroughShapes(targetShapeElement);
+					targetElement = targetShapeElement.ModelElement;
+					if(targetElement == null) targetElement = targetShapeElement;
+			
+				}
+
+				// base.CanCreateConnection must be called to check whether existing Locks prevent this link from getting created.	
+				canConnect = base.CanCreateConnection(sourceShapeElement, targetShapeElement, ref connectionWarning);
+				if (canConnect)
+				{				
+					if(targetShapeElement == null)
+					{
+						return NestedClassReferencesModelClassesBuilder.CanAcceptSource(sourceElement);
+					}
+					else
+					{				
+						return NestedClassReferencesModelClassesBuilder.CanAcceptSourceAndTarget(sourceElement, targetElement);
+					}
 				}
 				else
 				{
-					targetShapeElement = RemovePassThroughShapes(targetShapeElement);
-					DslModeling::ModelElement targetElement = targetShapeElement.ModelElement;
-					if(targetElement == null) targetElement = targetShapeElement;
-				
-					return NestedClassReferencesModelClassesBuilder.CanAcceptSourceAndTarget(sourceElement, targetElement);
+					//return false
+					return canConnect;
 				}
 			}
-			
+						
 			/// <summary>
 			/// Called by the base ConnectAction class to ask whether the given source and target are valid.
 			/// </summary>
@@ -1437,7 +1497,7 @@ namespace Altinoren.ActiveWriter
 				}
 				return shape;
 			}
-			
+						
 			/// <summary>
 			/// Called by the base ConnectAction class to determine if the given shapes can be connected.
 			/// </summary>
@@ -1446,27 +1506,42 @@ namespace Altinoren.ActiveWriter
 			/// </remarks>
 			public override bool CanCreateConnection(DslDiagrams::ShapeElement sourceShapeElement, DslDiagrams::ShapeElement targetShapeElement, ref string connectionWarning)
 			{
+				bool canConnect = true;
+				
 				if(sourceShapeElement == null) throw new global::System.ArgumentNullException("sourceShapeElement");
-				
 				sourceShapeElement = RemovePassThroughShapes(sourceShapeElement);
-				
 				DslModeling::ModelElement sourceElement = sourceShapeElement.ModelElement;
 				if(sourceElement == null) sourceElement = sourceShapeElement;
 				
-				if(targetShapeElement == null)
+				DslModeling::ModelElement targetElement = null;
+				if (targetShapeElement != null)
 				{
-					return InheritanceRelationBuilder.CanAcceptSource(sourceElement);
+					targetShapeElement = RemovePassThroughShapes(targetShapeElement);
+					targetElement = targetShapeElement.ModelElement;
+					if(targetElement == null) targetElement = targetShapeElement;
+			
+				}
+
+				// base.CanCreateConnection must be called to check whether existing Locks prevent this link from getting created.	
+				canConnect = base.CanCreateConnection(sourceShapeElement, targetShapeElement, ref connectionWarning);
+				if (canConnect)
+				{				
+					if(targetShapeElement == null)
+					{
+						return InheritanceRelationBuilder.CanAcceptSource(sourceElement);
+					}
+					else
+					{				
+						return InheritanceRelationBuilder.CanAcceptSourceAndTarget(sourceElement, targetElement);
+					}
 				}
 				else
 				{
-					targetShapeElement = RemovePassThroughShapes(targetShapeElement);
-					DslModeling::ModelElement targetElement = targetShapeElement.ModelElement;
-					if(targetElement == null) targetElement = targetShapeElement;
-				
-					return InheritanceRelationBuilder.CanAcceptSourceAndTarget(sourceElement, targetElement);
+					//return false
+					return canConnect;
 				}
 			}
-			
+						
 			/// <summary>
 			/// Called by the base ConnectAction class to ask whether the given source and target are valid.
 			/// </summary>

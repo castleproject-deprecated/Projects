@@ -1,4 +1,4 @@
-﻿namespace Altinoren.ActiveWriter
+﻿namespace Castle.ActiveWriter
 {
     using System.ComponentModel;
     using System.Runtime.InteropServices;

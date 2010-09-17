@@ -1,4 +1,4 @@
-// Copyright 2006 Gokhan Altinoren - http://altinoren.com/
+// Copyright 2006 Gokhan Castle - http://altinoren.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
     public static class Common
     {
@@ -55,7 +55,7 @@ namespace Altinoren.ActiveWriter
         public static string ControllersFolderName = "Controllers";
         public static string InMemoryCompiledAssemblyName = "AW";
         public static string ActiveRecordVersion = "1.0.0.0";
-        public static string vsProgIdBase = "!VisualStudio.DTE.9.0:";
+        public static string vsProgIdBase = "!VisualStudio.DTE.10.0:";
         public const string OptionPageCategory = "ActiveWriter";
         public const string OptionPageSubCategory = "General";
     }

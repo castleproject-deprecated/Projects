@@ -11,13 +11,14 @@ using DslModeling = global::Microsoft.VisualStudio.Modeling;
 using DslDesign = global::Microsoft.VisualStudio.Modeling.Design;
 using DslDiagrams = global::Microsoft.VisualStudio.Modeling.Diagrams;
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainClass ManyToOneConnector
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneConnector.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneConnector.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneConnector.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneConnector.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslModeling::DomainModelOwner(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel))]
 	[global::System.CLSCompliant(true)]
 	[DslModeling::DomainObjectId("e7702e83-2753-42c9-85ce-3a19239d6012")]
 	public partial class ManyToOneConnector : DslDiagrams::BinaryLinkShape
@@ -134,7 +135,7 @@ namespace Altinoren.ActiveWriter
 		protected override void InitializeInstanceResources()
 		{
 			base.InitializeInstanceResources();
-			this.SetDecorators(DslDiagrams::LinkDecorator.DecoratorEmptyDiamond, DslDiagrams::LinkDecorator.DecoratorEmptyArrow, false);
+			this.SetDecorators(DslDiagrams::LinkDecorator.DecoratorEmptyDiamond, new DslDiagrams::SizeD(0.1,0.1), DslDiagrams::LinkDecorator.DecoratorEmptyArrow, new DslDiagrams::SizeD(0.1,0.1), false);
 		}
 		
 		#endregion
@@ -158,7 +159,7 @@ namespace Altinoren.ActiveWriter
 			base.InitializeDecorators(shapeFields, decorators);
 			
 			DslDiagrams::TextField field1 = new DslDiagrams::TextField("One");
-			field1.DefaultText = global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("ManyToOneConnectorOneDefaultText");
+			field1.DefaultText = global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("ManyToOneConnectorOneDefaultText");
 			field1.DefaultFocusable = true;
 			field1.DefaultAutoSize = true;
 			field1.AnchoringBehavior.MinimumHeightInLines = 1;
@@ -168,7 +169,7 @@ namespace Altinoren.ActiveWriter
 			decorators.Add(decorator1);
 				
 			DslDiagrams::TextField field2 = new DslDiagrams::TextField("Many");
-			field2.DefaultText = global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("ManyToOneConnectorManyDefaultText");
+			field2.DefaultText = global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("ManyToOneConnectorManyDefaultText");
 			field2.DefaultFocusable = true;
 			field2.DefaultAutoSize = true;
 			field2.AnchoringBehavior.MinimumHeightInLines = 1;
@@ -193,7 +194,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="store">Store where new element is to be created.</param>
 		/// <param name="propertyAssignments">List of domain property id/value pairs to set once the element is created.</param>
 		public ManyToOneConnector(DslModeling::Store store, params DslModeling::PropertyAssignment[] propertyAssignments)
-			: this(store != null ? store.DefaultPartition : null, propertyAssignments)
+			: this(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, propertyAssignments)
 		{
 		}
 		
@@ -209,13 +210,14 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainClass ManyToManyConnector
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyConnector.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyConnector.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyConnector.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyConnector.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslModeling::DomainModelOwner(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel))]
 	[global::System.CLSCompliant(true)]
 	[DslModeling::DomainObjectId("2c40f7b4-090f-4cc2-802e-1aa792bf4785")]
 	public partial class ManyToManyConnector : DslDiagrams::BinaryLinkShape
@@ -332,7 +334,7 @@ namespace Altinoren.ActiveWriter
 		protected override void InitializeInstanceResources()
 		{
 			base.InitializeInstanceResources();
-			this.SetDecorators(DslDiagrams::LinkDecorator.DecoratorEmptyDiamond, DslDiagrams::LinkDecorator.DecoratorEmptyDiamond, false);
+			this.SetDecorators(DslDiagrams::LinkDecorator.DecoratorEmptyDiamond, new DslDiagrams::SizeD(0.1,0.1), DslDiagrams::LinkDecorator.DecoratorEmptyDiamond, new DslDiagrams::SizeD(0.1,0.1), false);
 		}
 		
 		#endregion
@@ -356,7 +358,7 @@ namespace Altinoren.ActiveWriter
 			base.InitializeDecorators(shapeFields, decorators);
 			
 			DslDiagrams::TextField field1 = new DslDiagrams::TextField("ManySource");
-			field1.DefaultText = global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("ManyToManyConnectorManySourceDefaultText");
+			field1.DefaultText = global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("ManyToManyConnectorManySourceDefaultText");
 			field1.DefaultFocusable = true;
 			field1.DefaultAutoSize = true;
 			field1.AnchoringBehavior.MinimumHeightInLines = 1;
@@ -366,7 +368,7 @@ namespace Altinoren.ActiveWriter
 			decorators.Add(decorator1);
 				
 			DslDiagrams::TextField field2 = new DslDiagrams::TextField("ManyTarget");
-			field2.DefaultText = global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("ManyToManyConnectorManyTargetDefaultText");
+			field2.DefaultText = global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("ManyToManyConnectorManyTargetDefaultText");
 			field2.DefaultFocusable = true;
 			field2.DefaultAutoSize = true;
 			field2.AnchoringBehavior.MinimumHeightInLines = 1;
@@ -391,7 +393,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="store">Store where new element is to be created.</param>
 		/// <param name="propertyAssignments">List of domain property id/value pairs to set once the element is created.</param>
 		public ManyToManyConnector(DslModeling::Store store, params DslModeling::PropertyAssignment[] propertyAssignments)
-			: this(store != null ? store.DefaultPartition : null, propertyAssignments)
+			: this(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, propertyAssignments)
 		{
 		}
 		
@@ -407,15 +409,16 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainClass OneToOneConnector
 	/// Associates a foreign table where the current class and the target class share
 	/// their primary key.
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneConnector.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneConnector.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.OneToOneConnector.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.OneToOneConnector.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslModeling::DomainModelOwner(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel))]
 	[global::System.CLSCompliant(true)]
 	[DslModeling::DomainObjectId("be1643a1-a849-4031-9f25-eff913be9cce")]
 	public partial class OneToOneConnector : DslDiagrams::BinaryLinkShape
@@ -532,7 +535,7 @@ namespace Altinoren.ActiveWriter
 		protected override void InitializeInstanceResources()
 		{
 			base.InitializeInstanceResources();
-			this.SetDecorators(DslDiagrams::LinkDecorator.DecoratorEmptyArrow, DslDiagrams::LinkDecorator.DecoratorFilledArrow, false);
+			this.SetDecorators(DslDiagrams::LinkDecorator.DecoratorEmptyArrow, new DslDiagrams::SizeD(0.1,0.1), DslDiagrams::LinkDecorator.DecoratorFilledArrow, new DslDiagrams::SizeD(0.1,0.1), false);
 		}
 		
 		#endregion
@@ -556,7 +559,7 @@ namespace Altinoren.ActiveWriter
 			base.InitializeDecorators(shapeFields, decorators);
 			
 			DslDiagrams::TextField field1 = new DslDiagrams::TextField("OneSource");
-			field1.DefaultText = global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("OneToOneConnectorOneSourceDefaultText");
+			field1.DefaultText = global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("OneToOneConnectorOneSourceDefaultText");
 			field1.DefaultFocusable = true;
 			field1.DefaultAutoSize = true;
 			field1.AnchoringBehavior.MinimumHeightInLines = 1;
@@ -566,7 +569,7 @@ namespace Altinoren.ActiveWriter
 			decorators.Add(decorator1);
 				
 			DslDiagrams::TextField field2 = new DslDiagrams::TextField("OneTarget");
-			field2.DefaultText = global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("OneToOneConnectorOneTargetDefaultText");
+			field2.DefaultText = global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("OneToOneConnectorOneTargetDefaultText");
 			field2.DefaultFocusable = true;
 			field2.DefaultAutoSize = true;
 			field2.AnchoringBehavior.MinimumHeightInLines = 1;
@@ -591,7 +594,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="store">Store where new element is to be created.</param>
 		/// <param name="propertyAssignments">List of domain property id/value pairs to set once the element is created.</param>
 		public OneToOneConnector(DslModeling::Store store, params DslModeling::PropertyAssignment[] propertyAssignments)
-			: this(store != null ? store.DefaultPartition : null, propertyAssignments)
+			: this(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, propertyAssignments)
 		{
 		}
 		
@@ -607,15 +610,16 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainClass NestedConnector
 	/// Associates a domain class with a nested class, representing an extracted subset
 	/// of repeating properties for multiple classes.
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedConnector.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedConnector.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.NestedConnector.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.NestedConnector.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslModeling::DomainModelOwner(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel))]
 	[global::System.CLSCompliant(true)]
 	[DslModeling::DomainObjectId("6fe0ecce-c266-4750-b28b-2e4e73e19800")]
 	public partial class NestedConnector : DslDiagrams::BinaryLinkShape
@@ -733,7 +737,7 @@ namespace Altinoren.ActiveWriter
 		protected override void InitializeInstanceResources()
 		{
 			base.InitializeInstanceResources();
-			this.SetDecorators(null, DslDiagrams::LinkDecorator.DecoratorHollowArrow, false);
+			this.SetDecorators(null, new DslDiagrams::SizeD(0.1,0.1), DslDiagrams::LinkDecorator.DecoratorHollowArrow, new DslDiagrams::SizeD(0.1,0.1), false);
 		}
 		
 		#endregion
@@ -757,7 +761,7 @@ namespace Altinoren.ActiveWriter
 			base.InitializeDecorators(shapeFields, decorators);
 			
 			DslDiagrams::TextField field1 = new DslDiagrams::TextField("Nested");
-			field1.DefaultText = global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("NestedConnectorNestedDefaultText");
+			field1.DefaultText = global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("NestedConnectorNestedDefaultText");
 			field1.DefaultFocusable = true;
 			field1.DefaultAutoSize = true;
 			field1.AnchoringBehavior.MinimumHeightInLines = 1;
@@ -782,7 +786,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="store">Store where new element is to be created.</param>
 		/// <param name="propertyAssignments">List of domain property id/value pairs to set once the element is created.</param>
 		public NestedConnector(DslModeling::Store store, params DslModeling::PropertyAssignment[] propertyAssignments)
-			: this(store != null ? store.DefaultPartition : null, propertyAssignments)
+			: this(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, propertyAssignments)
 		{
 		}
 		
@@ -798,14 +802,15 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainClass InheritanceConnector
 	/// Indicates that a class inherits from another class.
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.InheritanceConnector.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritanceConnector.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.InheritanceConnector.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritanceConnector.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslModeling::DomainModelOwner(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel))]
 	[global::System.CLSCompliant(true)]
 	[DslModeling::DomainObjectId("6de26394-b772-45cd-8f76-8766bd5c7fbf")]
 	public partial class InheritanceConnector : DslDiagrams::BinaryLinkShape
@@ -890,7 +895,7 @@ namespace Altinoren.ActiveWriter
 		protected override void InitializeInstanceResources()
 		{
 			base.InitializeInstanceResources();
-			this.SetDecorators(null, DslDiagrams::LinkDecorator.DecoratorHollowArrow, false);
+			this.SetDecorators(null, new DslDiagrams::SizeD(0.1,0.1), DslDiagrams::LinkDecorator.DecoratorHollowArrow, new DslDiagrams::SizeD(0.1,0.1), false);
 		}
 		
 		#endregion
@@ -907,7 +912,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="store">Store where new element is to be created.</param>
 		/// <param name="propertyAssignments">List of domain property id/value pairs to set once the element is created.</param>
 		public InheritanceConnector(DslModeling::Store store, params DslModeling::PropertyAssignment[] propertyAssignments)
-			: this(store != null ? store.DefaultPartition : null, propertyAssignments)
+			: this(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, propertyAssignments)
 		{
 		}
 		

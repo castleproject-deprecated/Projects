@@ -10,7 +10,7 @@
 using DslModeling = global::Microsoft.VisualStudio.Modeling;
 using DslDiagrams = global::Microsoft.VisualStudio.Modeling.Diagrams;
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer ModelSerializer for DomainClass Model.
@@ -25,6 +25,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -94,6 +112,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read nested XML elements, they can be either properties serialized as XML elements, or child 
 					// model elements.
 					while (!serializationContext.Result.Failed && !reader.EOF && reader.NodeType == global::System.Xml.XmlNodeType.Element)
@@ -112,6 +133,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		/// <summary>
 		/// This method deserializes all properties that are serialized as XML attributes.
@@ -124,19 +146,22 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">In-memory Model instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadPropertiesFromAttributes(serializationContext, element, reader);
+	
 			Model instanceOfModel = element as Model;
 			global::System.Diagnostics.Debug.Assert(instanceOfModel != null, "Expecting an instance of Model");
 	
 			// UseNullables
 			if (!serializationContext.Result.Failed)
 			{
-				string attribUseNullables = reader.GetAttribute("useNullables");
+				string attribUseNullables = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "useNullables");
 				if (attribUseNullables != null)
 				{
 					NullableUsage valueOfUseNullables;
-					if (DslModeling::SerializationUtilities.TryGetValue<NullableUsage>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUseNullables), out valueOfUseNullables))
+					if (DslModeling::SerializationUtilities.TryGetValue<NullableUsage>(serializationContext, attribUseNullables, out valueOfUseNullables))
 					{
 						instanceOfModel.UseNullables = valueOfUseNullables;
 					}
@@ -149,11 +174,11 @@ namespace Altinoren.ActiveWriter
 			// CaseOfPrivateFields
 			if (!serializationContext.Result.Failed)
 			{
-				string attribCaseOfPrivateFields = reader.GetAttribute("caseOfPrivateFields");
+				string attribCaseOfPrivateFields = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "caseOfPrivateFields");
 				if (attribCaseOfPrivateFields != null)
 				{
 					FieldCase valueOfCaseOfPrivateFields;
-					if (DslModeling::SerializationUtilities.TryGetValue<FieldCase>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCaseOfPrivateFields), out valueOfCaseOfPrivateFields))
+					if (DslModeling::SerializationUtilities.TryGetValue<FieldCase>(serializationContext, attribCaseOfPrivateFields, out valueOfCaseOfPrivateFields))
 					{
 						instanceOfModel.CaseOfPrivateFields = valueOfCaseOfPrivateFields;
 					}
@@ -166,11 +191,11 @@ namespace Altinoren.ActiveWriter
 			// GenerateMonoRailProject
 			if (!serializationContext.Result.Failed)
 			{
-				string attribGenerateMonoRailProject = reader.GetAttribute("generateMonoRailProject");
+				string attribGenerateMonoRailProject = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "generateMonoRailProject");
 				if (attribGenerateMonoRailProject != null)
 				{
 					global::System.Boolean valueOfGenerateMonoRailProject;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribGenerateMonoRailProject), out valueOfGenerateMonoRailProject))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribGenerateMonoRailProject, out valueOfGenerateMonoRailProject))
 					{
 						instanceOfModel.GenerateMonoRailProject = valueOfGenerateMonoRailProject;
 					}
@@ -183,11 +208,11 @@ namespace Altinoren.ActiveWriter
 			// MonoRailProjectName
 			if (!serializationContext.Result.Failed)
 			{
-				string attribMonoRailProjectName = reader.GetAttribute("monoRailProjectName");
+				string attribMonoRailProjectName = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "monoRailProjectName");
 				if (attribMonoRailProjectName != null)
 				{
 					global::System.String valueOfMonoRailProjectName;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribMonoRailProjectName), out valueOfMonoRailProjectName))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribMonoRailProjectName, out valueOfMonoRailProjectName))
 					{
 						instanceOfModel.MonoRailProjectName = valueOfMonoRailProjectName;
 					}
@@ -200,11 +225,11 @@ namespace Altinoren.ActiveWriter
 			// MonoRailProjectPath
 			if (!serializationContext.Result.Failed)
 			{
-				string attribMonoRailProjectPath = reader.GetAttribute("monoRailProjectPath");
+				string attribMonoRailProjectPath = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "monoRailProjectPath");
 				if (attribMonoRailProjectPath != null)
 				{
 					global::System.String valueOfMonoRailProjectPath;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribMonoRailProjectPath), out valueOfMonoRailProjectPath))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribMonoRailProjectPath, out valueOfMonoRailProjectPath))
 					{
 						instanceOfModel.MonoRailProjectPath = valueOfMonoRailProjectPath;
 					}
@@ -217,11 +242,11 @@ namespace Altinoren.ActiveWriter
 			// MonoRailDefaultLayout
 			if (!serializationContext.Result.Failed)
 			{
-				string attribMonoRailDefaultLayout = reader.GetAttribute("monoRailDefaultLayout");
+				string attribMonoRailDefaultLayout = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "monoRailDefaultLayout");
 				if (attribMonoRailDefaultLayout != null)
 				{
 					global::System.String valueOfMonoRailDefaultLayout;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribMonoRailDefaultLayout), out valueOfMonoRailDefaultLayout))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribMonoRailDefaultLayout, out valueOfMonoRailDefaultLayout))
 					{
 						instanceOfModel.MonoRailDefaultLayout = valueOfMonoRailDefaultLayout;
 					}
@@ -234,11 +259,11 @@ namespace Altinoren.ActiveWriter
 			// MonoRailDefaultRescue
 			if (!serializationContext.Result.Failed)
 			{
-				string attribMonoRailDefaultRescue = reader.GetAttribute("monoRailDefaultRescue");
+				string attribMonoRailDefaultRescue = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "monoRailDefaultRescue");
 				if (attribMonoRailDefaultRescue != null)
 				{
 					global::System.String valueOfMonoRailDefaultRescue;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribMonoRailDefaultRescue), out valueOfMonoRailDefaultRescue))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribMonoRailDefaultRescue, out valueOfMonoRailDefaultRescue))
 					{
 						instanceOfModel.MonoRailDefaultRescue = valueOfMonoRailDefaultRescue;
 					}
@@ -251,11 +276,11 @@ namespace Altinoren.ActiveWriter
 			// MonoRailViewFileExtension
 			if (!serializationContext.Result.Failed)
 			{
-				string attribMonoRailViewFileExtension = reader.GetAttribute("monoRailViewFileExtension");
+				string attribMonoRailViewFileExtension = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "monoRailViewFileExtension");
 				if (attribMonoRailViewFileExtension != null)
 				{
 					global::System.String valueOfMonoRailViewFileExtension;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribMonoRailViewFileExtension), out valueOfMonoRailViewFileExtension))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribMonoRailViewFileExtension, out valueOfMonoRailViewFileExtension))
 					{
 						instanceOfModel.MonoRailViewFileExtension = valueOfMonoRailViewFileExtension;
 					}
@@ -268,11 +293,11 @@ namespace Altinoren.ActiveWriter
 			// UseGenerics
 			if (!serializationContext.Result.Failed)
 			{
-				string attribUseGenerics = reader.GetAttribute("useGenerics");
+				string attribUseGenerics = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "useGenerics");
 				if (attribUseGenerics != null)
 				{
 					global::System.Boolean valueOfUseGenerics;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUseGenerics), out valueOfUseGenerics))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribUseGenerics, out valueOfUseGenerics))
 					{
 						instanceOfModel.UseGenerics = valueOfUseGenerics;
 					}
@@ -285,11 +310,11 @@ namespace Altinoren.ActiveWriter
 			// UseBaseClass
 			if (!serializationContext.Result.Failed)
 			{
-				string attribUseBaseClass = reader.GetAttribute("useBaseClass");
+				string attribUseBaseClass = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "useBaseClass");
 				if (attribUseBaseClass != null)
 				{
 					global::System.Boolean valueOfUseBaseClass;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUseBaseClass), out valueOfUseBaseClass))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribUseBaseClass, out valueOfUseBaseClass))
 					{
 						instanceOfModel.UseBaseClass = valueOfUseBaseClass;
 					}
@@ -302,11 +327,11 @@ namespace Altinoren.ActiveWriter
 			// BaseClassName
 			if (!serializationContext.Result.Failed)
 			{
-				string attribBaseClassName = reader.GetAttribute("baseClassName");
+				string attribBaseClassName = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "baseClassName");
 				if (attribBaseClassName != null)
 				{
 					global::System.String valueOfBaseClassName;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribBaseClassName), out valueOfBaseClassName))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribBaseClassName, out valueOfBaseClassName))
 					{
 						instanceOfModel.BaseClassName = valueOfBaseClassName;
 					}
@@ -319,11 +344,11 @@ namespace Altinoren.ActiveWriter
 			// GeneratesDoubleDerived
 			if (!serializationContext.Result.Failed)
 			{
-				string attribGeneratesDoubleDerived = reader.GetAttribute("generatesDoubleDerived");
+				string attribGeneratesDoubleDerived = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "generatesDoubleDerived");
 				if (attribGeneratesDoubleDerived != null)
 				{
 					global::System.Boolean valueOfGeneratesDoubleDerived;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribGeneratesDoubleDerived), out valueOfGeneratesDoubleDerived))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribGeneratesDoubleDerived, out valueOfGeneratesDoubleDerived))
 					{
 						instanceOfModel.GeneratesDoubleDerived = valueOfGeneratesDoubleDerived;
 					}
@@ -336,11 +361,11 @@ namespace Altinoren.ActiveWriter
 			// DoubleDerivedNameSuffix
 			if (!serializationContext.Result.Failed)
 			{
-				string attribDoubleDerivedNameSuffix = reader.GetAttribute("doubleDerivedNameSuffix");
+				string attribDoubleDerivedNameSuffix = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "doubleDerivedNameSuffix");
 				if (attribDoubleDerivedNameSuffix != null)
 				{
 					global::System.String valueOfDoubleDerivedNameSuffix;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribDoubleDerivedNameSuffix), out valueOfDoubleDerivedNameSuffix))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribDoubleDerivedNameSuffix, out valueOfDoubleDerivedNameSuffix))
 					{
 						instanceOfModel.DoubleDerivedNameSuffix = valueOfDoubleDerivedNameSuffix;
 					}
@@ -353,11 +378,11 @@ namespace Altinoren.ActiveWriter
 			// UseGeneratedCodeAttribute
 			if (!serializationContext.Result.Failed)
 			{
-				string attribUseGeneratedCodeAttribute = reader.GetAttribute("useGeneratedCodeAttribute");
+				string attribUseGeneratedCodeAttribute = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "useGeneratedCodeAttribute");
 				if (attribUseGeneratedCodeAttribute != null)
 				{
 					global::System.Boolean valueOfUseGeneratedCodeAttribute;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUseGeneratedCodeAttribute), out valueOfUseGeneratedCodeAttribute))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribUseGeneratedCodeAttribute, out valueOfUseGeneratedCodeAttribute))
 					{
 						instanceOfModel.UseGeneratedCodeAttribute = valueOfUseGeneratedCodeAttribute;
 					}
@@ -370,11 +395,11 @@ namespace Altinoren.ActiveWriter
 			// Target
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTarget = reader.GetAttribute("target");
+				string attribTarget = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "target");
 				if (attribTarget != null)
 				{
 					CodeGenerationTarget valueOfTarget;
-					if (DslModeling::SerializationUtilities.TryGetValue<CodeGenerationTarget>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTarget), out valueOfTarget))
+					if (DslModeling::SerializationUtilities.TryGetValue<CodeGenerationTarget>(serializationContext, attribTarget, out valueOfTarget))
 					{
 						instanceOfModel.Target = valueOfTarget;
 					}
@@ -387,11 +412,11 @@ namespace Altinoren.ActiveWriter
 			// AssemblyPath
 			if (!serializationContext.Result.Failed)
 			{
-				string attribAssemblyPath = reader.GetAttribute("assemblyPath");
+				string attribAssemblyPath = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "assemblyPath");
 				if (attribAssemblyPath != null)
 				{
 					global::System.String valueOfAssemblyPath;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribAssemblyPath), out valueOfAssemblyPath))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribAssemblyPath, out valueOfAssemblyPath))
 					{
 						instanceOfModel.AssemblyPath = valueOfAssemblyPath;
 					}
@@ -404,11 +429,11 @@ namespace Altinoren.ActiveWriter
 			// ActiveRecordAssemblyName
 			if (!serializationContext.Result.Failed)
 			{
-				string attribActiveRecordAssemblyName = reader.GetAttribute("activeRecordAssemblyName");
+				string attribActiveRecordAssemblyName = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "activeRecordAssemblyName");
 				if (attribActiveRecordAssemblyName != null)
 				{
 					global::System.String valueOfActiveRecordAssemblyName;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribActiveRecordAssemblyName), out valueOfActiveRecordAssemblyName))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribActiveRecordAssemblyName, out valueOfActiveRecordAssemblyName))
 					{
 						instanceOfModel.ActiveRecordAssemblyName = valueOfActiveRecordAssemblyName;
 					}
@@ -421,11 +446,11 @@ namespace Altinoren.ActiveWriter
 			// NHibernateAssemblyName
 			if (!serializationContext.Result.Failed)
 			{
-				string attribNHibernateAssemblyName = reader.GetAttribute("nHibernateAssemblyName");
+				string attribNHibernateAssemblyName = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "nHibernateAssemblyName");
 				if (attribNHibernateAssemblyName != null)
 				{
 					global::System.String valueOfNHibernateAssemblyName;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribNHibernateAssemblyName), out valueOfNHibernateAssemblyName))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribNHibernateAssemblyName, out valueOfNHibernateAssemblyName))
 					{
 						instanceOfModel.NHibernateAssemblyName = valueOfNHibernateAssemblyName;
 					}
@@ -438,11 +463,11 @@ namespace Altinoren.ActiveWriter
 			// RelateWithActiwFile
 			if (!serializationContext.Result.Failed)
 			{
-				string attribRelateWithActiwFile = reader.GetAttribute("relateWithActiwFile");
+				string attribRelateWithActiwFile = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "relateWithActiwFile");
 				if (attribRelateWithActiwFile != null)
 				{
 					global::System.Boolean valueOfRelateWithActiwFile;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribRelateWithActiwFile), out valueOfRelateWithActiwFile))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribRelateWithActiwFile, out valueOfRelateWithActiwFile))
 					{
 						instanceOfModel.RelateWithActiwFile = valueOfRelateWithActiwFile;
 					}
@@ -455,11 +480,11 @@ namespace Altinoren.ActiveWriter
 			// UseVirtualProperties
 			if (!serializationContext.Result.Failed)
 			{
-				string attribUseVirtualProperties = reader.GetAttribute("useVirtualProperties");
+				string attribUseVirtualProperties = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "useVirtualProperties");
 				if (attribUseVirtualProperties != null)
 				{
 					global::System.Boolean valueOfUseVirtualProperties;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUseVirtualProperties), out valueOfUseVirtualProperties))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribUseVirtualProperties, out valueOfUseVirtualProperties))
 					{
 						instanceOfModel.UseVirtualProperties = valueOfUseVirtualProperties;
 					}
@@ -472,11 +497,11 @@ namespace Altinoren.ActiveWriter
 			// Namespace
 			if (!serializationContext.Result.Failed)
 			{
-				string attribNamespace = reader.GetAttribute("namespace");
+				string attribNamespace = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "namespace");
 				if (attribNamespace != null)
 				{
 					global::System.String valueOfNamespace;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribNamespace), out valueOfNamespace))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribNamespace, out valueOfNamespace))
 					{
 						instanceOfModel.Namespace = valueOfNamespace;
 					}
@@ -489,11 +514,11 @@ namespace Altinoren.ActiveWriter
 			// ImplementINotifyPropertyChanged
 			if (!serializationContext.Result.Failed)
 			{
-				string attribImplementINotifyPropertyChanged = reader.GetAttribute("implementINotifyPropertyChanged");
+				string attribImplementINotifyPropertyChanged = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "implementINotifyPropertyChanged");
 				if (attribImplementINotifyPropertyChanged != null)
 				{
 					global::System.Boolean valueOfImplementINotifyPropertyChanged;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribImplementINotifyPropertyChanged), out valueOfImplementINotifyPropertyChanged))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribImplementINotifyPropertyChanged, out valueOfImplementINotifyPropertyChanged))
 					{
 						instanceOfModel.ImplementINotifyPropertyChanged = valueOfImplementINotifyPropertyChanged;
 					}
@@ -506,11 +531,11 @@ namespace Altinoren.ActiveWriter
 			// GenerateMetaData
 			if (!serializationContext.Result.Failed)
 			{
-				string attribGenerateMetaData = reader.GetAttribute("generateMetaData");
+				string attribGenerateMetaData = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "generateMetaData");
 				if (attribGenerateMetaData != null)
 				{
 					MetaDataGeneration valueOfGenerateMetaData;
-					if (DslModeling::SerializationUtilities.TryGetValue<MetaDataGeneration>(DslModeling::SerializationUtilities.UnescapeXmlString(attribGenerateMetaData), out valueOfGenerateMetaData))
+					if (DslModeling::SerializationUtilities.TryGetValue<MetaDataGeneration>(serializationContext, attribGenerateMetaData, out valueOfGenerateMetaData))
 					{
 						instanceOfModel.GenerateMetaData = valueOfGenerateMetaData;
 					}
@@ -523,11 +548,11 @@ namespace Altinoren.ActiveWriter
 			// UseNHQG
 			if (!serializationContext.Result.Failed)
 			{
-				string attribUseNHQG = reader.GetAttribute("useNHQG");
+				string attribUseNHQG = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "useNHQG");
 				if (attribUseNHQG != null)
 				{
 					global::System.Boolean valueOfUseNHQG;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUseNHQG), out valueOfUseNHQG))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribUseNHQG, out valueOfUseNHQG))
 					{
 						instanceOfModel.UseNHQG = valueOfUseNHQG;
 					}
@@ -540,11 +565,11 @@ namespace Altinoren.ActiveWriter
 			// NHQGExecutable
 			if (!serializationContext.Result.Failed)
 			{
-				string attribNHQGExecutable = reader.GetAttribute("nHQGExecutable");
+				string attribNHQGExecutable = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "nHQGExecutable");
 				if (attribNHQGExecutable != null)
 				{
 					global::System.String valueOfNHQGExecutable;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribNHQGExecutable), out valueOfNHQGExecutable))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribNHQGExecutable, out valueOfNHQGExecutable))
 					{
 						instanceOfModel.NHQGExecutable = valueOfNHQGExecutable;
 					}
@@ -557,11 +582,11 @@ namespace Altinoren.ActiveWriter
 			// UseGenericRelations
 			if (!serializationContext.Result.Failed)
 			{
-				string attribUseGenericRelations = reader.GetAttribute("useGenericRelations");
+				string attribUseGenericRelations = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "useGenericRelations");
 				if (attribUseGenericRelations != null)
 				{
 					global::System.Boolean valueOfUseGenericRelations;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUseGenericRelations), out valueOfUseGenericRelations))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribUseGenericRelations, out valueOfUseGenericRelations))
 					{
 						instanceOfModel.UseGenericRelations = valueOfUseGenericRelations;
 					}
@@ -574,11 +599,11 @@ namespace Altinoren.ActiveWriter
 			// PropertyNameFilterExpression
 			if (!serializationContext.Result.Failed)
 			{
-				string attribPropertyNameFilterExpression = reader.GetAttribute("propertyNameFilterExpression");
+				string attribPropertyNameFilterExpression = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "propertyNameFilterExpression");
 				if (attribPropertyNameFilterExpression != null)
 				{
 					global::System.String valueOfPropertyNameFilterExpression;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribPropertyNameFilterExpression), out valueOfPropertyNameFilterExpression))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribPropertyNameFilterExpression, out valueOfPropertyNameFilterExpression))
 					{
 						instanceOfModel.PropertyNameFilterExpression = valueOfPropertyNameFilterExpression;
 					}
@@ -591,11 +616,11 @@ namespace Altinoren.ActiveWriter
 			// InitializeIListFields
 			if (!serializationContext.Result.Failed)
 			{
-				string attribInitializeIListFields = reader.GetAttribute("initializeIListFields");
+				string attribInitializeIListFields = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "initializeIListFields");
 				if (attribInitializeIListFields != null)
 				{
 					global::System.Boolean valueOfInitializeIListFields;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribInitializeIListFields), out valueOfInitializeIListFields))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribInitializeIListFields, out valueOfInitializeIListFields))
 					{
 						instanceOfModel.InitializeIListFields = valueOfInitializeIListFields;
 					}
@@ -608,11 +633,11 @@ namespace Altinoren.ActiveWriter
 			// ImplementINotifyPropertyChanging
 			if (!serializationContext.Result.Failed)
 			{
-				string attribImplementINotifyPropertyChanging = reader.GetAttribute("implementINotifyPropertyChanging");
+				string attribImplementINotifyPropertyChanging = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "implementINotifyPropertyChanging");
 				if (attribImplementINotifyPropertyChanging != null)
 				{
 					global::System.Boolean valueOfImplementINotifyPropertyChanging;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribImplementINotifyPropertyChanging), out valueOfImplementINotifyPropertyChanging))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribImplementINotifyPropertyChanging, out valueOfImplementINotifyPropertyChanging))
 					{
 						instanceOfModel.ImplementINotifyPropertyChanging = valueOfImplementINotifyPropertyChanging;
 					}
@@ -625,11 +650,11 @@ namespace Altinoren.ActiveWriter
 			// CollectionInterface
 			if (!serializationContext.Result.Failed)
 			{
-				string attribCollectionInterface = reader.GetAttribute("collectionInterface");
+				string attribCollectionInterface = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "collectionInterface");
 				if (attribCollectionInterface != null)
 				{
 					global::System.String valueOfCollectionInterface;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCollectionInterface), out valueOfCollectionInterface))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribCollectionInterface, out valueOfCollectionInterface))
 					{
 						instanceOfModel.CollectionInterface = valueOfCollectionInterface;
 					}
@@ -642,11 +667,11 @@ namespace Altinoren.ActiveWriter
 			// CollectionImplementation
 			if (!serializationContext.Result.Failed)
 			{
-				string attribCollectionImplementation = reader.GetAttribute("collectionImplementation");
+				string attribCollectionImplementation = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "collectionImplementation");
 				if (attribCollectionImplementation != null)
 				{
 					global::System.String valueOfCollectionImplementation;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCollectionImplementation), out valueOfCollectionImplementation))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribCollectionImplementation, out valueOfCollectionImplementation))
 					{
 						instanceOfModel.CollectionImplementation = valueOfCollectionImplementation;
 					}
@@ -659,11 +684,11 @@ namespace Altinoren.ActiveWriter
 			// ManyToManyRelationType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribManyToManyRelationType = reader.GetAttribute("manyToManyRelationType");
+				string attribManyToManyRelationType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "manyToManyRelationType");
 				if (attribManyToManyRelationType != null)
 				{
 					RelationType valueOfManyToManyRelationType;
-					if (DslModeling::SerializationUtilities.TryGetValue<RelationType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToManyRelationType), out valueOfManyToManyRelationType))
+					if (DslModeling::SerializationUtilities.TryGetValue<RelationType>(serializationContext, attribManyToManyRelationType, out valueOfManyToManyRelationType))
 					{
 						instanceOfModel.ManyToManyRelationType = valueOfManyToManyRelationType;
 					}
@@ -676,11 +701,11 @@ namespace Altinoren.ActiveWriter
 			// ManyToOneRelationType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribManyToOneRelationType = reader.GetAttribute("manyToOneRelationType");
+				string attribManyToOneRelationType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "manyToOneRelationType");
 				if (attribManyToOneRelationType != null)
 				{
 					RelationType valueOfManyToOneRelationType;
-					if (DslModeling::SerializationUtilities.TryGetValue<RelationType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToOneRelationType), out valueOfManyToOneRelationType))
+					if (DslModeling::SerializationUtilities.TryGetValue<RelationType>(serializationContext, attribManyToOneRelationType, out valueOfManyToOneRelationType))
 					{
 						instanceOfModel.ManyToOneRelationType = valueOfManyToOneRelationType;
 					}
@@ -693,11 +718,11 @@ namespace Altinoren.ActiveWriter
 			// ManyToManyCollectionIDColumnFormat
 			if (!serializationContext.Result.Failed)
 			{
-				string attribManyToManyCollectionIDColumnFormat = reader.GetAttribute("manyToManyCollectionIDColumnFormat");
+				string attribManyToManyCollectionIDColumnFormat = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "manyToManyCollectionIDColumnFormat");
 				if (attribManyToManyCollectionIDColumnFormat != null)
 				{
 					global::System.String valueOfManyToManyCollectionIDColumnFormat;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToManyCollectionIDColumnFormat), out valueOfManyToManyCollectionIDColumnFormat))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribManyToManyCollectionIDColumnFormat, out valueOfManyToManyCollectionIDColumnFormat))
 					{
 						instanceOfModel.ManyToManyCollectionIDColumnFormat = valueOfManyToManyCollectionIDColumnFormat;
 					}
@@ -710,11 +735,11 @@ namespace Altinoren.ActiveWriter
 			// ManyToManyCollectionIDColumnType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribManyToManyCollectionIDColumnType = reader.GetAttribute("manyToManyCollectionIDColumnType");
+				string attribManyToManyCollectionIDColumnType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "manyToManyCollectionIDColumnType");
 				if (attribManyToManyCollectionIDColumnType != null)
 				{
 					NHibernateType valueOfManyToManyCollectionIDColumnType;
-					if (DslModeling::SerializationUtilities.TryGetValue<NHibernateType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToManyCollectionIDColumnType), out valueOfManyToManyCollectionIDColumnType))
+					if (DslModeling::SerializationUtilities.TryGetValue<NHibernateType>(serializationContext, attribManyToManyCollectionIDColumnType, out valueOfManyToManyCollectionIDColumnType))
 					{
 						instanceOfModel.ManyToManyCollectionIDColumnType = valueOfManyToManyCollectionIDColumnType;
 					}
@@ -727,11 +752,11 @@ namespace Altinoren.ActiveWriter
 			// ManyToManyCollectionIDGenerator
 			if (!serializationContext.Result.Failed)
 			{
-				string attribManyToManyCollectionIDGenerator = reader.GetAttribute("manyToManyCollectionIDGenerator");
+				string attribManyToManyCollectionIDGenerator = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "manyToManyCollectionIDGenerator");
 				if (attribManyToManyCollectionIDGenerator != null)
 				{
 					PrimaryKeyType valueOfManyToManyCollectionIDGenerator;
-					if (DslModeling::SerializationUtilities.TryGetValue<PrimaryKeyType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToManyCollectionIDGenerator), out valueOfManyToManyCollectionIDGenerator))
+					if (DslModeling::SerializationUtilities.TryGetValue<PrimaryKeyType>(serializationContext, attribManyToManyCollectionIDGenerator, out valueOfManyToManyCollectionIDGenerator))
 					{
 						instanceOfModel.ManyToManyCollectionIDGenerator = valueOfManyToManyCollectionIDGenerator;
 					}
@@ -744,11 +769,11 @@ namespace Altinoren.ActiveWriter
 			// ManyToManyIUserCollectionType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribManyToManyIUserCollectionType = reader.GetAttribute("manyToManyIUserCollectionType");
+				string attribManyToManyIUserCollectionType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "manyToManyIUserCollectionType");
 				if (attribManyToManyIUserCollectionType != null)
 				{
 					global::System.String valueOfManyToManyIUserCollectionType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToManyIUserCollectionType), out valueOfManyToManyIUserCollectionType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribManyToManyIUserCollectionType, out valueOfManyToManyIUserCollectionType))
 					{
 						instanceOfModel.ManyToManyIUserCollectionType = valueOfManyToManyIUserCollectionType;
 					}
@@ -761,11 +786,11 @@ namespace Altinoren.ActiveWriter
 			// ManyToOneIUserCollectionType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribManyToOneIUserCollectionType = reader.GetAttribute("manyToOneIUserCollectionType");
+				string attribManyToOneIUserCollectionType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "manyToOneIUserCollectionType");
 				if (attribManyToOneIUserCollectionType != null)
 				{
 					global::System.String valueOfManyToOneIUserCollectionType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToOneIUserCollectionType), out valueOfManyToOneIUserCollectionType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribManyToOneIUserCollectionType, out valueOfManyToOneIUserCollectionType))
 					{
 						instanceOfModel.ManyToOneIUserCollectionType = valueOfManyToOneIUserCollectionType;
 					}
@@ -778,11 +803,11 @@ namespace Altinoren.ActiveWriter
 			// AutomaticAssociations
 			if (!serializationContext.Result.Failed)
 			{
-				string attribAutomaticAssociations = reader.GetAttribute("automaticAssociations");
+				string attribAutomaticAssociations = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "automaticAssociations");
 				if (attribAutomaticAssociations != null)
 				{
 					global::System.Boolean valueOfAutomaticAssociations;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribAutomaticAssociations), out valueOfAutomaticAssociations))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribAutomaticAssociations, out valueOfAutomaticAssociations))
 					{
 						instanceOfModel.AutomaticAssociations = valueOfAutomaticAssociations;
 					}
@@ -795,11 +820,11 @@ namespace Altinoren.ActiveWriter
 			// AutomaticAssociationCollectionImplementation
 			if (!serializationContext.Result.Failed)
 			{
-				string attribAutomaticAssociationCollectionImplementation = reader.GetAttribute("automaticAssociationCollectionImplementation");
+				string attribAutomaticAssociationCollectionImplementation = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "automaticAssociationCollectionImplementation");
 				if (attribAutomaticAssociationCollectionImplementation != null)
 				{
 					global::System.String valueOfAutomaticAssociationCollectionImplementation;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribAutomaticAssociationCollectionImplementation), out valueOfAutomaticAssociationCollectionImplementation))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribAutomaticAssociationCollectionImplementation, out valueOfAutomaticAssociationCollectionImplementation))
 					{
 						instanceOfModel.AutomaticAssociationCollectionImplementation = valueOfAutomaticAssociationCollectionImplementation;
 					}
@@ -812,11 +837,11 @@ namespace Altinoren.ActiveWriter
 			// ManyToManyTableFormat
 			if (!serializationContext.Result.Failed)
 			{
-				string attribManyToManyTableFormat = reader.GetAttribute("manyToManyTableFormat");
+				string attribManyToManyTableFormat = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "manyToManyTableFormat");
 				if (attribManyToManyTableFormat != null)
 				{
 					global::System.String valueOfManyToManyTableFormat;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribManyToManyTableFormat), out valueOfManyToManyTableFormat))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribManyToManyTableFormat, out valueOfManyToManyTableFormat))
 					{
 						instanceOfModel.ManyToManyTableFormat = valueOfManyToManyTableFormat;
 					}
@@ -829,11 +854,11 @@ namespace Altinoren.ActiveWriter
 			// ForeignKeyFormat
 			if (!serializationContext.Result.Failed)
 			{
-				string attribForeignKeyFormat = reader.GetAttribute("foreignKeyFormat");
+				string attribForeignKeyFormat = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "foreignKeyFormat");
 				if (attribForeignKeyFormat != null)
 				{
 					global::System.String valueOfForeignKeyFormat;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribForeignKeyFormat), out valueOfForeignKeyFormat))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribForeignKeyFormat, out valueOfForeignKeyFormat))
 					{
 						instanceOfModel.ForeignKeyFormat = valueOfForeignKeyFormat;
 					}
@@ -846,11 +871,11 @@ namespace Altinoren.ActiveWriter
 			// CommonPrimaryKeyPropertyFormat
 			if (!serializationContext.Result.Failed)
 			{
-				string attribCommonPrimaryKeyPropertyFormat = reader.GetAttribute("commonPrimaryKeyPropertyFormat");
+				string attribCommonPrimaryKeyPropertyFormat = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "commonPrimaryKeyPropertyFormat");
 				if (attribCommonPrimaryKeyPropertyFormat != null)
 				{
 					global::System.String valueOfCommonPrimaryKeyPropertyFormat;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCommonPrimaryKeyPropertyFormat), out valueOfCommonPrimaryKeyPropertyFormat))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribCommonPrimaryKeyPropertyFormat, out valueOfCommonPrimaryKeyPropertyFormat))
 					{
 						instanceOfModel.CommonPrimaryKeyPropertyFormat = valueOfCommonPrimaryKeyPropertyFormat;
 					}
@@ -863,11 +888,11 @@ namespace Altinoren.ActiveWriter
 			// CommonPrimaryKeyColumnFormat
 			if (!serializationContext.Result.Failed)
 			{
-				string attribCommonPrimaryKeyColumnFormat = reader.GetAttribute("commonPrimaryKeyColumnFormat");
+				string attribCommonPrimaryKeyColumnFormat = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "commonPrimaryKeyColumnFormat");
 				if (attribCommonPrimaryKeyColumnFormat != null)
 				{
 					global::System.String valueOfCommonPrimaryKeyColumnFormat;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCommonPrimaryKeyColumnFormat), out valueOfCommonPrimaryKeyColumnFormat))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribCommonPrimaryKeyColumnFormat, out valueOfCommonPrimaryKeyColumnFormat))
 					{
 						instanceOfModel.CommonPrimaryKeyColumnFormat = valueOfCommonPrimaryKeyColumnFormat;
 					}
@@ -880,11 +905,11 @@ namespace Altinoren.ActiveWriter
 			// CommonPrimaryKeyColumnType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribCommonPrimaryKeyColumnType = reader.GetAttribute("commonPrimaryKeyColumnType");
+				string attribCommonPrimaryKeyColumnType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "commonPrimaryKeyColumnType");
 				if (attribCommonPrimaryKeyColumnType != null)
 				{
 					NHibernateType valueOfCommonPrimaryKeyColumnType;
-					if (DslModeling::SerializationUtilities.TryGetValue<NHibernateType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCommonPrimaryKeyColumnType), out valueOfCommonPrimaryKeyColumnType))
+					if (DslModeling::SerializationUtilities.TryGetValue<NHibernateType>(serializationContext, attribCommonPrimaryKeyColumnType, out valueOfCommonPrimaryKeyColumnType))
 					{
 						instanceOfModel.CommonPrimaryKeyColumnType = valueOfCommonPrimaryKeyColumnType;
 					}
@@ -897,11 +922,11 @@ namespace Altinoren.ActiveWriter
 			// CommonPrimaryKeyGenerator
 			if (!serializationContext.Result.Failed)
 			{
-				string attribCommonPrimaryKeyGenerator = reader.GetAttribute("commonPrimaryKeyGenerator");
+				string attribCommonPrimaryKeyGenerator = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "commonPrimaryKeyGenerator");
 				if (attribCommonPrimaryKeyGenerator != null)
 				{
 					PrimaryKeyType valueOfCommonPrimaryKeyGenerator;
-					if (DslModeling::SerializationUtilities.TryGetValue<PrimaryKeyType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCommonPrimaryKeyGenerator), out valueOfCommonPrimaryKeyGenerator))
+					if (DslModeling::SerializationUtilities.TryGetValue<PrimaryKeyType>(serializationContext, attribCommonPrimaryKeyGenerator, out valueOfCommonPrimaryKeyGenerator))
 					{
 						instanceOfModel.CommonPrimaryKeyGenerator = valueOfCommonPrimaryKeyGenerator;
 					}
@@ -914,11 +939,11 @@ namespace Altinoren.ActiveWriter
 			// MemberTemplateFile
 			if (!serializationContext.Result.Failed)
 			{
-				string attribMemberTemplateFile = reader.GetAttribute("memberTemplateFile");
+				string attribMemberTemplateFile = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "memberTemplateFile");
 				if (attribMemberTemplateFile != null)
 				{
 					global::System.String valueOfMemberTemplateFile;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribMemberTemplateFile), out valueOfMemberTemplateFile))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribMemberTemplateFile, out valueOfMemberTemplateFile))
 					{
 						instanceOfModel.MemberTemplateFile = valueOfMemberTemplateFile;
 					}
@@ -931,11 +956,11 @@ namespace Altinoren.ActiveWriter
 			// BaseClassPropertyChangedMethod
 			if (!serializationContext.Result.Failed)
 			{
-				string attribBaseClassPropertyChangedMethod = reader.GetAttribute("baseClassPropertyChangedMethod");
+				string attribBaseClassPropertyChangedMethod = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "baseClassPropertyChangedMethod");
 				if (attribBaseClassPropertyChangedMethod != null)
 				{
 					global::System.String valueOfBaseClassPropertyChangedMethod;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribBaseClassPropertyChangedMethod), out valueOfBaseClassPropertyChangedMethod))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribBaseClassPropertyChangedMethod, out valueOfBaseClassPropertyChangedMethod))
 					{
 						instanceOfModel.BaseClassPropertyChangedMethod = valueOfBaseClassPropertyChangedMethod;
 					}
@@ -948,11 +973,11 @@ namespace Altinoren.ActiveWriter
 			// BaseClassPropertyChangingMethod
 			if (!serializationContext.Result.Failed)
 			{
-				string attribBaseClassPropertyChangingMethod = reader.GetAttribute("baseClassPropertyChangingMethod");
+				string attribBaseClassPropertyChangingMethod = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "baseClassPropertyChangingMethod");
 				if (attribBaseClassPropertyChangingMethod != null)
 				{
 					global::System.String valueOfBaseClassPropertyChangingMethod;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribBaseClassPropertyChangingMethod), out valueOfBaseClassPropertyChangingMethod))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribBaseClassPropertyChangingMethod, out valueOfBaseClassPropertyChangingMethod))
 					{
 						instanceOfModel.BaseClassPropertyChangingMethod = valueOfBaseClassPropertyChangingMethod;
 					}
@@ -965,11 +990,11 @@ namespace Altinoren.ActiveWriter
 			// Access
 			if (!serializationContext.Result.Failed)
 			{
-				string attribAccess = reader.GetAttribute("access");
+				string attribAccess = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "access");
 				if (attribAccess != null)
 				{
 					PropertyAccess valueOfAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<PropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribAccess), out valueOfAccess))
+					if (DslModeling::SerializationUtilities.TryGetValue<PropertyAccess>(serializationContext, attribAccess, out valueOfAccess))
 					{
 						instanceOfModel.Access = valueOfAccess;
 					}
@@ -989,7 +1014,7 @@ namespace Altinoren.ActiveWriter
 		/// reader at the open tag of the first child XML element.
 		/// This method will read as many child XML elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the open 
-		///    tag of the unknown element. This implies the if the first child XML element is unknown, this method should return 
+		///    tag of the unknown element. This implies that if the first child XML element is unknown, this method should return 
 		///    immediately and do nothing.
 		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
 		/// 3) EOF.
@@ -997,8 +1022,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">In-memory Model instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
-		protected virtual void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadElements(serializationContext, element, reader);
+	
 			Model instanceOfModel = element as Model;
 			global::System.Diagnostics.Debug.Assert(instanceOfModel != null, "Expecting an instance of Model!");
 	
@@ -1041,15 +1069,15 @@ namespace Altinoren.ActiveWriter
 						}
 						else
 						{
-							string strAdditionalImports = reader.ReadInnerXml();
-							global::System.Collections.Generic.List<Altinoren.ActiveWriter.Import> valueOfAdditionalImports;
-							if (DslModeling::SerializationUtilities.TryGetValue<global::System.Collections.Generic.List<Altinoren.ActiveWriter.Import>>(DslModeling::SerializationUtilities.UnescapeXmlString(strAdditionalImports), out valueOfAdditionalImports))
+							string strAdditionalImports = ActiveWriterSerializationHelper.Instance.ReadElementContentAsString(serializationContext, element, reader);
+							global::System.Collections.Generic.List<Castle.ActiveWriter.Import> valueOfAdditionalImports;
+							if (DslModeling::SerializationUtilities.TryGetValue<global::System.Collections.Generic.List<Castle.ActiveWriter.Import>>(serializationContext, strAdditionalImports, out valueOfAdditionalImports))
 							{
 								element.AdditionalImports = valueOfAdditionalImports;
 							}
 							else
 							{	// Invalid property value, ignored.
-								ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "additionalImports", typeof(global::System.Collections.Generic.List<Altinoren.ActiveWriter.Import>), strAdditionalImports);
+								ActiveWriterSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "additionalImports", typeof(global::System.Collections.Generic.List<Castle.ActiveWriter.Import>), strAdditionalImports);
 							}
 	
 							DslModeling::SerializationUtilities.SkipToNextElement(reader);
@@ -1068,7 +1096,7 @@ namespace Altinoren.ActiveWriter
 		/// The caller will position the reader at the open tag of the first child XML element to deserialized.
 		/// This method will read as many child elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the 
-		///    open tag of the unknown element. This implies the if the first child XML element is unknown, this method 
+		///    open tag of the unknown element. This implies that if the first child XML element is unknown, this method 
 		///    should return immediately and do nothing.
 		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
 		/// 3) EOF.
@@ -1427,7 +1455,8 @@ namespace Altinoren.ActiveWriter
 		/// <returns>Created ModelRoot instance, or null if the reader is not pointing to a correct monikerized instance.</returns>
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
-			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
+			string monikerString = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, sourceRolePlayer, reader, this.MonikerAttributeName);
+	
 			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
@@ -1531,7 +1560,7 @@ namespace Altinoren.ActiveWriter
 			string monikerString = this.CalculateQualifiedName(serializationContext.Directory, element);
 			global::System.Diagnostics.Debug.Assert(!string.IsNullOrEmpty(monikerString));
 			writer.WriteStartElement(this.MonikerTagName);
-			writer.WriteAttributeString(this.MonikerAttributeName, monikerString);
+			ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, this.MonikerAttributeName, monikerString);
 			writer.WriteEndElement();
 		}
 		
@@ -1563,9 +1592,14 @@ namespace Altinoren.ActiveWriter
 	
 			// Write start of element, including schema target namespace if specified.
 			if (rootElementSettings != null && !string.IsNullOrEmpty(rootElementSettings.SchemaTargetNamespace))
+			{
 				writer.WriteStartElement(this.XmlTagName, rootElementSettings.SchemaTargetNamespace);
+				DslModeling::SerializationUtilities.WriteDomainModelNamespaces(serializationContext.Directory, writer, rootElementSettings.SchemaTargetNamespace);
+			}
 			else
+			{
 				writer.WriteStartElement(this.XmlTagName);
+			}
 				
 			// Write version info (in the format 1.2.3.4), if necessary
 			if (rootElementSettings != null && rootElementSettings.Version != null)
@@ -1575,6 +1609,12 @@ namespace Altinoren.ActiveWriter
 			writer.WriteAttributeString("Id", element.Id.ToString("D", global::System.Globalization.CultureInfo.CurrentCulture));
 	
 			WritePropertiesAsAttributes(serializationContext, element, writer);
+	
+			// Write out any extension data if this is the root element
+			if (rootElementSettings != null && !serializationContext.Result.Failed)
+			{
+				ActiveWriterSerializationHelper.Instance.WriteExtensions(serializationContext, element, writer);
+			}
 	
 			if (!serializationContext.Result.Failed)
 			{
@@ -1592,8 +1632,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">Model instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
 			Model instanceOfModel = element as Model;
 			global::System.Diagnostics.Debug.Assert(instanceOfModel != null, "Expecting an instance of Model");
 	
@@ -1606,7 +1649,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "No") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("useNullables", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "useNullables", serializedPropValue);
 					}
 				}
 			}
@@ -1619,7 +1662,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "CamelcaseUnderscore") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("caseOfPrivateFields", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "caseOfPrivateFields", serializedPropValue);
 					}
 				}
 			}
@@ -1632,7 +1675,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("generateMonoRailProject", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "generateMonoRailProject", serializedPropValue);
 					}
 				}
 			}
@@ -1643,7 +1686,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("monoRailProjectName", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "monoRailProjectName", propValue);
+	
 				}
 			}
 			// MonoRailProjectPath
@@ -1653,7 +1697,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("monoRailProjectPath", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "monoRailProjectPath", propValue);
+	
 				}
 			}
 			// MonoRailDefaultLayout
@@ -1664,7 +1709,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "default") != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("monoRailDefaultLayout", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "monoRailDefaultLayout", propValue);
 					}
 				}
 			}
@@ -1676,7 +1721,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "generalerror") != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("monoRailDefaultRescue", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "monoRailDefaultRescue", propValue);
 					}
 				}
 			}
@@ -1688,7 +1733,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, ".vm") != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("monoRailViewFileExtension", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "monoRailViewFileExtension", propValue);
 					}
 				}
 			}
@@ -1701,7 +1746,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("useGenerics", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "useGenerics", serializedPropValue);
 					}
 				}
 			}
@@ -1714,7 +1759,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("useBaseClass", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "useBaseClass", serializedPropValue);
 					}
 				}
 			}
@@ -1725,7 +1770,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("baseClassName", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "baseClassName", propValue);
+	
 				}
 			}
 			// GeneratesDoubleDerived
@@ -1737,7 +1783,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("generatesDoubleDerived", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "generatesDoubleDerived", serializedPropValue);
 					}
 				}
 			}
@@ -1749,7 +1795,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "Base") != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("doubleDerivedNameSuffix", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "doubleDerivedNameSuffix", propValue);
 					}
 				}
 			}
@@ -1762,7 +1808,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("useGeneratedCodeAttribute", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "useGeneratedCodeAttribute", serializedPropValue);
 					}
 				}
 			}
@@ -1775,7 +1821,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "ActiveRecord") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("target", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "target", serializedPropValue);
 					}
 				}
 			}
@@ -1786,7 +1832,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("assemblyPath", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "assemblyPath", propValue);
+	
 				}
 			}
 			// ActiveRecordAssemblyName
@@ -1797,7 +1844,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "Castle.ActiveRecord") != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("activeRecordAssemblyName", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "activeRecordAssemblyName", propValue);
 					}
 				}
 			}
@@ -1809,7 +1856,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "NHibernate") != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("nHibernateAssemblyName", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "nHibernateAssemblyName", propValue);
 					}
 				}
 			}
@@ -1822,7 +1869,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("relateWithActiwFile", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "relateWithActiwFile", serializedPropValue);
 					}
 				}
 			}
@@ -1835,7 +1882,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("useVirtualProperties", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "useVirtualProperties", serializedPropValue);
 					}
 				}
 			}
@@ -1846,7 +1893,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("namespace", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "namespace", propValue);
+	
 				}
 			}
 			// ImplementINotifyPropertyChanged
@@ -1858,7 +1906,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("implementINotifyPropertyChanged", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "implementINotifyPropertyChanged", serializedPropValue);
 					}
 				}
 			}
@@ -1871,7 +1919,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "False") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("generateMetaData", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "generateMetaData", serializedPropValue);
 					}
 				}
 			}
@@ -1884,7 +1932,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("useNHQG", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "useNHQG", serializedPropValue);
 					}
 				}
 			}
@@ -1896,7 +1944,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "C:\\Program Files\\Rhino\\NHibernate Query Generator\\NHQG.exe") != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("nHQGExecutable", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "nHQGExecutable", propValue);
 					}
 				}
 			}
@@ -1909,7 +1957,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("useGenericRelations", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "useGenericRelations", serializedPropValue);
 					}
 				}
 			}
@@ -1920,7 +1968,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("propertyNameFilterExpression", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "propertyNameFilterExpression", propValue);
+	
 				}
 			}
 			// InitializeIListFields
@@ -1932,7 +1981,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("initializeIListFields", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "initializeIListFields", serializedPropValue);
 					}
 				}
 			}
@@ -1945,7 +1994,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("implementINotifyPropertyChanging", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "implementINotifyPropertyChanging", serializedPropValue);
 					}
 				}
 			}
@@ -1957,7 +2006,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "IList") != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("collectionInterface", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "collectionInterface", propValue);
 					}
 				}
 			}
@@ -1969,7 +2018,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "List") != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("collectionImplementation", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "collectionImplementation", propValue);
 					}
 				}
 			}
@@ -1982,7 +2031,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Guess") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("manyToManyRelationType", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "manyToManyRelationType", serializedPropValue);
 					}
 				}
 			}
@@ -1995,7 +2044,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Guess") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("manyToOneRelationType", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "manyToOneRelationType", serializedPropValue);
 					}
 				}
 			}
@@ -2006,7 +2055,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("manyToManyCollectionIDColumnFormat", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "manyToManyCollectionIDColumnFormat", propValue);
+	
 				}
 			}
 			// ManyToManyCollectionIDColumnType
@@ -2016,7 +2066,7 @@ namespace Altinoren.ActiveWriter
 				string serializedPropValue = DslModeling::SerializationUtilities.GetString<NHibernateType>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
-					writer.WriteAttributeString("manyToManyCollectionIDColumnType", serializedPropValue);
+					ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "manyToManyCollectionIDColumnType", serializedPropValue);
 				}
 			}
 			// ManyToManyCollectionIDGenerator
@@ -2026,7 +2076,7 @@ namespace Altinoren.ActiveWriter
 				string serializedPropValue = DslModeling::SerializationUtilities.GetString<PrimaryKeyType>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
-					writer.WriteAttributeString("manyToManyCollectionIDGenerator", serializedPropValue);
+					ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "manyToManyCollectionIDGenerator", serializedPropValue);
 				}
 			}
 			// ManyToManyIUserCollectionType
@@ -2036,7 +2086,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("manyToManyIUserCollectionType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "manyToManyIUserCollectionType", propValue);
+	
 				}
 			}
 			// ManyToOneIUserCollectionType
@@ -2046,7 +2097,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("manyToOneIUserCollectionType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "manyToOneIUserCollectionType", propValue);
+	
 				}
 			}
 			// AutomaticAssociations
@@ -2058,7 +2110,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("automaticAssociations", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "automaticAssociations", serializedPropValue);
 					}
 				}
 			}
@@ -2069,7 +2121,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("automaticAssociationCollectionImplementation", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "automaticAssociationCollectionImplementation", propValue);
+	
 				}
 			}
 			// ManyToManyTableFormat
@@ -2080,7 +2133,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "{0}{1}") != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("manyToManyTableFormat", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "manyToManyTableFormat", propValue);
 					}
 				}
 			}
@@ -2092,7 +2145,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, "{0}") != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("foreignKeyFormat", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "foreignKeyFormat", propValue);
 					}
 				}
 			}
@@ -2104,7 +2157,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, string.Empty) != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("commonPrimaryKeyPropertyFormat", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "commonPrimaryKeyPropertyFormat", propValue);
 					}
 				}
 			}
@@ -2116,7 +2169,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, string.Empty) != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("commonPrimaryKeyColumnFormat", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "commonPrimaryKeyColumnFormat", propValue);
 					}
 				}
 			}
@@ -2129,7 +2182,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Int32") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("commonPrimaryKeyColumnType", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "commonPrimaryKeyColumnType", serializedPropValue);
 					}
 				}
 			}
@@ -2142,7 +2195,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Native") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("commonPrimaryKeyGenerator", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "commonPrimaryKeyGenerator", serializedPropValue);
 					}
 				}
 			}
@@ -2153,7 +2206,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("memberTemplateFile", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "memberTemplateFile", propValue);
+	
 				}
 			}
 			// BaseClassPropertyChangedMethod
@@ -2163,7 +2217,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("baseClassPropertyChangedMethod", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "baseClassPropertyChangedMethod", propValue);
+	
 				}
 			}
 			// BaseClassPropertyChangingMethod
@@ -2173,7 +2228,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("baseClassPropertyChangingMethod", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "baseClassPropertyChangingMethod", propValue);
+	
 				}
 			}
 			// Access
@@ -2185,7 +2241,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Property") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("access", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "access", serializedPropValue);
 					}
 				}
 			}
@@ -2197,8 +2253,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">Model instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param>        
-		protected virtual void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WriteElements(serializationContext, element, writer);
+	
 			Model instance = element as Model;
 			global::System.Diagnostics.Debug.Assert(instance != null, "Expecting an instance of Model!");
 	
@@ -2209,6 +2268,7 @@ namespace Altinoren.ActiveWriter
 			if (!serializationContext.Result.Failed)
 				WriteChildElements(serializationContext, instance, writer);
 		}
+		
 	
 		/// <summary>
 		/// Serialize all properties that need to be stored as nested XML elements.
@@ -2222,11 +2282,11 @@ namespace Altinoren.ActiveWriter
 			// AdditionalImports
 			if (!serializationContext.Result.Failed)
 			{
-				global::System.Collections.Generic.List<Altinoren.ActiveWriter.Import> propValue = element.AdditionalImports;
-				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Collections.Generic.List<Altinoren.ActiveWriter.Import>>(serializationContext, propValue);
+				global::System.Collections.Generic.List<Castle.ActiveWriter.Import> propValue = element.AdditionalImports;
+				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Collections.Generic.List<Castle.ActiveWriter.Import>>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
-					writer.WriteElementString("additionalImports", serializedPropValue);
+				ActiveWriterSerializationHelper.Instance.WriteElementString(serializationContext, element, writer, "additionalImports", serializedPropValue);
 				}
 			}
 		} 
@@ -2352,7 +2412,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer ModelClassSerializer for DomainClass ModelClass.
@@ -2367,6 +2427,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -2436,6 +2514,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read nested XML elements, they can be either properties serialized as XML elements, or child 
 					// model elements.
 					while (!serializationContext.Result.Failed && !reader.EOF && reader.NodeType == global::System.Xml.XmlNodeType.Element)
@@ -2454,6 +2535,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		/// <summary>
 		/// This method deserializes all properties that are serialized as XML attributes.
@@ -2468,6 +2550,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected override void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
 			base.ReadPropertiesFromAttributes(serializationContext, element, reader);
 	
 			ModelClass instanceOfModelClass = element as ModelClass;
@@ -2476,11 +2559,11 @@ namespace Altinoren.ActiveWriter
 			// Cache
 			if (!serializationContext.Result.Failed)
 			{
-				string attribCache = reader.GetAttribute("cache");
+				string attribCache = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "cache");
 				if (attribCache != null)
 				{
 					CacheEnum valueOfCache;
-					if (DslModeling::SerializationUtilities.TryGetValue<CacheEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCache), out valueOfCache))
+					if (DslModeling::SerializationUtilities.TryGetValue<CacheEnum>(serializationContext, attribCache, out valueOfCache))
 					{
 						instanceOfModelClass.Cache = valueOfCache;
 					}
@@ -2493,11 +2576,11 @@ namespace Altinoren.ActiveWriter
 			// DiscriminatorColumn
 			if (!serializationContext.Result.Failed)
 			{
-				string attribDiscriminatorColumn = reader.GetAttribute("discriminatorColumn");
+				string attribDiscriminatorColumn = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "discriminatorColumn");
 				if (attribDiscriminatorColumn != null)
 				{
 					global::System.String valueOfDiscriminatorColumn;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribDiscriminatorColumn), out valueOfDiscriminatorColumn))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribDiscriminatorColumn, out valueOfDiscriminatorColumn))
 					{
 						instanceOfModelClass.DiscriminatorColumn = valueOfDiscriminatorColumn;
 					}
@@ -2510,11 +2593,11 @@ namespace Altinoren.ActiveWriter
 			// DiscriminatorType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribDiscriminatorType = reader.GetAttribute("discriminatorType");
+				string attribDiscriminatorType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "discriminatorType");
 				if (attribDiscriminatorType != null)
 				{
 					global::System.String valueOfDiscriminatorType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribDiscriminatorType), out valueOfDiscriminatorType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribDiscriminatorType, out valueOfDiscriminatorType))
 					{
 						instanceOfModelClass.DiscriminatorType = valueOfDiscriminatorType;
 					}
@@ -2527,11 +2610,11 @@ namespace Altinoren.ActiveWriter
 			// DiscriminatorValue
 			if (!serializationContext.Result.Failed)
 			{
-				string attribDiscriminatorValue = reader.GetAttribute("discriminatorValue");
+				string attribDiscriminatorValue = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "discriminatorValue");
 				if (attribDiscriminatorValue != null)
 				{
 					global::System.String valueOfDiscriminatorValue;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribDiscriminatorValue), out valueOfDiscriminatorValue))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribDiscriminatorValue, out valueOfDiscriminatorValue))
 					{
 						instanceOfModelClass.DiscriminatorValue = valueOfDiscriminatorValue;
 					}
@@ -2544,11 +2627,11 @@ namespace Altinoren.ActiveWriter
 			// Lazy
 			if (!serializationContext.Result.Failed)
 			{
-				string attribLazy = reader.GetAttribute("lazy");
+				string attribLazy = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "lazy");
 				if (attribLazy != null)
 				{
 					global::System.Boolean valueOfLazy;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribLazy), out valueOfLazy))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribLazy, out valueOfLazy))
 					{
 						instanceOfModelClass.Lazy = valueOfLazy;
 					}
@@ -2561,11 +2644,11 @@ namespace Altinoren.ActiveWriter
 			// Proxy
 			if (!serializationContext.Result.Failed)
 			{
-				string attribProxy = reader.GetAttribute("proxy");
+				string attribProxy = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "proxy");
 				if (attribProxy != null)
 				{
 					global::System.String valueOfProxy;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribProxy), out valueOfProxy))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribProxy, out valueOfProxy))
 					{
 						instanceOfModelClass.Proxy = valueOfProxy;
 					}
@@ -2578,11 +2661,11 @@ namespace Altinoren.ActiveWriter
 			// Schema
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSchema = reader.GetAttribute("schema");
+				string attribSchema = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "schema");
 				if (attribSchema != null)
 				{
 					global::System.String valueOfSchema;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSchema), out valueOfSchema))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSchema, out valueOfSchema))
 					{
 						instanceOfModelClass.Schema = valueOfSchema;
 					}
@@ -2595,11 +2678,11 @@ namespace Altinoren.ActiveWriter
 			// Table
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTable = reader.GetAttribute("table");
+				string attribTable = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "table");
 				if (attribTable != null)
 				{
 					global::System.String valueOfTable;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTable), out valueOfTable))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTable, out valueOfTable))
 					{
 						instanceOfModelClass.Table = valueOfTable;
 					}
@@ -2612,11 +2695,11 @@ namespace Altinoren.ActiveWriter
 			// Where
 			if (!serializationContext.Result.Failed)
 			{
-				string attribWhere = reader.GetAttribute("where");
+				string attribWhere = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "where");
 				if (attribWhere != null)
 				{
 					global::System.String valueOfWhere;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribWhere), out valueOfWhere))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribWhere, out valueOfWhere))
 					{
 						instanceOfModelClass.Where = valueOfWhere;
 					}
@@ -2629,11 +2712,11 @@ namespace Altinoren.ActiveWriter
 			// DynamicInsert
 			if (!serializationContext.Result.Failed)
 			{
-				string attribDynamicInsert = reader.GetAttribute("dynamicInsert");
+				string attribDynamicInsert = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "dynamicInsert");
 				if (attribDynamicInsert != null)
 				{
 					global::System.Boolean valueOfDynamicInsert;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribDynamicInsert), out valueOfDynamicInsert))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribDynamicInsert, out valueOfDynamicInsert))
 					{
 						instanceOfModelClass.DynamicInsert = valueOfDynamicInsert;
 					}
@@ -2646,11 +2729,11 @@ namespace Altinoren.ActiveWriter
 			// DynamicUpdate
 			if (!serializationContext.Result.Failed)
 			{
-				string attribDynamicUpdate = reader.GetAttribute("dynamicUpdate");
+				string attribDynamicUpdate = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "dynamicUpdate");
 				if (attribDynamicUpdate != null)
 				{
 					global::System.Boolean valueOfDynamicUpdate;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribDynamicUpdate), out valueOfDynamicUpdate))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribDynamicUpdate, out valueOfDynamicUpdate))
 					{
 						instanceOfModelClass.DynamicUpdate = valueOfDynamicUpdate;
 					}
@@ -2663,11 +2746,11 @@ namespace Altinoren.ActiveWriter
 			// Persister
 			if (!serializationContext.Result.Failed)
 			{
-				string attribPersister = reader.GetAttribute("persister");
+				string attribPersister = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "persister");
 				if (attribPersister != null)
 				{
 					global::System.String valueOfPersister;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribPersister), out valueOfPersister))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribPersister, out valueOfPersister))
 					{
 						instanceOfModelClass.Persister = valueOfPersister;
 					}
@@ -2680,11 +2763,11 @@ namespace Altinoren.ActiveWriter
 			// SelectBeforeUpdate
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSelectBeforeUpdate = reader.GetAttribute("selectBeforeUpdate");
+				string attribSelectBeforeUpdate = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "selectBeforeUpdate");
 				if (attribSelectBeforeUpdate != null)
 				{
 					global::System.Boolean valueOfSelectBeforeUpdate;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSelectBeforeUpdate), out valueOfSelectBeforeUpdate))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribSelectBeforeUpdate, out valueOfSelectBeforeUpdate))
 					{
 						instanceOfModelClass.SelectBeforeUpdate = valueOfSelectBeforeUpdate;
 					}
@@ -2697,11 +2780,11 @@ namespace Altinoren.ActiveWriter
 			// Polymorphism
 			if (!serializationContext.Result.Failed)
 			{
-				string attribPolymorphism = reader.GetAttribute("polymorphism");
+				string attribPolymorphism = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "polymorphism");
 				if (attribPolymorphism != null)
 				{
 					Polymorphism valueOfPolymorphism;
-					if (DslModeling::SerializationUtilities.TryGetValue<Polymorphism>(DslModeling::SerializationUtilities.UnescapeXmlString(attribPolymorphism), out valueOfPolymorphism))
+					if (DslModeling::SerializationUtilities.TryGetValue<Polymorphism>(serializationContext, attribPolymorphism, out valueOfPolymorphism))
 					{
 						instanceOfModelClass.Polymorphism = valueOfPolymorphism;
 					}
@@ -2714,11 +2797,11 @@ namespace Altinoren.ActiveWriter
 			// Mutable
 			if (!serializationContext.Result.Failed)
 			{
-				string attribMutable = reader.GetAttribute("mutable");
+				string attribMutable = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "mutable");
 				if (attribMutable != null)
 				{
 					global::System.Boolean valueOfMutable;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribMutable), out valueOfMutable))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribMutable, out valueOfMutable))
 					{
 						instanceOfModelClass.Mutable = valueOfMutable;
 					}
@@ -2731,11 +2814,11 @@ namespace Altinoren.ActiveWriter
 			// BatchSize
 			if (!serializationContext.Result.Failed)
 			{
-				string attribBatchSize = reader.GetAttribute("batchSize");
+				string attribBatchSize = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "batchSize");
 				if (attribBatchSize != null)
 				{
 					global::System.Int32 valueOfBatchSize;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Int32>(DslModeling::SerializationUtilities.UnescapeXmlString(attribBatchSize), out valueOfBatchSize))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Int32>(serializationContext, attribBatchSize, out valueOfBatchSize))
 					{
 						instanceOfModelClass.BatchSize = valueOfBatchSize;
 					}
@@ -2748,11 +2831,11 @@ namespace Altinoren.ActiveWriter
 			// Locking
 			if (!serializationContext.Result.Failed)
 			{
-				string attribLocking = reader.GetAttribute("locking");
+				string attribLocking = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "locking");
 				if (attribLocking != null)
 				{
 					OptimisticLocking valueOfLocking;
-					if (DslModeling::SerializationUtilities.TryGetValue<OptimisticLocking>(DslModeling::SerializationUtilities.UnescapeXmlString(attribLocking), out valueOfLocking))
+					if (DslModeling::SerializationUtilities.TryGetValue<OptimisticLocking>(serializationContext, attribLocking, out valueOfLocking))
 					{
 						instanceOfModelClass.Locking = valueOfLocking;
 					}
@@ -2765,11 +2848,11 @@ namespace Altinoren.ActiveWriter
 			// UseAutoImport
 			if (!serializationContext.Result.Failed)
 			{
-				string attribUseAutoImport = reader.GetAttribute("useAutoImport");
+				string attribUseAutoImport = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "useAutoImport");
 				if (attribUseAutoImport != null)
 				{
 					global::System.Boolean valueOfUseAutoImport;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUseAutoImport), out valueOfUseAutoImport))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribUseAutoImport, out valueOfUseAutoImport))
 					{
 						instanceOfModelClass.UseAutoImport = valueOfUseAutoImport;
 					}
@@ -2782,11 +2865,11 @@ namespace Altinoren.ActiveWriter
 			// BaseClassName
 			if (!serializationContext.Result.Failed)
 			{
-				string attribBaseClassName = reader.GetAttribute("baseClassName");
+				string attribBaseClassName = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "baseClassName");
 				if (attribBaseClassName != null)
 				{
 					global::System.String valueOfBaseClassName;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribBaseClassName), out valueOfBaseClassName))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribBaseClassName, out valueOfBaseClassName))
 					{
 						instanceOfModelClass.BaseClassName = valueOfBaseClassName;
 					}
@@ -2799,11 +2882,11 @@ namespace Altinoren.ActiveWriter
 			// UseGenerics
 			if (!serializationContext.Result.Failed)
 			{
-				string attribUseGenerics = reader.GetAttribute("useGenerics");
+				string attribUseGenerics = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "useGenerics");
 				if (attribUseGenerics != null)
 				{
 					InheritableBoolean valueOfUseGenerics;
-					if (DslModeling::SerializationUtilities.TryGetValue<InheritableBoolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUseGenerics), out valueOfUseGenerics))
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritableBoolean>(serializationContext, attribUseGenerics, out valueOfUseGenerics))
 					{
 						instanceOfModelClass.UseGenerics = valueOfUseGenerics;
 					}
@@ -2816,11 +2899,11 @@ namespace Altinoren.ActiveWriter
 			// ImplementINotifyPropertyChanged
 			if (!serializationContext.Result.Failed)
 			{
-				string attribImplementINotifyPropertyChanged = reader.GetAttribute("implementINotifyPropertyChanged");
+				string attribImplementINotifyPropertyChanged = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "implementINotifyPropertyChanged");
 				if (attribImplementINotifyPropertyChanged != null)
 				{
 					InheritableBoolean valueOfImplementINotifyPropertyChanged;
-					if (DslModeling::SerializationUtilities.TryGetValue<InheritableBoolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribImplementINotifyPropertyChanged), out valueOfImplementINotifyPropertyChanged))
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritableBoolean>(serializationContext, attribImplementINotifyPropertyChanged, out valueOfImplementINotifyPropertyChanged))
 					{
 						instanceOfModelClass.ImplementINotifyPropertyChanged = valueOfImplementINotifyPropertyChanged;
 					}
@@ -2833,11 +2916,11 @@ namespace Altinoren.ActiveWriter
 			// UseGenericRelations
 			if (!serializationContext.Result.Failed)
 			{
-				string attribUseGenericRelations = reader.GetAttribute("useGenericRelations");
+				string attribUseGenericRelations = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "useGenericRelations");
 				if (attribUseGenericRelations != null)
 				{
 					InheritableBoolean valueOfUseGenericRelations;
-					if (DslModeling::SerializationUtilities.TryGetValue<InheritableBoolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUseGenericRelations), out valueOfUseGenericRelations))
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritableBoolean>(serializationContext, attribUseGenericRelations, out valueOfUseGenericRelations))
 					{
 						instanceOfModelClass.UseGenericRelations = valueOfUseGenericRelations;
 					}
@@ -2850,11 +2933,11 @@ namespace Altinoren.ActiveWriter
 			// ImplementINotifyPropertyChanging
 			if (!serializationContext.Result.Failed)
 			{
-				string attribImplementINotifyPropertyChanging = reader.GetAttribute("implementINotifyPropertyChanging");
+				string attribImplementINotifyPropertyChanging = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "implementINotifyPropertyChanging");
 				if (attribImplementINotifyPropertyChanging != null)
 				{
 					InheritableBoolean valueOfImplementINotifyPropertyChanging;
-					if (DslModeling::SerializationUtilities.TryGetValue<InheritableBoolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribImplementINotifyPropertyChanging), out valueOfImplementINotifyPropertyChanging))
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritableBoolean>(serializationContext, attribImplementINotifyPropertyChanging, out valueOfImplementINotifyPropertyChanging))
 					{
 						instanceOfModelClass.ImplementINotifyPropertyChanging = valueOfImplementINotifyPropertyChanging;
 					}
@@ -2874,7 +2957,7 @@ namespace Altinoren.ActiveWriter
 		/// reader at the open tag of the first child XML element.
 		/// This method will read as many child XML elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the open 
-		///    tag of the unknown element. This implies the if the first child XML element is unknown, this method should return 
+		///    tag of the unknown element. This implies that if the first child XML element is unknown, this method should return 
 		///    immediately and do nothing.
 		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
 		/// 3) EOF.
@@ -2884,6 +2967,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="reader">XmlReader to read serialized data from.</param>
 		protected override void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
 			base.ReadElements(serializationContext, element, reader);
 	
 			ModelClass instanceOfModelClass = element as ModelClass;
@@ -2901,7 +2985,7 @@ namespace Altinoren.ActiveWriter
 		/// The caller will position the reader at the open tag of the first child XML element to deserialized.
 		/// This method will read as many child elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the 
-		///    open tag of the unknown element. This implies the if the first child XML element is unknown, this method 
+		///    open tag of the unknown element. This implies that if the first child XML element is unknown, this method 
 		///    should return immediately and do nothing.
 		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
 		/// 3) EOF.
@@ -3412,7 +3496,8 @@ namespace Altinoren.ActiveWriter
 		/// <returns>Created ModelRoot instance, or null if the reader is not pointing to a correct monikerized instance.</returns>
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
-			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
+			string monikerString = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, sourceRolePlayer, reader, this.MonikerAttributeName);
+	
 			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
@@ -3503,7 +3588,7 @@ namespace Altinoren.ActiveWriter
 			string monikerString = relSerializer.SerializeReference(serializationContext, sourceRolePlayer, element);
 			global::System.Diagnostics.Debug.Assert(!string.IsNullOrEmpty(monikerString));
 			writer.WriteStartElement(this.MonikerTagName);
-			writer.WriteAttributeString(this.MonikerAttributeName, monikerString);
+			ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, this.MonikerAttributeName, monikerString);
 			writer.WriteEndElement();
 		}
 		
@@ -3535,15 +3620,26 @@ namespace Altinoren.ActiveWriter
 	
 			// Write start of element, including schema target namespace if specified.
 			if (rootElementSettings != null && !string.IsNullOrEmpty(rootElementSettings.SchemaTargetNamespace))
+			{
 				writer.WriteStartElement(this.XmlTagName, rootElementSettings.SchemaTargetNamespace);
+				DslModeling::SerializationUtilities.WriteDomainModelNamespaces(serializationContext.Directory, writer, rootElementSettings.SchemaTargetNamespace);
+			}
 			else
+			{
 				writer.WriteStartElement(this.XmlTagName);
+			}
 				
 			// Write version info (in the format 1.2.3.4), if necessary
 			if (rootElementSettings != null && rootElementSettings.Version != null)
 				writer.WriteAttributeString("dslVersion", rootElementSettings.Version.ToString(4));
 	
 			WritePropertiesAsAttributes(serializationContext, element, writer);
+	
+			// Write out any extension data if this is the root element
+			if (rootElementSettings != null && !serializationContext.Result.Failed)
+			{
+				ActiveWriterSerializationHelper.Instance.WriteExtensions(serializationContext, element, writer);
+			}
 	
 			if (!serializationContext.Result.Failed)
 			{
@@ -3563,6 +3659,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
 			base.WritePropertiesAsAttributes(serializationContext, element, writer);
 	
 			ModelClass instanceOfModelClass = element as ModelClass;
@@ -3577,7 +3674,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Undefined") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("cache", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "cache", serializedPropValue);
 					}
 				}
 			}
@@ -3588,7 +3685,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("discriminatorColumn", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "discriminatorColumn", propValue);
+	
 				}
 			}
 			// DiscriminatorType
@@ -3598,7 +3696,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("discriminatorType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "discriminatorType", propValue);
+	
 				}
 			}
 			// DiscriminatorValue
@@ -3608,7 +3707,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("discriminatorValue", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "discriminatorValue", propValue);
+	
 				}
 			}
 			// Lazy
@@ -3620,7 +3720,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("lazy", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "lazy", serializedPropValue);
 					}
 				}
 			}
@@ -3631,7 +3731,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("proxy", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "proxy", propValue);
+	
 				}
 			}
 			// Schema
@@ -3641,7 +3742,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("schema", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "schema", propValue);
+	
 				}
 			}
 			// Table
@@ -3651,7 +3753,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("table", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "table", propValue);
+	
 				}
 			}
 			// Where
@@ -3661,7 +3764,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("where", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "where", propValue);
+	
 				}
 			}
 			// DynamicInsert
@@ -3673,7 +3777,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("dynamicInsert", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "dynamicInsert", serializedPropValue);
 					}
 				}
 			}
@@ -3686,7 +3790,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("dynamicUpdate", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "dynamicUpdate", serializedPropValue);
 					}
 				}
 			}
@@ -3697,7 +3801,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("persister", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "persister", propValue);
+	
 				}
 			}
 			// SelectBeforeUpdate
@@ -3709,7 +3814,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("selectBeforeUpdate", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "selectBeforeUpdate", serializedPropValue);
 					}
 				}
 			}
@@ -3722,7 +3827,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Implicit") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("polymorphism", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "polymorphism", serializedPropValue);
 					}
 				}
 			}
@@ -3735,7 +3840,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("mutable", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "mutable", serializedPropValue);
 					}
 				}
 			}
@@ -3748,7 +3853,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "1") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("batchSize", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "batchSize", serializedPropValue);
 					}
 				}
 			}
@@ -3761,7 +3866,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Version") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("locking", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "locking", serializedPropValue);
 					}
 				}
 			}
@@ -3774,7 +3879,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("useAutoImport", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "useAutoImport", serializedPropValue);
 					}
 				}
 			}
@@ -3785,7 +3890,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("baseClassName", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "baseClassName", propValue);
+	
 				}
 			}
 			// UseGenerics
@@ -3797,7 +3903,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("useGenerics", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "useGenerics", serializedPropValue);
 					}
 				}
 			}
@@ -3810,7 +3916,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("implementINotifyPropertyChanged", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "implementINotifyPropertyChanged", serializedPropValue);
 					}
 				}
 			}
@@ -3823,7 +3929,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("useGenericRelations", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "useGenericRelations", serializedPropValue);
 					}
 				}
 			}
@@ -3836,7 +3942,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("implementINotifyPropertyChanging", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "implementINotifyPropertyChanging", serializedPropValue);
 					}
 				}
 			}
@@ -3850,6 +3956,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="writer">XmlWriter to write serialized data to.</param>        
 		protected override void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
 			base.WriteElements(serializationContext, element, writer);
 	
 			ModelClass instance = element as ModelClass;
@@ -3859,6 +3966,7 @@ namespace Altinoren.ActiveWriter
 			if (!serializationContext.Result.Failed)
 				WriteChildElements(serializationContext, instance, writer);
 		}
+		
 	
 		/// <summary>
 		/// Serialize all child model elements.
@@ -4061,7 +4169,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer ModelPropertySerializer for DomainClass ModelProperty.
@@ -4076,6 +4184,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -4145,6 +4271,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read nested XML elements, they can be either properties serialized as XML elements, or child 
 					// model elements.
 					while (!serializationContext.Result.Failed && !reader.EOF && reader.NodeType == global::System.Xml.XmlNodeType.Element)
@@ -4163,6 +4292,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		/// <summary>
 		/// This method deserializes all properties that are serialized as XML attributes.
@@ -4177,6 +4307,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected override void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
 			base.ReadPropertiesFromAttributes(serializationContext, element, reader);
 	
 			ModelProperty instanceOfModelProperty = element as ModelProperty;
@@ -4185,11 +4316,11 @@ namespace Altinoren.ActiveWriter
 			// Column
 			if (!serializationContext.Result.Failed)
 			{
-				string attribColumn = reader.GetAttribute("column");
+				string attribColumn = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "column");
 				if (attribColumn != null)
 				{
 					global::System.String valueOfColumn;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribColumn), out valueOfColumn))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribColumn, out valueOfColumn))
 					{
 						instanceOfModelProperty.Column = valueOfColumn;
 					}
@@ -4202,11 +4333,11 @@ namespace Altinoren.ActiveWriter
 			// ColumnType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribColumnType = reader.GetAttribute("columnType");
+				string attribColumnType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "columnType");
 				if (attribColumnType != null)
 				{
 					NHibernateType valueOfColumnType;
-					if (DslModeling::SerializationUtilities.TryGetValue<NHibernateType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribColumnType), out valueOfColumnType))
+					if (DslModeling::SerializationUtilities.TryGetValue<NHibernateType>(serializationContext, attribColumnType, out valueOfColumnType))
 					{
 						instanceOfModelProperty.ColumnType = valueOfColumnType;
 					}
@@ -4219,11 +4350,11 @@ namespace Altinoren.ActiveWriter
 			// CustomColumnType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribCustomColumnType = reader.GetAttribute("customColumnType");
+				string attribCustomColumnType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "customColumnType");
 				if (attribCustomColumnType != null)
 				{
 					global::System.String valueOfCustomColumnType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCustomColumnType), out valueOfCustomColumnType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribCustomColumnType, out valueOfCustomColumnType))
 					{
 						instanceOfModelProperty.CustomColumnType = valueOfCustomColumnType;
 					}
@@ -4236,11 +4367,11 @@ namespace Altinoren.ActiveWriter
 			// CustomMemberType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribCustomMemberType = reader.GetAttribute("customMemberType");
+				string attribCustomMemberType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "customMemberType");
 				if (attribCustomMemberType != null)
 				{
 					global::System.String valueOfCustomMemberType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCustomMemberType), out valueOfCustomMemberType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribCustomMemberType, out valueOfCustomMemberType))
 					{
 						instanceOfModelProperty.CustomMemberType = valueOfCustomMemberType;
 					}
@@ -4253,11 +4384,11 @@ namespace Altinoren.ActiveWriter
 			// Formula
 			if (!serializationContext.Result.Failed)
 			{
-				string attribFormula = reader.GetAttribute("formula");
+				string attribFormula = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "formula");
 				if (attribFormula != null)
 				{
 					global::System.String valueOfFormula;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribFormula), out valueOfFormula))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribFormula, out valueOfFormula))
 					{
 						instanceOfModelProperty.Formula = valueOfFormula;
 					}
@@ -4270,11 +4401,11 @@ namespace Altinoren.ActiveWriter
 			// Insert
 			if (!serializationContext.Result.Failed)
 			{
-				string attribInsert = reader.GetAttribute("insert");
+				string attribInsert = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "insert");
 				if (attribInsert != null)
 				{
 					global::System.Boolean valueOfInsert;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribInsert), out valueOfInsert))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribInsert, out valueOfInsert))
 					{
 						instanceOfModelProperty.Insert = valueOfInsert;
 					}
@@ -4287,11 +4418,11 @@ namespace Altinoren.ActiveWriter
 			// Length
 			if (!serializationContext.Result.Failed)
 			{
-				string attribLength = reader.GetAttribute("length");
+				string attribLength = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "length");
 				if (attribLength != null)
 				{
 					global::System.Int32 valueOfLength;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Int32>(DslModeling::SerializationUtilities.UnescapeXmlString(attribLength), out valueOfLength))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Int32>(serializationContext, attribLength, out valueOfLength))
 					{
 						instanceOfModelProperty.Length = valueOfLength;
 					}
@@ -4304,11 +4435,11 @@ namespace Altinoren.ActiveWriter
 			// NotNull
 			if (!serializationContext.Result.Failed)
 			{
-				string attribNotNull = reader.GetAttribute("notNull");
+				string attribNotNull = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "notNull");
 				if (attribNotNull != null)
 				{
 					global::System.Boolean valueOfNotNull;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribNotNull), out valueOfNotNull))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribNotNull, out valueOfNotNull))
 					{
 						instanceOfModelProperty.NotNull = valueOfNotNull;
 					}
@@ -4321,11 +4452,11 @@ namespace Altinoren.ActiveWriter
 			// Unique
 			if (!serializationContext.Result.Failed)
 			{
-				string attribUnique = reader.GetAttribute("unique");
+				string attribUnique = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "unique");
 				if (attribUnique != null)
 				{
 					global::System.Boolean valueOfUnique;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUnique), out valueOfUnique))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribUnique, out valueOfUnique))
 					{
 						instanceOfModelProperty.Unique = valueOfUnique;
 					}
@@ -4338,11 +4469,11 @@ namespace Altinoren.ActiveWriter
 			// UnsavedValue
 			if (!serializationContext.Result.Failed)
 			{
-				string attribUnsavedValue = reader.GetAttribute("unsavedValue");
+				string attribUnsavedValue = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "unsavedValue");
 				if (attribUnsavedValue != null)
 				{
 					global::System.String valueOfUnsavedValue;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUnsavedValue), out valueOfUnsavedValue))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribUnsavedValue, out valueOfUnsavedValue))
 					{
 						instanceOfModelProperty.UnsavedValue = valueOfUnsavedValue;
 					}
@@ -4355,11 +4486,11 @@ namespace Altinoren.ActiveWriter
 			// Update
 			if (!serializationContext.Result.Failed)
 			{
-				string attribUpdate = reader.GetAttribute("update");
+				string attribUpdate = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "update");
 				if (attribUpdate != null)
 				{
 					global::System.Boolean valueOfUpdate;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUpdate), out valueOfUpdate))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribUpdate, out valueOfUpdate))
 					{
 						instanceOfModelProperty.Update = valueOfUpdate;
 					}
@@ -4372,11 +4503,11 @@ namespace Altinoren.ActiveWriter
 			// Generator
 			if (!serializationContext.Result.Failed)
 			{
-				string attribGenerator = reader.GetAttribute("generator");
+				string attribGenerator = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "generator");
 				if (attribGenerator != null)
 				{
 					PrimaryKeyType valueOfGenerator;
-					if (DslModeling::SerializationUtilities.TryGetValue<PrimaryKeyType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribGenerator), out valueOfGenerator))
+					if (DslModeling::SerializationUtilities.TryGetValue<PrimaryKeyType>(serializationContext, attribGenerator, out valueOfGenerator))
 					{
 						instanceOfModelProperty.Generator = valueOfGenerator;
 					}
@@ -4389,11 +4520,11 @@ namespace Altinoren.ActiveWriter
 			// KeyType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribKeyType = reader.GetAttribute("keyType");
+				string attribKeyType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "keyType");
 				if (attribKeyType != null)
 				{
 					KeyType valueOfKeyType;
-					if (DslModeling::SerializationUtilities.TryGetValue<KeyType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribKeyType), out valueOfKeyType))
+					if (DslModeling::SerializationUtilities.TryGetValue<KeyType>(serializationContext, attribKeyType, out valueOfKeyType))
 					{
 						instanceOfModelProperty.KeyType = valueOfKeyType;
 					}
@@ -4406,11 +4537,11 @@ namespace Altinoren.ActiveWriter
 			// Params
 			if (!serializationContext.Result.Failed)
 			{
-				string attribParams = reader.GetAttribute("params");
+				string attribParams = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "params");
 				if (attribParams != null)
 				{
 					global::System.String valueOfParams;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribParams), out valueOfParams))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribParams, out valueOfParams))
 					{
 						instanceOfModelProperty.Params = valueOfParams;
 					}
@@ -4423,11 +4554,11 @@ namespace Altinoren.ActiveWriter
 			// SequenceName
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSequenceName = reader.GetAttribute("sequenceName");
+				string attribSequenceName = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sequenceName");
 				if (attribSequenceName != null)
 				{
 					global::System.String valueOfSequenceName;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSequenceName), out valueOfSequenceName))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSequenceName, out valueOfSequenceName))
 					{
 						instanceOfModelProperty.SequenceName = valueOfSequenceName;
 					}
@@ -4440,11 +4571,11 @@ namespace Altinoren.ActiveWriter
 			// Accessor
 			if (!serializationContext.Result.Failed)
 			{
-				string attribAccessor = reader.GetAttribute("accessor");
+				string attribAccessor = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "accessor");
 				if (attribAccessor != null)
 				{
 					Accessor valueOfAccessor;
-					if (DslModeling::SerializationUtilities.TryGetValue<Accessor>(DslModeling::SerializationUtilities.UnescapeXmlString(attribAccessor), out valueOfAccessor))
+					if (DslModeling::SerializationUtilities.TryGetValue<Accessor>(serializationContext, attribAccessor, out valueOfAccessor))
 					{
 						instanceOfModelProperty.Accessor = valueOfAccessor;
 					}
@@ -4457,11 +4588,11 @@ namespace Altinoren.ActiveWriter
 			// CompositeKeyName
 			if (!serializationContext.Result.Failed)
 			{
-				string attribCompositeKeyName = reader.GetAttribute("compositeKeyName");
+				string attribCompositeKeyName = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "compositeKeyName");
 				if (attribCompositeKeyName != null)
 				{
 					global::System.String valueOfCompositeKeyName;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCompositeKeyName), out valueOfCompositeKeyName))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribCompositeKeyName, out valueOfCompositeKeyName))
 					{
 						instanceOfModelProperty.CompositeKeyName = valueOfCompositeKeyName;
 					}
@@ -4474,11 +4605,11 @@ namespace Altinoren.ActiveWriter
 			// PropertyType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribPropertyType = reader.GetAttribute("propertyType");
+				string attribPropertyType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "propertyType");
 				if (attribPropertyType != null)
 				{
 					PropertyType valueOfPropertyType;
-					if (DslModeling::SerializationUtilities.TryGetValue<PropertyType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribPropertyType), out valueOfPropertyType))
+					if (DslModeling::SerializationUtilities.TryGetValue<PropertyType>(serializationContext, attribPropertyType, out valueOfPropertyType))
 					{
 						instanceOfModelProperty.PropertyType = valueOfPropertyType;
 					}
@@ -4491,11 +4622,11 @@ namespace Altinoren.ActiveWriter
 			// DebuggerDisplay
 			if (!serializationContext.Result.Failed)
 			{
-				string attribDebuggerDisplay = reader.GetAttribute("debuggerDisplay");
+				string attribDebuggerDisplay = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "debuggerDisplay");
 				if (attribDebuggerDisplay != null)
 				{
 					global::System.Boolean valueOfDebuggerDisplay;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribDebuggerDisplay), out valueOfDebuggerDisplay))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribDebuggerDisplay, out valueOfDebuggerDisplay))
 					{
 						instanceOfModelProperty.DebuggerDisplay = valueOfDebuggerDisplay;
 					}
@@ -4508,11 +4639,11 @@ namespace Altinoren.ActiveWriter
 			// Validator
 			if (!serializationContext.Result.Failed)
 			{
-				string attribValidator = reader.GetAttribute("validator");
+				string attribValidator = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "validator");
 				if (attribValidator != null)
 				{
 					global::System.String valueOfValidator;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribValidator), out valueOfValidator))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribValidator, out valueOfValidator))
 					{
 						instanceOfModelProperty.Validator = valueOfValidator;
 					}
@@ -4525,11 +4656,11 @@ namespace Altinoren.ActiveWriter
 			// UniqueKey
 			if (!serializationContext.Result.Failed)
 			{
-				string attribUniqueKey = reader.GetAttribute("uniqueKey");
+				string attribUniqueKey = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "uniqueKey");
 				if (attribUniqueKey != null)
 				{
 					global::System.String valueOfUniqueKey;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUniqueKey), out valueOfUniqueKey))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribUniqueKey, out valueOfUniqueKey))
 					{
 						instanceOfModelProperty.UniqueKey = valueOfUniqueKey;
 					}
@@ -4542,11 +4673,11 @@ namespace Altinoren.ActiveWriter
 			// Index
 			if (!serializationContext.Result.Failed)
 			{
-				string attribIndex = reader.GetAttribute("index");
+				string attribIndex = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "index");
 				if (attribIndex != null)
 				{
 					global::System.String valueOfIndex;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribIndex), out valueOfIndex))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribIndex, out valueOfIndex))
 					{
 						instanceOfModelProperty.Index = valueOfIndex;
 					}
@@ -4559,11 +4690,11 @@ namespace Altinoren.ActiveWriter
 			// SqlType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSqlType = reader.GetAttribute("sqlType");
+				string attribSqlType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sqlType");
 				if (attribSqlType != null)
 				{
 					global::System.String valueOfSqlType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSqlType), out valueOfSqlType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSqlType, out valueOfSqlType))
 					{
 						instanceOfModelProperty.SqlType = valueOfSqlType;
 					}
@@ -4576,11 +4707,11 @@ namespace Altinoren.ActiveWriter
 			// Check
 			if (!serializationContext.Result.Failed)
 			{
-				string attribCheck = reader.GetAttribute("check");
+				string attribCheck = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "check");
 				if (attribCheck != null)
 				{
 					global::System.String valueOfCheck;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCheck), out valueOfCheck))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribCheck, out valueOfCheck))
 					{
 						instanceOfModelProperty.Check = valueOfCheck;
 					}
@@ -4593,11 +4724,11 @@ namespace Altinoren.ActiveWriter
 			// DefaultMember
 			if (!serializationContext.Result.Failed)
 			{
-				string attribDefaultMember = reader.GetAttribute("defaultMember");
+				string attribDefaultMember = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "defaultMember");
 				if (attribDefaultMember != null)
 				{
 					global::System.Boolean valueOfDefaultMember;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribDefaultMember), out valueOfDefaultMember))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribDefaultMember, out valueOfDefaultMember))
 					{
 						instanceOfModelProperty.DefaultMember = valueOfDefaultMember;
 					}
@@ -4610,11 +4741,11 @@ namespace Altinoren.ActiveWriter
 			// ColumnDefault
 			if (!serializationContext.Result.Failed)
 			{
-				string attribColumnDefault = reader.GetAttribute("columnDefault");
+				string attribColumnDefault = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "columnDefault");
 				if (attribColumnDefault != null)
 				{
 					global::System.String valueOfColumnDefault;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribColumnDefault), out valueOfColumnDefault))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribColumnDefault, out valueOfColumnDefault))
 					{
 						instanceOfModelProperty.ColumnDefault = valueOfColumnDefault;
 					}
@@ -4841,7 +4972,8 @@ namespace Altinoren.ActiveWriter
 		/// <returns>Created ModelRoot instance, or null if the reader is not pointing to a correct monikerized instance.</returns>
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
-			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
+			string monikerString = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, sourceRolePlayer, reader, this.MonikerAttributeName);
+	
 			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
@@ -4932,7 +5064,7 @@ namespace Altinoren.ActiveWriter
 			string monikerString = relSerializer.SerializeReference(serializationContext, sourceRolePlayer, element);
 			global::System.Diagnostics.Debug.Assert(!string.IsNullOrEmpty(monikerString));
 			writer.WriteStartElement(this.MonikerTagName);
-			writer.WriteAttributeString(this.MonikerAttributeName, monikerString);
+			ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, this.MonikerAttributeName, monikerString);
 			writer.WriteEndElement();
 		}
 		
@@ -4964,9 +5096,14 @@ namespace Altinoren.ActiveWriter
 	
 			// Write start of element, including schema target namespace if specified.
 			if (rootElementSettings != null && !string.IsNullOrEmpty(rootElementSettings.SchemaTargetNamespace))
+			{
 				writer.WriteStartElement(this.XmlTagName, rootElementSettings.SchemaTargetNamespace);
+				DslModeling::SerializationUtilities.WriteDomainModelNamespaces(serializationContext.Directory, writer, rootElementSettings.SchemaTargetNamespace);
+			}
 			else
+			{
 				writer.WriteStartElement(this.XmlTagName);
+			}
 				
 			// Write version info (in the format 1.2.3.4), if necessary
 			if (rootElementSettings != null && rootElementSettings.Version != null)
@@ -4976,6 +5113,12 @@ namespace Altinoren.ActiveWriter
 			writer.WriteAttributeString("Id", element.Id.ToString("D", global::System.Globalization.CultureInfo.CurrentCulture));
 	
 			WritePropertiesAsAttributes(serializationContext, element, writer);
+	
+			// Write out any extension data if this is the root element
+			if (rootElementSettings != null && !serializationContext.Result.Failed)
+			{
+				ActiveWriterSerializationHelper.Instance.WriteExtensions(serializationContext, element, writer);
+			}
 	
 			if (!serializationContext.Result.Failed)
 			{
@@ -4995,6 +5138,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
 			base.WritePropertiesAsAttributes(serializationContext, element, writer);
 	
 			ModelProperty instanceOfModelProperty = element as ModelProperty;
@@ -5007,7 +5151,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("column", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "column", propValue);
+	
 				}
 			}
 			// ColumnType
@@ -5019,7 +5164,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "String") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("columnType", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "columnType", serializedPropValue);
 					}
 				}
 			}
@@ -5031,7 +5176,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, string.Empty) != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("customColumnType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "customColumnType", propValue);
 					}
 				}
 			}
@@ -5043,7 +5188,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, string.Empty) != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("customMemberType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "customMemberType", propValue);
 					}
 				}
 			}
@@ -5054,7 +5199,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("formula", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "formula", propValue);
+	
 				}
 			}
 			// Insert
@@ -5066,7 +5212,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("insert", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "insert", serializedPropValue);
 					}
 				}
 			}
@@ -5077,7 +5223,7 @@ namespace Altinoren.ActiveWriter
 				string serializedPropValue = DslModeling::SerializationUtilities.GetString<global::System.Int32>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
-					writer.WriteAttributeString("length", serializedPropValue);
+					ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "length", serializedPropValue);
 				}
 			}
 			// NotNull
@@ -5089,7 +5235,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("notNull", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "notNull", serializedPropValue);
 					}
 				}
 			}
@@ -5102,7 +5248,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("unique", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "unique", serializedPropValue);
 					}
 				}
 			}
@@ -5113,7 +5259,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("unsavedValue", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "unsavedValue", propValue);
+	
 				}
 			}
 			// Update
@@ -5125,7 +5272,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("update", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "update", serializedPropValue);
 					}
 				}
 			}
@@ -5138,7 +5285,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Native") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("generator", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "generator", serializedPropValue);
 					}
 				}
 			}
@@ -5151,7 +5298,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "None") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("keyType", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "keyType", serializedPropValue);
 					}
 				}
 			}
@@ -5162,7 +5309,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("params", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "params", propValue);
+	
 				}
 			}
 			// SequenceName
@@ -5172,7 +5320,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sequenceName", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sequenceName", propValue);
+	
 				}
 			}
 			// Accessor
@@ -5184,7 +5333,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Public") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("accessor", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "accessor", serializedPropValue);
 					}
 				}
 			}
@@ -5195,7 +5344,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("compositeKeyName", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "compositeKeyName", propValue);
+	
 				}
 			}
 			// PropertyType
@@ -5207,7 +5357,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Property") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("propertyType", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "propertyType", serializedPropValue);
 					}
 				}
 			}
@@ -5220,7 +5370,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("debuggerDisplay", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "debuggerDisplay", serializedPropValue);
 					}
 				}
 			}
@@ -5231,7 +5381,7 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (propValue != null)
-						writer.WriteAttributeString("validator", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "validator", propValue);
 				}
 			}
 			// UniqueKey
@@ -5241,7 +5391,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("uniqueKey", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "uniqueKey", propValue);
+	
 				}
 			}
 			// Index
@@ -5251,7 +5402,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("index", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "index", propValue);
+	
 				}
 			}
 			// SqlType
@@ -5261,7 +5413,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sqlType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sqlType", propValue);
+	
 				}
 			}
 			// Check
@@ -5271,7 +5424,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("check", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "check", propValue);
+	
 				}
 			}
 			// DefaultMember
@@ -5283,7 +5437,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("defaultMember", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "defaultMember", serializedPropValue);
 					}
 				}
 			}
@@ -5294,7 +5448,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("columnDefault", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "columnDefault", propValue);
+	
 				}
 			}
 		}
@@ -5384,7 +5539,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer ModelElementWithAccessSerializer for DomainClass ModelElementWithAccess.
@@ -5399,6 +5554,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -5461,6 +5634,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected override void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
 			base.ReadPropertiesFromAttributes(serializationContext, element, reader);
 	
 			ModelElementWithAccess instanceOfModelElementWithAccess = element as ModelElementWithAccess;
@@ -5469,11 +5643,11 @@ namespace Altinoren.ActiveWriter
 			// CustomAccess
 			if (!serializationContext.Result.Failed)
 			{
-				string attribCustomAccess = reader.GetAttribute("customAccess");
+				string attribCustomAccess = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "customAccess");
 				if (attribCustomAccess != null)
 				{
 					global::System.String valueOfCustomAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCustomAccess), out valueOfCustomAccess))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribCustomAccess, out valueOfCustomAccess))
 					{
 						instanceOfModelElementWithAccess.CustomAccess = valueOfCustomAccess;
 					}
@@ -5486,11 +5660,11 @@ namespace Altinoren.ActiveWriter
 			// Access
 			if (!serializationContext.Result.Failed)
 			{
-				string attribAccess = reader.GetAttribute("access");
+				string attribAccess = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "access");
 				if (attribAccess != null)
 				{
 					InheritablePropertyAccess valueOfAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribAccess), out valueOfAccess))
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(serializationContext, attribAccess, out valueOfAccess))
 					{
 						instanceOfModelElementWithAccess.Access = valueOfAccess;
 					}
@@ -5679,7 +5853,8 @@ namespace Altinoren.ActiveWriter
 		/// <returns>Created ModelRoot instance, or null if the reader is not pointing to a correct monikerized instance.</returns>
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
-			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
+			string monikerString = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, sourceRolePlayer, reader, this.MonikerAttributeName);
+	
 			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
@@ -5779,6 +5954,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
 			base.WritePropertiesAsAttributes(serializationContext, element, writer);
 	
 			ModelElementWithAccess instanceOfModelElementWithAccess = element as ModelElementWithAccess;
@@ -5791,7 +5967,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("customAccess", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "customAccess", propValue);
+	
 				}
 			}
 			// Access
@@ -5803,7 +5980,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("access", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "access", serializedPropValue);
 					}
 				}
 			}
@@ -5894,7 +6071,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer NamedElementSerializer for DomainClass NamedElement.
@@ -5909,6 +6086,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -5969,19 +6164,22 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">In-memory NamedElement instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadPropertiesFromAttributes(serializationContext, element, reader);
+	
 			NamedElement instanceOfNamedElement = element as NamedElement;
 			global::System.Diagnostics.Debug.Assert(instanceOfNamedElement != null, "Expecting an instance of NamedElement");
 	
 			// Name
 			if (!serializationContext.Result.Failed)
 			{
-				string attribName = reader.GetAttribute("name");
+				string attribName = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "name");
 				if (attribName != null)
 				{
 					global::System.String valueOfName;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribName), out valueOfName))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribName, out valueOfName))
 					{
 						instanceOfNamedElement.Name = valueOfName;
 					}
@@ -5994,11 +6192,11 @@ namespace Altinoren.ActiveWriter
 			// Description
 			if (!serializationContext.Result.Failed)
 			{
-				string attribDescription = reader.GetAttribute("description");
+				string attribDescription = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "description");
 				if (attribDescription != null)
 				{
 					global::System.String valueOfDescription;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribDescription), out valueOfDescription))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribDescription, out valueOfDescription))
 					{
 						instanceOfNamedElement.Description = valueOfDescription;
 					}
@@ -6008,26 +6206,6 @@ namespace Altinoren.ActiveWriter
 					}
 				}
 			}
-		}
-	
-		/// <summary>
-		/// This methods deserializes nested XML elements inside the passed-in element.
-		/// </summary>
-		/// <remarks>
-		/// The caller will guarantee that the current element does have nested XML elements, and the call will position the 
-		/// reader at the open tag of the first child XML element.
-		/// This method will read as many child XML elements as it can. It returns under three circumstances:
-		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the open 
-		///    tag of the unknown element. This implies the if the first child XML element is unknown, this method should return 
-		///    immediately and do nothing.
-		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
-		/// 3) EOF.
-		/// </remarks>
-		/// <param name="serializationContext">Serialization context.</param>
-		/// <param name="element">In-memory NamedElement instance that will get the deserialized data.</param>
-		/// <param name="reader">XmlReader to read serialized data from.</param>
-		protected virtual void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
-		{
 		}
 	
 		#region TryCreateInstance
@@ -6207,7 +6385,8 @@ namespace Altinoren.ActiveWriter
 		/// <returns>Created ModelRoot instance, or null if the reader is not pointing to a correct monikerized instance.</returns>
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
-			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
+			string monikerString = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, sourceRolePlayer, reader, this.MonikerAttributeName);
+	
 			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
@@ -6305,8 +6484,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">NamedElement instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
 			NamedElement instanceOfNamedElement = element as NamedElement;
 			global::System.Diagnostics.Debug.Assert(instanceOfNamedElement != null, "Expecting an instance of NamedElement");
 	
@@ -6316,7 +6498,7 @@ namespace Altinoren.ActiveWriter
 				global::System.String propValue = instanceOfNamedElement.Name;
 				if (!serializationContext.Result.Failed)
 				{
-					writer.WriteAttributeString("name", propValue);
+					ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "name", propValue);
 				}
 			}
 			// Description
@@ -6326,19 +6508,10 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("description", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "description", propValue);
+	
 				}
 			}
-		}
-	
-		/// <summary>
-		/// This methods serializes 1) properties serialized as nested XML elements and 2) child model elements into XML. 
-		/// </summary>
-		/// <param name="serializationContext">Serialization context.</param>
-		/// <param name="element">NamedElement instance to be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>        
-		protected virtual void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
-		{
 		}
 		#endregion
 	
@@ -6426,7 +6599,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer NestedClassSerializer for DomainClass NestedClass.
@@ -6441,6 +6614,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -6510,6 +6701,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read nested XML elements, they can be either properties serialized as XML elements, or child 
 					// model elements.
 					while (!serializationContext.Result.Failed && !reader.EOF && reader.NodeType == global::System.Xml.XmlNodeType.Element)
@@ -6528,6 +6722,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		/// <summary>
 		/// This method deserializes all properties that are serialized as XML attributes.
@@ -6542,6 +6737,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected override void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
 			base.ReadPropertiesFromAttributes(serializationContext, element, reader);
 	
 			NestedClass instanceOfNestedClass = element as NestedClass;
@@ -6550,11 +6746,11 @@ namespace Altinoren.ActiveWriter
 			// ImplementINotifyPropertyChanged
 			if (!serializationContext.Result.Failed)
 			{
-				string attribImplementINotifyPropertyChanged = reader.GetAttribute("implementINotifyPropertyChanged");
+				string attribImplementINotifyPropertyChanged = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "implementINotifyPropertyChanged");
 				if (attribImplementINotifyPropertyChanged != null)
 				{
 					InheritableBoolean valueOfImplementINotifyPropertyChanged;
-					if (DslModeling::SerializationUtilities.TryGetValue<InheritableBoolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribImplementINotifyPropertyChanged), out valueOfImplementINotifyPropertyChanged))
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritableBoolean>(serializationContext, attribImplementINotifyPropertyChanged, out valueOfImplementINotifyPropertyChanged))
 					{
 						instanceOfNestedClass.ImplementINotifyPropertyChanged = valueOfImplementINotifyPropertyChanged;
 					}
@@ -6567,11 +6763,11 @@ namespace Altinoren.ActiveWriter
 			// ImplementINotifyPropertyChanging
 			if (!serializationContext.Result.Failed)
 			{
-				string attribImplementINotifyPropertyChanging = reader.GetAttribute("implementINotifyPropertyChanging");
+				string attribImplementINotifyPropertyChanging = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "implementINotifyPropertyChanging");
 				if (attribImplementINotifyPropertyChanging != null)
 				{
 					InheritableBoolean valueOfImplementINotifyPropertyChanging;
-					if (DslModeling::SerializationUtilities.TryGetValue<InheritableBoolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribImplementINotifyPropertyChanging), out valueOfImplementINotifyPropertyChanging))
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritableBoolean>(serializationContext, attribImplementINotifyPropertyChanging, out valueOfImplementINotifyPropertyChanging))
 					{
 						instanceOfNestedClass.ImplementINotifyPropertyChanging = valueOfImplementINotifyPropertyChanging;
 					}
@@ -6591,7 +6787,7 @@ namespace Altinoren.ActiveWriter
 		/// reader at the open tag of the first child XML element.
 		/// This method will read as many child XML elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the open 
-		///    tag of the unknown element. This implies the if the first child XML element is unknown, this method should return 
+		///    tag of the unknown element. This implies that if the first child XML element is unknown, this method should return 
 		///    immediately and do nothing.
 		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
 		/// 3) EOF.
@@ -6601,6 +6797,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="reader">XmlReader to read serialized data from.</param>
 		protected override void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
 			base.ReadElements(serializationContext, element, reader);
 	
 			NestedClass instanceOfNestedClass = element as NestedClass;
@@ -6618,7 +6815,7 @@ namespace Altinoren.ActiveWriter
 		/// The caller will position the reader at the open tag of the first child XML element to deserialized.
 		/// This method will read as many child elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the 
-		///    open tag of the unknown element. This implies the if the first child XML element is unknown, this method 
+		///    open tag of the unknown element. This implies that if the first child XML element is unknown, this method 
 		///    should return immediately and do nothing.
 		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
 		/// 3) EOF.
@@ -6945,7 +7142,8 @@ namespace Altinoren.ActiveWriter
 		/// <returns>Created ModelRoot instance, or null if the reader is not pointing to a correct monikerized instance.</returns>
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
-			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
+			string monikerString = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, sourceRolePlayer, reader, this.MonikerAttributeName);
+	
 			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
@@ -7036,7 +7234,7 @@ namespace Altinoren.ActiveWriter
 			string monikerString = relSerializer.SerializeReference(serializationContext, sourceRolePlayer, element);
 			global::System.Diagnostics.Debug.Assert(!string.IsNullOrEmpty(monikerString));
 			writer.WriteStartElement(this.MonikerTagName);
-			writer.WriteAttributeString(this.MonikerAttributeName, monikerString);
+			ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, this.MonikerAttributeName, monikerString);
 			writer.WriteEndElement();
 		}
 		
@@ -7068,15 +7266,26 @@ namespace Altinoren.ActiveWriter
 	
 			// Write start of element, including schema target namespace if specified.
 			if (rootElementSettings != null && !string.IsNullOrEmpty(rootElementSettings.SchemaTargetNamespace))
+			{
 				writer.WriteStartElement(this.XmlTagName, rootElementSettings.SchemaTargetNamespace);
+				DslModeling::SerializationUtilities.WriteDomainModelNamespaces(serializationContext.Directory, writer, rootElementSettings.SchemaTargetNamespace);
+			}
 			else
+			{
 				writer.WriteStartElement(this.XmlTagName);
+			}
 				
 			// Write version info (in the format 1.2.3.4), if necessary
 			if (rootElementSettings != null && rootElementSettings.Version != null)
 				writer.WriteAttributeString("dslVersion", rootElementSettings.Version.ToString(4));
 	
 			WritePropertiesAsAttributes(serializationContext, element, writer);
+	
+			// Write out any extension data if this is the root element
+			if (rootElementSettings != null && !serializationContext.Result.Failed)
+			{
+				ActiveWriterSerializationHelper.Instance.WriteExtensions(serializationContext, element, writer);
+			}
 	
 			if (!serializationContext.Result.Failed)
 			{
@@ -7096,6 +7305,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
 		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
 			base.WritePropertiesAsAttributes(serializationContext, element, writer);
 	
 			NestedClass instanceOfNestedClass = element as NestedClass;
@@ -7110,7 +7320,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("implementINotifyPropertyChanged", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "implementINotifyPropertyChanged", serializedPropValue);
 					}
 				}
 			}
@@ -7123,7 +7333,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("implementINotifyPropertyChanging", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "implementINotifyPropertyChanging", serializedPropValue);
 					}
 				}
 			}
@@ -7137,6 +7347,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="writer">XmlWriter to write serialized data to.</param>        
 		protected override void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
 			base.WriteElements(serializationContext, element, writer);
 	
 			NestedClass instance = element as NestedClass;
@@ -7146,6 +7357,7 @@ namespace Altinoren.ActiveWriter
 			if (!serializationContext.Result.Failed)
 				WriteChildElements(serializationContext, instance, writer);
 		}
+		
 	
 		/// <summary>
 		/// Serialize all child model elements.
@@ -7289,7 +7501,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer ModelHasClassSerializer for DomainClass ModelHasClass.
@@ -7304,6 +7516,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -7373,6 +7603,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read target role-player Class.
 					ReadTargetRolePlayer(serializationContext, element, reader);
 	
@@ -7398,6 +7631,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		/// <summary>
 		/// This method reads the target role player Class.
@@ -7469,8 +7703,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">In-memory ModelHasClass instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadPropertiesFromAttributes(serializationContext, element, reader);
+	
 			// There is no property to read; do nothing
 		}
 	
@@ -7482,7 +7719,7 @@ namespace Altinoren.ActiveWriter
 		/// reader at the open tag of the first child XML element.
 		/// This method will read as many child XML elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the open 
-		///    tag of the unknown element. This implies the if the first child XML element is unknown, this method should return 
+		///    tag of the unknown element. This implies that if the first child XML element is unknown, this method should return 
 		///    immediately and do nothing.
 		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
 		/// 3) EOF.
@@ -7490,8 +7727,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">In-memory ModelHasClass instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
-		protected virtual void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadElements(serializationContext, element, reader);
+	
 		}
 	
 		#region TryCreateInstance & TryCreateDerivedInstance
@@ -7811,8 +8051,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">ModelHasClass instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
 			// There are no properties; do nothing
 		}
 	
@@ -7822,9 +8065,13 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">ModelHasClass instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param>        
-		protected virtual void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WriteElements(serializationContext, element, writer);
+	
 		}
+		
 		#endregion
 	
 		#region Moniker Support
@@ -7925,7 +8172,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer ManyToOneRelationSerializer for DomainClass ManyToOneRelation.
@@ -7940,6 +8187,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -8009,6 +8274,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read target role-player Target.
 					ReadTargetRolePlayer(serializationContext, element, reader);
 	
@@ -8034,6 +8302,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		/// <summary>
 		/// This method reads the target role player Target.
@@ -8103,19 +8372,22 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">In-memory ManyToOneRelation instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadPropertiesFromAttributes(serializationContext, element, reader);
+	
 			ManyToOneRelation instanceOfManyToOneRelation = element as ManyToOneRelation;
 			global::System.Diagnostics.Debug.Assert(instanceOfManyToOneRelation != null, "Expecting an instance of ManyToOneRelation");
 	
 			// TargetCache
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetCache = reader.GetAttribute("targetCache");
+				string attribTargetCache = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetCache");
 				if (attribTargetCache != null)
 				{
 					CacheEnum valueOfTargetCache;
-					if (DslModeling::SerializationUtilities.TryGetValue<CacheEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetCache), out valueOfTargetCache))
+					if (DslModeling::SerializationUtilities.TryGetValue<CacheEnum>(serializationContext, attribTargetCache, out valueOfTargetCache))
 					{
 						instanceOfManyToOneRelation.TargetCache = valueOfTargetCache;
 					}
@@ -8128,11 +8400,11 @@ namespace Altinoren.ActiveWriter
 			// TargetCascade
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetCascade = reader.GetAttribute("targetCascade");
+				string attribTargetCascade = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetCascade");
 				if (attribTargetCascade != null)
 				{
 					ManyRelationCascadeEnum valueOfTargetCascade;
-					if (DslModeling::SerializationUtilities.TryGetValue<ManyRelationCascadeEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetCascade), out valueOfTargetCascade))
+					if (DslModeling::SerializationUtilities.TryGetValue<ManyRelationCascadeEnum>(serializationContext, attribTargetCascade, out valueOfTargetCascade))
 					{
 						instanceOfManyToOneRelation.TargetCascade = valueOfTargetCascade;
 					}
@@ -8145,11 +8417,11 @@ namespace Altinoren.ActiveWriter
 			// TargetColumnKey
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetColumnKey = reader.GetAttribute("targetColumnKey");
+				string attribTargetColumnKey = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetColumnKey");
 				if (attribTargetColumnKey != null)
 				{
 					global::System.String valueOfTargetColumnKey;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetColumnKey), out valueOfTargetColumnKey))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetColumnKey, out valueOfTargetColumnKey))
 					{
 						instanceOfManyToOneRelation.TargetColumnKey = valueOfTargetColumnKey;
 					}
@@ -8162,11 +8434,11 @@ namespace Altinoren.ActiveWriter
 			// TargetCustomAccess
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetCustomAccess = reader.GetAttribute("targetCustomAccess");
+				string attribTargetCustomAccess = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetCustomAccess");
 				if (attribTargetCustomAccess != null)
 				{
 					global::System.String valueOfTargetCustomAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetCustomAccess), out valueOfTargetCustomAccess))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetCustomAccess, out valueOfTargetCustomAccess))
 					{
 						instanceOfManyToOneRelation.TargetCustomAccess = valueOfTargetCustomAccess;
 					}
@@ -8179,11 +8451,11 @@ namespace Altinoren.ActiveWriter
 			// TargetInverse
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetInverse = reader.GetAttribute("targetInverse");
+				string attribTargetInverse = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetInverse");
 				if (attribTargetInverse != null)
 				{
 					global::System.Boolean valueOfTargetInverse;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetInverse), out valueOfTargetInverse))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribTargetInverse, out valueOfTargetInverse))
 					{
 						instanceOfManyToOneRelation.TargetInverse = valueOfTargetInverse;
 					}
@@ -8196,11 +8468,11 @@ namespace Altinoren.ActiveWriter
 			// TargetLazy
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetLazy = reader.GetAttribute("targetLazy");
+				string attribTargetLazy = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetLazy");
 				if (attribTargetLazy != null)
 				{
 					global::System.Boolean valueOfTargetLazy;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetLazy), out valueOfTargetLazy))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribTargetLazy, out valueOfTargetLazy))
 					{
 						instanceOfManyToOneRelation.TargetLazy = valueOfTargetLazy;
 					}
@@ -8213,11 +8485,11 @@ namespace Altinoren.ActiveWriter
 			// TargetMapType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetMapType = reader.GetAttribute("targetMapType");
+				string attribTargetMapType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetMapType");
 				if (attribTargetMapType != null)
 				{
 					global::System.String valueOfTargetMapType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetMapType), out valueOfTargetMapType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetMapType, out valueOfTargetMapType))
 					{
 						instanceOfManyToOneRelation.TargetMapType = valueOfTargetMapType;
 					}
@@ -8230,11 +8502,11 @@ namespace Altinoren.ActiveWriter
 			// TargetOrderBy
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetOrderBy = reader.GetAttribute("targetOrderBy");
+				string attribTargetOrderBy = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetOrderBy");
 				if (attribTargetOrderBy != null)
 				{
 					global::System.String valueOfTargetOrderBy;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetOrderBy), out valueOfTargetOrderBy))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetOrderBy, out valueOfTargetOrderBy))
 					{
 						instanceOfManyToOneRelation.TargetOrderBy = valueOfTargetOrderBy;
 					}
@@ -8247,11 +8519,11 @@ namespace Altinoren.ActiveWriter
 			// TargetRelationType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetRelationType = reader.GetAttribute("targetRelationType");
+				string attribTargetRelationType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetRelationType");
 				if (attribTargetRelationType != null)
 				{
 					InheritedRelationType valueOfTargetRelationType;
-					if (DslModeling::SerializationUtilities.TryGetValue<InheritedRelationType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetRelationType), out valueOfTargetRelationType))
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritedRelationType>(serializationContext, attribTargetRelationType, out valueOfTargetRelationType))
 					{
 						instanceOfManyToOneRelation.TargetRelationType = valueOfTargetRelationType;
 					}
@@ -8264,11 +8536,11 @@ namespace Altinoren.ActiveWriter
 			// TargetSchema
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetSchema = reader.GetAttribute("targetSchema");
+				string attribTargetSchema = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetSchema");
 				if (attribTargetSchema != null)
 				{
 					global::System.String valueOfTargetSchema;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetSchema), out valueOfTargetSchema))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetSchema, out valueOfTargetSchema))
 					{
 						instanceOfManyToOneRelation.TargetSchema = valueOfTargetSchema;
 					}
@@ -8281,11 +8553,11 @@ namespace Altinoren.ActiveWriter
 			// TargetSort
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetSort = reader.GetAttribute("targetSort");
+				string attribTargetSort = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetSort");
 				if (attribTargetSort != null)
 				{
 					global::System.String valueOfTargetSort;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetSort), out valueOfTargetSort))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetSort, out valueOfTargetSort))
 					{
 						instanceOfManyToOneRelation.TargetSort = valueOfTargetSort;
 					}
@@ -8298,11 +8570,11 @@ namespace Altinoren.ActiveWriter
 			// TargetTable
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetTable = reader.GetAttribute("targetTable");
+				string attribTargetTable = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetTable");
 				if (attribTargetTable != null)
 				{
 					global::System.String valueOfTargetTable;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetTable), out valueOfTargetTable))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetTable, out valueOfTargetTable))
 					{
 						instanceOfManyToOneRelation.TargetTable = valueOfTargetTable;
 					}
@@ -8315,11 +8587,11 @@ namespace Altinoren.ActiveWriter
 			// TargetWhere
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetWhere = reader.GetAttribute("targetWhere");
+				string attribTargetWhere = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetWhere");
 				if (attribTargetWhere != null)
 				{
 					global::System.String valueOfTargetWhere;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetWhere), out valueOfTargetWhere))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetWhere, out valueOfTargetWhere))
 					{
 						instanceOfManyToOneRelation.TargetWhere = valueOfTargetWhere;
 					}
@@ -8332,11 +8604,11 @@ namespace Altinoren.ActiveWriter
 			// TargetDescription
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetDescription = reader.GetAttribute("targetDescription");
+				string attribTargetDescription = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetDescription");
 				if (attribTargetDescription != null)
 				{
 					global::System.String valueOfTargetDescription;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetDescription), out valueOfTargetDescription))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetDescription, out valueOfTargetDescription))
 					{
 						instanceOfManyToOneRelation.TargetDescription = valueOfTargetDescription;
 					}
@@ -8349,11 +8621,11 @@ namespace Altinoren.ActiveWriter
 			// TargetPropertyName
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetPropertyName = reader.GetAttribute("targetPropertyName");
+				string attribTargetPropertyName = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetPropertyName");
 				if (attribTargetPropertyName != null)
 				{
 					global::System.String valueOfTargetPropertyName;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetPropertyName), out valueOfTargetPropertyName))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetPropertyName, out valueOfTargetPropertyName))
 					{
 						instanceOfManyToOneRelation.TargetPropertyName = valueOfTargetPropertyName;
 					}
@@ -8366,11 +8638,11 @@ namespace Altinoren.ActiveWriter
 			// TargetPropertyType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetPropertyType = reader.GetAttribute("targetPropertyType");
+				string attribTargetPropertyType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetPropertyType");
 				if (attribTargetPropertyType != null)
 				{
 					global::System.String valueOfTargetPropertyType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetPropertyType), out valueOfTargetPropertyType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetPropertyType, out valueOfTargetPropertyType))
 					{
 						instanceOfManyToOneRelation.TargetPropertyType = valueOfTargetPropertyType;
 					}
@@ -8383,11 +8655,11 @@ namespace Altinoren.ActiveWriter
 			// SourceCascade
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceCascade = reader.GetAttribute("sourceCascade");
+				string attribSourceCascade = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceCascade");
 				if (attribSourceCascade != null)
 				{
 					CascadeEnum valueOfSourceCascade;
-					if (DslModeling::SerializationUtilities.TryGetValue<CascadeEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceCascade), out valueOfSourceCascade))
+					if (DslModeling::SerializationUtilities.TryGetValue<CascadeEnum>(serializationContext, attribSourceCascade, out valueOfSourceCascade))
 					{
 						instanceOfManyToOneRelation.SourceCascade = valueOfSourceCascade;
 					}
@@ -8400,11 +8672,11 @@ namespace Altinoren.ActiveWriter
 			// SourceColumn
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceColumn = reader.GetAttribute("sourceColumn");
+				string attribSourceColumn = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceColumn");
 				if (attribSourceColumn != null)
 				{
 					global::System.String valueOfSourceColumn;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceColumn), out valueOfSourceColumn))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSourceColumn, out valueOfSourceColumn))
 					{
 						instanceOfManyToOneRelation.SourceColumn = valueOfSourceColumn;
 					}
@@ -8417,11 +8689,11 @@ namespace Altinoren.ActiveWriter
 			// SourceCustomAccess
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceCustomAccess = reader.GetAttribute("sourceCustomAccess");
+				string attribSourceCustomAccess = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceCustomAccess");
 				if (attribSourceCustomAccess != null)
 				{
 					global::System.String valueOfSourceCustomAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceCustomAccess), out valueOfSourceCustomAccess))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSourceCustomAccess, out valueOfSourceCustomAccess))
 					{
 						instanceOfManyToOneRelation.SourceCustomAccess = valueOfSourceCustomAccess;
 					}
@@ -8434,11 +8706,11 @@ namespace Altinoren.ActiveWriter
 			// SourceInsert
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceInsert = reader.GetAttribute("sourceInsert");
+				string attribSourceInsert = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceInsert");
 				if (attribSourceInsert != null)
 				{
 					global::System.Boolean valueOfSourceInsert;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceInsert), out valueOfSourceInsert))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribSourceInsert, out valueOfSourceInsert))
 					{
 						instanceOfManyToOneRelation.SourceInsert = valueOfSourceInsert;
 					}
@@ -8451,11 +8723,11 @@ namespace Altinoren.ActiveWriter
 			// SourceNotNull
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceNotNull = reader.GetAttribute("sourceNotNull");
+				string attribSourceNotNull = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceNotNull");
 				if (attribSourceNotNull != null)
 				{
 					global::System.Boolean valueOfSourceNotNull;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceNotNull), out valueOfSourceNotNull))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribSourceNotNull, out valueOfSourceNotNull))
 					{
 						instanceOfManyToOneRelation.SourceNotNull = valueOfSourceNotNull;
 					}
@@ -8468,11 +8740,11 @@ namespace Altinoren.ActiveWriter
 			// SourceOuterJoin
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceOuterJoin = reader.GetAttribute("sourceOuterJoin");
+				string attribSourceOuterJoin = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceOuterJoin");
 				if (attribSourceOuterJoin != null)
 				{
 					OuterJoinEnum valueOfSourceOuterJoin;
-					if (DslModeling::SerializationUtilities.TryGetValue<OuterJoinEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceOuterJoin), out valueOfSourceOuterJoin))
+					if (DslModeling::SerializationUtilities.TryGetValue<OuterJoinEnum>(serializationContext, attribSourceOuterJoin, out valueOfSourceOuterJoin))
 					{
 						instanceOfManyToOneRelation.SourceOuterJoin = valueOfSourceOuterJoin;
 					}
@@ -8485,11 +8757,11 @@ namespace Altinoren.ActiveWriter
 			// SourceType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceType = reader.GetAttribute("sourceType");
+				string attribSourceType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceType");
 				if (attribSourceType != null)
 				{
 					global::System.String valueOfSourceType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceType), out valueOfSourceType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSourceType, out valueOfSourceType))
 					{
 						instanceOfManyToOneRelation.SourceType = valueOfSourceType;
 					}
@@ -8502,11 +8774,11 @@ namespace Altinoren.ActiveWriter
 			// SourceUnique
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceUnique = reader.GetAttribute("sourceUnique");
+				string attribSourceUnique = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceUnique");
 				if (attribSourceUnique != null)
 				{
 					global::System.Boolean valueOfSourceUnique;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceUnique), out valueOfSourceUnique))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribSourceUnique, out valueOfSourceUnique))
 					{
 						instanceOfManyToOneRelation.SourceUnique = valueOfSourceUnique;
 					}
@@ -8519,11 +8791,11 @@ namespace Altinoren.ActiveWriter
 			// SourceUpdate
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceUpdate = reader.GetAttribute("sourceUpdate");
+				string attribSourceUpdate = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceUpdate");
 				if (attribSourceUpdate != null)
 				{
 					global::System.Boolean valueOfSourceUpdate;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceUpdate), out valueOfSourceUpdate))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribSourceUpdate, out valueOfSourceUpdate))
 					{
 						instanceOfManyToOneRelation.SourceUpdate = valueOfSourceUpdate;
 					}
@@ -8536,11 +8808,11 @@ namespace Altinoren.ActiveWriter
 			// SourceDescription
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceDescription = reader.GetAttribute("sourceDescription");
+				string attribSourceDescription = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceDescription");
 				if (attribSourceDescription != null)
 				{
 					global::System.String valueOfSourceDescription;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceDescription), out valueOfSourceDescription))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSourceDescription, out valueOfSourceDescription))
 					{
 						instanceOfManyToOneRelation.SourceDescription = valueOfSourceDescription;
 					}
@@ -8553,11 +8825,11 @@ namespace Altinoren.ActiveWriter
 			// TargetAccess
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetAccess = reader.GetAttribute("targetAccess");
+				string attribTargetAccess = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetAccess");
 				if (attribTargetAccess != null)
 				{
 					InheritablePropertyAccess valueOfTargetAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetAccess), out valueOfTargetAccess))
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(serializationContext, attribTargetAccess, out valueOfTargetAccess))
 					{
 						instanceOfManyToOneRelation.TargetAccess = valueOfTargetAccess;
 					}
@@ -8570,11 +8842,11 @@ namespace Altinoren.ActiveWriter
 			// SourcePropertyName
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourcePropertyName = reader.GetAttribute("sourcePropertyName");
+				string attribSourcePropertyName = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourcePropertyName");
 				if (attribSourcePropertyName != null)
 				{
 					global::System.String valueOfSourcePropertyName;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourcePropertyName), out valueOfSourcePropertyName))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSourcePropertyName, out valueOfSourcePropertyName))
 					{
 						instanceOfManyToOneRelation.SourcePropertyName = valueOfSourcePropertyName;
 					}
@@ -8587,11 +8859,11 @@ namespace Altinoren.ActiveWriter
 			// SourceNotFoundBehaviour
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceNotFoundBehaviour = reader.GetAttribute("sourceNotFoundBehaviour");
+				string attribSourceNotFoundBehaviour = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceNotFoundBehaviour");
 				if (attribSourceNotFoundBehaviour != null)
 				{
 					NotFoundBehaviour valueOfSourceNotFoundBehaviour;
-					if (DslModeling::SerializationUtilities.TryGetValue<NotFoundBehaviour>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceNotFoundBehaviour), out valueOfSourceNotFoundBehaviour))
+					if (DslModeling::SerializationUtilities.TryGetValue<NotFoundBehaviour>(serializationContext, attribSourceNotFoundBehaviour, out valueOfSourceNotFoundBehaviour))
 					{
 						instanceOfManyToOneRelation.SourceNotFoundBehaviour = valueOfSourceNotFoundBehaviour;
 					}
@@ -8604,11 +8876,11 @@ namespace Altinoren.ActiveWriter
 			// TargetNotFoundBehaviour
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetNotFoundBehaviour = reader.GetAttribute("targetNotFoundBehaviour");
+				string attribTargetNotFoundBehaviour = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetNotFoundBehaviour");
 				if (attribTargetNotFoundBehaviour != null)
 				{
 					NotFoundBehaviour valueOfTargetNotFoundBehaviour;
-					if (DslModeling::SerializationUtilities.TryGetValue<NotFoundBehaviour>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetNotFoundBehaviour), out valueOfTargetNotFoundBehaviour))
+					if (DslModeling::SerializationUtilities.TryGetValue<NotFoundBehaviour>(serializationContext, attribTargetNotFoundBehaviour, out valueOfTargetNotFoundBehaviour))
 					{
 						instanceOfManyToOneRelation.TargetNotFoundBehaviour = valueOfTargetNotFoundBehaviour;
 					}
@@ -8621,11 +8893,11 @@ namespace Altinoren.ActiveWriter
 			// TargetElement
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetElement = reader.GetAttribute("targetElement");
+				string attribTargetElement = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetElement");
 				if (attribTargetElement != null)
 				{
 					global::System.String valueOfTargetElement;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetElement), out valueOfTargetElement))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetElement, out valueOfTargetElement))
 					{
 						instanceOfManyToOneRelation.TargetElement = valueOfTargetElement;
 					}
@@ -8638,11 +8910,11 @@ namespace Altinoren.ActiveWriter
 			// TargetIndexType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetIndexType = reader.GetAttribute("targetIndexType");
+				string attribTargetIndexType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetIndexType");
 				if (attribTargetIndexType != null)
 				{
 					global::System.String valueOfTargetIndexType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetIndexType), out valueOfTargetIndexType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetIndexType, out valueOfTargetIndexType))
 					{
 						instanceOfManyToOneRelation.TargetIndexType = valueOfTargetIndexType;
 					}
@@ -8655,11 +8927,11 @@ namespace Altinoren.ActiveWriter
 			// TargetIndex
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetIndex = reader.GetAttribute("targetIndex");
+				string attribTargetIndex = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetIndex");
 				if (attribTargetIndex != null)
 				{
 					global::System.String valueOfTargetIndex;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetIndex), out valueOfTargetIndex))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetIndex, out valueOfTargetIndex))
 					{
 						instanceOfManyToOneRelation.TargetIndex = valueOfTargetIndex;
 					}
@@ -8672,11 +8944,11 @@ namespace Altinoren.ActiveWriter
 			// TargetFetch
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetFetch = reader.GetAttribute("targetFetch");
+				string attribTargetFetch = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetFetch");
 				if (attribTargetFetch != null)
 				{
 					FetchEnum valueOfTargetFetch;
-					if (DslModeling::SerializationUtilities.TryGetValue<FetchEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetFetch), out valueOfTargetFetch))
+					if (DslModeling::SerializationUtilities.TryGetValue<FetchEnum>(serializationContext, attribTargetFetch, out valueOfTargetFetch))
 					{
 						instanceOfManyToOneRelation.TargetFetch = valueOfTargetFetch;
 					}
@@ -8689,11 +8961,11 @@ namespace Altinoren.ActiveWriter
 			// TargetIUserCollectionType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetIUserCollectionType = reader.GetAttribute("targetIUserCollectionType");
+				string attribTargetIUserCollectionType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetIUserCollectionType");
 				if (attribTargetIUserCollectionType != null)
 				{
 					global::System.String valueOfTargetIUserCollectionType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetIUserCollectionType), out valueOfTargetIUserCollectionType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetIUserCollectionType, out valueOfTargetIUserCollectionType))
 					{
 						instanceOfManyToOneRelation.TargetIUserCollectionType = valueOfTargetIUserCollectionType;
 					}
@@ -8706,11 +8978,11 @@ namespace Altinoren.ActiveWriter
 			// TargetPropertyGenerated
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetPropertyGenerated = reader.GetAttribute("targetPropertyGenerated");
+				string attribTargetPropertyGenerated = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetPropertyGenerated");
 				if (attribTargetPropertyGenerated != null)
 				{
 					global::System.Boolean valueOfTargetPropertyGenerated;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetPropertyGenerated), out valueOfTargetPropertyGenerated))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribTargetPropertyGenerated, out valueOfTargetPropertyGenerated))
 					{
 						instanceOfManyToOneRelation.TargetPropertyGenerated = valueOfTargetPropertyGenerated;
 					}
@@ -8723,11 +8995,11 @@ namespace Altinoren.ActiveWriter
 			// SourcePropertyGenerated
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourcePropertyGenerated = reader.GetAttribute("sourcePropertyGenerated");
+				string attribSourcePropertyGenerated = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourcePropertyGenerated");
 				if (attribSourcePropertyGenerated != null)
 				{
 					global::System.Boolean valueOfSourcePropertyGenerated;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourcePropertyGenerated), out valueOfSourcePropertyGenerated))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribSourcePropertyGenerated, out valueOfSourcePropertyGenerated))
 					{
 						instanceOfManyToOneRelation.SourcePropertyGenerated = valueOfSourcePropertyGenerated;
 					}
@@ -8740,11 +9012,11 @@ namespace Altinoren.ActiveWriter
 			// SourceAccess
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceAccess = reader.GetAttribute("sourceAccess");
+				string attribSourceAccess = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceAccess");
 				if (attribSourceAccess != null)
 				{
 					InheritablePropertyAccess valueOfSourceAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceAccess), out valueOfSourceAccess))
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(serializationContext, attribSourceAccess, out valueOfSourceAccess))
 					{
 						instanceOfManyToOneRelation.SourceAccess = valueOfSourceAccess;
 					}
@@ -8764,7 +9036,7 @@ namespace Altinoren.ActiveWriter
 		/// reader at the open tag of the first child XML element.
 		/// This method will read as many child XML elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the open 
-		///    tag of the unknown element. This implies the if the first child XML element is unknown, this method should return 
+		///    tag of the unknown element. This implies that if the first child XML element is unknown, this method should return 
 		///    immediately and do nothing.
 		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
 		/// 3) EOF.
@@ -8772,8 +9044,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">In-memory ManyToOneRelation instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
-		protected virtual void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadElements(serializationContext, element, reader);
+	
 		}
 	
 		#region TryCreateInstance & TryCreateDerivedInstance
@@ -9043,7 +9318,8 @@ namespace Altinoren.ActiveWriter
 		/// <returns>Created ModelRoot instance, or null if the reader is not pointing to a correct monikerized instance.</returns>
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
-			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
+			string monikerString = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, sourceRolePlayer, reader, this.MonikerAttributeName);
+	
 			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
@@ -9147,7 +9423,7 @@ namespace Altinoren.ActiveWriter
 			string monikerString = this.CalculateQualifiedName(serializationContext.Directory, element);
 			global::System.Diagnostics.Debug.Assert(!string.IsNullOrEmpty(monikerString));
 			writer.WriteStartElement(this.MonikerTagName);
-			writer.WriteAttributeString(this.MonikerAttributeName, monikerString);
+			ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, this.MonikerAttributeName, monikerString);
 			writer.WriteEndElement();
 		}
 		
@@ -9179,9 +9455,14 @@ namespace Altinoren.ActiveWriter
 	
 			// Write start of element, including schema target namespace if specified.
 			if (rootElementSettings != null && !string.IsNullOrEmpty(rootElementSettings.SchemaTargetNamespace))
+			{
 				writer.WriteStartElement(this.XmlTagName, rootElementSettings.SchemaTargetNamespace);
+				DslModeling::SerializationUtilities.WriteDomainModelNamespaces(serializationContext.Directory, writer, rootElementSettings.SchemaTargetNamespace);
+			}
 			else
+			{
 				writer.WriteStartElement(this.XmlTagName);
+			}
 				
 			// Write version info (in the format 1.2.3.4), if necessary
 			if (rootElementSettings != null && rootElementSettings.Version != null)
@@ -9191,6 +9472,12 @@ namespace Altinoren.ActiveWriter
 			writer.WriteAttributeString("Id", element.Id.ToString("D", global::System.Globalization.CultureInfo.CurrentCulture));
 	
 			WritePropertiesAsAttributes(serializationContext, element, writer);
+	
+			// Write out any extension data if this is the root element
+			if (rootElementSettings != null && !serializationContext.Result.Failed)
+			{
+				ActiveWriterSerializationHelper.Instance.WriteExtensions(serializationContext, element, writer);
+			}
 	
 			// Write the target role-player instance.
 			ManyToOneRelation instance = element as ManyToOneRelation;
@@ -9217,8 +9504,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">ManyToOneRelation instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
 			ManyToOneRelation instanceOfManyToOneRelation = element as ManyToOneRelation;
 			global::System.Diagnostics.Debug.Assert(instanceOfManyToOneRelation != null, "Expecting an instance of ManyToOneRelation");
 	
@@ -9231,7 +9521,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Undefined") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetCache", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetCache", serializedPropValue);
 					}
 				}
 			}
@@ -9244,7 +9534,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "None") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetCascade", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetCascade", serializedPropValue);
 					}
 				}
 			}
@@ -9255,7 +9545,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetColumnKey", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetColumnKey", propValue);
+	
 				}
 			}
 			// TargetCustomAccess
@@ -9265,7 +9556,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetCustomAccess", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetCustomAccess", propValue);
+	
 				}
 			}
 			// TargetInverse
@@ -9277,7 +9569,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetInverse", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetInverse", serializedPropValue);
 					}
 				}
 			}
@@ -9290,7 +9582,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetLazy", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetLazy", serializedPropValue);
 					}
 				}
 			}
@@ -9301,7 +9593,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetMapType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetMapType", propValue);
+	
 				}
 			}
 			// TargetOrderBy
@@ -9311,7 +9604,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetOrderBy", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetOrderBy", propValue);
+	
 				}
 			}
 			// TargetRelationType
@@ -9323,7 +9617,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherited") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetRelationType", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetRelationType", serializedPropValue);
 					}
 				}
 			}
@@ -9334,7 +9628,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetSchema", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetSchema", propValue);
+	
 				}
 			}
 			// TargetSort
@@ -9344,7 +9639,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetSort", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetSort", propValue);
+	
 				}
 			}
 			// TargetTable
@@ -9354,7 +9650,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetTable", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetTable", propValue);
+	
 				}
 			}
 			// TargetWhere
@@ -9364,7 +9661,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetWhere", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetWhere", propValue);
+	
 				}
 			}
 			// TargetDescription
@@ -9374,7 +9672,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetDescription", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetDescription", propValue);
+	
 				}
 			}
 			// TargetPropertyName
@@ -9384,7 +9683,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetPropertyName", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetPropertyName", propValue);
+	
 				}
 			}
 			// TargetPropertyType
@@ -9395,7 +9695,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, string.Empty) != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetPropertyType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetPropertyType", propValue);
 					}
 				}
 			}
@@ -9408,7 +9708,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "None") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceCascade", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceCascade", serializedPropValue);
 					}
 				}
 			}
@@ -9419,7 +9719,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sourceColumn", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceColumn", propValue);
+	
 				}
 			}
 			// SourceCustomAccess
@@ -9429,7 +9730,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sourceCustomAccess", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceCustomAccess", propValue);
+	
 				}
 			}
 			// SourceInsert
@@ -9441,7 +9743,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceInsert", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceInsert", serializedPropValue);
 					}
 				}
 			}
@@ -9454,7 +9756,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceNotNull", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceNotNull", serializedPropValue);
 					}
 				}
 			}
@@ -9467,7 +9769,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Auto") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceOuterJoin", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceOuterJoin", serializedPropValue);
 					}
 				}
 			}
@@ -9478,7 +9780,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sourceType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceType", propValue);
+	
 				}
 			}
 			// SourceUnique
@@ -9490,7 +9793,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceUnique", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceUnique", serializedPropValue);
 					}
 				}
 			}
@@ -9503,7 +9806,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceUpdate", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceUpdate", serializedPropValue);
 					}
 				}
 			}
@@ -9514,7 +9817,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sourceDescription", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceDescription", propValue);
+	
 				}
 			}
 			// TargetAccess
@@ -9526,7 +9830,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetAccess", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetAccess", serializedPropValue);
 					}
 				}
 			}
@@ -9537,7 +9841,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sourcePropertyName", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourcePropertyName", propValue);
+	
 				}
 			}
 			// SourceNotFoundBehaviour
@@ -9549,7 +9854,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Default") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceNotFoundBehaviour", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceNotFoundBehaviour", serializedPropValue);
 					}
 				}
 			}
@@ -9562,7 +9867,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Default") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetNotFoundBehaviour", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetNotFoundBehaviour", serializedPropValue);
 					}
 				}
 			}
@@ -9573,7 +9878,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetElement", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetElement", propValue);
+	
 				}
 			}
 			// TargetIndexType
@@ -9583,7 +9889,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetIndexType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetIndexType", propValue);
+	
 				}
 			}
 			// TargetIndex
@@ -9593,7 +9900,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetIndex", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetIndex", propValue);
+	
 				}
 			}
 			// TargetFetch
@@ -9605,7 +9913,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Unspecified") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetFetch", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetFetch", serializedPropValue);
 					}
 				}
 			}
@@ -9616,7 +9924,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetIUserCollectionType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetIUserCollectionType", propValue);
+	
 				}
 			}
 			// TargetPropertyGenerated
@@ -9628,7 +9937,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetPropertyGenerated", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetPropertyGenerated", serializedPropValue);
 					}
 				}
 			}
@@ -9641,7 +9950,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourcePropertyGenerated", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourcePropertyGenerated", serializedPropValue);
 					}
 				}
 			}
@@ -9654,7 +9963,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceAccess", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceAccess", serializedPropValue);
 					}
 				}
 			}
@@ -9666,9 +9975,13 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">ManyToOneRelation instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param>        
-		protected virtual void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WriteElements(serializationContext, element, writer);
+	
 		}
+		
 		#endregion
 	
 		#region Moniker Support
@@ -9838,7 +10151,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer ClassHasPropertySerializer for DomainClass ClassHasProperty.
@@ -9853,6 +10166,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -9922,6 +10253,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read target role-player Property.
 					ReadTargetRolePlayer(serializationContext, element, reader);
 	
@@ -9947,6 +10281,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		/// <summary>
 		/// This method reads the target role player Property.
@@ -10018,8 +10353,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">In-memory ClassHasProperty instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadPropertiesFromAttributes(serializationContext, element, reader);
+	
 			// There is no property to read; do nothing
 		}
 	
@@ -10031,7 +10369,7 @@ namespace Altinoren.ActiveWriter
 		/// reader at the open tag of the first child XML element.
 		/// This method will read as many child XML elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the open 
-		///    tag of the unknown element. This implies the if the first child XML element is unknown, this method should return 
+		///    tag of the unknown element. This implies that if the first child XML element is unknown, this method should return 
 		///    immediately and do nothing.
 		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
 		/// 3) EOF.
@@ -10039,8 +10377,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">In-memory ClassHasProperty instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
-		protected virtual void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadElements(serializationContext, element, reader);
+	
 		}
 	
 		#region TryCreateInstance & TryCreateDerivedInstance
@@ -10360,8 +10701,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">ClassHasProperty instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
 			// There are no properties; do nothing
 		}
 	
@@ -10371,9 +10715,13 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">ClassHasProperty instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param>        
-		protected virtual void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WriteElements(serializationContext, element, writer);
+	
 		}
+		
 		#endregion
 	
 		#region Moniker Support
@@ -10474,7 +10822,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer ManyToManyRelationSerializer for DomainClass ManyToManyRelation.
@@ -10489,6 +10837,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -10558,6 +10924,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read target role-player Target.
 					ReadTargetRolePlayer(serializationContext, element, reader);
 	
@@ -10583,6 +10952,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		/// <summary>
 		/// This method reads the target role player Target.
@@ -10652,19 +11022,22 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">In-memory ManyToManyRelation instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadPropertiesFromAttributes(serializationContext, element, reader);
+	
 			ManyToManyRelation instanceOfManyToManyRelation = element as ManyToManyRelation;
 			global::System.Diagnostics.Debug.Assert(instanceOfManyToManyRelation != null, "Expecting an instance of ManyToManyRelation");
 	
 			// SourceCache
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceCache = reader.GetAttribute("sourceCache");
+				string attribSourceCache = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceCache");
 				if (attribSourceCache != null)
 				{
 					CacheEnum valueOfSourceCache;
-					if (DslModeling::SerializationUtilities.TryGetValue<CacheEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceCache), out valueOfSourceCache))
+					if (DslModeling::SerializationUtilities.TryGetValue<CacheEnum>(serializationContext, attribSourceCache, out valueOfSourceCache))
 					{
 						instanceOfManyToManyRelation.SourceCache = valueOfSourceCache;
 					}
@@ -10677,11 +11050,11 @@ namespace Altinoren.ActiveWriter
 			// SourceCascade
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceCascade = reader.GetAttribute("sourceCascade");
+				string attribSourceCascade = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceCascade");
 				if (attribSourceCascade != null)
 				{
 					ManyRelationCascadeEnum valueOfSourceCascade;
-					if (DslModeling::SerializationUtilities.TryGetValue<ManyRelationCascadeEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceCascade), out valueOfSourceCascade))
+					if (DslModeling::SerializationUtilities.TryGetValue<ManyRelationCascadeEnum>(serializationContext, attribSourceCascade, out valueOfSourceCascade))
 					{
 						instanceOfManyToManyRelation.SourceCascade = valueOfSourceCascade;
 					}
@@ -10694,11 +11067,11 @@ namespace Altinoren.ActiveWriter
 			// SourceColumn
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceColumn = reader.GetAttribute("sourceColumn");
+				string attribSourceColumn = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceColumn");
 				if (attribSourceColumn != null)
 				{
 					global::System.String valueOfSourceColumn;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceColumn), out valueOfSourceColumn))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSourceColumn, out valueOfSourceColumn))
 					{
 						instanceOfManyToManyRelation.SourceColumn = valueOfSourceColumn;
 					}
@@ -10711,11 +11084,11 @@ namespace Altinoren.ActiveWriter
 			// SourceCustomAccess
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceCustomAccess = reader.GetAttribute("sourceCustomAccess");
+				string attribSourceCustomAccess = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceCustomAccess");
 				if (attribSourceCustomAccess != null)
 				{
 					global::System.String valueOfSourceCustomAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceCustomAccess), out valueOfSourceCustomAccess))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSourceCustomAccess, out valueOfSourceCustomAccess))
 					{
 						instanceOfManyToManyRelation.SourceCustomAccess = valueOfSourceCustomAccess;
 					}
@@ -10728,11 +11101,11 @@ namespace Altinoren.ActiveWriter
 			// SourceInverse
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceInverse = reader.GetAttribute("sourceInverse");
+				string attribSourceInverse = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceInverse");
 				if (attribSourceInverse != null)
 				{
 					global::System.Boolean valueOfSourceInverse;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceInverse), out valueOfSourceInverse))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribSourceInverse, out valueOfSourceInverse))
 					{
 						instanceOfManyToManyRelation.SourceInverse = valueOfSourceInverse;
 					}
@@ -10745,11 +11118,11 @@ namespace Altinoren.ActiveWriter
 			// SourceLazy
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceLazy = reader.GetAttribute("sourceLazy");
+				string attribSourceLazy = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceLazy");
 				if (attribSourceLazy != null)
 				{
 					global::System.Boolean valueOfSourceLazy;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceLazy), out valueOfSourceLazy))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribSourceLazy, out valueOfSourceLazy))
 					{
 						instanceOfManyToManyRelation.SourceLazy = valueOfSourceLazy;
 					}
@@ -10762,11 +11135,11 @@ namespace Altinoren.ActiveWriter
 			// SourceMapType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceMapType = reader.GetAttribute("sourceMapType");
+				string attribSourceMapType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceMapType");
 				if (attribSourceMapType != null)
 				{
 					global::System.String valueOfSourceMapType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceMapType), out valueOfSourceMapType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSourceMapType, out valueOfSourceMapType))
 					{
 						instanceOfManyToManyRelation.SourceMapType = valueOfSourceMapType;
 					}
@@ -10779,11 +11152,11 @@ namespace Altinoren.ActiveWriter
 			// SourceOrderBy
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceOrderBy = reader.GetAttribute("sourceOrderBy");
+				string attribSourceOrderBy = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceOrderBy");
 				if (attribSourceOrderBy != null)
 				{
 					global::System.String valueOfSourceOrderBy;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceOrderBy), out valueOfSourceOrderBy))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSourceOrderBy, out valueOfSourceOrderBy))
 					{
 						instanceOfManyToManyRelation.SourceOrderBy = valueOfSourceOrderBy;
 					}
@@ -10796,11 +11169,11 @@ namespace Altinoren.ActiveWriter
 			// SourceRelationType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceRelationType = reader.GetAttribute("sourceRelationType");
+				string attribSourceRelationType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceRelationType");
 				if (attribSourceRelationType != null)
 				{
 					InheritedRelationType valueOfSourceRelationType;
-					if (DslModeling::SerializationUtilities.TryGetValue<InheritedRelationType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceRelationType), out valueOfSourceRelationType))
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritedRelationType>(serializationContext, attribSourceRelationType, out valueOfSourceRelationType))
 					{
 						instanceOfManyToManyRelation.SourceRelationType = valueOfSourceRelationType;
 					}
@@ -10813,11 +11186,11 @@ namespace Altinoren.ActiveWriter
 			// Schema
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSchema = reader.GetAttribute("schema");
+				string attribSchema = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "schema");
 				if (attribSchema != null)
 				{
 					global::System.String valueOfSchema;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSchema), out valueOfSchema))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSchema, out valueOfSchema))
 					{
 						instanceOfManyToManyRelation.Schema = valueOfSchema;
 					}
@@ -10830,11 +11203,11 @@ namespace Altinoren.ActiveWriter
 			// SourceSort
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceSort = reader.GetAttribute("sourceSort");
+				string attribSourceSort = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceSort");
 				if (attribSourceSort != null)
 				{
 					global::System.String valueOfSourceSort;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceSort), out valueOfSourceSort))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSourceSort, out valueOfSourceSort))
 					{
 						instanceOfManyToManyRelation.SourceSort = valueOfSourceSort;
 					}
@@ -10847,11 +11220,11 @@ namespace Altinoren.ActiveWriter
 			// Table
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTable = reader.GetAttribute("table");
+				string attribTable = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "table");
 				if (attribTable != null)
 				{
 					global::System.String valueOfTable;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTable), out valueOfTable))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTable, out valueOfTable))
 					{
 						instanceOfManyToManyRelation.Table = valueOfTable;
 					}
@@ -10864,11 +11237,11 @@ namespace Altinoren.ActiveWriter
 			// SourceWhere
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceWhere = reader.GetAttribute("sourceWhere");
+				string attribSourceWhere = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceWhere");
 				if (attribSourceWhere != null)
 				{
 					global::System.String valueOfSourceWhere;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceWhere), out valueOfSourceWhere))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSourceWhere, out valueOfSourceWhere))
 					{
 						instanceOfManyToManyRelation.SourceWhere = valueOfSourceWhere;
 					}
@@ -10881,11 +11254,11 @@ namespace Altinoren.ActiveWriter
 			// TargetCache
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetCache = reader.GetAttribute("targetCache");
+				string attribTargetCache = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetCache");
 				if (attribTargetCache != null)
 				{
 					CacheEnum valueOfTargetCache;
-					if (DslModeling::SerializationUtilities.TryGetValue<CacheEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetCache), out valueOfTargetCache))
+					if (DslModeling::SerializationUtilities.TryGetValue<CacheEnum>(serializationContext, attribTargetCache, out valueOfTargetCache))
 					{
 						instanceOfManyToManyRelation.TargetCache = valueOfTargetCache;
 					}
@@ -10898,11 +11271,11 @@ namespace Altinoren.ActiveWriter
 			// TargetCascade
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetCascade = reader.GetAttribute("targetCascade");
+				string attribTargetCascade = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetCascade");
 				if (attribTargetCascade != null)
 				{
 					ManyRelationCascadeEnum valueOfTargetCascade;
-					if (DslModeling::SerializationUtilities.TryGetValue<ManyRelationCascadeEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetCascade), out valueOfTargetCascade))
+					if (DslModeling::SerializationUtilities.TryGetValue<ManyRelationCascadeEnum>(serializationContext, attribTargetCascade, out valueOfTargetCascade))
 					{
 						instanceOfManyToManyRelation.TargetCascade = valueOfTargetCascade;
 					}
@@ -10915,11 +11288,11 @@ namespace Altinoren.ActiveWriter
 			// TargetColumn
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetColumn = reader.GetAttribute("targetColumn");
+				string attribTargetColumn = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetColumn");
 				if (attribTargetColumn != null)
 				{
 					global::System.String valueOfTargetColumn;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetColumn), out valueOfTargetColumn))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetColumn, out valueOfTargetColumn))
 					{
 						instanceOfManyToManyRelation.TargetColumn = valueOfTargetColumn;
 					}
@@ -10932,11 +11305,11 @@ namespace Altinoren.ActiveWriter
 			// TargetCustomAccess
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetCustomAccess = reader.GetAttribute("targetCustomAccess");
+				string attribTargetCustomAccess = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetCustomAccess");
 				if (attribTargetCustomAccess != null)
 				{
 					global::System.String valueOfTargetCustomAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetCustomAccess), out valueOfTargetCustomAccess))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetCustomAccess, out valueOfTargetCustomAccess))
 					{
 						instanceOfManyToManyRelation.TargetCustomAccess = valueOfTargetCustomAccess;
 					}
@@ -10949,11 +11322,11 @@ namespace Altinoren.ActiveWriter
 			// TargetInverse
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetInverse = reader.GetAttribute("targetInverse");
+				string attribTargetInverse = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetInverse");
 				if (attribTargetInverse != null)
 				{
 					global::System.Boolean valueOfTargetInverse;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetInverse), out valueOfTargetInverse))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribTargetInverse, out valueOfTargetInverse))
 					{
 						instanceOfManyToManyRelation.TargetInverse = valueOfTargetInverse;
 					}
@@ -10966,11 +11339,11 @@ namespace Altinoren.ActiveWriter
 			// TargetLazy
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetLazy = reader.GetAttribute("targetLazy");
+				string attribTargetLazy = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetLazy");
 				if (attribTargetLazy != null)
 				{
 					global::System.Boolean valueOfTargetLazy;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetLazy), out valueOfTargetLazy))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribTargetLazy, out valueOfTargetLazy))
 					{
 						instanceOfManyToManyRelation.TargetLazy = valueOfTargetLazy;
 					}
@@ -10983,11 +11356,11 @@ namespace Altinoren.ActiveWriter
 			// TargetMapType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetMapType = reader.GetAttribute("targetMapType");
+				string attribTargetMapType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetMapType");
 				if (attribTargetMapType != null)
 				{
 					global::System.String valueOfTargetMapType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetMapType), out valueOfTargetMapType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetMapType, out valueOfTargetMapType))
 					{
 						instanceOfManyToManyRelation.TargetMapType = valueOfTargetMapType;
 					}
@@ -11000,11 +11373,11 @@ namespace Altinoren.ActiveWriter
 			// TargetOrderBy
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetOrderBy = reader.GetAttribute("targetOrderBy");
+				string attribTargetOrderBy = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetOrderBy");
 				if (attribTargetOrderBy != null)
 				{
 					global::System.String valueOfTargetOrderBy;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetOrderBy), out valueOfTargetOrderBy))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetOrderBy, out valueOfTargetOrderBy))
 					{
 						instanceOfManyToManyRelation.TargetOrderBy = valueOfTargetOrderBy;
 					}
@@ -11017,11 +11390,11 @@ namespace Altinoren.ActiveWriter
 			// TargetRelationType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetRelationType = reader.GetAttribute("targetRelationType");
+				string attribTargetRelationType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetRelationType");
 				if (attribTargetRelationType != null)
 				{
 					InheritedRelationType valueOfTargetRelationType;
-					if (DslModeling::SerializationUtilities.TryGetValue<InheritedRelationType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetRelationType), out valueOfTargetRelationType))
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritedRelationType>(serializationContext, attribTargetRelationType, out valueOfTargetRelationType))
 					{
 						instanceOfManyToManyRelation.TargetRelationType = valueOfTargetRelationType;
 					}
@@ -11034,11 +11407,11 @@ namespace Altinoren.ActiveWriter
 			// TargetSort
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetSort = reader.GetAttribute("targetSort");
+				string attribTargetSort = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetSort");
 				if (attribTargetSort != null)
 				{
 					global::System.String valueOfTargetSort;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetSort), out valueOfTargetSort))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetSort, out valueOfTargetSort))
 					{
 						instanceOfManyToManyRelation.TargetSort = valueOfTargetSort;
 					}
@@ -11051,11 +11424,11 @@ namespace Altinoren.ActiveWriter
 			// TargetWhere
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetWhere = reader.GetAttribute("targetWhere");
+				string attribTargetWhere = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetWhere");
 				if (attribTargetWhere != null)
 				{
 					global::System.String valueOfTargetWhere;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetWhere), out valueOfTargetWhere))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetWhere, out valueOfTargetWhere))
 					{
 						instanceOfManyToManyRelation.TargetWhere = valueOfTargetWhere;
 					}
@@ -11068,11 +11441,11 @@ namespace Altinoren.ActiveWriter
 			// SourceDescription
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceDescription = reader.GetAttribute("sourceDescription");
+				string attribSourceDescription = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceDescription");
 				if (attribSourceDescription != null)
 				{
 					global::System.String valueOfSourceDescription;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceDescription), out valueOfSourceDescription))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSourceDescription, out valueOfSourceDescription))
 					{
 						instanceOfManyToManyRelation.SourceDescription = valueOfSourceDescription;
 					}
@@ -11085,11 +11458,11 @@ namespace Altinoren.ActiveWriter
 			// TargetDescription
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetDescription = reader.GetAttribute("targetDescription");
+				string attribTargetDescription = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetDescription");
 				if (attribTargetDescription != null)
 				{
 					global::System.String valueOfTargetDescription;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetDescription), out valueOfTargetDescription))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetDescription, out valueOfTargetDescription))
 					{
 						instanceOfManyToManyRelation.TargetDescription = valueOfTargetDescription;
 					}
@@ -11102,11 +11475,11 @@ namespace Altinoren.ActiveWriter
 			// SourceAccess
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceAccess = reader.GetAttribute("sourceAccess");
+				string attribSourceAccess = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceAccess");
 				if (attribSourceAccess != null)
 				{
 					InheritablePropertyAccess valueOfSourceAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceAccess), out valueOfSourceAccess))
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(serializationContext, attribSourceAccess, out valueOfSourceAccess))
 					{
 						instanceOfManyToManyRelation.SourceAccess = valueOfSourceAccess;
 					}
@@ -11119,11 +11492,11 @@ namespace Altinoren.ActiveWriter
 			// TargetAccess
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetAccess = reader.GetAttribute("targetAccess");
+				string attribTargetAccess = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetAccess");
 				if (attribTargetAccess != null)
 				{
 					InheritablePropertyAccess valueOfTargetAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetAccess), out valueOfTargetAccess))
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(serializationContext, attribTargetAccess, out valueOfTargetAccess))
 					{
 						instanceOfManyToManyRelation.TargetAccess = valueOfTargetAccess;
 					}
@@ -11136,11 +11509,11 @@ namespace Altinoren.ActiveWriter
 			// SourcePropertyType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourcePropertyType = reader.GetAttribute("sourcePropertyType");
+				string attribSourcePropertyType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourcePropertyType");
 				if (attribSourcePropertyType != null)
 				{
 					global::System.String valueOfSourcePropertyType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourcePropertyType), out valueOfSourcePropertyType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSourcePropertyType, out valueOfSourcePropertyType))
 					{
 						instanceOfManyToManyRelation.SourcePropertyType = valueOfSourcePropertyType;
 					}
@@ -11153,11 +11526,11 @@ namespace Altinoren.ActiveWriter
 			// TargetPropertyType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetPropertyType = reader.GetAttribute("targetPropertyType");
+				string attribTargetPropertyType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetPropertyType");
 				if (attribTargetPropertyType != null)
 				{
 					global::System.String valueOfTargetPropertyType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetPropertyType), out valueOfTargetPropertyType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetPropertyType, out valueOfTargetPropertyType))
 					{
 						instanceOfManyToManyRelation.TargetPropertyType = valueOfTargetPropertyType;
 					}
@@ -11170,11 +11543,11 @@ namespace Altinoren.ActiveWriter
 			// SourcePropertyName
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourcePropertyName = reader.GetAttribute("sourcePropertyName");
+				string attribSourcePropertyName = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourcePropertyName");
 				if (attribSourcePropertyName != null)
 				{
 					global::System.String valueOfSourcePropertyName;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourcePropertyName), out valueOfSourcePropertyName))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSourcePropertyName, out valueOfSourcePropertyName))
 					{
 						instanceOfManyToManyRelation.SourcePropertyName = valueOfSourcePropertyName;
 					}
@@ -11187,11 +11560,11 @@ namespace Altinoren.ActiveWriter
 			// TargetPropertyName
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetPropertyName = reader.GetAttribute("targetPropertyName");
+				string attribTargetPropertyName = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetPropertyName");
 				if (attribTargetPropertyName != null)
 				{
 					global::System.String valueOfTargetPropertyName;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetPropertyName), out valueOfTargetPropertyName))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetPropertyName, out valueOfTargetPropertyName))
 					{
 						instanceOfManyToManyRelation.TargetPropertyName = valueOfTargetPropertyName;
 					}
@@ -11204,11 +11577,11 @@ namespace Altinoren.ActiveWriter
 			// TargetNotFoundBehaviour
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetNotFoundBehaviour = reader.GetAttribute("targetNotFoundBehaviour");
+				string attribTargetNotFoundBehaviour = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetNotFoundBehaviour");
 				if (attribTargetNotFoundBehaviour != null)
 				{
 					NotFoundBehaviour valueOfTargetNotFoundBehaviour;
-					if (DslModeling::SerializationUtilities.TryGetValue<NotFoundBehaviour>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetNotFoundBehaviour), out valueOfTargetNotFoundBehaviour))
+					if (DslModeling::SerializationUtilities.TryGetValue<NotFoundBehaviour>(serializationContext, attribTargetNotFoundBehaviour, out valueOfTargetNotFoundBehaviour))
 					{
 						instanceOfManyToManyRelation.TargetNotFoundBehaviour = valueOfTargetNotFoundBehaviour;
 					}
@@ -11221,11 +11594,11 @@ namespace Altinoren.ActiveWriter
 			// SourceNotFoundBehaviour
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceNotFoundBehaviour = reader.GetAttribute("sourceNotFoundBehaviour");
+				string attribSourceNotFoundBehaviour = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceNotFoundBehaviour");
 				if (attribSourceNotFoundBehaviour != null)
 				{
 					NotFoundBehaviour valueOfSourceNotFoundBehaviour;
-					if (DslModeling::SerializationUtilities.TryGetValue<NotFoundBehaviour>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceNotFoundBehaviour), out valueOfSourceNotFoundBehaviour))
+					if (DslModeling::SerializationUtilities.TryGetValue<NotFoundBehaviour>(serializationContext, attribSourceNotFoundBehaviour, out valueOfSourceNotFoundBehaviour))
 					{
 						instanceOfManyToManyRelation.SourceNotFoundBehaviour = valueOfSourceNotFoundBehaviour;
 					}
@@ -11238,11 +11611,11 @@ namespace Altinoren.ActiveWriter
 			// SourceIUserCollectionType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceIUserCollectionType = reader.GetAttribute("sourceIUserCollectionType");
+				string attribSourceIUserCollectionType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceIUserCollectionType");
 				if (attribSourceIUserCollectionType != null)
 				{
 					global::System.String valueOfSourceIUserCollectionType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceIUserCollectionType), out valueOfSourceIUserCollectionType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSourceIUserCollectionType, out valueOfSourceIUserCollectionType))
 					{
 						instanceOfManyToManyRelation.SourceIUserCollectionType = valueOfSourceIUserCollectionType;
 					}
@@ -11255,11 +11628,11 @@ namespace Altinoren.ActiveWriter
 			// TargetIUserCollectionType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetIUserCollectionType = reader.GetAttribute("targetIUserCollectionType");
+				string attribTargetIUserCollectionType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetIUserCollectionType");
 				if (attribTargetIUserCollectionType != null)
 				{
 					global::System.String valueOfTargetIUserCollectionType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetIUserCollectionType), out valueOfTargetIUserCollectionType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetIUserCollectionType, out valueOfTargetIUserCollectionType))
 					{
 						instanceOfManyToManyRelation.TargetIUserCollectionType = valueOfTargetIUserCollectionType;
 					}
@@ -11272,11 +11645,11 @@ namespace Altinoren.ActiveWriter
 			// CollectionIDColumn
 			if (!serializationContext.Result.Failed)
 			{
-				string attribCollectionIDColumn = reader.GetAttribute("collectionIDColumn");
+				string attribCollectionIDColumn = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "collectionIDColumn");
 				if (attribCollectionIDColumn != null)
 				{
 					global::System.String valueOfCollectionIDColumn;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCollectionIDColumn), out valueOfCollectionIDColumn))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribCollectionIDColumn, out valueOfCollectionIDColumn))
 					{
 						instanceOfManyToManyRelation.CollectionIDColumn = valueOfCollectionIDColumn;
 					}
@@ -11289,11 +11662,11 @@ namespace Altinoren.ActiveWriter
 			// CollectionIDColumnType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribCollectionIDColumnType = reader.GetAttribute("collectionIDColumnType");
+				string attribCollectionIDColumnType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "collectionIDColumnType");
 				if (attribCollectionIDColumnType != null)
 				{
 					NHibernateType valueOfCollectionIDColumnType;
-					if (DslModeling::SerializationUtilities.TryGetValue<NHibernateType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCollectionIDColumnType), out valueOfCollectionIDColumnType))
+					if (DslModeling::SerializationUtilities.TryGetValue<NHibernateType>(serializationContext, attribCollectionIDColumnType, out valueOfCollectionIDColumnType))
 					{
 						instanceOfManyToManyRelation.CollectionIDColumnType = valueOfCollectionIDColumnType;
 					}
@@ -11306,11 +11679,11 @@ namespace Altinoren.ActiveWriter
 			// CollectionIDGenerator
 			if (!serializationContext.Result.Failed)
 			{
-				string attribCollectionIDGenerator = reader.GetAttribute("collectionIDGenerator");
+				string attribCollectionIDGenerator = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "collectionIDGenerator");
 				if (attribCollectionIDGenerator != null)
 				{
 					PrimaryKeyType valueOfCollectionIDGenerator;
-					if (DslModeling::SerializationUtilities.TryGetValue<PrimaryKeyType>(DslModeling::SerializationUtilities.UnescapeXmlString(attribCollectionIDGenerator), out valueOfCollectionIDGenerator))
+					if (DslModeling::SerializationUtilities.TryGetValue<PrimaryKeyType>(serializationContext, attribCollectionIDGenerator, out valueOfCollectionIDGenerator))
 					{
 						instanceOfManyToManyRelation.CollectionIDGenerator = valueOfCollectionIDGenerator;
 					}
@@ -11323,11 +11696,11 @@ namespace Altinoren.ActiveWriter
 			// TargetPropertyGenerated
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetPropertyGenerated = reader.GetAttribute("targetPropertyGenerated");
+				string attribTargetPropertyGenerated = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetPropertyGenerated");
 				if (attribTargetPropertyGenerated != null)
 				{
 					global::System.Boolean valueOfTargetPropertyGenerated;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetPropertyGenerated), out valueOfTargetPropertyGenerated))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribTargetPropertyGenerated, out valueOfTargetPropertyGenerated))
 					{
 						instanceOfManyToManyRelation.TargetPropertyGenerated = valueOfTargetPropertyGenerated;
 					}
@@ -11340,11 +11713,11 @@ namespace Altinoren.ActiveWriter
 			// SourcePropertyGenerated
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourcePropertyGenerated = reader.GetAttribute("sourcePropertyGenerated");
+				string attribSourcePropertyGenerated = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourcePropertyGenerated");
 				if (attribSourcePropertyGenerated != null)
 				{
 					global::System.Boolean valueOfSourcePropertyGenerated;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourcePropertyGenerated), out valueOfSourcePropertyGenerated))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribSourcePropertyGenerated, out valueOfSourcePropertyGenerated))
 					{
 						instanceOfManyToManyRelation.SourcePropertyGenerated = valueOfSourcePropertyGenerated;
 					}
@@ -11364,7 +11737,7 @@ namespace Altinoren.ActiveWriter
 		/// reader at the open tag of the first child XML element.
 		/// This method will read as many child XML elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the open 
-		///    tag of the unknown element. This implies the if the first child XML element is unknown, this method should return 
+		///    tag of the unknown element. This implies that if the first child XML element is unknown, this method should return 
 		///    immediately and do nothing.
 		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
 		/// 3) EOF.
@@ -11372,8 +11745,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">In-memory ManyToManyRelation instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
-		protected virtual void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadElements(serializationContext, element, reader);
+	
 		}
 	
 		#region TryCreateInstance & TryCreateDerivedInstance
@@ -11643,7 +12019,8 @@ namespace Altinoren.ActiveWriter
 		/// <returns>Created ModelRoot instance, or null if the reader is not pointing to a correct monikerized instance.</returns>
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
-			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
+			string monikerString = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, sourceRolePlayer, reader, this.MonikerAttributeName);
+	
 			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
@@ -11747,7 +12124,7 @@ namespace Altinoren.ActiveWriter
 			string monikerString = this.CalculateQualifiedName(serializationContext.Directory, element);
 			global::System.Diagnostics.Debug.Assert(!string.IsNullOrEmpty(monikerString));
 			writer.WriteStartElement(this.MonikerTagName);
-			writer.WriteAttributeString(this.MonikerAttributeName, monikerString);
+			ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, this.MonikerAttributeName, monikerString);
 			writer.WriteEndElement();
 		}
 		
@@ -11779,9 +12156,14 @@ namespace Altinoren.ActiveWriter
 	
 			// Write start of element, including schema target namespace if specified.
 			if (rootElementSettings != null && !string.IsNullOrEmpty(rootElementSettings.SchemaTargetNamespace))
+			{
 				writer.WriteStartElement(this.XmlTagName, rootElementSettings.SchemaTargetNamespace);
+				DslModeling::SerializationUtilities.WriteDomainModelNamespaces(serializationContext.Directory, writer, rootElementSettings.SchemaTargetNamespace);
+			}
 			else
+			{
 				writer.WriteStartElement(this.XmlTagName);
+			}
 				
 			// Write version info (in the format 1.2.3.4), if necessary
 			if (rootElementSettings != null && rootElementSettings.Version != null)
@@ -11791,6 +12173,12 @@ namespace Altinoren.ActiveWriter
 			writer.WriteAttributeString("Id", element.Id.ToString("D", global::System.Globalization.CultureInfo.CurrentCulture));
 	
 			WritePropertiesAsAttributes(serializationContext, element, writer);
+	
+			// Write out any extension data if this is the root element
+			if (rootElementSettings != null && !serializationContext.Result.Failed)
+			{
+				ActiveWriterSerializationHelper.Instance.WriteExtensions(serializationContext, element, writer);
+			}
 	
 			// Write the target role-player instance.
 			ManyToManyRelation instance = element as ManyToManyRelation;
@@ -11817,8 +12205,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">ManyToManyRelation instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
 			ManyToManyRelation instanceOfManyToManyRelation = element as ManyToManyRelation;
 			global::System.Diagnostics.Debug.Assert(instanceOfManyToManyRelation != null, "Expecting an instance of ManyToManyRelation");
 	
@@ -11831,7 +12222,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Undefined") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceCache", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceCache", serializedPropValue);
 					}
 				}
 			}
@@ -11844,7 +12235,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "None") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceCascade", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceCascade", serializedPropValue);
 					}
 				}
 			}
@@ -11855,7 +12246,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sourceColumn", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceColumn", propValue);
+	
 				}
 			}
 			// SourceCustomAccess
@@ -11865,7 +12257,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sourceCustomAccess", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceCustomAccess", propValue);
+	
 				}
 			}
 			// SourceInverse
@@ -11877,7 +12270,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceInverse", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceInverse", serializedPropValue);
 					}
 				}
 			}
@@ -11890,7 +12283,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceLazy", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceLazy", serializedPropValue);
 					}
 				}
 			}
@@ -11901,7 +12294,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sourceMapType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceMapType", propValue);
+	
 				}
 			}
 			// SourceOrderBy
@@ -11911,7 +12305,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sourceOrderBy", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceOrderBy", propValue);
+	
 				}
 			}
 			// SourceRelationType
@@ -11923,7 +12318,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherited") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceRelationType", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceRelationType", serializedPropValue);
 					}
 				}
 			}
@@ -11934,7 +12329,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("schema", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "schema", propValue);
+	
 				}
 			}
 			// SourceSort
@@ -11944,7 +12340,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sourceSort", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceSort", propValue);
+	
 				}
 			}
 			// Table
@@ -11954,7 +12351,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("table", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "table", propValue);
+	
 				}
 			}
 			// SourceWhere
@@ -11964,7 +12362,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sourceWhere", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceWhere", propValue);
+	
 				}
 			}
 			// TargetCache
@@ -11976,7 +12375,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Undefined") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetCache", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetCache", serializedPropValue);
 					}
 				}
 			}
@@ -11989,7 +12388,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "None") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetCascade", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetCascade", serializedPropValue);
 					}
 				}
 			}
@@ -12000,7 +12399,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetColumn", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetColumn", propValue);
+	
 				}
 			}
 			// TargetCustomAccess
@@ -12010,7 +12410,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetCustomAccess", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetCustomAccess", propValue);
+	
 				}
 			}
 			// TargetInverse
@@ -12022,7 +12423,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetInverse", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetInverse", serializedPropValue);
 					}
 				}
 			}
@@ -12035,7 +12436,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetLazy", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetLazy", serializedPropValue);
 					}
 				}
 			}
@@ -12046,7 +12447,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetMapType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetMapType", propValue);
+	
 				}
 			}
 			// TargetOrderBy
@@ -12056,7 +12458,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetOrderBy", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetOrderBy", propValue);
+	
 				}
 			}
 			// TargetRelationType
@@ -12068,7 +12471,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherited") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetRelationType", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetRelationType", serializedPropValue);
 					}
 				}
 			}
@@ -12079,7 +12482,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetSort", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetSort", propValue);
+	
 				}
 			}
 			// TargetWhere
@@ -12089,7 +12493,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetWhere", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetWhere", propValue);
+	
 				}
 			}
 			// SourceDescription
@@ -12099,7 +12504,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sourceDescription", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceDescription", propValue);
+	
 				}
 			}
 			// TargetDescription
@@ -12109,7 +12515,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetDescription", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetDescription", propValue);
+	
 				}
 			}
 			// SourceAccess
@@ -12121,7 +12528,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceAccess", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceAccess", serializedPropValue);
 					}
 				}
 			}
@@ -12134,7 +12541,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetAccess", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetAccess", serializedPropValue);
 					}
 				}
 			}
@@ -12146,7 +12553,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, string.Empty) != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourcePropertyType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourcePropertyType", propValue);
 					}
 				}
 			}
@@ -12158,7 +12565,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (propValue != null && (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(propValue, string.Empty) != 0))
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetPropertyType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetPropertyType", propValue);
 					}
 				}
 			}
@@ -12169,7 +12576,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sourcePropertyName", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourcePropertyName", propValue);
+	
 				}
 			}
 			// TargetPropertyName
@@ -12179,7 +12587,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetPropertyName", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetPropertyName", propValue);
+	
 				}
 			}
 			// TargetNotFoundBehaviour
@@ -12191,7 +12600,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Default") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetNotFoundBehaviour", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetNotFoundBehaviour", serializedPropValue);
 					}
 				}
 			}
@@ -12204,7 +12613,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Default") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceNotFoundBehaviour", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceNotFoundBehaviour", serializedPropValue);
 					}
 				}
 			}
@@ -12215,7 +12624,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sourceIUserCollectionType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceIUserCollectionType", propValue);
+	
 				}
 			}
 			// TargetIUserCollectionType
@@ -12225,7 +12635,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetIUserCollectionType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetIUserCollectionType", propValue);
+	
 				}
 			}
 			// CollectionIDColumn
@@ -12235,7 +12646,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("collectionIDColumn", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "collectionIDColumn", propValue);
+	
 				}
 			}
 			// CollectionIDColumnType
@@ -12245,7 +12657,7 @@ namespace Altinoren.ActiveWriter
 				string serializedPropValue = DslModeling::SerializationUtilities.GetString<NHibernateType>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
-					writer.WriteAttributeString("collectionIDColumnType", serializedPropValue);
+					ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "collectionIDColumnType", serializedPropValue);
 				}
 			}
 			// CollectionIDGenerator
@@ -12255,7 +12667,7 @@ namespace Altinoren.ActiveWriter
 				string serializedPropValue = DslModeling::SerializationUtilities.GetString<PrimaryKeyType>(serializationContext, propValue);
 				if (!serializationContext.Result.Failed)
 				{
-					writer.WriteAttributeString("collectionIDGenerator", serializedPropValue);
+					ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "collectionIDGenerator", serializedPropValue);
 				}
 			}
 			// TargetPropertyGenerated
@@ -12267,7 +12679,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetPropertyGenerated", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetPropertyGenerated", serializedPropValue);
 					}
 				}
 			}
@@ -12280,7 +12692,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourcePropertyGenerated", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourcePropertyGenerated", serializedPropValue);
 					}
 				}
 			}
@@ -12292,9 +12704,13 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">ManyToManyRelation instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param>        
-		protected virtual void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WriteElements(serializationContext, element, writer);
+	
 		}
+		
 		#endregion
 	
 		#region Moniker Support
@@ -12464,7 +12880,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer OneToOneRelationSerializer for DomainClass OneToOneRelation.
@@ -12479,6 +12895,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -12548,6 +12982,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read target role-player Target.
 					ReadTargetRolePlayer(serializationContext, element, reader);
 	
@@ -12573,6 +13010,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		/// <summary>
 		/// This method reads the target role player Target.
@@ -12642,19 +13080,22 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">In-memory OneToOneRelation instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadPropertiesFromAttributes(serializationContext, element, reader);
+	
 			OneToOneRelation instanceOfOneToOneRelation = element as OneToOneRelation;
 			global::System.Diagnostics.Debug.Assert(instanceOfOneToOneRelation != null, "Expecting an instance of OneToOneRelation");
 	
 			// SourceAccess
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceAccess = reader.GetAttribute("sourceAccess");
+				string attribSourceAccess = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceAccess");
 				if (attribSourceAccess != null)
 				{
 					InheritablePropertyAccess valueOfSourceAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceAccess), out valueOfSourceAccess))
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(serializationContext, attribSourceAccess, out valueOfSourceAccess))
 					{
 						instanceOfOneToOneRelation.SourceAccess = valueOfSourceAccess;
 					}
@@ -12667,11 +13108,11 @@ namespace Altinoren.ActiveWriter
 			// SourceCascade
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceCascade = reader.GetAttribute("sourceCascade");
+				string attribSourceCascade = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceCascade");
 				if (attribSourceCascade != null)
 				{
 					CascadeEnum valueOfSourceCascade;
-					if (DslModeling::SerializationUtilities.TryGetValue<CascadeEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceCascade), out valueOfSourceCascade))
+					if (DslModeling::SerializationUtilities.TryGetValue<CascadeEnum>(serializationContext, attribSourceCascade, out valueOfSourceCascade))
 					{
 						instanceOfOneToOneRelation.SourceCascade = valueOfSourceCascade;
 					}
@@ -12684,11 +13125,11 @@ namespace Altinoren.ActiveWriter
 			// SourceConstrained
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceConstrained = reader.GetAttribute("sourceConstrained");
+				string attribSourceConstrained = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceConstrained");
 				if (attribSourceConstrained != null)
 				{
 					global::System.Boolean valueOfSourceConstrained;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceConstrained), out valueOfSourceConstrained))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribSourceConstrained, out valueOfSourceConstrained))
 					{
 						instanceOfOneToOneRelation.SourceConstrained = valueOfSourceConstrained;
 					}
@@ -12701,11 +13142,11 @@ namespace Altinoren.ActiveWriter
 			// SourceCustomAccess
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceCustomAccess = reader.GetAttribute("sourceCustomAccess");
+				string attribSourceCustomAccess = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceCustomAccess");
 				if (attribSourceCustomAccess != null)
 				{
 					global::System.String valueOfSourceCustomAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceCustomAccess), out valueOfSourceCustomAccess))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSourceCustomAccess, out valueOfSourceCustomAccess))
 					{
 						instanceOfOneToOneRelation.SourceCustomAccess = valueOfSourceCustomAccess;
 					}
@@ -12718,11 +13159,11 @@ namespace Altinoren.ActiveWriter
 			// SourceOuterJoin
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceOuterJoin = reader.GetAttribute("sourceOuterJoin");
+				string attribSourceOuterJoin = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceOuterJoin");
 				if (attribSourceOuterJoin != null)
 				{
 					OuterJoinEnum valueOfSourceOuterJoin;
-					if (DslModeling::SerializationUtilities.TryGetValue<OuterJoinEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceOuterJoin), out valueOfSourceOuterJoin))
+					if (DslModeling::SerializationUtilities.TryGetValue<OuterJoinEnum>(serializationContext, attribSourceOuterJoin, out valueOfSourceOuterJoin))
 					{
 						instanceOfOneToOneRelation.SourceOuterJoin = valueOfSourceOuterJoin;
 					}
@@ -12735,11 +13176,11 @@ namespace Altinoren.ActiveWriter
 			// TargetAccess
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetAccess = reader.GetAttribute("targetAccess");
+				string attribTargetAccess = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetAccess");
 				if (attribTargetAccess != null)
 				{
 					InheritablePropertyAccess valueOfTargetAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetAccess), out valueOfTargetAccess))
+					if (DslModeling::SerializationUtilities.TryGetValue<InheritablePropertyAccess>(serializationContext, attribTargetAccess, out valueOfTargetAccess))
 					{
 						instanceOfOneToOneRelation.TargetAccess = valueOfTargetAccess;
 					}
@@ -12752,11 +13193,11 @@ namespace Altinoren.ActiveWriter
 			// TargetCascade
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetCascade = reader.GetAttribute("targetCascade");
+				string attribTargetCascade = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetCascade");
 				if (attribTargetCascade != null)
 				{
 					CascadeEnum valueOfTargetCascade;
-					if (DslModeling::SerializationUtilities.TryGetValue<CascadeEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetCascade), out valueOfTargetCascade))
+					if (DslModeling::SerializationUtilities.TryGetValue<CascadeEnum>(serializationContext, attribTargetCascade, out valueOfTargetCascade))
 					{
 						instanceOfOneToOneRelation.TargetCascade = valueOfTargetCascade;
 					}
@@ -12769,11 +13210,11 @@ namespace Altinoren.ActiveWriter
 			// TargetConstrained
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetConstrained = reader.GetAttribute("targetConstrained");
+				string attribTargetConstrained = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetConstrained");
 				if (attribTargetConstrained != null)
 				{
 					global::System.Boolean valueOfTargetConstrained;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetConstrained), out valueOfTargetConstrained))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribTargetConstrained, out valueOfTargetConstrained))
 					{
 						instanceOfOneToOneRelation.TargetConstrained = valueOfTargetConstrained;
 					}
@@ -12786,11 +13227,11 @@ namespace Altinoren.ActiveWriter
 			// TargetCustomAccess
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetCustomAccess = reader.GetAttribute("targetCustomAccess");
+				string attribTargetCustomAccess = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetCustomAccess");
 				if (attribTargetCustomAccess != null)
 				{
 					global::System.String valueOfTargetCustomAccess;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetCustomAccess), out valueOfTargetCustomAccess))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetCustomAccess, out valueOfTargetCustomAccess))
 					{
 						instanceOfOneToOneRelation.TargetCustomAccess = valueOfTargetCustomAccess;
 					}
@@ -12803,11 +13244,11 @@ namespace Altinoren.ActiveWriter
 			// TargetOuterJoin
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetOuterJoin = reader.GetAttribute("targetOuterJoin");
+				string attribTargetOuterJoin = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetOuterJoin");
 				if (attribTargetOuterJoin != null)
 				{
 					OuterJoinEnum valueOfTargetOuterJoin;
-					if (DslModeling::SerializationUtilities.TryGetValue<OuterJoinEnum>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetOuterJoin), out valueOfTargetOuterJoin))
+					if (DslModeling::SerializationUtilities.TryGetValue<OuterJoinEnum>(serializationContext, attribTargetOuterJoin, out valueOfTargetOuterJoin))
 					{
 						instanceOfOneToOneRelation.TargetOuterJoin = valueOfTargetOuterJoin;
 					}
@@ -12820,11 +13261,11 @@ namespace Altinoren.ActiveWriter
 			// SourceDescription
 			if (!serializationContext.Result.Failed)
 			{
-				string attribSourceDescription = reader.GetAttribute("sourceDescription");
+				string attribSourceDescription = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "sourceDescription");
 				if (attribSourceDescription != null)
 				{
 					global::System.String valueOfSourceDescription;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribSourceDescription), out valueOfSourceDescription))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribSourceDescription, out valueOfSourceDescription))
 					{
 						instanceOfOneToOneRelation.SourceDescription = valueOfSourceDescription;
 					}
@@ -12837,11 +13278,11 @@ namespace Altinoren.ActiveWriter
 			// TargetDescription
 			if (!serializationContext.Result.Failed)
 			{
-				string attribTargetDescription = reader.GetAttribute("targetDescription");
+				string attribTargetDescription = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "targetDescription");
 				if (attribTargetDescription != null)
 				{
 					global::System.String valueOfTargetDescription;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribTargetDescription), out valueOfTargetDescription))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribTargetDescription, out valueOfTargetDescription))
 					{
 						instanceOfOneToOneRelation.TargetDescription = valueOfTargetDescription;
 					}
@@ -12854,11 +13295,11 @@ namespace Altinoren.ActiveWriter
 			// Lazy
 			if (!serializationContext.Result.Failed)
 			{
-				string attribLazy = reader.GetAttribute("lazy");
+				string attribLazy = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "lazy");
 				if (attribLazy != null)
 				{
 					global::System.Boolean valueOfLazy;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribLazy), out valueOfLazy))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribLazy, out valueOfLazy))
 					{
 						instanceOfOneToOneRelation.Lazy = valueOfLazy;
 					}
@@ -12878,7 +13319,7 @@ namespace Altinoren.ActiveWriter
 		/// reader at the open tag of the first child XML element.
 		/// This method will read as many child XML elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the open 
-		///    tag of the unknown element. This implies the if the first child XML element is unknown, this method should return 
+		///    tag of the unknown element. This implies that if the first child XML element is unknown, this method should return 
 		///    immediately and do nothing.
 		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
 		/// 3) EOF.
@@ -12886,8 +13327,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">In-memory OneToOneRelation instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
-		protected virtual void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadElements(serializationContext, element, reader);
+	
 		}
 	
 		#region TryCreateInstance & TryCreateDerivedInstance
@@ -13211,15 +13655,26 @@ namespace Altinoren.ActiveWriter
 	
 			// Write start of element, including schema target namespace if specified.
 			if (rootElementSettings != null && !string.IsNullOrEmpty(rootElementSettings.SchemaTargetNamespace))
+			{
 				writer.WriteStartElement(this.XmlTagName, rootElementSettings.SchemaTargetNamespace);
+				DslModeling::SerializationUtilities.WriteDomainModelNamespaces(serializationContext.Directory, writer, rootElementSettings.SchemaTargetNamespace);
+			}
 			else
+			{
 				writer.WriteStartElement(this.XmlTagName);
+			}
 				
 			// Write version info (in the format 1.2.3.4), if necessary
 			if (rootElementSettings != null && rootElementSettings.Version != null)
 				writer.WriteAttributeString("dslVersion", rootElementSettings.Version.ToString(4));
 	
 			WritePropertiesAsAttributes(serializationContext, element, writer);
+	
+			// Write out any extension data if this is the root element
+			if (rootElementSettings != null && !serializationContext.Result.Failed)
+			{
+				ActiveWriterSerializationHelper.Instance.WriteExtensions(serializationContext, element, writer);
+			}
 	
 			// Write the target role-player instance.
 			OneToOneRelation instance = element as OneToOneRelation;
@@ -13246,8 +13701,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">OneToOneRelation instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
 			OneToOneRelation instanceOfOneToOneRelation = element as OneToOneRelation;
 			global::System.Diagnostics.Debug.Assert(instanceOfOneToOneRelation != null, "Expecting an instance of OneToOneRelation");
 	
@@ -13260,7 +13718,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceAccess", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceAccess", serializedPropValue);
 					}
 				}
 			}
@@ -13273,7 +13731,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "None") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceCascade", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceCascade", serializedPropValue);
 					}
 				}
 			}
@@ -13286,7 +13744,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceConstrained", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceConstrained", serializedPropValue);
 					}
 				}
 			}
@@ -13297,7 +13755,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sourceCustomAccess", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceCustomAccess", propValue);
+	
 				}
 			}
 			// SourceOuterJoin
@@ -13309,7 +13768,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Auto") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("sourceOuterJoin", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceOuterJoin", serializedPropValue);
 					}
 				}
 			}
@@ -13322,7 +13781,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Inherit") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetAccess", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetAccess", serializedPropValue);
 					}
 				}
 			}
@@ -13335,7 +13794,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "None") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetCascade", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetCascade", serializedPropValue);
 					}
 				}
 			}
@@ -13348,7 +13807,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetConstrained", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetConstrained", serializedPropValue);
 					}
 				}
 			}
@@ -13359,7 +13818,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetCustomAccess", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetCustomAccess", propValue);
+	
 				}
 			}
 			// TargetOuterJoin
@@ -13371,7 +13831,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "Auto") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("targetOuterJoin", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetOuterJoin", serializedPropValue);
 					}
 				}
 			}
@@ -13382,7 +13842,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("sourceDescription", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "sourceDescription", propValue);
+	
 				}
 			}
 			// TargetDescription
@@ -13392,7 +13853,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("targetDescription", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "targetDescription", propValue);
+	
 				}
 			}
 			// Lazy
@@ -13404,7 +13866,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "false") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("lazy", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "lazy", serializedPropValue);
 					}
 				}
 			}
@@ -13416,9 +13878,13 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">OneToOneRelation instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param>        
-		protected virtual void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WriteElements(serializationContext, element, writer);
+	
 		}
+		
 		#endregion
 	
 		#region Moniker Support
@@ -13610,7 +14076,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer ModelHasNestedClassesSerializer for DomainClass ModelHasNestedClasses.
@@ -13625,6 +14091,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -13694,6 +14178,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read target role-player NestedClass.
 					ReadTargetRolePlayer(serializationContext, element, reader);
 	
@@ -13719,6 +14206,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		/// <summary>
 		/// This method reads the target role player NestedClass.
@@ -13790,8 +14278,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">In-memory ModelHasNestedClasses instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadPropertiesFromAttributes(serializationContext, element, reader);
+	
 			// There is no property to read; do nothing
 		}
 	
@@ -13803,7 +14294,7 @@ namespace Altinoren.ActiveWriter
 		/// reader at the open tag of the first child XML element.
 		/// This method will read as many child XML elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the open 
-		///    tag of the unknown element. This implies the if the first child XML element is unknown, this method should return 
+		///    tag of the unknown element. This implies that if the first child XML element is unknown, this method should return 
 		///    immediately and do nothing.
 		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
 		/// 3) EOF.
@@ -13811,8 +14302,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">In-memory ModelHasNestedClasses instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
-		protected virtual void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadElements(serializationContext, element, reader);
+	
 		}
 	
 		#region TryCreateInstance & TryCreateDerivedInstance
@@ -14132,8 +14626,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">ModelHasNestedClasses instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
 			// There are no properties; do nothing
 		}
 	
@@ -14143,9 +14640,13 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">ModelHasNestedClasses instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param>        
-		protected virtual void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WriteElements(serializationContext, element, writer);
+	
 		}
+		
 		#endregion
 	
 		#region Moniker Support
@@ -14246,7 +14747,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer NestedClassHasPropertiesSerializer for DomainClass NestedClassHasProperties.
@@ -14261,6 +14762,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -14330,6 +14849,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read target role-player Property.
 					ReadTargetRolePlayer(serializationContext, element, reader);
 	
@@ -14355,6 +14877,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		/// <summary>
 		/// This method reads the target role player Property.
@@ -14426,8 +14949,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">In-memory NestedClassHasProperties instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadPropertiesFromAttributes(serializationContext, element, reader);
+	
 			// There is no property to read; do nothing
 		}
 	
@@ -14439,7 +14965,7 @@ namespace Altinoren.ActiveWriter
 		/// reader at the open tag of the first child XML element.
 		/// This method will read as many child XML elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the open 
-		///    tag of the unknown element. This implies the if the first child XML element is unknown, this method should return 
+		///    tag of the unknown element. This implies that if the first child XML element is unknown, this method should return 
 		///    immediately and do nothing.
 		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
 		/// 3) EOF.
@@ -14447,8 +14973,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">In-memory NestedClassHasProperties instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
-		protected virtual void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadElements(serializationContext, element, reader);
+	
 		}
 	
 		#region TryCreateInstance & TryCreateDerivedInstance
@@ -14768,8 +15297,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">NestedClassHasProperties instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
 			// There are no properties; do nothing
 		}
 	
@@ -14779,9 +15311,13 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">NestedClassHasProperties instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param>        
-		protected virtual void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WriteElements(serializationContext, element, writer);
+	
 		}
+		
 		#endregion
 	
 		#region Moniker Support
@@ -14882,7 +15418,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer NestedClassReferencesModelClassesSerializer for DomainClass NestedClassReferencesModelClasses.
@@ -14897,6 +15433,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -14966,6 +15520,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read target role-player ModelClass.
 					ReadTargetRolePlayer(serializationContext, element, reader);
 	
@@ -14991,6 +15548,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		/// <summary>
 		/// This method reads the target role player ModelClass.
@@ -15060,19 +15618,22 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">In-memory NestedClassReferencesModelClasses instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadPropertiesFromAttributes(serializationContext, element, reader);
+	
 			NestedClassReferencesModelClasses instanceOfNestedClassReferencesModelClasses = element as NestedClassReferencesModelClasses;
 			global::System.Diagnostics.Debug.Assert(instanceOfNestedClassReferencesModelClasses != null, "Expecting an instance of NestedClassReferencesModelClasses");
 	
 			// MapType
 			if (!serializationContext.Result.Failed)
 			{
-				string attribMapType = reader.GetAttribute("mapType");
+				string attribMapType = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "mapType");
 				if (attribMapType != null)
 				{
 					global::System.String valueOfMapType;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribMapType), out valueOfMapType))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribMapType, out valueOfMapType))
 					{
 						instanceOfNestedClassReferencesModelClasses.MapType = valueOfMapType;
 					}
@@ -15085,11 +15646,11 @@ namespace Altinoren.ActiveWriter
 			// Insert
 			if (!serializationContext.Result.Failed)
 			{
-				string attribInsert = reader.GetAttribute("insert");
+				string attribInsert = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "insert");
 				if (attribInsert != null)
 				{
 					global::System.Boolean valueOfInsert;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribInsert), out valueOfInsert))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribInsert, out valueOfInsert))
 					{
 						instanceOfNestedClassReferencesModelClasses.Insert = valueOfInsert;
 					}
@@ -15102,11 +15663,11 @@ namespace Altinoren.ActiveWriter
 			// Update
 			if (!serializationContext.Result.Failed)
 			{
-				string attribUpdate = reader.GetAttribute("update");
+				string attribUpdate = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "update");
 				if (attribUpdate != null)
 				{
 					global::System.Boolean valueOfUpdate;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(DslModeling::SerializationUtilities.UnescapeXmlString(attribUpdate), out valueOfUpdate))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.Boolean>(serializationContext, attribUpdate, out valueOfUpdate))
 					{
 						instanceOfNestedClassReferencesModelClasses.Update = valueOfUpdate;
 					}
@@ -15119,11 +15680,11 @@ namespace Altinoren.ActiveWriter
 			// ColumnPrefix
 			if (!serializationContext.Result.Failed)
 			{
-				string attribColumnPrefix = reader.GetAttribute("columnPrefix");
+				string attribColumnPrefix = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "columnPrefix");
 				if (attribColumnPrefix != null)
 				{
 					global::System.String valueOfColumnPrefix;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribColumnPrefix), out valueOfColumnPrefix))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribColumnPrefix, out valueOfColumnPrefix))
 					{
 						instanceOfNestedClassReferencesModelClasses.ColumnPrefix = valueOfColumnPrefix;
 					}
@@ -15136,11 +15697,11 @@ namespace Altinoren.ActiveWriter
 			// Description
 			if (!serializationContext.Result.Failed)
 			{
-				string attribDescription = reader.GetAttribute("description");
+				string attribDescription = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "description");
 				if (attribDescription != null)
 				{
 					global::System.String valueOfDescription;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribDescription), out valueOfDescription))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribDescription, out valueOfDescription))
 					{
 						instanceOfNestedClassReferencesModelClasses.Description = valueOfDescription;
 					}
@@ -15153,11 +15714,11 @@ namespace Altinoren.ActiveWriter
 			// PropertyName
 			if (!serializationContext.Result.Failed)
 			{
-				string attribPropertyName = reader.GetAttribute("propertyName");
+				string attribPropertyName = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, element, reader, "propertyName");
 				if (attribPropertyName != null)
 				{
 					global::System.String valueOfPropertyName;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribPropertyName), out valueOfPropertyName))
+					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(serializationContext, attribPropertyName, out valueOfPropertyName))
 					{
 						instanceOfNestedClassReferencesModelClasses.PropertyName = valueOfPropertyName;
 					}
@@ -15177,7 +15738,7 @@ namespace Altinoren.ActiveWriter
 		/// reader at the open tag of the first child XML element.
 		/// This method will read as many child XML elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the open 
-		///    tag of the unknown element. This implies the if the first child XML element is unknown, this method should return 
+		///    tag of the unknown element. This implies that if the first child XML element is unknown, this method should return 
 		///    immediately and do nothing.
 		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
 		/// 3) EOF.
@@ -15185,8 +15746,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">In-memory NestedClassReferencesModelClasses instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
-		protected virtual void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadElements(serializationContext, element, reader);
+	
 		}
 	
 		#region TryCreateInstance & TryCreateDerivedInstance
@@ -15510,15 +16074,26 @@ namespace Altinoren.ActiveWriter
 	
 			// Write start of element, including schema target namespace if specified.
 			if (rootElementSettings != null && !string.IsNullOrEmpty(rootElementSettings.SchemaTargetNamespace))
+			{
 				writer.WriteStartElement(this.XmlTagName, rootElementSettings.SchemaTargetNamespace);
+				DslModeling::SerializationUtilities.WriteDomainModelNamespaces(serializationContext.Directory, writer, rootElementSettings.SchemaTargetNamespace);
+			}
 			else
+			{
 				writer.WriteStartElement(this.XmlTagName);
+			}
 				
 			// Write version info (in the format 1.2.3.4), if necessary
 			if (rootElementSettings != null && rootElementSettings.Version != null)
 				writer.WriteAttributeString("dslVersion", rootElementSettings.Version.ToString(4));
 	
 			WritePropertiesAsAttributes(serializationContext, element, writer);
+	
+			// Write out any extension data if this is the root element
+			if (rootElementSettings != null && !serializationContext.Result.Failed)
+			{
+				ActiveWriterSerializationHelper.Instance.WriteExtensions(serializationContext, element, writer);
+			}
 	
 			// Write the target role-player instance.
 			NestedClassReferencesModelClasses instance = element as NestedClassReferencesModelClasses;
@@ -15545,8 +16120,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">NestedClassReferencesModelClasses instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
 			NestedClassReferencesModelClasses instanceOfNestedClassReferencesModelClasses = element as NestedClassReferencesModelClasses;
 			global::System.Diagnostics.Debug.Assert(instanceOfNestedClassReferencesModelClasses != null, "Expecting an instance of NestedClassReferencesModelClasses");
 	
@@ -15557,7 +16135,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("mapType", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "mapType", propValue);
+	
 				}
 			}
 			// Insert
@@ -15569,7 +16148,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("insert", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "insert", serializedPropValue);
 					}
 				}
 			}
@@ -15582,7 +16161,7 @@ namespace Altinoren.ActiveWriter
 				{
 					if (serializationContext.WriteOptionalPropertiesWithDefaultValue || string.CompareOrdinal(serializedPropValue, "true") != 0)
 					{	// No need to write the value out if it's the same as default value.
-						writer.WriteAttributeString("update", serializedPropValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "update", serializedPropValue);
 					}
 				}
 			}
@@ -15593,7 +16172,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("columnPrefix", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "columnPrefix", propValue);
+	
 				}
 			}
 			// Description
@@ -15603,7 +16183,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("description", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "description", propValue);
+	
 				}
 			}
 			// PropertyName
@@ -15613,7 +16194,8 @@ namespace Altinoren.ActiveWriter
 				if (!serializationContext.Result.Failed)
 				{
 					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("propertyName", propValue);
+						ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, "propertyName", propValue);
+	
 				}
 			}
 		}
@@ -15624,9 +16206,13 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">NestedClassReferencesModelClasses instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param>        
-		protected virtual void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WriteElements(serializationContext, element, writer);
+	
 		}
+		
 		#endregion
 	
 		#region Moniker Support
@@ -15818,7 +16404,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer InheritanceRelationSerializer for DomainClass InheritanceRelation.
@@ -15833,6 +16419,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -15902,6 +16506,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read target role-player TargetModelClass.
 					ReadTargetRolePlayer(serializationContext, element, reader);
 	
@@ -15927,6 +16534,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		/// <summary>
 		/// This method reads the target role player TargetModelClass.
@@ -15996,8 +16604,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">In-memory InheritanceRelation instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadPropertiesFromAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadPropertiesFromAttributes(serializationContext, element, reader);
+	
 			// There is no property to read; do nothing
 		}
 	
@@ -16009,7 +16620,7 @@ namespace Altinoren.ActiveWriter
 		/// reader at the open tag of the first child XML element.
 		/// This method will read as many child XML elements as it can. It returns under three circumstances:
 		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the open 
-		///    tag of the unknown element. This implies the if the first child XML element is unknown, this method should return 
+		///    tag of the unknown element. This implies that if the first child XML element is unknown, this method should return 
 		///    immediately and do nothing.
 		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
 		/// 3) EOF.
@@ -16017,8 +16628,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">In-memory InheritanceRelation instance that will get the deserialized data.</param>
 		/// <param name="reader">XmlReader to read serialized data from.</param>
-		protected virtual void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		protected override void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
 		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadElements(serializationContext, element, reader);
+	
 		}
 	
 		#region TryCreateInstance & TryCreateDerivedInstance
@@ -16338,8 +16952,11 @@ namespace Altinoren.ActiveWriter
 		/// <param name="element">InheritanceRelation instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param> 
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Generated code.")]
-		protected virtual void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WritePropertiesAsAttributes(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
 			// There are no properties; do nothing
 		}
 	
@@ -16349,9 +16966,13 @@ namespace Altinoren.ActiveWriter
 		/// <param name="serializationContext">Serialization context.</param>
 		/// <param name="element">InheritanceRelation instance to be serialized.</param>
 		/// <param name="writer">XmlWriter to write serialized data to.</param>        
-		protected virtual void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		protected override void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
 		{
+			// Always call the base class so any extensions are serialized
+			base.WriteElements(serializationContext, element, writer);
+	
 		}
+		
 		#endregion
 	
 		#region Moniker Support
@@ -16543,7 +17164,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer ClassShapeSerializerBase for DomainClass ClassShape.
@@ -16558,6 +17179,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -16627,11 +17266,14 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read nested XML elements, they can be either properties serialized as XML elements, or child 
 					// model elements.
 					while (!serializationContext.Result.Failed && !reader.EOF && reader.NodeType == global::System.Xml.XmlNodeType.Element)
 					{
-						base.ReadElements(serializationContext, element, reader);
+						ReadElements(serializationContext, element, reader);
 						if (!serializationContext.Result.Failed && !reader.EOF && reader.NodeType == global::System.Xml.XmlNodeType.Element)
 						{
 							// Encountered one unknown XML element, skip it and keep reading.
@@ -16644,6 +17286,30 @@ namespace Altinoren.ActiveWriter
 	
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
+		}
+		
+	
+		/// <summary>
+		/// This methods deserializes nested XML elements inside the passed-in element.
+		/// </summary>
+		/// <remarks>
+		/// The caller will guarantee that the current element does have nested XML elements, and the call will position the 
+		/// reader at the open tag of the first child XML element.
+		/// This method will read as many child XML elements as it can. It returns under three circumstances:
+		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the open 
+		///    tag of the unknown element. This implies that if the first child XML element is unknown, this method should return 
+		///    immediately and do nothing.
+		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
+		/// 3) EOF.
+		/// </remarks>
+		/// <param name="serializationContext">Serialization context.</param>
+		/// <param name="element">In-memory ClassShape instance that will get the deserialized data.</param>
+		/// <param name="reader">XmlReader to read serialized data from.</param>
+		protected override void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadElements(serializationContext, element, reader);
+	
 		}
 	
 		#region TryCreateInstance
@@ -16861,7 +17527,8 @@ namespace Altinoren.ActiveWriter
 		/// <returns>Created ModelRoot instance, or null if the reader is not pointing to a correct monikerized instance.</returns>
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
-			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
+			string monikerString = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, sourceRolePlayer, reader, this.MonikerAttributeName);
+	
 			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
@@ -16965,7 +17632,7 @@ namespace Altinoren.ActiveWriter
 			string monikerString = this.CalculateQualifiedName(serializationContext.Directory, element);
 			global::System.Diagnostics.Debug.Assert(!string.IsNullOrEmpty(monikerString));
 			writer.WriteStartElement(this.MonikerTagName);
-			writer.WriteAttributeString(this.MonikerAttributeName, monikerString);
+			ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, this.MonikerAttributeName, monikerString);
 			writer.WriteEndElement();
 		}
 		
@@ -16997,9 +17664,14 @@ namespace Altinoren.ActiveWriter
 	
 			// Write start of element, including schema target namespace if specified.
 			if (rootElementSettings != null && !string.IsNullOrEmpty(rootElementSettings.SchemaTargetNamespace))
+			{
 				writer.WriteStartElement(this.XmlTagName, rootElementSettings.SchemaTargetNamespace);
+				DslModeling::SerializationUtilities.WriteDomainModelNamespaces(serializationContext.Directory, writer, rootElementSettings.SchemaTargetNamespace);
+			}
 			else
+			{
 				writer.WriteStartElement(this.XmlTagName);
+			}
 				
 			// Write version info (in the format 1.2.3.4), if necessary
 			if (rootElementSettings != null && rootElementSettings.Version != null)
@@ -17010,14 +17682,34 @@ namespace Altinoren.ActiveWriter
 	
 			base.WritePropertiesAsAttributes(serializationContext, element, writer);
 	
+			// Write out any extension data if this is the root element
+			if (rootElementSettings != null && !serializationContext.Result.Failed)
+			{
+				ActiveWriterSerializationHelper.Instance.WriteExtensions(serializationContext, element, writer);
+			}
+	
 			if (!serializationContext.Result.Failed)
 			{
 				// Write 1) properties serialized as nested XML elements and 2) child model elements into XML.
-				base.WriteElements(serializationContext, element, writer);
+				WriteElements(serializationContext, element, writer);
 			}
 	
 			writer.WriteEndElement();
 		}
+	
+		/// <summary>
+		/// This methods serializes 1) properties serialized as nested XML elements and 2) child model elements into XML. 
+		/// </summary>
+		/// <param name="serializationContext">Serialization context.</param>
+		/// <param name="element">ClassShape instance to be serialized.</param>
+		/// <param name="writer">XmlWriter to write serialized data to.</param>        
+		protected override void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		{
+			// Always call the base class so any extensions are serialized
+			base.WriteElements(serializationContext, element, writer);
+	
+		}
+		
 		#endregion
 	
 		#region Moniker Support
@@ -17088,7 +17780,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer NestedClassShapeSerializerBase for DomainClass NestedClassShape.
@@ -17103,6 +17795,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -17172,11 +17882,14 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read nested XML elements, they can be either properties serialized as XML elements, or child 
 					// model elements.
 					while (!serializationContext.Result.Failed && !reader.EOF && reader.NodeType == global::System.Xml.XmlNodeType.Element)
 					{
-						base.ReadElements(serializationContext, element, reader);
+						ReadElements(serializationContext, element, reader);
 						if (!serializationContext.Result.Failed && !reader.EOF && reader.NodeType == global::System.Xml.XmlNodeType.Element)
 						{
 							// Encountered one unknown XML element, skip it and keep reading.
@@ -17189,6 +17902,30 @@ namespace Altinoren.ActiveWriter
 	
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
+		}
+		
+	
+		/// <summary>
+		/// This methods deserializes nested XML elements inside the passed-in element.
+		/// </summary>
+		/// <remarks>
+		/// The caller will guarantee that the current element does have nested XML elements, and the call will position the 
+		/// reader at the open tag of the first child XML element.
+		/// This method will read as many child XML elements as it can. It returns under three circumstances:
+		/// 1) When an unknown child XML element is encountered. In this case, this method will position the reader at the open 
+		///    tag of the unknown element. This implies that if the first child XML element is unknown, this method should return 
+		///    immediately and do nothing.
+		/// 2) When all child XML elemnets are read. In this case, the reader will be positioned at the end tag of the parent element.
+		/// 3) EOF.
+		/// </remarks>
+		/// <param name="serializationContext">Serialization context.</param>
+		/// <param name="element">In-memory NestedClassShape instance that will get the deserialized data.</param>
+		/// <param name="reader">XmlReader to read serialized data from.</param>
+		protected override void ReadElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		{
+			// Always call the base class so any extensions are deserialized
+			base.ReadElements(serializationContext, element, reader);
+	
 		}
 	
 		#region TryCreateInstance
@@ -17406,7 +18143,8 @@ namespace Altinoren.ActiveWriter
 		/// <returns>Created ModelRoot instance, or null if the reader is not pointing to a correct monikerized instance.</returns>
 		protected override DslModeling::Moniker CreateMonikerInstance (DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader, DslModeling::ModelElement sourceRolePlayer, global::System.Guid relDomainClassId, DslModeling::Partition partition)
 		{
-			string monikerString = DslModeling::SerializationUtilities.UnescapeXmlString(reader.GetAttribute(this.MonikerAttributeName));
+			string monikerString = ActiveWriterSerializationHelper.Instance.ReadAttribute(serializationContext, sourceRolePlayer, reader, this.MonikerAttributeName);
+	
 			if (string.IsNullOrEmpty(monikerString))
 			{	
 				ActiveWriterSerializationBehaviorSerializationMessages.MissingMoniker(serializationContext, reader, this.MonikerAttributeName);
@@ -17510,7 +18248,7 @@ namespace Altinoren.ActiveWriter
 			string monikerString = this.CalculateQualifiedName(serializationContext.Directory, element);
 			global::System.Diagnostics.Debug.Assert(!string.IsNullOrEmpty(monikerString));
 			writer.WriteStartElement(this.MonikerTagName);
-			writer.WriteAttributeString(this.MonikerAttributeName, monikerString);
+			ActiveWriterSerializationHelper.Instance.WriteAttributeString(serializationContext, element, writer, this.MonikerAttributeName, monikerString);
 			writer.WriteEndElement();
 		}
 		
@@ -17542,9 +18280,14 @@ namespace Altinoren.ActiveWriter
 	
 			// Write start of element, including schema target namespace if specified.
 			if (rootElementSettings != null && !string.IsNullOrEmpty(rootElementSettings.SchemaTargetNamespace))
+			{
 				writer.WriteStartElement(this.XmlTagName, rootElementSettings.SchemaTargetNamespace);
+				DslModeling::SerializationUtilities.WriteDomainModelNamespaces(serializationContext.Directory, writer, rootElementSettings.SchemaTargetNamespace);
+			}
 			else
+			{
 				writer.WriteStartElement(this.XmlTagName);
+			}
 				
 			// Write version info (in the format 1.2.3.4), if necessary
 			if (rootElementSettings != null && rootElementSettings.Version != null)
@@ -17555,14 +18298,34 @@ namespace Altinoren.ActiveWriter
 	
 			base.WritePropertiesAsAttributes(serializationContext, element, writer);
 	
+			// Write out any extension data if this is the root element
+			if (rootElementSettings != null && !serializationContext.Result.Failed)
+			{
+				ActiveWriterSerializationHelper.Instance.WriteExtensions(serializationContext, element, writer);
+			}
+	
 			if (!serializationContext.Result.Failed)
 			{
 				// Write 1) properties serialized as nested XML elements and 2) child model elements into XML.
-				base.WriteElements(serializationContext, element, writer);
+				WriteElements(serializationContext, element, writer);
 			}
 	
 			writer.WriteEndElement();
 		}
+	
+		/// <summary>
+		/// This methods serializes 1) properties serialized as nested XML elements and 2) child model elements into XML. 
+		/// </summary>
+		/// <param name="serializationContext">Serialization context.</param>
+		/// <param name="element">NestedClassShape instance to be serialized.</param>
+		/// <param name="writer">XmlWriter to write serialized data to.</param>        
+		protected override void WriteElements(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		{
+			// Always call the base class so any extensions are serialized
+			base.WriteElements(serializationContext, element, writer);
+	
+		}
+		
 		#endregion
 	
 		#region Moniker Support
@@ -17633,7 +18396,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer ManyToOneConnectorSerializer for DomainClass ManyToOneConnector.
@@ -17648,6 +18411,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -17717,6 +18498,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read nested XML elements, they can be either properties serialized as XML elements, or child 
 					// model elements.
 					while (!serializationContext.Result.Failed && !reader.EOF && reader.NodeType == global::System.Xml.XmlNodeType.Element)
@@ -17735,6 +18519,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		#region TryCreateInstance
 		/// <summary>
@@ -18010,15 +18795,26 @@ namespace Altinoren.ActiveWriter
 	
 			// Write start of element, including schema target namespace if specified.
 			if (rootElementSettings != null && !string.IsNullOrEmpty(rootElementSettings.SchemaTargetNamespace))
+			{
 				writer.WriteStartElement(this.XmlTagName, rootElementSettings.SchemaTargetNamespace);
+				DslModeling::SerializationUtilities.WriteDomainModelNamespaces(serializationContext.Directory, writer, rootElementSettings.SchemaTargetNamespace);
+			}
 			else
+			{
 				writer.WriteStartElement(this.XmlTagName);
+			}
 				
 			// Write version info (in the format 1.2.3.4), if necessary
 			if (rootElementSettings != null && rootElementSettings.Version != null)
 				writer.WriteAttributeString("dslVersion", rootElementSettings.Version.ToString(4));
 	
 			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
+			// Write out any extension data if this is the root element
+			if (rootElementSettings != null && !serializationContext.Result.Failed)
+			{
+				ActiveWriterSerializationHelper.Instance.WriteExtensions(serializationContext, element, writer);
+			}
 	
 			if (!serializationContext.Result.Failed)
 			{
@@ -18104,7 +18900,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer ManyToManyConnectorSerializer for DomainClass ManyToManyConnector.
@@ -18119,6 +18915,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -18188,6 +19002,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read nested XML elements, they can be either properties serialized as XML elements, or child 
 					// model elements.
 					while (!serializationContext.Result.Failed && !reader.EOF && reader.NodeType == global::System.Xml.XmlNodeType.Element)
@@ -18206,6 +19023,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		#region TryCreateInstance
 		/// <summary>
@@ -18481,15 +19299,26 @@ namespace Altinoren.ActiveWriter
 	
 			// Write start of element, including schema target namespace if specified.
 			if (rootElementSettings != null && !string.IsNullOrEmpty(rootElementSettings.SchemaTargetNamespace))
+			{
 				writer.WriteStartElement(this.XmlTagName, rootElementSettings.SchemaTargetNamespace);
+				DslModeling::SerializationUtilities.WriteDomainModelNamespaces(serializationContext.Directory, writer, rootElementSettings.SchemaTargetNamespace);
+			}
 			else
+			{
 				writer.WriteStartElement(this.XmlTagName);
+			}
 				
 			// Write version info (in the format 1.2.3.4), if necessary
 			if (rootElementSettings != null && rootElementSettings.Version != null)
 				writer.WriteAttributeString("dslVersion", rootElementSettings.Version.ToString(4));
 	
 			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
+			// Write out any extension data if this is the root element
+			if (rootElementSettings != null && !serializationContext.Result.Failed)
+			{
+				ActiveWriterSerializationHelper.Instance.WriteExtensions(serializationContext, element, writer);
+			}
 	
 			if (!serializationContext.Result.Failed)
 			{
@@ -18575,7 +19404,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer OneToOneConnectorSerializer for DomainClass OneToOneConnector.
@@ -18590,6 +19419,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -18659,6 +19506,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read nested XML elements, they can be either properties serialized as XML elements, or child 
 					// model elements.
 					while (!serializationContext.Result.Failed && !reader.EOF && reader.NodeType == global::System.Xml.XmlNodeType.Element)
@@ -18677,6 +19527,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		#region TryCreateInstance
 		/// <summary>
@@ -18952,15 +19803,26 @@ namespace Altinoren.ActiveWriter
 	
 			// Write start of element, including schema target namespace if specified.
 			if (rootElementSettings != null && !string.IsNullOrEmpty(rootElementSettings.SchemaTargetNamespace))
+			{
 				writer.WriteStartElement(this.XmlTagName, rootElementSettings.SchemaTargetNamespace);
+				DslModeling::SerializationUtilities.WriteDomainModelNamespaces(serializationContext.Directory, writer, rootElementSettings.SchemaTargetNamespace);
+			}
 			else
+			{
 				writer.WriteStartElement(this.XmlTagName);
+			}
 				
 			// Write version info (in the format 1.2.3.4), if necessary
 			if (rootElementSettings != null && rootElementSettings.Version != null)
 				writer.WriteAttributeString("dslVersion", rootElementSettings.Version.ToString(4));
 	
 			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
+			// Write out any extension data if this is the root element
+			if (rootElementSettings != null && !serializationContext.Result.Failed)
+			{
+				ActiveWriterSerializationHelper.Instance.WriteExtensions(serializationContext, element, writer);
+			}
 	
 			if (!serializationContext.Result.Failed)
 			{
@@ -19046,7 +19908,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer NestedConnectorSerializer for DomainClass NestedConnector.
@@ -19061,6 +19923,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -19130,6 +20010,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read nested XML elements, they can be either properties serialized as XML elements, or child 
 					// model elements.
 					while (!serializationContext.Result.Failed && !reader.EOF && reader.NodeType == global::System.Xml.XmlNodeType.Element)
@@ -19148,6 +20031,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		#region TryCreateInstance
 		/// <summary>
@@ -19423,15 +20307,26 @@ namespace Altinoren.ActiveWriter
 	
 			// Write start of element, including schema target namespace if specified.
 			if (rootElementSettings != null && !string.IsNullOrEmpty(rootElementSettings.SchemaTargetNamespace))
+			{
 				writer.WriteStartElement(this.XmlTagName, rootElementSettings.SchemaTargetNamespace);
+				DslModeling::SerializationUtilities.WriteDomainModelNamespaces(serializationContext.Directory, writer, rootElementSettings.SchemaTargetNamespace);
+			}
 			else
+			{
 				writer.WriteStartElement(this.XmlTagName);
+			}
 				
 			// Write version info (in the format 1.2.3.4), if necessary
 			if (rootElementSettings != null && rootElementSettings.Version != null)
 				writer.WriteAttributeString("dslVersion", rootElementSettings.Version.ToString(4));
 	
 			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
+			// Write out any extension data if this is the root element
+			if (rootElementSettings != null && !serializationContext.Result.Failed)
+			{
+				ActiveWriterSerializationHelper.Instance.WriteExtensions(serializationContext, element, writer);
+			}
 	
 			if (!serializationContext.Result.Failed)
 			{
@@ -19517,7 +20412,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer InheritanceConnectorSerializer for DomainClass InheritanceConnector.
@@ -19532,6 +20427,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -19601,6 +20514,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read nested XML elements, they can be either properties serialized as XML elements, or child 
 					// model elements.
 					while (!serializationContext.Result.Failed && !reader.EOF && reader.NodeType == global::System.Xml.XmlNodeType.Element)
@@ -19619,6 +20535,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		#region TryCreateInstance
 		/// <summary>
@@ -19894,15 +20811,26 @@ namespace Altinoren.ActiveWriter
 	
 			// Write start of element, including schema target namespace if specified.
 			if (rootElementSettings != null && !string.IsNullOrEmpty(rootElementSettings.SchemaTargetNamespace))
+			{
 				writer.WriteStartElement(this.XmlTagName, rootElementSettings.SchemaTargetNamespace);
+				DslModeling::SerializationUtilities.WriteDomainModelNamespaces(serializationContext.Directory, writer, rootElementSettings.SchemaTargetNamespace);
+			}
 			else
+			{
 				writer.WriteStartElement(this.XmlTagName);
+			}
 				
 			// Write version info (in the format 1.2.3.4), if necessary
 			if (rootElementSettings != null && rootElementSettings.Version != null)
 				writer.WriteAttributeString("dslVersion", rootElementSettings.Version.ToString(4));
 	
 			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
+			// Write out any extension data if this is the root element
+			if (rootElementSettings != null && !serializationContext.Result.Failed)
+			{
+				ActiveWriterSerializationHelper.Instance.WriteExtensions(serializationContext, element, writer);
+			}
 	
 			if (!serializationContext.Result.Failed)
 			{
@@ -19988,7 +20916,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Serializer ActiveRecordMappingSerializer for DomainClass ActiveRecordMapping.
@@ -20003,6 +20931,24 @@ namespace Altinoren.ActiveWriter
 			: base ()
 		{
 		}
+		#endregion
+	
+		
+		#region Miscellaneous methods
+	
+		/// <summary>
+		/// Reset the serializer
+		/// </summary>
+		/// <remarks>
+		/// Clear the cached information about any derived classes so that it is recalculated.
+		/// </remarks>
+		public override void Reset()
+		{
+			base.Reset();
+			this.derivedClasses = null;
+			this.derivedClassMonikers = null;
+		}
+	
 		#endregion
 	
 		#region Public Properties
@@ -20072,6 +21018,9 @@ namespace Altinoren.ActiveWriter
 					// Read to the start of the first child element.
 					DslModeling::SerializationUtilities.SkipToFirstChild(reader);
 					
+					// Read any extension element data under this XML element
+					ActiveWriterSerializationHelper.Instance.ReadExtensions(serializationContext, element, reader);
+					
 					// Read nested XML elements, they can be either properties serialized as XML elements, or child 
 					// model elements.
 					while (!serializationContext.Result.Failed && !reader.EOF && reader.NodeType == global::System.Xml.XmlNodeType.Element)
@@ -20090,6 +21039,7 @@ namespace Altinoren.ActiveWriter
 			// Advance the reader to the next element (open tag of the next sibling, end tag of the parent, or EOF)
 			DslModeling::SerializationUtilities.Skip(reader);
 		}
+		
 	
 		#region TryCreateInstance
 		/// <summary>
@@ -20365,15 +21315,26 @@ namespace Altinoren.ActiveWriter
 	
 			// Write start of element, including schema target namespace if specified.
 			if (rootElementSettings != null && !string.IsNullOrEmpty(rootElementSettings.SchemaTargetNamespace))
+			{
 				writer.WriteStartElement(this.XmlTagName, rootElementSettings.SchemaTargetNamespace);
+				DslModeling::SerializationUtilities.WriteDomainModelNamespaces(serializationContext.Directory, writer, rootElementSettings.SchemaTargetNamespace);
+			}
 			else
+			{
 				writer.WriteStartElement(this.XmlTagName);
+			}
 				
 			// Write version info (in the format 1.2.3.4), if necessary
 			if (rootElementSettings != null && rootElementSettings.Version != null)
 				writer.WriteAttributeString("dslVersion", rootElementSettings.Version.ToString(4));
 	
 			base.WritePropertiesAsAttributes(serializationContext, element, writer);
+	
+			// Write out any extension data if this is the root element
+			if (rootElementSettings != null && !serializationContext.Result.Failed)
+			{
+				ActiveWriterSerializationHelper.Instance.WriteExtensions(serializationContext, element, writer);
+			}
 	
 			if (!serializationContext.Result.Failed)
 			{
@@ -20459,7 +21420,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// A DomainXmlSerializationBehavior implementation for defined behavior ActiveWriterSerializationBehavior.
@@ -20468,11 +21429,22 @@ namespace Altinoren.ActiveWriter
 	[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]		
 	public abstract class ActiveWriterSerializationBehaviorBase : DslModeling::DomainXmlSerializationBehavior
 	{
+		///<summary>
+		/// The xml namespace used by this domain model when serializing
+		///</summary>
+		public const string DomainModelXmlNamespace = @"http://schemas.microsoft.com/dsltools/ActiveWriter";
+	
 		#region Member Variables
 		/// <summary>
-		/// A dictionary that maps DomainClass Id to DomainClassXmlSerializer types.
+		/// A list of DomainClass Ids mapped to DomainClassXmlSerializer types.
 		/// </summary>
 		private static global::System.Collections.Generic.List<DslModeling::DomainXmlSerializerDirectoryEntry> serializerTypes;
+	
+		/// <summary>
+		/// A list of xml namespaces mapped to domain model types.
+		/// </summary>
+		private static global::System.Collections.Generic.List<DslModeling::DomainXmlSerializerNamespaceEntry> namespaceEntries;
+	
 		#endregion
 	
 		#region Constructor
@@ -20547,6 +21519,25 @@ namespace Altinoren.ActiveWriter
 				return ActiveWriterSerializationBehavior.serializerTypes.AsReadOnly();
 			}
 		}
+		
+		/// <summary>
+		/// This provides a mapping from xml namespaces to domain model implementation types.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerBrowsable (global::System.Diagnostics.DebuggerBrowsableState.Never)]	// Will trigger creation otherwise.
+		//[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]		
+		public override global::System.Collections.ObjectModel.ReadOnlyCollection<DslModeling::DomainXmlSerializerNamespaceEntry> AllNamespaces
+		{
+			get
+			{
+				if (ActiveWriterSerializationBehavior.namespaceEntries == null)
+				{
+					ActiveWriterSerializationBehavior.namespaceEntries = new global::System.Collections.Generic.List<DslModeling::DomainXmlSerializerNamespaceEntry>();
+					ActiveWriterSerializationBehavior.namespaceEntries.Add(new DslModeling::DomainXmlSerializerNamespaceEntry(DomainModelXmlNamespace, typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel)));
+				}
+				return ActiveWriterSerializationBehavior.namespaceEntries.AsReadOnly();
+			}
+		}
+		
 		#endregion
 	}
 	
@@ -20585,12 +21576,28 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Moniker resolver for serialization behavior ActiveWriterSerializationBehavior.
 	/// </summary>
-	public partial class ActiveWriterSerializationBehaviorMonikerResolver : DslModeling::SimpleMonikerResolver
+	public partial class ActiveWriterSerializationBehaviorMonikerResolver : ActiveWriterSerializationBehaviorMonikerResolverBase
+	{
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="store">Store for this moniker resolver.</param>
+		/// <param name="directory">Directory to used by this resolver to look up for serializers.</param>
+		public ActiveWriterSerializationBehaviorMonikerResolver(DslModeling::Store store, DslModeling::DomainXmlSerializerDirectory directory)
+			: base(store,directory)
+		{
+		}
+	}
+	
+	/// <summary>
+	/// Base moniker resolver for serialization behavior ActiveWriterSerializationBehavior.
+	/// </summary>
+	public partial class ActiveWriterSerializationBehaviorMonikerResolverBase : DslModeling::SimpleMonikerResolver
 	{
 		#region Member Variables
 		/// <summary>
@@ -20605,7 +21612,7 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		/// <param name="store">Store for this moniker resolver.</param>
 		/// <param name="directory">Directory to used by this resolver to look up for serializers.</param>
-		public ActiveWriterSerializationBehaviorMonikerResolver(DslModeling::Store store, DslModeling::DomainXmlSerializerDirectory directory)
+		public ActiveWriterSerializationBehaviorMonikerResolverBase(DslModeling::Store store, DslModeling::DomainXmlSerializerDirectory directory)
 			: base (store)
 		{
 			#region Check Parameters
@@ -20708,7 +21715,7 @@ namespace Altinoren.ActiveWriter
 	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Utility class to provide serialization messages
@@ -21266,6 +22273,215 @@ namespace Altinoren.ActiveWriter
 			);
 		}
 		#endregion
+	}
+}
+namespace Castle.ActiveWriter
+{
+	/// <summary>
+	/// Provides an implementation of the IDomainModelSerializer interface
+	/// that can be used to serialize / deserialize the ActiveWriter domain model.
+	/// </summary>
+	/// <remarks>Double-derived class - the default implementation is in ActiveWriterDomainModelSerializerBase.
+	/// This class exist so users can customize behavior easily.</remarks>
+	[global::System.ComponentModel.Composition.Export(typeof(DslModeling::IDomainModelSerializer))]
+	[DslModeling::DomainModelSerializer(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), global::Castle.ActiveWriter.ActiveWriterSerializationBehavior.DomainModelXmlNamespace, "actiw")]
+	public partial class ActiveWriterDomainModelSerializer : ActiveWriterDomainModelSerializerBase
+	{
+	}
+	
+	
+	/// <summary>
+	/// Base class that implements IDomainModelSerializer
+	/// </summary>
+	public abstract partial class ActiveWriterDomainModelSerializerBase : DslModeling::IDomainModelSerializer
+	{
+	
+		#region Public properties
+	
+		/// <summary>
+		/// The XML namespace used when serializing the domain model
+		/// </summary>
+		public virtual string DomainModelNamespace
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get { return global::Castle.ActiveWriter.ActiveWriterSerializationBehavior.DomainModelXmlNamespace; }
+		}
+	
+		/// <summary>
+		/// Returns true: this DSL can be serialized / deserialized directly.
+		/// </summary>
+		public virtual bool IsSerializable
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get { return true; }
+		}
+	
+		/// <summary>
+		/// The type of the domain model
+		/// </summary>
+		public virtual global::System.Type DomainModelType
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get { return typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel); }
+		}
+	
+		/// <summary>
+		/// File extension used for model files of this kind of domain model
+		/// </summary>
+		/// <remarks>If a domain model type cannot be serialized independently, or cannot
+		/// be serialized to a file, it should return null or empty.</remarks>
+		public string ModelFileExtension
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get { return "actiw"; }
+		}
+	
+		#endregion
+		
+		
+		#region Load / Save model methods
+		
+		/// <summary>
+		/// Loads a Model instance and its associated diagram file.
+		/// </summary>
+		/// <param name="serializationResult">Stores serialization result from the load operation.</param>
+		/// <param name="partition">Partition in which the new Model instance will be created.</param>
+		/// <param name="fileName">Name of the file from which the Model instance will be deserialized.</param>
+		/// <param name="serializerLocator">Used to locate any additional domain model types required to load the model. Can be null.</param>
+		/// <returns>The loaded Model instance.</returns>
+		public virtual DslModeling::ModelElement LoadModel(DslModeling::SerializationResult serializationResult, 
+			DslModeling::Partition partition, 
+			string fileName, 
+			DslModeling::ISerializerLocator serializerLocator)
+		{
+			if (serializationResult == null) { throw new global::System.ArgumentNullException("serializationResult"); }
+			if (partition == null) { throw new global::System.ArgumentNullException("partition"); }
+			if (string.IsNullOrEmpty(fileName)) { throw new global::System.ArgumentNullException("fileName"); }
+	
+			return ActiveWriterSerializationHelper.Instance.LoadModel(serializationResult, partition, fileName, null, null, serializerLocator);
+		}
+	
+		/// <summary>
+		/// Saves the given model root to the given file, with specified encoding.
+		/// </summary>
+		/// <param name="serializationResult">Stores serialization result from the save operation.</param>
+		/// <param name="modelRoot">Model instance to be saved.</param>
+		/// <param name="fileName">Name of the file in which the Model instance will be saved.</param>
+		/// <param name="encoding">Encoding to use when saving the Model instance.</param>
+		public void SaveModel(DslModeling::SerializationResult serializationResult, 
+			DslModeling::ModelElement modelRoot, 
+			string fileName, 
+			System.Text.Encoding encoding)
+		{
+			if (serializationResult == null) { throw new global::System.ArgumentNullException("serializationResult"); }
+			if (modelRoot == null) { throw new global::System.ArgumentNullException("modelRoot"); }
+			if (string.IsNullOrEmpty("fileName")) { throw new global::System.ArgumentNullException("fileName"); }
+	
+			global::Castle.ActiveWriter.Model rootElement = modelRoot as global::Castle.ActiveWriter.Model;
+			if (rootElement == null)
+			{
+				string errorMessage = string.Format(global::System.Globalization.CultureInfo.CurrentCulture,
+					global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("InvalidSaveRootElementType"),
+					modelRoot.GetType().ToString());
+	
+				throw new global::System.ArgumentException(errorMessage, "modelRoot");
+	
+			}
+	
+			ActiveWriterSerializationHelper.Instance.SaveModel(serializationResult, rootElement, fileName,encoding, true);
+		}
+	
+		#endregion
+	
+		#region Load / Save model and diagram methods
+	
+		/// <summary>
+		/// Calculates and returns the name of the diagram file for the specified model file
+		/// </summary>
+		/// <param name="modelFileName">The relevant model file name</param>
+		/// <returns>Name of the associated diagram file</returns>
+		/// <remarks>There is no guarantee that either the model file or the calculated diagram file exist.</remarks>
+		public virtual string CalculateDiagramFileName(string modelFileName)
+		{
+			if (string.IsNullOrEmpty(modelFileName))
+			{
+				throw new global::System.ArgumentNullException("modelFileName");
+			}
+			return modelFileName + ".diagram";
+		}
+	
+		/// <summary>
+		/// Loads a Model instance and its associated diagram file.
+		/// </summary>
+		/// <param name="serializationResult">Stores serialization result from the load operation.</param>
+		/// <param name="modelPartition">Partition in which the new Model instance will be created.</param>
+		/// <param name="modelFileName">Name of the file from which the Model instance will be deserialized.</param>
+		/// <param name="diagramPartition">Partition in which the new ActiveRecordMapping instance will be created.</param>
+		/// <param name="diagramFileName">Name of the file from which the ActiveRecordMapping instance will be deserialized.</param>
+		/// <param name="serializerLocator">Used to locate any additional domain model types required to load the model. Can be null.</param>
+		/// <returns>The loaded Model instance.</returns>
+		public DslModeling::ModelElement LoadModelAndDiagram(DslModeling::SerializationResult serializationResult, 
+			DslModeling::Partition modelPartition, 
+			string modelFileName, 
+			DslModeling::Partition diagramPartition, 
+			string diagramFileName, 
+			DslModeling::ISerializerLocator serializerLocator)
+		{
+			if (serializationResult == null) { throw new global::System.ArgumentNullException("serializationResult"); }
+			if (modelPartition == null) { throw new global::System.ArgumentNullException("modelPartition"); }
+			if (string.IsNullOrEmpty(modelFileName)) { throw new global::System.ArgumentNullException("modelFileName"); }
+			if (diagramPartition == null) { throw new global::System.ArgumentNullException("diagramPartition"); }
+			if (string.IsNullOrEmpty(diagramFileName)) { throw new global::System.ArgumentNullException("diagramFileName"); }
+	
+			return ActiveWriterSerializationHelper.Instance.LoadModelAndDiagram(serializationResult, modelPartition, modelFileName, diagramPartition, diagramFileName, null, null, serializerLocator);
+		}
+	
+		/// <summary>
+		/// Saves the given Model and ActiveRecordMapping to the given files, with specified encoding.
+		/// </summary>
+		/// <param name="serializationResult">Stores serialization result from the save operation.</param>
+		/// <param name="modelRoot">Model instance to be saved.</param>
+		/// <param name="modelFileName">Name of the file in which the CanonicalSampleRoot instance will be saved.</param>
+		/// <param name="diagram">ActiveRecordMapping to be saved.</param>
+		/// <param name="diagramFileName">Name of the file in which the diagram will be saved.</param>
+		/// <param name="encoding">Encoding to use when saving the diagram.</param>
+		public void SaveModelAndDiagram(DslModeling::SerializationResult serializationResult, 
+			DslModeling::ModelElement modelRoot, 
+			string modelFileName, 
+			DslModeling::ModelElement diagram, 
+			string diagramFileName, 
+			System.Text.Encoding encoding)
+		{
+			if (serializationResult == null) { throw new global::System.ArgumentNullException("serializationResult"); }
+			if (modelRoot == null) { throw new global::System.ArgumentNullException("modelRoot"); }
+			if (string.IsNullOrEmpty("modelFileName")) { throw new global::System.ArgumentNullException("modelFileName"); }
+			if (diagram == null) { throw new global::System.ArgumentNullException("diagram"); }
+			if (string.IsNullOrEmpty("diagramFileName")) { throw new global::System.ArgumentNullException("diagramFileName"); }
+	
+			global::Castle.ActiveWriter.Model typedRoot = modelRoot as global::Castle.ActiveWriter.Model;
+			if (typedRoot == null)
+			{
+				string errorMessage = string.Format(global::System.Globalization.CultureInfo.CurrentCulture,
+					global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("InvalidSaveRootElementType"),
+					modelRoot.GetType().ToString());
+	
+				throw new global::System.ArgumentException(errorMessage, "modelRoot");
+			}
+			global::Castle.ActiveWriter.ActiveRecordMapping typedDiagram = diagram as global::Castle.ActiveWriter.ActiveRecordMapping;
+			if (typedDiagram == null)
+			{
+				string errorMessage = string.Format(global::System.Globalization.CultureInfo.CurrentCulture,
+					global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("InvalidSaveDiagramType"),
+					diagram.GetType().ToString());
+	
+				throw new global::System.ArgumentException(errorMessage, "diagram");
+			}
+	
+			ActiveWriterSerializationHelper.Instance.SaveModelAndDiagram(serializationResult, typedRoot, modelFileName, typedDiagram, diagramFileName, encoding, true);
+		}
+	
+		#endregion
+		
 	}
 }
 

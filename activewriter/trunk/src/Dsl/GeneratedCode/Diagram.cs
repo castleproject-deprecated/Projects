@@ -11,15 +11,16 @@ using DslModeling = global::Microsoft.VisualStudio.Modeling;
 using DslDesign = global::Microsoft.VisualStudio.Modeling.Design;
 using DslDiagrams = global::Microsoft.VisualStudio.Modeling.Diagrams;
 
-[module: global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Scope = "type", Target = "Altinoren.ActiveWriter.ActiveRecordMapping")]
+[module: global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Scope = "type", Target = "Castle.ActiveWriter.ActiveRecordMapping")]
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainClass ActiveRecordMapping
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ActiveRecordMapping.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ActiveRecordMapping.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.ActiveRecordMapping.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.ActiveRecordMapping.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslModeling::DomainModelOwner(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel))]
 	[global::System.CLSCompliant(true)]
 	[DslModeling::DomainObjectId("d25f93b4-c78e-4d22-9d48-ce498e8c1e58")]
 	public partial class ActiveRecordMapping : DslDiagrams::Diagram
@@ -59,7 +60,7 @@ namespace Altinoren.ActiveWriter
 		#endregion
 		#region Toolbox filters
 		private static global::System.ComponentModel.ToolboxItemFilterAttribute[] toolboxFilters = new global::System.ComponentModel.ToolboxItemFilterAttribute[] {
-					new global::System.ComponentModel.ToolboxItemFilterAttribute(global::Altinoren.ActiveWriter.ActiveWriterToolboxHelperBase.ToolboxFilterString, global::System.ComponentModel.ToolboxItemFilterType.Require) };
+					new global::System.ComponentModel.ToolboxItemFilterAttribute(global::Castle.ActiveWriter.ActiveWriterToolboxHelperBase.ToolboxFilterString, global::System.ComponentModel.ToolboxItemFilterType.Require) };
 		
 		/// <summary>
 		/// Toolbox item filter attributes for this diagram.
@@ -265,41 +266,41 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]
 		protected override DslDiagrams::ShapeElement CreateChildShape(DslModeling::ModelElement element)
 		{
-			if(element is global::Altinoren.ActiveWriter.ModelClass)
+			if(element is global::Castle.ActiveWriter.ModelClass)
 			{
-				global::Altinoren.ActiveWriter.ClassShape newShape = new global::Altinoren.ActiveWriter.ClassShape(this.Partition);
+				global::Castle.ActiveWriter.ClassShape newShape = new global::Castle.ActiveWriter.ClassShape(this.Partition);
 				if(newShape != null) newShape.Size = newShape.DefaultSize; // set default shape size
 				return newShape;
 			}
-			if(element is global::Altinoren.ActiveWriter.NestedClass)
+			if(element is global::Castle.ActiveWriter.NestedClass)
 			{
-				global::Altinoren.ActiveWriter.NestedClassShape newShape = new global::Altinoren.ActiveWriter.NestedClassShape(this.Partition);
+				global::Castle.ActiveWriter.NestedClassShape newShape = new global::Castle.ActiveWriter.NestedClassShape(this.Partition);
 				if(newShape != null) newShape.Size = newShape.DefaultSize; // set default shape size
 				return newShape;
 			}
-			if(element is global::Altinoren.ActiveWriter.ManyToOneRelation)
+			if(element is global::Castle.ActiveWriter.ManyToOneRelation)
 			{
-				global::Altinoren.ActiveWriter.ManyToOneConnector newShape = new global::Altinoren.ActiveWriter.ManyToOneConnector(this.Partition);
+				global::Castle.ActiveWriter.ManyToOneConnector newShape = new global::Castle.ActiveWriter.ManyToOneConnector(this.Partition);
 				return newShape;
 			}
-			if(element is global::Altinoren.ActiveWriter.ManyToManyRelation)
+			if(element is global::Castle.ActiveWriter.ManyToManyRelation)
 			{
-				global::Altinoren.ActiveWriter.ManyToManyConnector newShape = new global::Altinoren.ActiveWriter.ManyToManyConnector(this.Partition);
+				global::Castle.ActiveWriter.ManyToManyConnector newShape = new global::Castle.ActiveWriter.ManyToManyConnector(this.Partition);
 				return newShape;
 			}
-			if(element is global::Altinoren.ActiveWriter.OneToOneRelation)
+			if(element is global::Castle.ActiveWriter.OneToOneRelation)
 			{
-				global::Altinoren.ActiveWriter.OneToOneConnector newShape = new global::Altinoren.ActiveWriter.OneToOneConnector(this.Partition);
+				global::Castle.ActiveWriter.OneToOneConnector newShape = new global::Castle.ActiveWriter.OneToOneConnector(this.Partition);
 				return newShape;
 			}
-			if(element is global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses)
+			if(element is global::Castle.ActiveWriter.NestedClassReferencesModelClasses)
 			{
-				global::Altinoren.ActiveWriter.NestedConnector newShape = new global::Altinoren.ActiveWriter.NestedConnector(this.Partition);
+				global::Castle.ActiveWriter.NestedConnector newShape = new global::Castle.ActiveWriter.NestedConnector(this.Partition);
 				return newShape;
 			}
-			if(element is global::Altinoren.ActiveWriter.InheritanceRelation)
+			if(element is global::Castle.ActiveWriter.InheritanceRelation)
 			{
-				global::Altinoren.ActiveWriter.InheritanceConnector newShape = new global::Altinoren.ActiveWriter.InheritanceConnector(this.Partition);
+				global::Castle.ActiveWriter.InheritanceConnector newShape = new global::Castle.ActiveWriter.InheritanceConnector(this.Partition);
 				return newShape;
 			}
 			return base.CreateChildShape(element);
@@ -313,8 +314,8 @@ namespace Altinoren.ActiveWriter
 		protected override void InitializeShapeFields(global::System.Collections.Generic.IList<DslDiagrams::ShapeField> shapeFields)
 		{
 			base.InitializeShapeFields(shapeFields);
-			global::Altinoren.ActiveWriter.ClassShape.DecoratorsInitialized += ClassShapeDecoratorMap.OnDecoratorsInitialized;
-			global::Altinoren.ActiveWriter.NestedClassShape.DecoratorsInitialized += NestedClassShapeDecoratorMap.OnDecoratorsInitialized;
+			global::Castle.ActiveWriter.ClassShape.DecoratorsInitialized += ClassShapeDecoratorMap.OnDecoratorsInitialized;
+			global::Castle.ActiveWriter.NestedClassShape.DecoratorsInitialized += NestedClassShapeDecoratorMap.OnDecoratorsInitialized;
 		}
 		
 		/// <summary>
@@ -330,14 +331,14 @@ namespace Altinoren.ActiveWriter
 				DslDiagrams::ShapeElement shape = (DslDiagrams::ShapeElement)sender;
 				DslDiagrams::AssociatedPropertyInfo propertyInfo;
 				
-				propertyInfo = new DslDiagrams::AssociatedPropertyInfo(global::Altinoren.ActiveWriter.NamedElement.NameDomainPropertyId);
+				propertyInfo = new DslDiagrams::AssociatedPropertyInfo(global::Castle.ActiveWriter.NamedElement.NameDomainPropertyId);
 				DslDiagrams::ShapeElement.FindDecorator(shape.Decorators, "Name").AssociateValueWith(shape.Store, propertyInfo);
 		
-				propertyInfo = new DslDiagrams::AssociatedPropertyInfo(global::Altinoren.ActiveWriter.ModelClass.HasKeyPropertyDomainPropertyId);
+				propertyInfo = new DslDiagrams::AssociatedPropertyInfo(global::Castle.ActiveWriter.ModelClass.HasKeyPropertyDomainPropertyId);
 				propertyInfo.FilteringValues.Add("True");
 				DslDiagrams::ShapeElement.FindDecorator(shape.Decorators, "Key").AssociateVisibilityWith(shape.Store, propertyInfo);
 		
-				propertyInfo = new DslDiagrams::AssociatedPropertyInfo(global::Altinoren.ActiveWriter.ModelClass.IsValidatorSetDomainPropertyId);
+				propertyInfo = new DslDiagrams::AssociatedPropertyInfo(global::Castle.ActiveWriter.ModelClass.IsValidatorSetDomainPropertyId);
 				propertyInfo.FilteringValues.Add("True");
 				DslDiagrams::ShapeElement.FindDecorator(shape.Decorators, "Validation").AssociateVisibilityWith(shape.Store, propertyInfo);
 			}
@@ -356,18 +357,29 @@ namespace Altinoren.ActiveWriter
 				DslDiagrams::ShapeElement shape = (DslDiagrams::ShapeElement)sender;
 				DslDiagrams::AssociatedPropertyInfo propertyInfo;
 				
-				propertyInfo = new DslDiagrams::AssociatedPropertyInfo(global::Altinoren.ActiveWriter.NamedElement.NameDomainPropertyId);
+				propertyInfo = new DslDiagrams::AssociatedPropertyInfo(global::Castle.ActiveWriter.NamedElement.NameDomainPropertyId);
 				DslDiagrams::ShapeElement.FindDecorator(shape.Decorators, "Name").AssociateValueWith(shape.Store, propertyInfo);
 			}
 		}
 		
 		#endregion
+		
 		#region Connect actions
-		private global::Altinoren.ActiveWriter.ManyToOneRelationshipConnectAction manyToOneRelationshipConnectAction;
-		private global::Altinoren.ActiveWriter.ManyToManyRelationshipConnectAction manyToManyRelationshipConnectAction;
-		private global::Altinoren.ActiveWriter.OneToOneRelationshipConnectAction oneToOneRelationshipConnectAction;
-		private global::Altinoren.ActiveWriter.NestedRelationshipConnectAction nestedRelationshipConnectAction;
-		private global::Altinoren.ActiveWriter.InheritanceRelationshipConnectAction inheritanceRelationshipConnectAction;
+		private bool changingMouseAction;
+		private global::Castle.ActiveWriter.ManyToOneRelationshipConnectAction manyToOneRelationshipConnectAction;
+		private global::Castle.ActiveWriter.ManyToManyRelationshipConnectAction manyToManyRelationshipConnectAction;
+		private global::Castle.ActiveWriter.OneToOneRelationshipConnectAction oneToOneRelationshipConnectAction;
+		private global::Castle.ActiveWriter.NestedRelationshipConnectAction nestedRelationshipConnectAction;
+		private global::Castle.ActiveWriter.InheritanceRelationshipConnectAction inheritanceRelationshipConnectAction;
+		/// <summary>
+		/// Virtual method to provide a filter when to select the mouse action
+		/// </summary>
+		/// <param name="activeView">Currently active view</param>
+		/// <param name="filter">filter string used to filter the toolbox items</param>
+		protected virtual bool SelectedToolboxItemSupportsFilterString(DslDiagrams::DiagramView activeView, string filter)
+		{
+			return activeView.SelectedToolboxItemSupportsFilterString(filter);
+		}
 		/// <summary>
 		/// Override to provide the right mouse action when trying
 		/// to create links on the diagram
@@ -381,47 +393,47 @@ namespace Altinoren.ActiveWriter
 			if(activeView != null)
 			{
 				DslDiagrams::MouseAction action = null;
-				if (activeView.SelectedToolboxItemSupportsFilterString(global::Altinoren.ActiveWriter.ActiveWriterToolboxHelper.ManyToOneRelationshipFilterString))
+				if (SelectedToolboxItemSupportsFilterString(activeView, global::Castle.ActiveWriter.ActiveWriterToolboxHelper.ManyToOneRelationshipFilterString))
 				{
 					if (this.manyToOneRelationshipConnectAction == null)
 					{
-						this.manyToOneRelationshipConnectAction = new global::Altinoren.ActiveWriter.ManyToOneRelationshipConnectAction(this);
+						this.manyToOneRelationshipConnectAction = new global::Castle.ActiveWriter.ManyToOneRelationshipConnectAction(this);
 						this.manyToOneRelationshipConnectAction.MouseActionDeactivated += new DslDiagrams::MouseAction.MouseActionDeactivatedEventHandler(OnConnectActionDeactivated);
 					}
 					action = this.manyToOneRelationshipConnectAction;
 				} 
-				else if (activeView.SelectedToolboxItemSupportsFilterString(global::Altinoren.ActiveWriter.ActiveWriterToolboxHelper.ManyToManyRelationshipFilterString))
+				else if (SelectedToolboxItemSupportsFilterString(activeView, global::Castle.ActiveWriter.ActiveWriterToolboxHelper.ManyToManyRelationshipFilterString))
 				{
 					if (this.manyToManyRelationshipConnectAction == null)
 					{
-						this.manyToManyRelationshipConnectAction = new global::Altinoren.ActiveWriter.ManyToManyRelationshipConnectAction(this);
+						this.manyToManyRelationshipConnectAction = new global::Castle.ActiveWriter.ManyToManyRelationshipConnectAction(this);
 						this.manyToManyRelationshipConnectAction.MouseActionDeactivated += new DslDiagrams::MouseAction.MouseActionDeactivatedEventHandler(OnConnectActionDeactivated);
 					}
 					action = this.manyToManyRelationshipConnectAction;
 				} 
-				else if (activeView.SelectedToolboxItemSupportsFilterString(global::Altinoren.ActiveWriter.ActiveWriterToolboxHelper.OneToOneRelationshipFilterString))
+				else if (SelectedToolboxItemSupportsFilterString(activeView, global::Castle.ActiveWriter.ActiveWriterToolboxHelper.OneToOneRelationshipFilterString))
 				{
 					if (this.oneToOneRelationshipConnectAction == null)
 					{
-						this.oneToOneRelationshipConnectAction = new global::Altinoren.ActiveWriter.OneToOneRelationshipConnectAction(this);
+						this.oneToOneRelationshipConnectAction = new global::Castle.ActiveWriter.OneToOneRelationshipConnectAction(this);
 						this.oneToOneRelationshipConnectAction.MouseActionDeactivated += new DslDiagrams::MouseAction.MouseActionDeactivatedEventHandler(OnConnectActionDeactivated);
 					}
 					action = this.oneToOneRelationshipConnectAction;
 				} 
-				else if (activeView.SelectedToolboxItemSupportsFilterString(global::Altinoren.ActiveWriter.ActiveWriterToolboxHelper.NestedRelationshipFilterString))
+				else if (SelectedToolboxItemSupportsFilterString(activeView, global::Castle.ActiveWriter.ActiveWriterToolboxHelper.NestedRelationshipFilterString))
 				{
 					if (this.nestedRelationshipConnectAction == null)
 					{
-						this.nestedRelationshipConnectAction = new global::Altinoren.ActiveWriter.NestedRelationshipConnectAction(this);
+						this.nestedRelationshipConnectAction = new global::Castle.ActiveWriter.NestedRelationshipConnectAction(this);
 						this.nestedRelationshipConnectAction.MouseActionDeactivated += new DslDiagrams::MouseAction.MouseActionDeactivatedEventHandler(OnConnectActionDeactivated);
 					}
 					action = this.nestedRelationshipConnectAction;
 				} 
-				else if (activeView.SelectedToolboxItemSupportsFilterString(global::Altinoren.ActiveWriter.ActiveWriterToolboxHelper.InheritanceRelationshipFilterString))
+				else if (SelectedToolboxItemSupportsFilterString(activeView, global::Castle.ActiveWriter.ActiveWriterToolboxHelper.InheritanceRelationshipFilterString))
 				{
 					if (this.inheritanceRelationshipConnectAction == null)
 					{
-						this.inheritanceRelationshipConnectAction = new global::Altinoren.ActiveWriter.InheritanceRelationshipConnectAction(this);
+						this.inheritanceRelationshipConnectAction = new global::Castle.ActiveWriter.InheritanceRelationshipConnectAction(this);
 						this.inheritanceRelationshipConnectAction.MouseActionDeactivated += new DslDiagrams::MouseAction.MouseActionDeactivatedEventHandler(OnConnectActionDeactivated);
 					}
 					action = this.inheritanceRelationshipConnectAction;
@@ -433,7 +445,15 @@ namespace Altinoren.ActiveWriter
 				
 				if (pointArgs.DiagramClientView.ActiveMouseAction != action)
 				{
-					pointArgs.DiagramClientView.ActiveMouseAction = action;
+					try
+					{
+						this.changingMouseAction = true;
+						pointArgs.DiagramClientView.ActiveMouseAction = action;
+					}
+					finally
+					{
+						this.changingMouseAction = false;
+					}
 				}
 			}
 		}
@@ -443,13 +463,28 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		private void OnConnectActionDeactivated(object sender, DslDiagrams::DiagramEventArgs e)
 		{
+			OnMouseActionDeactivated();
+		}
+		
+		/// <summary>
+		/// Overridable method to manage the mouse deactivation. The default implementation snap stoolbox selection back to regular pointer 
+		/// after using a custom connect action.
+		/// </summary>
+		protected virtual void OnMouseActionDeactivated()
+		{
 			DslDiagrams::DiagramView activeView = this.ActiveDiagramView;
 		
 			if (activeView != null && activeView.Toolbox != null)
 			{
-				activeView.Toolbox.SelectedToolboxItemUsed();
+				// If we're not changing mouse action due to changing toolbox selection change,
+				// reset toolbox selection.
+				if (!this.changingMouseAction)
+				{
+					activeView.Toolbox.SelectedToolboxItemUsed();
+				}
 			}
 		}
+		#endregion
 		
 		/// <summary>
 		/// Dispose of connect actions.
@@ -493,7 +528,6 @@ namespace Altinoren.ActiveWriter
 				base.Dispose(disposing);
 			}
 		}
-		#endregion
 		#region Constructors, domain class Id
 	
 		/// <summary>
@@ -506,7 +540,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="store">Store where new element is to be created.</param>
 		/// <param name="propertyAssignments">List of domain property id/value pairs to set once the element is created.</param>
 		public ActiveRecordMapping(DslModeling::Store store, params DslModeling::PropertyAssignment[] propertyAssignments)
-			: this(store != null ? store.DefaultPartition : null, propertyAssignments)
+			: this(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, propertyAssignments)
 		{
 		}
 		
@@ -522,19 +556,32 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
+	
+		/// <summary>
+		/// Double derived implementation for the rule that initiates view fixup when an element that has an associated shape is added to the model.
+		/// This now enables the DSL author to everride the SkipFixUp() method 
+		/// </summary>
+		internal partial class FixUpDiagramBase : DslModeling::AddRule
+		{
+			protected virtual bool SkipFixup(DslModeling::ModelElement childElement)
+			{
+				return childElement.IsDeleted;
+			}
+		}
+	
 		/// <summary>
 		/// Rule that initiates view fixup when an element that has an associated shape is added to the model. 
 		/// </summary>
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.ModelClass), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddShapeParentExistRulePriority, InitiallyDisabled=true)]
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.NestedClass), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddShapeParentExistRulePriority, InitiallyDisabled=true)]
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.InheritanceRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.OneToOneRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.ManyToOneRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.ManyToManyRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
-		internal sealed partial class FixUpDiagram : DslModeling::AddRule
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.ModelClass), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddShapeParentExistRulePriority, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.NestedClass), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddShapeParentExistRulePriority, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.NestedClassReferencesModelClasses), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.InheritanceRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.OneToOneRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.ManyToOneRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.ManyToManyRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
+		internal sealed partial class FixUpDiagram : FixUpDiagramBase
 		{
 			[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily")]
 			public override void ElementAdded(DslModeling::ElementAddedEventArgs e)
@@ -542,20 +589,20 @@ namespace Altinoren.ActiveWriter
 				if(e == null) throw new global::System.ArgumentNullException("e");
 			
 				DslModeling::ModelElement childElement = e.ModelElement;
-				if (childElement.IsDeleted)
+				if (this.SkipFixup(childElement))
 					return;
 				DslModeling::ModelElement parentElement;
 				if(childElement is DslModeling::ElementLink)
 				{
 					parentElement = GetParentForRelationship((DslModeling::ElementLink)childElement);
 				} else
-				if(childElement is global::Altinoren.ActiveWriter.ModelClass)
+				if(childElement is global::Castle.ActiveWriter.ModelClass)
 				{
-					parentElement = GetParentForModelClass((global::Altinoren.ActiveWriter.ModelClass)childElement);
+					parentElement = GetParentForModelClass((global::Castle.ActiveWriter.ModelClass)childElement);
 				} else
-				if(childElement is global::Altinoren.ActiveWriter.NestedClass)
+				if(childElement is global::Castle.ActiveWriter.NestedClass)
 				{
-					parentElement = GetParentForNestedClass((global::Altinoren.ActiveWriter.NestedClass)childElement);
+					parentElement = GetParentForNestedClass((global::Castle.ActiveWriter.NestedClass)childElement);
 				} else
 				{
 					parentElement = null;
@@ -566,17 +613,17 @@ namespace Altinoren.ActiveWriter
 					DslDiagrams::Diagram.FixUpDiagram(parentElement, childElement);
 				}
 			}
-			public static global::Altinoren.ActiveWriter.Model GetParentForModelClass( global::Altinoren.ActiveWriter.ModelClass root )
+			public static global::Castle.ActiveWriter.Model GetParentForModelClass( global::Castle.ActiveWriter.ModelClass root )
 			{
 				// Segments 0 and 1
-				global::Altinoren.ActiveWriter.Model result = root.Model;
+				global::Castle.ActiveWriter.Model result = root.Model;
 				if ( result == null ) return null;
 				return result;
 			}
-			public static global::Altinoren.ActiveWriter.Model GetParentForNestedClass( global::Altinoren.ActiveWriter.NestedClass root )
+			public static global::Castle.ActiveWriter.Model GetParentForNestedClass( global::Castle.ActiveWriter.NestedClass root )
 			{
 				// Segments 0 and 1
-				global::Altinoren.ActiveWriter.Model result = root.Model;
+				global::Castle.ActiveWriter.Model result = root.Model;
 				if ( result == null ) return null;
 				return result;
 			}
@@ -668,8 +715,8 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Rule to update compartments when an item is added to the list
 		/// </summary>
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.ClassHasProperty), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.NestedClassHasProperties), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.ClassHasProperty), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.NestedClassHasProperties), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
 		internal sealed class CompartmentItemAddRule : DslModeling::AddRule
 		{
 			/// <summary>
@@ -686,44 +733,44 @@ namespace Altinoren.ActiveWriter
 				if(e==null) throw new global::System.ArgumentNullException("e");
 				if (e.ModelElement.IsDeleted)
 					return;
-				if(e.ModelElement is global::Altinoren.ActiveWriter.ClassHasProperty)
+				if(e.ModelElement is global::Castle.ActiveWriter.ClassHasProperty)
 				{
-					global::System.Collections.IEnumerable elements = GetModelClassForClassShapePropertiesFromLastLink((global::Altinoren.ActiveWriter.ClassHasProperty)e.ModelElement);
-					UpdateCompartments(elements, typeof(global::Altinoren.ActiveWriter.ClassShape), "Properties", repaintOnly);
+					global::System.Collections.IEnumerable elements = GetModelClassForClassShapePropertiesFromLastLink((global::Castle.ActiveWriter.ClassHasProperty)e.ModelElement);
+					UpdateCompartments(elements, typeof(global::Castle.ActiveWriter.ClassShape), "Properties", repaintOnly);
 				}
-				if(e.ModelElement is global::Altinoren.ActiveWriter.NestedClassHasProperties)
+				if(e.ModelElement is global::Castle.ActiveWriter.NestedClassHasProperties)
 				{
-					global::System.Collections.IEnumerable elements = GetNestedClassForNestedClassShapePropertiesFromLastLink((global::Altinoren.ActiveWriter.NestedClassHasProperties)e.ModelElement);
-					UpdateCompartments(elements, typeof(global::Altinoren.ActiveWriter.NestedClassShape), "Properties", repaintOnly);
+					global::System.Collections.IEnumerable elements = GetNestedClassForNestedClassShapePropertiesFromLastLink((global::Castle.ActiveWriter.NestedClassHasProperties)e.ModelElement);
+					UpdateCompartments(elements, typeof(global::Castle.ActiveWriter.NestedClassShape), "Properties", repaintOnly);
 				}
 			}
 			
 			#region static DomainPath traversal methods to get the list of compartments to update
-			internal static global::System.Collections.ICollection GetModelClassForClassShapePropertiesFromLastLink(global::Altinoren.ActiveWriter.ClassHasProperty root)
+			internal static global::System.Collections.ICollection GetModelClassForClassShapePropertiesFromLastLink(global::Castle.ActiveWriter.ClassHasProperty root)
 			{
 				// Segment 0
-				global::Altinoren.ActiveWriter.ModelClass result = root.ModelClass;
+				global::Castle.ActiveWriter.ModelClass result = root.ModelClass;
 				if ( result == null ) return new DslModeling::ModelElement[0];
 				return new DslModeling::ModelElement[] {result};
 			}
-			internal static global::System.Collections.ICollection GetModelClassForClassShapeProperties(global::Altinoren.ActiveWriter.ModelProperty root)
+			internal static global::System.Collections.ICollection GetModelClassForClassShapeProperties(global::Castle.ActiveWriter.ModelProperty root)
 			{
 				// Segments 1 and 0
-				global::Altinoren.ActiveWriter.ModelClass result = root.ModelClass;
+				global::Castle.ActiveWriter.ModelClass result = root.ModelClass;
 				if ( result == null ) return new DslModeling::ModelElement[0];
 				return new DslModeling::ModelElement[] {result};
 			}
-			internal static global::System.Collections.ICollection GetNestedClassForNestedClassShapePropertiesFromLastLink(global::Altinoren.ActiveWriter.NestedClassHasProperties root)
+			internal static global::System.Collections.ICollection GetNestedClassForNestedClassShapePropertiesFromLastLink(global::Castle.ActiveWriter.NestedClassHasProperties root)
 			{
 				// Segment 0
-				global::Altinoren.ActiveWriter.NestedClass result = root.NestedClass;
+				global::Castle.ActiveWriter.NestedClass result = root.NestedClass;
 				if ( result == null ) return new DslModeling::ModelElement[0];
 				return new DslModeling::ModelElement[] {result};
 			}
-			internal static global::System.Collections.ICollection GetNestedClassForNestedClassShapeProperties(global::Altinoren.ActiveWriter.ModelProperty root)
+			internal static global::System.Collections.ICollection GetNestedClassForNestedClassShapeProperties(global::Castle.ActiveWriter.ModelProperty root)
 			{
 				// Segments 1 and 0
-				global::Altinoren.ActiveWriter.NestedClass result = root.NestedClass;
+				global::Castle.ActiveWriter.NestedClass result = root.NestedClass;
 				if ( result == null ) return new DslModeling::ModelElement[0];
 				return new DslModeling::ModelElement[] {result};
 			}
@@ -772,8 +819,8 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Rule to update compartments when an items is removed from the list
 		/// </summary>
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.ClassHasProperty), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.NestedClassHasProperties), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.ClassHasProperty), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.NestedClassHasProperties), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
 		internal sealed class CompartmentItemDeleteRule : DslModeling::DeleteRule
 		{
 			/// <summary>
@@ -788,15 +835,15 @@ namespace Altinoren.ActiveWriter
 			internal static void ElementDeleted(DslModeling::ElementDeletedEventArgs e, bool repaintOnly)
 			{
 				if(e==null) throw new global::System.ArgumentNullException("e");
-				if(e.ModelElement is global::Altinoren.ActiveWriter.ClassHasProperty)
+				if(e.ModelElement is global::Castle.ActiveWriter.ClassHasProperty)
 				{
-					global::System.Collections.ICollection elements = CompartmentItemAddRule.GetModelClassForClassShapePropertiesFromLastLink((global::Altinoren.ActiveWriter.ClassHasProperty)e.ModelElement);
-					CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Altinoren.ActiveWriter.ClassShape), "Properties", repaintOnly);
+					global::System.Collections.ICollection elements = CompartmentItemAddRule.GetModelClassForClassShapePropertiesFromLastLink((global::Castle.ActiveWriter.ClassHasProperty)e.ModelElement);
+					CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Castle.ActiveWriter.ClassShape), "Properties", repaintOnly);
 				}
-				if(e.ModelElement is global::Altinoren.ActiveWriter.NestedClassHasProperties)
+				if(e.ModelElement is global::Castle.ActiveWriter.NestedClassHasProperties)
 				{
-					global::System.Collections.ICollection elements = CompartmentItemAddRule.GetNestedClassForNestedClassShapePropertiesFromLastLink((global::Altinoren.ActiveWriter.NestedClassHasProperties)e.ModelElement);
-					CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Altinoren.ActiveWriter.NestedClassShape), "Properties", repaintOnly);
+					global::System.Collections.ICollection elements = CompartmentItemAddRule.GetNestedClassForNestedClassShapePropertiesFromLastLink((global::Castle.ActiveWriter.NestedClassHasProperties)e.ModelElement);
+					CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Castle.ActiveWriter.NestedClassShape), "Properties", repaintOnly);
 				}
 			}
 		}
@@ -804,7 +851,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Rule to update compartments when the property on an item being displayed changes.
 		/// </summary>
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.ModelProperty), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.ModelProperty), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
 		internal sealed class CompartmentItemChangeRule : DslModeling::ChangeRule 
 		{
 			/// <summary>
@@ -819,15 +866,15 @@ namespace Altinoren.ActiveWriter
 			internal static void ElementPropertyChanged(DslModeling::ElementPropertyChangedEventArgs e, bool repaintOnly)
 			{
 				if(e==null) throw new global::System.ArgumentNullException("e");
-				if(e.ModelElement is global::Altinoren.ActiveWriter.ModelProperty && e.DomainProperty.Id == global::Altinoren.ActiveWriter.ModelProperty.NameDomainPropertyId)
+				if(e.ModelElement is global::Castle.ActiveWriter.ModelProperty && e.DomainProperty.Id == global::Castle.ActiveWriter.ModelProperty.NameDomainPropertyId)
 				{
-					global::System.Collections.IEnumerable elements = CompartmentItemAddRule.GetModelClassForClassShapeProperties((global::Altinoren.ActiveWriter.ModelProperty)e.ModelElement);
-					CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Altinoren.ActiveWriter.ClassShape), "Properties", repaintOnly);
+					global::System.Collections.IEnumerable elements = CompartmentItemAddRule.GetModelClassForClassShapeProperties((global::Castle.ActiveWriter.ModelProperty)e.ModelElement);
+					CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Castle.ActiveWriter.ClassShape), "Properties", repaintOnly);
 				}
-				if(e.ModelElement is global::Altinoren.ActiveWriter.ModelProperty && e.DomainProperty.Id == global::Altinoren.ActiveWriter.ModelProperty.NameDomainPropertyId)
+				if(e.ModelElement is global::Castle.ActiveWriter.ModelProperty && e.DomainProperty.Id == global::Castle.ActiveWriter.ModelProperty.NameDomainPropertyId)
 				{
-					global::System.Collections.IEnumerable elements = CompartmentItemAddRule.GetNestedClassForNestedClassShapeProperties((global::Altinoren.ActiveWriter.ModelProperty)e.ModelElement);
-					CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Altinoren.ActiveWriter.NestedClassShape), "Properties", repaintOnly);
+					global::System.Collections.IEnumerable elements = CompartmentItemAddRule.GetNestedClassForNestedClassShapeProperties((global::Castle.ActiveWriter.ModelProperty)e.ModelElement);
+					CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Castle.ActiveWriter.NestedClassShape), "Properties", repaintOnly);
 				}
 			}
 		}
@@ -835,8 +882,8 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Rule to update compartments when a roleplayer change happens
 		/// </summary>
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.ClassHasProperty), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.NestedClassHasProperties), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.ClassHasProperty), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.NestedClassHasProperties), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
 		internal sealed class CompartmentItemRolePlayerChangeRule : DslModeling::RolePlayerChangeRule 
 		{
 			/// <summary>
@@ -851,17 +898,17 @@ namespace Altinoren.ActiveWriter
 			internal static void RolePlayerChanged(DslModeling::RolePlayerChangedEventArgs e, bool repaintOnly)
 			{
 				if(e==null) throw new global::System.ArgumentNullException("e");
-				if(typeof(global::Altinoren.ActiveWriter.ClassHasProperty).IsAssignableFrom(e.DomainRelationship.ImplementationClass))
+				if(typeof(global::Castle.ActiveWriter.ClassHasProperty).IsAssignableFrom(e.DomainRelationship.ImplementationClass))
 				{
 					if(e.DomainRole.IsSource)
 					{
-						//global::System.Collections.IEnumerable oldElements = CompartmentItemAddRule.GetModelClassForClassShapePropertiesFromLastLink((global::Altinoren.ActiveWriter.ModelProperty)e.OldRolePlayer);
+						//global::System.Collections.IEnumerable oldElements = CompartmentItemAddRule.GetModelClassForClassShapePropertiesFromLastLink((global::Castle.ActiveWriter.ModelProperty)e.OldRolePlayer);
 						//foreach(DslModeling::ModelElement element in oldElements)
 						//{
 						//	DslModeling::LinkedElementCollection<DslDiagrams::PresentationElement> pels = DslDiagrams::PresentationViewsSubject.GetPresentation(element);
 						//	foreach(DslDiagrams::PresentationElement pel in pels)
 						//	{
-						//		global::Altinoren.ActiveWriter.ClassShape compartmentShape = pel as global::Altinoren.ActiveWriter.ClassShape;
+						//		global::Castle.ActiveWriter.ClassShape compartmentShape = pel as global::Castle.ActiveWriter.ClassShape;
 						//		if(compartmentShape != null)
 						//		{
 						//			compartmentShape.GetCompartmentMappings()[0].InitializeCompartmentShape(compartmentShape);
@@ -869,26 +916,26 @@ namespace Altinoren.ActiveWriter
 						//	}
 						//}
 						
-						global::System.Collections.IEnumerable elements = CompartmentItemAddRule.GetModelClassForClassShapePropertiesFromLastLink((global::Altinoren.ActiveWriter.ClassHasProperty)e.ElementLink);
-						CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Altinoren.ActiveWriter.ClassShape), "Properties", repaintOnly);
+						global::System.Collections.IEnumerable elements = CompartmentItemAddRule.GetModelClassForClassShapePropertiesFromLastLink((global::Castle.ActiveWriter.ClassHasProperty)e.ElementLink);
+						CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Castle.ActiveWriter.ClassShape), "Properties", repaintOnly);
 					}
 					else 
 					{
-						global::System.Collections.IEnumerable elements = CompartmentItemAddRule.GetModelClassForClassShapeProperties((global::Altinoren.ActiveWriter.ModelProperty)e.NewRolePlayer);
-						CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Altinoren.ActiveWriter.ClassShape), "Properties", repaintOnly);
+						global::System.Collections.IEnumerable elements = CompartmentItemAddRule.GetModelClassForClassShapeProperties((global::Castle.ActiveWriter.ModelProperty)e.NewRolePlayer);
+						CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Castle.ActiveWriter.ClassShape), "Properties", repaintOnly);
 					}
 				}
-				if(typeof(global::Altinoren.ActiveWriter.NestedClassHasProperties).IsAssignableFrom(e.DomainRelationship.ImplementationClass))
+				if(typeof(global::Castle.ActiveWriter.NestedClassHasProperties).IsAssignableFrom(e.DomainRelationship.ImplementationClass))
 				{
 					if(e.DomainRole.IsSource)
 					{
-						//global::System.Collections.IEnumerable oldElements = CompartmentItemAddRule.GetNestedClassForNestedClassShapePropertiesFromLastLink((global::Altinoren.ActiveWriter.ModelProperty)e.OldRolePlayer);
+						//global::System.Collections.IEnumerable oldElements = CompartmentItemAddRule.GetNestedClassForNestedClassShapePropertiesFromLastLink((global::Castle.ActiveWriter.ModelProperty)e.OldRolePlayer);
 						//foreach(DslModeling::ModelElement element in oldElements)
 						//{
 						//	DslModeling::LinkedElementCollection<DslDiagrams::PresentationElement> pels = DslDiagrams::PresentationViewsSubject.GetPresentation(element);
 						//	foreach(DslDiagrams::PresentationElement pel in pels)
 						//	{
-						//		global::Altinoren.ActiveWriter.NestedClassShape compartmentShape = pel as global::Altinoren.ActiveWriter.NestedClassShape;
+						//		global::Castle.ActiveWriter.NestedClassShape compartmentShape = pel as global::Castle.ActiveWriter.NestedClassShape;
 						//		if(compartmentShape != null)
 						//		{
 						//			compartmentShape.GetCompartmentMappings()[0].InitializeCompartmentShape(compartmentShape);
@@ -896,13 +943,13 @@ namespace Altinoren.ActiveWriter
 						//	}
 						//}
 						
-						global::System.Collections.IEnumerable elements = CompartmentItemAddRule.GetNestedClassForNestedClassShapePropertiesFromLastLink((global::Altinoren.ActiveWriter.NestedClassHasProperties)e.ElementLink);
-						CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Altinoren.ActiveWriter.NestedClassShape), "Properties", repaintOnly);
+						global::System.Collections.IEnumerable elements = CompartmentItemAddRule.GetNestedClassForNestedClassShapePropertiesFromLastLink((global::Castle.ActiveWriter.NestedClassHasProperties)e.ElementLink);
+						CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Castle.ActiveWriter.NestedClassShape), "Properties", repaintOnly);
 					}
 					else 
 					{
-						global::System.Collections.IEnumerable elements = CompartmentItemAddRule.GetNestedClassForNestedClassShapeProperties((global::Altinoren.ActiveWriter.ModelProperty)e.NewRolePlayer);
-						CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Altinoren.ActiveWriter.NestedClassShape), "Properties", repaintOnly);
+						global::System.Collections.IEnumerable elements = CompartmentItemAddRule.GetNestedClassForNestedClassShapeProperties((global::Castle.ActiveWriter.ModelProperty)e.NewRolePlayer);
+						CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Castle.ActiveWriter.NestedClassShape), "Properties", repaintOnly);
 					}
 				}
 			}
@@ -911,8 +958,8 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Rule to update compartments when the order of items in the list changes.
 		/// </summary>
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.ClassHasProperty), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.NestedClassHasProperties), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.ClassHasProperty), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.NestedClassHasProperties), FireTime=DslModeling::TimeToFire.TopLevelCommit, InitiallyDisabled=true)]
 		internal sealed class CompartmentItemRolePlayerPositionChangeRule : DslModeling::RolePlayerPositionChangeRule 
 		{
 			/// <summary>
@@ -927,20 +974,20 @@ namespace Altinoren.ActiveWriter
 			internal static void RolePlayerPositionChanged(DslModeling::RolePlayerOrderChangedEventArgs e, bool repaintOnly)
 			{
 				if(e==null) throw new global::System.ArgumentNullException("e");
-				if(typeof(global::Altinoren.ActiveWriter.ClassHasProperty).IsAssignableFrom(e.DomainRelationship.ImplementationClass))
+				if(typeof(global::Castle.ActiveWriter.ClassHasProperty).IsAssignableFrom(e.DomainRelationship.ImplementationClass))
 				{
 					if(!e.CounterpartDomainRole.IsSource)
 					{
-						global::System.Collections.IEnumerable elements = CompartmentItemAddRule.GetModelClassForClassShapeProperties((global::Altinoren.ActiveWriter.ModelProperty)e.CounterpartRolePlayer);
-						CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Altinoren.ActiveWriter.ClassShape), "Properties", repaintOnly);
+						global::System.Collections.IEnumerable elements = CompartmentItemAddRule.GetModelClassForClassShapeProperties((global::Castle.ActiveWriter.ModelProperty)e.CounterpartRolePlayer);
+						CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Castle.ActiveWriter.ClassShape), "Properties", repaintOnly);
 					}
 				}
-				if(typeof(global::Altinoren.ActiveWriter.NestedClassHasProperties).IsAssignableFrom(e.DomainRelationship.ImplementationClass))
+				if(typeof(global::Castle.ActiveWriter.NestedClassHasProperties).IsAssignableFrom(e.DomainRelationship.ImplementationClass))
 				{
 					if(!e.CounterpartDomainRole.IsSource)
 					{
-						global::System.Collections.IEnumerable elements = CompartmentItemAddRule.GetNestedClassForNestedClassShapeProperties((global::Altinoren.ActiveWriter.ModelProperty)e.CounterpartRolePlayer);
-						CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Altinoren.ActiveWriter.NestedClassShape), "Properties", repaintOnly);
+						global::System.Collections.IEnumerable elements = CompartmentItemAddRule.GetNestedClassForNestedClassShapeProperties((global::Castle.ActiveWriter.ModelProperty)e.CounterpartRolePlayer);
+						CompartmentItemAddRule.UpdateCompartments(elements, typeof(global::Castle.ActiveWriter.NestedClassShape), "Properties", repaintOnly);
 					}
 				}
 			}
@@ -949,11 +996,11 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Reroute a connector when the role players of its underlying relationship change
 		/// </summary>
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.ManyToOneRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.ManyToManyRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.OneToOneRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
-		[DslModeling::RuleOn(typeof(global::Altinoren.ActiveWriter.InheritanceRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.ManyToOneRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.ManyToManyRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.OneToOneRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.NestedClassReferencesModelClasses), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
+		[DslModeling::RuleOn(typeof(global::Castle.ActiveWriter.InheritanceRelation), FireTime = DslModeling::TimeToFire.TopLevelCommit, Priority = DslDiagrams::DiagramFixupConstants.AddConnectionRulePriority, InitiallyDisabled=true)]
 		internal sealed class ConnectorRolePlayerChanged : DslModeling::RolePlayerChangeRule
 		{
 			/// <summary>
@@ -970,7 +1017,7 @@ namespace Altinoren.ActiveWriter
 					DslDiagrams::BinaryLinkShape linkShape = connectorLink.Presentation as DslDiagrams::BinaryLinkShape;
 					if (linkShape != null)
 					{
-						global::Altinoren.ActiveWriter.ActiveRecordMapping diagram = linkShape.Diagram as global::Altinoren.ActiveWriter.ActiveRecordMapping;
+						global::Castle.ActiveWriter.ActiveRecordMapping diagram = linkShape.Diagram as global::Castle.ActiveWriter.ActiveRecordMapping;
 						if (diagram != null)
 						{
 							if (e.NewRolePlayer != null)

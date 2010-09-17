@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	internal static partial class Constants
 	{
@@ -18,7 +18,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
 		public const string CompanyName = @"altinoren.com";
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-		public const string ProductVersion = "1.0.0.0";
+		public const string ProductVersion = "10.0.0.1";
 
 		// Menu definitions
 		public static readonly global::System.ComponentModel.Design.CommandID ActiveWriterDiagramMenu = new global::System.ComponentModel.Design.CommandID(new global::System.Guid(ActiveWriterCommandSetId), 0x10000);
@@ -42,12 +42,12 @@ namespace Altinoren.ActiveWriter
 //
 // Constants not generated from values in DesignerDefinition.dsl are defined below
 //
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	internal static partial class Constants
 	{
 		// Menu identifier
-		public const string ActiveWriterCommandSetId = "9928a048-76e7-4f47-8055-2b7da11b6f58";
+		public const string ActiveWriterCommandSetId = "0e766536-f400-419b-ab04-a9ea12dcccba";
 		public const string ActiveWriterClassDetailsToolWindowId = "1a0d2807-900b-4092-9ac9-1829dd34ce6f";
 		public static readonly global::System.ComponentModel.Design.CommandID ViewClassDetailsCommand = new global::System.ComponentModel.Design.CommandID(new global::System.Guid(ActiveWriterCommandSetId), 0x10002);
 	}

@@ -10,7 +10,7 @@
 using VSShellInterop = global::Microsoft.VisualStudio.Shell.Interop;
 using DslShell = global::Microsoft.VisualStudio.Modeling.Shell;
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Double-derived class to allow easier code customization.
@@ -43,7 +43,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Called by the shell to ask the editor to create a new document object.
 		/// </summary>
-		protected override DslShell::ModelingDocData CreateDocData(string fileName, VSShellInterop::IVsHierarchy hierarchy, uint itemId)
+		public override DslShell::ModelingDocData CreateDocData(string fileName, VSShellInterop::IVsHierarchy hierarchy, uint itemId)
 		{
 			// Create the document type supported by this editor.
 			return new ActiveWriterDocData(this.ServiceProvider, typeof(ActiveWriterEditorFactory).GUID);

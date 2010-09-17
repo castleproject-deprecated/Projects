@@ -6,12 +6,11 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	#region Using directives
 	using DslModeling = global::Microsoft.VisualStudio.Modeling;
 	using DslValidation = global::Microsoft.VisualStudio.Modeling.Validation;
-	using DslDiagrams = global::Microsoft.VisualStudio.Modeling.Diagrams;
 	using VSTextTemplating = global::Microsoft.VisualStudio.TextTemplating;
 	#endregion
 	
@@ -164,13 +163,13 @@ namespace Altinoren.ActiveWriter
 					// Create a field to store the model once it is loaded
 					global::System.CodeDom.CodeMemberField rootElement = new global::System.CodeDom.CodeMemberField();
 					rootElement.Name = providesArguments[providesModelParameter].ToLower(global::System.Globalization.CultureInfo.InvariantCulture) + "Value";
-					rootElement.Type = new global::System.CodeDom.CodeTypeReference(typeof(global::Altinoren.ActiveWriter.Model));
+					rootElement.Type = new global::System.CodeDom.CodeTypeReference(typeof(global::Castle.ActiveWriter.Model));
 					rootElement.Attributes = global::System.CodeDom.MemberAttributes.Private;
 	
 					// Create a property for the Model that delay-loads the model
 					global::System.CodeDom.CodeMemberProperty rootElementProperty = new global::System.CodeDom.CodeMemberProperty();
 					rootElementProperty.Name = providesArguments[providesModelParameter];
-					rootElementProperty.Type = new global::System.CodeDom.CodeTypeReference(typeof(global::Altinoren.ActiveWriter.Model));
+					rootElementProperty.Type = new global::System.CodeDom.CodeTypeReference(typeof(global::Castle.ActiveWriter.Model));
 					rootElementProperty.Attributes = global::System.CodeDom.MemberAttributes.Private;
 					rootElementProperty.HasSet = false;
 					rootElementProperty.HasGet = true;
@@ -236,8 +235,7 @@ namespace Altinoren.ActiveWriter
 				if (languageProvider != null)
 				{
 					string[] domainModels = {
-						"Microsoft.VisualStudio.Modeling.Diagrams.CoreDesignSurfaceDomainModel",
-						"Altinoren.ActiveWriter.ActiveWriterDomainModel",
+						"Castle.ActiveWriter.ActiveWriterDomainModel",
 					};
 	
 					global::System.CodeDom.Compiler.CodeGeneratorOptions options = new global::System.CodeDom.Compiler.CodeGeneratorOptions();
@@ -317,12 +315,12 @@ namespace Altinoren.ActiveWriter
 						diagramFileDeclaration = new global::System.CodeDom.CodeVariableDeclarationStatement(new global::System.CodeDom.CodeTypeReference("System.String"), "diagramFileName");
 						diagramFileAssign = new global::System.CodeDom.CodeAssignStatement(new global::System.CodeDom.CodeVariableReferenceExpression("diagramFileName"), new global::System.CodeDom.CodeBinaryOperatorExpression(new global::System.CodeDom.CodePrimitiveExpression(requiresArguments[requiresFileParameter]), global::System.CodeDom.CodeBinaryOperatorType.Add, new global::System.CodeDom.CodePrimitiveExpression(".diagram")));
 						invokeLoad = new global::System.CodeDom.CodeMethodInvokeExpression(
-							new global::System.CodeDom.CodeMethodReferenceExpression(new global::System.CodeDom.CodeFieldReferenceExpression(new global::System.CodeDom.CodeTypeReferenceExpression(typeof(ActiveWriterSerializationHelper)), "Instance"), "LoadModelAndDiagram"), new global::System.CodeDom.CodeVariableReferenceExpression("serializationResult"), new global::System.CodeDom.CodePropertyReferenceExpression(new global::System.CodeDom.CodeThisReferenceExpression(), "Store"), new global::System.CodeDom.CodePrimitiveExpression(requiresArguments[requiresFileParameter]), new global::System.CodeDom.CodeVariableReferenceExpression("diagramFileName"), new global::System.CodeDom.CodePrimitiveExpression(null), new global::System.CodeDom.CodePrimitiveExpression(null));
+							new global::System.CodeDom.CodeMethodReferenceExpression(new global::System.CodeDom.CodeFieldReferenceExpression(new global::System.CodeDom.CodeTypeReferenceExpression(typeof(ActiveWriterSerializationHelper)), "Instance"), "LoadModelAndDiagram"), new global::System.CodeDom.CodeVariableReferenceExpression("serializationResult"), new global::System.CodeDom.CodePropertyReferenceExpression(new global::System.CodeDom.CodeThisReferenceExpression(), "Store"), new global::System.CodeDom.CodePrimitiveExpression(requiresArguments[requiresFileParameter]), new global::System.CodeDom.CodeVariableReferenceExpression("diagramFileName"), new global::System.CodeDom.CodePrimitiveExpression(null), new global::System.CodeDom.CodePrimitiveExpression(null), new global::System.CodeDom.CodePrimitiveExpression(null));
 					}
 					else
 					{
 						invokeLoad = new global::System.CodeDom.CodeMethodInvokeExpression(
-							new global::System.CodeDom.CodeMethodReferenceExpression(new global::System.CodeDom.CodeFieldReferenceExpression(new global::System.CodeDom.CodeTypeReferenceExpression(typeof(ActiveWriterSerializationHelper)), "Instance"), "LoadModel"), new global::System.CodeDom.CodeVariableReferenceExpression("serializationResult"), new global::System.CodeDom.CodePropertyReferenceExpression(new global::System.CodeDom.CodeThisReferenceExpression(), "Store"), new global::System.CodeDom.CodePrimitiveExpression(requiresArguments[requiresFileParameter]), new global::System.CodeDom.CodePrimitiveExpression(null), new global::System.CodeDom.CodePrimitiveExpression(null));
+							new global::System.CodeDom.CodeMethodReferenceExpression(new global::System.CodeDom.CodeFieldReferenceExpression(new global::System.CodeDom.CodeTypeReferenceExpression(typeof(ActiveWriterSerializationHelper)), "Instance"), "LoadModel"), new global::System.CodeDom.CodeVariableReferenceExpression("serializationResult"), new global::System.CodeDom.CodePropertyReferenceExpression(new global::System.CodeDom.CodeThisReferenceExpression(), "Store"), new global::System.CodeDom.CodePrimitiveExpression(requiresArguments[requiresFileParameter]), new global::System.CodeDom.CodePrimitiveExpression(null), new global::System.CodeDom.CodePrimitiveExpression(null), new global::System.CodeDom.CodePrimitiveExpression(null));
 					}
 	
 					global::System.CodeDom.CodeAssignStatement loadAssign = new global::System.CodeDom.CodeAssignStatement(new global::System.CodeDom.CodeFieldReferenceExpression(new global::System.CodeDom.CodeThisReferenceExpression(), providesArguments[providesModelParameter].ToLower(global::System.Globalization.CultureInfo.InvariantCulture) + "Value"), invokeLoad);
@@ -402,7 +400,7 @@ namespace Altinoren.ActiveWriter
 	
 			imports.Add("Microsoft.VisualStudio.Modeling");
 			imports.Add("System.CodeDom.Compiler");
-			imports.Add("Altinoren.ActiveWriter");
+			imports.Add("Castle.ActiveWriter");
 	
 			return imports.ToArray();
 		}
@@ -415,8 +413,9 @@ namespace Altinoren.ActiveWriter
 		{
 			global::System.Collections.Generic.List<string> references = new global::System.Collections.Generic.List<string>(base.GetReferencesForProcessingRun());
 			references.Add(this.GetType().Assembly.Location);
-			references.Add(typeof(DslDiagrams::Diagram).Assembly.Location);
+			references.Add(typeof(global::Microsoft.VisualStudio.Modeling.Diagrams.Diagram).Assembly.Location);
 			references.Add(typeof(DslModeling::Store).Assembly.Location);
+			references.Add("Microsoft.VisualStudio.TextTemplating.Modeling.10.0.dll");
 			return references.ToArray();
 		}
 	}

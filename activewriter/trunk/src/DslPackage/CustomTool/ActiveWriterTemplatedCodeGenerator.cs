@@ -1,4 +1,4 @@
-// Copyright 2006 Gokhan Altinoren - http://altinoren.com/
+// Copyright 2006 Gokhan Castle - http://altinoren.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Altinoren.ActiveWriter.CustomTool
+namespace Castle.ActiveWriter.CustomTool
 {
     using System;
     using ServerExplorerSupport;
@@ -49,11 +49,11 @@ namespace Altinoren.ActiveWriter.CustomTool
             }
 
             ResourceManager manager =
-                new ResourceManager("Altinoren.ActiveWriter.VSPackage",
+                new ResourceManager("Castle.ActiveWriter.VSPackage1",
                                     typeof (ActiveWriterTemplatedCodeGenerator).Assembly);
             FileInfo fi = new FileInfo(inputFileName);
-            inputFileContent =
-                manager.GetObject("ActiveWriterReport").ToString()
+                        inputFileContent =
+                                            manager.GetObject("ActiveWriterReport").ToString()
                     .Replace("%MODELFILE%", fi.Name)
                     .Replace("%MODELFILEFULLNAME%", fi.FullName)
                     .Replace("%NAMESPACE%", FileNamespace)

@@ -1,4 +1,4 @@
-// Copyright 2006 Gokhan Altinoren - http://altinoren.com/
+// Copyright 2006 Gokhan Castle - http://altinoren.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 using System;
 using System.IO;
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
     using Microsoft.VisualStudio.Modeling;
     

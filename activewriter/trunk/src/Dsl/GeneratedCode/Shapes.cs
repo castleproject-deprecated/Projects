@@ -11,13 +11,14 @@ using DslModeling = global::Microsoft.VisualStudio.Modeling;
 using DslDesign = global::Microsoft.VisualStudio.Modeling.Design;
 using DslDiagrams = global::Microsoft.VisualStudio.Modeling.Diagrams;
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Double-derived base class for DomainClass ClassShape
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ClassShape.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ClassShape.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.ClassShape.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.ClassShape.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslModeling::DomainModelOwner(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel))]
 	[global::System.CLSCompliant(true)]
 	[DslModeling::DomainObjectId("ca45d586-12d1-4f5d-99c7-83c1eb0e61eb")]
 	public abstract partial class ClassShapeBase : DslDiagrams::CompartmentShape
@@ -181,7 +182,7 @@ namespace Altinoren.ActiveWriter
 		{
 			base.InitializeShapeFields(shapeFields);
 			DslDiagrams::TextField field1 = new DslDiagrams::TextField("Name");
-			field1.DefaultText = global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("ClassShapeNameDefaultText");
+			field1.DefaultText = global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("ClassShapeNameDefaultText");
 			field1.DefaultFocusable = true;
 			field1.DefaultAutoSize = true;
 			field1.AnchoringBehavior.MinimumHeightInLines = 1;
@@ -195,11 +196,11 @@ namespace Altinoren.ActiveWriter
 			shapeFields.Add(field2);
 			
 			DslDiagrams::ImageField field3 = new DslDiagrams::ImageField("Key");
-			field3.DefaultImage = DslDiagrams::ImageHelper.GetImage(global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetObject("ClassShapeKeyDefaultImage"));
+			field3.DefaultImage = DslDiagrams::ImageHelper.GetImage(global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetObject("ClassShapeKeyDefaultImage"));
 			shapeFields.Add(field3);
 			
 			DslDiagrams::ImageField field4 = new DslDiagrams::ImageField("Validation");
-			field4.DefaultImage = DslDiagrams::ImageHelper.GetImage(global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetObject("ClassShapeValidationDefaultImage"));
+			field4.DefaultImage = DslDiagrams::ImageHelper.GetImage(global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetObject("ClassShapeValidationDefaultImage"));
 			shapeFields.Add(field4);
 			
 		}
@@ -288,7 +289,7 @@ namespace Altinoren.ActiveWriter
 					baseCompartmentDescriptions.CopyTo(compartmentDescriptions, 0);	
 				}
 				{
-					string title = global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("ClassShapePropertiesTitle");
+					string title = global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("ClassShapePropertiesTitle");
 					DslDiagrams::ElementListCompartmentDescription descriptor = new DslDiagrams::ElementListCompartmentDescription("Properties", title, 
 						global::System.Drawing.Color.FromKnownColor(global::System.Drawing.KnownColor.LightGray), false, 
 						global::System.Drawing.Color.FromKnownColor(global::System.Drawing.KnownColor.White), false,
@@ -322,7 +323,7 @@ namespace Altinoren.ActiveWriter
 				{
 					// First we get the mappings defined for the base shape, and add on any mappings defined for this
 					// shape. 
-					DslDiagrams::CompartmentMapping[] baseMappings = base.GetCompartmentMappings(typeof(global::Altinoren.ActiveWriter.ModelClass));
+					DslDiagrams::CompartmentMapping[] baseMappings = base.GetCompartmentMappings(typeof(global::Castle.ActiveWriter.ModelClass));
 					int localCompartmentMappingsOffset = 0;
 					if(baseMappings!=null)
 					{
@@ -336,13 +337,13 @@ namespace Altinoren.ActiveWriter
 					}
 					mappings[localCompartmentMappingsOffset+0] = new DslDiagrams::ElementListCompartmentMapping(
 																				"Properties", 
-																				global::Altinoren.ActiveWriter.NamedElement.NameDomainPropertyId, 
-																				global::Altinoren.ActiveWriter.ModelProperty.DomainClassId, 
+																				global::Castle.ActiveWriter.NamedElement.NameDomainPropertyId, 
+																				global::Castle.ActiveWriter.ModelProperty.DomainClassId, 
 																				GetElementsFromModelClassForProperties,
 																				null,
 																				null,
 																				null);
-					compartmentMappings.Add(typeof(global::Altinoren.ActiveWriter.ModelClass), mappings);
+					compartmentMappings.Add(typeof(global::Castle.ActiveWriter.ModelClass), mappings);
 				}
 			}
 			
@@ -373,9 +374,9 @@ namespace Altinoren.ActiveWriter
 			#region DomainPath traversal methods to get the list of elements to display in a compartment.
 			internal static global::System.Collections.IList GetElementsFromModelClassForProperties(DslModeling::ModelElement element)
 			{
-				global::Altinoren.ActiveWriter.ModelClass root = (global::Altinoren.ActiveWriter.ModelClass)element;
+				global::Castle.ActiveWriter.ModelClass root = (global::Castle.ActiveWriter.ModelClass)element;
 					// Segments 0 and 1
-					DslModeling::LinkedElementCollection<global::Altinoren.ActiveWriter.ModelProperty> result = root.Properties;
+					DslModeling::LinkedElementCollection<global::Castle.ActiveWriter.ModelProperty> result = root.Properties;
 				return result;
 			}
 			#endregion
@@ -412,7 +413,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="store">Store where new element is to be created.</param>
 		/// <param name="propertyAssignments">List of domain property id/value pairs to set once the element is created.</param>
 		public ClassShape(DslModeling::Store store, params DslModeling::PropertyAssignment[] propertyAssignments)
-			: this(store != null ? store.DefaultPartition : null, propertyAssignments)
+			: this(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, propertyAssignments)
 		{
 		}
 		
@@ -428,13 +429,14 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Double-derived base class for DomainClass NestedClassShape
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassShape.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassShape.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.NestedClassShape.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.NestedClassShape.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslModeling::DomainModelOwner(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel))]
 	[global::System.CLSCompliant(true)]
 	[DslModeling::DomainObjectId("db37440f-1f67-41af-869d-fb873cfa72a1")]
 	public abstract partial class NestedClassShapeBase : DslDiagrams::CompartmentShape
@@ -598,7 +600,7 @@ namespace Altinoren.ActiveWriter
 		{
 			base.InitializeShapeFields(shapeFields);
 			DslDiagrams::TextField field1 = new DslDiagrams::TextField("Name");
-			field1.DefaultText = global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("NestedClassShapeNameDefaultText");
+			field1.DefaultText = global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("NestedClassShapeNameDefaultText");
 			field1.DefaultFocusable = true;
 			field1.DefaultAutoSize = true;
 			field1.AnchoringBehavior.MinimumHeightInLines = 1;
@@ -689,7 +691,7 @@ namespace Altinoren.ActiveWriter
 					baseCompartmentDescriptions.CopyTo(compartmentDescriptions, 0);	
 				}
 				{
-					string title = global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("NestedClassShapePropertiesTitle");
+					string title = global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("NestedClassShapePropertiesTitle");
 					DslDiagrams::ElementListCompartmentDescription descriptor = new DslDiagrams::ElementListCompartmentDescription("Properties", title, 
 						global::System.Drawing.Color.FromKnownColor(global::System.Drawing.KnownColor.LightGray), false, 
 						global::System.Drawing.Color.FromKnownColor(global::System.Drawing.KnownColor.White), false,
@@ -723,7 +725,7 @@ namespace Altinoren.ActiveWriter
 				{
 					// First we get the mappings defined for the base shape, and add on any mappings defined for this
 					// shape. 
-					DslDiagrams::CompartmentMapping[] baseMappings = base.GetCompartmentMappings(typeof(global::Altinoren.ActiveWriter.NestedClass));
+					DslDiagrams::CompartmentMapping[] baseMappings = base.GetCompartmentMappings(typeof(global::Castle.ActiveWriter.NestedClass));
 					int localCompartmentMappingsOffset = 0;
 					if(baseMappings!=null)
 					{
@@ -737,13 +739,13 @@ namespace Altinoren.ActiveWriter
 					}
 					mappings[localCompartmentMappingsOffset+0] = new DslDiagrams::ElementListCompartmentMapping(
 																				"Properties", 
-																				global::Altinoren.ActiveWriter.NamedElement.NameDomainPropertyId, 
-																				global::Altinoren.ActiveWriter.ModelProperty.DomainClassId, 
+																				global::Castle.ActiveWriter.NamedElement.NameDomainPropertyId, 
+																				global::Castle.ActiveWriter.ModelProperty.DomainClassId, 
 																				GetElementsFromNestedClassForProperties,
 																				null,
 																				null,
 																				null);
-					compartmentMappings.Add(typeof(global::Altinoren.ActiveWriter.NestedClass), mappings);
+					compartmentMappings.Add(typeof(global::Castle.ActiveWriter.NestedClass), mappings);
 				}
 			}
 			
@@ -774,9 +776,9 @@ namespace Altinoren.ActiveWriter
 			#region DomainPath traversal methods to get the list of elements to display in a compartment.
 			internal static global::System.Collections.IList GetElementsFromNestedClassForProperties(DslModeling::ModelElement element)
 			{
-				global::Altinoren.ActiveWriter.NestedClass root = (global::Altinoren.ActiveWriter.NestedClass)element;
+				global::Castle.ActiveWriter.NestedClass root = (global::Castle.ActiveWriter.NestedClass)element;
 					// Segments 0 and 1
-					DslModeling::LinkedElementCollection<global::Altinoren.ActiveWriter.ModelProperty> result = root.Properties;
+					DslModeling::LinkedElementCollection<global::Castle.ActiveWriter.ModelProperty> result = root.Properties;
 				return result;
 			}
 			#endregion
@@ -813,7 +815,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="store">Store where new element is to be created.</param>
 		/// <param name="propertyAssignments">List of domain property id/value pairs to set once the element is created.</param>
 		public NestedClassShape(DslModeling::Store store, params DslModeling::PropertyAssignment[] propertyAssignments)
-			: this(store != null ? store.DefaultPartition : null, propertyAssignments)
+			: this(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, propertyAssignments)
 		{
 		}
 		

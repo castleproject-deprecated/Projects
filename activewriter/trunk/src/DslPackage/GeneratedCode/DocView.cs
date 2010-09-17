@@ -11,7 +11,7 @@ using DslModeling = global::Microsoft.VisualStudio.Modeling;
 using DslDiagrams = global::Microsoft.VisualStudio.Modeling.Diagrams;
 using DslShell = global::Microsoft.VisualStudio.Modeling.Shell;
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Double-derived class to allow easier code customization.
@@ -51,12 +51,23 @@ namespace Altinoren.ActiveWriter
 			{
 				return false;
 			}
-			// The diagram should exist in the store by now, just need to find it and connect it to this view.
-			global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.ActiveRecordMapping> diagrams = this.DocData.Store.ElementDirectory.FindElements<global::Altinoren.ActiveWriter.ActiveRecordMapping>();
-			if (diagrams.Count > 0)
+
+			// The diagram should exist in the diagram partition by now, just need to find it and connect it to this view.
+			ActiveWriterDocDataBase docData = this.DocData as ActiveWriterDocDataBase;
+			global::System.Diagnostics.Debug.Assert(docData != null, "DocData for ActiveWriterDocViewBase should be an ActiveWriterDocDataBase!");
+			DslModeling::Partition diagramPartition = docData.GetDiagramPartition();
+			if (diagramPartition != null)
 			{
-				global::System.Diagnostics.Debug.Assert(diagrams.Count == 1, "Found more than one diagram, using the first one found.");
-				this.Diagram = (DslDiagrams::Diagram)diagrams[0];
+				global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.ActiveRecordMapping> diagrams = docData.GetDiagramPartition().ElementDirectory.FindElements<global::Castle.ActiveWriter.ActiveRecordMapping>();
+				if (diagrams.Count > 0)
+				{
+					global::System.Diagnostics.Debug.Assert(diagrams.Count == 1, "Found more than one diagram, using the first one found.");
+					this.Diagram = (DslDiagrams::Diagram)diagrams[0];
+				}
+				else
+				{
+					return false;
+				}
 			}
 			else
 			{
@@ -73,7 +84,7 @@ namespace Altinoren.ActiveWriter
 		{
 			get
 			{
-				return global::Altinoren.ActiveWriter.ActiveWriterToolboxHelper.DefaultToolboxTabName;
+				return global::Castle.ActiveWriter.ActiveWriterToolboxHelper.DefaultToolboxTabName;
 			}
 		}
 		
@@ -84,7 +95,7 @@ namespace Altinoren.ActiveWriter
 		{
 			get
 			{
-				return global::Altinoren.ActiveWriter.ActiveWriterToolboxHelper.DefaultToolboxTabToolboxItemsCount;			
+				return global::Castle.ActiveWriter.ActiveWriterToolboxHelper.DefaultToolboxTabToolboxItemsCount;			
 			}
 		}
 		
@@ -111,12 +122,12 @@ namespace Altinoren.ActiveWriter
 		{
 			base.OnSelectionChanged(e);
 
-			if(global::Altinoren.ActiveWriter.ActiveWriterHelpKeywordHelper.Instance != null)
+			if(global::Castle.ActiveWriter.ActiveWriterHelpKeywordHelper.Instance != null)
 			{
 				DslModeling::ModelElement selectedElement = this.PrimarySelection as DslModeling::ModelElement;
 				if(selectedElement != null)
 				{
-					string f1Keyword = global::Altinoren.ActiveWriter.ActiveWriterHelpKeywordHelper.Instance.GetHelpKeyword(selectedElement);
+					string f1Keyword = global::Castle.ActiveWriter.ActiveWriterHelpKeywordHelper.Instance.GetHelpKeyword(selectedElement);
 
 					// If this is a presentation element, check the underlying model element for a help keyword
 					DslDiagrams::PresentationElement presentationElement = this.PrimarySelection as DslDiagrams::PresentationElement;
@@ -125,7 +136,7 @@ namespace Altinoren.ActiveWriter
 						selectedElement = presentationElement.ModelElement;
 						if(selectedElement != null)
 						{
-							string modelElementKeyword = global::Altinoren.ActiveWriter.ActiveWriterHelpKeywordHelper.Instance.GetHelpKeyword(selectedElement);
+							string modelElementKeyword = global::Castle.ActiveWriter.ActiveWriterHelpKeywordHelper.Instance.GetHelpKeyword(selectedElement);
 							if(string.IsNullOrEmpty(f1Keyword))
 							{
 								// Presentation element does not have an F1 keyword, so push the keyword from the model element as an F1 keyword.

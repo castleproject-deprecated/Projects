@@ -1,26 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>10.0.20723</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{68116C7F-C1D8-4DDC-9CA9-9DDA35356EC3}</ProjectGuid>
+    <ProjectGuid>{9B466868-77E9-4721-B53D-90DF61029048}</ProjectGuid>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <ApplicationIcon>Resources\File.ico</ApplicationIcon>
-    <RootNamespace>Altinoren.ActiveWriter</RootNamespace>
-    <AssemblyName>Altinoren.ActiveWriter.DslPackage</AssemblyName>
+    <RootNamespace>Castle.ActiveWriter</RootNamespace>
+    <AssemblyName>Castle.ActiveWriter.DslPackage</AssemblyName>
     <AssemblyOriginatorKeyFile>..\Key.snk</AssemblyOriginatorKeyFile>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <SignAssembly>true</SignAssembly>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ClearToolboxCacheInExpHive>true</ClearToolboxCacheInExpHive>
     <StartupObject>
     </StartupObject>
-    <TargetRegistryRoot>SOFTWARE\Microsoft\VisualStudio\9.0Exp</TargetRegistryRoot>
-    <RegisterOutputPackage>true</RegisterOutputPackage>
-    <RegisterWithCodebase>true</RegisterWithCodebase>
-    <GacTargetOutput>false</GacTargetOutput>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,9 +37,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <!-- Properties for VSSDK/DSL Targets: Must be defined before importing the targets -->
+  <PropertyGroup>
+    <RegisterOutputPackage>true</RegisterOutputPackage>
+    <UseCodebase>true</UseCodebase>
+    <GacTargetOutput>false</GacTargetOutput>
+    <TransformOnBuild>True</TransformOnBuild>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\VSSDK\Microsoft.VsSDK.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\DSLTools\v2.1\Microsoft.DSLTools.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\VSSDK\Microsoft.VsSDK.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\DSLTools\v10.0\Microsoft.DSLTools.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -50,36 +55,45 @@
   </Target>
   -->
   <ItemGroup>
-    <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams.GraphObject, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86" />
-    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Shell, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk$(DslToolsVersionSuffix), Version=$(DslToolsAsmVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams$(DslToolsVersionSuffix), Version=$(DslToolsAsmVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams.GraphObject$(DslToolsVersionSuffix), Version=$(DslToolsAsmVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86" />
+    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Shell$(DslToolsVersionSuffix), Version=$(DslToolsAsmVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Microsoft.VisualStudio.Shell.9.0, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Shell$(MpfVersionSuffix), Version=$(MpfAsmVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable$(MpfVersionSuffix), Version=$(MpfAsmVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Microsoft.VisualStudio.TextTemplating, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.TextTemplating.VSHost, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.Modeling.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.VSHost.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomCommands\ActiveWriterCommandSet.cs" />
     <Compile Include="CustomTool\ActiveWriterTemplatedCodeGenerator.cs" />
     <Compile Include="DTESupport\ActiveWriterDiagramExtensibilityObject.cs" />
     <Compile Include="DTESupport\ActiveWriterDocData.cs" />
+    <Compile Include="DTESupport\ActiveWriterDocData.Partial.cs" />
     <Compile Include="DTESupport\ActiveWriterDocView.cs" />
     <Compile Include="DTESupport\ActiveWriterExtensibleObject.cs" />
-    <Compile Include="DTESupport\ActiveWriterDocData.Partial.cs" />
     <Compile Include="DTESupport\IActiveWriterDiagramExtensibilityObject.cs" />
     <Compile Include="DTESupport\IActiveWriterExtensibleObject.cs" />
     <Compile Include="GeneratedCode\CommandSet.cs">
@@ -87,6 +101,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CommandSet.tt</DependentUpon>
     </Compile>
+    <Compile Include="ToolWindow\ActiveWriterClassDetailsToolWindow.cs" />
+    <Compile Include="ToolWindow\ClassDetailsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ToolWindow\ClassDetailsControl.Designer.cs">
+      <DependentUpon>ClassDetailsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToolWindow\ColumnTypeComboBoxCell.cs" />
+    <Compile Include="ToolWindow\KeyTypeComboBoxCell.cs" />
+    <None Include="Resources\ActiveWriterReport.tt" />
+    <None Include="source.extension.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>source.extension.vsixmanifest</LastGenOutput>
+    </None>
+    <None Include="source.extension.vsixmanifest">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>source.extension.tt</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="GeneratedCode\Constants.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Constants.cs</LastGenOutput>
@@ -140,15 +174,6 @@
       <DependentUpon>Package.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ToolWindow\ActiveWriterClassDetailsToolWindow.cs" />
-    <Compile Include="ToolWindow\ClassDetailsControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ToolWindow\ClassDetailsControl.Designer.cs">
-      <DependentUpon>ClassDetailsControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ToolWindow\ColumnTypeComboBoxCell.cs" />
-    <Compile Include="ToolWindow\KeyTypeComboBoxCell.cs" />
     <None Include="GeneratedCode\EditorFactory.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EditorFactory.cs</LastGenOutput>
@@ -164,41 +189,55 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dsl\Dsl.csproj">
-      <Project>{bb8e2a67-d8bc-424f-82e9-ebd4af951b3d}</Project>
+      <Project>{b6c654ff-6cef-467c-b845-dd0f6cbb1267}</Project>
       <Name>Dsl</Name>
+      <IncludeOutputGroupsInVSIX>
+        BuiltProjectOutputGroup;
+      </IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>
+        DebugSymbolsProjectOutputGroup;
+      </IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+    <Service Include="{508349B6-6B84-4df5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ToolWindow\ClassDetailsControl.resx">
       <DependentUpon>ClassDetailsControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="VSPackage.resx">
       <SubType>Designer</SubType>
+      <MergeWithCTO>true</MergeWithCTO>
+      <ManifestResourceName>VSPackage</ManifestResourceName>
     </EmbeddedResource>
+    <EmbeddedResource Include="VSPackage1.resx" />
   </ItemGroup>
   <ItemGroup>
     <VSItemTemplate Include="ProjectItemTemplates\CSharp.vstemplate">
-      <OutputName>ActiveWriter</OutputName>
+      <OutputName>ARWriter</OutputName>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CSharp.tt</DependentUpon>
     </VSItemTemplate>
     <VSItemTemplate Include="ProjectItemTemplates\VisualBasic.vstemplate">
-      <OutputName>ActiveWriter</OutputName>
+      <OutputName>ARWriter</OutputName>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>VisualBasic.tt</DependentUpon>
     </VSItemTemplate>
-    <None Include="Resources\File.ico" />
+    <Content Include="Resources\File.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Key.snk">
       <Link>Key.snk</Link>
     </None>
+    <VSCTCompile Include="Commands.vsct">
+      <ResourceName>1000.ctmenu</ResourceName>
+    </VSCTCompile>
     <None Include="GeneratedCode\CommandSet.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CommandSet.cs</LastGenOutput>
@@ -222,25 +261,20 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>VisualBasic.vstemplate</LastGenOutput>
     </None>
-    <None Include="Resources\ActiveWriterReport.tt">
-      <LastGenOutput>ActiveWriterReport.%25EXT%25</LastGenOutput>
-    </None>
   </ItemGroup>
   <PropertyGroup>
     <StartProgram>$(DevEnvDir)\devenv.exe</StartProgram>
     <StartAction>Program</StartAction>
-    <StartArguments>/ranu /rootsuffix Exp /DesignTimeRun "..\..\..\Debugging\Debugging.sln"</StartArguments>
+    <StartArguments>/rootsuffix Exp "..\..\..\Debugging\Debugging.sln"</StartArguments>
   </PropertyGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CodeAnalysisDictionary.xml">
       <Link>CodeAnalysisDictionary.xml</Link>
     </CodeAnalysisDictionary>
-    <None Include="GeneratedCode\GeneratedVSCT.txt" />
-    <Content Include="Resources\ModelExplorerToolWindowBitmaps.bmp" />
+    <Content Include="Resources\ModelExplorerToolWindowBitmaps.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
   </ItemGroup>
-  <ItemGroup>
-    <VSCTCompile Include="Commands.vsct">
-      <ResourceName>1000.ctmenu</ResourceName>
-    </VSCTCompile>
-  </ItemGroup>
+  <ItemGroup />
 </Project>

@@ -1,4 +1,4 @@
-// Copyright 2006 Gokhan Altinoren - http://altinoren.com/
+// Copyright 2006 Gokhan Castle - http://altinoren.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,11 +15,11 @@
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
-using Altinoren.ActiveWriter.CodeGeneration;
+using Castle.ActiveWriter.CodeGeneration;
 using System.Collections.ObjectModel;
 using Microsoft.VisualStudio.Modeling;
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
     public partial class ModelClass
     {

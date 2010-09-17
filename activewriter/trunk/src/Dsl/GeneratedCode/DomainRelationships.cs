@@ -9,14 +9,15 @@
 
 using DslModeling = global::Microsoft.VisualStudio.Modeling;
 using DslDesign = global::Microsoft.VisualStudio.Modeling.Design;
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainRelationship ModelHasClass
-	/// Description for Altinoren.ActiveWriter.ModelHasClass
+	/// Description for Castle.ActiveWriter.ModelHasClass
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelHasClass.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelHasClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.ModelHasClass.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.ModelHasClass.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslModeling::DomainModelOwner(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel))]
 	[global::System.CLSCompliant(true)]
 	[DslModeling::DomainRelationship(IsEmbedding=true)]
 	[DslModeling::DomainObjectId("f9419603-bb7b-40fc-9fea-fcd2e7e1b990")]
@@ -47,7 +48,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="store">Store where new link is to be created.</param>
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		public ModelHasClass(DslModeling::Store store, params DslModeling::RoleAssignment[] roleAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, null)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, null)
 		{
 		}
 		
@@ -58,7 +59,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		/// <param name="propertyAssignments">List of properties assignments to set on the new link.</param>
 		public ModelHasClass(DslModeling::Store store, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, propertyAssignments)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, propertyAssignments)
 		{
 		}
 		
@@ -94,9 +95,9 @@ namespace Altinoren.ActiveWriter
 		/// DomainRole Model
 		/// Classes of the model
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelHasClass/Model.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelHasClass/Model.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "Classes", PropertyDisplayNameKey="Altinoren.ActiveWriter.ModelHasClass/Model.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ModelHasClass/Model.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ModelHasClass/Model.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "Classes", PropertyDisplayNameKey="Castle.ActiveWriter.ModelHasClass/Model.PropertyDisplayName",  PropagatesCopy = DslModeling::PropagatesCopyOption.DoNotPropagateCopy, Multiplicity = DslModeling::Multiplicity.ZeroMany)]
 		[DslModeling::DomainObjectId("9e22f600-80ad-4883-a32f-df2738ee3614")]
 		public virtual Model Model
 		{
@@ -145,9 +146,9 @@ namespace Altinoren.ActiveWriter
 		/// DomainRole Class
 		/// Model of the class
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelHasClass/Class.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelHasClass/Class.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "Model", PropertyDisplayNameKey="Altinoren.ActiveWriter.ModelHasClass/Class.PropertyDisplayName", PropagatesDelete = true, Multiplicity = DslModeling::Multiplicity.One)]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ModelHasClass/Class.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ModelHasClass/Class.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "Model", PropertyDisplayNameKey="Castle.ActiveWriter.ModelHasClass/Class.PropertyDisplayName", PropagatesDelete = true,  PropagatesCopy = DslModeling::PropagatesCopyOption.DoNotPropagateCopy, Multiplicity = DslModeling::Multiplicity.One)]
 		[DslModeling::DomainObjectId("91a1db06-cbe8-44b8-a827-329a2ca102c3")]
 		public virtual ModelClass Class
 		{
@@ -172,7 +173,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
 		public static DslModeling::LinkedElementCollection<ModelClass> GetClasses(Model element)
 		{
-			return new DslModeling::LinkedElementCollection<ModelClass>(element, ModelDomainRoleId);
+			return GetRoleCollection<DslModeling::LinkedElementCollection<ModelClass>, ModelClass>(element, ModelDomainRoleId);
 		}
 		#endregion
 		#region Model link accessor
@@ -181,9 +182,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.ModelHasClass> GetLinksToClasses ( global::Altinoren.ActiveWriter.Model modelInstance )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.ModelHasClass> GetLinksToClasses ( global::Castle.ActiveWriter.Model modelInstance )
 		{
-			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ModelHasClass>(modelInstance, global::Altinoren.ActiveWriter.ModelHasClass.ModelDomainRoleId);
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ModelHasClass>(modelInstance, global::Castle.ActiveWriter.ModelHasClass.ModelDomainRoleId);
 		}
 		#endregion
 		#region Class link accessor
@@ -192,9 +193,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::Altinoren.ActiveWriter.ModelHasClass GetLinkToModel (global::Altinoren.ActiveWriter.ModelClass classInstance)
+		public static global::Castle.ActiveWriter.ModelHasClass GetLinkToModel (global::Castle.ActiveWriter.ModelClass classInstance)
 		{
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.ModelHasClass> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ModelHasClass>(classInstance, global::Altinoren.ActiveWriter.ModelHasClass.ClassDomainRoleId);
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.ModelHasClass> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ModelHasClass>(classInstance, global::Castle.ActiveWriter.ModelHasClass.ClassDomainRoleId);
 			global::System.Diagnostics.Debug.Assert(links.Count <= 1, "Multiplicity of Class not obeyed.");
 			if ( links.Count == 0 )
 			{
@@ -213,11 +214,11 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.ModelHasClass> GetLinks( global::Altinoren.ActiveWriter.Model source, global::Altinoren.ActiveWriter.ModelClass target )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.ModelHasClass> GetLinks( global::Castle.ActiveWriter.Model source, global::Castle.ActiveWriter.ModelClass target )
 		{
-			global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.ModelHasClass> outLinks = new global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.ModelHasClass>();
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.ModelHasClass> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ModelHasClass>(source, global::Altinoren.ActiveWriter.ModelHasClass.ModelDomainRoleId);
-			foreach ( global::Altinoren.ActiveWriter.ModelHasClass link in links )
+			global::System.Collections.Generic.List<global::Castle.ActiveWriter.ModelHasClass> outLinks = new global::System.Collections.Generic.List<global::Castle.ActiveWriter.ModelHasClass>();
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.ModelHasClass> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ModelHasClass>(source, global::Castle.ActiveWriter.ModelHasClass.ModelDomainRoleId);
+			foreach ( global::Castle.ActiveWriter.ModelHasClass link in links )
 			{
 				if ( target.Equals(link.Class) )
 				{
@@ -231,10 +232,10 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::Altinoren.ActiveWriter.ModelHasClass GetLink( global::Altinoren.ActiveWriter.Model source, global::Altinoren.ActiveWriter.ModelClass target )
+		public static global::Castle.ActiveWriter.ModelHasClass GetLink( global::Castle.ActiveWriter.Model source, global::Castle.ActiveWriter.ModelClass target )
 		{
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.ModelHasClass> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ModelHasClass>(source, global::Altinoren.ActiveWriter.ModelHasClass.ModelDomainRoleId);
-			foreach ( global::Altinoren.ActiveWriter.ModelHasClass link in links )
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.ModelHasClass> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ModelHasClass>(source, global::Castle.ActiveWriter.ModelHasClass.ModelDomainRoleId);
+			foreach ( global::Castle.ActiveWriter.ModelHasClass link in links )
 			{
 				if ( target.Equals(link.Class) )
 				{
@@ -247,14 +248,15 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainRelationship ManyToOneRelation
 	/// Maps a many to one association
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslModeling::DomainModelOwner(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel))]
 	[global::System.CLSCompliant(true)]
 	[DslModeling::DomainRelationship(AllowsDuplicates = true)]
 	[DslModeling::DomainObjectId("68ba5474-0696-4988-9e76-1bc8e9eb9de8")]
@@ -285,7 +287,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="store">Store where new link is to be created.</param>
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		public ManyToOneRelation(DslModeling::Store store, params DslModeling::RoleAssignment[] roleAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, null)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, null)
 		{
 		}
 		
@@ -296,7 +298,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		/// <param name="propertyAssignments">List of properties assignments to set on the new link.</param>
 		public ManyToOneRelation(DslModeling::Store store, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, propertyAssignments)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, propertyAssignments)
 		{
 		}
 		
@@ -331,9 +333,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// DomainRole Source
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/Source.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/Source.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "Targets", PropertyDisplayNameKey="Altinoren.ActiveWriter.ManyToOneRelation/Source.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/Source.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/Source.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "Targets", PropertyDisplayNameKey="Castle.ActiveWriter.ManyToOneRelation/Source.PropertyDisplayName",  PropagatesCopy = DslModeling::PropagatesCopyOption.DoNotPropagateCopy, Multiplicity = DslModeling::Multiplicity.ZeroMany)]
 		[DslModeling::DomainObjectId("8fc70677-e363-4cda-b821-17505cab2c14")]
 		public virtual ModelClass Source
 		{
@@ -358,7 +360,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
 		public static DslModeling::LinkedElementCollection<ModelClass> GetSources(ModelClass element)
 		{
-			return new DslModeling::LinkedElementCollection<ModelClass>(element, TargetDomainRoleId);
+			return GetRoleCollection<DslModeling::LinkedElementCollection<ModelClass>, ModelClass>(element, TargetDomainRoleId);
 		}
 		#endregion
 		#region Target domain role code
@@ -371,9 +373,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// DomainRole Target
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/Target.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/Target.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "Sources", PropertyDisplayNameKey="Altinoren.ActiveWriter.ManyToOneRelation/Target.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/Target.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/Target.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "Sources", PropertyDisplayNameKey="Castle.ActiveWriter.ManyToOneRelation/Target.PropertyDisplayName",  PropagatesCopy = DslModeling::PropagatesCopyOption.DoNotPropagateCopy, Multiplicity = DslModeling::Multiplicity.ZeroMany)]
 		[DslModeling::DomainObjectId("25d422d4-6342-4127-9b72-33da88df08be")]
 		public virtual ModelClass Target
 		{
@@ -398,7 +400,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
 		public static DslModeling::LinkedElementCollection<ModelClass> GetTargets(ModelClass element)
 		{
-			return new DslModeling::LinkedElementCollection<ModelClass>(element, SourceDomainRoleId);
+			return GetRoleCollection<DslModeling::LinkedElementCollection<ModelClass>, ModelClass>(element, SourceDomainRoleId);
 		}
 		#endregion
 		#region TargetCache domain property code
@@ -416,9 +418,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetCache domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCache.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCache.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCache.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetCache.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetCache.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetCache.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(CacheEnum.Undefined)]
 		[DslModeling::DomainObjectId("c3ac9ce5-87b4-48ca-a243-26e0a237e7ab")]
 		public CacheEnum TargetCache
@@ -504,9 +506,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetCascade domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCascade.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCascade.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCascade.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetCascade.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetCascade.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetCascade.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(ManyRelationCascadeEnum.None)]
 		[DslModeling::DomainObjectId("55f2f2e3-3183-4b1a-b3c9-9a864fb2e4ae")]
 		public ManyRelationCascadeEnum TargetCascade
@@ -592,9 +594,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetColumnKey domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetColumnKey.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetColumnKey.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetColumnKey.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetColumnKey.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetColumnKey.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetColumnKey.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("e4d0bfec-46a2-466d-b8f2-5545ebb18658")]
 		public global::System.String TargetColumnKey
 		{
@@ -679,9 +681,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetCustomAccess domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCustomAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCustomAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetCustomAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetCustomAccess.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetCustomAccess.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetCustomAccess.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("76ddf835-fca5-44dc-abb1-adc0c1563db4")]
 		public global::System.String TargetCustomAccess
 		{
@@ -766,9 +768,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetInverse domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetInverse.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetInverse.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetInverse.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetInverse.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetInverse.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetInverse.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("396220b5-9996-4ca6-9cbb-fca174540765")]
 		public global::System.Boolean TargetInverse
 		{
@@ -853,9 +855,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetLazy domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetLazy.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetLazy.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetLazy.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetLazy.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetLazy.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetLazy.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("b99bdbe1-4c3b-4040-aa1e-4f0f1f081b93")]
 		public global::System.Boolean TargetLazy
 		{
@@ -940,9 +942,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetMapType domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetMapType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetMapType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetMapType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetMapType.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetMapType.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetMapType.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("1a4f7b45-a9e0-4489-a71e-f2a8aecbfb7f")]
 		public global::System.String TargetMapType
 		{
@@ -1027,9 +1029,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetOrderBy domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetOrderBy.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetOrderBy.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetOrderBy.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetOrderBy.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetOrderBy.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetOrderBy.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("ec6503aa-f498-4992-bd6f-baa9fcc568b3")]
 		public global::System.String TargetOrderBy
 		{
@@ -1114,9 +1116,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetRelationType domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetRelationType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetRelationType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetRelationType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetRelationType.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetRelationType.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetRelationType.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(InheritedRelationType.Inherited)]
 		[DslModeling::DomainObjectId("8c4ed47e-37dc-4975-b996-7c6521940bf2")]
 		public InheritedRelationType TargetRelationType
@@ -1202,9 +1204,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetSchema domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetSchema.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetSchema.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetSchema.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetSchema.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetSchema.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetSchema.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("3da30e35-2a3d-4e5e-ab57-8f71af79c4c4")]
 		public global::System.String TargetSchema
 		{
@@ -1289,9 +1291,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetSort domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetSort.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetSort.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetSort.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetSort.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetSort.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetSort.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("aa0eab75-566c-40a8-ae2c-ddf13effa636")]
 		public global::System.String TargetSort
 		{
@@ -1376,9 +1378,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetTable domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetTable.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetTable.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetTable.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetTable.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetTable.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetTable.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("dbace6bc-2b15-4b78-a57d-95852b8cd583")]
 		public global::System.String TargetTable
 		{
@@ -1463,9 +1465,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetWhere domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetWhere.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetWhere.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetWhere.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetWhere.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetWhere.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetWhere.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("2f1e9945-4335-4316-a705-3e27a0943b61")]
 		public global::System.String TargetWhere
 		{
@@ -1551,9 +1553,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of TargetDescription domain property.
 		/// Description of the property. This will appear in a <summary> Xml comment.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetDescription.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetDescription.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetDescription.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetDescription.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetDescription.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetDescription.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("e4a0ff32-b309-439a-94b5-de8d3ef7d0ca")]
 		public global::System.String TargetDescription
 		{
@@ -1640,9 +1642,9 @@ namespace Altinoren.ActiveWriter
 		/// Name of the property in the generated code. If not supplied, ActiveWriter will
 		/// use the source class name in plural form.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyName.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyName.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyName.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetPropertyName.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetPropertyName.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetPropertyName.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("658c3768-1a8c-442c-8ebe-df02007cc3a1")]
 		public global::System.String TargetPropertyName
 		{
@@ -1729,9 +1731,9 @@ namespace Altinoren.ActiveWriter
 		/// Type of the property. If not supplied, ActiveWriter will use the model's
 		/// Collection Inteface by default.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetPropertyType.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetPropertyType.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetPropertyType.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue("")]
 		[DslModeling::DomainObjectId("f415a978-5c96-46e1-900e-443303aa5a37")]
 		public global::System.String TargetPropertyType
@@ -1817,9 +1819,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceCascade domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceCascade.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceCascade.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceCascade.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/SourceCascade.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/SourceCascade.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/SourceCascade.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(CascadeEnum.None)]
 		[DslModeling::DomainObjectId("563916db-4a01-4bd6-b6b4-aab15e396f78")]
 		public CascadeEnum SourceCascade
@@ -1905,9 +1907,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceColumn domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceColumn.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceColumn.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceColumn.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/SourceColumn.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/SourceColumn.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/SourceColumn.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("78d006af-6e94-463b-a5bf-fba65534f272")]
 		public global::System.String SourceColumn
 		{
@@ -1992,9 +1994,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceCustomAccess domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceCustomAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceCustomAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceCustomAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/SourceCustomAccess.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/SourceCustomAccess.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/SourceCustomAccess.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("f24290b4-9a78-4bd0-b9ba-4f7973768389")]
 		public global::System.String SourceCustomAccess
 		{
@@ -2079,9 +2081,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceInsert domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceInsert.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceInsert.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceInsert.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/SourceInsert.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/SourceInsert.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/SourceInsert.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(true)]
 		[DslModeling::DomainObjectId("69f188c5-6e65-4d3c-ad92-5f706d79eaad")]
 		public global::System.Boolean SourceInsert
@@ -2167,9 +2169,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceNotNull domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceNotNull.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceNotNull.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceNotNull.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/SourceNotNull.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/SourceNotNull.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/SourceNotNull.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("12d3226e-3185-44be-af32-1e3459cad8e9")]
 		public global::System.Boolean SourceNotNull
 		{
@@ -2254,9 +2256,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceOuterJoin domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceOuterJoin.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceOuterJoin.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceOuterJoin.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/SourceOuterJoin.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/SourceOuterJoin.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/SourceOuterJoin.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(OuterJoinEnum.Auto)]
 		[DslModeling::DomainObjectId("d5bd0e29-9032-4775-9711-df5b24f9914d")]
 		public OuterJoinEnum SourceOuterJoin
@@ -2342,9 +2344,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceType domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/SourceType.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/SourceType.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/SourceType.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("d03c165e-b655-4428-a368-6a9184805470")]
 		public global::System.String SourceType
 		{
@@ -2429,9 +2431,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceUnique domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceUnique.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceUnique.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceUnique.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/SourceUnique.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/SourceUnique.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/SourceUnique.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("c2e055f1-5410-4488-90cd-278a8a494ab7")]
 		public global::System.Boolean SourceUnique
 		{
@@ -2516,9 +2518,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceUpdate domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceUpdate.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceUpdate.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceUpdate.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/SourceUpdate.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/SourceUpdate.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/SourceUpdate.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(true)]
 		[DslModeling::DomainObjectId("328a72d1-69d3-45f5-b671-27b0b8ce08f1")]
 		public global::System.Boolean SourceUpdate
@@ -2605,9 +2607,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of SourceDescription domain property.
 		/// Description of the property. This will appear in a <summary> Xml comment.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceDescription.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceDescription.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceDescription.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/SourceDescription.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/SourceDescription.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/SourceDescription.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("4090d713-654c-48c3-9640-73ad00dbc4b6")]
 		public global::System.String SourceDescription
 		{
@@ -2693,9 +2695,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of TargetAccess domain property.
 		/// The access strategy.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetAccess.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetAccess.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetAccess.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(InheritablePropertyAccess.Inherit)]
 		[DslModeling::DomainObjectId("05776d07-5fe2-4041-84fc-8d0c1d3b21ec")]
 		public InheritablePropertyAccess TargetAccess
@@ -2782,9 +2784,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of SourcePropertyName domain property.
 		/// Name of the property. If not suplied, ActiveWriter will use target class name.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyName.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyName.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyName.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/SourcePropertyName.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/SourcePropertyName.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/SourcePropertyName.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("46603735-0a4c-4811-a643-125844df7d70")]
 		public global::System.String SourcePropertyName
 		{
@@ -2870,9 +2872,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of SourceNotFoundBehaviour domain property.
 		/// Gets or sets the way broken relations are handled.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceNotFoundBehaviour.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceNotFoundBehaviour.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceNotFoundBehaviour.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/SourceNotFoundBehaviour.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/SourceNotFoundBehaviour.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/SourceNotFoundBehaviour.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(NotFoundBehaviour.Default)]
 		[DslModeling::DomainObjectId("e9556820-fa84-4921-97a3-c7cc3b45d539")]
 		public NotFoundBehaviour SourceNotFoundBehaviour
@@ -2959,9 +2961,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of TargetNotFoundBehaviour domain property.
 		/// Gets or sets the way broken relations are handled.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetNotFoundBehaviour.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetNotFoundBehaviour.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetNotFoundBehaviour.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetNotFoundBehaviour.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetNotFoundBehaviour.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetNotFoundBehaviour.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(NotFoundBehaviour.Default)]
 		[DslModeling::DomainObjectId("91224e05-42d5-4913-9659-aa8996fb8240")]
 		public NotFoundBehaviour TargetNotFoundBehaviour
@@ -3048,9 +3050,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of TargetElement domain property.
 		/// Use for simple types.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetElement.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetElement.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetElement.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetElement.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetElement.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetElement.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("0c3d3bc5-bea7-4146-8a8e-943626595d5b")]
 		public global::System.String TargetElement
 		{
@@ -3136,9 +3138,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of TargetIndexType domain property.
 		/// Only used with maps.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetIndexType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetIndexType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetIndexType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetIndexType.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetIndexType.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetIndexType.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("90d3139c-f9b1-4dd1-8db6-7c8564abb213")]
 		public global::System.String TargetIndexType
 		{
@@ -3224,9 +3226,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of TargetIndex domain property.
 		/// Only used with maps or list.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetIndex.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetIndex.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetIndex.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetIndex.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetIndex.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetIndex.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("efe49545-0679-4e40-967e-e8034c83f70e")]
 		public global::System.String TargetIndex
 		{
@@ -3310,10 +3312,10 @@ namespace Altinoren.ActiveWriter
 		
 		/// <summary>
 		/// Gets or sets the value of TargetFetch domain property.
-		/// Description for Altinoren.ActiveWriter.ManyToOneRelation.Target Fetch
+		/// Description for Castle.ActiveWriter.ManyToOneRelation.Target Fetch
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetFetch.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetFetch.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetFetch.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetFetch.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(FetchEnum.Unspecified)]
 		[DslModeling::DomainObjectId("65a5cad5-daac-4487-bdd4-24ba761f92b1")]
 		public FetchEnum TargetFetch
@@ -3400,9 +3402,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of TargetIUserCollectionType domain property.
 		/// User collection type for many side of relationship
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetIUserCollectionType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetIUserCollectionType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetIUserCollectionType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetIUserCollectionType.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetIUserCollectionType.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetIUserCollectionType.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("173770db-04a0-4401-b2dd-69e70edda734")]
 		public global::System.String TargetIUserCollectionType
 		{
@@ -3486,12 +3488,11 @@ namespace Altinoren.ActiveWriter
 		
 		/// <summary>
 		/// Gets or sets the value of TargetPropertyGenerated domain property.
-		/// Description for Altinoren.ActiveWriter.ManyToOneRelation.Target Property
-		/// Generated
+		/// Description for Castle.ActiveWriter.ManyToOneRelation.Target Property Generated
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyGenerated.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyGenerated.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/TargetPropertyGenerated.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/TargetPropertyGenerated.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/TargetPropertyGenerated.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/TargetPropertyGenerated.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(true)]
 		[DslModeling::DomainObjectId("b78081c0-24d3-4367-8007-6f5da73d411c")]
 		public global::System.Boolean TargetPropertyGenerated
@@ -3576,12 +3577,11 @@ namespace Altinoren.ActiveWriter
 		
 		/// <summary>
 		/// Gets or sets the value of SourcePropertyGenerated domain property.
-		/// Description for Altinoren.ActiveWriter.ManyToOneRelation.Source Property
-		/// Generated
+		/// Description for Castle.ActiveWriter.ManyToOneRelation.Source Property Generated
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyGenerated.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyGenerated.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourcePropertyGenerated.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/SourcePropertyGenerated.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/SourcePropertyGenerated.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/SourcePropertyGenerated.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(true)]
 		[DslModeling::DomainObjectId("5a6da19e-ae0e-49c5-afa1-dfce0433e464")]
 		public global::System.Boolean SourcePropertyGenerated
@@ -3666,11 +3666,11 @@ namespace Altinoren.ActiveWriter
 		
 		/// <summary>
 		/// Gets or sets the value of SourceAccess domain property.
-		/// Description for Altinoren.ActiveWriter.ManyToOneRelation.Source Access
+		/// Description for Castle.ActiveWriter.ManyToOneRelation.Source Access
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToOneRelation/SourceAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToOneRelation/SourceAccess.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToOneRelation/SourceAccess.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToOneRelation/SourceAccess.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(InheritablePropertyAccess.Inherit)]
 		[DslModeling::DomainObjectId("06b82c89-9c53-467a-8e36-90e87be1e5f3")]
 		public InheritablePropertyAccess SourceAccess
@@ -3747,9 +3747,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.ManyToOneRelation> GetLinksToTargets ( global::Altinoren.ActiveWriter.ModelClass sourceInstance )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.ManyToOneRelation> GetLinksToTargets ( global::Castle.ActiveWriter.ModelClass sourceInstance )
 		{
-			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ManyToOneRelation>(sourceInstance, global::Altinoren.ActiveWriter.ManyToOneRelation.SourceDomainRoleId);
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ManyToOneRelation>(sourceInstance, global::Castle.ActiveWriter.ManyToOneRelation.SourceDomainRoleId);
 		}
 		#endregion
 		#region Target link accessor
@@ -3758,9 +3758,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.ManyToOneRelation> GetLinksToSources ( global::Altinoren.ActiveWriter.ModelClass targetInstance )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.ManyToOneRelation> GetLinksToSources ( global::Castle.ActiveWriter.ModelClass targetInstance )
 		{
-			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ManyToOneRelation>(targetInstance, global::Altinoren.ActiveWriter.ManyToOneRelation.TargetDomainRoleId);
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ManyToOneRelation>(targetInstance, global::Castle.ActiveWriter.ManyToOneRelation.TargetDomainRoleId);
 		}
 		#endregion
 		#region ManyToOneRelation instance accessors
@@ -3770,11 +3770,11 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.ManyToOneRelation> GetLinks( global::Altinoren.ActiveWriter.ModelClass source, global::Altinoren.ActiveWriter.ModelClass target )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.ManyToOneRelation> GetLinks( global::Castle.ActiveWriter.ModelClass source, global::Castle.ActiveWriter.ModelClass target )
 		{
-			global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.ManyToOneRelation> outLinks = new global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.ManyToOneRelation>();
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.ManyToOneRelation> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ManyToOneRelation>(source, global::Altinoren.ActiveWriter.ManyToOneRelation.SourceDomainRoleId);
-			foreach ( global::Altinoren.ActiveWriter.ManyToOneRelation link in links )
+			global::System.Collections.Generic.List<global::Castle.ActiveWriter.ManyToOneRelation> outLinks = new global::System.Collections.Generic.List<global::Castle.ActiveWriter.ManyToOneRelation>();
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.ManyToOneRelation> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ManyToOneRelation>(source, global::Castle.ActiveWriter.ManyToOneRelation.SourceDomainRoleId);
+			foreach ( global::Castle.ActiveWriter.ManyToOneRelation link in links )
 			{
 				if ( target.Equals(link.Target) )
 				{
@@ -3786,13 +3786,14 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainRelationship ClassHasProperty
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ClassHasProperty.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ClassHasProperty.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.ClassHasProperty.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.ClassHasProperty.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslModeling::DomainModelOwner(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel))]
 	[global::System.CLSCompliant(true)]
 	[DslModeling::DomainRelationship(IsEmbedding=true)]
 	[DslModeling::DomainObjectId("8f270f87-f8f4-4f43-9fe5-13b75748144c")]
@@ -3823,7 +3824,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="store">Store where new link is to be created.</param>
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		public ClassHasProperty(DslModeling::Store store, params DslModeling::RoleAssignment[] roleAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, null)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, null)
 		{
 		}
 		
@@ -3834,7 +3835,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		/// <param name="propertyAssignments">List of properties assignments to set on the new link.</param>
 		public ClassHasProperty(DslModeling::Store store, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, propertyAssignments)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, propertyAssignments)
 		{
 		}
 		
@@ -3869,9 +3870,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// DomainRole ModelClass
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ClassHasProperty/ModelClass.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ClassHasProperty/ModelClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "Properties", PropertyDisplayNameKey="Altinoren.ActiveWriter.ClassHasProperty/ModelClass.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ClassHasProperty/ModelClass.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ClassHasProperty/ModelClass.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "Properties", PropertyDisplayNameKey="Castle.ActiveWriter.ClassHasProperty/ModelClass.PropertyDisplayName",  PropagatesCopy = DslModeling::PropagatesCopyOption.DoNotPropagateCopy, Multiplicity = DslModeling::Multiplicity.ZeroMany)]
 		[DslModeling::DomainObjectId("8eddf27d-b9d1-4813-940e-c374248112cb")]
 		public virtual ModelClass ModelClass
 		{
@@ -3919,9 +3920,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// DomainRole Property
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ClassHasProperty/Property.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ClassHasProperty/Property.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "ModelClass", PropertyDisplayNameKey="Altinoren.ActiveWriter.ClassHasProperty/Property.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroOne)]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ClassHasProperty/Property.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ClassHasProperty/Property.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "ModelClass", PropertyDisplayNameKey="Castle.ActiveWriter.ClassHasProperty/Property.PropertyDisplayName",  PropagatesCopy = DslModeling::PropagatesCopyOption.DoNotPropagateCopy, Multiplicity = DslModeling::Multiplicity.ZeroOne)]
 		[DslModeling::DomainObjectId("2a4fd4f7-6c32-4821-9f28-f596ad9423f0")]
 		public virtual ModelProperty Property
 		{
@@ -3946,7 +3947,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
 		public static DslModeling::LinkedElementCollection<ModelProperty> GetProperties(ModelClass element)
 		{
-			return new DslModeling::LinkedElementCollection<ModelProperty>(element, ModelClassDomainRoleId);
+			return GetRoleCollection<DslModeling::LinkedElementCollection<ModelProperty>, ModelProperty>(element, ModelClassDomainRoleId);
 		}
 		#endregion
 		#region ModelClass link accessor
@@ -3955,9 +3956,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.ClassHasProperty> GetLinksToProperties ( global::Altinoren.ActiveWriter.ModelClass modelClassInstance )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.ClassHasProperty> GetLinksToProperties ( global::Castle.ActiveWriter.ModelClass modelClassInstance )
 		{
-			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ClassHasProperty>(modelClassInstance, global::Altinoren.ActiveWriter.ClassHasProperty.ModelClassDomainRoleId);
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ClassHasProperty>(modelClassInstance, global::Castle.ActiveWriter.ClassHasProperty.ModelClassDomainRoleId);
 		}
 		#endregion
 		#region Property link accessor
@@ -3966,9 +3967,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::Altinoren.ActiveWriter.ClassHasProperty GetLinkToModelClass (global::Altinoren.ActiveWriter.ModelProperty propertyInstance)
+		public static global::Castle.ActiveWriter.ClassHasProperty GetLinkToModelClass (global::Castle.ActiveWriter.ModelProperty propertyInstance)
 		{
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.ClassHasProperty> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ClassHasProperty>(propertyInstance, global::Altinoren.ActiveWriter.ClassHasProperty.PropertyDomainRoleId);
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.ClassHasProperty> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ClassHasProperty>(propertyInstance, global::Castle.ActiveWriter.ClassHasProperty.PropertyDomainRoleId);
 			global::System.Diagnostics.Debug.Assert(links.Count <= 1, "Multiplicity of Property not obeyed.");
 			if ( links.Count == 0 )
 			{
@@ -3987,11 +3988,11 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.ClassHasProperty> GetLinks( global::Altinoren.ActiveWriter.ModelClass source, global::Altinoren.ActiveWriter.ModelProperty target )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.ClassHasProperty> GetLinks( global::Castle.ActiveWriter.ModelClass source, global::Castle.ActiveWriter.ModelProperty target )
 		{
-			global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.ClassHasProperty> outLinks = new global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.ClassHasProperty>();
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.ClassHasProperty> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ClassHasProperty>(source, global::Altinoren.ActiveWriter.ClassHasProperty.ModelClassDomainRoleId);
-			foreach ( global::Altinoren.ActiveWriter.ClassHasProperty link in links )
+			global::System.Collections.Generic.List<global::Castle.ActiveWriter.ClassHasProperty> outLinks = new global::System.Collections.Generic.List<global::Castle.ActiveWriter.ClassHasProperty>();
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.ClassHasProperty> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ClassHasProperty>(source, global::Castle.ActiveWriter.ClassHasProperty.ModelClassDomainRoleId);
+			foreach ( global::Castle.ActiveWriter.ClassHasProperty link in links )
 			{
 				if ( target.Equals(link.Property) )
 				{
@@ -4005,10 +4006,10 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::Altinoren.ActiveWriter.ClassHasProperty GetLink( global::Altinoren.ActiveWriter.ModelClass source, global::Altinoren.ActiveWriter.ModelProperty target )
+		public static global::Castle.ActiveWriter.ClassHasProperty GetLink( global::Castle.ActiveWriter.ModelClass source, global::Castle.ActiveWriter.ModelProperty target )
 		{
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.ClassHasProperty> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ClassHasProperty>(source, global::Altinoren.ActiveWriter.ClassHasProperty.ModelClassDomainRoleId);
-			foreach ( global::Altinoren.ActiveWriter.ClassHasProperty link in links )
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.ClassHasProperty> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ClassHasProperty>(source, global::Castle.ActiveWriter.ClassHasProperty.ModelClassDomainRoleId);
+			foreach ( global::Castle.ActiveWriter.ClassHasProperty link in links )
 			{
 				if ( target.Equals(link.Property) )
 				{
@@ -4021,14 +4022,15 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainRelationship ManyToManyRelation
 	/// Maps a many to many association with an association table
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslModeling::DomainModelOwner(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel))]
 	[global::System.CLSCompliant(true)]
 	[DslModeling::DomainRelationship(AllowsDuplicates = true)]
 	[DslModeling::DomainObjectId("3facccc2-b82b-4dd9-b414-1a787f87ecd8")]
@@ -4059,7 +4061,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="store">Store where new link is to be created.</param>
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		public ManyToManyRelation(DslModeling::Store store, params DslModeling::RoleAssignment[] roleAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, null)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, null)
 		{
 		}
 		
@@ -4070,7 +4072,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		/// <param name="propertyAssignments">List of properties assignments to set on the new link.</param>
 		public ManyToManyRelation(DslModeling::Store store, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, propertyAssignments)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, propertyAssignments)
 		{
 		}
 		
@@ -4105,9 +4107,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// DomainRole Source
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/Source.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/Source.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "ManyToManyTargets", PropertyDisplayNameKey="Altinoren.ActiveWriter.ManyToManyRelation/Source.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/Source.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/Source.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "ManyToManyTargets", PropertyDisplayNameKey="Castle.ActiveWriter.ManyToManyRelation/Source.PropertyDisplayName",  PropagatesCopy = DslModeling::PropagatesCopyOption.DoNotPropagateCopy, Multiplicity = DslModeling::Multiplicity.ZeroMany)]
 		[DslModeling::DomainObjectId("a09915cc-6063-4ccb-b932-1dc8660fc47c")]
 		public virtual ModelClass Source
 		{
@@ -4132,7 +4134,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
 		public static DslModeling::LinkedElementCollection<ModelClass> GetManyToManySources(ModelClass element)
 		{
-			return new DslModeling::LinkedElementCollection<ModelClass>(element, TargetDomainRoleId);
+			return GetRoleCollection<DslModeling::LinkedElementCollection<ModelClass>, ModelClass>(element, TargetDomainRoleId);
 		}
 		#endregion
 		#region Target domain role code
@@ -4145,9 +4147,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// DomainRole Target
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/Target.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/Target.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "ManyToManySources", PropertyDisplayNameKey="Altinoren.ActiveWriter.ManyToManyRelation/Target.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/Target.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/Target.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "ManyToManySources", PropertyDisplayNameKey="Castle.ActiveWriter.ManyToManyRelation/Target.PropertyDisplayName",  PropagatesCopy = DslModeling::PropagatesCopyOption.DoNotPropagateCopy, Multiplicity = DslModeling::Multiplicity.ZeroMany)]
 		[DslModeling::DomainObjectId("2cf13e85-7739-4764-9d1a-f68680e977be")]
 		public virtual ModelClass Target
 		{
@@ -4172,7 +4174,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
 		public static DslModeling::LinkedElementCollection<ModelClass> GetManyToManyTargets(ModelClass element)
 		{
-			return new DslModeling::LinkedElementCollection<ModelClass>(element, SourceDomainRoleId);
+			return GetRoleCollection<DslModeling::LinkedElementCollection<ModelClass>, ModelClass>(element, SourceDomainRoleId);
 		}
 		#endregion
 		#region SourceCache domain property code
@@ -4190,9 +4192,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceCache domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCache.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCache.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCache.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourceCache.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourceCache.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourceCache.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(CacheEnum.Undefined)]
 		[DslModeling::DomainObjectId("0edaa292-6e4e-403e-87f5-c6e3b65d37c7")]
 		public CacheEnum SourceCache
@@ -4278,9 +4280,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceCascade domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCascade.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCascade.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCascade.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourceCascade.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourceCascade.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourceCascade.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(ManyRelationCascadeEnum.None)]
 		[DslModeling::DomainObjectId("b1eb524a-89f0-407d-a7d2-fe54e92c091e")]
 		public ManyRelationCascadeEnum SourceCascade
@@ -4366,9 +4368,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceColumn domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceColumn.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceColumn.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceColumn.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourceColumn.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourceColumn.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourceColumn.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("45f8bd67-d220-4187-a3c9-0cf6bab3057f")]
 		public global::System.String SourceColumn
 		{
@@ -4453,9 +4455,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceCustomAccess domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCustomAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCustomAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceCustomAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourceCustomAccess.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourceCustomAccess.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourceCustomAccess.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("3ccebabd-ae79-43a0-bb64-65c687801773")]
 		public global::System.String SourceCustomAccess
 		{
@@ -4540,9 +4542,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceInverse domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceInverse.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceInverse.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceInverse.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourceInverse.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourceInverse.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourceInverse.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("1f969dd1-34d3-45f0-9c0b-997e466e51ac")]
 		public global::System.Boolean SourceInverse
 		{
@@ -4627,9 +4629,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceLazy domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceLazy.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceLazy.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceLazy.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourceLazy.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourceLazy.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourceLazy.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("8243d2da-48fc-4c4e-b767-54761c5d8ecf")]
 		public global::System.Boolean SourceLazy
 		{
@@ -4714,9 +4716,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceMapType domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceMapType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceMapType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceMapType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourceMapType.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourceMapType.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourceMapType.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("1bfebb0e-ef50-4f1d-8d31-fc6cd8305f6c")]
 		public global::System.String SourceMapType
 		{
@@ -4801,9 +4803,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceOrderBy domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceOrderBy.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceOrderBy.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceOrderBy.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourceOrderBy.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourceOrderBy.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourceOrderBy.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("36f64f63-e9e8-4baf-bd34-93a6a714ad9f")]
 		public global::System.String SourceOrderBy
 		{
@@ -4888,9 +4890,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceRelationType domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceRelationType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceRelationType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceRelationType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourceRelationType.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourceRelationType.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourceRelationType.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(InheritedRelationType.Inherited)]
 		[DslModeling::DomainObjectId("1a7ce077-b01a-4e14-ba2e-81f24d1645ac")]
 		public InheritedRelationType SourceRelationType
@@ -4976,9 +4978,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of Schema domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/Schema.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/Schema.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/Schema.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/Schema.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/Schema.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/Schema.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("aa9b2d6f-225f-42c5-8871-05df449fc598")]
 		public global::System.String Schema
 		{
@@ -5063,9 +5065,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceSort domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceSort.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceSort.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceSort.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourceSort.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourceSort.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourceSort.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("8f6bcfce-156a-4224-bac8-8ef0f973a56a")]
 		public global::System.String SourceSort
 		{
@@ -5150,9 +5152,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of Table domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/Table.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/Table.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/Table.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/Table.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/Table.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/Table.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("c0b31c9a-a436-4cc8-bf42-c29f75be6bc5")]
 		public global::System.String Table
 		{
@@ -5237,9 +5239,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceWhere domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceWhere.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceWhere.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceWhere.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourceWhere.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourceWhere.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourceWhere.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("df150009-69a6-4cc6-b6a4-96beabc88c85")]
 		public global::System.String SourceWhere
 		{
@@ -5324,9 +5326,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetCache domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCache.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCache.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCache.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetCache.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetCache.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetCache.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(CacheEnum.Undefined)]
 		[DslModeling::DomainObjectId("e7614cb3-b408-4170-91bd-0d8fa3213be9")]
 		public CacheEnum TargetCache
@@ -5412,9 +5414,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetCascade domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCascade.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCascade.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCascade.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetCascade.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetCascade.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetCascade.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(ManyRelationCascadeEnum.None)]
 		[DslModeling::DomainObjectId("79db5e78-57ca-41f6-b409-f54c3692c71b")]
 		public ManyRelationCascadeEnum TargetCascade
@@ -5500,9 +5502,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetColumn domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetColumn.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetColumn.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetColumn.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetColumn.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetColumn.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetColumn.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("6b974a6d-7e61-4920-8ced-490f4a59f590")]
 		public global::System.String TargetColumn
 		{
@@ -5587,9 +5589,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetCustomAccess domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCustomAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCustomAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetCustomAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetCustomAccess.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetCustomAccess.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetCustomAccess.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("3f6c6de8-21b0-4c86-9f39-5f0b4b3ff24d")]
 		public global::System.String TargetCustomAccess
 		{
@@ -5674,9 +5676,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetInverse domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetInverse.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetInverse.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetInverse.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetInverse.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetInverse.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetInverse.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("50027d75-155d-481d-9074-e15c47a42df8")]
 		public global::System.Boolean TargetInverse
 		{
@@ -5761,9 +5763,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetLazy domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetLazy.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetLazy.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetLazy.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetLazy.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetLazy.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetLazy.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("e9403ad1-f969-4640-8422-ef4ba7d1b34a")]
 		public global::System.Boolean TargetLazy
 		{
@@ -5848,9 +5850,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetMapType domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetMapType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetMapType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetMapType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetMapType.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetMapType.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetMapType.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("4b222ca6-b4c7-42b7-a357-60c3dc0256b1")]
 		public global::System.String TargetMapType
 		{
@@ -5935,9 +5937,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetOrderBy domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetOrderBy.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetOrderBy.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetOrderBy.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetOrderBy.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetOrderBy.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetOrderBy.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("490b0adb-fb17-44af-8852-00f62231b389")]
 		public global::System.String TargetOrderBy
 		{
@@ -6022,9 +6024,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetRelationType domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetRelationType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetRelationType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetRelationType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetRelationType.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetRelationType.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetRelationType.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(InheritedRelationType.Inherited)]
 		[DslModeling::DomainObjectId("913caa46-b08b-45bb-ac6f-6ef394c59938")]
 		public InheritedRelationType TargetRelationType
@@ -6110,9 +6112,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetSort domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetSort.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetSort.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetSort.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetSort.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetSort.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetSort.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("65664bb5-5639-4405-85d0-837c8c56e1b8")]
 		public global::System.String TargetSort
 		{
@@ -6197,9 +6199,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetWhere domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetWhere.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetWhere.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetWhere.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetWhere.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetWhere.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetWhere.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("f1a74b56-59f7-4dad-aac8-da5eb7f3fd15")]
 		public global::System.String TargetWhere
 		{
@@ -6285,9 +6287,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of SourceDescription domain property.
 		/// Description of the property. This will appear in a <summary> Xml comment.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceDescription.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceDescription.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceDescription.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourceDescription.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourceDescription.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourceDescription.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("d8741eea-178b-405f-8159-76e839d77970")]
 		public global::System.String SourceDescription
 		{
@@ -6373,9 +6375,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of TargetDescription domain property.
 		/// Description of the property. This will appear in a <summary> Xml comment.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetDescription.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetDescription.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetDescription.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetDescription.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetDescription.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetDescription.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("7286c00d-568a-41d1-8d53-fe673520aeb9")]
 		public global::System.String TargetDescription
 		{
@@ -6460,9 +6462,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceAccess domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourceAccess.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourceAccess.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourceAccess.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(InheritablePropertyAccess.Inherit)]
 		[DslModeling::DomainObjectId("9e857994-04c2-40f0-99b1-d909623a6873")]
 		public InheritablePropertyAccess SourceAccess
@@ -6548,9 +6550,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetAccess domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetAccess.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetAccess.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetAccess.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(InheritablePropertyAccess.Inherit)]
 		[DslModeling::DomainObjectId("308436c6-0b6c-4887-b5d4-e15c9174f9cc")]
 		public InheritablePropertyAccess TargetAccess
@@ -6638,9 +6640,9 @@ namespace Altinoren.ActiveWriter
 		/// Type of the property. If not supplied, ActiveWriter will use the model's
 		/// Collection Interface by default.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourcePropertyType.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourcePropertyType.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourcePropertyType.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue("")]
 		[DslModeling::DomainObjectId("e5d28e22-22c2-48bb-9540-8be851751818")]
 		public global::System.String SourcePropertyType
@@ -6728,9 +6730,9 @@ namespace Altinoren.ActiveWriter
 		/// Type of the property. If not supplied, ActiveWriter will use the model's
 		/// Collection Inteface by default.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetPropertyType.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetPropertyType.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetPropertyType.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue("")]
 		[DslModeling::DomainObjectId("9a519de5-5dbd-4c8b-91ab-7c2ba677566a")]
 		public global::System.String TargetPropertyType
@@ -6818,9 +6820,9 @@ namespace Altinoren.ActiveWriter
 		/// Name of the property in the generated code. If not supplied, ActiveWriter will
 		/// use the target class name in plural form.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyName.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyName.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyName.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourcePropertyName.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourcePropertyName.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourcePropertyName.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("894becde-cb4f-4c73-bcf8-39a2cd831096")]
 		public global::System.String SourcePropertyName
 		{
@@ -6907,9 +6909,9 @@ namespace Altinoren.ActiveWriter
 		/// Name of the property in the generated code. If not supplied, ActiveWriter will
 		/// use the source class name in plural form.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyName.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyName.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyName.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetPropertyName.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetPropertyName.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetPropertyName.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("486cb585-d891-4eb2-97de-846aeaec33e5")]
 		public global::System.String TargetPropertyName
 		{
@@ -6995,9 +6997,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of TargetNotFoundBehaviour domain property.
 		/// Gets or sets the way broken relations are handled.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetNotFoundBehaviour.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetNotFoundBehaviour.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetNotFoundBehaviour.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetNotFoundBehaviour.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetNotFoundBehaviour.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetNotFoundBehaviour.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(NotFoundBehaviour.Default)]
 		[DslModeling::DomainObjectId("29123760-24b6-42d1-a9b1-fb8b1d08d198")]
 		public NotFoundBehaviour TargetNotFoundBehaviour
@@ -7084,9 +7086,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of SourceNotFoundBehaviour domain property.
 		/// Gets or sets the way broken relations are handled.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceNotFoundBehaviour.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceNotFoundBehaviour.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceNotFoundBehaviour.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourceNotFoundBehaviour.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourceNotFoundBehaviour.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourceNotFoundBehaviour.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(NotFoundBehaviour.Default)]
 		[DslModeling::DomainObjectId("32c73c34-5d19-4c1c-8427-91646d05fb53")]
 		public NotFoundBehaviour SourceNotFoundBehaviour
@@ -7173,9 +7175,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of SourceIUserCollectionType domain property.
 		/// User collection type
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceIUserCollectionType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceIUserCollectionType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourceIUserCollectionType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourceIUserCollectionType.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourceIUserCollectionType.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourceIUserCollectionType.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("96fda275-b5d3-48bb-b65c-1c3a04d3ccb2")]
 		public global::System.String SourceIUserCollectionType
 		{
@@ -7261,9 +7263,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of TargetIUserCollectionType domain property.
 		/// User collection type
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetIUserCollectionType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetIUserCollectionType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetIUserCollectionType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetIUserCollectionType.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetIUserCollectionType.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetIUserCollectionType.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("cb5dddc8-a7c2-4fca-9493-09d9f5040087")]
 		public global::System.String TargetIUserCollectionType
 		{
@@ -7349,8 +7351,8 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of CollectionIDColumn domain property.
 		/// The column name used for the primary key of the many to many link table.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDColumn.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDColumn.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/CollectionIDColumn.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/CollectionIDColumn.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("e0cd5759-5c0c-4000-aaa8-6a81d30376a0")]
 		public global::System.String CollectionIDColumn
 		{
@@ -7436,9 +7438,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of CollectionIDColumnType domain property.
 		/// The type of the column used for the primary key.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDColumnType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDColumnType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDColumnType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/CollectionIDColumnType.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/CollectionIDColumnType.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/CollectionIDColumnType.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("a0a2373a-bad1-487e-83e6-cfa23a02d4d0")]
 		public NHibernateType CollectionIDColumnType
 		{
@@ -7524,9 +7526,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of CollectionIDGenerator domain property.
 		/// The generator type for the primary key of the many to many link table.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDGenerator.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDGenerator.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/CollectionIDGenerator.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/CollectionIDGenerator.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/CollectionIDGenerator.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/CollectionIDGenerator.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("21f90b70-a02a-436d-a3c0-86aad9060e9d")]
 		public PrimaryKeyType CollectionIDGenerator
 		{
@@ -7610,12 +7612,11 @@ namespace Altinoren.ActiveWriter
 		
 		/// <summary>
 		/// Gets or sets the value of TargetPropertyGenerated domain property.
-		/// Description for Altinoren.ActiveWriter.ManyToManyRelation.Target Property
-		/// Generated
+		/// Description for Castle.ActiveWriter.ManyToManyRelation.Target Property Generated
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyGenerated.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyGenerated.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/TargetPropertyGenerated.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/TargetPropertyGenerated.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/TargetPropertyGenerated.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/TargetPropertyGenerated.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(true)]
 		[DslModeling::DomainObjectId("feb33769-96a2-44c6-94fb-06ae1e160c10")]
 		public global::System.Boolean TargetPropertyGenerated
@@ -7700,12 +7701,11 @@ namespace Altinoren.ActiveWriter
 		
 		/// <summary>
 		/// Gets or sets the value of SourcePropertyGenerated domain property.
-		/// Description for Altinoren.ActiveWriter.ManyToManyRelation.Source Property
-		/// Generated
+		/// Description for Castle.ActiveWriter.ManyToManyRelation.Source Property Generated
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyGenerated.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyGenerated.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyToManyRelation/SourcePropertyGenerated.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ManyToManyRelation/SourcePropertyGenerated.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.ManyToManyRelation/SourcePropertyGenerated.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyToManyRelation/SourcePropertyGenerated.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(true)]
 		[DslModeling::DomainObjectId("1a60bb90-b145-4931-b2fb-5f2988da83fb")]
 		public global::System.Boolean SourcePropertyGenerated
@@ -7782,9 +7782,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.ManyToManyRelation> GetLinksToManyToManyTargets ( global::Altinoren.ActiveWriter.ModelClass sourceInstance )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.ManyToManyRelation> GetLinksToManyToManyTargets ( global::Castle.ActiveWriter.ModelClass sourceInstance )
 		{
-			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ManyToManyRelation>(sourceInstance, global::Altinoren.ActiveWriter.ManyToManyRelation.SourceDomainRoleId);
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ManyToManyRelation>(sourceInstance, global::Castle.ActiveWriter.ManyToManyRelation.SourceDomainRoleId);
 		}
 		#endregion
 		#region Target link accessor
@@ -7793,9 +7793,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.ManyToManyRelation> GetLinksToManyToManySources ( global::Altinoren.ActiveWriter.ModelClass targetInstance )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.ManyToManyRelation> GetLinksToManyToManySources ( global::Castle.ActiveWriter.ModelClass targetInstance )
 		{
-			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ManyToManyRelation>(targetInstance, global::Altinoren.ActiveWriter.ManyToManyRelation.TargetDomainRoleId);
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ManyToManyRelation>(targetInstance, global::Castle.ActiveWriter.ManyToManyRelation.TargetDomainRoleId);
 		}
 		#endregion
 		#region ManyToManyRelation instance accessors
@@ -7805,11 +7805,11 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.ManyToManyRelation> GetLinks( global::Altinoren.ActiveWriter.ModelClass source, global::Altinoren.ActiveWriter.ModelClass target )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.ManyToManyRelation> GetLinks( global::Castle.ActiveWriter.ModelClass source, global::Castle.ActiveWriter.ModelClass target )
 		{
-			global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.ManyToManyRelation> outLinks = new global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.ManyToManyRelation>();
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.ManyToManyRelation> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ManyToManyRelation>(source, global::Altinoren.ActiveWriter.ManyToManyRelation.SourceDomainRoleId);
-			foreach ( global::Altinoren.ActiveWriter.ManyToManyRelation link in links )
+			global::System.Collections.Generic.List<global::Castle.ActiveWriter.ManyToManyRelation> outLinks = new global::System.Collections.Generic.List<global::Castle.ActiveWriter.ManyToManyRelation>();
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.ManyToManyRelation> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ManyToManyRelation>(source, global::Castle.ActiveWriter.ManyToManyRelation.SourceDomainRoleId);
+			foreach ( global::Castle.ActiveWriter.ManyToManyRelation link in links )
 			{
 				if ( target.Equals(link.Target) )
 				{
@@ -7821,15 +7821,16 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainRelationship OneToOneRelation
 	/// Associates a foreign table where the current class and the target class share
 	/// their primary key.
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.OneToOneRelation.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.OneToOneRelation.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslModeling::DomainModelOwner(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel))]
 	[global::System.CLSCompliant(true)]
 	[DslModeling::DomainRelationship()]
 	[DslModeling::DomainObjectId("fc147ce4-8aa0-4719-94a9-21179d6cf6a5")]
@@ -7860,7 +7861,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="store">Store where new link is to be created.</param>
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		public OneToOneRelation(DslModeling::Store store, params DslModeling::RoleAssignment[] roleAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, null)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, null)
 		{
 		}
 		
@@ -7871,7 +7872,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		/// <param name="propertyAssignments">List of properties assignments to set on the new link.</param>
 		public OneToOneRelation(DslModeling::Store store, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, propertyAssignments)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, propertyAssignments)
 		{
 		}
 		
@@ -7906,10 +7907,10 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// DomainRole Source
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/Source.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/Source.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.OneToOneRelation/Source.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OneToOneRelation/Source.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.Browsable(false)]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "OneToOneTarget", PropertyDisplayNameKey="Altinoren.ActiveWriter.OneToOneRelation/Source.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroOne)]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "OneToOneTarget", PropertyDisplayNameKey="Castle.ActiveWriter.OneToOneRelation/Source.PropertyDisplayName",  PropagatesCopy = DslModeling::PropagatesCopyOption.DoNotPropagateCopy, Multiplicity = DslModeling::Multiplicity.ZeroOne)]
 		[DslModeling::DomainObjectId("7b304a5c-cb3e-4f10-be86-c52eeec945d5")]
 		public virtual ModelClass Source
 		{
@@ -7934,7 +7935,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
 		public static DslModeling::LinkedElementCollection<ModelClass> GetOneToOneSources(ModelClass element)
 		{
-			return new DslModeling::LinkedElementCollection<ModelClass>(element, TargetDomainRoleId);
+			return GetRoleCollection<DslModeling::LinkedElementCollection<ModelClass>, ModelClass>(element, TargetDomainRoleId);
 		}
 		#endregion
 		#region Target domain role code
@@ -7947,9 +7948,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// DomainRole Target
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/Target.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/Target.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "OneToOneSources", PropertyDisplayNameKey="Altinoren.ActiveWriter.OneToOneRelation/Target.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.OneToOneRelation/Target.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OneToOneRelation/Target.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "OneToOneSources", PropertyDisplayNameKey="Castle.ActiveWriter.OneToOneRelation/Target.PropertyDisplayName",  PropagatesCopy = DslModeling::PropagatesCopyOption.DoNotPropagateCopy, Multiplicity = DslModeling::Multiplicity.ZeroMany)]
 		[DslModeling::DomainObjectId("24658a8c-da41-491a-8cad-9c5125cdd06c")]
 		public virtual ModelClass Target
 		{
@@ -8002,9 +8003,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceAccess domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/SourceAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/SourceAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/SourceAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.OneToOneRelation/SourceAccess.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.OneToOneRelation/SourceAccess.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OneToOneRelation/SourceAccess.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(InheritablePropertyAccess.Inherit)]
 		[DslModeling::DomainObjectId("6cab92a3-03e6-41fa-926d-f33afdbbbfcd")]
 		public InheritablePropertyAccess SourceAccess
@@ -8090,9 +8091,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceCascade domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/SourceCascade.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/SourceCascade.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/SourceCascade.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.OneToOneRelation/SourceCascade.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.OneToOneRelation/SourceCascade.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OneToOneRelation/SourceCascade.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(CascadeEnum.None)]
 		[DslModeling::DomainObjectId("1d99e2db-2ed5-42dc-b869-cfb8041d97b5")]
 		public CascadeEnum SourceCascade
@@ -8178,9 +8179,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceConstrained domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/SourceConstrained.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/SourceConstrained.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/SourceConstrained.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.OneToOneRelation/SourceConstrained.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.OneToOneRelation/SourceConstrained.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OneToOneRelation/SourceConstrained.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("9266b2c1-d18e-41ae-818e-baff98d89724")]
 		public global::System.Boolean SourceConstrained
 		{
@@ -8265,9 +8266,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceCustomAccess domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/SourceCustomAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/SourceCustomAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/SourceCustomAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.OneToOneRelation/SourceCustomAccess.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.OneToOneRelation/SourceCustomAccess.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OneToOneRelation/SourceCustomAccess.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("b3b9f301-bbbb-4a4e-a9bc-31511ba03ab0")]
 		public global::System.String SourceCustomAccess
 		{
@@ -8352,9 +8353,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of SourceOuterJoin domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/SourceOuterJoin.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/SourceOuterJoin.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/SourceOuterJoin.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.OneToOneRelation/SourceOuterJoin.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.OneToOneRelation/SourceOuterJoin.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OneToOneRelation/SourceOuterJoin.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(OuterJoinEnum.Auto)]
 		[DslModeling::DomainObjectId("5d4c0adf-fbb4-41b1-b615-6e6690cc20c6")]
 		public OuterJoinEnum SourceOuterJoin
@@ -8440,9 +8441,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetAccess domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/TargetAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/TargetAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/TargetAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.OneToOneRelation/TargetAccess.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.OneToOneRelation/TargetAccess.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OneToOneRelation/TargetAccess.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(InheritablePropertyAccess.Inherit)]
 		[DslModeling::DomainObjectId("f51a55ef-21f7-4e22-9776-14c00caf8879")]
 		public InheritablePropertyAccess TargetAccess
@@ -8528,9 +8529,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetCascade domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/TargetCascade.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/TargetCascade.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/TargetCascade.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.OneToOneRelation/TargetCascade.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.OneToOneRelation/TargetCascade.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OneToOneRelation/TargetCascade.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(CascadeEnum.None)]
 		[DslModeling::DomainObjectId("42102a9d-77ce-437e-abc7-3cd54e8a1061")]
 		public CascadeEnum TargetCascade
@@ -8616,9 +8617,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetConstrained domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/TargetConstrained.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/TargetConstrained.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/TargetConstrained.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.OneToOneRelation/TargetConstrained.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.OneToOneRelation/TargetConstrained.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OneToOneRelation/TargetConstrained.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("c38a4744-ad38-4be2-acc9-1a32330fbed0")]
 		public global::System.Boolean TargetConstrained
 		{
@@ -8703,9 +8704,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetCustomAccess domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/TargetCustomAccess.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/TargetCustomAccess.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/TargetCustomAccess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.OneToOneRelation/TargetCustomAccess.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.OneToOneRelation/TargetCustomAccess.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OneToOneRelation/TargetCustomAccess.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("71644b41-9c91-40ad-b8f7-83c91d8239cb")]
 		public global::System.String TargetCustomAccess
 		{
@@ -8790,9 +8791,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Gets or sets the value of TargetOuterJoin domain property.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/TargetOuterJoin.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/TargetOuterJoin.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/TargetOuterJoin.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.OneToOneRelation/TargetOuterJoin.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.OneToOneRelation/TargetOuterJoin.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OneToOneRelation/TargetOuterJoin.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(OuterJoinEnum.Auto)]
 		[DslModeling::DomainObjectId("51177b34-f743-4cb8-860f-d0d7b6b00ba6")]
 		public OuterJoinEnum TargetOuterJoin
@@ -8879,9 +8880,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of SourceDescription domain property.
 		/// Description of the property. This will appear in a <summary> Xml comment.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/SourceDescription.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/SourceDescription.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/SourceDescription.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.OneToOneRelation/SourceDescription.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.OneToOneRelation/SourceDescription.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OneToOneRelation/SourceDescription.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("892bd79a-5ea9-44e9-bffa-bde7c18c9560")]
 		public global::System.String SourceDescription
 		{
@@ -8967,9 +8968,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of TargetDescription domain property.
 		/// Description of the property. This will appear in a <summary> Xml comment.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/TargetDescription.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/TargetDescription.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/TargetDescription.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.OneToOneRelation/TargetDescription.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.OneToOneRelation/TargetDescription.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OneToOneRelation/TargetDescription.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("742dacbc-a8a5-41d1-9f4a-b5c370057902")]
 		public global::System.String TargetDescription
 		{
@@ -9055,9 +9056,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of Lazy domain property.
 		/// Will generate BelongsTo on the target end instead of a OneToOne to support lazy.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.OneToOneRelation/Lazy.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.OneToOneRelation/Lazy.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OneToOneRelation/Lazy.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.OneToOneRelation/Lazy.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.OneToOneRelation/Lazy.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OneToOneRelation/Lazy.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("94274ae2-d397-4398-b914-501e02f1c472")]
 		public global::System.Boolean Lazy
 		{
@@ -9133,9 +9134,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::Altinoren.ActiveWriter.OneToOneRelation GetLinkToOneToOneTarget (global::Altinoren.ActiveWriter.ModelClass sourceInstance)
+		public static global::Castle.ActiveWriter.OneToOneRelation GetLinkToOneToOneTarget (global::Castle.ActiveWriter.ModelClass sourceInstance)
 		{
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.OneToOneRelation> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.OneToOneRelation>(sourceInstance, global::Altinoren.ActiveWriter.OneToOneRelation.SourceDomainRoleId);
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.OneToOneRelation> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.OneToOneRelation>(sourceInstance, global::Castle.ActiveWriter.OneToOneRelation.SourceDomainRoleId);
 			global::System.Diagnostics.Debug.Assert(links.Count <= 1, "Multiplicity of Source not obeyed.");
 			if ( links.Count == 0 )
 			{
@@ -9153,9 +9154,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.OneToOneRelation> GetLinksToOneToOneSources ( global::Altinoren.ActiveWriter.ModelClass targetInstance )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.OneToOneRelation> GetLinksToOneToOneSources ( global::Castle.ActiveWriter.ModelClass targetInstance )
 		{
-			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.OneToOneRelation>(targetInstance, global::Altinoren.ActiveWriter.OneToOneRelation.TargetDomainRoleId);
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.OneToOneRelation>(targetInstance, global::Castle.ActiveWriter.OneToOneRelation.TargetDomainRoleId);
 		}
 		#endregion
 		#region OneToOneRelation instance accessors
@@ -9165,11 +9166,11 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.OneToOneRelation> GetLinks( global::Altinoren.ActiveWriter.ModelClass source, global::Altinoren.ActiveWriter.ModelClass target )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.OneToOneRelation> GetLinks( global::Castle.ActiveWriter.ModelClass source, global::Castle.ActiveWriter.ModelClass target )
 		{
-			global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.OneToOneRelation> outLinks = new global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.OneToOneRelation>();
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.OneToOneRelation> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.OneToOneRelation>(source, global::Altinoren.ActiveWriter.OneToOneRelation.SourceDomainRoleId);
-			foreach ( global::Altinoren.ActiveWriter.OneToOneRelation link in links )
+			global::System.Collections.Generic.List<global::Castle.ActiveWriter.OneToOneRelation> outLinks = new global::System.Collections.Generic.List<global::Castle.ActiveWriter.OneToOneRelation>();
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.OneToOneRelation> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.OneToOneRelation>(source, global::Castle.ActiveWriter.OneToOneRelation.SourceDomainRoleId);
+			foreach ( global::Castle.ActiveWriter.OneToOneRelation link in links )
 			{
 				if ( target.Equals(link.Target) )
 				{
@@ -9183,10 +9184,10 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::Altinoren.ActiveWriter.OneToOneRelation GetLink( global::Altinoren.ActiveWriter.ModelClass source, global::Altinoren.ActiveWriter.ModelClass target )
+		public static global::Castle.ActiveWriter.OneToOneRelation GetLink( global::Castle.ActiveWriter.ModelClass source, global::Castle.ActiveWriter.ModelClass target )
 		{
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.OneToOneRelation> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.OneToOneRelation>(source, global::Altinoren.ActiveWriter.OneToOneRelation.SourceDomainRoleId);
-			foreach ( global::Altinoren.ActiveWriter.OneToOneRelation link in links )
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.OneToOneRelation> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.OneToOneRelation>(source, global::Castle.ActiveWriter.OneToOneRelation.SourceDomainRoleId);
+			foreach ( global::Castle.ActiveWriter.OneToOneRelation link in links )
 			{
 				if ( target.Equals(link.Target) )
 				{
@@ -9199,14 +9200,15 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainRelationship ModelHasNestedClasses
-	/// Description for Altinoren.ActiveWriter.ModelHasNestedClasses
+	/// Description for Castle.ActiveWriter.ModelHasNestedClasses
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelHasNestedClasses.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelHasNestedClasses.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.ModelHasNestedClasses.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.ModelHasNestedClasses.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslModeling::DomainModelOwner(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel))]
 	[global::System.CLSCompliant(true)]
 	[DslModeling::DomainRelationship(IsEmbedding=true)]
 	[DslModeling::DomainObjectId("b52af8b1-d8e4-4df3-9ccc-aed68d8c50f6")]
@@ -9237,7 +9239,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="store">Store where new link is to be created.</param>
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		public ModelHasNestedClasses(DslModeling::Store store, params DslModeling::RoleAssignment[] roleAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, null)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, null)
 		{
 		}
 		
@@ -9248,7 +9250,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		/// <param name="propertyAssignments">List of properties assignments to set on the new link.</param>
 		public ModelHasNestedClasses(DslModeling::Store store, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, propertyAssignments)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, propertyAssignments)
 		{
 		}
 		
@@ -9282,11 +9284,11 @@ namespace Altinoren.ActiveWriter
 		
 		/// <summary>
 		/// DomainRole Model
-		/// Description for Altinoren.ActiveWriter.ModelHasNestedClasses.Model
+		/// Description for Castle.ActiveWriter.ModelHasNestedClasses.Model
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelHasNestedClasses/Model.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelHasNestedClasses/Model.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "NestedClasses", PropertyDisplayNameKey="Altinoren.ActiveWriter.ModelHasNestedClasses/Model.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ModelHasNestedClasses/Model.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ModelHasNestedClasses/Model.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "NestedClasses", PropertyDisplayNameKey="Castle.ActiveWriter.ModelHasNestedClasses/Model.PropertyDisplayName",  PropagatesCopy = DslModeling::PropagatesCopyOption.DoNotPropagateCopy, Multiplicity = DslModeling::Multiplicity.ZeroMany)]
 		[DslModeling::DomainObjectId("aa430439-9ab3-4298-9636-53d2f9774d04")]
 		public virtual Model Model
 		{
@@ -9333,11 +9335,11 @@ namespace Altinoren.ActiveWriter
 		
 		/// <summary>
 		/// DomainRole NestedClass
-		/// Description for Altinoren.ActiveWriter.ModelHasNestedClasses.NestedClass
+		/// Description for Castle.ActiveWriter.ModelHasNestedClasses.NestedClass
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ModelHasNestedClasses/NestedClass.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ModelHasNestedClasses/NestedClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "Model", PropertyDisplayNameKey="Altinoren.ActiveWriter.ModelHasNestedClasses/NestedClass.PropertyDisplayName", PropagatesDelete = true, PropagatesCopy = true, Multiplicity = DslModeling::Multiplicity.One)]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.ModelHasNestedClasses/NestedClass.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ModelHasNestedClasses/NestedClass.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "Model", PropertyDisplayNameKey="Castle.ActiveWriter.ModelHasNestedClasses/NestedClass.PropertyDisplayName", PropagatesDelete = true,  PropagatesCopy = DslModeling::PropagatesCopyOption.PropagatesCopyToLinkAndOppositeRolePlayer, Multiplicity = DslModeling::Multiplicity.One)]
 		[DslModeling::DomainObjectId("6948fc5c-a899-4a5b-91a9-9650e8d27e3b")]
 		public virtual NestedClass NestedClass
 		{
@@ -9362,7 +9364,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
 		public static DslModeling::LinkedElementCollection<NestedClass> GetNestedClasses(Model element)
 		{
-			return new DslModeling::LinkedElementCollection<NestedClass>(element, ModelDomainRoleId);
+			return GetRoleCollection<DslModeling::LinkedElementCollection<NestedClass>, NestedClass>(element, ModelDomainRoleId);
 		}
 		#endregion
 		#region Model link accessor
@@ -9371,9 +9373,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.ModelHasNestedClasses> GetLinksToNestedClasses ( global::Altinoren.ActiveWriter.Model modelInstance )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.ModelHasNestedClasses> GetLinksToNestedClasses ( global::Castle.ActiveWriter.Model modelInstance )
 		{
-			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ModelHasNestedClasses>(modelInstance, global::Altinoren.ActiveWriter.ModelHasNestedClasses.ModelDomainRoleId);
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ModelHasNestedClasses>(modelInstance, global::Castle.ActiveWriter.ModelHasNestedClasses.ModelDomainRoleId);
 		}
 		#endregion
 		#region NestedClass link accessor
@@ -9382,9 +9384,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::Altinoren.ActiveWriter.ModelHasNestedClasses GetLinkToModel (global::Altinoren.ActiveWriter.NestedClass nestedClassInstance)
+		public static global::Castle.ActiveWriter.ModelHasNestedClasses GetLinkToModel (global::Castle.ActiveWriter.NestedClass nestedClassInstance)
 		{
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.ModelHasNestedClasses> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ModelHasNestedClasses>(nestedClassInstance, global::Altinoren.ActiveWriter.ModelHasNestedClasses.NestedClassDomainRoleId);
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.ModelHasNestedClasses> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ModelHasNestedClasses>(nestedClassInstance, global::Castle.ActiveWriter.ModelHasNestedClasses.NestedClassDomainRoleId);
 			global::System.Diagnostics.Debug.Assert(links.Count <= 1, "Multiplicity of NestedClass not obeyed.");
 			if ( links.Count == 0 )
 			{
@@ -9403,11 +9405,11 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.ModelHasNestedClasses> GetLinks( global::Altinoren.ActiveWriter.Model source, global::Altinoren.ActiveWriter.NestedClass target )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.ModelHasNestedClasses> GetLinks( global::Castle.ActiveWriter.Model source, global::Castle.ActiveWriter.NestedClass target )
 		{
-			global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.ModelHasNestedClasses> outLinks = new global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.ModelHasNestedClasses>();
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.ModelHasNestedClasses> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ModelHasNestedClasses>(source, global::Altinoren.ActiveWriter.ModelHasNestedClasses.ModelDomainRoleId);
-			foreach ( global::Altinoren.ActiveWriter.ModelHasNestedClasses link in links )
+			global::System.Collections.Generic.List<global::Castle.ActiveWriter.ModelHasNestedClasses> outLinks = new global::System.Collections.Generic.List<global::Castle.ActiveWriter.ModelHasNestedClasses>();
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.ModelHasNestedClasses> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ModelHasNestedClasses>(source, global::Castle.ActiveWriter.ModelHasNestedClasses.ModelDomainRoleId);
+			foreach ( global::Castle.ActiveWriter.ModelHasNestedClasses link in links )
 			{
 				if ( target.Equals(link.NestedClass) )
 				{
@@ -9421,10 +9423,10 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::Altinoren.ActiveWriter.ModelHasNestedClasses GetLink( global::Altinoren.ActiveWriter.Model source, global::Altinoren.ActiveWriter.NestedClass target )
+		public static global::Castle.ActiveWriter.ModelHasNestedClasses GetLink( global::Castle.ActiveWriter.Model source, global::Castle.ActiveWriter.NestedClass target )
 		{
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.ModelHasNestedClasses> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.ModelHasNestedClasses>(source, global::Altinoren.ActiveWriter.ModelHasNestedClasses.ModelDomainRoleId);
-			foreach ( global::Altinoren.ActiveWriter.ModelHasNestedClasses link in links )
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.ModelHasNestedClasses> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.ModelHasNestedClasses>(source, global::Castle.ActiveWriter.ModelHasNestedClasses.ModelDomainRoleId);
+			foreach ( global::Castle.ActiveWriter.ModelHasNestedClasses link in links )
 			{
 				if ( target.Equals(link.NestedClass) )
 				{
@@ -9437,14 +9439,15 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainRelationship NestedClassHasProperties
-	/// Description for Altinoren.ActiveWriter.NestedClassHasProperties
+	/// Description for Castle.ActiveWriter.NestedClassHasProperties
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassHasProperties.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassHasProperties.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.NestedClassHasProperties.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.NestedClassHasProperties.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslModeling::DomainModelOwner(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel))]
 	[global::System.CLSCompliant(true)]
 	[DslModeling::DomainRelationship(IsEmbedding=true)]
 	[DslModeling::DomainObjectId("43b9347e-1b5e-4727-b8eb-8ce53dfe040d")]
@@ -9475,7 +9478,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="store">Store where new link is to be created.</param>
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		public NestedClassHasProperties(DslModeling::Store store, params DslModeling::RoleAssignment[] roleAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, null)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, null)
 		{
 		}
 		
@@ -9486,7 +9489,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		/// <param name="propertyAssignments">List of properties assignments to set on the new link.</param>
 		public NestedClassHasProperties(DslModeling::Store store, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, propertyAssignments)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, propertyAssignments)
 		{
 		}
 		
@@ -9520,11 +9523,11 @@ namespace Altinoren.ActiveWriter
 		
 		/// <summary>
 		/// DomainRole NestedClass
-		/// Description for Altinoren.ActiveWriter.NestedClassHasProperties.NestedClass
+		/// Description for Castle.ActiveWriter.NestedClassHasProperties.NestedClass
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassHasProperties/NestedClass.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassHasProperties/NestedClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "Properties", PropertyDisplayNameKey="Altinoren.ActiveWriter.NestedClassHasProperties/NestedClass.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.NestedClassHasProperties/NestedClass.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NestedClassHasProperties/NestedClass.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "Properties", PropertyDisplayNameKey="Castle.ActiveWriter.NestedClassHasProperties/NestedClass.PropertyDisplayName",  PropagatesCopy = DslModeling::PropagatesCopyOption.DoNotPropagateCopy, Multiplicity = DslModeling::Multiplicity.ZeroMany)]
 		[DslModeling::DomainObjectId("6180382e-dc27-408f-9293-4863f8054b67")]
 		public virtual NestedClass NestedClass
 		{
@@ -9572,9 +9575,9 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// DomainRole Property
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassHasProperties/Property.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassHasProperties/Property.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "NestedClass", PropertyDisplayNameKey="Altinoren.ActiveWriter.NestedClassHasProperties/Property.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroOne)]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.NestedClassHasProperties/Property.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NestedClassHasProperties/Property.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "NestedClass", PropertyDisplayNameKey="Castle.ActiveWriter.NestedClassHasProperties/Property.PropertyDisplayName",  PropagatesCopy = DslModeling::PropagatesCopyOption.DoNotPropagateCopy, Multiplicity = DslModeling::Multiplicity.ZeroOne)]
 		[DslModeling::DomainObjectId("a679ceaf-60f0-4a92-ad5b-42ab197de0cc")]
 		public virtual ModelProperty Property
 		{
@@ -9599,7 +9602,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
 		public static DslModeling::LinkedElementCollection<ModelProperty> GetProperties(NestedClass element)
 		{
-			return new DslModeling::LinkedElementCollection<ModelProperty>(element, NestedClassDomainRoleId);
+			return GetRoleCollection<DslModeling::LinkedElementCollection<ModelProperty>, ModelProperty>(element, NestedClassDomainRoleId);
 		}
 		#endregion
 		#region NestedClass link accessor
@@ -9608,9 +9611,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.NestedClassHasProperties> GetLinksToProperties ( global::Altinoren.ActiveWriter.NestedClass nestedClassInstance )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.NestedClassHasProperties> GetLinksToProperties ( global::Castle.ActiveWriter.NestedClass nestedClassInstance )
 		{
-			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.NestedClassHasProperties>(nestedClassInstance, global::Altinoren.ActiveWriter.NestedClassHasProperties.NestedClassDomainRoleId);
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.NestedClassHasProperties>(nestedClassInstance, global::Castle.ActiveWriter.NestedClassHasProperties.NestedClassDomainRoleId);
 		}
 		#endregion
 		#region Property link accessor
@@ -9619,9 +9622,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::Altinoren.ActiveWriter.NestedClassHasProperties GetLinkToNestedClass (global::Altinoren.ActiveWriter.ModelProperty propertyInstance)
+		public static global::Castle.ActiveWriter.NestedClassHasProperties GetLinkToNestedClass (global::Castle.ActiveWriter.ModelProperty propertyInstance)
 		{
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.NestedClassHasProperties> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.NestedClassHasProperties>(propertyInstance, global::Altinoren.ActiveWriter.NestedClassHasProperties.PropertyDomainRoleId);
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.NestedClassHasProperties> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.NestedClassHasProperties>(propertyInstance, global::Castle.ActiveWriter.NestedClassHasProperties.PropertyDomainRoleId);
 			global::System.Diagnostics.Debug.Assert(links.Count <= 1, "Multiplicity of Property not obeyed.");
 			if ( links.Count == 0 )
 			{
@@ -9640,11 +9643,11 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.NestedClassHasProperties> GetLinks( global::Altinoren.ActiveWriter.NestedClass source, global::Altinoren.ActiveWriter.ModelProperty target )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.NestedClassHasProperties> GetLinks( global::Castle.ActiveWriter.NestedClass source, global::Castle.ActiveWriter.ModelProperty target )
 		{
-			global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.NestedClassHasProperties> outLinks = new global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.NestedClassHasProperties>();
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.NestedClassHasProperties> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.NestedClassHasProperties>(source, global::Altinoren.ActiveWriter.NestedClassHasProperties.NestedClassDomainRoleId);
-			foreach ( global::Altinoren.ActiveWriter.NestedClassHasProperties link in links )
+			global::System.Collections.Generic.List<global::Castle.ActiveWriter.NestedClassHasProperties> outLinks = new global::System.Collections.Generic.List<global::Castle.ActiveWriter.NestedClassHasProperties>();
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.NestedClassHasProperties> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.NestedClassHasProperties>(source, global::Castle.ActiveWriter.NestedClassHasProperties.NestedClassDomainRoleId);
+			foreach ( global::Castle.ActiveWriter.NestedClassHasProperties link in links )
 			{
 				if ( target.Equals(link.Property) )
 				{
@@ -9658,10 +9661,10 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::Altinoren.ActiveWriter.NestedClassHasProperties GetLink( global::Altinoren.ActiveWriter.NestedClass source, global::Altinoren.ActiveWriter.ModelProperty target )
+		public static global::Castle.ActiveWriter.NestedClassHasProperties GetLink( global::Castle.ActiveWriter.NestedClass source, global::Castle.ActiveWriter.ModelProperty target )
 		{
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.NestedClassHasProperties> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.NestedClassHasProperties>(source, global::Altinoren.ActiveWriter.NestedClassHasProperties.NestedClassDomainRoleId);
-			foreach ( global::Altinoren.ActiveWriter.NestedClassHasProperties link in links )
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.NestedClassHasProperties> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.NestedClassHasProperties>(source, global::Castle.ActiveWriter.NestedClassHasProperties.NestedClassDomainRoleId);
+			foreach ( global::Castle.ActiveWriter.NestedClassHasProperties link in links )
 			{
 				if ( target.Equals(link.Property) )
 				{
@@ -9674,13 +9677,14 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainRelationship NestedClassReferencesModelClasses
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.NestedClassReferencesModelClasses.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.NestedClassReferencesModelClasses.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslModeling::DomainModelOwner(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel))]
 	[global::System.CLSCompliant(true)]
 	[DslModeling::DomainRelationship()]
 	[DslModeling::DomainObjectId("6d7cfc22-da01-49be-87ae-387c801c09a5")]
@@ -9711,7 +9715,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="store">Store where new link is to be created.</param>
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		public NestedClassReferencesModelClasses(DslModeling::Store store, params DslModeling::RoleAssignment[] roleAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, null)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, null)
 		{
 		}
 		
@@ -9722,7 +9726,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		/// <param name="propertyAssignments">List of properties assignments to set on the new link.</param>
 		public NestedClassReferencesModelClasses(DslModeling::Store store, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, propertyAssignments)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, propertyAssignments)
 		{
 		}
 		
@@ -9757,11 +9761,11 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// DomainRole NestedClass
 		/// Description for
-		/// Altinoren.ActiveWriter.NestedClassReferencesModelClasses.NestedClass
+		/// Castle.ActiveWriter.NestedClassReferencesModelClasses.NestedClass
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/NestedClass.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/NestedClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "ModelClasses", PropertyDisplayNameKey="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/NestedClass.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/NestedClass.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/NestedClass.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "ModelClasses", PropertyDisplayNameKey="Castle.ActiveWriter.NestedClassReferencesModelClasses/NestedClass.PropertyDisplayName",  PropagatesCopy = DslModeling::PropagatesCopyOption.DoNotPropagateCopy, Multiplicity = DslModeling::Multiplicity.ZeroMany)]
 		[DslModeling::DomainObjectId("9afdc90c-c59b-4a9e-848d-7c82aed6cc3d")]
 		public virtual NestedClass NestedClass
 		{
@@ -9786,7 +9790,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
 		public static DslModeling::LinkedElementCollection<NestedClass> GetNestedClasses(ModelClass element)
 		{
-			return new DslModeling::LinkedElementCollection<NestedClass>(element, ModelClassDomainRoleId);
+			return GetRoleCollection<DslModeling::LinkedElementCollection<NestedClass>, NestedClass>(element, ModelClassDomainRoleId);
 		}
 		#endregion
 		#region ModelClass domain role code
@@ -9798,12 +9802,11 @@ namespace Altinoren.ActiveWriter
 		
 		/// <summary>
 		/// DomainRole ModelClass
-		/// Description for
-		/// Altinoren.ActiveWriter.NestedClassReferencesModelClasses.ModelClass
+		/// Description for Castle.ActiveWriter.NestedClassReferencesModelClasses.ModelClass
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ModelClass.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ModelClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "NestedClasses", PropertyDisplayNameKey="Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ModelClass.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/ModelClass.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/ModelClass.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "NestedClasses", PropertyDisplayNameKey="Castle.ActiveWriter.NestedClassReferencesModelClasses/ModelClass.PropertyDisplayName",  PropagatesCopy = DslModeling::PropagatesCopyOption.DoNotPropagateCopy, Multiplicity = DslModeling::Multiplicity.ZeroMany)]
 		[DslModeling::DomainObjectId("c8a74401-0517-4a83-b799-8c64c26af5a3")]
 		public virtual ModelClass ModelClass
 		{
@@ -9828,7 +9831,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
 		public static DslModeling::LinkedElementCollection<ModelClass> GetModelClasses(NestedClass element)
 		{
-			return new DslModeling::LinkedElementCollection<ModelClass>(element, NestedClassDomainRoleId);
+			return GetRoleCollection<DslModeling::LinkedElementCollection<ModelClass>, ModelClass>(element, NestedClassDomainRoleId);
 		}
 		#endregion
 		#region MapType domain property code
@@ -9847,9 +9850,9 @@ namespace Altinoren.ActiveWriter
 		/// Gets or sets the value of MapType domain property.
 		/// Allows one to reference a different type than the property type
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/MapType.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/MapType.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/MapType.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/MapType.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/MapType.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/MapType.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("f223ecda-896f-4951-a58d-f45b16c1f0bb")]
 		public global::System.String MapType
 		{
@@ -9936,9 +9939,9 @@ namespace Altinoren.ActiveWriter
 		/// Set to false to ignore this nested component when updating entities of this
 		/// ActiveRecord class.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Insert.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Insert.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Insert.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/Insert.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/Insert.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/Insert.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(true)]
 		[DslModeling::DomainObjectId("1f2d4b58-7b2f-4aff-bea9-0bcfb50b1a01")]
 		public global::System.Boolean Insert
@@ -10023,11 +10026,11 @@ namespace Altinoren.ActiveWriter
 		
 		/// <summary>
 		/// Gets or sets the value of Update domain property.
-		/// Description for Altinoren.ActiveWriter.NestedClassReferencesModelClasses.Update
+		/// Description for Castle.ActiveWriter.NestedClassReferencesModelClasses.Update
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Update.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Update.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Update.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/Update.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/Update.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/Update.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[global::System.ComponentModel.DefaultValue(true)]
 		[DslModeling::DomainObjectId("ce949210-8ff3-45ab-b8f9-df65ba4b40ef")]
 		public global::System.Boolean Update
@@ -10115,9 +10118,9 @@ namespace Altinoren.ActiveWriter
 		/// Set to false to ignore this nested component when inserting entities of this
 		/// ActiveRecord class.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ColumnPrefix.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ColumnPrefix.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/ColumnPrefix.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/ColumnPrefix.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/ColumnPrefix.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/ColumnPrefix.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("3e791122-9269-440a-ab27-35a37e3be363")]
 		public global::System.String ColumnPrefix
 		{
@@ -10204,9 +10207,9 @@ namespace Altinoren.ActiveWriter
 		/// Description for nested property on the model class. This will appear in a
 		/// <summary> Xml comment.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Description.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Description.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/Description.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/Description.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/Description.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/Description.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("9010a202-2aaf-4c97-bd0f-87d48198dbc6")]
 		public global::System.String Description
 		{
@@ -10293,9 +10296,9 @@ namespace Altinoren.ActiveWriter
 		/// Name of the property on the nesting class. If not suplied, ActiveWriter will use
 		/// nested class' name.
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/PropertyName.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::CategoryResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/PropertyName.Category", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NestedClassReferencesModelClasses/PropertyName.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/PropertyName.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::CategoryResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/PropertyName.Category", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NestedClassReferencesModelClasses/PropertyName.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		[DslModeling::DomainObjectId("ec25892d-150f-4a9a-874b-7f80e97a2135")]
 		public global::System.String PropertyName
 		{
@@ -10371,9 +10374,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses> GetLinksToModelClasses ( global::Altinoren.ActiveWriter.NestedClass nestedClassInstance )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.NestedClassReferencesModelClasses> GetLinksToModelClasses ( global::Castle.ActiveWriter.NestedClass nestedClassInstance )
 		{
-			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses>(nestedClassInstance, global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses.NestedClassDomainRoleId);
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.NestedClassReferencesModelClasses>(nestedClassInstance, global::Castle.ActiveWriter.NestedClassReferencesModelClasses.NestedClassDomainRoleId);
 		}
 		#endregion
 		#region ModelClass link accessor
@@ -10382,9 +10385,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses> GetLinksToNestedClasses ( global::Altinoren.ActiveWriter.ModelClass modelClassInstance )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.NestedClassReferencesModelClasses> GetLinksToNestedClasses ( global::Castle.ActiveWriter.ModelClass modelClassInstance )
 		{
-			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses>(modelClassInstance, global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses.ModelClassDomainRoleId);
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.NestedClassReferencesModelClasses>(modelClassInstance, global::Castle.ActiveWriter.NestedClassReferencesModelClasses.ModelClassDomainRoleId);
 		}
 		#endregion
 		#region NestedClassReferencesModelClasses instance accessors
@@ -10394,11 +10397,11 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses> GetLinks( global::Altinoren.ActiveWriter.NestedClass source, global::Altinoren.ActiveWriter.ModelClass target )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.NestedClassReferencesModelClasses> GetLinks( global::Castle.ActiveWriter.NestedClass source, global::Castle.ActiveWriter.ModelClass target )
 		{
-			global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses> outLinks = new global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses>();
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses>(source, global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses.NestedClassDomainRoleId);
-			foreach ( global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses link in links )
+			global::System.Collections.Generic.List<global::Castle.ActiveWriter.NestedClassReferencesModelClasses> outLinks = new global::System.Collections.Generic.List<global::Castle.ActiveWriter.NestedClassReferencesModelClasses>();
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.NestedClassReferencesModelClasses> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.NestedClassReferencesModelClasses>(source, global::Castle.ActiveWriter.NestedClassReferencesModelClasses.NestedClassDomainRoleId);
+			foreach ( global::Castle.ActiveWriter.NestedClassReferencesModelClasses link in links )
 			{
 				if ( target.Equals(link.ModelClass) )
 				{
@@ -10412,10 +10415,10 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses GetLink( global::Altinoren.ActiveWriter.NestedClass source, global::Altinoren.ActiveWriter.ModelClass target )
+		public static global::Castle.ActiveWriter.NestedClassReferencesModelClasses GetLink( global::Castle.ActiveWriter.NestedClass source, global::Castle.ActiveWriter.ModelClass target )
 		{
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses>(source, global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses.NestedClassDomainRoleId);
-			foreach ( global::Altinoren.ActiveWriter.NestedClassReferencesModelClasses link in links )
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.NestedClassReferencesModelClasses> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.NestedClassReferencesModelClasses>(source, global::Castle.ActiveWriter.NestedClassReferencesModelClasses.NestedClassDomainRoleId);
+			foreach ( global::Castle.ActiveWriter.NestedClassReferencesModelClasses link in links )
 			{
 				if ( target.Equals(link.ModelClass) )
 				{
@@ -10428,14 +10431,15 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainRelationship InheritanceRelation
 	/// Indicates that a class inherits from another class.
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.InheritanceRelation.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritanceRelation.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.InheritanceRelation.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritanceRelation.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslModeling::DomainModelOwner(typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel))]
 	[global::System.CLSCompliant(true)]
 	[DslModeling::DomainRelationship()]
 	[DslModeling::DomainObjectId("91bc9e95-6a4c-467b-9e05-19d77f3f5c6e")]
@@ -10466,7 +10470,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="store">Store where new link is to be created.</param>
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		public InheritanceRelation(DslModeling::Store store, params DslModeling::RoleAssignment[] roleAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, null)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, null)
 		{
 		}
 		
@@ -10477,7 +10481,7 @@ namespace Altinoren.ActiveWriter
 		/// <param name="roleAssignments">List of relationship role assignments.</param>
 		/// <param name="propertyAssignments">List of properties assignments to set on the new link.</param>
 		public InheritanceRelation(DslModeling::Store store, DslModeling::RoleAssignment[] roleAssignments, DslModeling::PropertyAssignment[] propertyAssignments)
-			: base(store != null ? store.DefaultPartition : null, roleAssignments, propertyAssignments)
+			: base(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, roleAssignments, propertyAssignments)
 		{
 		}
 		
@@ -10511,11 +10515,11 @@ namespace Altinoren.ActiveWriter
 		
 		/// <summary>
 		/// DomainRole SourceModelClass
-		/// Description for Altinoren.ActiveWriter.InheritanceRelation.SourceModelClass
+		/// Description for Castle.ActiveWriter.InheritanceRelation.SourceModelClass
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.InheritanceRelation/SourceModelClass.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritanceRelation/SourceModelClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "TargetModelClasses", PropertyDisplayNameKey="Altinoren.ActiveWriter.InheritanceRelation/SourceModelClass.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.InheritanceRelation/SourceModelClass.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritanceRelation/SourceModelClass.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Source, PropertyName = "TargetModelClasses", PropertyDisplayNameKey="Castle.ActiveWriter.InheritanceRelation/SourceModelClass.PropertyDisplayName",  PropagatesCopy = DslModeling::PropagatesCopyOption.DoNotPropagateCopy, Multiplicity = DslModeling::Multiplicity.ZeroMany)]
 		[DslModeling::DomainObjectId("041227b3-4da3-4472-909b-980ee5ac163a")]
 		public virtual ModelClass SourceModelClass
 		{
@@ -10540,7 +10544,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
 		public static DslModeling::LinkedElementCollection<ModelClass> GetSourceModelClasses(ModelClass element)
 		{
-			return new DslModeling::LinkedElementCollection<ModelClass>(element, TargetModelClassDomainRoleId);
+			return GetRoleCollection<DslModeling::LinkedElementCollection<ModelClass>, ModelClass>(element, TargetModelClassDomainRoleId);
 		}
 		#endregion
 		#region TargetModelClass domain role code
@@ -10552,11 +10556,11 @@ namespace Altinoren.ActiveWriter
 		
 		/// <summary>
 		/// DomainRole TargetModelClass
-		/// Description for Altinoren.ActiveWriter.InheritanceRelation.TargetModelClass
+		/// Description for Castle.ActiveWriter.InheritanceRelation.TargetModelClass
 		/// </summary>
-		[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.InheritanceRelation/TargetModelClass.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritanceRelation/TargetModelClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "SourceModelClasses", PropertyDisplayNameKey="Altinoren.ActiveWriter.InheritanceRelation/TargetModelClass.PropertyDisplayName", Multiplicity = DslModeling::Multiplicity.ZeroMany)]
+		[DslDesign::DisplayNameResource("Castle.ActiveWriter.InheritanceRelation/TargetModelClass.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritanceRelation/TargetModelClass.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslModeling::DomainRole(DslModeling::DomainRoleOrder.Target, PropertyName = "SourceModelClasses", PropertyDisplayNameKey="Castle.ActiveWriter.InheritanceRelation/TargetModelClass.PropertyDisplayName",  PropagatesCopy = DslModeling::PropagatesCopyOption.DoNotPropagateCopy, Multiplicity = DslModeling::Multiplicity.ZeroMany)]
 		[DslModeling::DomainObjectId("a8f24912-537a-480a-965e-7c0aa9c88d19")]
 		public virtual ModelClass TargetModelClass
 		{
@@ -10581,7 +10585,7 @@ namespace Altinoren.ActiveWriter
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
 		public static DslModeling::LinkedElementCollection<ModelClass> GetTargetModelClasses(ModelClass element)
 		{
-			return new DslModeling::LinkedElementCollection<ModelClass>(element, SourceModelClassDomainRoleId);
+			return GetRoleCollection<DslModeling::LinkedElementCollection<ModelClass>, ModelClass>(element, SourceModelClassDomainRoleId);
 		}
 		#endregion
 		#region SourceModelClass link accessor
@@ -10590,9 +10594,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.InheritanceRelation> GetLinksToTargetModelClasses ( global::Altinoren.ActiveWriter.ModelClass sourceModelClassInstance )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.InheritanceRelation> GetLinksToTargetModelClasses ( global::Castle.ActiveWriter.ModelClass sourceModelClassInstance )
 		{
-			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.InheritanceRelation>(sourceModelClassInstance, global::Altinoren.ActiveWriter.InheritanceRelation.SourceModelClassDomainRoleId);
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.InheritanceRelation>(sourceModelClassInstance, global::Castle.ActiveWriter.InheritanceRelation.SourceModelClassDomainRoleId);
 		}
 		#endregion
 		#region TargetModelClass link accessor
@@ -10601,9 +10605,9 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.InheritanceRelation> GetLinksToSourceModelClasses ( global::Altinoren.ActiveWriter.ModelClass targetModelClassInstance )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.InheritanceRelation> GetLinksToSourceModelClasses ( global::Castle.ActiveWriter.ModelClass targetModelClassInstance )
 		{
-			return DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.InheritanceRelation>(targetModelClassInstance, global::Altinoren.ActiveWriter.InheritanceRelation.TargetModelClassDomainRoleId);
+			return DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.InheritanceRelation>(targetModelClassInstance, global::Castle.ActiveWriter.InheritanceRelation.TargetModelClassDomainRoleId);
 		}
 		#endregion
 		#region InheritanceRelation instance accessors
@@ -10613,11 +10617,11 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Altinoren.ActiveWriter.InheritanceRelation> GetLinks( global::Altinoren.ActiveWriter.ModelClass source, global::Altinoren.ActiveWriter.ModelClass target )
+		public static global::System.Collections.ObjectModel.ReadOnlyCollection<global::Castle.ActiveWriter.InheritanceRelation> GetLinks( global::Castle.ActiveWriter.ModelClass source, global::Castle.ActiveWriter.ModelClass target )
 		{
-			global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.InheritanceRelation> outLinks = new global::System.Collections.Generic.List<global::Altinoren.ActiveWriter.InheritanceRelation>();
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.InheritanceRelation> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.InheritanceRelation>(source, global::Altinoren.ActiveWriter.InheritanceRelation.SourceModelClassDomainRoleId);
-			foreach ( global::Altinoren.ActiveWriter.InheritanceRelation link in links )
+			global::System.Collections.Generic.List<global::Castle.ActiveWriter.InheritanceRelation> outLinks = new global::System.Collections.Generic.List<global::Castle.ActiveWriter.InheritanceRelation>();
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.InheritanceRelation> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.InheritanceRelation>(source, global::Castle.ActiveWriter.InheritanceRelation.SourceModelClassDomainRoleId);
+			foreach ( global::Castle.ActiveWriter.InheritanceRelation link in links )
 			{
 				if ( target.Equals(link.TargetModelClass) )
 				{
@@ -10631,10 +10635,10 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		[global::System.Diagnostics.DebuggerStepThrough]
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011")]
-		public static global::Altinoren.ActiveWriter.InheritanceRelation GetLink( global::Altinoren.ActiveWriter.ModelClass source, global::Altinoren.ActiveWriter.ModelClass target )
+		public static global::Castle.ActiveWriter.InheritanceRelation GetLink( global::Castle.ActiveWriter.ModelClass source, global::Castle.ActiveWriter.ModelClass target )
 		{
-			global::System.Collections.Generic.IList<global::Altinoren.ActiveWriter.InheritanceRelation> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Altinoren.ActiveWriter.InheritanceRelation>(source, global::Altinoren.ActiveWriter.InheritanceRelation.SourceModelClassDomainRoleId);
-			foreach ( global::Altinoren.ActiveWriter.InheritanceRelation link in links )
+			global::System.Collections.Generic.IList<global::Castle.ActiveWriter.InheritanceRelation> links = DslModeling::DomainRoleInfo.GetElementLinks<global::Castle.ActiveWriter.InheritanceRelation>(source, global::Castle.ActiveWriter.InheritanceRelation.SourceModelClassDomainRoleId);
+			foreach ( global::Castle.ActiveWriter.InheritanceRelation link in links )
 			{
 				if ( target.Equals(link.TargetModelClass) )
 				{

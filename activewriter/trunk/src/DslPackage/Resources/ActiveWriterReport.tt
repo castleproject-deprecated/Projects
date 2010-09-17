@@ -18,9 +18,9 @@ limitations under the License.
 <#@ template inherits="Microsoft.VisualStudio.TextTemplating.VSHost.ModelingTextTransformation" debug="true" hostspecific="true"#>
 <#@ output extension=".%EXT%" #>
 <#@ ActiveWriter processor="ActiveWriterDirectiveProcessor" requires="fileName='%MODELFILE%'" #>
-<#@ import namespace="Altinoren.ActiveWriter.CodeGeneration" #>
+<#@ import namespace="Castle.ActiveWriter.CodeGeneration" #>
 <#@ import namespace="System.Collections" #>
-<#@ import namespace="Altinoren.ActiveWriter.ServerExplorerSupport" #>
+<#@ import namespace="Castle.ActiveWriter.ServerExplorerSupport" #>
 <#
     CodeGenerationContext context = new CodeGenerationContext(
         this.Model,

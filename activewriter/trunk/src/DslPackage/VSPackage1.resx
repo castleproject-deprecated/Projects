@@ -117,24 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="1" xml:space="preserve">
-    <value>M0ZERRRKD3DCJJP3JQRAJPHKI8HZH1A9H1I3HQDEDKZHAQA2A9IZAMP1C0ETEEH9ZJHMA3ICMEETZZPQPJPZIJQ9K1HHEDKIJZAICEQQPDRDKIIIIQC0CHZCKMCRJZEE</value>
-  </data>
-  <data name="101" xml:space="preserve">
-    <value>ActiveWriter</value>
-  </data>
-  <data name="102" xml:space="preserve">
-    <value>Adds an ActiveWriter file to the project.</value>
-  </data>
-  <data name="103" xml:space="preserve">
-    <value>ActiveWriter</value>
-  </data>
-  <data name="110" xml:space="preserve">
-    <value>Visual designer for Castle ActiveRecord and NHibernate</value>
-  </data>
-  <data name="120" xml:space="preserve">
-    <value>General</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ActiveWriterReport" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ActiveWriterReport.tt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>

@@ -7,16 +7,16 @@
     </Unrecognized>
     <Recognized>
       <!-- Words to augment the existing dictionary -->
-      <!-- If your company name or project name is an unusal word, you may want to include it. -->
+      <!-- If your company or product name is an unusal word, you may want to include it. -->
       <!-- For compound words, include the individual words (if necessary) -->
-      <!--<Word>Company</Word>-->
+      <!--<Word>Castle</Word>-->
       <!--<Word>ActiveWriter</Word>-->
     </Recognized>
     <Acronyms>
       <!-- Company, domain, or project specific acronyms -->
       <CasingExceptions>
-        <!-- If your company or project name is an acroynm, you may want to include these here -->
-        <!--<Acronym>Company</Acronym>-->
+        <!-- If your company or product name is an acroynm, you may want to include these here -->
+        <!--<Acronym>Castle</Acronym>-->
         <!--<Acronym>ActiveWriter</Acronym>-->
       </CasingExceptions>
     </Acronyms>

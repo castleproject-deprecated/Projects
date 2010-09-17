@@ -1,4 +1,4 @@
-// Copyright 2006 Gokhan Altinoren - http://altinoren.com/
+// Copyright 2006 Gokhan Castle - http://altinoren.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Altinoren.ActiveWriter.CodeGeneration
+namespace Castle.ActiveWriter.CodeGeneration
 {
     using System.Collections.Generic;
     using System;
     using System.CodeDom;
     using System.IO;
-    using Altinoren.ActiveWriter.ServerExplorerSupport;
+    using Castle.ActiveWriter.ServerExplorerSupport;
     using EnvDTE;
     using EnvDTE80;
     using CodeNamespace = System.CodeDom.CodeNamespace;

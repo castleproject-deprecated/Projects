@@ -10,19 +10,19 @@
 using DslModeling = global::Microsoft.VisualStudio.Modeling;
 using DslDesign = global::Microsoft.VisualStudio.Modeling.Design;
 using DslDiagrams = global::Microsoft.VisualStudio.Modeling.Diagrams;
-
-
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainModel ActiveWriterDomainModel
-	/// A Visual Studio 2008 addin to design domain models and to generate code
+	/// A Visual Studio 2010 addin to design domain models and to generate code
 	/// decorated with ActiveRecord attributes or supported with NHibernate
 	/// configuration based on the model.
 	/// </summary>
-	[DslDesign::DisplayNameResource("Altinoren.ActiveWriter.ActiveWriterDomainModel.DisplayName", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
-	[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ActiveWriterDomainModel.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DisplayNameResource("Castle.ActiveWriter.ActiveWriterDomainModel.DisplayName", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
+	[DslDesign::DescriptionResource("Castle.ActiveWriter.ActiveWriterDomainModel.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 	[global::System.CLSCompliant(true)]
+	[DslModeling::DependsOnDomainModel(typeof(global::Microsoft.VisualStudio.Modeling.CoreDomainModel))]
+	[DslModeling::DependsOnDomainModel(typeof(global::Microsoft.VisualStudio.Modeling.Diagrams.CoreDesignSurfaceDomainModel))]
 	[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]
 	[DslModeling::DomainObjectId("3a7d8d12-f07c-4dd1-8689-f9610e7a79e1")]
 	public partial class ActiveWriterDomainModel : DslModeling::DomainModel
@@ -41,8 +41,22 @@ namespace Altinoren.ActiveWriter
 		public ActiveWriterDomainModel(DslModeling::Store store)
 			: base(store, DomainModelId)
 		{
+			// Call the partial method to allow any required serialization setup to be done.
+			this.InitializeSerialization(store);		
 		}
 		
+	
+		///<Summary>
+		/// Defines a partial method that will be called from the constructor to
+		/// allow any necessary serialization setup to be done.
+		///</Summary>
+		///<remarks>
+		/// For a DSL created with the DSL Designer wizard, an implementation of this 
+		/// method will be generated in the GeneratedCode\SerializationHelper.cs class.
+		///</remarks>
+		partial void InitializeSerialization(DslModeling::Store store);
+	
+	
 		#endregion
 		#region Domain model reflection
 			
@@ -78,13 +92,13 @@ namespace Altinoren.ActiveWriter
 				typeof(InheritanceConnector),
 				typeof(ClassShape),
 				typeof(NestedClassShape),
-				typeof(global::Altinoren.ActiveWriter.FixUpDiagram),
-				typeof(global::Altinoren.ActiveWriter.ConnectorRolePlayerChanged),
-				typeof(global::Altinoren.ActiveWriter.CompartmentItemAddRule),
-				typeof(global::Altinoren.ActiveWriter.CompartmentItemDeleteRule),
-				typeof(global::Altinoren.ActiveWriter.CompartmentItemRolePlayerChangeRule),
-				typeof(global::Altinoren.ActiveWriter.CompartmentItemRolePlayerPositionChangeRule),
-				typeof(global::Altinoren.ActiveWriter.CompartmentItemChangeRule),
+				typeof(global::Castle.ActiveWriter.FixUpDiagram),
+				typeof(global::Castle.ActiveWriter.ConnectorRolePlayerChanged),
+				typeof(global::Castle.ActiveWriter.CompartmentItemAddRule),
+				typeof(global::Castle.ActiveWriter.CompartmentItemDeleteRule),
+				typeof(global::Castle.ActiveWriter.CompartmentItemRolePlayerChangeRule),
+				typeof(global::Castle.ActiveWriter.CompartmentItemRolePlayerPositionChangeRule),
+				typeof(global::Castle.ActiveWriter.CompartmentItemChangeRule),
 			};
 		}
 		/// <summary>
@@ -371,7 +385,7 @@ namespace Altinoren.ActiveWriter
 				// construct exception error message		
 				string exceptionError = string.Format(
 								global::System.Globalization.CultureInfo.CurrentCulture,
-								global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("UnrecognizedElementType"),
+								global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("UnrecognizedElementType"),
 								elementType.Name);
 				throw new global::System.ArgumentException(exceptionError, "elementType");
 			}
@@ -428,7 +442,7 @@ namespace Altinoren.ActiveWriter
 				// construct exception error message
 				string exceptionError = string.Format(
 								global::System.Globalization.CultureInfo.CurrentCulture,
-								global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("UnrecognizedElementLinkType"),
+								global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager.GetString("UnrecognizedElementLinkType"),
 								elementLinkType.Name);
 				throw new global::System.ArgumentException(exceptionError, "elementLinkType");
 			
@@ -455,7 +469,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// The base name of this model's resources.
 		/// </summary>
-		public const string ResourceBaseName = "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx";
+		public const string ResourceBaseName = "Castle.ActiveWriter.GeneratedCode.DomainModelResx";
 		
 		/// <summary>
 		/// Gets the DomainModel's ResourceManager. If the ResourceManager does not already exist, then it is created.
@@ -523,6 +537,7 @@ namespace Altinoren.ActiveWriter
 				{
 					DslModeling::ChainingElementVisitorFilter copyFilter = new DslModeling::ChainingElementVisitorFilter();
 					copyFilter.AddFilter(new ActiveWriterCopyClosure());
+					copyFilter.AddFilter(new DslModeling::CoreCopyClosure());
 					copyFilter.AddFilter(new DslDiagrams::CoreDesignSurfaceCopyClosure());
 					
 					ActiveWriterDomainModel.copyClosure = copyFilter;
@@ -542,6 +557,7 @@ namespace Altinoren.ActiveWriter
 				{
 					DslModeling::ChainingElementVisitorFilter removeFilter = new DslModeling::ChainingElementVisitorFilter();
 					removeFilter.AddFilter(new ActiveWriterDeleteClosure());
+					removeFilter.AddFilter(new DslModeling::CoreDeleteClosure());
 					removeFilter.AddFilter(new DslDiagrams::CoreDesignSurfaceDeleteClosure());
 		
 					ActiveWriterDomainModel.removeClosure = removeFilter;
@@ -561,13 +577,13 @@ namespace Altinoren.ActiveWriter
 			if(store == null) throw new global::System.ArgumentNullException("store");
 			
 			DslModeling::RuleManager ruleManager = store.RuleManager;
-			ruleManager.EnableRule(typeof(global::Altinoren.ActiveWriter.FixUpDiagram));
-			ruleManager.EnableRule(typeof(global::Altinoren.ActiveWriter.ConnectorRolePlayerChanged));
-			ruleManager.EnableRule(typeof(global::Altinoren.ActiveWriter.CompartmentItemAddRule));
-			ruleManager.EnableRule(typeof(global::Altinoren.ActiveWriter.CompartmentItemDeleteRule));
-			ruleManager.EnableRule(typeof(global::Altinoren.ActiveWriter.CompartmentItemRolePlayerChangeRule));
-			ruleManager.EnableRule(typeof(global::Altinoren.ActiveWriter.CompartmentItemRolePlayerPositionChangeRule));
-			ruleManager.EnableRule(typeof(global::Altinoren.ActiveWriter.CompartmentItemChangeRule));
+			ruleManager.EnableRule(typeof(global::Castle.ActiveWriter.FixUpDiagram));
+			ruleManager.EnableRule(typeof(global::Castle.ActiveWriter.ConnectorRolePlayerChanged));
+			ruleManager.EnableRule(typeof(global::Castle.ActiveWriter.CompartmentItemAddRule));
+			ruleManager.EnableRule(typeof(global::Castle.ActiveWriter.CompartmentItemDeleteRule));
+			ruleManager.EnableRule(typeof(global::Castle.ActiveWriter.CompartmentItemRolePlayerChangeRule));
+			ruleManager.EnableRule(typeof(global::Castle.ActiveWriter.CompartmentItemRolePlayerPositionChangeRule));
+			ruleManager.EnableRule(typeof(global::Castle.ActiveWriter.CompartmentItemChangeRule));
 		}
 		
 		/// <summary>
@@ -578,13 +594,13 @@ namespace Altinoren.ActiveWriter
 			if(store == null) throw new global::System.ArgumentNullException("store");
 			
 			DslModeling::RuleManager ruleManager = store.RuleManager;
-			ruleManager.DisableRule(typeof(global::Altinoren.ActiveWriter.FixUpDiagram));
-			ruleManager.DisableRule(typeof(global::Altinoren.ActiveWriter.ConnectorRolePlayerChanged));
-			ruleManager.DisableRule(typeof(global::Altinoren.ActiveWriter.CompartmentItemAddRule));
-			ruleManager.DisableRule(typeof(global::Altinoren.ActiveWriter.CompartmentItemDeleteRule));
-			ruleManager.DisableRule(typeof(global::Altinoren.ActiveWriter.CompartmentItemRolePlayerChangeRule));
-			ruleManager.DisableRule(typeof(global::Altinoren.ActiveWriter.CompartmentItemRolePlayerPositionChangeRule));
-			ruleManager.DisableRule(typeof(global::Altinoren.ActiveWriter.CompartmentItemChangeRule));
+			ruleManager.DisableRule(typeof(global::Castle.ActiveWriter.FixUpDiagram));
+			ruleManager.DisableRule(typeof(global::Castle.ActiveWriter.ConnectorRolePlayerChanged));
+			ruleManager.DisableRule(typeof(global::Castle.ActiveWriter.CompartmentItemAddRule));
+			ruleManager.DisableRule(typeof(global::Castle.ActiveWriter.CompartmentItemDeleteRule));
+			ruleManager.DisableRule(typeof(global::Castle.ActiveWriter.CompartmentItemRolePlayerChangeRule));
+			ruleManager.DisableRule(typeof(global::Castle.ActiveWriter.CompartmentItemRolePlayerPositionChangeRule));
+			ruleManager.DisableRule(typeof(global::Castle.ActiveWriter.CompartmentItemChangeRule));
 		}
 		#endregion
 	}
@@ -607,6 +623,7 @@ namespace Altinoren.ActiveWriter
 	/// <summary>
 	/// Base class for remove closure visitor filter
 	/// </summary>
+	[global::System.CLSCompliant(true)]
 	public partial class ActiveWriterDeleteClosureBase : DslModeling::IElementVisitorFilter
 	{
 		/// <summary>
@@ -619,8 +636,8 @@ namespace Altinoren.ActiveWriter
 		public ActiveWriterDeleteClosureBase()
 		{
 			#region Initialize DomainData Table
-			DomainRoles.Add(global::Altinoren.ActiveWriter.ModelHasClass.ClassDomainRoleId, true);
-			DomainRoles.Add(global::Altinoren.ActiveWriter.ModelHasNestedClasses.NestedClassDomainRoleId, true);
+			DomainRoles.Add(global::Castle.ActiveWriter.ModelHasClass.ClassDomainRoleId, true);
+			DomainRoles.Add(global::Castle.ActiveWriter.ModelHasNestedClasses.NestedClassDomainRoleId, true);
 			#endregion
 		}
 		/// <summary>
@@ -682,689 +699,637 @@ namespace Altinoren.ActiveWriter
 	/// <summary>
 	/// Base class for copy closure visitor filter
 	/// </summary>
-	public partial class ActiveWriterCopyClosureBase : DslModeling::IElementVisitorFilter
+	[global::System.CLSCompliant(true)]
+	public partial class ActiveWriterCopyClosureBase : DslModeling::CopyClosureFilter, DslModeling::IElementVisitorFilter
 	{
-		/// <summary>
-		/// DomainRoles
-		/// </summary>
-		private global::System.Collections.Specialized.HybridDictionary domainRoles;
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public ActiveWriterCopyClosureBase()
+		public ActiveWriterCopyClosureBase():base()
 		{
-			#region Initialize DomainData Table
-			DomainRoles.Add(global::Altinoren.ActiveWriter.ModelHasNestedClasses.NestedClassDomainRoleId, true);
-			#endregion
 		}
-		/// <summary>
-		/// Called to ask the filter if a particular relationship from a source element should be included in the traversal
-		/// </summary>
-		/// <param name="walker">ElementWalker traversing the model</param>
-		/// <param name="sourceElement">Model Element playing the source role</param>
-		/// <param name="sourceRoleInfo">DomainRoleInfo of the role that the source element is playing in the relationship</param>
-		/// <param name="domainRelationshipInfo">DomainRelationshipInfo for the ElementLink in question</param>
-		/// <param name="targetRelationship">Relationship in question</param>
-		/// <returns>Yes if the relationship should be traversed</returns>
-		public virtual DslModeling::VisitorFilterResult ShouldVisitRelationship(DslModeling::ElementWalker walker, DslModeling::ModelElement sourceElement, DslModeling::DomainRoleInfo sourceRoleInfo, DslModeling::DomainRelationshipInfo domainRelationshipInfo, DslModeling::ElementLink targetRelationship)
-		{
-			if (sourceRoleInfo == null) throw new global::System.ArgumentNullException("sourceRoleInfo");
-			return this.DomainRoles.Contains(sourceRoleInfo.Id) ? DslModeling::VisitorFilterResult.Yes : DslModeling::VisitorFilterResult.DoNotCare;
-		}
-		/// <summary>
-		/// Called to ask the filter if a particular role player should be Visited during traversal
-		/// </summary>
-		/// <param name="walker">ElementWalker traversing the model</param>
-		/// <param name="sourceElement">Model Element playing the source role</param>
-		/// <param name="elementLink">Element Link that forms the relationship to the role player in question</param>
-		/// <param name="targetDomainRole">DomainRoleInfo of the target role</param>
-		/// <param name="targetRolePlayer">Model Element that plays the target role in the relationship</param>
-		/// <returns></returns>
-		public virtual DslModeling::VisitorFilterResult ShouldVisitRolePlayer(DslModeling::ElementWalker walker, DslModeling::ModelElement sourceElement, DslModeling::ElementLink elementLink, DslModeling::DomainRoleInfo targetDomainRole, DslModeling::ModelElement targetRolePlayer)
-		{
-			if (targetDomainRole == null) throw new global::System.ArgumentNullException("targetDomainRole");
-			return this.DomainRoles.Contains(targetDomainRole.Id) ? DslModeling::VisitorFilterResult.Yes : DslModeling::VisitorFilterResult.DoNotCare;
-		}
-		/// <summary>
-		/// DomainRoles
-		/// </summary>
-		private global::System.Collections.Specialized.HybridDictionary DomainRoles
-		{
-			get
-			{
-				if (this.domainRoles == null)
-				{
-					this.domainRoles = new global::System.Collections.Specialized.HybridDictionary();
-				}
-				return this.domainRoles;
-			}
-		}
-	
 	}
 	#endregion
 		
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: PropertyAccess
-	/// Description for Altinoren.ActiveWriter.PropertyAccess
+	/// Description for Castle.ActiveWriter.PropertyAccess
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum PropertyAccess
 	{
 		/// <summary>
 		/// Property
-		/// Description for Altinoren.ActiveWriter.PropertyAccess.Property
+		/// Description for Castle.ActiveWriter.PropertyAccess.Property
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PropertyAccess/Property.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PropertyAccess/Property.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Property,
 		/// <summary>
 		/// FieldCamelcase
-		/// Description for Altinoren.ActiveWriter.PropertyAccess.FieldCamelcase
+		/// Description for Castle.ActiveWriter.PropertyAccess.FieldCamelcase
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PropertyAccess/FieldCamelcase.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PropertyAccess/FieldCamelcase.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		FieldCamelcase,
 		/// <summary>
 		/// FieldCamelcaseUnderscore
-		/// Description for Altinoren.ActiveWriter.PropertyAccess.FieldCamelcaseUnderscore
+		/// Description for Castle.ActiveWriter.PropertyAccess.FieldCamelcaseUnderscore
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PropertyAccess/FieldCamelcaseUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PropertyAccess/FieldCamelcaseUnderscore.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		FieldCamelcaseUnderscore,
 		/// <summary>
 		/// FieldPascalcaseMUnderscore
-		/// Description for Altinoren.ActiveWriter.PropertyAccess.FieldPascalcaseMUnderscore
+		/// Description for Castle.ActiveWriter.PropertyAccess.FieldPascalcaseMUnderscore
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PropertyAccess/FieldPascalcaseMUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PropertyAccess/FieldPascalcaseMUnderscore.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		FieldPascalcaseMUnderscore,
 		/// <summary>
 		/// FieldLowercaseUnderscore
-		/// Description for Altinoren.ActiveWriter.PropertyAccess.FieldLowercaseUnderscore
+		/// Description for Castle.ActiveWriter.PropertyAccess.FieldLowercaseUnderscore
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PropertyAccess/FieldLowercaseUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PropertyAccess/FieldLowercaseUnderscore.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		FieldLowercaseUnderscore,
 		/// <summary>
 		/// NosetterCamelcase
-		/// Description for Altinoren.ActiveWriter.PropertyAccess.NosetterCamelcase
+		/// Description for Castle.ActiveWriter.PropertyAccess.NosetterCamelcase
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PropertyAccess/NosetterCamelcase.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PropertyAccess/NosetterCamelcase.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		NosetterCamelcase,
 		/// <summary>
 		/// NosetterCamelcaseUnderscore
-		/// Description for
-		/// Altinoren.ActiveWriter.PropertyAccess.NosetterCamelcaseUnderscore
+		/// Description for Castle.ActiveWriter.PropertyAccess.NosetterCamelcaseUnderscore
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PropertyAccess/NosetterCamelcaseUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PropertyAccess/NosetterCamelcaseUnderscore.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		NosetterCamelcaseUnderscore,
 		/// <summary>
 		/// NosetterPascalcaseMUnderscore
-		/// Description for
-		/// Altinoren.ActiveWriter.PropertyAccess.NosetterPascalcaseMUnderscore
+		/// Description for Castle.ActiveWriter.PropertyAccess.NosetterPascalcaseMUnderscore
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PropertyAccess/NosetterPascalcaseMUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PropertyAccess/NosetterPascalcaseMUnderscore.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		NosetterPascalcaseMUnderscore,
 		/// <summary>
 		/// NosetterLowercaseUnderscore
-		/// Description for
-		/// Altinoren.ActiveWriter.PropertyAccess.NosetterLowercaseUnderscore
+		/// Description for Castle.ActiveWriter.PropertyAccess.NosetterLowercaseUnderscore
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PropertyAccess/NosetterLowercaseUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PropertyAccess/NosetterLowercaseUnderscore.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		NosetterLowercaseUnderscore,
 		/// <summary>
 		/// Field
-		/// Description for Altinoren.ActiveWriter.PropertyAccess.Field
+		/// Description for Castle.ActiveWriter.PropertyAccess.Field
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PropertyAccess/Field.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PropertyAccess/Field.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Field,
 		/// <summary>
 		/// NosetterLowercase
-		/// Description for Altinoren.ActiveWriter.PropertyAccess.NosetterLowercase
+		/// Description for Castle.ActiveWriter.PropertyAccess.NosetterLowercase
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PropertyAccess/NosetterLowercase.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PropertyAccess/NosetterLowercase.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		NosetterLowercase,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: CacheEnum
-	/// Description for Altinoren.ActiveWriter.CacheEnum
+	/// Description for Castle.ActiveWriter.CacheEnum
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum CacheEnum
 	{
 		/// <summary>
 		/// Undefined
-		/// Description for Altinoren.ActiveWriter.CacheEnum.Undefined
+		/// Description for Castle.ActiveWriter.CacheEnum.Undefined
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.CacheEnum/Undefined.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.CacheEnum/Undefined.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Undefined,
 		/// <summary>
 		/// ReadOnly
-		/// Description for Altinoren.ActiveWriter.CacheEnum.ReadOnly
+		/// Description for Castle.ActiveWriter.CacheEnum.ReadOnly
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.CacheEnum/ReadOnly.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.CacheEnum/ReadOnly.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		ReadOnly,
 		/// <summary>
 		/// ReadWrite
-		/// Description for Altinoren.ActiveWriter.CacheEnum.ReadWrite
+		/// Description for Castle.ActiveWriter.CacheEnum.ReadWrite
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.CacheEnum/ReadWrite.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.CacheEnum/ReadWrite.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		ReadWrite,
 		/// <summary>
 		/// NonStrictReadWrite
-		/// Description for Altinoren.ActiveWriter.CacheEnum.NonStrictReadWrite
+		/// Description for Castle.ActiveWriter.CacheEnum.NonStrictReadWrite
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.CacheEnum/NonStrictReadWrite.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.CacheEnum/NonStrictReadWrite.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		NonStrictReadWrite,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: PrimaryKeyType
-	/// Description for Altinoren.ActiveWriter.PrimaryKeyType
+	/// Description for Castle.ActiveWriter.PrimaryKeyType
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum PrimaryKeyType
 	{
 		/// <summary>
 		/// None
-		/// Description for Altinoren.ActiveWriter.PrimaryKeyType.None
+		/// Description for Castle.ActiveWriter.PrimaryKeyType.None
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PrimaryKeyType/None.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PrimaryKeyType/None.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		None,
 		/// <summary>
 		/// Identity
-		/// Description for Altinoren.ActiveWriter.PrimaryKeyType.Identity
+		/// Description for Castle.ActiveWriter.PrimaryKeyType.Identity
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PrimaryKeyType/Identity.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PrimaryKeyType/Identity.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Identity,
 		/// <summary>
 		/// Sequence
-		/// Description for Altinoren.ActiveWriter.PrimaryKeyType.Sequence
+		/// Description for Castle.ActiveWriter.PrimaryKeyType.Sequence
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PrimaryKeyType/Sequence.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PrimaryKeyType/Sequence.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Sequence,
 		/// <summary>
 		/// HiLo
-		/// Description for Altinoren.ActiveWriter.PrimaryKeyType.HiLo
+		/// Description for Castle.ActiveWriter.PrimaryKeyType.HiLo
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PrimaryKeyType/HiLo.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PrimaryKeyType/HiLo.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		HiLo,
 		/// <summary>
 		/// SeqHiLo
-		/// Description for Altinoren.ActiveWriter.PrimaryKeyType.SeqHiLo
+		/// Description for Castle.ActiveWriter.PrimaryKeyType.SeqHiLo
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PrimaryKeyType/SeqHiLo.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PrimaryKeyType/SeqHiLo.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		SeqHiLo,
 		/// <summary>
 		/// UuidHex
-		/// Description for Altinoren.ActiveWriter.PrimaryKeyType.UuidHex
+		/// Description for Castle.ActiveWriter.PrimaryKeyType.UuidHex
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PrimaryKeyType/UuidHex.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PrimaryKeyType/UuidHex.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		UuidHex,
 		/// <summary>
 		/// UuidString
-		/// Description for Altinoren.ActiveWriter.PrimaryKeyType.UuidString
+		/// Description for Castle.ActiveWriter.PrimaryKeyType.UuidString
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PrimaryKeyType/UuidString.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PrimaryKeyType/UuidString.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		UuidString,
 		/// <summary>
 		/// Guid
-		/// Description for Altinoren.ActiveWriter.PrimaryKeyType.Guid
+		/// Description for Castle.ActiveWriter.PrimaryKeyType.Guid
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PrimaryKeyType/Guid.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PrimaryKeyType/Guid.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Guid,
 		/// <summary>
 		/// GuidComb
-		/// Description for Altinoren.ActiveWriter.PrimaryKeyType.GuidComb
+		/// Description for Castle.ActiveWriter.PrimaryKeyType.GuidComb
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PrimaryKeyType/GuidComb.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PrimaryKeyType/GuidComb.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		GuidComb,
 		/// <summary>
 		/// Native
-		/// Description for Altinoren.ActiveWriter.PrimaryKeyType.Native
+		/// Description for Castle.ActiveWriter.PrimaryKeyType.Native
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PrimaryKeyType/Native.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PrimaryKeyType/Native.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Native,
 		/// <summary>
 		/// Assigned
-		/// Description for Altinoren.ActiveWriter.PrimaryKeyType.Assigned
+		/// Description for Castle.ActiveWriter.PrimaryKeyType.Assigned
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PrimaryKeyType/Assigned.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PrimaryKeyType/Assigned.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Assigned,
 		/// <summary>
 		/// Foreign
-		/// Description for Altinoren.ActiveWriter.PrimaryKeyType.Foreign
+		/// Description for Castle.ActiveWriter.PrimaryKeyType.Foreign
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PrimaryKeyType/Foreign.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PrimaryKeyType/Foreign.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Foreign,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: KeyType
-	/// Description for Altinoren.ActiveWriter.KeyType
+	/// Description for Castle.ActiveWriter.KeyType
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum KeyType
 	{
 		/// <summary>
 		/// None
-		/// Description for Altinoren.ActiveWriter.KeyType.None
+		/// Description for Castle.ActiveWriter.KeyType.None
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.KeyType/None.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.KeyType/None.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		None,
 		/// <summary>
 		/// PrimaryKey
-		/// Description for Altinoren.ActiveWriter.KeyType.PrimaryKey
+		/// Description for Castle.ActiveWriter.KeyType.PrimaryKey
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.KeyType/PrimaryKey.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.KeyType/PrimaryKey.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		PrimaryKey,
 		/// <summary>
 		/// CompositeKey
-		/// Description for Altinoren.ActiveWriter.KeyType.CompositeKey
+		/// Description for Castle.ActiveWriter.KeyType.CompositeKey
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.KeyType/CompositeKey.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.KeyType/CompositeKey.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		CompositeKey,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: CascadeEnum
-	/// Description for Altinoren.ActiveWriter.CascadeEnum
+	/// Description for Castle.ActiveWriter.CascadeEnum
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum CascadeEnum
 	{
 		/// <summary>
 		/// None
-		/// Description for Altinoren.ActiveWriter.CascadeEnum.None
+		/// Description for Castle.ActiveWriter.CascadeEnum.None
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.CascadeEnum/None.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.CascadeEnum/None.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		None,
 		/// <summary>
 		/// All
-		/// Description for Altinoren.ActiveWriter.CascadeEnum.All
+		/// Description for Castle.ActiveWriter.CascadeEnum.All
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.CascadeEnum/All.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.CascadeEnum/All.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		All,
 		/// <summary>
 		/// SaveUpdate
-		/// Description for Altinoren.ActiveWriter.CascadeEnum.SaveUpdate
+		/// Description for Castle.ActiveWriter.CascadeEnum.SaveUpdate
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.CascadeEnum/SaveUpdate.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.CascadeEnum/SaveUpdate.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		SaveUpdate,
 		/// <summary>
 		/// Delete
-		/// Description for Altinoren.ActiveWriter.CascadeEnum.Delete
+		/// Description for Castle.ActiveWriter.CascadeEnum.Delete
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.CascadeEnum/Delete.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.CascadeEnum/Delete.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Delete,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: OuterJoinEnum
-	/// Description for Altinoren.ActiveWriter.OuterJoinEnum
+	/// Description for Castle.ActiveWriter.OuterJoinEnum
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum OuterJoinEnum
 	{
 		/// <summary>
 		/// Auto
-		/// Description for Altinoren.ActiveWriter.OuterJoinEnum.Auto
+		/// Description for Castle.ActiveWriter.OuterJoinEnum.Auto
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OuterJoinEnum/Auto.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OuterJoinEnum/Auto.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Auto,
 		/// <summary>
 		/// True
-		/// Description for Altinoren.ActiveWriter.OuterJoinEnum.True
+		/// Description for Castle.ActiveWriter.OuterJoinEnum.True
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OuterJoinEnum/True.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OuterJoinEnum/True.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		True,
 		/// <summary>
 		/// False
-		/// Description for Altinoren.ActiveWriter.OuterJoinEnum.False
+		/// Description for Castle.ActiveWriter.OuterJoinEnum.False
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OuterJoinEnum/False.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OuterJoinEnum/False.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		False,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: InheritedRelationType
-	/// Description for Altinoren.ActiveWriter.InheritedRelationType
+	/// Description for Castle.ActiveWriter.InheritedRelationType
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum InheritedRelationType
 	{
 		/// <summary>
 		/// Inherited
-		/// Description for Altinoren.ActiveWriter.InheritedRelationType.Inherited
+		/// Description for Castle.ActiveWriter.InheritedRelationType.Inherited
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritedRelationType/Inherited.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritedRelationType/Inherited.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Inherited,
 		/// <summary>
 		/// Guess
-		/// Description for Altinoren.ActiveWriter.InheritedRelationType.Guess
+		/// Description for Castle.ActiveWriter.InheritedRelationType.Guess
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritedRelationType/Guess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritedRelationType/Guess.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Guess,
 		/// <summary>
 		/// Bag
-		/// Description for Altinoren.ActiveWriter.InheritedRelationType.Bag
+		/// Description for Castle.ActiveWriter.InheritedRelationType.Bag
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritedRelationType/Bag.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritedRelationType/Bag.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Bag,
 		/// <summary>
 		/// Set
-		/// Description for Altinoren.ActiveWriter.InheritedRelationType.Set
+		/// Description for Castle.ActiveWriter.InheritedRelationType.Set
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritedRelationType/Set.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritedRelationType/Set.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Set,
 		/// <summary>
 		/// IdBag
-		/// Description for Altinoren.ActiveWriter.InheritedRelationType.IdBag
+		/// Description for Castle.ActiveWriter.InheritedRelationType.IdBag
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritedRelationType/IdBag.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritedRelationType/IdBag.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		IdBag,
 		/// <summary>
 		/// Map
-		/// Description for Altinoren.ActiveWriter.InheritedRelationType.Map
+		/// Description for Castle.ActiveWriter.InheritedRelationType.Map
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritedRelationType/Map.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritedRelationType/Map.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Map,
 		/// <summary>
 		/// List
-		/// Description for Altinoren.ActiveWriter.InheritedRelationType.List
+		/// Description for Castle.ActiveWriter.InheritedRelationType.List
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritedRelationType/List.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritedRelationType/List.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		List,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: RelationType
-	/// Description for Altinoren.ActiveWriter.RelationType
+	/// Description for Castle.ActiveWriter.RelationType
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum RelationType
 	{
 		/// <summary>
 		/// Guess
-		/// Description for Altinoren.ActiveWriter.RelationType.Guess
+		/// Description for Castle.ActiveWriter.RelationType.Guess
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.RelationType/Guess.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.RelationType/Guess.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Guess,
 		/// <summary>
 		/// Bag
-		/// Description for Altinoren.ActiveWriter.RelationType.Bag
+		/// Description for Castle.ActiveWriter.RelationType.Bag
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.RelationType/Bag.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.RelationType/Bag.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Bag,
 		/// <summary>
 		/// Set
-		/// Description for Altinoren.ActiveWriter.RelationType.Set
+		/// Description for Castle.ActiveWriter.RelationType.Set
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.RelationType/Set.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.RelationType/Set.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Set,
 		/// <summary>
 		/// IdBag
-		/// Description for Altinoren.ActiveWriter.RelationType.IdBag
+		/// Description for Castle.ActiveWriter.RelationType.IdBag
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.RelationType/IdBag.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.RelationType/IdBag.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		IdBag,
 		/// <summary>
 		/// Map
-		/// Description for Altinoren.ActiveWriter.RelationType.Map
+		/// Description for Castle.ActiveWriter.RelationType.Map
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.RelationType/Map.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.RelationType/Map.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Map,
 		/// <summary>
 		/// List
-		/// Description for Altinoren.ActiveWriter.RelationType.List
+		/// Description for Castle.ActiveWriter.RelationType.List
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.RelationType/List.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.RelationType/List.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		List,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: NHibernateType
-	/// Description for Altinoren.ActiveWriter.NHibernateType
+	/// Description for Castle.ActiveWriter.NHibernateType
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum NHibernateType
 	{
 		/// <summary>
 		/// AnsiChar
-		/// Description for Altinoren.ActiveWriter.NHibernateType.AnsiChar
+		/// Description for Castle.ActiveWriter.NHibernateType.AnsiChar
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/AnsiChar.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/AnsiChar.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		AnsiChar,
 		/// <summary>
 		/// Single
-		/// Description for Altinoren.ActiveWriter.NHibernateType.Single
+		/// Description for Castle.ActiveWriter.NHibernateType.Single
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/Single.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/Single.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Single,
 		/// <summary>
 		/// AnsiString
-		/// Description for Altinoren.ActiveWriter.NHibernateType.AnsiString
+		/// Description for Castle.ActiveWriter.NHibernateType.AnsiString
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/AnsiString.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/AnsiString.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		AnsiString,
 		/// <summary>
 		/// CultureInfo
-		/// Description for Altinoren.ActiveWriter.NHibernateType.CultureInfo
+		/// Description for Castle.ActiveWriter.NHibernateType.CultureInfo
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/CultureInfo.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/CultureInfo.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		CultureInfo,
 		/// <summary>
 		/// Binary
-		/// Description for Altinoren.ActiveWriter.NHibernateType.Binary
+		/// Description for Castle.ActiveWriter.NHibernateType.Binary
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/Binary.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/Binary.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Binary,
 		/// <summary>
 		/// Type
-		/// Description for Altinoren.ActiveWriter.NHibernateType.Type
+		/// Description for Castle.ActiveWriter.NHibernateType.Type
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/Type.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/Type.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Type,
 		/// <summary>
 		/// String
-		/// Description for Altinoren.ActiveWriter.NHibernateType.String
+		/// Description for Castle.ActiveWriter.NHibernateType.String
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/String.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/String.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		String,
 		/// <summary>
 		/// StringClob
-		/// Description for Altinoren.ActiveWriter.NHibernateType.StringClob
+		/// Description for Castle.ActiveWriter.NHibernateType.StringClob
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/StringClob.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/StringClob.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		StringClob,
 		/// <summary>
 		/// BinaryBlob
-		/// Description for Altinoren.ActiveWriter.NHibernateType.BinaryBlob
+		/// Description for Castle.ActiveWriter.NHibernateType.BinaryBlob
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/BinaryBlob.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/BinaryBlob.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		BinaryBlob,
 		/// <summary>
 		/// Boolean
-		/// Description for Altinoren.ActiveWriter.NHibernateType.Boolean
+		/// Description for Castle.ActiveWriter.NHibernateType.Boolean
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/Boolean.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/Boolean.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Boolean,
 		/// <summary>
 		/// Byte
-		/// Description for Altinoren.ActiveWriter.NHibernateType.Byte
+		/// Description for Castle.ActiveWriter.NHibernateType.Byte
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/Byte.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/Byte.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Byte,
 		/// <summary>
 		/// Char
-		/// Description for Altinoren.ActiveWriter.NHibernateType.Char
+		/// Description for Castle.ActiveWriter.NHibernateType.Char
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/Char.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/Char.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Char,
 		/// <summary>
 		/// DateTime
-		/// Description for Altinoren.ActiveWriter.NHibernateType.DateTime
+		/// Description for Castle.ActiveWriter.NHibernateType.DateTime
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/DateTime.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/DateTime.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		DateTime,
 		/// <summary>
 		/// Decimal
-		/// Description for Altinoren.ActiveWriter.NHibernateType.Decimal
+		/// Description for Castle.ActiveWriter.NHibernateType.Decimal
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/Decimal.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/Decimal.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Decimal,
 		/// <summary>
 		/// Double
-		/// Description for Altinoren.ActiveWriter.NHibernateType.Double
+		/// Description for Castle.ActiveWriter.NHibernateType.Double
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/Double.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/Double.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Double,
 		/// <summary>
 		/// Guid
-		/// Description for Altinoren.ActiveWriter.NHibernateType.Guid
+		/// Description for Castle.ActiveWriter.NHibernateType.Guid
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/Guid.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/Guid.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Guid,
 		/// <summary>
 		/// Int16
-		/// Description for Altinoren.ActiveWriter.NHibernateType.Int16
+		/// Description for Castle.ActiveWriter.NHibernateType.Int16
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/Int16.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/Int16.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Int16,
 		/// <summary>
 		/// Int32
-		/// Description for Altinoren.ActiveWriter.NHibernateType.Int32
+		/// Description for Castle.ActiveWriter.NHibernateType.Int32
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/Int32.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/Int32.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Int32,
 		/// <summary>
 		/// Int64
-		/// Description for Altinoren.ActiveWriter.NHibernateType.Int64
+		/// Description for Castle.ActiveWriter.NHibernateType.Int64
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/Int64.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/Int64.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Int64,
 		/// <summary>
 		/// Ticks
-		/// Description for Altinoren.ActiveWriter.NHibernateType.Ticks
+		/// Description for Castle.ActiveWriter.NHibernateType.Ticks
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/Ticks.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/Ticks.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Ticks,
 		/// <summary>
 		/// TimeSpan
-		/// Description for Altinoren.ActiveWriter.NHibernateType.TimeSpan
+		/// Description for Castle.ActiveWriter.NHibernateType.TimeSpan
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/TimeSpan.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/TimeSpan.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		TimeSpan,
 		/// <summary>
 		/// Timestamp
-		/// Description for Altinoren.ActiveWriter.NHibernateType.Timestamp
+		/// Description for Castle.ActiveWriter.NHibernateType.Timestamp
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/Timestamp.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/Timestamp.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Timestamp,
 		/// <summary>
 		/// TrueFalse
-		/// Description for Altinoren.ActiveWriter.NHibernateType.TrueFalse
+		/// Description for Castle.ActiveWriter.NHibernateType.TrueFalse
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/TrueFalse.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/TrueFalse.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		TrueFalse,
 		/// <summary>
 		/// YesNo
-		/// Description for Altinoren.ActiveWriter.NHibernateType.YesNo
+		/// Description for Castle.ActiveWriter.NHibernateType.YesNo
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/YesNo.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/YesNo.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		YesNo,
 		/// <summary>
 		/// Custom
-		/// Description for Altinoren.ActiveWriter.NHibernateType.Custom
+		/// Description for Castle.ActiveWriter.NHibernateType.Custom
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NHibernateType/Custom.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NHibernateType/Custom.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Custom,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: Accessor
-	/// Description for Altinoren.ActiveWriter.Accessor
+	/// Description for Castle.ActiveWriter.Accessor
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum Accessor
 	{
 		/// <summary>
 		/// Public
-		/// Description for Altinoren.ActiveWriter.Accessor.Public
+		/// Description for Castle.ActiveWriter.Accessor.Public
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Accessor/Public.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.Accessor/Public.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Public,
 		/// <summary>
 		/// Private
-		/// Description for Altinoren.ActiveWriter.Accessor.Private
+		/// Description for Castle.ActiveWriter.Accessor.Private
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Accessor/Private.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.Accessor/Private.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Private,
 		/// <summary>
 		/// Protected
-		/// Description for Altinoren.ActiveWriter.Accessor.Protected
+		/// Description for Castle.ActiveWriter.Accessor.Protected
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Accessor/Protected.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.Accessor/Protected.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Protected,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: PropertyType
-	/// Description for Altinoren.ActiveWriter.PropertyType
+	/// Description for Castle.ActiveWriter.PropertyType
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum PropertyType
 	{
 		/// <summary>
 		/// Property
-		/// Description for Altinoren.ActiveWriter.PropertyType.Property
+		/// Description for Castle.ActiveWriter.PropertyType.Property
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PropertyType/Property.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PropertyType/Property.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Property,
 		/// <summary>
 		/// Field
-		/// Description for Altinoren.ActiveWriter.PropertyType.Field
+		/// Description for Castle.ActiveWriter.PropertyType.Field
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PropertyType/Field.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PropertyType/Field.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Field,
 		/// <summary>
 		/// Version
-		/// Description for Altinoren.ActiveWriter.PropertyType.Version
+		/// Description for Castle.ActiveWriter.PropertyType.Version
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PropertyType/Version.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PropertyType/Version.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Version,
 		/// <summary>
 		/// Timestamp
-		/// Description for Altinoren.ActiveWriter.PropertyType.Timestamp
+		/// Description for Castle.ActiveWriter.PropertyType.Timestamp
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.PropertyType/Timestamp.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.PropertyType/Timestamp.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Timestamp,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: FieldCase
-	/// Description for Altinoren.ActiveWriter.FieldCase
+	/// Description for Castle.ActiveWriter.FieldCase
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum FieldCase
@@ -1372,47 +1337,47 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Unchanged
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.FieldCase/Unchanged.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.FieldCase/Unchanged.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Unchanged,
 		/// <summary>
 		/// Camelcase
-		/// Description for Altinoren.ActiveWriter.FieldCase.Camelcase
+		/// Description for Castle.ActiveWriter.FieldCase.Camelcase
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.FieldCase/Camelcase.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.FieldCase/Camelcase.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Camelcase,
 		/// <summary>
 		/// CamelcaseUnderscore
-		/// Description for Altinoren.ActiveWriter.FieldCase.CamelcaseUnderscore
+		/// Description for Castle.ActiveWriter.FieldCase.CamelcaseUnderscore
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.FieldCase/CamelcaseUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.FieldCase/CamelcaseUnderscore.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		CamelcaseUnderscore,
 		/// <summary>
 		/// CamelcaseMUnderscore
-		/// Description for Altinoren.ActiveWriter.FieldCase.CamelcaseMUnderscore
+		/// Description for Castle.ActiveWriter.FieldCase.CamelcaseMUnderscore
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.FieldCase/CamelcaseMUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.FieldCase/CamelcaseMUnderscore.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		CamelcaseMUnderscore,
 		/// <summary>
 		/// Pascalcase
-		/// Description for Altinoren.ActiveWriter.FieldCase.Pascalcase
+		/// Description for Castle.ActiveWriter.FieldCase.Pascalcase
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.FieldCase/Pascalcase.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.FieldCase/Pascalcase.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Pascalcase,
 		/// <summary>
 		/// PascalcaseUnderscore
-		/// Description for Altinoren.ActiveWriter.FieldCase.PascalcaseUnderscore
+		/// Description for Castle.ActiveWriter.FieldCase.PascalcaseUnderscore
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.FieldCase/PascalcaseUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.FieldCase/PascalcaseUnderscore.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		PascalcaseUnderscore,
 		/// <summary>
 		/// PascalcaseMUnderscore
-		/// Description for Altinoren.ActiveWriter.FieldCase.PascalcaseMUnderscore
+		/// Description for Castle.ActiveWriter.FieldCase.PascalcaseMUnderscore
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.FieldCase/PascalcaseMUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.FieldCase/PascalcaseMUnderscore.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		PascalcaseMUnderscore,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: CodeLanguage
@@ -1423,133 +1388,133 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// CSharp
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.CodeLanguage/CSharp.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.CodeLanguage/CSharp.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		CSharp,
 		/// <summary>
 		/// VB
-		/// Description for Altinoren.ActiveWriter.CodeLanguage.VB
+		/// Description for Castle.ActiveWriter.CodeLanguage.VB
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.CodeLanguage/VB.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.CodeLanguage/VB.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		VB,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: NullableUsage
-	/// Description for Altinoren.ActiveWriter.NullableUsage
+	/// Description for Castle.ActiveWriter.NullableUsage
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum NullableUsage
 	{
 		/// <summary>
 		/// No
-		/// Description for Altinoren.ActiveWriter.NullableUsage.No
+		/// Description for Castle.ActiveWriter.NullableUsage.No
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NullableUsage/No.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NullableUsage/No.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		No,
 		/// <summary>
 		/// Native
-		/// Description for Altinoren.ActiveWriter.NullableUsage.Native
+		/// Description for Castle.ActiveWriter.NullableUsage.Native
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NullableUsage/Native.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NullableUsage/Native.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Native,
 		/// <summary>
 		/// WithHelperLibrary
-		/// Description for Altinoren.ActiveWriter.NullableUsage.WithHelperLibrary
+		/// Description for Castle.ActiveWriter.NullableUsage.WithHelperLibrary
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NullableUsage/WithHelperLibrary.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NullableUsage/WithHelperLibrary.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		WithHelperLibrary,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: Polymorphism
-	/// Description for Altinoren.ActiveWriter.Polymorphism
+	/// Description for Castle.ActiveWriter.Polymorphism
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum Polymorphism
 	{
 		/// <summary>
 		/// Implicit
-		/// Description for Altinoren.ActiveWriter.Polymorphism.Implicit
+		/// Description for Castle.ActiveWriter.Polymorphism.Implicit
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Polymorphism/Implicit.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.Polymorphism/Implicit.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Implicit,
 		/// <summary>
 		/// Explicit
-		/// Description for Altinoren.ActiveWriter.Polymorphism.Explicit
+		/// Description for Castle.ActiveWriter.Polymorphism.Explicit
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.Polymorphism/Explicit.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.Polymorphism/Explicit.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Explicit,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: OptimisticLocking
-	/// Description for Altinoren.ActiveWriter.OptimisticLocking
+	/// Description for Castle.ActiveWriter.OptimisticLocking
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum OptimisticLocking
 	{
 		/// <summary>
 		/// None
-		/// Description for Altinoren.ActiveWriter.OptimisticLocking.None
+		/// Description for Castle.ActiveWriter.OptimisticLocking.None
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OptimisticLocking/None.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OptimisticLocking/None.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		None,
 		/// <summary>
 		/// Version
-		/// Description for Altinoren.ActiveWriter.OptimisticLocking.Version
+		/// Description for Castle.ActiveWriter.OptimisticLocking.Version
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OptimisticLocking/Version.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OptimisticLocking/Version.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Version,
 		/// <summary>
 		/// Dirty
-		/// Description for Altinoren.ActiveWriter.OptimisticLocking.Dirty
+		/// Description for Castle.ActiveWriter.OptimisticLocking.Dirty
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OptimisticLocking/Dirty.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OptimisticLocking/Dirty.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Dirty,
 		/// <summary>
 		/// All
-		/// Description for Altinoren.ActiveWriter.OptimisticLocking.All
+		/// Description for Castle.ActiveWriter.OptimisticLocking.All
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.OptimisticLocking/All.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.OptimisticLocking/All.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		All,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: NotFoundBehaviour
-	/// Description for Altinoren.ActiveWriter.NotFoundBehaviour
+	/// Description for Castle.ActiveWriter.NotFoundBehaviour
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum NotFoundBehaviour
 	{
 		/// <summary>
 		/// Default
-		/// Description for Altinoren.ActiveWriter.NotFoundBehaviour.Default
+		/// Description for Castle.ActiveWriter.NotFoundBehaviour.Default
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NotFoundBehaviour/Default.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NotFoundBehaviour/Default.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Default,
 		/// <summary>
 		/// Exception
-		/// Description for Altinoren.ActiveWriter.NotFoundBehaviour.Exception
+		/// Description for Castle.ActiveWriter.NotFoundBehaviour.Exception
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NotFoundBehaviour/Exception.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NotFoundBehaviour/Exception.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Exception,
 		/// <summary>
 		/// Ignore
-		/// Description for Altinoren.ActiveWriter.NotFoundBehaviour.Ignore
+		/// Description for Castle.ActiveWriter.NotFoundBehaviour.Ignore
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.NotFoundBehaviour/Ignore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.NotFoundBehaviour/Ignore.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Ignore,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: CodeGenerationTarget
@@ -1559,123 +1524,123 @@ namespace Altinoren.ActiveWriter
 	{
 		/// <summary>
 		/// ActiveRecord
-		/// Description for Altinoren.ActiveWriter.CodeGenerationTarget.ActiveRecord
+		/// Description for Castle.ActiveWriter.CodeGenerationTarget.ActiveRecord
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.CodeGenerationTarget/ActiveRecord.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.CodeGenerationTarget/ActiveRecord.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		ActiveRecord,
 		/// <summary>
 		/// NHibernate
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.CodeGenerationTarget/NHibernate.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.CodeGenerationTarget/NHibernate.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		NHibernate,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: ManyRelationCascadeEnum
-	/// Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum
+	/// Description for Castle.ActiveWriter.ManyRelationCascadeEnum
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum ManyRelationCascadeEnum
 	{
 		/// <summary>
 		/// None
-		/// Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.None
+		/// Description for Castle.ActiveWriter.ManyRelationCascadeEnum.None
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyRelationCascadeEnum/None.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyRelationCascadeEnum/None.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		None,
 		/// <summary>
 		/// All
-		/// Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.All
+		/// Description for Castle.ActiveWriter.ManyRelationCascadeEnum.All
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyRelationCascadeEnum/All.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyRelationCascadeEnum/All.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		All,
 		/// <summary>
 		/// SaveUpdate
-		/// Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.SaveUpdate
+		/// Description for Castle.ActiveWriter.ManyRelationCascadeEnum.SaveUpdate
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyRelationCascadeEnum/SaveUpdate.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyRelationCascadeEnum/SaveUpdate.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		SaveUpdate,
 		/// <summary>
 		/// Delete
-		/// Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.Delete
+		/// Description for Castle.ActiveWriter.ManyRelationCascadeEnum.Delete
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyRelationCascadeEnum/Delete.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyRelationCascadeEnum/Delete.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Delete,
 		/// <summary>
 		/// AllDeleteOrphan
-		/// Description for Altinoren.ActiveWriter.ManyRelationCascadeEnum.AllDeleteOrphan
+		/// Description for Castle.ActiveWriter.ManyRelationCascadeEnum.AllDeleteOrphan
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.ManyRelationCascadeEnum/AllDeleteOrphan.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.ManyRelationCascadeEnum/AllDeleteOrphan.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		AllDeleteOrphan,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: InheritableBoolean
-	/// Description for Altinoren.ActiveWriter.InheritableBoolean
+	/// Description for Castle.ActiveWriter.InheritableBoolean
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum InheritableBoolean
 	{
 		/// <summary>
 		/// True
-		/// Description for Altinoren.ActiveWriter.InheritableBoolean.True
+		/// Description for Castle.ActiveWriter.InheritableBoolean.True
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritableBoolean/True.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritableBoolean/True.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		True,
 		/// <summary>
 		/// Inherit
-		/// Description for Altinoren.ActiveWriter.InheritableBoolean.Inherit
+		/// Description for Castle.ActiveWriter.InheritableBoolean.Inherit
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritableBoolean/Inherit.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritableBoolean/Inherit.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Inherit,
 		/// <summary>
 		/// False
-		/// Description for Altinoren.ActiveWriter.InheritableBoolean.False
+		/// Description for Castle.ActiveWriter.InheritableBoolean.False
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritableBoolean/False.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritableBoolean/False.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		False,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: FetchEnum
-	/// Description for Altinoren.ActiveWriter.FetchEnum
+	/// Description for Castle.ActiveWriter.FetchEnum
 	/// </summary>
 	[global::System.CLSCompliant(true)]
 	public enum FetchEnum
 	{
 		/// <summary>
 		/// Select
-		/// Description for Altinoren.ActiveWriter.FetchEnum.Select
+		/// Description for Castle.ActiveWriter.FetchEnum.Select
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.FetchEnum/Select.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.FetchEnum/Select.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Select,
 		/// <summary>
 		/// Join
-		/// Description for Altinoren.ActiveWriter.FetchEnum.Join
+		/// Description for Castle.ActiveWriter.FetchEnum.Join
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.FetchEnum/Join.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.FetchEnum/Join.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Join,
 		/// <summary>
 		/// SubSelect
-		/// Description for Altinoren.ActiveWriter.FetchEnum.SubSelect
+		/// Description for Castle.ActiveWriter.FetchEnum.SubSelect
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.FetchEnum/SubSelect.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.FetchEnum/SubSelect.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		SubSelect,
 		/// <summary>
 		/// Unspecified
-		/// Description for Altinoren.ActiveWriter.FetchEnum.Unspecified
+		/// Description for Castle.ActiveWriter.FetchEnum.Unspecified
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.FetchEnum/Unspecified.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.FetchEnum/Unspecified.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Unspecified,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: MetaDataGeneration
@@ -1686,21 +1651,21 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// False
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.MetaDataGeneration/False.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.MetaDataGeneration/False.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		False,
 		/// <summary>
 		/// InClass
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.MetaDataGeneration/InClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.MetaDataGeneration/InClass.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		InClass,
 		/// <summary>
 		/// InSubClass
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.MetaDataGeneration/InSubClass.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.MetaDataGeneration/InSubClass.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		InSubClass,
 	}
 }
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// DomainEnumeration: InheritablePropertyAccess
@@ -1711,83 +1676,81 @@ namespace Altinoren.ActiveWriter
 	{
 		/// <summary>
 		/// Inherit
-		/// Description for Altinoren.ActiveWriter.InheritablePropertyAccess.Inherit
+		/// Description for Castle.ActiveWriter.InheritablePropertyAccess.Inherit
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/Inherit.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritablePropertyAccess/Inherit.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Inherit,
 		/// <summary>
 		/// FieldLowercaseUnderscore
 		/// Description for
-		/// Altinoren.ActiveWriter.InheritablePropertyAccess.FieldLowercaseUnderscore
+		/// Castle.ActiveWriter.InheritablePropertyAccess.FieldLowercaseUnderscore
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/FieldLowercaseUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritablePropertyAccess/FieldLowercaseUnderscore.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		FieldLowercaseUnderscore,
 		/// <summary>
 		/// FieldPascalcaseMUnderscore
 		/// Description for
-		/// Altinoren.ActiveWriter.InheritablePropertyAccess.FieldPascalcaseMUnderscore
+		/// Castle.ActiveWriter.InheritablePropertyAccess.FieldPascalcaseMUnderscore
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/FieldPascalcaseMUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritablePropertyAccess/FieldPascalcaseMUnderscore.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		FieldPascalcaseMUnderscore,
 		/// <summary>
 		/// NosetterCamelcase
-		/// Description for
-		/// Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterCamelcase
+		/// Description for Castle.ActiveWriter.InheritablePropertyAccess.NosetterCamelcase
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterCamelcase.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritablePropertyAccess/NosetterCamelcase.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		NosetterCamelcase,
 		/// <summary>
 		/// NosetterCamelcaseUnderscore
 		/// Description for
-		/// Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterCamelcaseUnderscore
+		/// Castle.ActiveWriter.InheritablePropertyAccess.NosetterCamelcaseUnderscore
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterCamelcaseUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritablePropertyAccess/NosetterCamelcaseUnderscore.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		NosetterCamelcaseUnderscore,
 		/// <summary>
 		/// Property
-		/// Description for Altinoren.ActiveWriter.InheritablePropertyAccess.Property
+		/// Description for Castle.ActiveWriter.InheritablePropertyAccess.Property
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/Property.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritablePropertyAccess/Property.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Property,
 		/// <summary>
 		/// NosetterPascalcaseMUnderscore
 		/// Description for
-		/// Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterPascalcaseMUnderscore
+		/// Castle.ActiveWriter.InheritablePropertyAccess.NosetterPascalcaseMUnderscore
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterPascalcaseMUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritablePropertyAccess/NosetterPascalcaseMUnderscore.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		NosetterPascalcaseMUnderscore,
 		/// <summary>
 		/// NosetterLowercaseUnderscore
 		/// Description for
-		/// Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterLowercaseUnderscore
+		/// Castle.ActiveWriter.InheritablePropertyAccess.NosetterLowercaseUnderscore
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterLowercaseUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritablePropertyAccess/NosetterLowercaseUnderscore.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		NosetterLowercaseUnderscore,
 		/// <summary>
 		/// NosetterLowercase
-		/// Description for
-		/// Altinoren.ActiveWriter.InheritablePropertyAccess.NosetterLowercase
+		/// Description for Castle.ActiveWriter.InheritablePropertyAccess.NosetterLowercase
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/NosetterLowercase.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritablePropertyAccess/NosetterLowercase.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		NosetterLowercase,
 		/// <summary>
 		/// Field
-		/// Description for Altinoren.ActiveWriter.InheritablePropertyAccess.Field
+		/// Description for Castle.ActiveWriter.InheritablePropertyAccess.Field
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/Field.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritablePropertyAccess/Field.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		Field,
 		/// <summary>
 		/// FieldCamelcase
-		/// Description for Altinoren.ActiveWriter.InheritablePropertyAccess.FieldCamelcase
+		/// Description for Castle.ActiveWriter.InheritablePropertyAccess.FieldCamelcase
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/FieldCamelcase.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritablePropertyAccess/FieldCamelcase.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		FieldCamelcase,
 		/// <summary>
 		/// FieldCamelcaseUnderscore
 		/// Description for
-		/// Altinoren.ActiveWriter.InheritablePropertyAccess.FieldCamelcaseUnderscore
+		/// Castle.ActiveWriter.InheritablePropertyAccess.FieldCamelcaseUnderscore
 		/// </summary>
-		[DslDesign::DescriptionResource("Altinoren.ActiveWriter.InheritablePropertyAccess/FieldCamelcaseUnderscore.Description", typeof(global::Altinoren.ActiveWriter.ActiveWriterDomainModel), "Altinoren.ActiveWriter.GeneratedCode.DomainModelResx")]
+		[DslDesign::DescriptionResource("Castle.ActiveWriter.InheritablePropertyAccess/FieldCamelcaseUnderscore.Description", typeof(global::Castle.ActiveWriter.ActiveWriterDomainModel), "Castle.ActiveWriter.GeneratedCode.DomainModelResx")]
 		FieldCamelcaseUnderscore,
 	}
 }

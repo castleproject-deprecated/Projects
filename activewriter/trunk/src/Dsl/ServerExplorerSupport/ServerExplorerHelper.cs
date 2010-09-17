@@ -1,4 +1,4 @@
-// Copyright 2006 Gokhan Altinoren - http://altinoren.com/
+// Copyright 2006 Gokhan Castle - http://altinoren.com/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Altinoren.ActiveWriter.ServerExplorerSupport
+namespace Castle.ActiveWriter.ServerExplorerSupport
 {
 	using System;
 	using System.Data;
 	using Microsoft.VisualStudio.Data;
 	using Microsoft.VisualStudio.Data.Interop;
+	using Microsoft.VisualStudio.Data.Services;
 	using Microsoft.VisualStudio.Shell;
 	using Microsoft.VisualStudio.Shell.Interop;
 
@@ -33,40 +34,45 @@ namespace Altinoren.ActiveWriter.ServerExplorerSupport
 			{
 				if (navigator != null)
 				{
-					IVsDataConnectionsService dataConnectionsService =
-						(IVsDataConnectionsService) Package.GetGlobalService(typeof(IVsDataConnectionsService));
+					IVsDataExplorerConnectionManager dataConnectionsService =
+						(IVsDataExplorerConnectionManager) Package.GetGlobalService(typeof(IVsDataExplorerConnectionManager));
+
 					string itemName = navigator.GetConnectionName();
 
 					if (itemName != null)
 					{
-						int iConn; // = dataConnectionsService.GetConnectionIndex(itemName);
-						DataViewHierarchyAccessor dataViewHierarchy = null;
+						var connection = dataConnectionsService.Connections[itemName];
 
-						for(iConn = 0; iConn < dataConnectionsService.Count; iConn++)
-						{
-							DataViewHierarchyAccessor hierarchyAccessor =
-								new DataViewHierarchyAccessor((IVsUIHierarchy) dataConnectionsService.GetConnectionHierarchy(iConn));
-							try
-							{
-								if (hierarchyAccessor.Connection.DisplayConnectionString == itemName)
-								{
-									dataViewHierarchy = hierarchyAccessor;
-									break;
-								}
-							}
-							catch
-							{
-							}
-						}
-						if (dataViewHierarchy != null)
-						{
-							DataConnection connection = dataViewHierarchy.Connection;
-							if (connection != null && connection.ConnectionSupport.ProviderObject != null)
-							{
-								type = connection.ConnectionSupport.ProviderObject.GetType().FullName;
-								return (IDbConnection) connection.ConnectionSupport.ProviderObject;
-							}
-						}
+						return (IDbConnection) connection.Connection.GetLockedProviderObject();
+
+						//int iConn; // = dataConnectionsService.GetConnectionIndex(itemName);
+						//DataViewHierarchyAccessor dataViewHierarchy = null;
+
+						//for(iConn = 0; iConn < dataConnectionsService.Connections.Count; iConn++)
+						//{
+						//    DataViewHierarchyAccessor hierarchyAccessor =
+						//        new DataViewHierarchyAccessor((IVsUIHierarchy) dataConnectionsService.GetConnectionHierarchy(iConn));
+						//    try
+						//    {
+						//        if (hierarchyAccessor.Connection.DisplayConnectionString == itemName)
+						//        {
+						//            dataViewHierarchy = hierarchyAccessor;
+						//            break;
+						//        }
+						//    }
+						//    catch
+						//    {
+						//    }
+						//}
+						//if (dataViewHierarchy != null)
+						//{
+						//    DataConnection connection = dataViewHierarchy.Connection;
+						//    if (connection != null && connection.ConnectionSupport.ProviderObject != null)
+						//    {
+						//        type = connection.ConnectionSupport.ProviderObject.GetType().FullName;
+						//        return (IDbConnection) connection.ConnectionSupport.ProviderObject;
+						//    }
+						//}
 					}
 				}
 			}

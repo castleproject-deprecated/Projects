@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Altinoren.ActiveWriter.CodeDomExtensions;
+using Castle.ActiveWriter.CodeDomExtensions;
 using ICSharpCode.NRefactory;
 using ICSharpCode.NRefactory.Visitors;
 
-namespace Altinoren.ActiveWriter.CodeGeneration
+namespace Castle.ActiveWriter.CodeGeneration
 {
     public class TemplateMemberGenerator
     {

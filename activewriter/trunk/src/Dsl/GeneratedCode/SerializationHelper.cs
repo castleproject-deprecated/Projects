@@ -7,385 +7,31 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Linq;
 using DslModeling = global::Microsoft.VisualStudio.Modeling;
 using DslValidation = global::Microsoft.VisualStudio.Modeling.Validation;
 using DslDiagrams = global::Microsoft.VisualStudio.Modeling.Diagrams;
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
-	/// <summary>
-	/// Partial class to handle serialization of Model instance as a root-level XML element.
-	/// </summary>
-	public partial class ModelSerializer
+	
+	partial class ActiveWriterDomainModel
 	{
-		/// <summary>
-		/// Public ReadRootElement() method that deserializes a root-level Model instance from XML.
-		/// </summary>
-		/// <param name="serializationContext">Serialization context.</param>
-		/// <param name="element">In-memory Model instance that will get the deserialized data.</param>
-		/// <param name="reader">XmlReader to read serialized data from.</param>
-		/// <param name="schemaResolver">An ISchemaResolver that allows the serializer to do schema validation on the root element (and everything inside it).</param>
-		public override void ReadRootElement(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader, DslModeling::ISchemaResolver schemaResolver)
+		///<Summary>
+		/// Provide an implementation of the partial method to set up the serialization behavior for this model.
+		///</Summary>
+		///<remarks>
+		/// This partial method is called from the constructor of the domain class.
+		///</remarks>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance","CA1822:MarkMembersAsStatic", Justification="Alternative implementations might need to reference instance variables, so not marked as static.")]
+		partial void InitializeSerialization(DslModeling::Store store)
 		{
-			#region Check Parameters
-			global::System.Diagnostics.Debug.Assert(serializationContext != null);
-			if (serializationContext == null)
-				throw new global::System.ArgumentNullException("serializationContext");
-			global::System.Diagnostics.Debug.Assert(reader != null);
-			if (reader == null)
-				throw new global::System.ArgumentNullException("reader");
-			#endregion
-	
-			// Version check.
-			CheckVersion(serializationContext, reader);
-	
-			if (!serializationContext.Result.Failed)
-			{	// Check to see if schema validation is possible.
-				if (schemaResolver != null)
-				{
-					string targetNamespace = reader.NamespaceURI;
-					if (!string.IsNullOrEmpty(targetNamespace))
-					{
-						global::System.Collections.Generic.IList<string> schemas = schemaResolver.ResolveSchema(targetNamespace);
-						if (schemas != null && schemas.Count > 0)
-						{
-							if (schemas.Count > 1)
-							{
-								ActiveWriterSerializationBehaviorSerializationMessages.AmbiguousSchema(serializationContext, reader, targetNamespace, schemas[0]);
-							}
-							global::System.Xml.Schema.XmlSchemaSet schemaSet = new global::System.Xml.Schema.XmlSchemaSet(reader.NameTable);
-							schemaSet.Add(targetNamespace, schemas[0]);
-							global::System.Xml.XmlReaderSettings readerSettings = new global::System.Xml.XmlReaderSettings();
-							readerSettings.ConformanceLevel = global::System.Xml.ConformanceLevel.Auto;
-							readerSettings.ValidationType = global::System.Xml.ValidationType.Schema;
-							readerSettings.Schemas = schemaSet;
-							ActiveWriterSerializationBehaviorSchemaValidationCallback validationCallback = new ActiveWriterSerializationBehaviorSchemaValidationCallback(serializationContext);
-							readerSettings.ValidationEventHandler += new global::System.Xml.Schema.ValidationEventHandler(validationCallback.Handler);
-							// Wrap the given reader as a validating reader and carry out the normal deserialization.
-							using (global::System.Xml.XmlReader validatingReader = global::System.Xml.XmlReader.Create(reader, readerSettings))
-							{
-								validationCallback.Reader = validatingReader;
-								this.Read(serializationContext, element, validatingReader);
-							}
-							return;
-						}
-						else
-						{
-							ActiveWriterSerializationBehaviorSerializationMessages.NoSchema(serializationContext, reader, targetNamespace);
-						}
-					}
-				}
-	
-				// No schema information available, carry out the normal deserialization.
-				this.Read(serializationContext, element, reader);
-			}
-		}
-		
-		/// <summary>
-		/// Checks the version of the file being read.
-		/// </summary>
-		/// <param name="serializationContext">Serialization context.</param>
-		/// <param name="reader">Reader for the file being read. The reader is positioned at the open tag of the root element being read.</param>
-		private static void CheckVersion(DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader)
-		{
-			global::System.Version expectedVersion = new global::System.Version("1.0.0.0");
-			string dslVersionStr = reader.GetAttribute("dslVersion");
-			if (dslVersionStr != null)
-			{
-				try
-				{
-					global::System.Version actualVersion = new global::System.Version(dslVersionStr);
-					if (actualVersion != expectedVersion)
-					{
-						ActiveWriterSerializationBehaviorSerializationMessages.VersionMismatch(serializationContext, reader, expectedVersion, actualVersion);
-					}
-				}
-				catch (global::System.ArgumentException)
-				{
-					ActiveWriterSerializationBehaviorSerializationMessages.InvalidPropertyValue(serializationContext, reader, "dslVersion", typeof(global::System.Version), dslVersionStr);
-				}
-				catch (global::System.FormatException)
-				{
-					ActiveWriterSerializationBehaviorSerializationMessages.InvalidPropertyValue(serializationContext, reader, "dslVersion", typeof(global::System.Version), dslVersionStr);
-				}
-				catch (global::System.OverflowException)
-				{
-					ActiveWriterSerializationBehaviorSerializationMessages.InvalidPropertyValue(serializationContext, reader, "dslVersion", typeof(global::System.Version), dslVersionStr);
-				}
-			}
-		}
-		
-		/// <summary>
-		/// A utility class to handle schema validation warning/error
-		/// </summary>
-		private sealed class ActiveWriterSerializationBehaviorSchemaValidationCallback
-		{
-			#region Member Variables
-			/// <summary>
-			/// SerializationContext to store schema validation warning/error.
-			/// </summary>
-			DslModeling::SerializationContext serializationContext;
-			/// <summary>
-			/// Reader that generates the schema warning/error.
-			/// </summary>
-			global::System.Xml.XmlReader reader;
-			#endregion
-	
-			#region Constructor
-			/// <summary>
-			/// Constructor
-			/// </summary>
-			/// <param name="serializationContext">SerializationContext to be used to store schema validation warning/error.</param>
-			internal ActiveWriterSerializationBehaviorSchemaValidationCallback(DslModeling::SerializationContext serializationContext)
-			{
-				global::System.Diagnostics.Debug.Assert(serializationContext != null);
-				this.serializationContext = serializationContext;
-			}
-			#endregion
-	
-			#region Accessor
-			/// <summary>
-			/// Sets the reader that generates the schema validation warning/error.
-			/// </summary>
-			internal global::System.Xml.XmlReader Reader
-			{
-				[global::System.Diagnostics.DebuggerStepThrough]
-				set { this.reader = value; }
-			}
-			#endregion
-	
-			#region Callback method
-			/// <summary>
-			/// Callback to handler schema validation warning/error.
-			/// </summary>
-			internal void Handler(object sender, global::System.Xml.Schema.ValidationEventArgs e)
-			{
-				global::System.Diagnostics.Debug.Assert(this.serializationContext != null);
-				if (this.serializationContext != null)
-					ActiveWriterSerializationBehaviorSerializationMessages.SchemaValidationError(this.serializationContext, this.reader, e.Message);
-			}
-			#endregion
-		}
-	
-		/// <summary>
-		/// Public WriteRootElement() method that serializes a root-level Model instance to XML.
-		/// </summary>
-		/// <param name="serializationContext">Serialization context.</param>
-		/// <param name="element">Model instance that will be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>
-		public override void WriteRootElement(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
-		{
-			#region Check Parameters
-			global::System.Diagnostics.Debug.Assert(serializationContext != null);
-			if (serializationContext == null)
-				throw new global::System.ArgumentNullException("serializationContext");
-			global::System.Diagnostics.Debug.Assert(element != null);
-			if (element == null)
-				throw new global::System.ArgumentNullException("element");
-			global::System.Diagnostics.Debug.Assert(writer != null);
-			if (writer == null)
-				throw new global::System.ArgumentNullException("writer");
-			#endregion
-	
-			// Set up root element settings
-			DslModeling::RootElementSettings rootElementSettings = new DslModeling::RootElementSettings();
-			rootElementSettings.SchemaTargetNamespace = "http://schemas.microsoft.com/dsltools/ActiveWriter";
-			rootElementSettings.Version = new global::System.Version("1.0.0.0");
-	
-			// Carry out the normal serialization.
-			this.Write(serializationContext, element, writer, rootElementSettings);
+			// Register the serializers and moniker resolver for this model
+			ActiveWriterSerializationHelper.Instance.InitializeSerialization(store);	
 		}
 	}
-}
-
-namespace Altinoren.ActiveWriter
-{
-	/// <summary>
-	/// Partial class to handle serialization of ActiveRecordMapping instance as a root-level XML element.
-	/// </summary>
-	public partial class ActiveRecordMappingSerializer
-	{
-		/// <summary>
-		/// Public ReadRootElement() method that deserializes a root-level ActiveRecordMapping instance from XML.
-		/// </summary>
-		/// <param name="serializationContext">Serialization context.</param>
-		/// <param name="element">In-memory ActiveRecordMapping instance that will get the deserialized data.</param>
-		/// <param name="reader">XmlReader to read serialized data from.</param>
-		/// <param name="schemaResolver">An ISchemaResolver that allows the serializer to do schema validation on the root element (and everything inside it).</param>
-		public override void ReadRootElement(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader, DslModeling::ISchemaResolver schemaResolver)
-		{
-			#region Check Parameters
-			global::System.Diagnostics.Debug.Assert(serializationContext != null);
-			if (serializationContext == null)
-				throw new global::System.ArgumentNullException("serializationContext");
-			global::System.Diagnostics.Debug.Assert(reader != null);
-			if (reader == null)
-				throw new global::System.ArgumentNullException("reader");
-			#endregion
 	
-			// Version check.
-			CheckVersion(serializationContext, reader);
 	
-			if (!serializationContext.Result.Failed)
-			{	// Check to see if schema validation is possible.
-				if (schemaResolver != null)
-				{
-					string targetNamespace = reader.NamespaceURI;
-					if (!string.IsNullOrEmpty(targetNamespace))
-					{
-						global::System.Collections.Generic.IList<string> schemas = schemaResolver.ResolveSchema(targetNamespace);
-						if (schemas != null && schemas.Count > 0)
-						{
-							if (schemas.Count > 1)
-							{
-								ActiveWriterSerializationBehaviorSerializationMessages.AmbiguousSchema(serializationContext, reader, targetNamespace, schemas[0]);
-							}
-							global::System.Xml.Schema.XmlSchemaSet schemaSet = new global::System.Xml.Schema.XmlSchemaSet(reader.NameTable);
-							schemaSet.Add(targetNamespace, schemas[0]);
-							global::System.Xml.XmlReaderSettings readerSettings = new global::System.Xml.XmlReaderSettings();
-							readerSettings.ConformanceLevel = global::System.Xml.ConformanceLevel.Auto;
-							readerSettings.ValidationType = global::System.Xml.ValidationType.Schema;
-							readerSettings.Schemas = schemaSet;
-							ActiveWriterSerializationBehaviorSchemaValidationCallback validationCallback = new ActiveWriterSerializationBehaviorSchemaValidationCallback(serializationContext);
-							readerSettings.ValidationEventHandler += new global::System.Xml.Schema.ValidationEventHandler(validationCallback.Handler);
-							// Wrap the given reader as a validating reader and carry out the normal deserialization.
-							using (global::System.Xml.XmlReader validatingReader = global::System.Xml.XmlReader.Create(reader, readerSettings))
-							{
-								validationCallback.Reader = validatingReader;
-								this.Read(serializationContext, element, validatingReader);
-							}
-							return;
-						}
-						else
-						{
-							ActiveWriterSerializationBehaviorSerializationMessages.NoSchema(serializationContext, reader, targetNamespace);
-						}
-					}
-				}
-	
-				// No schema information available, carry out the normal deserialization.
-				this.Read(serializationContext, element, reader);
-			}
-		}
-		
-		/// <summary>
-		/// Checks the version of the file being read.
-		/// </summary>
-		/// <param name="serializationContext">Serialization context.</param>
-		/// <param name="reader">Reader for the file being read. The reader is positioned at the open tag of the root element being read.</param>
-		private static void CheckVersion(DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader)
-		{
-			global::System.Version expectedVersion = new global::System.Version("1.0.0.0");
-			string dslVersionStr = reader.GetAttribute("dslVersion");
-			if (dslVersionStr != null)
-			{
-				try
-				{
-					global::System.Version actualVersion = new global::System.Version(dslVersionStr);
-					if (actualVersion != expectedVersion)
-					{
-						ActiveWriterSerializationBehaviorSerializationMessages.VersionMismatch(serializationContext, reader, expectedVersion, actualVersion);
-					}
-				}
-				catch (global::System.ArgumentException)
-				{
-					ActiveWriterSerializationBehaviorSerializationMessages.InvalidPropertyValue(serializationContext, reader, "dslVersion", typeof(global::System.Version), dslVersionStr);
-				}
-				catch (global::System.FormatException)
-				{
-					ActiveWriterSerializationBehaviorSerializationMessages.InvalidPropertyValue(serializationContext, reader, "dslVersion", typeof(global::System.Version), dslVersionStr);
-				}
-				catch (global::System.OverflowException)
-				{
-					ActiveWriterSerializationBehaviorSerializationMessages.InvalidPropertyValue(serializationContext, reader, "dslVersion", typeof(global::System.Version), dslVersionStr);
-				}
-			}
-		}
-		
-		/// <summary>
-		/// A utility class to handle schema validation warning/error
-		/// </summary>
-		private sealed class ActiveWriterSerializationBehaviorSchemaValidationCallback
-		{
-			#region Member Variables
-			/// <summary>
-			/// SerializationContext to store schema validation warning/error.
-			/// </summary>
-			DslModeling::SerializationContext serializationContext;
-			/// <summary>
-			/// Reader that generates the schema warning/error.
-			/// </summary>
-			global::System.Xml.XmlReader reader;
-			#endregion
-	
-			#region Constructor
-			/// <summary>
-			/// Constructor
-			/// </summary>
-			/// <param name="serializationContext">SerializationContext to be used to store schema validation warning/error.</param>
-			internal ActiveWriterSerializationBehaviorSchemaValidationCallback(DslModeling::SerializationContext serializationContext)
-			{
-				global::System.Diagnostics.Debug.Assert(serializationContext != null);
-				this.serializationContext = serializationContext;
-			}
-			#endregion
-	
-			#region Accessor
-			/// <summary>
-			/// Sets the reader that generates the schema validation warning/error.
-			/// </summary>
-			internal global::System.Xml.XmlReader Reader
-			{
-				[global::System.Diagnostics.DebuggerStepThrough]
-				set { this.reader = value; }
-			}
-			#endregion
-	
-			#region Callback method
-			/// <summary>
-			/// Callback to handler schema validation warning/error.
-			/// </summary>
-			internal void Handler(object sender, global::System.Xml.Schema.ValidationEventArgs e)
-			{
-				global::System.Diagnostics.Debug.Assert(this.serializationContext != null);
-				if (this.serializationContext != null)
-					ActiveWriterSerializationBehaviorSerializationMessages.SchemaValidationError(this.serializationContext, this.reader, e.Message);
-			}
-			#endregion
-		}
-	
-		/// <summary>
-		/// Public WriteRootElement() method that serializes a root-level ActiveRecordMapping instance to XML.
-		/// </summary>
-		/// <param name="serializationContext">Serialization context.</param>
-		/// <param name="element">ActiveRecordMapping instance that will be serialized.</param>
-		/// <param name="writer">XmlWriter to write serialized data to.</param>
-		public override void WriteRootElement(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
-		{
-			#region Check Parameters
-			global::System.Diagnostics.Debug.Assert(serializationContext != null);
-			if (serializationContext == null)
-				throw new global::System.ArgumentNullException("serializationContext");
-			global::System.Diagnostics.Debug.Assert(element != null);
-			if (element == null)
-				throw new global::System.ArgumentNullException("element");
-			global::System.Diagnostics.Debug.Assert(writer != null);
-			if (writer == null)
-				throw new global::System.ArgumentNullException("writer");
-			#endregion
-	
-			// Set up root element settings
-			DslModeling::RootElementSettings rootElementSettings = new DslModeling::RootElementSettings();
-			rootElementSettings.Version = new global::System.Version("1.0.0.0");
-	
-			// Carry out the normal serialization.
-			this.Write(serializationContext, element, writer, rootElementSettings);
-		}
-	}
-}
-
-namespace Altinoren.ActiveWriter
-{
 	/// <summary>
 	/// Helper class for serializing and deserializing ActiveWriter models.
 	/// </summary>
@@ -397,6 +43,270 @@ namespace Altinoren.ActiveWriter
 		/// </summary>
 		protected ActiveWriterSerializationHelperBase() { }
 		#endregion
+		
+		#region Methods
+		
+		/// <summary>
+		/// Ensure that moniker resolvers and domain element serializers are installed properly on the given store, 
+		/// so that deserialization can be carried out correctly.
+		/// </summary>
+		/// <param name="store">Store on which moniker resolvers will be set up.</param>
+		internal protected virtual void InitializeSerialization(DslModeling::Store store)
+		{
+			#region Check Parameters
+			global::System.Diagnostics.Debug.Assert(store != null);
+			if (store == null)
+				throw new global::System.ArgumentNullException("store");
+			#endregion
+	
+			DslModeling::DomainXmlSerializerDirectory directory = this.GetDirectory(store);
+	
+			// Register the moniker resolver for this model, unless one is already registered
+			DslModeling::IMonikerResolver monikerResolver = store.FindMonikerResolver(ActiveWriterDomainModel.DomainModelId);
+			if (monikerResolver == null)
+			{
+				monikerResolver = new ActiveWriterSerializationBehaviorMonikerResolver(store, directory);
+				store.AddMonikerResolver(ActiveWriterDomainModel.DomainModelId, monikerResolver);
+			}
+			
+			// Add serialization behaviors
+			directory.AddBehavior(ActiveWriterSerializationBehavior.Instance);
+		}
+	
+		/// <Summary>
+		/// Called by the serialization helper to allow any necessary setup to be done on each load / save.
+		/// </Summary>
+		/// <param name="partition">The partition being serialized.</param>
+		/// <param name="serializationContext">The current serialization context instance.</param>
+		/// <param name="isLoading">Flag to indicate whether the file is being loaded or saved.</param>
+		/// <Remarks>The base implementation does nothing</Remarks>
+		protected virtual void InitializeSerializationContext(DslModeling::Partition partition, DslModeling::SerializationContext serializationContext, bool isLoading)
+		{
+		}
+	
+		/// <summary>
+		/// Return the directory of serializers to use
+		/// </summary>
+		protected virtual DslModeling::DomainXmlSerializerDirectory GetDirectory(DslModeling::Store store)
+		{
+			// Just return the default serialization directory from the store
+			return store.SerializerDirectory;
+		}
+			
+		/// <summary>
+		/// This method returns the moniker resolvers for each of the domain models in the store
+		/// </summary>
+		/// <param name="store">Store on which the moniker resolvers are set up.</param>
+		internal protected virtual global::System.Collections.Generic.IDictionary<global::System.Guid, DslModeling::IMonikerResolver> GetMonikerResolvers(DslModeling::Store store)
+		{
+			#region Check Parameters
+			global::System.Diagnostics.Debug.Assert(store != null);
+			if (store == null)
+				throw new global::System.ArgumentNullException("store");
+			#endregion
+			
+			global::System.Collections.Generic.Dictionary<global::System.Guid, DslModeling::IMonikerResolver> result = new global::System.Collections.Generic.Dictionary<global::System.Guid, DslModeling::IMonikerResolver>();
+			foreach (DslModeling::DomainModelInfo modelInfo in store.DomainDataDirectory.DomainModels)
+			{
+				if (modelInfo.MonikerResolver != null)
+				{
+					result.Add(modelInfo.Id, modelInfo.MonikerResolver);
+				}
+			}
+			
+			return result;
+		}
+	
+		/// <summary>
+		/// Write extension element data inside the current XML element
+		/// </summary>
+		/// <param name="serializationContext">The current serialization context instance.</param>
+		/// <param name="element">The element whose attributes have just been written.</param>
+		/// <param name="writer">XmlWriter to write serialized data to.</param>
+		/// <remarks>The default implemenation is to write out all non-embedded extension elements,
+		/// regardless of whether they relate to the current element or not.
+		/// The additional data should be written as a series of one or more
+		/// XML elements.</remarks>
+		internal protected virtual void WriteExtensions(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer)
+		{
+			if (serializationContext == null)
+			{
+				throw new global::System.ArgumentNullException("serializationContext");
+			}
+			if (element == null)
+			{
+				throw new global::System.ArgumentNullException("element");
+			}
+			if (writer == null)
+			{
+				throw new global::System.ArgumentNullException("writer");
+			}
+	
+			// Build a list of extension elements to serialize
+			global::System.Collections.ObjectModel.ReadOnlyCollection<DslModeling::ModelElement> allExtensionElements = element.Partition.ElementDirectory.FindElements(DslModeling::ExtensionElement.DomainClassId, true);
+			global::System.Collections.Generic.IEnumerable<DslModeling::ExtensionElement> nonEmbeddedExtensionsElements = allExtensionElements.Where(e => DslModeling::DomainClassInfo.FindEmbeddingElementLink(e) == null).OfType<DslModeling::ExtensionElement>();
+	
+			DslModeling::SerializationUtilities.WriteExtensions(serializationContext, writer, nonEmbeddedExtensionsElements);
+		}
+	
+		/// <summary>
+		/// Read any extension data written inside this XML element
+		/// </summary>
+		/// <param name="serializationContext">The current serialization context instance.</param>
+		/// <param name="element">In-memory ModelElement instance that is currently being read.</param>
+		/// <param name="reader">Reader for the file being read. The reader is positioned after the attributes of the specified element.</param>
+		/// <remarks>The method reads any extension element data, regardless of whether it relates the current
+		/// element or not. There may be no additional data for the specified element.</remarks>
+		internal protected virtual void ReadExtensions(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		{
+			if (serializationContext == null)
+			{
+				throw new global::System.ArgumentNullException("serializationContext");
+			}
+			if (element == null)
+			{
+				throw new global::System.ArgumentNullException("element");
+			}
+			if (reader == null)
+			{
+				throw new global::System.ArgumentNullException("reader");
+			}
+	
+			if (string.CompareOrdinal(reader.LocalName, DslModeling::SerializationUtilities.ExtensionsXmlElementName) == 0)
+			{
+				DslModeling::SerializationUtilities.ReadExtensions(serializationContext, reader, element.Partition);
+			}
+		}
+		
+		/// <summary>
+		/// Writes the specified attribute to the file.
+		/// </summary>
+		/// <param name="serializationContext">The current serialization context instance.</param>
+		/// <param name="element">The element whose attributes have just been written.</param>
+		/// <param name="writer">XmlWriter to write serialized data to.</param>
+		/// <param name="attributeName">Name of the attribute to be written</param>
+		/// <param name="attributeValue">Value of the attribute to be written</param>
+		/// <remarks>This is an extension point to allow customisation e.g. to encode the data
+		/// being written to the file.</remarks>
+		internal virtual void WriteAttributeString(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer, string attributeName, string attributeValue)
+		{
+			writer.WriteAttributeString(attributeName, attributeValue);
+		}
+	
+		/// <summary>
+		/// Writes the specified element to the file.
+		/// </summary>
+		/// <param name="serializationContext">The current serialization context instance.</param>
+		/// <param name="element">The element whose attributes have just been written.</param>
+		/// <param name="writer">XmlWriter to write serialized data to.</param>
+		/// <param name="elementName">Name of the element to be written.</param>
+		/// <param name="elementValue">Value of the element to be written.</param>
+		/// <remarks>This is an extension point to allow customisation e.g. to encode the data
+		/// being written to the file.</remarks>
+		internal virtual void WriteElementString(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlWriter writer, string elementName, string elementValue)
+		{
+			writer.WriteElementString(elementName, elementValue);
+		}
+	
+		/// <summary>
+		/// Reads and returns the value of an attribute.
+		/// </summary>
+		/// <param name="serializationContext">The current serialization context instance.</param>
+		/// <param name="element">The element whose attributes have just been written.</param>
+		/// <param name="reader">XmlReader to read the serialized data from.</param>
+		/// <param name="attributeName">The name of the attribute to be read.</param>
+		/// <returns>The value of the attribute.</returns>
+		/// <remarks>This is an extension point to allow customisation e.g. to decode the data
+		/// being written to the file.</remarks>
+		internal virtual string ReadAttribute(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader, string attributeName)
+		{
+			return reader.GetAttribute(attributeName);
+		}
+	
+		/// <summary>
+		/// Reads and returns the value of an element.
+		/// </summary>
+		/// <param name="serializationContext">The current serialization context instance.</param>
+		/// <param name="element">The element whose attributes have just been written.</param>
+		/// <param name="reader">XmlReader to read the serialized data from.</param>
+		/// <returns>The value of the element.</returns>
+		/// <remarks>This is an extension point to allow customisation e.g. to decode the data
+		/// being written to the file.</remarks>
+		internal virtual string ReadElementContentAsString(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement element, global::System.Xml.XmlReader reader)
+		{
+			return reader.ReadElementContentAsString();
+		}
+	
+		/// <summary>
+		/// Creates and returns the settings used when reading a file.
+		/// </summary>
+		/// <param name="serializationContext">The current serialization context instance.</param>
+		/// <param name="isDiagram">Indicates whether a diagram or model file is currently being serialized.</param>
+		internal virtual global::System.Xml.XmlReaderSettings CreateXmlReaderSettings(DslModeling::SerializationContext serializationContext, bool isDiagram)
+		{
+			return new global::System.Xml.XmlReaderSettings();
+		}
+	
+		/// <summary>
+		/// Creates and returns the settings used when writing a file.
+		/// </summary>
+		/// <param name="serializationContext">The current serialization context instance.</param>
+		/// <param name="isDiagram">Indicates whether a diagram or model file is currently being serialized.</param>
+		/// <param name="encoding">The encoding to use when writing the file.</param>
+		internal virtual global::System.Xml.XmlWriterSettings CreateXmlWriterSettings(DslModeling::SerializationContext serializationContext, bool isDiagram, global::System.Text.Encoding encoding)
+		{
+			global::System.Xml.XmlWriterSettings settings = new global::System.Xml.XmlWriterSettings();
+			settings.Indent = true;
+			settings.Encoding = encoding;
+	
+			return settings;
+		}
+		
+		#endregion
+	}
+	
+	/// <summary>
+	/// Helper class for serializing and deserializing ActiveWriter models.
+	/// </summary>
+	public sealed partial class ActiveWriterSerializationHelper : ActiveWriterSerializationHelperBase
+	{
+		#region Constructor
+		/// <summary>
+		/// Private constructor to prevent direct instantiation.
+		/// </summary>
+		private ActiveWriterSerializationHelper() : base () { }
+		#endregion
+		
+		#region Singleton Instance
+		/// <summary>
+		/// Singleton instance.
+		/// </summary>
+		private static ActiveWriterSerializationHelper instance;
+		/// <summary>
+		/// Singleton instance.
+		/// </summary>
+		[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)] // Will trigger creation otherwise.
+		public static ActiveWriterSerializationHelper Instance
+		{
+			[global::System.Diagnostics.DebuggerStepThrough]
+			get
+			{
+				if (ActiveWriterSerializationHelper.instance == null)
+					ActiveWriterSerializationHelper.instance = new ActiveWriterSerializationHelper();
+				return ActiveWriterSerializationHelper.instance;
+			}
+		}
+		#endregion
+	}
+	
+}
+
+
+namespace Castle.ActiveWriter
+{
+	
+	partial class ActiveWriterSerializationHelperBase
+	{
 	
 		/// <summary>
 		/// Loads a Model instance into the default partition of the given store, and ignore serialization result.
@@ -411,15 +321,18 @@ namespace Altinoren.ActiveWriter
 		/// A ValidationController that will be used to do load-time validation (validations with validation category "Load"). If null
 		/// is passed, load-time validation will not be performed.
 		/// </param>
+		/// <param name="serializerLocator">
+		/// An ISerializerLocator that will be used to locate any additional domain model types required to load the model. Can be null.
+		/// </param>
 		/// <returns>The loaded Model instance.</returns>
-		public virtual Model LoadModel(DslModeling::Store store, string fileName, DslModeling::ISchemaResolver schemaResolver, DslValidation::ValidationController validationController)
+		public virtual Model LoadModel(DslModeling::Store store, string fileName, DslModeling::ISchemaResolver schemaResolver, DslValidation::ValidationController validationController, DslModeling::ISerializerLocator serializerLocator)
 		{
 			#region Check Parameters
 			if (store == null) 
 				throw new global::System.ArgumentNullException("store");
 			#endregion
 			
-			return this.LoadModel(new DslModeling::SerializationResult(), store.DefaultPartition, fileName, schemaResolver, validationController);
+			return this.LoadModel(new DslModeling::SerializationResult(), store.DefaultPartition, fileName, schemaResolver, validationController, serializerLocator);
 		}
 		
 		/// <summary>
@@ -436,15 +349,18 @@ namespace Altinoren.ActiveWriter
 		/// A ValidationController that will be used to do load-time validation (validations with validation category "Load"). If null
 		/// is passed, load-time validation will not be performed.
 		/// </param>
+		/// <param name="serializerLocator">
+		/// An ISerializerLocator that will be used to locate any additional domain model types required to load the model. Can be null.
+		/// </param>
 		/// <returns>The loaded Model instance.</returns>
-		public virtual Model LoadModel(DslModeling::SerializationResult serializationResult, DslModeling::Store store, string fileName, DslModeling::ISchemaResolver schemaResolver, DslValidation::ValidationController validationController)
+		public virtual Model LoadModel(DslModeling::SerializationResult serializationResult, DslModeling::Store store, string fileName, DslModeling::ISchemaResolver schemaResolver, DslValidation::ValidationController validationController, DslModeling::ISerializerLocator serializerLocator)
 		{
 			#region Check Parameters
 			if (store == null) 
 				throw new global::System.ArgumentNullException("store");
 			#endregion
 			
-			return this.LoadModel(serializationResult, store.DefaultPartition, fileName, schemaResolver, validationController);
+			return this.LoadModel(serializationResult, store.DefaultPartition, fileName, schemaResolver, validationController, serializerLocator);
 		}
 	
 		/// <summary>
@@ -461,8 +377,12 @@ namespace Altinoren.ActiveWriter
 		/// A ValidationController that will be used to do load-time validation (validations with validation category "Load"). If null
 		/// is passed, load-time validation will not be performed.
 		/// </param>
+		/// <param name="serializerLocator">
+		/// An ISerializerLocator that will be used to locate any additional domain model types required to load the model. Can be null.
+		/// </param>
 		/// <returns>The loaded Model instance.</returns>
-		public virtual Model LoadModel(DslModeling::SerializationResult serializationResult, DslModeling::Partition partition, string fileName, DslModeling::ISchemaResolver schemaResolver, DslValidation::ValidationController validationController)
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability","CA1506:AvoidExcessiveClassCoupling", Justification="Generated code")]
+		public virtual Model LoadModel(DslModeling::SerializationResult serializationResult, DslModeling::Partition partition, string fileName, DslModeling::ISchemaResolver schemaResolver, DslValidation::ValidationController validationController, DslModeling::ISerializerLocator serializerLocator)
 		{
 			#region Check Parameters
 			if (serializationResult == null)
@@ -480,35 +400,46 @@ namespace Altinoren.ActiveWriter
 			}
 			
 			Model modelRoot = null;
-			DslModeling::DomainClassXmlSerializer modelRootSerializer = this.Directory.GetSerializer(Model.DomainClassId);
+			DslModeling::DomainXmlSerializerDirectory directory = this.GetDirectory(partition.Store);
+			DslModeling::DomainClassXmlSerializer modelRootSerializer = directory.GetSerializer(Model.DomainClassId);
 			global::System.Diagnostics.Debug.Assert(modelRootSerializer != null, "Cannot find serializer for Model!");
 			if (modelRootSerializer != null)
 			{
 				using (global::System.IO.FileStream fileStream = global::System.IO.File.OpenRead(fileName))
 				{
-					using (DslModeling::Transaction t = partition.Store.TransactionManager.BeginTransaction("Load Model from " + fileName, true))
+					DslModeling::SerializationContext serializationContext = new DslModeling::SerializationContext(directory, fileStream.Name, serializationResult);
+					this.InitializeSerializationContext(partition, serializationContext, true);
+					DslModeling::TransactionContext transactionContext = new DslModeling::TransactionContext();
+					transactionContext.Add(DslModeling::SerializationContext.TransactionContextKey, serializationContext);
+					using (DslModeling::Transaction t = partition.Store.TransactionManager.BeginTransaction("Load Model from " + fileName, true, transactionContext))
 					{
-						DslModeling::SerializationContext serializationContext = new DslModeling::SerializationContext(this.Directory, fileStream.Name, serializationResult);
-						// Set up MonikerResolver for ActiveWriter.
-						this.SetupMonikerResolver(serializationContext, partition.Store);
 						// Ensure there is some content in the file.  Blank (or almost blank, to account for encoding header bytes, etc.)
 						// files will cause a new root element to be created and returned. 
 						if (fileStream.Length > 5)
 						{
-							global::System.Xml.XmlReaderSettings settings = new global::System.Xml.XmlReaderSettings();
 							try
 							{
+								global::System.Xml.XmlReaderSettings settings = ActiveWriterSerializationHelper.Instance.CreateXmlReaderSettings(serializationContext, false);
 								using (global::System.Xml.XmlReader reader = global::System.Xml.XmlReader.Create(fileStream, settings))
 								{
+									// Attempt to read the encoding.
+									reader.Read(); // Move to the first node - will be the XmlDeclaration if there is one.
+									global::System.Text.Encoding encoding;
+									if (this.TryGetEncoding(reader, out encoding))
+									{
+										serializationResult.Encoding = encoding;
+									}
+	
+									// Load any additional domain models that are required
+									DslModeling::SerializationUtilities.ResolveDomainModels(reader, serializerLocator, partition.Store);
+								
 									reader.MoveToContent();
+	
+									
 									modelRoot = modelRootSerializer.TryCreateInstance(serializationContext, reader, partition) as Model;
 									if (modelRoot != null && !serializationResult.Failed)
 									{
-										// Note: the actual instance we get back from TryCreateInstance() can be of a derived type of Model,
-										// so we need to find the correct serializer instance to deserialize the element properly.
-										DslModeling::DomainClassXmlSerializer instanceSerializer = this.Directory.GetSerializer(modelRoot.GetDomainClass().Id);
-										global::System.Diagnostics.Debug.Assert(instanceSerializer != null, "Cannot find serializer for " + modelRoot.GetDomainClass().Name + "!");
-										instanceSerializer.ReadRootElement(serializationContext, modelRoot, reader, schemaResolver);
+										this.ReadRootElement(serializationContext, modelRoot, reader, schemaResolver);
 									}
 								}
 	
@@ -540,9 +471,34 @@ namespace Altinoren.ActiveWriter
 							validationController.Validate(partition, DslValidation::ValidationCategories.Load);
 						}
 					}
+	
 				}
 			}
 			return modelRoot;
+		}
+	
+		/// <summary>
+		/// Attempts to return the encoding used by the reader.
+		/// </summary>
+		/// <remarks>
+		/// The reader will be positioned at the start of the document when calling this method.
+		/// </remarks>
+		protected virtual bool TryGetEncoding(global::System.Xml.XmlReader reader, out global::System.Text.Encoding encoding)
+		{
+			global::System.Diagnostics.Debug.Assert(reader.NodeType == System.Xml.XmlNodeType.XmlDeclaration, "reader should be at the XmlDeclaration node when calling this method");
+	
+			encoding = null;
+			// Attempt to read and parse the "encoding" attribute from the XML declaration node
+			if (reader.NodeType == global::System.Xml.XmlNodeType.XmlDeclaration)
+			{
+				string encodingName = reader.GetAttribute("encoding");
+				if (!string.IsNullOrWhiteSpace(encodingName))
+				{
+					encoding = global::System.Text.Encoding.GetEncoding(encodingName);
+					return true;
+				}
+			}
+			return false;
 		}
 	
 		/// <summary>
@@ -626,27 +582,24 @@ namespace Altinoren.ActiveWriter
 			global::System.Diagnostics.Debug.Assert(modelRoot != null);
 			global::System.Diagnostics.Debug.Assert(!serializationResult.Failed);
 			#endregion
+	
+			serializationResult.Encoding = encoding;
+	
+			DslModeling::DomainXmlSerializerDirectory directory = this.GetDirectory(modelRoot.Store);
+	
 			
 			global::System.IO.MemoryStream newFileContent = new global::System.IO.MemoryStream();
 			
-			DslModeling::DomainClassXmlSerializer modelRootSerializer = this.Directory.GetSerializer(modelRoot.GetDomainClass().Id);
-			global::System.Diagnostics.Debug.Assert(modelRootSerializer != null, "Cannot find serializer for " + modelRoot.GetDomainClass().Name + "!");
-			if (modelRootSerializer != null)
+			DslModeling::SerializationContext serializationContext = new DslModeling::SerializationContext(directory, fileName, serializationResult);
+			this.InitializeSerializationContext(modelRoot.Partition, serializationContext, false);
+			// MonikerResolver shouldn't be required in Save operation, so not calling SetupMonikerResolver() here.
+			serializationContext.WriteOptionalPropertiesWithDefaultValue = writeOptionalPropertiesWithDefaultValue;
+			global::System.Xml.XmlWriterSettings settings = ActiveWriterSerializationHelper.Instance.CreateXmlWriterSettings(serializationContext, false, encoding);
+			using (global::System.Xml.XmlWriter writer = global::System.Xml.XmlWriter.Create(newFileContent, settings))
 			{
-				DslModeling::SerializationContext serializationContext = new DslModeling::SerializationContext(this.Directory, fileName, serializationResult);
-				// MonikerResolver shouldn't be required in Save operation, so not calling SetupMonikerResolver() here.
-				serializationContext.WriteOptionalPropertiesWithDefaultValue = writeOptionalPropertiesWithDefaultValue;
-				global::System.Xml.XmlWriterSettings settings = new global::System.Xml.XmlWriterSettings();
-				settings.Indent = true;
-				settings.Encoding = encoding;
-				using (global::System.IO.StreamWriter streamWriter = new global::System.IO.StreamWriter(newFileContent, encoding))
-				{
-					using (global::System.Xml.XmlWriter writer = global::System.Xml.XmlWriter.Create(streamWriter, settings))
-					{
-						modelRootSerializer.WriteRootElement(serializationContext, modelRoot, writer);
-					}
-				}
+				this.WriteRootElement(serializationContext, modelRoot, writer);
 			}
+				
 			return newFileContent;
 		}
 		/// <summary>
@@ -668,27 +621,22 @@ namespace Altinoren.ActiveWriter
 			global::System.Diagnostics.Debug.Assert(diagram != null);
 			global::System.Diagnostics.Debug.Assert(!serializationResult.Failed);
 			#endregion
+	
+			DslModeling::DomainXmlSerializerDirectory directory = this.GetDirectory(diagram.Store);
+	
 			
 			global::System.IO.MemoryStream newFileContent = new global::System.IO.MemoryStream();
 			
-			DslModeling::DomainClassXmlSerializer diagramSerializer = this.Directory.GetSerializer(diagram.GetDomainClass().Id);
-			global::System.Diagnostics.Debug.Assert(diagramSerializer != null, "Cannot find serializer for " + diagram.GetDomainClass().Name + "!");
-			if (diagramSerializer != null)
+			DslModeling::SerializationContext serializationContext = new DslModeling::SerializationContext(directory, diagramFileName, serializationResult);
+			this.InitializeSerializationContext(diagram.Partition, serializationContext, false);
+			// MonikerResolver shouldn't be required in Save operation, so not calling SetupMonikerResolver() here.
+			serializationContext.WriteOptionalPropertiesWithDefaultValue = writeOptionalPropertiesWithDefaultValue;
+			global::System.Xml.XmlWriterSettings settings = ActiveWriterSerializationHelper.Instance.CreateXmlWriterSettings(serializationContext, true, encoding);
+			using (global::System.Xml.XmlWriter writer = global::System.Xml.XmlWriter.Create(newFileContent, settings))
 			{
-				DslModeling::SerializationContext serializationContext = new DslModeling::SerializationContext(this.Directory, diagramFileName, serializationResult);
-				// MonikerResolver shouldn't be required in Save operation, so not calling SetupMonikerResolver() here.
-				serializationContext.WriteOptionalPropertiesWithDefaultValue = writeOptionalPropertiesWithDefaultValue;
-				global::System.Xml.XmlWriterSettings settings = new global::System.Xml.XmlWriterSettings();
-				settings.Indent = true;
-				settings.Encoding = encoding;
-				using (global::System.IO.StreamWriter streamWriter = new global::System.IO.StreamWriter(newFileContent, encoding))
-				{
-					using (global::System.Xml.XmlWriter writer = global::System.Xml.XmlWriter.Create(streamWriter, settings))
-					{
-						diagramSerializer.WriteRootElement(serializationContext, diagram, writer);
-					}
-				}
+				this.WriteRootElement(serializationContext, diagram, writer);
 			}
+	
 			return newFileContent;
 		}
 	
@@ -715,10 +663,13 @@ namespace Altinoren.ActiveWriter
 		/// A ValidationController that will be used to do load-time validation (validations with validation category "Load"). If null
 		/// is passed, load-time validation will not be performed.
 		/// </param>
+		/// <param name="serializerLocator">
+		/// An ISerializerLocator that will be used to locate any additional domain model types required to load the model. Can be null.
+		/// </param>
 		/// <returns>The loaded Model instance.</returns>
-		public virtual Model LoadModelAndDiagram(DslModeling::Store store, string modelFileName, string diagramFileName, DslModeling::ISchemaResolver schemaResolver, DslValidation::ValidationController validationController)
+		public virtual Model LoadModelAndDiagram(DslModeling::Store store, string modelFileName, string diagramFileName, DslModeling::ISchemaResolver schemaResolver, DslValidation::ValidationController validationController, DslModeling::ISerializerLocator serializerLocator)
 		{
-			return this.LoadModelAndDiagram(new DslModeling::SerializationResult(), store, modelFileName, diagramFileName, schemaResolver, validationController);
+			return this.LoadModelAndDiagram(new DslModeling::SerializationResult(), store, modelFileName, diagramFileName, schemaResolver, validationController, serializerLocator);
 		}
 		
 		/// <summary>
@@ -736,15 +687,19 @@ namespace Altinoren.ActiveWriter
 		/// A ValidationController that will be used to do load-time validation (validations with validation category "Load"). If null
 		/// is passed, load-time validation will not be performed.
 		/// </param>
+		/// <param name="serializerLocator">
+		/// An ISerializerLocator that will be used to locate any additional domain model types required to load the model. Can be null.
+		/// </param>
 		/// <returns>The loaded Model instance.</returns>
-		public virtual Model LoadModelAndDiagram(DslModeling::SerializationResult serializationResult, DslModeling::Store store, string modelFileName, string diagramFileName, DslModeling::ISchemaResolver schemaResolver, DslValidation::ValidationController validationController)
+		public virtual Model LoadModelAndDiagram(DslModeling::SerializationResult serializationResult, DslModeling::Store store, string modelFileName, string diagramFileName, DslModeling::ISchemaResolver schemaResolver, DslValidation::ValidationController validationController, DslModeling::ISerializerLocator serializerLocator)
 		{
 			#region Check Parameters
 			if (store == null)
 				throw new global::System.ArgumentNullException("store");
 			#endregion
 			
-			return this.LoadModelAndDiagram(serializationResult, store.DefaultPartition, modelFileName, store.DefaultPartition, diagramFileName, schemaResolver, validationController);
+			DslModeling::Partition diagramPartition = new DslModeling::Partition(store);
+			return this.LoadModelAndDiagram(serializationResult, store.DefaultPartition, modelFileName, diagramPartition, diagramFileName, schemaResolver, validationController, serializerLocator);
 		}
 			
 		/// <summary>
@@ -763,9 +718,12 @@ namespace Altinoren.ActiveWriter
 		/// A ValidationController that will be used to do load-time validation (validations with validation category "Load"). If null
 		/// is passed, load-time validation will not be performed.
 		/// </param>
+		/// <param name="serializerLocator">
+		/// An ISerializerLocator that will be used to locate any additional domain model types required to load the model. Can be null.
+		/// </param>
 		/// <returns>The loaded Model instance.</returns>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]
-		public virtual Model LoadModelAndDiagram(DslModeling::SerializationResult serializationResult, DslModeling::Partition modelPartition, string modelFileName, DslModeling::Partition diagramPartition, string diagramFileName, DslModeling::ISchemaResolver schemaResolver, DslValidation::ValidationController validationController)
+		public virtual Model LoadModelAndDiagram(DslModeling::SerializationResult serializationResult, DslModeling::Partition modelPartition, string modelFileName, DslModeling::Partition diagramPartition, string diagramFileName, DslModeling::ISchemaResolver schemaResolver, DslValidation::ValidationController validationController, DslModeling::ISerializerLocator serializerLocator)
 		{
 			#region Check Parameters
 			if (serializationResult == null)
@@ -786,7 +744,7 @@ namespace Altinoren.ActiveWriter
 				throw new global::System.InvalidOperationException(ActiveWriterDomainModel.SingletonResourceManager.GetString("MissingTransaction"));
 			}
 	
-			modelRoot = this.LoadModel(serializationResult, modelPartition, modelFileName, schemaResolver, validationController);
+			modelRoot = this.LoadModel(serializationResult, modelPartition, modelFileName, schemaResolver, validationController, serializerLocator);
 	
 			if (serializationResult.Failed)
 			{
@@ -795,7 +753,8 @@ namespace Altinoren.ActiveWriter
 			}
 	
 			ActiveRecordMapping diagram = null;
-			DslModeling::DomainClassXmlSerializer diagramSerializer = this.Directory.GetSerializer(ActiveRecordMapping.DomainClassId);
+			DslModeling::DomainXmlSerializerDirectory directory = this.GetDirectory(diagramPartition.Store);
+			DslModeling::DomainClassXmlSerializer diagramSerializer = directory.GetSerializer(ActiveRecordMapping.DomainClassId);
 			global::System.Diagnostics.Debug.Assert(diagramSerializer != null, "Cannot find serializer for ActiveRecordMapping");
 			if (diagramSerializer != null)
 			{
@@ -808,17 +767,18 @@ namespace Altinoren.ActiveWriter
 				{
 					using (global::System.IO.FileStream fileStream = global::System.IO.File.OpenRead(diagramFileName))
 					{
-						DslModeling::SerializationContext serializationContext = new DslModeling::SerializationContext(this.Directory, fileStream.Name, serializationResult);
-						// Set up MonikerResolver for ActiveWriter.
-						this.SetupMonikerResolver(serializationContext, diagramPartition.Store);
+						DslModeling::SerializationContext serializationContext = new DslModeling::SerializationContext(directory, fileStream.Name, serializationResult);
+						this.InitializeSerializationContext(diagramPartition, serializationContext, true);
+						DslModeling::TransactionContext transactionContext = new DslModeling::TransactionContext();
+						transactionContext.Add(DslModeling::SerializationContext.TransactionContextKey, serializationContext);
 						
-						using (DslModeling::Transaction t = diagramPartition.Store.TransactionManager.BeginTransaction("LoadDiagram", true))
+						using (DslModeling::Transaction t = diagramPartition.Store.TransactionManager.BeginTransaction("LoadDiagram", true, transactionContext))
 						{
 							// Ensure there is some content in the file. Blank (or almost blank, to account for encoding header bytes, etc.)
 							// files will cause a new diagram to be created and returned 
 							if (fileStream.Length > 5)
 							{
-								global::System.Xml.XmlReaderSettings settings = new global::System.Xml.XmlReaderSettings();
+								global::System.Xml.XmlReaderSettings settings = ActiveWriterSerializationHelper.Instance.CreateXmlReaderSettings(serializationContext, false);
 								try
 								{
 									using (global::System.Xml.XmlReader reader = global::System.Xml.XmlReader.Create(fileStream, settings))
@@ -827,11 +787,7 @@ namespace Altinoren.ActiveWriter
 										diagram = diagramSerializer.TryCreateInstance(serializationContext, reader, diagramPartition) as ActiveRecordMapping;
 										if (diagram != null)
 										{
-											// Note: the actual instance we get back from TryCreateInstance() can be of a derived type of ActiveRecordMapping,
-											// so we need to find the correct serializer instance to deserialize the element properly.
-											DslModeling::DomainClassXmlSerializer instanceSerializer = this.Directory.GetSerializer(diagram.GetDomainClass().Id);
-											global::System.Diagnostics.Debug.Assert(instanceSerializer != null, "Cannot find serializer for " + diagram.GetDomainClass().Name + "!");
-											instanceSerializer.ReadRootElement(serializationContext, diagram, reader, schemaResolver);
+											this.ReadRootElement(serializationContext, diagram, reader, schemaResolver);
 										}
 									}
 								}
@@ -898,6 +854,7 @@ namespace Altinoren.ActiveWriter
 			ActiveRecordMapping diagram = new ActiveRecordMapping(diagramPartition);
 			return diagram;
 		}
+		
 	
 		/// <summary>
 		/// Saves the given diagram to the given file, with default encoding (UTF-8), and optional properties with default value will not
@@ -1057,12 +1014,260 @@ namespace Altinoren.ActiveWriter
 		}
 	
 		/// <summary>
+		/// Read an element from the root of XML.
+		/// </summary>
+		/// <param name="serializationContext">Serialization context.</param>
+		/// <param name="rootElement">In-memory element instance that will get the deserialized data.</param>
+		/// <param name="reader">XmlReader to read serialized data from.</param>
+		/// <param name="schemaResolver">An ISchemaResolver that allows the serializer to do schema validation on the root element (and everything inside it).</param>
+		protected virtual void ReadRootElement(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement rootElement, global::System.Xml.XmlReader reader, DslModeling::ISchemaResolver schemaResolver)
+		{
+			#region Check Parameters
+			global::System.Diagnostics.Debug.Assert(serializationContext != null);
+			if (serializationContext == null)
+				throw new global::System.ArgumentNullException("serializationContext");
+			global::System.Diagnostics.Debug.Assert(rootElement != null);
+			if (rootElement == null)
+				throw new global::System.ArgumentNullException("rootElement");
+			global::System.Diagnostics.Debug.Assert(reader != null);
+			if (reader == null)
+				throw new global::System.ArgumentNullException("reader");
+			#endregion
+	
+			DslModeling::DomainXmlSerializerDirectory directory = this.GetDirectory(rootElement.Store);
+	
+			DslModeling::DomainClassXmlSerializer rootSerializer = directory.GetSerializer(rootElement.GetDomainClass().Id);
+			global::System.Diagnostics.Debug.Assert(rootSerializer != null, "Cannot find serializer for " + rootElement.GetDomainClass().Name + "!");
+	
+			// Version check.
+			this.CheckVersion(serializationContext, reader);
+	
+			if (!serializationContext.Result.Failed)
+			{	
+				// Use a validating reader if possible
+				using (reader = TryCreateValidatingReader(schemaResolver, reader, serializationContext))
+				{
+					rootSerializer.Read(serializationContext, rootElement, reader);
+				}
+			}
+	
+		}
+		
+		/// <summary>
+		/// Write an element as the root of XML.
+		/// </summary>
+		/// <param name="serializationContext">Serialization context.</param>
+		/// <param name="rootElement">Root element instance that will be serialized.</param>
+		/// <param name="writer">XmlWriter to write serialized data to.</param>
+		public virtual void WriteRootElement(DslModeling::SerializationContext serializationContext, DslModeling::ModelElement rootElement, global::System.Xml.XmlWriter writer)
+		{
+			#region Check Parameters
+			global::System.Diagnostics.Debug.Assert(serializationContext != null);
+			if (serializationContext == null)
+				throw new global::System.ArgumentNullException("serializationContext");
+			global::System.Diagnostics.Debug.Assert(rootElement != null);
+			if (rootElement == null)
+				throw new global::System.ArgumentNullException("rootElement");
+			global::System.Diagnostics.Debug.Assert(writer != null);
+			if (writer == null)
+				throw new global::System.ArgumentNullException("writer");
+			#endregion
+	
+			DslModeling::DomainXmlSerializerDirectory directory = this.GetDirectory(rootElement.Store);
+	
+			DslModeling::DomainClassXmlSerializer rootSerializer = directory.GetSerializer(rootElement.GetDomainClass().Id);
+			global::System.Diagnostics.Debug.Assert(rootSerializer != null, "Cannot find serializer for " + rootElement.GetDomainClass().Name + "!");
+	
+			// Set up root element settings
+			DslModeling::RootElementSettings rootElementSettings = new DslModeling::RootElementSettings();
+			if (!(rootElement is DslDiagrams::Diagram))
+			{
+				// Only model has schema, diagram has no schema.
+				rootElementSettings.SchemaTargetNamespace = "http://schemas.microsoft.com/dsltools/ActiveWriter";
+			}
+			rootElementSettings.Version = new global::System.Version("10.0.0.1");
+	
+			// Carry out the normal serialization.
+			rootSerializer.Write(serializationContext, rootElement, writer, rootElementSettings);
+		}
+	
+		/// <summary>
+		/// Checks the version of the file being read.
+		/// </summary>
+		/// <param name="serializationContext">Serialization context.</param>
+		/// <param name="reader">Reader for the file being read. The reader is positioned at the open tag of the root element being read.</param>
+		protected virtual void CheckVersion(DslModeling::SerializationContext serializationContext, global::System.Xml.XmlReader reader)
+		{
+			#region Check Parameters
+			global::System.Diagnostics.Debug.Assert(serializationContext != null);
+			if (serializationContext == null)
+				throw new global::System.ArgumentNullException("serializationContext");
+			global::System.Diagnostics.Debug.Assert(reader != null);
+			if (reader == null)
+				throw new global::System.ArgumentNullException("reader");
+			#endregion
+	
+			global::System.Version expectedVersion = new global::System.Version("10.0.0.1");
+			string dslVersionStr = reader.GetAttribute("dslVersion");
+			if (dslVersionStr != null)
+			{
+				try
+				{
+					global::System.Version actualVersion = new global::System.Version(dslVersionStr);
+					if (actualVersion != expectedVersion)
+					{
+						ActiveWriterSerializationBehaviorSerializationMessages.VersionMismatch(serializationContext, reader, expectedVersion, actualVersion);
+					}
+				}
+				catch (global::System.ArgumentException)
+				{
+					ActiveWriterSerializationBehaviorSerializationMessages.InvalidPropertyValue(serializationContext, reader, "dslVersion", typeof(global::System.Version), dslVersionStr);
+				}
+				catch (global::System.FormatException)
+				{
+					ActiveWriterSerializationBehaviorSerializationMessages.InvalidPropertyValue(serializationContext, reader, "dslVersion", typeof(global::System.Version), dslVersionStr);
+				}
+				catch (global::System.OverflowException)
+				{
+					ActiveWriterSerializationBehaviorSerializationMessages.InvalidPropertyValue(serializationContext, reader, "dslVersion", typeof(global::System.Version), dslVersionStr);
+				}
+			}
+		}
+	
+	
+		/// <summary>
+		/// Attempts to return a validating XML reader
+		/// </summary>
+		/// <returns>If all of the schema for registered serializers and all of the schema referenced in the file can be resolved,
+		/// then a validating reader is returned. Otherwise, the supplied reader is returned.
+		/// The serialization context will contain warning messages for all schema that could not be resolved.</returns>
+		protected virtual global::System.Xml.XmlReader TryCreateValidatingReader(DslModeling::ISchemaResolver schemaResolver, global::System.Xml.XmlReader reader, DslModeling::SerializationContext serializationContext)
+		{
+			System.Diagnostics.Debug.Assert(serializationContext != null, "Serialization context should not be null");
+	
+			// Can't do anything without a schema resolver
+			if (schemaResolver == null)
+			{
+				return reader;
+			}
+			
+			global::System.Xml.Schema.XmlSchemaSet schemaSet = new global::System.Xml.Schema.XmlSchemaSet(reader.NameTable);
+	
+			// Combine the list of namespaces for models in the store with those referred to in the current node
+			System.Collections.Generic.IEnumerable<string> namespaces = serializationContext.Directory.Namespaces.Select(n => n.TargetNamespace);
+			namespaces = namespaces.Concat(DslModeling::SerializationUtilities.GetNamespacesFromCurrentNode(reader));		
+	
+			bool success = true;
+			foreach (string ns in namespaces.Distinct())
+			{
+				// Try to resolve all namespaces so warnings are shown for all missing namespaces
+				success = ResolveSchema(ns, schemaSet, schemaResolver, reader, serializationContext) & success;
+			}
+	
+			if (success && schemaSet.Count > 0)
+			{
+				global::System.Xml.XmlReaderSettings readerSettings = reader.Settings.Clone();
+				readerSettings.ConformanceLevel = global::System.Xml.ConformanceLevel.Auto;
+				readerSettings.ValidationType = global::System.Xml.ValidationType.Schema;
+				readerSettings.Schemas = schemaSet;
+				ActiveWriterSerializationBehaviorSchemaValidationCallback validationCallback = new ActiveWriterSerializationBehaviorSchemaValidationCallback(serializationContext);
+				readerSettings.ValidationEventHandler += new global::System.Xml.Schema.ValidationEventHandler(validationCallback.Handler);
+	
+	
+				// Wrap the given reader as a validating reader and carry out the normal deserialization.
+				global::System.Xml.XmlReader validatingReader = global::System.Xml.XmlReader.Create(reader, readerSettings);
+	
+				validationCallback.Reader = validatingReader;
+				return validatingReader;
+			}
+	
+			return reader;
+		}
+	
+		/// <summary>
+		/// Attempts to resolve the supplied schema namespace
+		/// </summary>
+		/// <remarks>If the schema can be resolved it is added to the supplied schema set. Otherwise, a 
+		/// warning will be written to serializationContext.
+		/// </remarks>
+		/// <returns>A flag indicating whether the schema was resolved or not</returns>
+		protected static bool ResolveSchema(string targetNamespace, global::System.Xml.Schema.XmlSchemaSet schemaSet, DslModeling::ISchemaResolver schemaResolver, global::System.Xml.XmlReader reader, DslModeling::SerializationContext serializationContext)
+		{
+			global::System.Collections.Generic.IList<string> schemas = schemaResolver.ResolveSchema(targetNamespace);
+			if (schemas != null && schemas.Count > 0)
+			{
+				if (schemas.Count > 1)
+				{
+					ActiveWriterSerializationBehaviorSerializationMessages.AmbiguousSchema(serializationContext, reader, targetNamespace, schemas[0]);
+				}
+				schemaSet.Add(targetNamespace, schemas[0]);
+				return true;
+			}
+	
+			ActiveWriterSerializationBehaviorSerializationMessages.NoSchema(serializationContext, reader, targetNamespace);
+			return false;
+		}
+	
+	
+		/// <summary>
+		/// A utility class to handle schema validation warning/error
+		/// </summary>
+		private sealed class ActiveWriterSerializationBehaviorSchemaValidationCallback
+		{
+			#region Member Variables
+			/// <summary>
+			/// SerializationContext to store schema validation warning/error.
+			/// </summary>
+			DslModeling::SerializationContext serializationContext;
+			/// <summary>
+			/// Reader that generates the schema warning/error.
+			/// </summary>
+			global::System.Xml.XmlReader reader;
+			#endregion
+	
+			#region Constructor
+			/// <summary>
+			/// Constructor
+			/// </summary>
+			/// <param name="serializationContext">SerializationContext to be used to store schema validation warning/error.</param>
+			internal ActiveWriterSerializationBehaviorSchemaValidationCallback(DslModeling::SerializationContext serializationContext)
+			{
+				global::System.Diagnostics.Debug.Assert(serializationContext != null);
+				this.serializationContext = serializationContext;
+			}
+			#endregion
+	
+			#region Accessor
+			/// <summary>
+			/// Sets the reader that generates the schema validation warning/error.
+			/// </summary>
+			internal global::System.Xml.XmlReader Reader
+			{
+				[global::System.Diagnostics.DebuggerStepThrough]
+				set { this.reader = value; }
+			}
+			#endregion
+	
+			#region Callback method
+			/// <summary>
+			/// Callback to handler schema validation warning/error.
+			/// </summary>
+			internal void Handler(object sender, global::System.Xml.Schema.ValidationEventArgs e)
+			{
+				global::System.Diagnostics.Debug.Assert(this.serializationContext != null);
+				if (this.serializationContext != null)
+					ActiveWriterSerializationBehaviorSerializationMessages.SchemaValidationError(this.serializationContext, this.reader, e.Message);
+			}
+			#endregion
+		}
+	
+		/// <summary>
 		/// Return the model in XML format
 		/// </summary>
-		/// <param name="modelRoot">ExampleModel instance to be saved.</param>
-		/// <param name="encoding">Encoding to use when saving the ExampleModel instance.</param>
+		/// <param name="modelRoot">Root instance to be saved.</param>
+		/// <param name="encoding">Encoding to use when saving the root instance.</param>
 		/// <returns>Model in XML form</returns>
-		public virtual string GetSerializedModelString(global::Altinoren.ActiveWriter.Model modelRoot, global::System.Text.Encoding encoding)
+		public virtual string GetSerializedModelString(global::Castle.ActiveWriter.Model modelRoot, global::System.Text.Encoding encoding)
 		{
 			string result = string.Empty;
 			if (modelRoot == null)
@@ -1095,83 +1300,12 @@ namespace Altinoren.ActiveWriter
 		
 	
 		#region Private/Helper Methods/Properties
-		/// <summary>
-		/// DomainXmlSerializerDirectory instance used by this ActiveWriterSerializationHelper class.
-		/// </summary>
-		private DslModeling::DomainXmlSerializerDirectory directory;
-		/// <summary>
-		/// DomainXmlSerializerDirectory instance used by this ActiveWriterSerializationHelper class.
-		/// </summary>
-		[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)] // Will trigger creation otherwise.
-		protected virtual DslModeling::DomainXmlSerializerDirectory Directory
-		{
-			[global::System.Diagnostics.DebuggerStepThrough]
-			get
-			{
-				if (this.directory == null)
-				{
-					this.directory = new DslModeling::DomainXmlSerializerDirectory();
-					directory.AddBehavior(DslDiagrams::CoreDesignSurfaceSerializationBehavior.Instance);
-					directory.AddBehavior(ActiveWriterSerializationBehavior.Instance);
-				}
-				return this.directory;
-			}
-		}
-		
-		/// <summary>
-		/// This method creates one SimpleMonikerResolver instance for each DomainModel used in serialization.
-		/// </summary>
-		/// <param name="store">Store on which moniker resolvers will be set up.</param>
-		internal protected virtual global::System.Collections.Generic.IDictionary<global::System.Guid, DslModeling::IMonikerResolver> GetMonikerResolvers(DslModeling::Store store)
-		{
-			#region Check Parameters
-			global::System.Diagnostics.Debug.Assert(store != null);
-			if (store == null)
-				throw new global::System.ArgumentNullException("store");
-			#endregion
 			
-			global::System.Collections.Generic.Dictionary<global::System.Guid, DslModeling::IMonikerResolver> result = new global::System.Collections.Generic.Dictionary<global::System.Guid, DslModeling::IMonikerResolver>();
-			result.Add(DslDiagrams::CoreDesignSurfaceDomainModel.DomainModelId, new DslDiagrams::CoreDesignSurfaceSerializationBehaviorMonikerResolver(store, this.Directory));
-			result.Add(ActiveWriterDomainModel.DomainModelId, new ActiveWriterSerializationBehaviorMonikerResolver(store, this.Directory));
-			return result;
-		}
-	
-		/// <summary>
-		/// Ensure that moniker resolvers are installed properly on the given store, so that deserialization can be carried out correctly.
-		/// </summary>
-		/// <param name="serializationContext">SerializationContext of the current operations.</param>
-		/// <param name="store">Store on which moniker resolvers will be set up.</param>
-		protected virtual void SetupMonikerResolver(DslModeling::SerializationContext serializationContext, DslModeling::Store store)
-		{
-			#region Check Parameters
-			global::System.Diagnostics.Debug.Assert(serializationContext != null);
-			if (serializationContext == null)
-				throw new global::System.ArgumentNullException("serializationContext");
-			global::System.Diagnostics.Debug.Assert(store != null);
-			if (store == null)
-				throw new global::System.ArgumentNullException("store");
-			#endregion
-	
-			global::System.Collections.Generic.IDictionary<global::System.Guid, DslModeling::IMonikerResolver> resolvers = this.GetMonikerResolvers(store);
-			foreach (global::System.Collections.Generic.KeyValuePair<global::System.Guid, DslModeling::IMonikerResolver> pair in resolvers)
-			{
-				DslModeling::IMonikerResolver existingMonikerResolver = store.FindMonikerResolver(pair.Key);
-				if (existingMonikerResolver == null)
-				{
-					existingMonikerResolver = pair.Value;
-					store.AddMonikerResolver(pair.Key, existingMonikerResolver);
-				}
-				DslModeling::SimpleMonikerResolver simpleMonikerResolver = existingMonikerResolver as DslModeling::SimpleMonikerResolver;
-				if (simpleMonikerResolver != null)
-					simpleMonikerResolver.SerializationContext = serializationContext;
-			}
-		}
-		
 		#region Class SerializationValidationObserver
 		/// <summary>
 		/// An utility class to collect validation messages during serialization, and store them in serialization result.
 		/// </summary>
-		private sealed class SerializationValidationObserver : DslValidation::ValidationMessageObserver, global::System.IDisposable
+		protected sealed class SerializationValidationObserver : DslValidation::ValidationMessageObserver, global::System.IDisposable
 		{
 			#region Member Variables
 			/// <summary>
@@ -1331,42 +1465,9 @@ namespace Altinoren.ActiveWriter
 		#endregion
 	}
 	
-	/// <summary>
-	/// Helper class for serializing and deserializing ActiveWriter models.
-	/// </summary>
-	public sealed partial class ActiveWriterSerializationHelper : ActiveWriterSerializationHelperBase
-	{
-		#region Constructor
-		/// <summary>
-		/// Private constructor to prevent direct instantiation.
-		/// </summary>
-		private ActiveWriterSerializationHelper() : base () { }
-		#endregion
-		
-		#region Singleton Instance
-		/// <summary>
-		/// Singleton instance.
-		/// </summary>
-		private static ActiveWriterSerializationHelper instance;
-		/// <summary>
-		/// Singleton instance.
-		/// </summary>
-		[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)] // Will trigger creation otherwise.
-		public static ActiveWriterSerializationHelper Instance
-		{
-			[global::System.Diagnostics.DebuggerStepThrough]
-			get
-			{
-				if (ActiveWriterSerializationHelper.instance == null)
-					ActiveWriterSerializationHelper.instance = new ActiveWriterSerializationHelper();
-				return ActiveWriterSerializationHelper.instance;
-			}
-		}
-		#endregion
-	}
 }
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	[DslValidation::ValidationState(DslValidation::ValidationState.Enabled)]
 	public partial class Model
@@ -1375,9 +1476,16 @@ namespace Altinoren.ActiveWriter
 		/// Check to make sure all elements in the model will have unambiguous monikers when serialized.
 		/// </summary>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Generated code.")]
-		[DslValidation::ValidationMethod(DslValidation::ValidationCategories.Load | DslValidation::ValidationCategories.Menu)]
+		[DslValidation::ValidationMethod(DslValidation::ValidationCategories.Load | DslValidation::ValidationCategories.Save | DslValidation::ValidationCategories.Menu)]
 		private void ValidateMonikerAmbiguity(DslValidation::ValidationContext context)
 		{
+			// Don't run this rule when deserializing - any ambiguous monikers will 
+			// already have stopped the file from loading.
+			if (this.Store.InSerializationTransaction)
+			{
+				return;
+			}
+		
 			global::System.Collections.Generic.IDictionary<global::System.Guid, DslModeling::IMonikerResolver> monikerResolvers = ActiveWriterSerializationHelper.Instance.GetMonikerResolvers(this.Store);
 			foreach (DslModeling::ModelElement element in this.Store.ElementDirectory.AllElements)
 			{
@@ -1413,9 +1521,9 @@ namespace Altinoren.ActiveWriter
 			// Clean up the created moniker resolvers after the check.
 			foreach (DslModeling::IMonikerResolver monikerResolver in monikerResolvers.Values)
 			{
-				DslModeling::SimpleMonikerResolver simpleMonikerResolver = monikerResolvers as DslModeling::SimpleMonikerResolver;
+				DslModeling::SimpleMonikerResolver simpleMonikerResolver = monikerResolver as DslModeling::SimpleMonikerResolver;
 				if (simpleMonikerResolver != null)
-					simpleMonikerResolver.Dispose();
+					simpleMonikerResolver.Reset();
 			}
 			monikerResolvers.Clear();
 		}

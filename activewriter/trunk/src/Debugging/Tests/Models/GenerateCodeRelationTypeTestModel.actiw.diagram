@@ -2,16 +2,16 @@
 <activeRecordMapping dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="GenerateCodeRelationTypeTestModel">
   <modelMoniker Id="077ec74d-6f0b-4af9-90a6-929ac5807fa1" />
   <nestedChildShapes>
-    <classShape Id="86a1a932-c4a2-47cd-8f22-825c4947c00f" absoluteBounds="2.375, 1, 1.5, 0.95169108072916675">
+    <classShape Id="86a1a932-c4a2-47cd-8f22-825c4947c00f" absoluteBounds="2.375, 1, 1.5, 0.88180582682291675">
       <modelClassMoniker name="/077ec74d-6f0b-4af9-90a6-929ac5807fa1/ModelClass1" />
       <nestedChildShapes>
-        <elementListCompartment Id="e1341890-9bbc-4a5a-8c92-23ca9db7ab43" absoluteBounds="2.3899999999999997, 1.4100000000000001, 1.4700000000000002, 0.44169108072916663" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="e1341890-9bbc-4a5a-8c92-23ca9db7ab43" absoluteBounds="2.3899999999999997, 1.4100000000000001, 1.4700000000000002, 0.37180582682291663" name="Properties" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="69a3e835-aaca-4068-b070-09071ce55851" absoluteBounds="5, 1, 1.5, 0.95169108072916675">
+    <classShape Id="69a3e835-aaca-4068-b070-09071ce55851" absoluteBounds="5, 1, 1.5, 0.88180582682291675">
       <modelClassMoniker name="/077ec74d-6f0b-4af9-90a6-929ac5807fa1/ModelClass2" />
       <nestedChildShapes>
-        <elementListCompartment Id="e74565a9-cf95-4dff-887e-1ce94530c36d" absoluteBounds="5.015, 1.4100000000000001, 1.4700000000000002, 0.44169108072916663" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="e74565a9-cf95-4dff-887e-1ce94530c36d" absoluteBounds="5.015, 1.4100000000000001, 1.4700000000000002, 0.37180582682291663" name="Properties" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <manyToOneConnector edgePoints="[(5 : 1.47584554036458); (3.875 : 1.47584554036458)]" fixedFrom="NotFixed" fixedTo="NotFixed">

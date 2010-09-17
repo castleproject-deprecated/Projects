@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
     public static class InheritablePropertyAccessExtensions
     {

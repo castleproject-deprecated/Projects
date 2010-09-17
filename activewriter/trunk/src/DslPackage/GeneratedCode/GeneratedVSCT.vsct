@@ -82,7 +82,7 @@
 </VisibilityConstraints>
 <Symbols>
   <GuidSymbol name="guidPkg" value="{9f4f10d0-81ad-4308-a398-ba7741f3f7e2}" />
-  <GuidSymbol name="guidCmdSet" value="{9928a048-76e7-4f47-8055-2b7da11b6f58}" >
+  <GuidSymbol name="guidCmdSet" value="{0e766536-f400-419b-ab04-a9ea12dcccba}" >
     <IDSymbol name="menuidContext" value="0x10000"/>
     <IDSymbol name="grpidContextMain" value="0x20000"/>
     <IDSymbol name="menuidExplorer" value="0x10001"/>

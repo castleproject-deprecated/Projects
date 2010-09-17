@@ -13,7 +13,7 @@ using DslModeling = global::Microsoft.VisualStudio.Modeling;
 using DslDiagrams = global::Microsoft.VisualStudio.Modeling.Diagrams;
 using DslValidation = global::Microsoft.VisualStudio.Modeling.Validation;
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Double-derived class to allow easier code customization.
@@ -50,6 +50,7 @@ namespace Altinoren.ActiveWriter
 			global::System.Collections.Generic.IList<global::System.ComponentModel.Design.MenuCommand> commands = base.GetMenuCommands();
 
 			global::System.ComponentModel.Design.MenuCommand menuCommand;
+
 			// Add command handler for the "view explorer" command in the top-level menu.
 			// We use a ContextBoundMenuCommand because the visibility of this command is
 			// based on whether or not the command context of our DSL editor is active. 
@@ -101,7 +102,7 @@ namespace Altinoren.ActiveWriter
 		{
 			if (this.CurrentActiveWriterDocData != null && this.CurrentActiveWriterDocData.Store != null)
 			{
-				this.CurrentActiveWriterDocData.ValidationController.Validate(this.CurrentActiveWriterDocData.Store, DslValidation::ValidationCategories.Menu);
+				this.CurrentActiveWriterDocData.ValidationController.Validate(this.CurrentActiveWriterDocData.GetAllElementsForValidation(), DslValidation::ValidationCategories.Menu);
 			}
 		}
 		
@@ -151,7 +152,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Helper method to retrieve the target root element for validation from the selected object.
 		/// </summary>
-		private static DslModeling::ModelElement GetValidationTarget(object selectedObject)
+		protected static DslModeling::ModelElement GetValidationTarget(object selectedObject)
 		{
 			DslModeling::ModelElement element = null;
 			DslDiagrams::PresentationElement presentation = selectedObject as DslDiagrams::PresentationElement;
@@ -173,7 +174,7 @@ namespace Altinoren.ActiveWriter
 		/// <summary>
 		/// Helper class for building the list of elements to validate when the Validate command is executed.
 		/// </summary>
-		private sealed class ValidateCommandVisitor : DslModeling::IElementVisitor
+		protected sealed class ValidateCommandVisitor : DslModeling::IElementVisitor
 		{
 			private System.Collections.Generic.IList<DslModeling::ModelElement> validationList;
  

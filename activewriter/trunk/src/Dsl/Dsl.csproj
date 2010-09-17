@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>10.0.10318</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BB8E2A67-D8BC-424F-82E9-EBD4AF951B3D}</ProjectGuid>
+    <ProjectGuid>{B6C654FF-6CEF-467C-B845-DD0F6CBB1267}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Altinoren.ActiveWriter</RootNamespace>
-    <AssemblyName>Altinoren.ActiveWriter.Dsl</AssemblyName>
+    <RootNamespace>Castle.ActiveWriter</RootNamespace>
+    <AssemblyName>Castle.ActiveWriter.Dsl</AssemblyName>
     <AssemblyOriginatorKeyFile>..\Key.snk</AssemblyOriginatorKeyFile>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <SignAssembly>true</SignAssembly>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <GacTargetOutput>true</GacTargetOutput>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <GacTargetOutput>false</GacTargetOutput>
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
@@ -23,7 +23,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET35</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -35,8 +35,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <!-- Project specific properties to control T4/DSL targets -->
+  <PropertyGroup>
+    <TransformOnBuild>True</TransformOnBuild>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\DSLTools\v2.1\Microsoft.DSLTools.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\DSLTools\v10.0\Microsoft.DSLTools.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -45,56 +49,46 @@
   </Target>
   -->
   <ItemGroup>
-    <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="envdte80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Microsoft.VisualStudio.Data, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Data.Interop, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio 9.0\Common7\IDE\Microsoft.VisualStudio.Data.Interop.dll</HintPath>
+    <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams.GraphObject, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86" />
-    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Shell, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="envdte80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.Data, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Data.Services, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk$(DslToolsVersionSuffix), Version=$(DslToolsAsmVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams$(DslToolsVersionSuffix), Version=$(DslToolsAsmVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams.GraphObject$(DslToolsVersionSuffix), Version=$(DslToolsAsmVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86" />
+    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Shell.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Microsoft.VisualStudio.Shell.9.0, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Shell.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Microsoft.VisualStudio.TextTemplating, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.TextTemplating$(T4VersionSuffix), Version=$(T4AsmVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces$(T4VersionSuffix), Version=$(T4AsmVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.Modeling.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
-    <Reference Include="VSLangProj, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="VSLangProj, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="GeneratedCode\SerializationHelper.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SerializationHelper.cs</LastGenOutput>
-    </None>
-    <Compile Include="ARValidators\AbstractValidation.cs" />
-    <Compile Include="ARValidators\ValidateCollectionNotEmpty.cs" />
-    <Compile Include="ARValidators\ValidateCreditCard.cs" />
-    <Compile Include="ARValidators\ValidateDate.cs" />
-    <Compile Include="ARValidators\ValidateDateTime.cs" />
-    <Compile Include="ARValidators\ValidateDecimal.cs" />
-    <Compile Include="ARValidators\ValidateDouble.cs" />
-    <Compile Include="ARValidators\ValidateEmail.cs" />
-    <Compile Include="ARValidators\ValidateGroupNotEmpty.cs" />
-    <Compile Include="ARValidators\ValidateInteger.cs" />
-    <Compile Include="ARValidators\ValidateLength.cs" />
-    <Compile Include="ARValidators\ValidateNonEmpty.cs" />
-    <Compile Include="ARValidators\ValidateRange.cs" />
-    <Compile Include="ARValidators\ValidateRegExp.cs" />
-    <Compile Include="ARValidators\ValidateSameAs.cs" />
-    <Compile Include="ARValidators\ValidateSet.cs" />
-    <Compile Include="ARValidators\ValidateSingle.cs" />
     <Compile Include="CalculatedProperties\ModelClass.cs" />
     <Compile Include="CodeDomExtensions\CodeArrayCreateExpressionExtensions.cs" />
     <Compile Include="CodeDomExtensions\CodeArrayIndexerExpressionExtensions.cs" />
@@ -160,71 +154,6 @@
     <Compile Include="GeneratedCodeExtensions\Connectors.cs" />
     <Compile Include="GeneratedCodeExtensions\InheritablePropertyAccessExtensions.cs" />
     <Compile Include="GeneratedCodeExtensions\InheritedRelationTypeExtensions.cs" />
-    <Compile Include="GeneratedCode\ConnectionBuilders.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ConnectionBuilders.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GeneratedCode\Connectors.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Connectors.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GeneratedCode\Diagram.cs">
-      <DependentUpon>Diagram.tt</DependentUpon>
-      <SubType>Code</SubType>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="GeneratedCode\DirectiveProcessor.cs">
-      <DependentUpon>DirectiveProcessor.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="GeneratedCode\DomainClasses.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DomainClasses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GeneratedCode\DomainRelationships.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DomainRelationships.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GeneratedCode\HelpKeywordHelper.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HelpKeywordHelper.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GeneratedCode\MultiplicityValidation.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MultiplicityValidation.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GeneratedCode\PropertiesGrid.cs">
-      <DependentUpon>PropertiesGrid.tt</DependentUpon>
-      <SubType>Code</SubType>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="GeneratedCode\SerializationHelper.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SerializationHelper.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GeneratedCode\Shapes.cs">
-      <DependentUpon>Shapes.tt</DependentUpon>
-      <SubType>Code</SubType>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="GeneratedCode\ToolboxHelper.cs">
-      <DependentUpon>ToolboxHelper.tt</DependentUpon>
-      <SubType>Code</SubType>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="NRefactory\AstBuilder\ExpressionBuilder.cs" />
     <Compile Include="NRefactory\AstBuilder\StatementBuilder.cs" />
     <Compile Include="NRefactory\Ast\AbstractNode.cs" />
@@ -302,17 +231,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="OptionsPage\IDialogPageProvider.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GeneratedCode\DomainModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DomainModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GeneratedCode\Serializer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Serializer.tt</DependentUpon>
-    </Compile>
     <Compile Include="Rules\ActiveWriterDomainModel.cs" />
     <Compile Include="Rules\Model.cs" />
     <Compile Include="Rules\ModelPropertyAddedRule.cs" />
@@ -347,8 +265,149 @@
     <Compile Include="Validation\ModelValidation.cs" />
     <Compile Include="Validation\NestedModelClassValidation.cs" />
     <Compile Include="Validation\ValidationHelper.cs" />
+    <None Include="GeneratedCode\SerializationHelper.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SerializationHelper.cs</LastGenOutput>
+    </None>
+    <Compile Include="ARValidators\AbstractValidation.cs" />
+    <Compile Include="ARValidators\ValidateCollectionNotEmpty.cs" />
+    <Compile Include="ARValidators\ValidateCreditCard.cs" />
+    <Compile Include="ARValidators\ValidateDate.cs" />
+    <Compile Include="ARValidators\ValidateDateTime.cs" />
+    <Compile Include="ARValidators\ValidateDecimal.cs" />
+    <Compile Include="ARValidators\ValidateDouble.cs" />
+    <Compile Include="ARValidators\ValidateEmail.cs" />
+    <Compile Include="ARValidators\ValidateGroupNotEmpty.cs" />
+    <Compile Include="ARValidators\ValidateInteger.cs" />
+    <Compile Include="ARValidators\ValidateLength.cs" />
+    <Compile Include="ARValidators\ValidateNonEmpty.cs" />
+    <Compile Include="ARValidators\ValidateRange.cs" />
+    <Compile Include="ARValidators\ValidateRegExp.cs" />
+    <Compile Include="ARValidators\ValidateSameAs.cs" />
+    <Compile Include="ARValidators\ValidateSet.cs" />
+    <Compile Include="ARValidators\ValidateSingle.cs" />
+    <Compile Include="GeneratedCode\ConnectionBuilders.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConnectionBuilders.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GeneratedCode\Connectors.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Connectors.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GeneratedCode\Diagram.cs">
+      <DependentUpon>Diagram.tt</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="GeneratedCode\DirectiveProcessor.cs">
+      <DependentUpon>DirectiveProcessor.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="GeneratedCode\DomainClasses.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DomainClasses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GeneratedCode\DomainRelationships.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DomainRelationships.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GeneratedCode\HelpKeywordHelper.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HelpKeywordHelper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GeneratedCode\MultiplicityValidation.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MultiplicityValidation.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GeneratedCode\PropertiesGrid.cs">
+      <DependentUpon>PropertiesGrid.tt</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="GeneratedCode\SerializationHelper.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SerializationHelper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GeneratedCode\Shapes.cs">
+      <DependentUpon>Shapes.tt</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="GeneratedCode\ToolboxHelper.cs">
+      <DependentUpon>ToolboxHelper.tt</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GeneratedCode\DomainModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DomainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GeneratedCode\Serializer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Serializer.tt</DependentUpon>
+    </Compile>
+    <None Include="NRefactory\Lexer\.svn\all-wcprops" />
+    <None Include="NRefactory\Lexer\.svn\entries" />
+    <None Include="NRefactory\Lexer\.svn\text-base\AbstractLexer.cs.svn-base" />
+    <None Include="NRefactory\Lexer\.svn\text-base\BuildKeywords.pl.svn-base" />
+    <None Include="NRefactory\Lexer\.svn\text-base\ILexer.cs.svn-base" />
+    <None Include="NRefactory\Lexer\.svn\text-base\LookupTable.cs.svn-base" />
+    <None Include="NRefactory\Lexer\.svn\text-base\Token.cs.svn-base" />
+    <None Include="NRefactory\Lexer\BuildKeywords.pl" />
+    <None Include="NRefactory\Lexer\CSharp\.svn\all-wcprops" />
+    <None Include="NRefactory\Lexer\CSharp\.svn\entries" />
+    <None Include="NRefactory\Lexer\CSharp\.svn\text-base\ConditionalCompilation.cs.svn-base" />
+    <None Include="NRefactory\Lexer\CSharp\.svn\text-base\KeywordList.txt.svn-base" />
+    <None Include="NRefactory\Lexer\CSharp\.svn\text-base\Keywords.cs.svn-base" />
+    <None Include="NRefactory\Lexer\CSharp\.svn\text-base\Lexer.cs.svn-base" />
+    <None Include="NRefactory\Lexer\CSharp\.svn\text-base\Tokens.cs.svn-base" />
+    <None Include="NRefactory\Lexer\Special\.svn\all-wcprops" />
+    <None Include="NRefactory\Lexer\Special\.svn\entries" />
+    <None Include="NRefactory\Lexer\Special\.svn\text-base\BlankLine.cs.svn-base" />
+    <None Include="NRefactory\Lexer\Special\.svn\text-base\Comment.cs.svn-base" />
+    <None Include="NRefactory\Lexer\Special\.svn\text-base\CommentType.cs.svn-base" />
+    <None Include="NRefactory\Lexer\Special\.svn\text-base\ISpecial.cs.svn-base" />
+    <None Include="NRefactory\Lexer\Special\.svn\text-base\PreProcessingDirective.cs.svn-base" />
+    <None Include="NRefactory\Lexer\Special\.svn\text-base\SpecialTracker.cs.svn-base" />
+    <None Include="NRefactory\Lexer\Special\.svn\text-base\TagComment.cs.svn-base" />
+    <None Include="NRefactory\Lexer\VBNet\.svn\all-wcprops" />
+    <None Include="NRefactory\Lexer\VBNet\.svn\entries" />
+    <None Include="NRefactory\Lexer\VBNet\.svn\text-base\KeywordList.txt.svn-base" />
+    <None Include="NRefactory\Lexer\VBNet\.svn\text-base\Keywords.cs.svn-base" />
+    <None Include="NRefactory\Lexer\VBNet\.svn\text-base\Lexer.cs.svn-base" />
+    <None Include="NRefactory\Lexer\VBNet\.svn\text-base\Tokens.cs.svn-base" />
+    <None Include="NRefactory\Parser\CSharp\cs.ATG" />
+    <None Include="NRefactory\Parser\Frames\Parser.frame" />
+    <None Include="NRefactory\Parser\Frames\Scanner.frame" />
+    <None Include="NRefactory\Parser\gen.bat" />
+    <None Include="NRefactory\Parser\VBNet\VBNET.ATG" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\AttributeTool.bmp" />
+    <Content Include="Resources\Class.ico" />
+    <Content Include="Resources\ClassTool.bmp" />
+    <Content Include="Resources\Connector121.bmp" />
+    <Content Include="Resources\Connector12n.bmp" />
+    <Content Include="Resources\ConnectorInheritance.bmp" />
+    <Content Include="Resources\Connectorm2n.bmp" />
+    <Content Include="Resources\ConnectorNested.bmp" />
+    <Content Include="Resources\key.png" />
+    <Content Include="Resources\validation.png" />
     <None Include="DslDefinition.dsl.diagram">
       <DependentUpon>DslDefinition.dsl</DependentUpon>
     </None>
@@ -405,11 +464,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ActiveWriterSchema.tt</DependentUpon>
-      <SubType>
-      </SubType>
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Resources\ConnectorInheritance.bmp" />
     <None Include="GeneratedCode\Serializer.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Serializer.cs</LastGenOutput>
@@ -424,7 +481,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+    <Service Include="{508349B6-6B84-4df5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GeneratedCode\DomainModelResx.resx">
@@ -433,32 +490,48 @@
       <DependentUpon>DomainModelResx.tt</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\PropertyValidationEditorForm.resx">
+      <DependentUpon>PropertyValidationEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <StartProgram>$(DevEnvDir)\devenv.exe</StartProgram>
     <StartAction>Program</StartAction>
-    <StartArguments>/ranu /rootsuffix Exp /DesignTimeRun "..\..\..\Debugging\Debugging.sln"</StartArguments>
+    <StartArguments>/rootsuffix Exp "..\..\..\Debugging\Debugging.sln"</StartArguments>
   </PropertyGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CodeAnalysisDictionary.xml">
       <Link>CodeAnalysisDictionary.xml</Link>
     </CodeAnalysisDictionary>
-    <EmbeddedResource Include="Resources\AttributeTool.bmp" />
-    <EmbeddedResource Include="Resources\Class.ico" />
-    <EmbeddedResource Include="Resources\ClassTool.bmp" />
-    <EmbeddedResource Include="Resources\Connector121.bmp" />
-    <EmbeddedResource Include="Resources\Connector12n.bmp" />
-    <EmbeddedResource Include="Resources\Connectorm2n.bmp" />
-    <EmbeddedResource Include="Resources\ConnectorNested.bmp" />
-    <EmbeddedResource Include="Resources\ExampleConnectorToolBitmap.bmp" />
-    <EmbeddedResource Include="Resources\ExampleShapeToolBitmap.bmp" />
-    <EmbeddedResource Include="Resources\key.png" />
-    <EmbeddedResource Include="Resources\validation.png" />
+    <Content Include="NRefactory\Lexer\CSharp\KeywordList.txt" />
+    <Content Include="NRefactory\Lexer\VBNet\KeywordList.txt" />
+    <Content Include="NRefactory\Parser\Frames\SharpCoco.exe" />
+    <Content Include="NRefactory\version.txt" />
+    <Content Include="Resources\ExampleConnectorToolBitmap.bmp" />
+    <Content Include="Resources\ExampleShapeToolBitmap.bmp" />
     <EmbeddedResource Include="Resources\ConnectorSourceSearch.cur" />
     <EmbeddedResource Include="Resources\ConnectorTargetSearch.cur" />
-    <EmbeddedResource Include="UIEditors\PropertyValidationEditorForm.resx">
-      <DependentUpon>PropertyValidationEditorForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="NRefactory\Lexer\.svn\prop-base\" />
+    <Folder Include="NRefactory\Lexer\.svn\props\" />
+    <Folder Include="NRefactory\Lexer\.svn\tmp\prop-base\" />
+    <Folder Include="NRefactory\Lexer\.svn\tmp\props\" />
+    <Folder Include="NRefactory\Lexer\.svn\tmp\text-base\" />
+    <Folder Include="NRefactory\Lexer\CSharp\.svn\prop-base\" />
+    <Folder Include="NRefactory\Lexer\CSharp\.svn\props\" />
+    <Folder Include="NRefactory\Lexer\CSharp\.svn\tmp\prop-base\" />
+    <Folder Include="NRefactory\Lexer\CSharp\.svn\tmp\props\" />
+    <Folder Include="NRefactory\Lexer\CSharp\.svn\tmp\text-base\" />
+    <Folder Include="NRefactory\Lexer\Special\.svn\prop-base\" />
+    <Folder Include="NRefactory\Lexer\Special\.svn\props\" />
+    <Folder Include="NRefactory\Lexer\Special\.svn\tmp\prop-base\" />
+    <Folder Include="NRefactory\Lexer\Special\.svn\tmp\props\" />
+    <Folder Include="NRefactory\Lexer\Special\.svn\tmp\text-base\" />
+    <Folder Include="NRefactory\Lexer\VBNet\.svn\prop-base\" />
+    <Folder Include="NRefactory\Lexer\VBNet\.svn\props\" />
+    <Folder Include="NRefactory\Lexer\VBNet\.svn\tmp\prop-base\" />
+    <Folder Include="NRefactory\Lexer\VBNet\.svn\tmp\props\" />
+    <Folder Include="NRefactory\Lexer\VBNet\.svn\tmp\text-base\" />
   </ItemGroup>
 </Project>

@@ -15,8 +15,8 @@ using System.Runtime.ConstrainedExecution;
 //
 [assembly: AssemblyTitle(@"")]
 [assembly: AssemblyDescription(@"")]
-[assembly: AssemblyConfiguration("Preview")]
-[assembly: AssemblyCompany(@"altinoren.com")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany(@"Castle")]
 [assembly: AssemblyProduct(@"ActiveWriter")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
@@ -34,7 +34,8 @@ using System.Runtime.ConstrainedExecution;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion(@"1.0.0.0")]
+[assembly: AssemblyVersion("1.2010.0.1")]
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
 [assembly: ReliabilityContract(Consistency.MayCorruptProcess, Cer.None)]
+[assembly: AssemblyFileVersionAttribute("1.2010.0.1")]

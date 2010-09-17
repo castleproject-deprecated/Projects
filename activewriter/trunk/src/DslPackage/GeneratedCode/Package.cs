@@ -11,19 +11,75 @@ using VSShellInterop = global::Microsoft.VisualStudio.Shell.Interop;
 using VSShell = global::Microsoft.VisualStudio.Shell;
 using DslShell = global::Microsoft.VisualStudio.Modeling.Shell;
 using DslDesign = global::Microsoft.VisualStudio.Modeling.Design;
+using DslModeling = global::Microsoft.VisualStudio.Modeling;
 using VSTextTemplatingHost = global::Microsoft.VisualStudio.TextTemplating.VSHost;
+using System;
+using System.Diagnostics;
+using System.Drawing.Design;
+using System.Linq;
+using System.Windows.Forms;
 	
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// This class implements the VS package that integrates this DSL into Visual Studio.
 	/// </summary>
-	[VSShell::DefaultRegistryRoot("Software\\Microsoft\\VisualStudio\\9.0")]
+	[VSShell::DefaultRegistryRoot("Software\\Microsoft\\VisualStudio\\10.0")]
 	[VSShell::PackageRegistration(RegisterUsing = VSShell::RegistrationMethod.Assembly, UseManagedResourcesOnly = true)]
 	[VSShell::ProvideToolWindow(typeof(ActiveWriterExplorerToolWindow), MultiInstances = false, Style = VSShell::VsDockStyle.Tabbed, Orientation = VSShell::ToolWindowOrientation.Right, Window = "{3AE79031-E1BC-11D0-8F78-00A0C9110057}")]
 	[VSShell::ProvideToolWindowVisibility(typeof(ActiveWriterExplorerToolWindow), Constants.ActiveWriterEditorFactoryId)]
+	[VSShell::ProvideStaticToolboxGroup("@ActiveWriterToolboxTab;Castle.ActiveWriter.Dsl.dll", "Castle.ActiveWriter.ActiveWriterToolboxTab")]
+	[VSShell::ProvideStaticToolboxItem("Castle.ActiveWriter.ActiveWriterToolboxTab",
+					"@ClassToolboxItem;Castle.ActiveWriter.Dsl.dll", 
+					"Castle.ActiveWriter.ClassToolboxItem", 
+					"CF_TOOLBOXITEMCONTAINER,CF_TOOLBOXITEMCONTAINER_HASH,CF_TOOLBOXITEMCONTAINER_CONTENTS", 
+					"CreateClassF1Keyword", 
+					"@ClassToolboxBitmap;Castle.ActiveWriter.Dsl.dll", 
+					0xff00ff)]
+	[VSShell::ProvideStaticToolboxItem("Castle.ActiveWriter.ActiveWriterToolboxTab",
+					"@ManyToOneRelationshipToolboxItem;Castle.ActiveWriter.Dsl.dll", 
+					"Castle.ActiveWriter.ManyToOneRelationshipToolboxItem", 
+					"CF_TOOLBOXITEMCONTAINER,CF_TOOLBOXITEMCONTAINER_HASH,CF_TOOLBOXITEMCONTAINER_CONTENTS", 
+					"ConnectRelationF1Keyword", 
+					"@ManyToOneRelationshipToolboxBitmap;Castle.ActiveWriter.Dsl.dll", 
+					0xff00ff)]
+	[VSShell::ProvideStaticToolboxItem("Castle.ActiveWriter.ActiveWriterToolboxTab",
+					"@ManyToManyRelationshipToolboxItem;Castle.ActiveWriter.Dsl.dll", 
+					"Castle.ActiveWriter.ManyToManyRelationshipToolboxItem", 
+					"CF_TOOLBOXITEMCONTAINER,CF_TOOLBOXITEMCONTAINER_HASH,CF_TOOLBOXITEMCONTAINER_CONTENTS", 
+					"ManyToManyRelationship", 
+					"@ManyToManyRelationshipToolboxBitmap;Castle.ActiveWriter.Dsl.dll", 
+					0xff00ff)]
+	[VSShell::ProvideStaticToolboxItem("Castle.ActiveWriter.ActiveWriterToolboxTab",
+					"@OneToOneRelationshipToolboxItem;Castle.ActiveWriter.Dsl.dll", 
+					"Castle.ActiveWriter.OneToOneRelationshipToolboxItem", 
+					"CF_TOOLBOXITEMCONTAINER,CF_TOOLBOXITEMCONTAINER_HASH,CF_TOOLBOXITEMCONTAINER_CONTENTS", 
+					"OneToOneRelationship", 
+					"@OneToOneRelationshipToolboxBitmap;Castle.ActiveWriter.Dsl.dll", 
+					0xff00ff)]
+	[VSShell::ProvideStaticToolboxItem("Castle.ActiveWriter.ActiveWriterToolboxTab",
+					"@NestedClassToolboxItem;Castle.ActiveWriter.Dsl.dll", 
+					"Castle.ActiveWriter.NestedClassToolboxItem", 
+					"CF_TOOLBOXITEMCONTAINER,CF_TOOLBOXITEMCONTAINER_HASH,CF_TOOLBOXITEMCONTAINER_CONTENTS", 
+					"NestedClassF1Keyword", 
+					"@NestedClassToolboxBitmap;Castle.ActiveWriter.Dsl.dll", 
+					0xff00ff)]
+	[VSShell::ProvideStaticToolboxItem("Castle.ActiveWriter.ActiveWriterToolboxTab",
+					"@NestedRelationshipToolboxItem;Castle.ActiveWriter.Dsl.dll", 
+					"Castle.ActiveWriter.NestedRelationshipToolboxItem", 
+					"CF_TOOLBOXITEMCONTAINER,CF_TOOLBOXITEMCONTAINER_HASH,CF_TOOLBOXITEMCONTAINER_CONTENTS", 
+					"NestedRelationship", 
+					"@NestedRelationshipToolboxBitmap;Castle.ActiveWriter.Dsl.dll", 
+					0xff00ff)]
+	[VSShell::ProvideStaticToolboxItem("Castle.ActiveWriter.ActiveWriterToolboxTab",
+					"@InheritanceRelationshipToolboxItem;Castle.ActiveWriter.Dsl.dll", 
+					"Castle.ActiveWriter.InheritanceRelationshipToolboxItem", 
+					"CF_TOOLBOXITEMCONTAINER,CF_TOOLBOXITEMCONTAINER_HASH,CF_TOOLBOXITEMCONTAINER_CONTENTS", 
+					"InheritanceRelationship", 
+					"@InheritanceRelationshipToolboxBitmap;Castle.ActiveWriter.Dsl.dll", 
+					0xff00ff)]
 	[VSShell::ProvideEditorFactory(typeof(ActiveWriterEditorFactory), 103, TrustLevel = VSShellInterop::__VSEDITORTRUSTLEVEL.ETL_AlwaysTrusted)]
-	[VSShell::ProvideEditorExtension(typeof(ActiveWriterEditorFactory), "." + Constants.DesignerFileExtension, 32)]
+	[VSShell::ProvideEditorExtension(typeof(ActiveWriterEditorFactory), "." + Constants.DesignerFileExtension, 50)]
 	[DslShell::ProvideRelatedFile("." + Constants.DesignerFileExtension, Constants.DefaultDiagramExtension,
 		ProjectSystem = DslShell::ProvideRelatedFileAttribute.CSharpProjectGuid,
 		FileOptions = DslShell::RelatedFileType.FileName)]
@@ -32,8 +88,12 @@ namespace Altinoren.ActiveWriter
 		FileOptions = DslShell::RelatedFileType.FileName)]
 	[DslShell::RegisterAsDslToolsEditor]
 	[global::System.Runtime.InteropServices.ComVisible(true)]
+	[DslShell::ProvideBindingPath]
+	[DslShell::ProvideXmlEditorChooserBlockSxSWithXmlEditor(@"ActiveWriter", typeof(ActiveWriterEditorFactory))]
 	internal abstract partial class ActiveWriterPackageBase : DslShell::ModelingPackage
 	{
+		protected global::Castle.ActiveWriter.ActiveWriterToolboxHelper toolboxHelper;	
+		
 		/// <summary>
 		/// Initialization method called by the package base class when this package is loaded.
 		/// </summary>
@@ -43,6 +103,9 @@ namespace Altinoren.ActiveWriter
 
 			// Register the editor factory used to create the DSL editor.
 			this.RegisterEditorFactory(new ActiveWriterEditorFactory(this));
+			
+			// Initialize the toolbox helper
+			toolboxHelper = new global::Castle.ActiveWriter.ActiveWriterToolboxHelper(this);
 
 			// Create the command set that handles menu commands provided by this package.
 			ActiveWriterCommandSet commandSet = new ActiveWriterCommandSet(this);
@@ -51,24 +114,28 @@ namespace Altinoren.ActiveWriter
 			// Register the model explorer tool window for this DSL.
 			this.AddToolWindow(typeof(ActiveWriterExplorerToolWindow));
 
-			if (this.DesignTimeRunMode)
-			{
-				// Toolbar registration doesn't work well under design run mode as the toolbox needs to be reset
-				// Instead we'll dynamically zap and recreate our toolbox every time
-				// Regular users of the finished tool will get the toolbox setup in the perfectly normal way
-				this.SetupDynamicToolbox();
-			}
+			// Initialize Extension Registars
+			// this is a partial method call
+			this.InitializeExtensions();
+
+			// Add dynamic toolbox items
+			this.SetupDynamicToolbox();
 		}
+
+		/// <summary>
+		/// Partial method to initialize ExtensionRegistrars (if any) in the DslPackage
+		/// </summary>
+		partial void InitializeExtensions();
 		
 		/// <summary>
-		/// Retrieves the toolbox items used by this DSL-based editor.
+		/// Returns any dynamic tool items for the designer
 		/// </summary>
-		[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals")]
+		/// <remarks>The default implementation is to return the list of items from the generated toolbox helper.</remarks>
 		protected override global::System.Collections.Generic.IList<DslDesign::ModelingToolboxItem> CreateToolboxItems()
 		{
-			global::Altinoren.ActiveWriter.ActiveWriterToolboxHelper toolboxHelper = new global::Altinoren.ActiveWriter.ActiveWriterToolboxHelper(this);
 			try
 			{
+				Debug.Assert(toolboxHelper != null, "Toolbox helper is not initialized");
 				return toolboxHelper.CreateToolboxItems();
 			}
 			catch(global::System.Exception e)
@@ -77,12 +144,29 @@ namespace Altinoren.ActiveWriter
 				throw;
 			}
 		}
+		
+		
+		/// <summary>
+		/// Given a toolbox item "unique ID" and a data format identifier, returns the content of
+		/// the data format. 
+		/// </summary>
+		/// <param name="itemId">The unique ToolboxItem to retrieve data for</param>
+		/// <param name="format">The desired format of the resulting data</param>
+		protected override object GetToolboxItemData(string itemId, DataFormats.Format format)
+		{
+			Debug.Assert(toolboxHelper != null, "Toolbox helper is not initialized");
+		
+			// Retrieve the specified ToolboxItem from the DSL
+			return toolboxHelper.GetToolboxItemData(itemId, format);
+		}
 	}
+
 }
+
 //
 // Package attributes which may need to change are placed on the partial class below, rather than in the main include file.
 //
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	using CustomTool;
 	using Microsoft.VisualStudio.Shell;
@@ -91,25 +175,25 @@ namespace Altinoren.ActiveWriter
 	/// <summary>
 	/// Double-derived class to allow easier code customization.
 	/// </summary>
-	[ProvideToolWindow(typeof(Altinoren.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow), MultiInstances = false, Style = VSShell::VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Bottom)]
-	[ProvideToolWindowVisibility(typeof(Altinoren.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow), Constants.ActiveWriterEditorFactoryId )]
-	[InstalledProductRegistration(false, "#101", "#110", "1.0", IconResourceID = 201)]
+	[ProvideToolWindow(typeof(Castle.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow), MultiInstances = false, Style = VSShell::VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Bottom)]
+	[ProvideToolWindowVisibility(typeof(Castle.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow), Constants.ActiveWriterEditorFactoryId )]
+	[InstalledProductRegistration("#101", "#110", "1.0", IconResourceID = 201)]
     [ProvideLoadKey("Standard", "1.0", Constants.ProductName, Constants.CompanyName, 1)]
-    [ProvideCodeGenerator(typeof(ActiveWriterTemplatedCodeGenerator), "ActiveWriterCodeGenerator", "Altinoren ActiveWriter code generator for .actiw files", true, ProjectSystem = ProvideCodeGeneratorAttribute.CSharpProjectGuid)]
-    [ProvideCodeGenerator(typeof(ActiveWriterTemplatedCodeGenerator), "ActiveWriterCodeGenerator", "Altinoren ActiveWriter code generator for .actiw files", true, ProjectSystem = ProvideCodeGeneratorAttribute.VisualBasicProjectGuid)]
-    [ProvideOptionPage(typeof(ActiveWriterOptions), Altinoren.ActiveWriter.Common.OptionPageCategory, Altinoren.ActiveWriter.Common.OptionPageSubCategory, 101, 120, true)]
-    [ProvideProfileAttribute(typeof(ActiveWriterOptions), Altinoren.ActiveWriter.Common.OptionPageCategory, Altinoren.ActiveWriter.Common.OptionPageSubCategory, 101, 120, true)]
+    [ProvideCodeGenerator(typeof(ActiveWriterTemplatedCodeGenerator), "ActiveWriterCodeGenerator", "Castle ActiveWriter code generator for .actiw files", true, ProjectSystem = ProvideCodeGeneratorAttribute.CSharpProjectGuid)]
+    [ProvideCodeGenerator(typeof(ActiveWriterTemplatedCodeGenerator), "ActiveWriterCodeGenerator", "Castle ActiveWriter code generator for .actiw files", true, ProjectSystem = ProvideCodeGeneratorAttribute.VisualBasicProjectGuid)]
+    [ProvideOptionPage(typeof(ActiveWriterOptions), Castle.ActiveWriter.Common.OptionPageCategory, Castle.ActiveWriter.Common.OptionPageSubCategory, 101, 120, true)]
+    [ProvideProfileAttribute(typeof(ActiveWriterOptions), Castle.ActiveWriter.Common.OptionPageCategory, Castle.ActiveWriter.Common.OptionPageSubCategory, 101, 120, true)]
 	[VSShell::ProvideMenuResource("1000.ctmenu", 4)]
 	[VSShell::ProvideToolboxItems(1)]
-	[VSTextTemplatingHost::ProvideDirectiveProcessor(typeof(global::Altinoren.ActiveWriter.ActiveWriterDirectiveProcessor), global::Altinoren.ActiveWriter.ActiveWriterDirectiveProcessor.ActiveWriterDirectiveProcessorName, "A directive processor that provides access to ActiveWriter files")]
+	[VSTextTemplatingHost::ProvideDirectiveProcessor(typeof(global::Castle.ActiveWriter.ActiveWriterDirectiveProcessor), global::Castle.ActiveWriter.ActiveWriterDirectiveProcessor.ActiveWriterDirectiveProcessorName, "A directive processor that provides access to ActiveWriter files")]
 	[global::System.Runtime.InteropServices.Guid(Constants.ActiveWriterPackageId)]
-	internal sealed partial class ActiveWriterPackage : ActiveWriterPackageBase, Altinoren.ActiveWriter.IDialogPageProvider
+	internal sealed partial class ActiveWriterPackage : ActiveWriterPackageBase, Castle.ActiveWriter.IDialogPageProvider
 	{
 		protected override void Initialize()
 		{
 			base.Initialize();
 			
-			this.AddToolWindow(typeof(Altinoren.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow));
+			this.AddToolWindow(typeof(Castle.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow));
 		}
 		
 		public DialogPage GetDialogPage<T>()

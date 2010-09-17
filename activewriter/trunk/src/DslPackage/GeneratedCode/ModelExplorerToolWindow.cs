@@ -9,7 +9,7 @@
 using DslModeling = global::Microsoft.VisualStudio.Modeling;
 using DslShell = global::Microsoft.VisualStudio.Modeling.Shell;
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Double-derived class to allow easier code customization.
@@ -47,7 +47,7 @@ namespace Altinoren.ActiveWriter
 		{
 			get
 			{
-				global::System.Resources.ResourceManager resourceManager = global::Altinoren.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager;
+				global::System.Resources.ResourceManager resourceManager = global::Castle.ActiveWriter.ActiveWriterDomainModel.SingletonResourceManager;
 				return resourceManager.GetString("ModelExplorerTitle");
 			}
 		}
@@ -91,12 +91,12 @@ namespace Altinoren.ActiveWriter
 		{
 			base.OnSelectionChanged(e);
 
-			if(global::Altinoren.ActiveWriter.ActiveWriterHelpKeywordHelper.Instance != null)
+			if(global::Castle.ActiveWriter.ActiveWriterHelpKeywordHelper.Instance != null)
 			{
 				DslModeling::ModelElement selectedElement = this.PrimarySelection as DslModeling::ModelElement;
 				if(selectedElement != null)
 				{
-					string f1Keyword = global::Altinoren.ActiveWriter.ActiveWriterHelpKeywordHelper.Instance.GetHelpKeyword(selectedElement);
+					string f1Keyword = global::Castle.ActiveWriter.ActiveWriterHelpKeywordHelper.Instance.GetHelpKeyword(selectedElement);
 					if (!string.IsNullOrEmpty(f1Keyword) && this.SelectionHelpService != null)
 					{
 						this.SelectionHelpService.AddContextAttribute(string.Empty, f1Keyword, global::System.ComponentModel.Design.HelpKeywordType.F1Keyword);

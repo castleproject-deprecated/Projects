@@ -3,7 +3,7 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 
-namespace Altinoren.ActiveWriter.CodeDomExtensions
+namespace Castle.ActiveWriter.CodeDomExtensions
 {
     public static class IDictionaryExtensions
     {

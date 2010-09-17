@@ -1,4 +1,4 @@
-namespace Altinoren.ActiveWriter.UIEditors
+namespace Castle.ActiveWriter.UIEditors
 {
 	using System;
 	using System.Collections;

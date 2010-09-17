@@ -1,24 +1,21 @@
 <#
 /***************************************************************************
-Copyright 2006 Gokhan Altinoren - http://altinoren.com/
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+         Copyright (c) Microsoft Corporation, All rights reserved.             
+    This code sample is provided "AS IS" without warranty of any kind, 
+    it is not recommended for use in a production environment.
 ***************************************************************************/
 #>
 <#@ Dsl processor="DslDirectiveProcessor" requires="fileName='..\..\Dsl\DslDefinition.dsl'" #>
+<#
+	//DSL assembly name - used for toolbox item registration. 
+	//This value is initially set to the default AssemblyName of the Dsl.csproj 
+	//If you update the DSL Assembly name, please update the following string value to the new name.
+	//Failure to do so may result in your Toolbox items not appearing correctly.
+	string dslAssembly = "Castle.ActiveWriter.Dsl.dll";
+#>
 <#@ include file="DslPackage\Package.tt" #>
 <#
-	string directiveName = "ActiveWriter";
+	string directiveName = this.Dsl.Name;
 #>
 //
 // Package attributes which may need to change are placed on the partial class below, rather than in the main include file.
@@ -32,25 +29,25 @@ namespace <#= CodeGenerationUtilities.GetPackageNamespace(this.Dsl) #>
 	/// <summary>
 	/// Double-derived class to allow easier code customization.
 	/// </summary>
-	[ProvideToolWindow(typeof(Altinoren.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow), MultiInstances = false, Style = VSShell::VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Bottom)]
-	[ProvideToolWindowVisibility(typeof(Altinoren.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow), Constants.ActiveWriterEditorFactoryId )]
-	[InstalledProductRegistration(false, "#101", "#110", "1.0", IconResourceID = 201)]
+	[ProvideToolWindow(typeof(Castle.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow), MultiInstances = false, Style = VSShell::VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Bottom)]
+	[ProvideToolWindowVisibility(typeof(Castle.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow), Constants.ActiveWriterEditorFactoryId )]
+	[InstalledProductRegistration("#101", "#110", "1.0", IconResourceID = 201)]
     [ProvideLoadKey("Standard", "1.0", Constants.ProductName, Constants.CompanyName, 1)]
-    [ProvideCodeGenerator(typeof(ActiveWriterTemplatedCodeGenerator), "ActiveWriterCodeGenerator", "Altinoren ActiveWriter code generator for .actiw files", true, ProjectSystem = ProvideCodeGeneratorAttribute.CSharpProjectGuid)]
-    [ProvideCodeGenerator(typeof(ActiveWriterTemplatedCodeGenerator), "ActiveWriterCodeGenerator", "Altinoren ActiveWriter code generator for .actiw files", true, ProjectSystem = ProvideCodeGeneratorAttribute.VisualBasicProjectGuid)]
-    [ProvideOptionPage(typeof(ActiveWriterOptions), Altinoren.ActiveWriter.Common.OptionPageCategory, Altinoren.ActiveWriter.Common.OptionPageSubCategory, 101, 120, true)]
-    [ProvideProfileAttribute(typeof(ActiveWriterOptions), Altinoren.ActiveWriter.Common.OptionPageCategory, Altinoren.ActiveWriter.Common.OptionPageSubCategory, 101, 120, true)]
+    [ProvideCodeGenerator(typeof(ActiveWriterTemplatedCodeGenerator), "ActiveWriterCodeGenerator", "Castle ActiveWriter code generator for .actiw files", true, ProjectSystem = ProvideCodeGeneratorAttribute.CSharpProjectGuid)]
+    [ProvideCodeGenerator(typeof(ActiveWriterTemplatedCodeGenerator), "ActiveWriterCodeGenerator", "Castle ActiveWriter code generator for .actiw files", true, ProjectSystem = ProvideCodeGeneratorAttribute.VisualBasicProjectGuid)]
+    [ProvideOptionPage(typeof(ActiveWriterOptions), Castle.ActiveWriter.Common.OptionPageCategory, Castle.ActiveWriter.Common.OptionPageSubCategory, 101, 120, true)]
+    [ProvideProfileAttribute(typeof(ActiveWriterOptions), Castle.ActiveWriter.Common.OptionPageCategory, Castle.ActiveWriter.Common.OptionPageSubCategory, 101, 120, true)]
 	[VSShell::ProvideMenuResource("1000.ctmenu", 4)]
 	[VSShell::ProvideToolboxItems(1)]
 	[VSTextTemplatingHost::ProvideDirectiveProcessor(typeof(global::<#= this.Dsl.Namespace #>.<#= directiveName #>DirectiveProcessor), global::<#= this.Dsl.Namespace #>.<#= directiveName #>DirectiveProcessor.<#= directiveName #>DirectiveProcessorName, "A directive processor that provides access to <#= directiveName #> files")]
 	[global::System.Runtime.InteropServices.Guid(Constants.<#= dslName #>PackageId)]
-	internal sealed partial class <#= dslName #>Package : <#= dslName #>PackageBase, Altinoren.ActiveWriter.IDialogPageProvider
+	internal sealed partial class <#= dslName #>Package : <#= dslName #>PackageBase, Castle.ActiveWriter.IDialogPageProvider
 	{
 		protected override void Initialize()
 		{
 			base.Initialize();
 			
-			this.AddToolWindow(typeof(Altinoren.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow));
+			this.AddToolWindow(typeof(Castle.ActiveWriter.ToolWindow.ActiveWriterClassDetailsToolWindow));
 		}
 		
 		public DialogPage GetDialogPage<T>()

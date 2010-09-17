@@ -1,4 +1,4 @@
-namespace Altinoren.ActiveWriter.GeneratedCodeExtensions
+namespace Castle.ActiveWriter.GeneratedCodeExtensions
 {
     using System;
 

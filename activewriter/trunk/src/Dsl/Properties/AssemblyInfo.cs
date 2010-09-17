@@ -16,7 +16,7 @@ using System.Runtime.ConstrainedExecution;
 [assembly: AssemblyTitle(@"")]
 [assembly: AssemblyDescription(@"")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany(@"altinoren.com")]
+[assembly: AssemblyCompany(@"Castle")]
 [assembly: AssemblyProduct(@"ActiveWriter")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
@@ -34,7 +34,7 @@ using System.Runtime.ConstrainedExecution;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion(@"1.0.0.0")]
+[assembly: AssemblyVersion("1.2010.0.1")]
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
 [assembly: ReliabilityContract(Consistency.MayCorruptProcess, Cer.None)]
@@ -42,4 +42,5 @@ using System.Runtime.ConstrainedExecution;
 //
 // Make the Dsl project internally visible to the DslPackage assembly
 //
-//[assembly: InternalsVisibleTo(@"Company.ActiveWriter.DslPackage, PublicKey=00240000048000009400000006020000002400005253413100040000010001007FF134B247E9D9E5466632AA016B0735B45DEEEFC74E7F1B7532F7AB5FB38F17F75C0BC3DEAC1371E8E39B85C5E19418CBAEE7E0DA0E470B95E00A8A09B850AE75A4C63FA37DA7BE127837E12F955FA0368C12DD2752086A87120762868E62FEE11D0D6890ADF60C942B6831548EA1E9ADDFB4ACFAE493D94BD9F3B6A8BD39A0")]
+//[assembly: InternalsVisibleTo(@"Castle.ActiveWriter.DslPackage, PublicKey=002400000480000094000000060200000024000052534131000400000100010055123430CB08A707E23376BC917AD32627561DBFFF34F8727064045E29659D98D91DD7BB1B027B6A486AB477A91D55B63A9D0B7CB537ABF4EF0A137DA95A1B50553FBF50174BC99F451AB38CB8E7F09657537A8D72C206849F0F5DFFFB19A7ECC907245216791B14CE6A7FE8589D7FA646CACB6AD48B77728CCD43813D5435D8")]
+[assembly: AssemblyFileVersionAttribute("1.2010.0.1")]

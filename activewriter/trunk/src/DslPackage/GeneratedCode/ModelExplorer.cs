@@ -11,7 +11,7 @@ using DslModeling = global::Microsoft.VisualStudio.Modeling;
 using DslShell = global::Microsoft.VisualStudio.Modeling.Shell;
 using DslDiagrams = global::Microsoft.VisualStudio.Modeling.Diagrams;
 
-namespace Altinoren.ActiveWriter
+namespace Castle.ActiveWriter
 {
 	/// <summary>
 	/// Double-derived class to allow easier code customization.
@@ -67,7 +67,7 @@ namespace Altinoren.ActiveWriter
 		///</summary>
 		protected override global::System.Guid RootElementDomainClassId
 		{
-			get { return global::Altinoren.ActiveWriter.Model.DomainClassId; }
+			get { return global::Castle.ActiveWriter.Model.DomainClassId; }
 		}
 		
 		/// <summary>

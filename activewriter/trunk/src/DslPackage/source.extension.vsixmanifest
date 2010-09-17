@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
+  <Identifier Id="9f4f10d0-81ad-4308-a398-ba7741f3f7e2">
+    <Name>ActiveWriter</Name>
+    <Author>altinoren.com</Author>
+    <Version>10.0.0.1</Version>
+    <Description>A Visual Studio 2010 addin to design domain models and to generate code decorated with ActiveRecord attributes or supported with NHibernate configuration based on the model.</Description>
+    <Locale>1033</Locale>
+    <MoreInfoUrl>http://using.castleproject.org/display/Contrib/ActiveWriter</MoreInfoUrl>
+    <GettingStartedGuide>http://using.castleproject.org/display/Contrib/ActiveWriter</GettingStartedGuide>
+    <Icon>Resources\File.ico</Icon>
+    <PreviewImage></PreviewImage>
+    <SupportedProducts>
+      <VisualStudio Version="10.0">
+        <Edition>Ultimate</Edition>
+        <Edition>Premium</Edition>
+        <Edition>Pro</Edition>
+      </VisualStudio>
+    </SupportedProducts>
+    <SupportedFrameworkRuntimeEdition MinVersion="4.0" MaxVersion="4.0" />
+  </Identifier>
+  <References/>
+  <Content>
+    <VsPackage>|%CurrentProject%;PkgdefProjectOutputGroup|</VsPackage>
+    <MefComponent>|Dsl|</MefComponent>
+    <MefComponent>|%CurrentProject%|</MefComponent>
+    <ItemTemplate>ItemTemplates</ItemTemplate>
+  </Content>
+</Vsix>

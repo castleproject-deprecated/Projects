@@ -15,24 +15,5 @@
   <Extern href="DSLToolsCmdID.h"/>
   <Include href="GeneratedCode\GeneratedVsct.vsct"/>
   <Commands package="guidPkg">
-    <Buttons>
-      <Button guid="guidCmdSet" id="cmdidClassDetails" priority="0x0101" type="Button">
-        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
-        <CommandFlag>DefaultDisabled</CommandFlag>
-        <CommandFlag>DefaultInvisible</CommandFlag>
-        <CommandFlag>DynamicVisibility</CommandFlag>
-        <Strings>
-          <ButtonText>ActiveWriter Class Details</ButtonText>
-        </Strings>
-      </Button>
-    </Buttons>
   </Commands>
-  <VisibilityConstraints>
-    <VisibilityItem guid="guidCmdSet" id="cmdidClassDetails" context="guidEditor" />
-  </VisibilityConstraints>
-  <Symbols>
-    <GuidSymbol name="guidCmdSet" value="{9928a048-76e7-4f47-8055-2b7da11b6f58}" >
-      <IDSymbol name="cmdidClassDetails" value="0x10002"/>
-    </GuidSymbol>
-  </Symbols>
 </CommandTable>
