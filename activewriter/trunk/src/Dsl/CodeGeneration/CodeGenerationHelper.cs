@@ -1,42 +1,42 @@
-// Copyright 2004-2010 Castle Project - http://www.castleproject.org/
+#region License
+//  Copyright 2004-2010 Castle Project - http:www.castleproject.org/
+//  
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//  
+//      http:www.apache.org/licenses/LICENSE-2.0
+//  
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 // 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//     http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-using Castle.ActiveWriter.CodeDomExtensions;
-using ICSharpCode.NRefactory;
-using ICSharpCode.NRefactory.Visitors;
+#endregion
 
 namespace Castle.ActiveWriter.CodeGeneration
 {
-    using System;
-    using System.CodeDom;
-    using System.CodeDom.Compiler;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Reflection;
-    using System.Text;
-    using System.Xml;
-    using Microsoft.VisualBasic;
-    using EnvDTE;
-    using Microsoft.VisualStudio.Modeling;
-    using ServerExplorerSupport;
-    using VSLangProj;
-    using CodeNamespace = System.CodeDom.CodeNamespace;
+	using System;
+	using System.CodeDom;
+	using System.CodeDom.Compiler;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
+	using System.Diagnostics;
+	using System.IO;
+	using System.Reflection;
+	using System.Text;
+	using System.Xml;
+	using CodeDomExtensions;
+	using EnvDTE;
+	using Microsoft.VisualBasic;
+	using Microsoft.VisualStudio.Modeling;
+	using ServerExplorerSupport;
+	using VSLangProj;
+	using CodeNamespace = System.CodeDom.CodeNamespace;
 
-    public class CodeGenerationHelper
+	public class CodeGenerationHelper
     {
         #region Private Variables
 
@@ -136,7 +136,7 @@ namespace Castle.ActiveWriter.CodeGeneration
                     }
                     Type eventType = eventInfo.EventHandlerType;
                     MethodInfo info =
-                        this.GetType().GetMethod("OnARModelCreated", BindingFlags.Public | BindingFlags.Instance);
+                        GetType().GetMethod("OnARModelCreated", BindingFlags.Public | BindingFlags.Instance);
                     Delegate del = Delegate.CreateDelegate(eventType, this, info);
                     eventInfo.AddEventHandler(this, del);
 

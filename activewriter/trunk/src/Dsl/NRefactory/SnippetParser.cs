@@ -1,20 +1,29 @@
-﻿// <file>
-//     <copyright see="prj:///doc/copyright.txt"/>
-//     <license see="prj:///doc/license.txt"/>
-//     <owner name="Daniel Grunwald"/>
-//     <version>$Revision: 3531 $</version>
-// </file>
-
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-
-using ICSharpCode.NRefactory.Ast;
-using ICSharpCode.NRefactory.Parser;
+﻿#region License
+//  Copyright 2004-2010 Castle Project - http:www.castleproject.org/
+//  
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//  
+//      http:www.apache.org/licenses/LICENSE-2.0
+//  
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+// 
+#endregion
 
 namespace ICSharpCode.NRefactory
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.IO;
+	using Ast;
+	using Parser;
+
 	public enum SnippetType
 	{
 		None,
@@ -59,12 +68,12 @@ namespace ICSharpCode.NRefactory
 		{
 			IParser parser = ParserFactory.CreateParser(language, new StringReader(code));
 			parser.Parse();
-			this.Errors = parser.Errors;
-			this.Specials = parser.Lexer.SpecialTracker.RetrieveSpecials();
-			this.SnippetType = SnippetType.CompilationUnit;
+			Errors = parser.Errors;
+			Specials = parser.Lexer.SpecialTracker.RetrieveSpecials();
+			SnippetType = SnippetType.CompilationUnit;
 			INode result = parser.CompilationUnit;
 			
-			if (this.Errors.Count > 0) {
+			if (Errors.Count > 0) {
 				if (language == SupportedLanguage.CSharp) {
 					// SEMICOLON HACK : without a trailing semicolon, parsing expressions does not work correctly
 					parser = ParserFactory.CreateParser(language, new StringReader(code + ";"));
@@ -72,30 +81,30 @@ namespace ICSharpCode.NRefactory
 					parser = ParserFactory.CreateParser(language, new StringReader(code));
 				}
 				Expression expression = parser.ParseExpression();
-				if (expression != null && parser.Errors.Count < this.Errors.Count) {
-					this.Errors = parser.Errors;
-					this.Specials = parser.Lexer.SpecialTracker.RetrieveSpecials();
-					this.SnippetType = SnippetType.Expression;
+				if (expression != null && parser.Errors.Count < Errors.Count) {
+					Errors = parser.Errors;
+					Specials = parser.Lexer.SpecialTracker.RetrieveSpecials();
+					SnippetType = SnippetType.Expression;
 					result = expression;
 				}
 			}
-			if (this.Errors.Count > 0) {
+			if (Errors.Count > 0) {
 				parser = ParserFactory.CreateParser(language, new StringReader(code));
 				BlockStatement block = parser.ParseBlock();
-				if (block != null && parser.Errors.Count < this.Errors.Count) {
-					this.Errors = parser.Errors;
-					this.Specials = parser.Lexer.SpecialTracker.RetrieveSpecials();
-					this.SnippetType = SnippetType.Statements;
+				if (block != null && parser.Errors.Count < Errors.Count) {
+					Errors = parser.Errors;
+					Specials = parser.Lexer.SpecialTracker.RetrieveSpecials();
+					SnippetType = SnippetType.Statements;
 					result = block;
 				}
 			}
-			if (this.Errors.Count > 0) {
+			if (Errors.Count > 0) {
 				parser = ParserFactory.CreateParser(language, new StringReader(code));
 				List<INode> members = parser.ParseTypeMembers();
-				if (members != null && members.Count > 0 && parser.Errors.Count < this.Errors.Count) {
-					this.Errors = parser.Errors;
-					this.Specials = parser.Lexer.SpecialTracker.RetrieveSpecials();
-					this.SnippetType = SnippetType.TypeMembers;
+				if (members != null && members.Count > 0 && parser.Errors.Count < Errors.Count) {
+					Errors = parser.Errors;
+					Specials = parser.Lexer.SpecialTracker.RetrieveSpecials();
+					SnippetType = SnippetType.TypeMembers;
 					result = new NodeListNode(members);
 					result.StartLocation = members[0].StartLocation;
 					result.EndLocation = members[members.Count - 1].EndLocation;

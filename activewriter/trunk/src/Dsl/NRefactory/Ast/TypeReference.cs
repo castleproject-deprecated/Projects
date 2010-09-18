@@ -1,19 +1,27 @@
-﻿// <file>
-//     <copyright see="prj:///doc/copyright.txt"/>
-//     <license see="prj:///doc/license.txt"/>
-//     <owner name="Mike Krüger" email="mike@icsharpcode.net"/>
-//     <version>$Revision: 3787 $</version>
-// </file>
-
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿#region License
+//  Copyright 2004-2010 Castle Project - http:www.castleproject.org/
+//  
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//  
+//      http:www.apache.org/licenses/LICENSE-2.0
+//  
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+// 
+#endregion
 
 namespace ICSharpCode.NRefactory.Ast
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Text;
+
 	public class TypeReference : AbstractNode, INullable, ICloneable
 	{
 		public static readonly TypeReference StructConstraint = new TypeReference("constraint: struct");
@@ -123,7 +131,7 @@ namespace ICSharpCode.NRefactory.Ast
 		
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 		
 		public virtual TypeReference Clone()
@@ -188,7 +196,7 @@ namespace ICSharpCode.NRefactory.Ast
 		[Obsolete("Use 'Type' instead - it now contains the SystemType for primitive types.")]
 		public string SystemType {
 			get {
-				return this.Type;
+				return Type;
 			}
 		}
 		
@@ -197,7 +205,7 @@ namespace ICSharpCode.NRefactory.Ast
 				return pointerNestingLevel;
 			}
 			set {
-				Debug.Assert(this.IsNull == false);
+				Debug.Assert(IsNull == false);
 				pointerNestingLevel = value;
 			}
 		}
@@ -213,7 +221,7 @@ namespace ICSharpCode.NRefactory.Ast
 				return rankSpecifier;
 			}
 			set {
-				Debug.Assert(this.IsNull == false);
+				Debug.Assert(IsNull == false);
 				rankSpecifier = value;
 			}
 		}
@@ -263,20 +271,20 @@ namespace ICSharpCode.NRefactory.Ast
 		
 		public TypeReference(string type)
 		{
-			this.Type = type;
+			Type = type;
 		}
 		
 		[Obsolete("Type and SystemType are no longer distinguished - use the (string type, bool isKeyword) constructor instead!")]
 		public TypeReference(string type, string systemType)
 		{
-			this.Type = systemType;
-			this.IsKeyword = type != systemType;
+			Type = systemType;
+			IsKeyword = type != systemType;
 		}
 		
 		public TypeReference(string type, bool isKeyword)
 		{
-			this.Type = type;
-			this.IsKeyword = isKeyword;
+			Type = type;
+			IsKeyword = isKeyword;
 		}
 		
 		public TypeReference(string type, List<TypeReference> genericTypes) : this(type)
@@ -414,7 +422,7 @@ namespace ICSharpCode.NRefactory.Ast
 		public InnerClassTypeReference(TypeReference outerClass, string innerType, List<TypeReference> innerGenericTypes)
 			: base(innerType, innerGenericTypes)
 		{
-			this.baseType = outerClass;
+			baseType = outerClass;
 		}
 		
 		public override object AcceptVisitor(IAstVisitor visitor, object data)

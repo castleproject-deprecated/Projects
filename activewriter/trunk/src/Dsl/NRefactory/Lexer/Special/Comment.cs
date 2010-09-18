@@ -1,37 +1,30 @@
-// <file>
-//     <copyright see="prj:///doc/copyright.txt"/>
-//     <license see="prj:///doc/license.txt"/>
-//     <owner name="none" email=""/>
-//     <version>$Revision: 3845 $</version>
-// </file>
-
-using System;
+#region License
+//  Copyright 2004-2010 Castle Project - http:www.castleproject.org/
+//  
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//  
+//      http:www.apache.org/licenses/LICENSE-2.0
+//  
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+// 
+#endregion
 
 namespace ICSharpCode.NRefactory
 {
+	using System;
+
 	public class Comment : AbstractSpecial
 	{
-		CommentType   commentType;
-		string        comment;
-		
-		public CommentType CommentType {
-			get {
-				return commentType;
-			}
-			set {
-				commentType = value;
-			}
-		}
-		
-		public string CommentText {
-			get {
-				return comment;
-			}
-			set {
-				comment = value;
-			}
-		}
-		
+		public CommentType CommentType { get; set; }
+
+		public string CommentText { get; set; }
+
 		/// <value>
 		/// Is true, when the comment is at line start or only whitespaces
 		/// between line and comment start.
@@ -44,9 +37,9 @@ namespace ICSharpCode.NRefactory
 		public Comment(CommentType commentType, string comment, bool commentStartsLine, Location startPosition, Location endPosition)
 			: base(startPosition, endPosition)
 		{
-			this.commentType   = commentType;
-			this.comment       = comment;
-			this.CommentStartsLine = commentStartsLine;
+			this.CommentType   = commentType;
+			this.CommentText       = comment;
+			CommentStartsLine = commentStartsLine;
 		}
 		
 		public override string ToString()

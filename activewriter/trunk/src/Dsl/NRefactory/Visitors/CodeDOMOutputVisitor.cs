@@ -1,21 +1,30 @@
-﻿// <file>
-//     <copyright see="prj:///doc/copyright.txt"/>
-//     <license see="prj:///doc/license.txt"/>
-//     <owner name="Daniel Grunwald" email="daniel@danielgrunwald.de"/>
-//     <version>$Revision: 3833 $</version>
-// </file>
-
-using System;
-using System.CodeDom;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-
-using ICSharpCode.NRefactory.Ast;
+﻿#region License
+//  Copyright 2004-2010 Castle Project - http:www.castleproject.org/
+//  
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//  
+//      http:www.apache.org/licenses/LICENSE-2.0
+//  
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+// 
+#endregion
 
 namespace ICSharpCode.NRefactory.Visitors
 {
+	using System;
+	using System.CodeDom;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Reflection;
+	using System.Text;
+	using Ast;
+
 	public class CodeDomVisitor : AbstractAstVisitor
 	{
 		Stack<CodeNamespace>  namespaceDeclarations = new Stack<CodeNamespace>();
@@ -230,7 +239,7 @@ namespace ICSharpCode.NRefactory.Visitors
 		public override object VisitTypeDeclaration(TypeDeclaration typeDeclaration, object data)
 		{
 			TypeDeclaration oldTypeDeclaration = currentTypeDeclaration;
-			this.currentTypeDeclaration = typeDeclaration;
+			currentTypeDeclaration = typeDeclaration;
 			CodeTypeDeclaration codeTypeDeclaration = new CodeTypeDeclaration(typeDeclaration.Name);
 			codeTypeDeclaration.TypeAttributes = ConvTypeAttributes(typeDeclaration.Modifier);
 			codeTypeDeclaration.IsClass     = typeDeclaration.Type == ClassType.Class;

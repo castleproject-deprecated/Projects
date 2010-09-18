@@ -1,23 +1,34 @@
+#region License
+//  Copyright 2004-2010 Castle Project - http:www.castleproject.org/
+//  
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//  
+//      http:www.apache.org/licenses/LICENSE-2.0
+//  
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+// 
+#endregion
 
-#line  1 "VBNET.ATG" 
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Text;
-using ICSharpCode.NRefactory.Ast;
-using ICSharpCode.NRefactory.Parser.VB;
+#line  1 "VBNET.ATG"
 using ASTAttribute = ICSharpCode.NRefactory.Ast.Attribute;
 /*
   Parser.frame file for NRefactory.
  */
-using System;
-using System.Reflection;
 
 namespace ICSharpCode.NRefactory.Parser.VB {
+	using System;
+	using System.Collections;
+	using System.Collections.Generic;
+	using Ast;
 
 
-
-partial class Parser : AbstractParser
+	partial class Parser : AbstractParser
 {
 	const int maxT = 222;
 
@@ -6907,7 +6918,7 @@ out arguments, out canBeNormal, out canBeRedim);
 #line  3156 "VBNET.ATG" 
 		expr = new InvocationExpression(expr, arguments);
 		if (canBeRedim == false || canBeNormal && (la.kind == Tokens.Dot || la.kind == Tokens.OpenParenthesis)) {
-			if (this.Errors.Count == 0) {
+			if (Errors.Count == 0) {
 				// don't recurse on parse errors - could result in endless recursion
 				ReDimClauseInternal(ref expr);
 			}
@@ -7346,7 +7357,7 @@ out blockStmt);
 
 			default: s = "error " + errorNumber; break;
 		}
-		this.Errors.Error(line, col, s);
+		Errors.Error(line, col, s);
 	}
 	
 	private bool StartOf(int s)

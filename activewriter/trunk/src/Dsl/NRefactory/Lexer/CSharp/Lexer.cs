@@ -1,18 +1,28 @@
-// <file>
-//     <copyright see="prj:///doc/copyright.txt"/>
-//     <license see="prj:///doc/license.txt"/>
-//     <owner name="Andrea Paatz" email="andrea@icsharpcode.net"/>
-//     <version>$Revision: 3866 $</version>
-// </file>
-
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Text;
+#region License
+//  Copyright 2004-2010 Castle Project - http:www.castleproject.org/
+//  
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//  
+//      http:www.apache.org/licenses/LICENSE-2.0
+//  
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+// 
+#endregion
 
 namespace ICSharpCode.NRefactory.Parser.CSharp
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Globalization;
+	using System.IO;
+	using System.Text;
+
 	internal sealed class Lexer : AbstractLexer
 	{
 		bool isAtLineBegin = true;
@@ -834,7 +844,7 @@ namespace ICSharpCode.NRefactory.Parser.CSharp
 					if (specialCommentHash.ContainsKey(tag)) {
 						Location p = new Location(Col, Line);
 						string comment = ch + ReadToEndOfLine();
-						this.TagComments.Add(new TagComment(tag, comment, isAtLineBegin, p, new Location(Col, Line)));
+						TagComments.Add(new TagComment(tag, comment, isAtLineBegin, p, new Location(Col, Line)));
 						sb.Append(comment);
 						break;
 					}
@@ -845,7 +855,7 @@ namespace ICSharpCode.NRefactory.Parser.CSharp
 		
 		void ReadSingleLineComment(CommentType commentType)
 		{
-			if (this.SkipAllComments) {
+			if (SkipAllComments) {
 				SkipToEndOfLine();
 			} else {
 				specialTracker.StartComment(commentType, isAtLineBegin, new Location(Col, Line));
@@ -857,7 +867,7 @@ namespace ICSharpCode.NRefactory.Parser.CSharp
 		void ReadMultiLineComment()
 		{
 			int nextChar;
-			if (this.SkipAllComments) {
+			if (SkipAllComments) {
 				while ((nextChar = ReaderRead()) != -1) {
 					char ch = (char)nextChar;
 					if (ch == '*' && ReaderPeek() == '/') {
@@ -880,7 +890,7 @@ namespace ICSharpCode.NRefactory.Parser.CSharp
 					
 					if (HandleLineEnd(ch)) {
 						if (scTag != null) {
-							this.TagComments.Add(new TagComment(scTag, scCurWord.ToString(), isAtLineBegin, scStartLocation, new Location(Col, Line)));
+							TagComments.Add(new TagComment(scTag, scCurWord.ToString(), isAtLineBegin, scStartLocation, new Location(Col, Line)));
 							scTag = null;
 						}
 						scCurWord.Length = 0;
@@ -891,7 +901,7 @@ namespace ICSharpCode.NRefactory.Parser.CSharp
 					// End of multiline comment reached ?
 					if (ch == '*' && ReaderPeek() == '/') {
 						if (scTag != null) {
-							this.TagComments.Add(new TagComment(scTag, scCurWord.ToString(), isAtLineBegin, scStartLocation, new Location(Col, Line)));
+							TagComments.Add(new TagComment(scTag, scCurWord.ToString(), isAtLineBegin, scStartLocation, new Location(Col, Line)));
 						}
 						ReaderRead();
 						specialTracker.FinishComment(new Location(Col, Line));
@@ -1003,7 +1013,7 @@ namespace ICSharpCode.NRefactory.Parser.CSharp
 		void ReadPreProcessingDirective()
 		{
 			PreprocessingDirective d = ReadPreProcessingDirectiveInternal(true, true);
-			this.specialTracker.AddPreprocessingDirective(d);
+			specialTracker.AddPreprocessingDirective(d);
 			
 			if (EvaluateConditionalCompilation) {
 				switch (d.Cmd) {
@@ -1034,7 +1044,7 @@ namespace ICSharpCode.NRefactory.Parser.CSharp
 								}
 							}
 							if (d != null)
-								this.specialTracker.AddPreprocessingDirective(d);
+								specialTracker.AddPreprocessingDirective(d);
 						}
 						break;
 					case "#elif":
@@ -1055,7 +1065,7 @@ namespace ICSharpCode.NRefactory.Parser.CSharp
 								}
 							}
 							if (d != null)
-								this.specialTracker.AddPreprocessingDirective(d);
+								specialTracker.AddPreprocessingDirective(d);
 						}
 						break;
 				}

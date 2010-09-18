@@ -1,10 +1,19 @@
-﻿// <file>
-//     <copyright see="prj:///doc/copyright.txt"/>
-//     <license see="prj:///doc/license.txt"/>
-//     <owner name="Mike Krüger" email="mike@icsharpcode.net"/>
-//     <version>$Revision: 3856 $</version>
-// </file>
-
+﻿#region License
+//  Copyright 2004-2010 Castle Project - http:www.castleproject.org/
+//  
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//  
+//      http:www.apache.org/licenses/LICENSE-2.0
+//  
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+// 
+#endregion
 namespace ICSharpCode.NRefactory.PrettyPrinter
 {
 	public enum BraceStyle {
@@ -385,11 +394,7 @@ namespace ICSharpCode.NRefactory.PrettyPrinter
 		#region Spaces
 		
 		#region Before Parentheses
-		bool beforeMethodCallParentheses        = false;
-		bool beforeDelegateDeclarationParentheses = false;
-		bool beforeMethodDeclarationParentheses = false;
-		bool beforeConstructorDeclarationParentheses = false;
-		
+
 		bool ifParentheses      = true;
 		bool whileParentheses   = true;
 		bool forParentheses     = true;
@@ -399,89 +404,25 @@ namespace ICSharpCode.NRefactory.PrettyPrinter
 		bool lockParentheses    = true;
 		bool usingParentheses   = true;
 		bool fixedParentheses   = true;
-		bool sizeOfParentheses  = false;
-		bool typeOfParentheses  = false;
-		bool checkedParentheses  = false;
-		bool uncheckedParentheses  = false;
-		bool newParentheses  = false;
-		
-		public bool CheckedParentheses {
-			get {
-				return checkedParentheses;
-			}
-			set {
-				checkedParentheses = value;
-			}
-		}
-		public bool NewParentheses {
-			get {
-				return newParentheses;
-			}
-			set {
-				newParentheses = value;
-			}
-		}
-		public bool SizeOfParentheses {
-			get {
-				return sizeOfParentheses;
-			}
-			set {
-				sizeOfParentheses = value;
-			}
-		}
-		public bool TypeOfParentheses {
-			get {
-				return typeOfParentheses;
-			}
-			set {
-				typeOfParentheses = value;
-			}
-		}
-		public bool UncheckedParentheses {
-			get {
-				return uncheckedParentheses;
-			}
-			set {
-				uncheckedParentheses = value;
-			}
-		}
-		
-		public bool BeforeConstructorDeclarationParentheses {
-			get {
-				return beforeConstructorDeclarationParentheses;
-			}
-			set {
-				beforeConstructorDeclarationParentheses = value;
-			}
-		}
-		
-		public bool BeforeDelegateDeclarationParentheses {
-			get {
-				return beforeDelegateDeclarationParentheses;
-			}
-			set {
-				beforeDelegateDeclarationParentheses = value;
-			}
-		}
-		
-		public bool BeforeMethodCallParentheses {
-			get {
-				return beforeMethodCallParentheses;
-			}
-			set {
-				beforeMethodCallParentheses = value;
-			}
-		}
-		
-		public bool BeforeMethodDeclarationParentheses {
-			get {
-				return beforeMethodDeclarationParentheses;
-			}
-			set {
-				beforeMethodDeclarationParentheses = value;
-			}
-		}
-		
+
+		public bool CheckedParentheses { get; set; }
+
+		public bool NewParentheses { get; set; }
+
+		public bool SizeOfParentheses { get; set; }
+
+		public bool TypeOfParentheses { get; set; }
+
+		public bool UncheckedParentheses { get; set; }
+
+		public bool BeforeConstructorDeclarationParentheses { get; set; }
+
+		public bool BeforeDelegateDeclarationParentheses { get; set; }
+
+		public bool BeforeMethodCallParentheses { get; set; }
+
+		public bool BeforeMethodDeclarationParentheses { get; set; }
+
 		public bool IfParentheses {
 			get {
 				return ifParentheses;
@@ -636,156 +577,37 @@ namespace ICSharpCode.NRefactory.PrettyPrinter
 		#endregion
 		
 		#region WithinParentheses
-		bool withinCheckedExpressionParantheses = false;
-		public bool WithinCheckedExpressionParantheses {
-			get {
-				return withinCheckedExpressionParantheses;
-			}
-			set {
-				withinCheckedExpressionParantheses = value;
-			}
-		}
-		
-		bool withinTypeOfParentheses = false;
-		public bool WithinTypeOfParentheses {
-			get {
-				return withinTypeOfParentheses;
-			}
-			set {
-				withinTypeOfParentheses = value;
-			}
-		}
-		
-		bool withinSizeOfParentheses = false;
-		public bool WithinSizeOfParentheses {
-			get {
-				return withinSizeOfParentheses;
-			}
-			set {
-				withinSizeOfParentheses = value;
-			}
-		}
-		
-		bool withinCastParentheses = false;
-		public bool WithinCastParentheses {
-			get {
-				return withinCastParentheses;
-			}
-			set {
-				withinCastParentheses = value;
-			}
-		}
-		
-		bool withinUsingParentheses = false;
-		public bool WithinUsingParentheses {
-			get {
-				return withinUsingParentheses;
-			}
-			set {
-				withinUsingParentheses = value;
-			}
-		}
-		
-		bool withinLockParentheses = false;
-		public bool WithinLockParentheses {
-			get {
-				return withinLockParentheses;
-			}
-			set {
-				withinLockParentheses = value;
-			}
-		}
-		
-		bool withinSwitchParentheses = false;
-		public bool WithinSwitchParentheses {
-			get {
-				return withinSwitchParentheses;
-			}
-			set {
-				withinSwitchParentheses = value;
-			}
-		}
-		
-		bool withinCatchParentheses = false;
-		public bool WithinCatchParentheses {
-			get {
-				return withinCatchParentheses;
-			}
-			set {
-				withinCatchParentheses = value;
-			}
-		}
-		
-		bool withinForEachParentheses = false;
-		public bool WithinForEachParentheses {
-			get {
-				return withinForEachParentheses;
-			}
-			set {
-				withinForEachParentheses = value;
-			}
-		}
-		
-		bool withinForParentheses = false;
-		public bool WithinForParentheses {
-			get {
-				return withinForParentheses;
-			}
-			set {
-				withinForParentheses = value;
-			}
-		}
-		
-		bool withinWhileParentheses = false;
-		public bool WithinWhileParentheses {
-			get {
-				return withinWhileParentheses;
-			}
-			set {
-				withinWhileParentheses = value;
-			}
-		}
-		
-		bool withinIfParentheses = false;
-		public bool WithinIfParentheses {
-			get {
-				return withinIfParentheses;
-			}
-			set {
-				withinIfParentheses = value;
-			}
-		}
-		
-		bool withinMethodDeclarationParentheses = false;
-		public bool WithinMethodDeclarationParentheses {
-			get {
-				return withinMethodDeclarationParentheses;
-			}
-			set {
-				withinMethodDeclarationParentheses = value;
-			}
-		}
-		
-		bool withinMethodCallParentheses = false;
-		public bool WithinMethodCallParentheses {
-			get {
-				return withinMethodCallParentheses;
-			}
-			set {
-				withinMethodCallParentheses = value;
-			}
-		}
-		
-		bool withinParentheses = false;
-		public bool WithinParentheses {
-			get {
-				return withinParentheses;
-			}
-			set {
-				withinParentheses = value;
-			}
-		}
-		
+
+		public bool WithinCheckedExpressionParantheses { get; set; }
+
+		public bool WithinTypeOfParentheses { get; set; }
+
+		public bool WithinSizeOfParentheses { get; set; }
+
+		public bool WithinCastParentheses { get; set; }
+
+		public bool WithinUsingParentheses { get; set; }
+
+		public bool WithinLockParentheses { get; set; }
+
+		public bool WithinSwitchParentheses { get; set; }
+
+		public bool WithinCatchParentheses { get; set; }
+
+		public bool WithinForEachParentheses { get; set; }
+
+		public bool WithinForParentheses { get; set; }
+
+		public bool WithinWhileParentheses { get; set; }
+
+		public bool WithinIfParentheses { get; set; }
+
+		public bool WithinMethodDeclarationParentheses { get; set; }
+
+		public bool WithinMethodCallParentheses { get; set; }
+
+		public bool WithinParentheses { get; set; }
+
 		#endregion
 		
 		#region SpacesInConditionalOperator
@@ -849,36 +671,13 @@ namespace ICSharpCode.NRefactory.PrettyPrinter
 				spacesAfterSemicolon = value;
 			}
 		}
-		
-		bool spacesAfterTypecast  = false;
-		public bool SpacesAfterTypecast {
-			get {
-				return spacesAfterTypecast;
-			}
-			set {
-				spacesAfterTypecast = value;
-			}
-		}
-		
-		bool spacesBeforeComma    = false;
-		public bool SpacesBeforeComma {
-			get {
-				return spacesBeforeComma;
-			}
-			set {
-				spacesBeforeComma = value;
-			}
-		}
-		
-		bool spacesWithinBrackets = false;
-		public bool SpacesWithinBrackets {
-			get {
-				return spacesWithinBrackets;
-			}
-			set {
-				spacesWithinBrackets = value;
-			}
-		}
+
+		public bool SpacesAfterTypecast { get; set; }
+
+		public bool SpacesBeforeComma { get; set; }
+
+		public bool SpacesWithinBrackets { get; set; }
+
 		#endregion
 		#endregion
 	}

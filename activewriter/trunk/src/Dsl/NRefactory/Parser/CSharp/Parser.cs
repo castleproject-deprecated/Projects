@@ -1,24 +1,35 @@
+#region License
+//  Copyright 2004-2010 Castle Project - http:www.castleproject.org/
+//  
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//  
+//      http:www.apache.org/licenses/LICENSE-2.0
+//  
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+// 
+#endregion
 
-#line  1 "cs.ATG" 
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Text;
-using ICSharpCode.NRefactory.Parser;
-using ICSharpCode.NRefactory.Ast;
+#line  1 "cs.ATG"
 using ASTAttribute = ICSharpCode.NRefactory.Ast.Attribute;
 using Types = ICSharpCode.NRefactory.Ast.ClassType;
 /*
   Parser.frame file for NRefactory.
  */
-using System;
-using System.Reflection;
 
 namespace ICSharpCode.NRefactory.Parser.CSharp {
+	using System;
+	using System.Collections;
+	using System.Collections.Generic;
+	using Ast;
 
 
-
-partial class Parser : AbstractParser
+	partial class Parser : AbstractParser
 {
 	const int maxT = 145;
 
@@ -6124,7 +6135,7 @@ out expr);
 
 			default: s = "error " + errorNumber; break;
 		}
-		this.Errors.Error(line, col, s);
+		Errors.Error(line, col, s);
 	}
 	
 	private bool StartOf(int s)

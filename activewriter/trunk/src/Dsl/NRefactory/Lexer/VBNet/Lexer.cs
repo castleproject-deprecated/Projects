@@ -1,17 +1,27 @@
-// <file>
-//     <copyright see="prj:///doc/copyright.txt"/>
-//     <license see="prj:///doc/license.txt"/>
-//     <owner name="Andrea Paatz" email="andrea@icsharpcode.net"/>
-//     <version>$Revision: 3845 $</version>
-// </file>
-
-using System;
-using System.Globalization;
-using System.IO;
-using System.Text;
+#region License
+//  Copyright 2004-2010 Castle Project - http:www.castleproject.org/
+//  
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//  
+//      http:www.apache.org/licenses/LICENSE-2.0
+//  
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+// 
+#endregion
 
 namespace ICSharpCode.NRefactory.Parser.VB
 {
+	using System;
+	using System.Globalization;
+	using System.IO;
+	using System.Text;
+
 	internal sealed class Lexer : AbstractLexer
 	{
 		bool lineEnd = true;
@@ -508,7 +518,7 @@ namespace ICSharpCode.NRefactory.Parser.VB
 			Location start = new Location(Col - 1, Line);
 			string directive = ReadIdent('#');
 			string argument  = ReadToEndOfLine();
-			this.specialTracker.AddPreprocessingDirective(new PreprocessingDirective(directive, argument.Trim(), start, new Location(start.Column + directive.Length + argument.Length, start.Line)));
+			specialTracker.AddPreprocessingDirective(new PreprocessingDirective(directive, argument.Trim(), start, new Location(start.Column + directive.Length + argument.Length, start.Line)));
 		}
 		
 		string ReadDate()
@@ -595,7 +605,7 @@ namespace ICSharpCode.NRefactory.Parser.VB
 						if (specialCommentHash.ContainsKey(tag)) {
 							Location p = new Location(Col, Line);
 							string comment = ch + ReadToEndOfLine();
-							this.TagComments.Add(new TagComment(tag, comment, isAtLineBegin, p, new Location(Col, Line)));
+							TagComments.Add(new TagComment(tag, comment, isAtLineBegin, p, new Location(Col, Line)));
 							sb.Append(comment);
 							break;
 						}
